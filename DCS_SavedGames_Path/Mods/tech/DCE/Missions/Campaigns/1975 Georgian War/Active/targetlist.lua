@@ -1043,7 +1043,7 @@ targetlist = {
 			['task'] = 'Strike',
 			['attributes'] = {
 				[1] = 'Structure',
-			},
+			}
 		},
 		['209 SA-11 Site R-3'] = {
 			['elements'] = {
@@ -1484,7 +1484,7 @@ targetlist = {
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
-			},
+			}
 		},
 		['501 5th Artillery Division/1.Btry'] = {
 			['elements'] = {
@@ -4149,12 +4149,13 @@ targetlist = {
 			},
 			['dead_last'] = 0,
 			['alive'] = 100,
+			['alive2'] = 100,
 			['priority'] = 4,
 			['task'] = 'Strike',
 			['firepower'] = {
 				['min'] = 6,
 				['max'] = 10,
-			},
+			}
 		},
 		['Rail Bridge Sukhumi-Babushara North-FH74'] = {
 			['elements'] = {
