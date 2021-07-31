@@ -29,11 +29,11 @@ pow_plt_<n>.damage: infrastructure damage by DCE / 100
 
 ]]
 
-require("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
-require("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
-require("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
-require("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
-require("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
+dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
+dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
+dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
+dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
+dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
 
 --load status file to be updated
 --require("Init/db_airbases")																		--load db_airbases
@@ -378,7 +378,6 @@ end
 
 -- Update the airbase efficiency propriety in airbase_tab
 -- OK
--- IMPORTANT: -- before execute check if UpdatePowerTabIntegrity is uncommentated
 local function UpdateAirbaseEfficiency( airb_tab )
 
 	for side, side_val in pairs( airb_tab ) do
@@ -393,6 +392,7 @@ local function UpdateAirbaseEfficiency( airb_tab )
 end
 
 -- Update oob_air number propriety considering airbase efficiency propriety
+-- IMPORTANT: -- before execute check if UpdatePowerTabIntegrity is uncommentated
 function UpdateOobAir()
 
     local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
