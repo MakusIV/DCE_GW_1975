@@ -32,7 +32,7 @@ pow_plt_<n>.damage: infrastructure damage by DCE / 100
 local executeTest = false
 
 if executeTest then
-
+  print("TEST EXECUTING\n")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
@@ -45,6 +45,10 @@ else
   dofile("Active/oob_air.lua")
   dofile("Active/power_tab.lua")
   dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+  print("power_tab: " .. power_tab .."\n")
+
+
+
 end
 
 --load status file to be updated
@@ -91,93 +95,128 @@ The Campaign Creator must define the power_tab using the infrastructure target, 
 
 
 power_tab = {
-
-        ["red"] = {
-
-            ["Prohladniy Depot MP 24"] = { -- power plant
-                integrity = 0.8, -- integrity of the power plant (damage level: propriety alive in targetlist)
-                ["power_line_names"] = { -- table of power line powered by the power plant
-                    ["Bridge Alagir MN 36"] = { -- power line
-                        integrity = 0.5, -- integrity of power line (damage level: propriety alive in targetlist)
-                        ["airbase_supply"] = { -- table of airbases powered by the power line
-                            ["Beslan"] = true,
-                            ["Mozdok"] = true
-                        }
-                    },
-                    ["Bridge South Beslan MN 68"] = { --  anothe power plant
-                        integrity = 0.25,
-                        ["airbase_supply"] = {
-                            ["Nalchik"] = true,
-                            ["Mineralnye-Vody"] = true
-                        }
-                    }
-                }
-            },
-            ["Mineralnye-Vody Airbase"] = {
-                integrity = 0.4,
-                ["power_line_names"] = {
-                    ["Rail Bridge SE Mayskiy MP 23"] = {
-                        integrity = 0.5,
-                        ["airbase_supply"] = {
-                            ["Sochi-Adler"] = true,
-                            ["Beslan"] = true
-                        }
-                    },
-                    ["Bridge South Elhotovo MN 39"] = {
-                        integrity = 0.25,
-                        ["airbase_supply"] = {
-                            ["Mineralnye-Vody"] = true,
-                            ["Sochi-Adler"] = true,
-                            ["Maykop-Khanskaya"] = true
-                        }
-                    }
-                }
-
-            }
+	['blue'] = {
+		['EWR-1'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['EAU East Front Convoy 1'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Al Maktoum Intl'] = true,
+						['Sharjah Intl'] = true
+					}
+				},
+				['US Army ELINT Station'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Dubai Intl'] = true,
+						['Reserves'] = true,
+						['Jazirat al Hamra FARP'] = true
+					}
+				}
+			}
+		},
+		['EWR-2'] = {
+			['integrity'] = 0.4,
+			['power_line_names'] = {
+				['EAU West Front Convoy 2'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Reserves'] = true,
+						['LHA_Nassau'] = true,
+						['Al Dhafra AB'] = true
+					}
+				},
+				['US Army ELINT Station 2'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['LHA_Tarawa'] = true,
+						['Dubai Intl'] = true
+					}
+				}
+			}
+		},
+    ['EWR-3'] = {
+      ['integrity'] = 0.4,
+      ['power_line_names'] = {
+        ['EAU West Front Convoy 3'] = {
+          ['integrity'] = 0.5,
+          ['airbase_supply'] = {
+            ['Reserves'] = true,
+            ['LHA_Nassau'] = true,
+            ['LHA_Tarawa'] = true
+          }
         },
-        ["blue"] = {
-
-            ["Novyy Afon Train Station - FH57"] = {
-                integrity = 0.8,
-                ["power_line_names"] = {
-                    ["Bridge Nizh Armyanskoe Uschele-FH47"] = {
-                        integrity = 0.5,
-                        ["airbase_supply"] = {
-                            ["Senaki-Kolkhi"] = true,
-                            ["Vaziani"] = true
-                        }
-                    },
-                    ["Bridge Tagrskiy-FH08"] = {
-                        integrity = 0.25,
-                        ["airbase_supply"] = {
-                            ["Kutaisi"] = true,
-                            ["Batumi"] = true
-                        }
-                    }
-                }
-            },
-            ["Sukhumi Airbase Strategics"] = {
-                integrity = 0.4,
-                ["power_line_names"] = {
-                    ["Bridge Anaklia-GG19"] = {
-                        integrity = 0.5,
-                        ["airbase_supply"] = {
-                            ["Batumi"] = true,
-                            ["Senaki-Kolkhi"] = true
-                        }
-                    },
-                    ["Rail Bridge Grebeshok-EH99"] = {
-                        integrity = 0.25,
-                        ["airbase_supply"] = {
-                            ["Kutaisi"] = true,
-                            ["Vaziani"] = true
-                        }
-                    }
-                }
-
-            }
+        ['EAU West Front Convoy 1'] = {
+          ['integrity'] = 0.25,
+          ['airbase_supply'] = {
+            ['Jazirat al Hamra FARP'] = true,
+            ['Reserves'] = true
+          }
         }
+      }
     }
+	},
+	['red'] = {
+		['EWR 1'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Mountain Iranian convoy 4'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Shiraz Intl'] = true,
+						['Khasab'] = true
+					}
+				},
+				['4th Iranian Transport fleet'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Bandar e Jask airfield'] = true,
+						['Qeshm Island'] = true
+					}
+				},
+			}
+		},
+		['EWR 2'] = {
+			['integrity'] = 0.4,
+			['power_line_names'] = {
+				['2nd Iranian Transport fleet'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Bandar Abbas Intl'] = true,
+						['Al Ima FARP'] = true,
+						['Sirri Island'] = true
+					}
+				},
+				['5th Iranian Transport fleet'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Lar Airbase'] = true,
+						['Reserves'] = true
+					}
+				}
+			}
+		},
+    ['EWR 3'] = {
+      ['integrity'] = 0.4,
+      ['power_line_names'] = {
+        ['Iranian West frontline convoy 1'] = {
+          ['integrity'] = 0.25,
+          ['airbase_supply'] = {
+            ['Reserves'] = true
+          }
+        },
+        ['Iranian West frontline convoy 2'] = {
+          ['integrity'] = 0.5,
+          ['airbase_supply'] = {
+            ['Lar Airbase'] = true,
+            ['Reserves'] = true
+          },
+        }
+      }
+    }
+	}
+}
 
 
 
@@ -333,8 +372,7 @@ local function UpdatePowerTabIntegrity( pow_tab )
     UpdatePowerPlantIntegrity( pow_tab )
     UpdateAPowerLineIntegrity( pow_tab )
 
-    -- salvare power_tab
-	return pow_tab
+	  return pow_tab
 
 end
 
@@ -406,11 +444,11 @@ end
 -- Update oob_air number propriety considering airbase efficiency propriety
 function UpdateOobAir()
 
-    local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
+  local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
 	local percentage_efficiency_effect_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
 	local airbase_tab = InitializeAirbaseTab()
 
-  if not executeTest then -- delete this condition in operative version
+  if not executeTest then -- delete this condition in operative version and insert UpdatePowerTestIntegrity in a new line
 	   UpdatePowerTabIntegrity( power_tab )
   end
 
@@ -463,11 +501,14 @@ end
 -- Save on disk power_tab.lua
 function SavePowerTab()
     local tgt_str = "power_tab = " .. TableSerialization(power_tab, 0)						    --make a string
+    local tgtFile = nil
+
     if executeTest then
-      local tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua", "w")	--open power_tab file
+      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua", "w")	--open power_tab file
     else
-      local tgtFile = io.open("Active/power_tab.lua", "w")										--open power_tab file
+      tgtFile = io.open("Active/power_tab.lua", "w")
     end
+
     tgtFile:write(tgt_str)																		--save new data
     tgtFile:close()
 end
@@ -509,6 +550,13 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
+
+
+
+OPPURE CONSIDERA:
+verifica come i resupply sono aggiornati in oob_air.lua (vedi [rooster]) e applica li il coefficente di riduzione,
+es: oob_air.lua - roster.ready = 30 * efficiency_<airbase>
+l'aggiornamento di oob_air.lua: devi creare una tabella dove il nome della base (base) è associato al nome dello squadron (name) utilizzando oob_air.lua,
 
 ]]
 
