@@ -510,13 +510,6 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua"
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
-
-
-OPPURE CONSIDERA:
-verifica come i resupply sono aggiornati in oob_air.lua (vedi [rooster]) e applica li il coefficente di riduzione,
-es: oob_air.lua - roster.ready = 30 * efficiency_<airbase>
-l'aggiornamento di oob_air.lua: devi creare una tabella dove il nome della base (base) è associato al nome dello squadron (name) utilizzando oob_air.lua,
-
 ]]
 
 
