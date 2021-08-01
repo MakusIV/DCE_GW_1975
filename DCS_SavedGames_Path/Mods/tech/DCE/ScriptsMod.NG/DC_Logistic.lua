@@ -29,11 +29,23 @@ pow_plt_<n>.damage: infrastructure damage by DCE / 100
 
 ]]
 
-dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
-dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
-dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
-dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
-dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
+local executeTest = false
+
+if executeTest then
+
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
+
+else
+  dofile("Init/db_airbases.lua")
+  dofile("Active/targetlist.lua")
+  dofile("Active/oob_air.lua")
+  dofile("Active/power_tab.lua")
+  dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+end
 
 --load status file to be updated
 --require("Init/db_airbases")																		--load db_airbases
@@ -45,7 +57,7 @@ dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL
 -- Aircraft number in airbase, are influenced from power and integrity (damage)
 -- Reserves are influenced only by power. Integrity calculation for Reserves will be inserted in logistic resupply extension.
 
-local executeTest = true
+
 
 --[[
 
@@ -360,13 +372,13 @@ end
 local function UpdateAirbaseIntegrity( airb_tab )
 
     for base, airbase_values in pairs( airb_tab ) do
-        base = base .. " " .."Airbase"
+        -- base = base .. " " .."Airbase"
 
         for side, targets in pairs( targetlist ) do
 
             for target_name, target_value in pairs( targets ) do
 
-                if base == target_name then
+                if target_name == base or target_name == base .. " " .."Airbase" or  target_name == base .. " " .."FARP" then
                     airbase_values.integrity = target_value.alive / 100
                     break
                 end
@@ -387,18 +399,21 @@ local function UpdateAirbaseEfficiency( airb_tab )
 			--print("airbase: " .. base  .. "\n" )
 			--print("airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.power: " ..  airbase_values.power .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency .. "\n" )
 		end
-    end
+  end
 	return airb_tab
 end
 
 -- Update oob_air number propriety considering airbase efficiency propriety
--- IMPORTANT: -- before execute check if UpdatePowerTabIntegrity is uncommentated
 function UpdateOobAir()
 
     local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
 	local percentage_efficiency_effect_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
 	local airbase_tab = InitializeAirbaseTab()
-	--UpdatePowerTabIntegrity( power_tab ) -- comment for execute test function, uncomment for normal execution
+
+  if not executeTest then -- delete this condition in operative version
+	   UpdatePowerTabIntegrity( power_tab )
+  end
+
 	airbase_tab = UpdatePowerAirbase( airbase_tab, power_tab )
 	airbase_tab = UpdateAirbaseIntegrity( airbase_tab )
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
@@ -418,12 +433,14 @@ function UpdateOobAir()
 					if oob_value.base ~= "Reserves" then
 						--print("old airbase oob_value.number: " .. oob_value.number .."\n")
 						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
+						-- oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
+            oob_value.roster.ready = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
 						--print("new airbase oob_value.number: " .. oob_value.number .."\n")
 					else
 						--print("old reserves oob_value.number: " .. oob_value.number .."\n")
 						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
+						--oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
+            oob_value.roster.ready = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
 						--print("new reserves oob_value.number: " .. oob_value.number .."\n")
 					end
 
@@ -446,7 +463,11 @@ end
 -- Save on disk power_tab.lua
 function SavePowerTab()
     local tgt_str = "power_tab = " .. TableSerialization(power_tab, 0)						    --make a string
-    local tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua", "w")										--open power_tab file
+    if executeTest then
+      local tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua", "w")	--open power_tab file
+    else
+      local tgtFile = io.open("Active/power_tab.lua", "w")										--open power_tab file
+    end
     tgtFile:write(tgt_str)																		--save new data
     tgtFile:close()
 end
@@ -455,6 +476,25 @@ end
 
 
 --[[
+modifiche su campagna
+DEBRIEF_Master.lua:
+86 --run logistic evalutation and save power_tab
+87 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+88 UpdateOobAir()
+89 SavePowerTab()
+
+
+Active/: DC_Logistic.lua
+Active/: power_tab.lua
+
+
+npte: devi modificare la ricerca base = base ..  "airbase"  vedi il campo name oppure verifica solo la sottostringa base
+verificare l'intera stringa (per evitare di considerare nomi simili ma target diversi tipo airbase .. "strategic" o "OCA" ):
+airbase == base oppure airbase == base .. "airbase" oppure airbase == base .. "FARP" e unificare la definizione dei target in base a questi formati
+probabilmente devi agire non su number ma su ready in rooster
+
+att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
+teoricamente si potrebbbe distinguere le riserve in power tab identificandole per i due parametri (che palle)
 
 oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
 molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
