@@ -45,9 +45,6 @@ else
   dofile("Active/oob_air.lua")
   dofile("Active/power_tab.lua")
   dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
-  print("power_tab: " .. power_tab .."\n")
-
-
 
 end
 
@@ -495,18 +492,22 @@ function UpdateOobAir()
 	end
     -- print("\n--->: " .. dump(airbase_tab).. " <----\n")
 	-- print("\n--->: " .. dump(oob_air).. " <----\n")
+  SaveTabOnDisk( "airbase_tab", airbase_tab )
+  SaveTabOnDisk( "power_tab", power_tab )
+
 	return result
 end
 
--- Save on disk power_tab.lua
-function SavePowerTab()
-    local tgt_str = "power_tab = " .. TableSerialization(power_tab, 0)						    --make a string
+
+-- Save table on disk power_tab.lua
+function SaveTabOnDisk( table_name, table )
+    local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
     local tgtFile = nil
 
     if executeTest then
-      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua", "w")	--open power_tab file
+      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/" .. table_name .. ".lua", "w")	--open power_tab file
     else
-      tgtFile = io.open("Active/power_tab.lua", "w")
+      tgtFile = io.open("Active/" .. table_name .. ".lua", "w")
     end
 
     tgtFile:write(tgt_str)																		--save new data
