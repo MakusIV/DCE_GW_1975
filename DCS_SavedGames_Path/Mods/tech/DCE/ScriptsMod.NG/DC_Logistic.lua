@@ -29,7 +29,7 @@ pow_plt_<n>.damage: infrastructure damage by DCE / 100
 
 ]]
 
-local executeTest = false
+local executeTest = true
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -215,6 +215,123 @@ power_tab = {
 	}
 }
 
+------
+
+power_tab = {
+	['red'] = {
+		['Prohladniy Depot MP 24'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Bridge Alagir MN 36'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
+						['Mozdok'] = true, 						
+					},
+				},
+				['Bridge South Beslan MN 68'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Beslan'] = true,
+						['Nalchik'] = true, -- Nalchik dovrebbe prendere 0.8*0.25=0.2 efficiency
+						['Sochi-Adler'] = true,
+					},
+				},
+			},
+		},
+		['Mineralnye-Vody Airbase'] = {
+			['integrity'] = 0.6,
+			['power_line_names'] = {
+				['Rail Bridge SE Mayskiy MP 23'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Mozdok'] = true,
+						['Sochi-Adler'] = true,  -- Sochi-Adler dovrebbe prendere 0.6*0.5=0.3 efficiency
+						['Beslan'] = true,
+					},
+				},
+				['Bridge South Elhotovo MN 39'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Reserves'] = true,
+						['Sochi-Adler'] = true,
+						['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
+						['Nalchik'] = true,
+						['Mozdok'] = true,
+						['Beslan'] = true, 
+						['Mineralnye-Vody'] = true,
+					},
+				},
+			},
+		},
+		['101 EWR Site'] = {
+			['integrity'] = 1,
+			['power_line_names'] = {
+				['Russian Convoy 1'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Mozdok'] = true, -- Mozdok dovrebbe prendere 1*0.5=0.5 efficiency
+						['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
+					},
+				},
+				['Bridge SW Kardzhin MN 49'] = { 
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
+						['Sochi-Adler'] = true,
+						['Mineralnye-Vody'] = true,
+						['Beslan'] = true,
+						['Mozdok'] = true,
+					},
+				},
+			},
+		},
+	},
+	['blue'] = {
+		['Sukhumi Airbase Strategics'] = {
+			['integrity'] = 0.4,
+			['power_line_names'] = {
+				['Rail Bridge Grebeshok-EH99'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+						['Vaziani'] = true,
+					},
+				},
+				['Bridge Anaklia-GG19'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Senaki-Kolkhi'] = true,
+						['Batumi'] = true,
+						['Reserves'] = true,
+					},
+				},
+			},
+		},
+		['Novyy Afon Train Station - FH57'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Bridge Tagrskiy-FH08'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+						['Batumi'] = true,
+					},
+				},
+				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Vaziani'] = true,
+						['Senaki-Kolkhi'] = true,
+						['Reserves'] = true,
+					},
+				},
+			},
+		},
+	},
+}
+
+
 
 
 
@@ -235,6 +352,11 @@ local function dump(o)
    else
       return tostring(o)
    end
+end
+
+-- copy the power_tab from Init folder
+local function copyPowerTab()
+    return true
 end
 
 -- Initialize the airbase_tab by defining the planes operating in the airbase
@@ -328,6 +450,7 @@ local function UpdatePowerPlantIntegrity( pow_tab )
                         power_plant_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         -- eventuale codice per terminare l'iterazione
                     end
+
                 end
             end
         end
@@ -386,12 +509,18 @@ local function UpdatePowerAirbase( airb_tab, pow_tab )
                 for power_line_name, power_line_values in pairs( power_plant_values.power_line_names ) do
 
                     for airbase_name, airbase_values in pairs( power_line_values.airbase_supply ) do
+                        --print("air_tab.airbase: " .. base_name .. ", power_line.airbase: " .. airbase_name .. "\n")
+                        --print("power_plant: " .. power_plant_name .. ", power_line_name: " .. power_line_name .. "\n")
 
                         if base_name == airbase_name then
+                            -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", power_line.airbase: " .. airbase_name .. "\n")
                             local power = power_plant_values.integrity * power_line_values.integrity  -- update power value of an airbase
+                            --print("air_tab.airbase.power: " .. base_values.power .. ", calculated power: " .. power .. "\n")
+                            --print("power_plant_values.integrity: " .. power_plant_values.integrity .. ", power_line_values.integrity: " .. power_line_values.integrity .. ", calculated power: " .. power .. "\n")                            
 
-                            if base_values.power == 1 or power > base_values.power then -- select power calculate from highest power supply integrity
-                                base_values.power  = power
+                            if ( base_values.power == 1 and power > 0 ) or ( power > base_values.power ) then -- select power value from highest power supply integrity calculated                                
+                                --print("air_tab.power ==1 or calculated power > air_tab.power(" .. base_values.power .. ") --> update air_tab.powert: air_tab.power = power(" .. power .. ") \n")
+                                base_values.power  = power                                
                             end
                         end
                     end
@@ -457,7 +586,7 @@ function UpdateOobAir()
 
         for index_value, oob_value in pairs(index) do
 			--print("airbase_tab is not nil\n")
-			--print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.number )
+			--print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.roster.ready )
 
 			if airbase_tab[side][oob_value.base] then
 				--print("airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab\n")
@@ -466,17 +595,17 @@ function UpdateOobAir()
 					result = true
 
 					if oob_value.base ~= "Reserves" then
-						--print("old airbase oob_value.number: " .. oob_value.number .."\n")
+						--print("old airbase oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
 						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						-- oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
-            oob_value.roster.ready = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
-						--print("new airbase oob_value.number: " .. oob_value.number .."\n")
+						-- oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
+                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
+						--print("new airbase oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
 					else
-						--print("old reserves oob_value.number: " .. oob_value.number .."\n")
+						--print("old reserves oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
 						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						--oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
-            oob_value.roster.ready = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
-						--print("new reserves oob_value.number: " .. oob_value.number .."\n")
+						--oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
+                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
+						--print("new reserves oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
 					end
 
 				else
@@ -696,7 +825,20 @@ local function Test_UpdatePowerAirbase()
 
     local result = false
 
-    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red['Mineralnye-Vody'].power == 0.2 and airbase_tab.red['Maykop-Khanskaya'].power == 0.1 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4 then
+    --[[
+    print("airbase_tab.red.Beslan.power: " .. airbase_tab.red.Beslan.power .. ", airbase_tab.red.Mozdok.power: " .. airbase_tab.red.Mozdok.power 
+    .. ", airbase_tab.red.Nalchik.power: " .. airbase_tab.red.Nalchik.power .. ", airbase_tab.red['Mineralnye-Vody'].power :" 
+    .. airbase_tab.red['Mineralnye-Vody'].power .. ", airbase_tab.red['Maykop-Khanskaya'].power :" .. airbase_tab.red['Maykop-Khanskaya'].power 
+    .. ", airbase_tab.red['Sochi-Adler'].power :" .. airbase_tab.red['Sochi-Adler'].power .. ", airbase_tab.blue.Batumi.power :" 
+    .. airbase_tab.blue.Batumi.power .. ", airbase_tab.blue.Vaziani.power :" .. airbase_tab.blue.Vaziani.power .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.power  
+    .. ", airbase_tab.blue.Reserves.power: " .. airbase_tab.blue.Reserves.power .. ", airbase_tab.red.Reserves.power: " 
+    .. airbase_tab.red.Reserves.power .. "\n")
+    ]]
+
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and 
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and 
+    airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4
+    and airbase_tab.red.Reserves.power == 0.25 and airbase_tab.blue.Reserves.power == 0.4 and airbase_tab.blue.Kutaisi.power == 0.2 then
         result = true
     end
 
@@ -749,7 +891,9 @@ local function Test_UpdateAirbaseEfficiency()
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
     local result = false
 
-    if airbase_tab.red.Beslan.efficiency == 0.4 and airbase_tab.red['Mineralnye-Vody'].efficiency == 0.2 and airbase_tab.red['Maykop-Khanskaya'].efficiency == 0.1 and airbase_tab.blue.Batumi.efficiency == 0.2 and airbase_tab.blue.Vaziani.efficiency == 0.4 then
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and 
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and 
+    airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4 then
         result = true
     end
 
@@ -768,15 +912,7 @@ local function Test_UpdateOobAir()
     --[[
 
     NOTE:
-    In UpdateOobAir() apply this two points:
-        1- set:
-            local percentage_efficiency_effect_for_airbases = 100
-            local percentage_efficiency_effect_for_resupplies = 100
-
-        2 - comment this line:
-	        UpdatePowerTabIntegrity( power_tab ) -- comment for execute test function, uncomment for normal execution
-
-    .. after test, remember uncommenting!!
+    In UpdateOobAir() apply this: local percentage_efficiency_effect_for_airbases = 100, local percentage_efficiency_effect_for_resupplies = 100
 
     ]]
 
@@ -784,26 +920,34 @@ local function Test_UpdateOobAir()
 
     oob_air_old = deepcopy (oob_air)
 
-	-- IMPORTANT:
-    -- before testing you must commentate line 495 UpdatePowerTabIntegrity( power_tab ): not upgrading power_tab and use the inital (example) value
-	UpdateOobAir()
+    UpdateOobAir()
+
 
 	for side, index in pairs(oob_air) do
 
         for index_value, oob_value in pairs(index) do
-            --print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.number )
-            --print("old oob_air value: ", side, oob_air_old[side][index_value].base, oob_air_old[side][index_value].type, oob_air_old[side][index_value].number )
+            --print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.roster.ready )
+            --print("old oob_air value: ", side, oob_air_old[side][index_value].base, oob_air_old[side][index_value].type, oob_air_old[side][index_value].roster.ready )
 
-            if oob_value.base == "Reserves" or oob_value.base == "Beslan" or oob_value.base == "Mozdok" or
-            oob_value.base == "Senaki-Kolkhi" or oob_value.base == "Vaziani" then
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.4 ) - 1  ) ) )
+            if oob_value.base == "Mozdok" or oob_value.base == "Mineralnye-Vody"  then
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
 
-            elseif oob_value.base == "Nalchik" or oob_value.base == "Sochi-Adler" or oob_value.base == "Mineralnye-Vody" or
-            oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
+            elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi"  
+                or ( oob_value.base == "Reserves" and side == "blue") then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
 
+            elseif oob_value.base == "Sochi-Adler"  then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.3 ) - 1  ) ) )
+
+            elseif oob_value.base == "Reserves" and side == "red" then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+    
+            elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
+    
             elseif oob_value.base == "Maykop-Khanskaya"  then
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.1 ) - 1  ) ) )
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
+                
             end
         end
 	end
@@ -811,105 +955,127 @@ local function Test_UpdateOobAir()
     return result
 end
 
-local function Test_SavePowerTab()
+local function Test_SaveTabOnDisk()
 
-    power_tab = {
-
-        ["red"] = {
-
-            ["Prohladniy Depot MP 24"] = { -- power plant
-                integrity = 1, -- integrity (property alive in targetlist) of power plant
-                ["power_line_names"] = { -- table of power line powered of power plant
-                    ["Bridge Alagir MN 36"] = { -- power line n.1
-                        integrity = 1, -- integrity (property alive in targetlist) of power line
-                        ["airbase_supply"] = {  -- airbases powered from this power line n.1
-                            ["Beslan"] = true,
-                            ["Reserves"] = true,
-                            ["Mozdok"] = true
-                        }
+    power_tab_test = {
+        ['red'] = {
+            ['Prohladniy Depot MP 24'] = {
+                ['integrity'] = 1,
+                ['power_line_names'] = {
+                    ['Bridge Alagir MN 36'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
+                            ['Mozdok'] = true, 						
+                        },
                     },
-                    ["Bridge South Beslan MN 68"] = { -- power line n.2
-                        integrity = 1,
-                        ["airbase_supply"] = { -- airbases powered from this power line n.2
-                            ["Nalchik"] = true,
-                            ["Mineralnye-Vody"] = true
-                        }
-                    }
-                }
+                    ['Bridge South Beslan MN 68'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Nalchik'] = true, -- Nalchik dovrebbe prendere 0.8*0.25=0.2 efficiency
+                            ['Sochi-Adler'] = true,
+                        },
+                    },
+                },
             },
-            ["Mineralnye-Vody Airbase"] = { -- another power plant and
-                integrity = 1,
-                ["power_line_names"] = {
-                    ["Rail Bridge SE Mayskiy MP 23"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Sochi-Adler"] = true,
-                            ["Reserves"] = true
-                        }
+            ['Mineralnye-Vody Airbase'] = {
+                ['integrity'] = 1,
+                ['power_line_names'] = {
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,  -- Sochi-Adler dovrebbe prendere 0.6*0.5=0.3 efficiency
+                            ['Beslan'] = true,
+                        },
                     },
-                    ["Bridge South Elhotovo MN 39"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Mineralnye-Vody"] = true,
-                            ["Sochi-Adler"] = true,
-                            ["Maykop-Khanskaya"] = true,
-                            ["Reserves"] = true
-                        }
-                    }
-                }
-
-            }
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
+                            ['Nalchik'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true, 
+                            ['Mineralnye-Vody'] = true,
+                        },
+                    },
+                },
+            },
+            ['101 EWR Site'] = {
+                ['integrity'] = 1,
+                ['power_line_names'] = {
+                    ['Russian Convoy 1'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true, -- Mozdok dovrebbe prendere 1*0.5=0.5 efficiency
+                            ['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
+                        },
+                    },
+                    ['Bridge SW Kardzhin MN 49'] = { 
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
+                            ['Sochi-Adler'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                        },
+                    },
+                },
+            },
         },
-        ["blue"] = {
-
-            ["Novyy Afon Train Station - FH57"] = {
-                integrity = 1,
-                ["power_line_names"] = {
-                    ["Bridge Nizh Armyanskoe Uschele-FH47"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Senaki-Kolkhi"] = true,
-                            ["Vaziani"] = true,
-                            ["Reserves"] = true
-                        }
+        ['blue'] = {
+            ['Sukhumi Airbase Strategics'] = {
+                ['integrity'] = 1,
+                ['power_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
                     },
-                    ["Bridge Tagrskiy-FH08"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Kutaisi"] = true,
-                            ["Batumi"] = true
-                        }
-                    }
-                }
+                    ['Bridge Anaklia-GG19'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                    },
+                },
             },
-            ["Sukhumi Airbase Strategics"] = {
-                integrity = 1,
-                ["power_line_names"] = {
-                    ["Bridge Anaklia-GG19"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Batumi"] = true,
-                            ["Senaki-Kolkhi"] = true,
-                            ["Reserves"] = true
-                        }
+            ['Novyy Afon Train Station - FH57'] = {
+                ['integrity'] = 1,
+                ['power_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
                     },
-                    ["Rail Bridge Grebeshok-EH99"] = {
-                        integrity = 1,
-                        ["airbase_supply"] = {
-                            ["Kutaisi"] = true,
-                            ["Vaziani"] = true
-                        }
-                    }
-                }
-
-            }
-        }
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['integrity'] = 1,
+                        ['airbase_supply'] = {
+                            ['Vaziani'] = true,
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                        },
+                    },
+                },
+            },
+        },
     }
-    SavePowerTab()
-    power_tab = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
-    local result = power_tab.blue["Novyy Afon Train Station - FH57"].integrity == 1
-    power_tab = {
+    
+    SaveTabOnDisk( "power_tab_test", power_tab_test )
+    power_tab_test = nil
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab_test.lua")
+    local result = power_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 1
+    power_tab_test = {
 
         ["red"] = {
 
@@ -1001,11 +1167,11 @@ local function Test_SavePowerTab()
             }
         }
     }
-    SavePowerTab()
-    power_tab = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
-    result = result and ( power_tab.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
-    print("Test_SavePowerTab(): " .. tostring(result) .. "\n")
+    SaveTabOnDisk( "power_tab_test", power_tab_test )
+    power_tab_test = nil
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab_test.lua")
+    result = result and ( power_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
+    print("Test_SaveTabOnDisk(): " .. tostring(result) .. "\n")
     return result
 
 end
@@ -1038,7 +1204,7 @@ local function executeAllTest()
 	Test_UpdateOobAir()
 	-- OK
 
-    Test_SavePowerTab()
+    Test_SaveTabOnDisk()
     -- OK
 end
 
