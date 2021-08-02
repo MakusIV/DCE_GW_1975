@@ -1,11 +1,11 @@
 --To evaluate the DCS debrief.log, update the campaign status files/OOBs, generate a debriefing and initiate generation of next campaign mission
 --Initiated by MissionEnd.lua running from within DCS
-------------------------------------------------------------------------------------------------------- 
-------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
 -- Miguel Fichier Revision  M47.c
 -------------------------------------------------------------------------------------------------------
 
--- adjustment A01.b : robust form 
+-- adjustment A01.b : robust form
 -- debug01.b EndMission
 
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
@@ -21,19 +21,19 @@ versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 local function AcceptMission()
 	repeat
 		print("\n\n Night or Day ? : "..daytime)													-- info day or not
-		print("\n\nAccept Mission ?:")	
-		
+		print("\n\nAccept Mission ?:")
+
 		print("a".." - Accept mission")
 		print("s".." - Skip mission")
-		
+
 		m = tostring(io.read())
 		m = string.lower(m)
-		
-		if not ( m ~= nil and ( m == "a" or m == "s" or m == "d")) then 
+
+		if not ( m ~= nil and ( m == "a" or m == "s" or m == "d")) then
 			print("\nInvalid entry.\n")
 		end
 	until m ~= nil and ( m == "a" or m == "s" or m == "d")
-	
+
 	if  m == "s" then
 		TaskRefused = true
 		return false
@@ -84,6 +84,15 @@ dofile("Init/conf_mod.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 
+--=====================  start marco implementation ==================================
+
+--run logistic evalutation, save power_tab and airbase_tab
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+UpdateOobAir()--mark
+
+--=====================  end marco implementation ==================================
+
+
 --run log evaluation and status updates
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
@@ -117,16 +126,16 @@ local TabTask = {
 		["Intercept"] = "i",
 	["l"] = "Laser Illumination",
 		["Laser Illumination"] = "l",
-	["r"] = "Reconnaissance",	
-		["Reconnaissance"] = "r",	
+	["r"] = "Reconnaissance",
+		["Reconnaissance"] = "r",
 	["s"] = "Strike",
 		["Strike"] = "s",
 	["t"] = "Transport",
 		["Transport"] = "t",
-	["u"] = "Refueling",	
+	["u"] = "Refueling",
 		["Refueling"] = "u",
 	}
-		
+
 local showVersion = versionPackageICM
 
 local verScriptsModPath = "../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua"
@@ -142,11 +151,11 @@ if versionPackageICM then
 	print("= = = = = = = = = = = = = = Version: "..camp.version)
 	print("= = = = = = = = = = = = = Script: "..showVersion)
 	print()
-else 
+else
 	print("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
-end	
+end
 	--===================================================================================
-	-- Ecran N°0 Choix next campaign mission	
+	-- Ecran Nï¿½0 Choix next campaign mission
 --ask for input to save results and continue with campaign or disregard the last mission
 print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")						--ask for user confirmation
 
@@ -154,7 +163,7 @@ local input
 local playable_type = {}
 
 SinglePlayer = false
-Multi = 
+Multi =
 	{
 		NbGroup = 0,
 	}																						--user input
@@ -172,13 +181,13 @@ until input == "y" or input == "yes" or input == "n" or input == "no"
 print("\n\n")
 
 if input == "y" or input == "yes" then
-	
+
 	--save new data (remaining files are updated in MAIN_NextMission.lua)
 	local client_str = "clientstats = " .. TableSerialization(clientstats, 0)					--make a string
 	local clientFile = io.open("Active/clientstats.lua", "w")									--open clientstats file
 	clientFile:write(client_str)																--save new data
 	clientFile:close()
-	
+
 	local oob_scen_old = loadfile("Active/oob_scen.lua")()										--load oob_scen file
 	for scen_name,scen in pairs(scen_log) do													--iterate through destroyed scenery objects
 		if scen.x and scen.z then																--destroyed scenery object has x and z coordinates
@@ -189,45 +198,45 @@ if input == "y" or input == "yes" then
 	local scenFile = io.open("Active/oob_scen.lua", "w")										--open oob_scen file
 	scenFile:write(scen_str)																	--save new data
 	scenFile:close()
-	
-	repeat	
+
+	repeat
 		--===================================================================================
-		-- Ecran N°1 Choix entre Single ou Multiplayer
+		-- Ecran Nï¿½1 Choix entre Single ou Multiplayer
 		print("Select :\n"..
 			"S (S)ingleplayer  \n"..
 			"D Singleplayer with (D)edicated Server (In Test) \n"..
 			"DF Singleplayer with (D)edicated Server, (F)ull plane on Deck (Testing: Bug Catapult possible) \n"..
-			"\n"..		
-			
+			"\n"..
+
 			-- "C (C)hange type of plane (coming soon) \n"..
 			-- "\n"..
 			"T Multiplayer by choice of (T)arget \n"..
 			"N multiplayer by choice of (N)ATO")
-		
+
 		local tabIndex01 = {
 			["s"] = true,
 			["d"] = true,
-			
+
 			["df"] = true,
-			
+
 			["n"] = true,
 			["t"] = true,
-			
-			
+
+
 			["y"] = true,
 			["z"] = true,
 		}
 
-		
-		repeat																							-- adjustment A01 : robust form 
-		
+
+		repeat																							-- adjustment A01 : robust form
+
 			choix1 = io.read()
 			choix1 = string.lower(choix1)
 
 			if choix1 == "n" or  choix1 == "t"  then
 				if choix1 == "t"  then
 				--===================================================================================
-				-- Ecran N°2 Selection du Target	
+				-- Ecran Nï¿½2 Selection du Target
 					print("choose a Single target")
 					local tableTargetlist = {}
 					local i = 1
@@ -235,40 +244,40 @@ if input == "y" or input == "yes" then
 							["blue"] = {},
 							["red"] = {},
 							}
-					for side, target_side in pairs(targetlist) do														--iterate through sides in targetlist						
+					for side, target_side in pairs(targetlist) do														--iterate through sides in targetlist
 						for target_name, target in pairs(target_side) do												--iterate through all hostile targets
 							if target.inactive ~= true and ( target.task == "Strike" or target.task == "Anti-ship Strike") then															--if target is active and should be added to ATO
 								local draftTarget = {
 										["name"] = tostring(target_name),
 										["priority"] = tonumber(target.priority),
 										}
-								
-								table.insert(tableTargetlist[side], draftTarget)						
-								
-								i = i +1 
+
+								table.insert(tableTargetlist[side], draftTarget)
+
+								i = i +1
 							end
 						end
 					end
-					
+
 					table.sort(tableTargetlist["red"], function(a,b) return a.priority > b.priority  end)
 					table.sort(tableTargetlist["blue"], function(a,b) return a.priority > b.priority  end)
-			
-					local tabIndex = {}	 
+
+					local tabIndex = {}
 					for side, Targetlist in pairs(tableTargetlist) do
 						local j = 1
 						local Ckey = 0
 						print() print(side..":")
-						for key, value in pairs(Targetlist) do	
-							if  j <= 20  then	
+						for key, value in pairs(Targetlist) do
+							if  j <= 20  then
 								if side == "red" then
 									Ckey = key + #tableTargetlist["blue"]															--permet de n'afficher qu'un nombre continue pour les 2 camps
-								else 
+								else
 									Ckey = key
-								end											
+								end
 								io.write(  Ckey.." "..side.." "..tostring(value.name) .."  "..tostring(value.priority).."\n")
 								if not tabIndex[Ckey]  then tabIndex[Ckey] = {} end
 								tabIndex[Ckey]["side"] = side
-								j = j+1	
+								j = j+1
 							end
 						end
 					end
@@ -287,34 +296,34 @@ if input == "y" or input == "yes" then
 							if not Multi.Target[side] then Multi.Target[side]= {} end
 							Multi.Target[side] = tableTargetlist[side][Ckey].name
 							print("\n"..tableTargetlist[side][Ckey].name.."\n")
-						else 
+						else
 							print("\nInvalid entry.\n")
 						end
 					until  tabIndex[input]
-					
-					io.write( "\n")	
+
+					io.write( "\n")
 				end	--if choix1 == "t"  then
-			
+
 			--===================================================================================
-			-- Ecran N°3 Selection nb of Flight
+			-- Ecran Nï¿½3 Selection nb of Flight
 				repeat
 					print("Select number of Flight :\n")
 					input = tonumber(io.read())
 					if (input == nil or input == "") then input = 999 end
 					if  (input >= 1 and  input <= 10) then
 						Multi.NbGroup = input
-					else 
+					else
 						print("\nInvalid entry.\n")
 					end
-				until   (input >= 1 and  input <= 10) 
+				until   (input >= 1 and  input <= 10)
 
 			--===================================================================================
-			-- Ecran N°4 Selection du type d'avion Multiplayer	
+			-- Ecran Nï¿½4 Selection du type d'avion Multiplayer
 				local tabIndex = {}
 				for i = 1 , Multi.NbGroup do
 					local ExPlaneA = ""
 					local stopLoop = false
-					for nSide , oob_airSide in pairs(oob_air) do														--pour afficher l'exemple de selection du premier avion présenté
+					for nSide , oob_airSide in pairs(oob_air) do														--pour afficher l'exemple de selection du premier avion prï¿½sentï¿½
 						for m , unit in pairs(oob_airSide) do
 							if playable_m[unit.type] and unit.inactive ~= true and not stopLoop then
 								ExPlaneA = unit.type
@@ -322,28 +331,28 @@ if input == "y" or input == "yes" then
 							end
 						end
 					end
-								
-					print("Choose your aircraft type for Flight n°"..i)
+
+					print("Choose your aircraft type for Flight nï¿½"..i)
 					print("(number of aircraft) (type of aircraft) (type of mission)")
-					print("example for (4 "..ExPlaneA..": Escort): 4ae or 4AE") 
+					print("example for (4 "..ExPlaneA..": Escort): 4ae or 4AE")
 
 					if not Multi.Group then Multi.Group= {} end
 					if not Multi.Group[i] then Multi.Group[i]= {} end
-					
+
 					local playable_type = {}
-					local seen = {}	
+					local seen = {}
 					local tasks = {}
 				local ti = 65 																						--char(65) == a
 				tabTaskAvailable = {}
-				
-				-- parse toutes les unités et rempli le tab tabTaskAvailable pour etre sur de proposer toutes les task proposé active 
-				for nSide , oob_airSide in pairs(oob_air) do	
+
+				-- parse toutes les unitï¿½s et rempli le tab tabTaskAvailable pour etre sur de proposer toutes les task proposï¿½ active
+				for nSide , oob_airSide in pairs(oob_air) do
 					print() print(nSide..":")
-					for m , unit in pairs(oob_airSide) do						
-						if playable_m[unit.type]  and unit.inactive ~= true then							
+					for m , unit in pairs(oob_airSide) do
+						if playable_m[unit.type]  and unit.inactive ~= true then
 							for taskStr , nbool in pairs(oob_air[nSide][m].tasks) do
-								taskStr = tostring(taskStr)							
-								
+								taskStr = tostring(taskStr)
+
 								if not tabTaskAvailable[nSide] then tabTaskAvailable[nSide] = {} end
 								if not tabTaskAvailable[nSide][unit.type] then tabTaskAvailable[nSide][unit.type] = {} end
 								if not tabTaskAvailable[nSide][unit.type][taskStr] then tabTaskAvailable[nSide][unit.type][taskStr] = nbool end
@@ -352,21 +361,21 @@ if input == "y" or input == "yes" then
 						end
 					end
 				end
-				
+
 				-- display le tableau des choix d'avion et de task
 				--tabTaskAvailable[nSide][unit.type][taskStr]
-				for nSide , unit_type in pairs(tabTaskAvailable) do	
+				for nSide , unit_type in pairs(tabTaskAvailable) do
 					print() print(nSide..":")
 					for unitType , TabType in pairs(unit_type) do
-							
+
 						local IndexStringType = string.lower(string.char(ti))
-						if not playable_type[IndexStringType] then playable_type[IndexStringType] = {} end													
+						if not playable_type[IndexStringType] then playable_type[IndexStringType] = {} end
 						playable_type[IndexStringType]["type"] = unitType
 						playable_type[IndexStringType]["side"] = nSide
-						
-						io.write(" (1 to 8): ("..IndexStringType.."): "..unitType..":")												
-							
-						for taskStr , nbool in pairs(TabType) do	
+
+						io.write(" (1 to 8): ("..IndexStringType.."): "..unitType..":")
+
+						for taskStr , nbool in pairs(TabType) do
 							if   nbool == true then
 								io.write( " ("..TabTask[taskStr]..")"..taskStr.."")
 								local FstLetTask = string.lower(string.sub (taskStr, 1, 1))
@@ -378,7 +387,7 @@ if input == "y" or input == "yes" then
 								tabIndex[tostring(6)..IndexStringType..TabTask[taskStr]] = true
 								tabIndex[tostring(7)..IndexStringType..TabTask[taskStr]] = true
 								tabIndex[tostring(8)..IndexStringType..TabTask[taskStr]] = true
-								
+
 							end
 						end
 						io.write("\n")
@@ -388,79 +397,79 @@ if input == "y" or input == "yes" then
 
 				io.write( "\n")
 			--===================================================================================
-				-- Ecran N°5 Selection Nombre d'avion Multiplayer
+				-- Ecran Nï¿½5 Selection Nombre d'avion Multiplayer
 					repeat
 						input = string.lower(io.read())
 						if  tabIndex[input] then
 							if not Multi.Group[i] then Multi.Group[i]= {} end
-							
+
 							local inputNb = tonumber(string.sub (input, 1, 1))
 							Multi.Group[i].NbPlane = inputNb
-							
+
 							local inputTyp = tostring(string.sub (input, 2, 2))
 							Multi.Group[i].PlaneType = playable_type[inputTyp].type
 							Multi.Group[i].side = playable_type[inputTyp].side
-							
+
 							local inputTsk = tostring(string.sub (input, 3, 3))
 							Multi.Group[i].task = TabTask[inputTsk]
-							
-						else 
+
+						else
 							print("\nInvalid entry.\n")
 						end
-					until   tabIndex[input] 
-					
+					until   tabIndex[input]
+
 					io.write( "\n")
-				
+
 					--========================= affiche le choix du joueurs
 					print(" -------------------------------------------------------> Building your different Flight: ")
 					for k=1, i do
 						print(" -------------------------------------------------------> "..Multi.Group[k].NbPlane.." "..Multi.Group[k].PlaneType.." ("..Multi.Group[k].side..")".." "..Multi.Group[k].task)
 					end
 					io.write( "\n")
-				
+
 				end
 			--===================================================================================
-				-- Ecran N°6 SinglePlayer
-			
+				-- Ecran Nï¿½6 SinglePlayer
+
 		elseif choix1 == "s" then
 		  SinglePlayer = true
-		  
+
 		elseif choix1 == "d" then
 		  SinglePlayer = true
 		  SingleWithDServer = true
 		  SingleWithDServerAiAir = true
-		  
+
 		elseif choix1 == "df" then
 		  SinglePlayer = true
 		  SingleWithDServer = true
 		end
-		
+
 	until tabIndex01[choix1]
 
 --==========================================================
 
 	--increase campaign mission number
-	camp.mission = camp.mission + 1	
-	
+	camp.mission = camp.mission + 1
+
 	--generate next campaign mission
 	briefing_status = ""																		--text string to be added to next briefing (status reports are amended for each mission generation attempt until mission is succesfully generated)
 	briefing_oob_text_red = ""																	--text string to be added to next briefing (red repair and reinforcements)
 	briefing_oob_text_blue = ""																	--text string to be added to next briefing (blue repair and reinforcements)
 	PlayerFlight = false																		--variable to control mission generation loop
-	
+
 	MissionInstance = 0
 	repeat
 		print("Generating Next Mission.\n")
-	
-		MissionInstance = MissionInstance + 1													--count the number of times the mission is generated															   
+
+		MissionInstance = MissionInstance + 1													--count the number of times the mission is generated
 		dofile("../../../ScriptsMod."..versionPackageICM.."/MAIN_NextMission.lua")											--generate next mission
-		
+
 		if v_EndCampaign then 																			-- debug01.b EndMission
 			if AcceptMission() then
 				  print("\nEND OF THE CAMPAIGN, SEE THE BRIEFING IN THE MISSION..\n")					-- end of camapaign
 				 break
-			end			
-		elseif Multi.NbGroup >= 1 and PlayerFlight then 
+			end
+		elseif Multi.NbGroup >= 1 and PlayerFlight then
 			if AcceptMission() then
 				print("\nMultiplayerCampaign Next mission generated.\n")								--confirmation text
 				 break
@@ -469,7 +478,7 @@ if input == "y" or input == "yes" then
 			if AcceptMission() then
 				 print("\nNext mission generated.\n")													--confirmation text
 				 break
-			end	
+			end
 		elseif stopBug then																			--mission has a player flight
 			print("\n\n stopBug .\n")																--confirmation text
 			break
@@ -506,9 +515,9 @@ if input == "y" or input == "yes" then
 			print("= = = = = = = = = = = = = = Version: "..camp.version)
 			print("= = = = = = = = = = = = = Script: "..showVersion)
 			print()
-		else 
+		else
 			print("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
-		end		
+		end
 	until 1 == 2																					--repeat until the next mission is ready (has a player flight)
 	break
   until 1 == 2

@@ -1,49 +1,96 @@
-power_tab_test = {
+power_tab = {
 	['red'] = {
 		['Mineralnye-Vody Airbase'] = {
+			['integrity'] = 0.6,
 			['power_line_names'] = {
 				['Rail Bridge SE Mayskiy MP 23'] = {
 					['airbase_supply'] = {
-						['Reserves'] = true,
+						['Beslan'] = true,
+						['Mozdok'] = true,
 						['Sochi-Adler'] = true,
 					},
 					['integrity'] = 0.5,
 				},
 				['Bridge South Elhotovo MN 39'] = {
 					['airbase_supply'] = {
-						['Reserves'] = true,
 						['Maykop-Khanskaya'] = true,
+						['Nalchik'] = true,
+						['Mozdok'] = true,
+						['Beslan'] = true,
+						['Sochi-Adler'] = true,
 						['Mineralnye-Vody'] = true,
+						['Reserves'] = true,
+					},
+					['integrity'] = 0.25,
+				},
+			},
+		},
+		['Prohladniy Depot MP 24'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Bridge Alagir MN 36'] = {
+					['airbase_supply'] = {
+						['Mozdok'] = true,
+						['Beslan'] = true,
+					},
+					['integrity'] = 0.5,
+				},
+				['Bridge South Beslan MN 68'] = {
+					['airbase_supply'] = {
+						['Beslan'] = true,
+						['Nalchik'] = true,
 						['Sochi-Adler'] = true,
 					},
 					['integrity'] = 0.25,
 				},
 			},
-			['integrity'] = 0.4,
 		},
-		['Prohladniy Depot MP 24'] = {
+		['101 EWR Site'] = {
+			['integrity'] = 1,
 			['power_line_names'] = {
-				['Bridge South Beslan MN 68'] = {
+				['Bridge SW Kardzhin MN 49'] = {
 					['airbase_supply'] = {
-						['Nalchik'] = true,
+						['Mozdok'] = true,
+						['Beslan'] = true,
+						['Sochi-Adler'] = true,
 						['Mineralnye-Vody'] = true,
+						['Reserves'] = true,
 					},
 					['integrity'] = 0.25,
 				},
-				['Bridge Alagir MN 36'] = {
+				['Russian Convoy 1'] = {
 					['airbase_supply'] = {
-						['Beslan'] = true,
+						['Mineralnye-Vody'] = true,
 						['Mozdok'] = true,
-						['Reserves'] = true,
 					},
 					['integrity'] = 0.5,
 				},
 			},
-			['integrity'] = 0.8,
 		},
 	},
 	['blue'] = {
+		['Novyy Afon Train Station - FH57'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+					['airbase_supply'] = {
+						['Senaki-Kolkhi'] = true,
+						['Vaziani'] = true,
+						['Reserves'] = true,
+					},
+					['integrity'] = 0.5,
+				},
+				['Bridge Tagrskiy-FH08'] = {
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+						['Batumi'] = true,
+					},
+					['integrity'] = 0.25,
+				},
+			},
+		},
 		['Sukhumi Airbase Strategics'] = {
+			['integrity'] = 0.4,
 			['power_line_names'] = {
 				['Bridge Anaklia-GG19'] = {
 					['airbase_supply'] = {
@@ -61,27 +108,6 @@ power_tab_test = {
 					['integrity'] = 0.25,
 				},
 			},
-			['integrity'] = 0.4,
-		},
-		['Novyy Afon Train Station - FH57'] = {
-			['power_line_names'] = {
-				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
-					['airbase_supply'] = {
-						['Senaki-Kolkhi'] = true,
-						['Reserves'] = true,
-						['Vaziani'] = true,
-					},
-					['integrity'] = 0.5,
-				},
-				['Bridge Tagrskiy-FH08'] = {
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Batumi'] = true,
-					},
-					['integrity'] = 0.25,
-				},
-			},
-			['integrity'] = 0.8,
 		},
 	},
 }

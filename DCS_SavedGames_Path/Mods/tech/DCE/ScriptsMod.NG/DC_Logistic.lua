@@ -1,4 +1,24 @@
+
+
 --[[
+
+power plant --- energizes ---->|----> power line A -- energizes---> |--> airbase 1
+                               |                                    |--> airbase 3
+                               |                                    |--> airbase 5
+                               |
+                               |----> power line B -- energizes---> |--> airbase 2
+															 |                                    |--> airbase 5
+															 |
+                               |----> power line C -- energizes---> |--> airbase 2
+
+like for airbase damage, power plant and/or power line damage influence number of ready aircraft stored in airbases
+
+]]
+
+
+--[[
+
+
 
 
 - - resupply_<asset> = max_resupply_<asset> _for_<airbase> * efficiency_<airbase>;
@@ -29,7 +49,7 @@ pow_plt_<n>.damage: infrastructure damage by DCE / 100
 
 ]]
 
-local executeTest = true
+local executeTest = false
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -226,7 +246,7 @@ power_tab = {
 					['integrity'] = 0.5,
 					['airbase_supply'] = {
 						['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
-						['Mozdok'] = true, 						
+						['Mozdok'] = true,
 					},
 				},
 				['Bridge South Beslan MN 68'] = {
@@ -258,7 +278,7 @@ power_tab = {
 						['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
 						['Nalchik'] = true,
 						['Mozdok'] = true,
-						['Beslan'] = true, 
+						['Beslan'] = true,
 						['Mineralnye-Vody'] = true,
 					},
 				},
@@ -274,7 +294,7 @@ power_tab = {
 						['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
 					},
 				},
-				['Bridge SW Kardzhin MN 49'] = { 
+				['Bridge SW Kardzhin MN 49'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
 						['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
@@ -516,11 +536,11 @@ local function UpdatePowerAirbase( airb_tab, pow_tab )
                             -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", power_line.airbase: " .. airbase_name .. "\n")
                             local power = power_plant_values.integrity * power_line_values.integrity  -- update power value of an airbase
                             --print("air_tab.airbase.power: " .. base_values.power .. ", calculated power: " .. power .. "\n")
-                            --print("power_plant_values.integrity: " .. power_plant_values.integrity .. ", power_line_values.integrity: " .. power_line_values.integrity .. ", calculated power: " .. power .. "\n")                            
+                            --print("power_plant_values.integrity: " .. power_plant_values.integrity .. ", power_line_values.integrity: " .. power_line_values.integrity .. ", calculated power: " .. power .. "\n")
 
-                            if ( base_values.power == 1 and power > 0 ) or ( power > base_values.power ) then -- select power value from highest power supply integrity calculated                                
+                            if ( base_values.power == 1 and power > 0 ) or ( power > base_values.power ) then -- select power value from highest power supply integrity calculated
                                 --print("air_tab.power ==1 or calculated power > air_tab.power(" .. base_values.power .. ") --> update air_tab.powert: air_tab.power = power(" .. power .. ") \n")
-                                base_values.power  = power                                
+                                base_values.power  = power
                             end
                         end
                     end
@@ -647,22 +667,34 @@ end
 
 
 --[[
-modifiche su campagna
+
+IMPLEMENTATION
+
+Active/: DC_Logistic.lua --marco
+Init/: power_tab_init.lua --defined by campaign's maker
+
 DEBRIEF_Master.lua:
-86 --run logistic evalutation and save power_tab
-87 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-88 UpdateOobAir()
-89 SavePowerTab()
+87 --=====================  start marco implementation ==================================
+88
+89 --run logistic evalutation and save power_tab
+90 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+91 UpdateOobAir()
+92
+93 --=====================  end marco implementation ==================================
+
+BAT_FirstMission.lua:
+84 --====================  start marco implementation ==================================
+85
+86 dofile("Init/power_tab_init.lua")
+87 local tgt_str = power_tab .. " = " .. TableSerialization(power_tab, 0)						    --make a string
+88 local tgtFile = nil
+89 tgtFile = io.open("Active/" .. power_tab .. ".lua", "w")
+90 tgtFile:write(tgt_str)																		--save new data
+91 tgtFile:close()
+92
+93 --=====================  end marco implementation ==================================
 
 
-Active/: DC_Logistic.lua
-Active/: power_tab.lua
-
-
-npte: devi modificare la ricerca base = base ..  "airbase"  vedi il campo name oppure verifica solo la sottostringa base
-verificare l'intera stringa (per evitare di considerare nomi simili ma target diversi tipo airbase .. "strategic" o "OCA" ):
-airbase == base oppure airbase == base .. "airbase" oppure airbase == base .. "FARP" e unificare la definizione dei target in base a questi formati
-probabilmente devi agire non su number ma su ready in rooster
 
 att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
 teoricamente si potrebbbe distinguere le riserve in power tab identificandole per i due parametri (che palle)
@@ -826,17 +858,17 @@ local function Test_UpdatePowerAirbase()
     local result = false
 
     --[[
-    print("airbase_tab.red.Beslan.power: " .. airbase_tab.red.Beslan.power .. ", airbase_tab.red.Mozdok.power: " .. airbase_tab.red.Mozdok.power 
-    .. ", airbase_tab.red.Nalchik.power: " .. airbase_tab.red.Nalchik.power .. ", airbase_tab.red['Mineralnye-Vody'].power :" 
-    .. airbase_tab.red['Mineralnye-Vody'].power .. ", airbase_tab.red['Maykop-Khanskaya'].power :" .. airbase_tab.red['Maykop-Khanskaya'].power 
-    .. ", airbase_tab.red['Sochi-Adler'].power :" .. airbase_tab.red['Sochi-Adler'].power .. ", airbase_tab.blue.Batumi.power :" 
-    .. airbase_tab.blue.Batumi.power .. ", airbase_tab.blue.Vaziani.power :" .. airbase_tab.blue.Vaziani.power .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.power  
-    .. ", airbase_tab.blue.Reserves.power: " .. airbase_tab.blue.Reserves.power .. ", airbase_tab.red.Reserves.power: " 
+    print("airbase_tab.red.Beslan.power: " .. airbase_tab.red.Beslan.power .. ", airbase_tab.red.Mozdok.power: " .. airbase_tab.red.Mozdok.power
+    .. ", airbase_tab.red.Nalchik.power: " .. airbase_tab.red.Nalchik.power .. ", airbase_tab.red['Mineralnye-Vody'].power :"
+    .. airbase_tab.red['Mineralnye-Vody'].power .. ", airbase_tab.red['Maykop-Khanskaya'].power :" .. airbase_tab.red['Maykop-Khanskaya'].power
+    .. ", airbase_tab.red['Sochi-Adler'].power :" .. airbase_tab.red['Sochi-Adler'].power .. ", airbase_tab.blue.Batumi.power :"
+    .. airbase_tab.blue.Batumi.power .. ", airbase_tab.blue.Vaziani.power :" .. airbase_tab.blue.Vaziani.power .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.power
+    .. ", airbase_tab.blue.Reserves.power: " .. airbase_tab.blue.Reserves.power .. ", airbase_tab.red.Reserves.power: "
     .. airbase_tab.red.Reserves.power .. "\n")
     ]]
 
-    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and 
-    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and 
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and
     airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4
     and airbase_tab.red.Reserves.power == 0.25 and airbase_tab.blue.Reserves.power == 0.4 and airbase_tab.blue.Kutaisi.power == 0.2 then
         result = true
@@ -891,8 +923,8 @@ local function Test_UpdateAirbaseEfficiency()
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
     local result = false
 
-    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and 
-    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and 
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and
     airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4 then
         result = true
     end
@@ -932,7 +964,7 @@ local function Test_UpdateOobAir()
             if oob_value.base == "Mozdok" or oob_value.base == "Mineralnye-Vody"  then
                 result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
 
-            elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi"  
+            elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi"
                 or ( oob_value.base == "Reserves" and side == "blue") then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
 
@@ -941,13 +973,13 @@ local function Test_UpdateOobAir()
 
             elseif oob_value.base == "Reserves" and side == "red" then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
-    
+
             elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
-    
+
             elseif oob_value.base == "Maykop-Khanskaya"  then
                 result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
-                
+
             end
         end
 	end
@@ -966,7 +998,7 @@ local function Test_SaveTabOnDisk()
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
                             ['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
-                            ['Mozdok'] = true, 						
+                            ['Mozdok'] = true,
                         },
                     },
                     ['Bridge South Beslan MN 68'] = {
@@ -998,7 +1030,7 @@ local function Test_SaveTabOnDisk()
                             ['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
                             ['Nalchik'] = true,
                             ['Mozdok'] = true,
-                            ['Beslan'] = true, 
+                            ['Beslan'] = true,
                             ['Mineralnye-Vody'] = true,
                         },
                     },
@@ -1014,7 +1046,7 @@ local function Test_SaveTabOnDisk()
                             ['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
                         },
                     },
-                    ['Bridge SW Kardzhin MN 49'] = { 
+                    ['Bridge SW Kardzhin MN 49'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
                             ['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
@@ -1070,7 +1102,7 @@ local function Test_SaveTabOnDisk()
             },
         },
     }
-    
+
     SaveTabOnDisk( "power_tab_test", power_tab_test )
     power_tab_test = nil
     dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab_test.lua")

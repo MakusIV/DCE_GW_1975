@@ -1,11 +1,11 @@
 --To manually generate the first campaign mission and reset the campaign to initial status. For manual use by campaign designer only, not required for normal campaign play.
 --Initiated by FirstMission.bat
-------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
 -- Miguel Fichier Revision  M47.c
 -------------------------------------------------------------------------------------------------------
 
 
--- adjustment A01.b : robust form 
+-- adjustment A01.b : robust form
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M46.d  singlePlayer with dedicated server (c: DF choice)(c: D choice with AI AirSpawn)
 -- miguel21 modification M38.e  helps to balance the game
@@ -20,19 +20,19 @@ versionDCE["BAT_FirstMission.lua"] = "1.7.33"
 local function AcceptMission()
 	repeat
 		print("\n\n Night or Day ? : "..daytime)													-- info day or not
-		print("\n\nAccept Mission ?:")	
-		
+		print("\n\nAccept Mission ?:")
+
 		print("a".." - Accept mission")
 		print("s".." - Skip mission")
-		
+
 		m = tostring(io.read())
 		m = string.lower(m)
-		
-		if not ( m ~= nil and ( m == "a" or m == "s" or m == "d")) then 
+
+		if not ( m ~= nil and ( m == "a" or m == "s" or m == "d")) then
 			print("\nInvalid entry.\n")
 		end
 	until m ~= nil and ( m == "a" or m == "s" or m == "d")
-	
+
 	if  m == "s" then
 		TaskRefused = true
 		return false
@@ -59,27 +59,38 @@ local TabTask = {
 		["Intercept"] = "i",
 	["l"] = "Laser Illumination",
 		["Laser Illumination"] = "l",
-	["r"] = "Reconnaissance",	
-		["Reconnaissance"] = "r",	
+	["r"] = "Reconnaissance",
+		["Reconnaissance"] = "r",
 	["s"] = "Strike",
 		["Strike"] = "s",
 	["t"] = "Transport",
 		["Transport"] = "t",
-	["u"] = "Refueling",	
+	["u"] = "Refueling",
 		["Refueling"] = "u",
 	}
 
 ----- random seed -----
 math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))
 math.random(); math.random(); math.random()
-  
+
 versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
-  
+
 dofile("Init/conf_mod.lua")
 dofile("Init/camp_init.lua")
 dofile("Init/oob_air_init.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 dofile("Init/targetlist_init.lua")
+
+--=====================  start marco implementation ==================================
+
+dofile("Init/power_tab_init.lua")
+local tgt_str = power_tab .. " = " .. TableSerialization(power_tab, 0)						    --make a string
+local tgtFile = nil
+tgtFile = io.open("Active/" .. power_tab .. ".lua", "w")
+tgtFile:write(tgt_str)																		--save new data
+tgtFile:close()
+
+--=====================  end marco implementation ==================================
 
 local showVersion = versionPackageICM
 
@@ -96,7 +107,7 @@ if versionPackageICM then
 	print("= = = = = = = = = = = = = = Version: "..camp.version)
 	print("= = = = = = = = = = = = = Script: "..showVersion)
 	print()
-else 
+else
 	print("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
 end
 	--===================================================================================
@@ -107,36 +118,36 @@ local input
 local playable_type = {}
 
 SinglePlayer = false
-Multi = 
+Multi =
 	{
 		NbGroup = 0,
 	}
 
-repeat	
+repeat
 	--===================================================================================
 	-- Ecran N°1 Choix entre Single ou Multiplayer
-	
-	local tabIndex01 = { 
+
+	local tabIndex01 = {
 		["s"] = true,
 		["d"] = true,
-		
+
 		["df"] = true,
-		
+
 		["n"] = true,
 		["t"] = true,
-		
-		
+
+
 		-- ["y"] = true,
 		["z"] = true,
 	}
-	
+
 	repeat
-		
+
 		print("Select :\n"..
 			"S (S)ingleplayer  \n"..
 			"D Singleplayer with (D)edicated Server \n"..
 			"DF Singleplayer with (D)edicated Server, (F)ull plane on Deck (Testing: Bug Catapult possible) \n"..
-			"\n"..						
+			"\n"..
 			-- "C (C)hange type of plane (coming soon) \n"..
 			-- "\n"..
 			"T Multiplayer by choice of (T)arget \n"..
@@ -145,11 +156,11 @@ repeat
 		choix1 = io.read()
 		-- if choix1 == ""  then choix1 = "A" end
 		choix1 = string.lower(choix1)
-		
+
 		if choix1 == "n" or  choix1 == "t"  then
 			if choix1 == "t"  then
 				--===================================================================================
-				-- Ecran N°2 Selection du Target	
+				-- Ecran N°2 Selection du Target
 				print("choose a Single target")
 				local tableTargetlist = {}
 				local i = 1
@@ -157,40 +168,40 @@ repeat
 						["blue"] = {},
 						["red"] = {},
 						}
-				for side, target_side in pairs(targetlist) do														--iterate through sides in targetlist						
+				for side, target_side in pairs(targetlist) do														--iterate through sides in targetlist
 					for target_name, target in pairs(target_side) do												--iterate through all hostile targets
 						if target.inactive ~= true and ( target.task == "Strike" or target.task == "Anti-ship Strike") then															--if target is active and should be added to ATO
 							local draftTarget = {
 									["name"] = tostring(target_name),
 									["priority"] = tonumber(target.priority),
 									}
-							
-							table.insert(tableTargetlist[side], draftTarget)						
-							
-							i = i +1 
+
+							table.insert(tableTargetlist[side], draftTarget)
+
+							i = i +1
 						end
 					end
 				end
-				
+
 				table.sort(tableTargetlist["red"], function(a,b) return a.priority > b.priority  end)
 				table.sort(tableTargetlist["blue"], function(a,b) return a.priority > b.priority  end)
-		
-				local tabIndex = {}	 
+
+				local tabIndex = {}
 				for side, Targetlist in pairs(tableTargetlist) do
 					local j = 1
 					local Ckey = 0
 					print() print(side..":")
-					for key, value in pairs(Targetlist) do	
-						if  j <= 20  then	
+					for key, value in pairs(Targetlist) do
+						if  j <= 20  then
 							if side == "red" then
 								Ckey = key + #tableTargetlist["blue"]															--permet de n'afficher qu'un nombre continue pour les 2 camps
-							else 
+							else
 								Ckey = key
-							end											
+							end
 							io.write(  Ckey.." "..side.." "..tostring(value.name) .."  "..tostring(value.priority).."\n")
 							if not tabIndex[Ckey]  then tabIndex[Ckey] = {} end
 							tabIndex[Ckey]["side"] = side
-							j = j+1	
+							j = j+1
 						end
 					end
 				end
@@ -209,14 +220,14 @@ repeat
 						if not Multi.Target[side] then Multi.Target[side]= {} end
 						Multi.Target[side] = tableTargetlist[side][Ckey].name
 						print("\n"..tableTargetlist[side][Ckey].name.."\n")
-					else 
+					else
 						print("\nInvalid entry.\n")
 					end
 				until  tabIndex[input]
-				
-				io.write( "\n")	
+
+				io.write( "\n")
 			end	--if choix1 == "t"  then
-		
+
 			--===================================================================================
 			-- Ecran N°3 Selection nb of Flight
 			repeat
@@ -225,13 +236,13 @@ repeat
 				if (input == nil or input == "") then input = 999 end
 				if  (input >= 1 and  input <= 10) then
 					Multi.NbGroup = input
-				else 
+				else
 					print("\nInvalid entry.\n")
 				end
-			until   (input >= 1 and  input <= 10) 
+			until   (input >= 1 and  input <= 10)
 
 			--===================================================================================
-			-- Ecran N°4 Selection du type d'avion Multiplayer	
+			-- Ecran N°4 Selection du type d'avion Multiplayer
 			local tabIndex = {}
 			for i = 1 , Multi.NbGroup do
 				local ExPlaneA = ""
@@ -244,26 +255,26 @@ repeat
 						end
 					end
 				end
-							
+
 				print("Choose your aircraft type for Flight n°"..i)
 				print("(number of aircraft) (type of aircraft) (type of mission)")
-				print("example for (4 "..ExPlaneA..": Escort): 4ae or 4AE") 
+				print("example for (4 "..ExPlaneA..": Escort): 4ae or 4AE")
 
 				if not Multi.Group then Multi.Group= {} end
 				if not Multi.Group[i] then Multi.Group[i]= {} end
-				
+
 				local playable_type = {}
 				local ti = 65 																						--char(65) == a
 				tabTaskAvailable = {}
-				
-				-- parse toutes les unités et rempli le tab tabTaskAvailable pour etre sur de proposer toutes les task proposé active 
-				for nSide , oob_airSide in pairs(oob_air) do	
+
+				-- parse toutes les unités et rempli le tab tabTaskAvailable pour etre sur de proposer toutes les task proposé active
+				for nSide , oob_airSide in pairs(oob_air) do
 					print() print(nSide..":")
-					for m , unit in pairs(oob_airSide) do						
-						if playable_m[unit.type]  and unit.inactive ~= true then							
+					for m , unit in pairs(oob_airSide) do
+						if playable_m[unit.type]  and unit.inactive ~= true then
 							for taskStr , nbool in pairs(oob_air[nSide][m].tasks) do
-								taskStr = tostring(taskStr)							
-								
+								taskStr = tostring(taskStr)
+
 								if not tabTaskAvailable[nSide] then tabTaskAvailable[nSide] = {} end
 								if not tabTaskAvailable[nSide][unit.type] then tabTaskAvailable[nSide][unit.type] = {} end
 								if not tabTaskAvailable[nSide][unit.type][taskStr] then tabTaskAvailable[nSide][unit.type][taskStr] = nbool end
@@ -272,21 +283,21 @@ repeat
 						end
 					end
 				end
-				
+
 				-- display le tableau des choix d'avion et de task
 				--tabTaskAvailable[nSide][unit.type][taskStr]
-				for nSide , unit_type in pairs(tabTaskAvailable) do	
+				for nSide , unit_type in pairs(tabTaskAvailable) do
 					print() print(nSide..":")
 					for unitType , TabType in pairs(unit_type) do
-							
+
 						local IndexStringType = string.lower(string.char(ti))
-						if not playable_type[IndexStringType] then playable_type[IndexStringType] = {} end													
+						if not playable_type[IndexStringType] then playable_type[IndexStringType] = {} end
 						playable_type[IndexStringType]["type"] = unitType
 						playable_type[IndexStringType]["side"] = nSide
-						
-						io.write(" (1 to 8): ("..IndexStringType.."): "..unitType..":")												
-							
-						for taskStr , nbool in pairs(TabType) do	
+
+						io.write(" (1 to 8): ("..IndexStringType.."): "..unitType..":")
+
+						for taskStr , nbool in pairs(TabType) do
 							if   nbool == true then
 								io.write( " ("..TabTask[taskStr]..")"..taskStr.."")
 								local FstLetTask = string.lower(string.sub (taskStr, 1, 1))
@@ -298,7 +309,7 @@ repeat
 								tabIndex[tostring(6)..IndexStringType..TabTask[taskStr]] = true
 								tabIndex[tostring(7)..IndexStringType..TabTask[taskStr]] = true
 								tabIndex[tostring(8)..IndexStringType..TabTask[taskStr]] = true
-								
+
 							end
 						end
 						io.write("\n")
@@ -313,48 +324,48 @@ repeat
 					input = string.lower(io.read())
 					if  tabIndex[input] then
 						if not Multi.Group[i] then Multi.Group[i]= {} end
-						
+
 						local inputNb = tonumber(string.sub (input, 1, 1))
 						Multi.Group[i].NbPlane = inputNb
-						
+
 						local inputTyp = tostring(string.sub (input, 2, 2))
 						Multi.Group[i].PlaneType = playable_type[inputTyp].type
 						Multi.Group[i].side = playable_type[inputTyp].side
-						
+
 						local inputTsk = tostring(string.sub (input, 3, 3))
 						Multi.Group[i].task = TabTask[inputTsk]
-						
-					else 
+
+					else
 						print("\nInvalid entry.\n")
 					end
-				until   tabIndex[input] 
-				
+				until   tabIndex[input]
+
 				io.write( "\n")
-			
+
 				--========================= affiche le choix du joueurs
 				print(" -------------------------------------------------------> Building your different Flight: ")
 				for k=1, i do
 					print(" -------------------------------------------------------> "..Multi.Group[k].NbPlane.." "..Multi.Group[k].PlaneType.." ("..Multi.Group[k].side..")".." "..Multi.Group[k].task)
 				end
 				io.write( "\n")
-			
+
 			end
 			--===================================================================================
 			-- Ecran N°6 SinglePlayer
-			
+
 		elseif choix1 == "s" then
 		  SinglePlayer = true
-		  
+
 		elseif choix1 == "d" then
 		  SinglePlayer = true
 		  SingleWithDServer = true
 		  SingleWithDServerAiAir = true
-		  
+
 		elseif choix1 == "df" then
 		  SinglePlayer = true
 		  SingleWithDServer = true
-		
-		
+
+
 		-- miguel21 modification M38.e Check and helps to balance the game for CampaignMaker
 		elseif choix1 == "z" then
 		  	repeat
@@ -362,20 +373,20 @@ repeat
 				os.execute 'pause'
 			until 1 == 2
 		end
-		
+
 	until tabIndex01[choix1]
-	
-	FirstMission = true																					--variable used during mission generation to make sure that mission is generated as first campaign mission 
+
+	FirstMission = true																					--variable used during mission generation to make sure that mission is generated as first campaign mission
 	MissionInstance = 0
 	print("\n\n")
 	repeat
 		print("Generating First Mission.\n")
-	
+
 		MissionInstance = MissionInstance + 1															--count the number of times the mission is generated
 		dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_ResetCampaign.lua")					--reset campaign status files. Required for first mission to generate according to initial status
 		dofile("../../../ScriptsMod."..versionPackageICM.."/MAIN_NextMission.lua")						--generate mission
 
-		if Multi.NbGroup >= 1 and PlayerFlight then  
+		if Multi.NbGroup >= 1 and PlayerFlight then
 			if AcceptMission() then
 				 print("\nMultiplayerCampaign Next mission generated.\n")								--confirmation text
 				 break
@@ -384,11 +395,11 @@ repeat
 			if AcceptMission() then
 				 print("\nCampaign reset and first campaign mission re-generated.\n")					--confirmation text
 				 break
-			end				
+			end
 		elseif stopBug then																				--mission has a player flight
 			print("\n\n stopBug .\n")																	--confirmation text
 			break
-			
+
 		elseif MissionInstance == 20 then																--no player flight could be assigned in 20 tries, stop it
 			print("Mission Generation Error. No eligible player flight in 20 attempts. Try again.\n\n")
 			break
@@ -417,13 +428,13 @@ repeat
 				print("Ground alert intercept duty without launch.\n\n")
 			end
 		end
-		
+
 	if showVersion  then
 		print("= = = = = = = = = = = = = = = = = = = = = = = "..camp.title.." = = = = = = = = = = = = = = = = = =")
 		print("= = = = = = = = = = = = = = Version: "..camp.version)
 		print("= = = = = = = = = = = = = Script: "..showVersion)
 		print()
-	else 
+	else
 		print("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
 	end
 	until 1 == 2
