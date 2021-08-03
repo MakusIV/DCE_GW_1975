@@ -1,92 +1,36 @@
-
-
 --[[
+
+
+Aircraft resupply (ready aircraft) depends from damage level of airbase and damage level of power_line and power_plant
+
+The power infrastructure logic:
 
 power plant --- energizes ---->|----> power line A -- energizes---> |--> airbase 1
                                |                                    |--> airbase 3
                                |                                    |--> airbase 5
                                |
                                |----> power line B -- energizes---> |--> airbase 2
-															 |                                    |--> airbase 5
+															 |      |--> airbase 5
 															 |
                                |----> power line C -- energizes---> |--> airbase 2
 
-like for airbase damage, power plant and/or power line damage influence number of ready aircraft stored in airbases
 
-]]
-
-
---[[
-
-
-
-
-- - resupply_<asset> = max_resupply_<asset> _for_<airbase> * efficiency_<airbase>;
-
-
-- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
-
-- energy_line_efficiency_<airbase> = infrastructure damage by DCE / 100;   (  0: min - 1: max  );  Linea/linee di fornitura dell'energia associata alla airbase.
-- energy_line_efficiency_<airbase> = ( enrg_lin _1 + enrg_lin _2 + ... enrg_lin _ n ) / n
--
-Una singola energy line può essere definita da un insieme di singole infrastrutture statiche tipo pilone. La lista delle energy line è gestita tramite file dedicato. Nella lista è anche definito la/le power plant che l'alimentano o il collegamento ad altre energy line
-Ogni airbase dovrà implementare una lista di riferimenti (nomi key) delle energy line che la alimentano.
-DCE dovrà implementare il codice per valutare il danno delle energy line e  aggiornare l'energy airbase.
-
-Nota che lo stesso meccanismo può essere utilizzato per definire delle supply line ma dopo aver realizzato quello delle energy line.
-
-- energy_request_<airbase> = energy_packet * priority_<airbase> ;   (  0: min - 1: max  )
-
-- priority_<airbase> = 1 - 10 (10 max)
-
-- energy_packet = 1 / (num_infrastucture_priority_10 * 1 + num_infrastucture_priority_9 * 0.9 + .... + num_infrastucture_priority_1 * 0.1 );    (  0: min - 1: max  )
-
--  total_energy_production = ( pow_plt_1.damage + pow_plt_2.damage + ..... pow_plt_n.damage ) / ( n * 100 );   (  0: min - 1: max  ); la produzione di energia di tutte le  Power Plant (infrastructure)
-
-pow_plt_<n>.damage: infrastructure damage by DCE / 100
-
-
-
-]]
-
-local executeTest = false
-
-if executeTest then
-  print("TEST EXECUTING\n")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
-
-else
-  dofile("Init/db_airbases.lua")
-  dofile("Active/targetlist.lua")
-  dofile("Active/oob_air.lua")
-  dofile("Active/power_tab.lua")
-  dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
-
-end
-
---load status file to be updated
---require("Init/db_airbases")																		--load db_airbases
---require("Active/oob_air")																		--load air oob
---require("Active/targetlist")
---load targetlist
-
--- In this version:
--- Aircraft number in airbase, are influenced from power and integrity (damage)
--- Reserves are influenced only by power. Integrity calculation for Reserves will be inserted in logistic resupply extension.
-
-
-
---[[
+aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k:(1-100) defined by user for balance
+airbase.efficiency = airbase.integrity * airbase.power
+airbase.power = max( power_plant.integrity * power_line.integrity )
+power_plant.integrity, power_line.integrity and airbase.integrity are alive/100 values defined for specific asset
 
 This module use two new table: airbase_tab and power_tab.
+airbase_tab include airbases with aircraft_type and efficiency values: propriety used for number of aircraft avalaibility calculation.
+airbase_tab is automatically created, used and saved (/Active) during mission generation.
+power_tab is loaded initially from power_tab_init.lua file, used and saved (/Active) during mission generation. 
+power_tab define association from airbase and power asset: power_line, power_plant).
+The Campaign Creator must define the power_tab_init using targets presents in targetlist table.
 
-airbase_tab include airbase including aircraft_type an efficiency: a factor usd for number (aircraft avalaibility) calculation.
-airbase_tab is automatically created, used and destroyed during runtime mission generation.
+]]
 
+-- airbase_tab structure example
+--[[
 airbase_tab = {
 
     [blue]
@@ -94,9 +38,9 @@ airbase_tab = {
             ["aircraft_types"]
                 [aircraft_1] true
                 [aircraft_2] true
-            ["efficiency"] 0.72 -- efficiency = integrity * power * k; ( 0: min - 1: max )
-            ["integrity"] 0.8 -- same of targetlist.alive
-            ["power"] 0.9 -- power = powerline.integrity * powerplant.integrity. next step: power = power_line_efficiency *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
+            ["efficiency"] 0.72 
+            ["integrity"] 0.8 
+            ["power"] 0.9 
 
         --......
     [red]
@@ -104,13 +48,131 @@ airbase_tab = {
             --......
         }
 }
+]]
+
+-- power_tab structure example
+--[[
+-- this definition of power_tab is dedicated for development enviroment
+power_tab = {
+	['red'] = {
+		['Prohladniy Depot MP 24'] = {--      power plant
+			['integrity'] = 0.8, --           power plant integrity    
+			['power_line_names'] = {          table of power lines powered by power plant
+				['Bridge Alagir MN 36'] = {   power line
+					['integrity'] = 0.5,      integrity of power line
+					['airbase_supply'] = {    table of airbases powerd by power line
+						['Beslan'] = true,    test info: Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
+						['Mozdok'] = true,
+					},
+				},
+				['Bridge South Beslan MN 68'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Beslan'] = true,
+						['Nalchik'] = true,   
+						['Sochi-Adler'] = true,
+					},
+				},
+			},
+		},
+		['Mineralnye-Vody Airbase'] = {
+			['integrity'] = 0.6,
+			['power_line_names'] = {
+				['Rail Bridge SE Mayskiy MP 23'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Mozdok'] = true,
+						['Sochi-Adler'] = true,
+						['Beslan'] = true,
+					},
+				},
+				['Bridge South Elhotovo MN 39'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Reserves'] = true,
+						['Sochi-Adler'] = true,
+						['Maykop-Khanskaya'] = true,
+						['Nalchik'] = true,
+						['Mozdok'] = true,
+						['Beslan'] = true,
+						['Mineralnye-Vody'] = true,
+					},
+				},
+			},
+		},
+		['101 EWR Site'] = {
+			['integrity'] = 1,
+			['power_line_names'] = {
+				['Russian Convoy 1'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Mozdok'] = true,
+						['Mineralnye-Vody'] = true,
+					},
+				},
+				['Bridge SW Kardzhin MN 49'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Reserves'] = true,
+						['Sochi-Adler'] = true,
+						['Mineralnye-Vody'] = true,
+						['Beslan'] = true,
+						['Mozdok'] = true,
+					},
+				},
+			},
+		},
+	},
+	['blue'] = {
+		['Sukhumi Airbase Strategics'] = {
+			['integrity'] = 0.4,
+			['power_line_names'] = {
+				['Rail Bridge Grebeshok-EH99'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+						['Vaziani'] = true,
+					},
+				},
+				['Bridge Anaklia-GG19'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Senaki-Kolkhi'] = true,
+						['Batumi'] = true,
+						['Reserves'] = true,
+					},
+				},
+			},
+		},
+		['Novyy Afon Train Station - FH57'] = {
+			['integrity'] = 0.8,
+			['power_line_names'] = {
+				['Bridge Tagrskiy-FH08'] = {
+					['integrity'] = 0.25,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+						['Batumi'] = true,
+					},
+				},
+				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+					['integrity'] = 0.5,
+					['airbase_supply'] = {
+						['Vaziani'] = true,
+						['Senaki-Kolkhi'] = true,
+						['Reserves'] = true,
+					},
+				},
+			},
+		},
+	},
+}
+
+]]
 
 
-power_tab is loaded from power_tab.lua file. This tab contains information of the infrastructure dedicated for
-energy production ( power plant ) and power supply ( power line).
-The Campaign Creator must define the power_tab using the infrastructure target, presents in targetlist table (targetlist.lua), representing power plant and power line.
-
-
+--[[
+-- this definition of power_tab is for testing in an active campaign running in DCS dedicated server enviroment
+-- don't use in developement enviroment
 power_tab = {
 	['blue'] = {
 		['EWR-1'] = {
@@ -234,130 +296,71 @@ power_tab = {
     }
 	}
 }
-
-------
-
-power_tab = {
-	['red'] = {
-		['Prohladniy Depot MP 24'] = {
-			['integrity'] = 0.8,
-			['power_line_names'] = {
-				['Bridge Alagir MN 36'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
-						['Mozdok'] = true,
-					},
-				},
-				['Bridge South Beslan MN 68'] = {
-					['integrity'] = 0.25,
-					['airbase_supply'] = {
-						['Beslan'] = true,
-						['Nalchik'] = true, -- Nalchik dovrebbe prendere 0.8*0.25=0.2 efficiency
-						['Sochi-Adler'] = true,
-					},
-				},
-			},
-		},
-		['Mineralnye-Vody Airbase'] = {
-			['integrity'] = 0.6,
-			['power_line_names'] = {
-				['Rail Bridge SE Mayskiy MP 23'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['Mozdok'] = true,
-						['Sochi-Adler'] = true,  -- Sochi-Adler dovrebbe prendere 0.6*0.5=0.3 efficiency
-						['Beslan'] = true,
-					},
-				},
-				['Bridge South Elhotovo MN 39'] = {
-					['integrity'] = 0.25,
-					['airbase_supply'] = {
-						['Reserves'] = true,
-						['Sochi-Adler'] = true,
-						['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
-						['Nalchik'] = true,
-						['Mozdok'] = true,
-						['Beslan'] = true,
-						['Mineralnye-Vody'] = true,
-					},
-				},
-			},
-		},
-		['101 EWR Site'] = {
-			['integrity'] = 1,
-			['power_line_names'] = {
-				['Russian Convoy 1'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['Mozdok'] = true, -- Mozdok dovrebbe prendere 1*0.5=0.5 efficiency
-						['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
-					},
-				},
-				['Bridge SW Kardzhin MN 49'] = {
-					['integrity'] = 0.25,
-					['airbase_supply'] = {
-						['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
-						['Sochi-Adler'] = true,
-						['Mineralnye-Vody'] = true,
-						['Beslan'] = true,
-						['Mozdok'] = true,
-					},
-				},
-			},
-		},
-	},
-	['blue'] = {
-		['Sukhumi Airbase Strategics'] = {
-			['integrity'] = 0.4,
-			['power_line_names'] = {
-				['Rail Bridge Grebeshok-EH99'] = {
-					['integrity'] = 0.25,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Vaziani'] = true,
-					},
-				},
-				['Bridge Anaklia-GG19'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['Senaki-Kolkhi'] = true,
-						['Batumi'] = true,
-						['Reserves'] = true,
-					},
-				},
-			},
-		},
-		['Novyy Afon Train Station - FH57'] = {
-			['integrity'] = 0.8,
-			['power_line_names'] = {
-				['Bridge Tagrskiy-FH08'] = {
-					['integrity'] = 0.25,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Batumi'] = true,
-					},
-				},
-				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['Vaziani'] = true,
-						['Senaki-Kolkhi'] = true,
-						['Reserves'] = true,
-					},
-				},
-			},
-		},
-	},
-}
+]]
 
 
 
 
+--[[
+
+DCE IMPLEMENTATION INFO
+
+new file:
+
+Active/: DC_Logistic.lua --marco
+Init/: power_tab_init.lua --defined by campaign's maker
+
+file modified:
+
+DEBRIEF_Master.lua:
+87 --=====================  start marco implementation ==================================
+88
+89 --run logistic evalutation and save power_tab
+90 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+91 UpdateOobAir()
+92
+93 --=====================  end marco implementation ==================================
+
+BAT_FirstMission.lua:
+84 --====================  start marco implementation ==================================
+85
+86 dofile("Init/power_tab_init.lua")
+87 local tgt_str = power_tab .. " = " .. TableSerialization(power_tab, 0)						
+88 local tgtFile = nil
+89 tgtFile = io.open("Active/" .. power_tab .. ".lua", "w")
+90 tgtFile:write(tgt_str)																		
+91 tgtFile:close()
+92
+93 --=====================  end marco implementation ==================================
 
 ]]
--- oob_air.<side>.base -- nome airbase
--- oob_air.<side>.type -- tipo aereo
+
+
+
+
+local executeTest = true
+
+if executeTest then
+  print("TEST EXECUTING\n")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
+
+else
+  dofile("Init/db_airbases.lua")
+  dofile("Active/targetlist.lua")
+  dofile("Active/oob_air.lua")
+  dofile("Active/power_tab.lua")
+  dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+
+end
+
+
+
+
+-- Utility function
 
 -- dump a table
 --from: https://stackoverflow.com/questions/9168058/how-to-dump-a-table-to-console
@@ -378,6 +381,9 @@ end
 local function copyPowerTab()
     return true
 end
+
+
+-- Logistic function
 
 -- Initialize the airbase_tab by defining the planes operating in the airbase
 -- OK
@@ -666,67 +672,10 @@ end
 
 
 
---[[
-
-IMPLEMENTATION
-
-Active/: DC_Logistic.lua --marco
-Init/: power_tab_init.lua --defined by campaign's maker
-
-DEBRIEF_Master.lua:
-87 --=====================  start marco implementation ==================================
-88
-89 --run logistic evalutation and save power_tab
-90 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-91 UpdateOobAir()
-92
-93 --=====================  end marco implementation ==================================
-
-BAT_FirstMission.lua:
-84 --====================  start marco implementation ==================================
-85
-86 dofile("Init/power_tab_init.lua")
-87 local tgt_str = power_tab .. " = " .. TableSerialization(power_tab, 0)						    --make a string
-88 local tgtFile = nil
-89 tgtFile = io.open("Active/" .. power_tab .. ".lua", "w")
-90 tgtFile:write(tgt_str)																		--save new data
-91 tgtFile:close()
-92
-93 --=====================  end marco implementation ==================================
 
 
 
-att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
-teoricamente si potrebbbe distinguere le riserve in power tab identificandole per i due parametri (che palle)
-
-oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
-molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
-sono più aerei disponibili utilizzando i dati in [rooster]: lost, damaged e ready.
-L'aggiornamento dei dati in [rooster]: lost, damaged e ready, viene fatto in DEBRIEF_StatsEvaluation.lua alla riga 149 "--oob loss update for crashed aircraft".
-Quindi puoi fare l'updating di oob_air appena conclusa la missione in DEBRIEF_Master.lua prima della riga 87 "--run log evaluation and status updates"
-considerando che la valutazione sulla vittoria della campagna deve essere fatta sicuramente dopo l'aggiornamento delle stat:
-
---run log evaluation and status updates
-dofile("Active/power_tab.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
-
-
-
-OPPURE CONSIDERA:
-verifica come i resupply sono aggiornati in oob_air.lua (vedi [rooster]) e applica li il coefficente di riduzione,
-es: oob_air.lua - roster.ready = 30 * efficiency_<airbase>
-l'aggiornamento di oob_air.lua: devi creare una tabella dove il nome della base (base) è associato al nome dello squadron (name) utilizzando oob_air.lua,
-
-]]
-
-
-
-
-
--- TEST
+-- Test function
 
 local function Test_InitializeAirbaseTab()
 
@@ -1240,9 +1189,35 @@ local function executeAllTest()
     -- OK
 end
 
-
-
-
 if executeTest then
 	executeAllTest()
 end
+
+--[[
+att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
+teoricamente si potrebbbe distinguere le riserve in power tab identificandole per i due parametri (che palle)
+
+oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
+molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
+sono più aerei disponibili utilizzando i dati in [rooster]: lost, damaged e ready.
+L'aggiornamento dei dati in [rooster]: lost, damaged e ready, viene fatto in DEBRIEF_StatsEvaluation.lua alla riga 149 "--oob loss update for crashed aircraft".
+Quindi puoi fare l'updating di oob_air appena conclusa la missione in DEBRIEF_Master.lua prima della riga 87 "--run log evaluation and status updates"
+considerando che la valutazione sulla vittoria della campagna deve essere fatta sicuramente dopo l'aggiornamento delle stat:
+
+--run log evaluation and status updates
+dofile("Active/power_tab.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
+
+
+
+OPPURE CONSIDERA:
+verifica come i resupply sono aggiornati in oob_air.lua (vedi [rooster]) e applica li il coefficente di riduzione,
+es: oob_air.lua - roster.ready = 30 * efficiency_<airbase>
+l'aggiornamento di oob_air.lua: devi creare una tabella dove il nome della base (base) è associato al nome dello squadron (name) utilizzando oob_air.lua,
+
+]]
+
+
