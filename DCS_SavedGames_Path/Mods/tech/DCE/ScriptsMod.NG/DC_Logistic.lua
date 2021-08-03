@@ -10,12 +10,12 @@ power plant --- energizes ---->|----> power line A -- energizes---> |--> airbase
                                |                                    |--> airbase 5
                                |
                                |----> power line B -- energizes---> |--> airbase 2
-															 |      |--> airbase 5
-															 |
+							   |                                    |--> airbase 5
+							   |
                                |----> power line C -- energizes---> |--> airbase 2
 
-
-aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k:(1-100) defined by user for balance
+calculus:
+aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance
 airbase.efficiency = airbase.integrity * airbase.power
 airbase.power = max( power_plant.integrity * power_line.integrity )
 power_plant.integrity, power_line.integrity and airbase.integrity are alive/100 values defined for specific asset
@@ -886,8 +886,6 @@ local function Test_UpdateAirbaseEfficiency()
 
 end
 
--- IMPORTANT:
--- before testing you must commentate line 495 UpdatePowerTabIntegrity( power_tab ): not upgrading power_tab and use the inital (example) value
 local function Test_UpdateOobAir()
 
     --[[
@@ -1203,20 +1201,6 @@ sono più aerei disponibili utilizzando i dati in [rooster]: lost, damaged e rea
 L'aggiornamento dei dati in [rooster]: lost, damaged e ready, viene fatto in DEBRIEF_StatsEvaluation.lua alla riga 149 "--oob loss update for crashed aircraft".
 Quindi puoi fare l'updating di oob_air appena conclusa la missione in DEBRIEF_Master.lua prima della riga 87 "--run log evaluation and status updates"
 considerando che la valutazione sulla vittoria della campagna deve essere fatta sicuramente dopo l'aggiornamento delle stat:
-
---run log evaluation and status updates
-dofile("Active/power_tab.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
-
-
-
-OPPURE CONSIDERA:
-verifica come i resupply sono aggiornati in oob_air.lua (vedi [rooster]) e applica li il coefficente di riduzione,
-es: oob_air.lua - roster.ready = 30 * efficiency_<airbase>
-l'aggiornamento di oob_air.lua: devi creare una tabella dove il nome della base (base) è associato al nome dello squadron (name) utilizzando oob_air.lua,
 
 ]]
 
