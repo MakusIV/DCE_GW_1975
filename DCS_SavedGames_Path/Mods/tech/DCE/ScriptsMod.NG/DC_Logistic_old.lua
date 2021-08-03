@@ -1,34 +1,31 @@
 --[[
 
 
-Aircraft resupply (ready aircraft) depends from damage level of airbase and damage level of supply_line and supply_plant
+Aircraft resupply (ready aircraft) depends from damage level of airbase and damage level of power_line and power_plant
 
-The supply infrastructure logic:
+The power infrastructure logic:
 
-supply plant --- supplies ---->|----> supply line A -- supplies---> |--> airbase 1
+power plant --- energizes ---->|----> power line A -- energizes---> |--> airbase 1
                                |                                    |--> airbase 3
                                |                                    |--> airbase 5
                                |
-                               |----> supply line B -- supplies---> |--> airbase 2
+                               |----> power line B -- energizes---> |--> airbase 2
 							   |                                    |--> airbase 5
 							   |
-                               |----> supply line C -- supplies---> |--> airbase 2
+                               |----> power line C -- energizes---> |--> airbase 2
 
 calculus:
 aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance
-airbase.efficiency = airbase.integrity * airbase.supply
-airbase.supply = max( supply_plant.integrity * supply_line.integrity )
-supply_plant.integrity, supply_line.integrity and airbase.integrity are alive/100 values defined for specific asset
+airbase.efficiency = airbase.integrity * airbase.power
+airbase.power = max( power_plant.integrity * power_line.integrity )
+power_plant.integrity, power_line.integrity and airbase.integrity are alive/100 values defined for specific asset
 
-This module use two new table: airbase_tab and supply_tab.
+This module use two new table: airbase_tab and power_tab.
 airbase_tab include airbases with aircraft_type and efficiency values: propriety used for number of aircraft avalaibility calculation.
 airbase_tab is automatically created, used and saved (/Active) during mission generation.
-supply_tab is loaded initially from supply_tab_init.lua file (/Init), used and saved (/Active) during mission generation. 
-supply_tab define association from airbase and supply asset: supply_line, supply_plant).
-The Campaign Creator must define the supply_tab_init using targets presents in targetlist table and airbases presents in oob_air. 
-Important: the names of the airbases must be the same as those used in the oob_air. The names of the airbases defined in targetlist must be 
-the same as those used in oob_air, eventually with the addition of " Airbase" or " FARP".
-For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]
+power_tab is loaded initially from power_tab_init.lua file, used and saved (/Active) during mission generation. 
+power_tab define association from airbase and power asset: power_line, power_plant).
+The Campaign Creator must define the power_tab_init using targets presents in targetlist table.
 
 ]]
 
@@ -43,7 +40,7 @@ airbase_tab = {
                 [aircraft_2] true
             ["efficiency"] 0.72 
             ["integrity"] 0.8 
-            ["supply"] 0.9 
+            ["power"] 0.9 
 
         --......
     [red]
@@ -53,17 +50,17 @@ airbase_tab = {
 }
 ]]
 
--- supply_tab structure example
+-- power_tab structure example
 --[[
--- this definition of supply_tab is dedicated for development enviroment
-supply_tab = {
+-- this definition of power_tab is dedicated for development enviroment
+power_tab = {
 	['red'] = {
-		['Prohladniy Depot MP 24'] = {--      supply plant
-			['integrity'] = 0.8, --           supply plant integrity    
-			['supply_line_names'] = {          table of supply lines supplyed by supply plant
-				['Bridge Alagir MN 36'] = {   supply line
-					['integrity'] = 0.5,      integrity of supply line
-					['airbase_supply'] = {    table of airbases supplyd by supply line
+		['Prohladniy Depot MP 24'] = {--      power plant
+			['integrity'] = 0.8, --           power plant integrity    
+			['power_line_names'] = {          table of power lines powered by power plant
+				['Bridge Alagir MN 36'] = {   power line
+					['integrity'] = 0.5,      integrity of power line
+					['airbase_supply'] = {    table of airbases powerd by power line
 						['Beslan'] = true,    test info: Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
 						['Mozdok'] = true,
 					},
@@ -80,7 +77,7 @@ supply_tab = {
 		},
 		['Mineralnye-Vody Airbase'] = {
 			['integrity'] = 0.6,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['Rail Bridge SE Mayskiy MP 23'] = {
 					['integrity'] = 0.5,
 					['airbase_supply'] = {
@@ -105,7 +102,7 @@ supply_tab = {
 		},
 		['101 EWR Site'] = {
 			['integrity'] = 1,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['Russian Convoy 1'] = {
 					['integrity'] = 0.5,
 					['airbase_supply'] = {
@@ -129,7 +126,7 @@ supply_tab = {
 	['blue'] = {
 		['Sukhumi Airbase Strategics'] = {
 			['integrity'] = 0.4,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['Rail Bridge Grebeshok-EH99'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
@@ -149,7 +146,7 @@ supply_tab = {
 		},
 		['Novyy Afon Train Station - FH57'] = {
 			['integrity'] = 0.8,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['Bridge Tagrskiy-FH08'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
@@ -174,13 +171,13 @@ supply_tab = {
 
 
 --[[
--- this definition of supply_tab is for testing in an active campaign running in DCS dedicated server enviroment
+-- this definition of power_tab is for testing in an active campaign running in DCS dedicated server enviroment
 -- don't use in developement enviroment
-supply_tab = {
+power_tab = {
 	['blue'] = {
 		['EWR-1'] = {
 			['integrity'] = 0.8,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['EAU East Front Convoy 1'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
@@ -200,7 +197,7 @@ supply_tab = {
 		},
 		['EWR-2'] = {
 			['integrity'] = 0.4,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['EAU West Front Convoy 2'] = {
 					['integrity'] = 0.5,
 					['airbase_supply'] = {
@@ -220,7 +217,7 @@ supply_tab = {
 		},
     ['EWR-3'] = {
       ['integrity'] = 0.4,
-      ['supply_line_names'] = {
+      ['power_line_names'] = {
         ['EAU West Front Convoy 3'] = {
           ['integrity'] = 0.5,
           ['airbase_supply'] = {
@@ -242,7 +239,7 @@ supply_tab = {
 	['red'] = {
 		['EWR 1'] = {
 			['integrity'] = 0.8,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['Mountain Iranian convoy 4'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
@@ -261,7 +258,7 @@ supply_tab = {
 		},
 		['EWR 2'] = {
 			['integrity'] = 0.4,
-			['supply_line_names'] = {
+			['power_line_names'] = {
 				['2nd Iranian Transport fleet'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
@@ -281,7 +278,7 @@ supply_tab = {
 		},
     ['EWR 3'] = {
       ['integrity'] = 0.4,
-      ['supply_line_names'] = {
+      ['power_line_names'] = {
         ['Iranian West frontline convoy 1'] = {
           ['integrity'] = 0.25,
           ['airbase_supply'] = {
@@ -311,14 +308,14 @@ DCE IMPLEMENTATION INFO
 new file:
 
 Active/: DC_Logistic.lua --marco
-Init/: supply_tab_init.lua --defined by campaign's maker
+Init/: power_tab_init.lua --defined by campaign's maker
 
 file modified:
 
 DEBRIEF_Master.lua:
 87 --=====================  start marco implementation ==================================
 88
-89 --run logistic evalutation and save supply_tab
+89 --run logistic evalutation and save power_tab
 90 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
 91 UpdateOobAir()
 92
@@ -327,10 +324,10 @@ DEBRIEF_Master.lua:
 BAT_FirstMission.lua:
 84 --====================  start marco implementation ==================================
 85
-86 dofile("Init/supply_tab_init.lua")
-87 local tgt_str = supply_tab .. " = " .. TableSerialization(supply_tab, 0)						
+86 dofile("Init/power_tab_init.lua")
+87 local tgt_str = power_tab .. " = " .. TableSerialization(power_tab, 0)						
 88 local tgtFile = nil
-89 tgtFile = io.open("Active/" .. supply_tab .. ".lua", "w")
+89 tgtFile = io.open("Active/" .. power_tab .. ".lua", "w")
 90 tgtFile:write(tgt_str)																		
 91 tgtFile:close()
 92
@@ -348,14 +345,14 @@ if executeTest then
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/db_airbases.lua")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/targetlist.lua")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/oob_air.lua")
-  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab.lua")
+  dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab.lua")
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
 
 else
   dofile("Init/db_airbases.lua")
   dofile("Active/targetlist.lua")
   dofile("Active/oob_air.lua")
-  dofile("Active/supply_tab.lua")
+  dofile("Active/power_tab.lua")
   dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 end
@@ -380,19 +377,11 @@ local function dump(o)
    end
 end
 
--- copy the supply_tab from Init folder
-local function copySupplyTab()
-    
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
-    local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)						    
-    local tgtFile = nil
-    tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab.lua", "w")
-    tgtFile:write(tgt_str)																
-    tgtFile:close()
-
+-- copy the power_tab from Init folder
+local function copyPowerTab()
     return true
-
 end
+
 
 -- Logistic function
 
@@ -418,7 +407,7 @@ local function InitializeAirbaseTab()
                             },
                             ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
                             ["integrity"] = 1, -- same of targetlist.alive
-                            ["supply"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
+                            ["power"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
 
                         }
                     }
@@ -433,7 +422,7 @@ local function InitializeAirbaseTab()
                         },
                         ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
                         ["integrity"] = 1, -- same of targetlist.alive
-                        ["supply"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
+                        ["power"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
 
                     }
                 }
@@ -455,7 +444,7 @@ local function InitializeAirbaseTab()
                         ["aircraft_types"] = { [aircraft_type] = true },-- insert new airbase and assign aircraft
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max, 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
-                        ["supply"]= 1 -- supply_<airbase> 1 = max, 0 = min
+                        ["power"]= 1 -- power_<airbase> 1 = max, 0 = min
                     }
                 end
                 --print("\n--->: " .. dump(airbase_tab).. " <----\n")
@@ -466,25 +455,25 @@ local function InitializeAirbaseTab()
 	return airbase_tab
 end
 
--- Update the integrity propriety for supply plant in supply_tab, by using propriety alive in targetlist
+-- Update the integrity propriety for power plant in power_tab, by using propriety alive in targetlist
 -- OK
-local function UpdateSupplyPlantIntegrity( sup_tab )
+local function UpdatePowerPlantIntegrity( pow_tab )
 
-    -- note: supply Plant are defined in supply_tab and also in targetlist like targets
+    -- note: Power Plant are defined in power_tab and also in targetlist like targets
 
-    for sidepw, side_val in pairs( sup_tab ) do
+    for sidepw, side_val in pairs( pow_tab ) do
 
-        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+        for power_plant_name, power_plant_values in pairs( side_val ) do -- iteration of power plants in power_tab
 
             for side, targets in pairs( targetlist ) do -- iteration of side in targetlist tab
 
                 for target_name, target_value in pairs( targets ) do -- iteration of targets from a single side
-                    --print("sup tab side: " .. sidepw .. " - " .. "sup_pl_name: " .. supply_plant_name .. " - " .. "targlist side: " .. side .. " - " .. "target name: " .. target_name .. "\n")
-                    --print("sup tab integrity: " .. supply_plant_values['integrity'] .. " - " .. "target_value[\"alive\"]: " .. tostring( target_value['alive']) .. "\n")
+                    --print("pow tab side: " .. sidepw .. " - " .. "pow_pl_name: " .. power_plant_name .. " - " .. "targlist side: " .. side .. " - " .. "target name: " .. target_name .. "\n")
+                    --print("pow tab integrity: " .. power_plant_values['integrity'] .. " - " .. "target_value[\"alive\"]: " .. tostring( target_value['alive']) .. "\n")
 
-                    if supply_plant_name ==  target_name then  -- update integrity value of an supply plant using alive target propriety
+                    if power_plant_name ==  target_name then  -- update integrity value of an power plant using alive target propriety
                         --print( dump( target_value ) .. "\n")
-                        supply_plant_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
+                        power_plant_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         -- eventuale codice per terminare l'iterazione
                     end
 
@@ -492,72 +481,72 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
             end
         end
     end
-	return sup_tab
+	return pow_tab
 end
 
--- Update the integrity propriety for supply line in supply_tab, by using propriety alive in targetlist
+-- Update the integrity propriety for power line in power_tab, by using propriety alive in targetlist
 -- OK
-local function UpdateSupplyLineIntegrity( sup_tab )
+local function UpdateAPowerLineIntegrity( pow_tab )
 
-    -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    -- note: Power Line are defined in power_tab and also in targetlist like targets
 
-    for sidepw, side_val in pairs( sup_tab ) do
+    for sidepw, side_val in pairs( pow_tab ) do
 
-        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+        for power_plant_name, power_plant_values in pairs( side_val ) do -- iteration of power plants in power_tab
 
-            for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
+            for power_line_name, power_line_values in pairs( power_plant_values.power_line_names ) do-- iteration of power lines from a single power_tab
 
                 for side, targets in pairs( targetlist ) do-- iteration of blue and red side in targetlist tab
 
                     for target_name, target_value in pairs( targets ) do -- iteration of targets from a single side
 
-                        if supply_line_name == target_name then -- update integrity value of an supply line using alive target propriety
-                            supply_line_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
+                        if power_line_name == target_name then -- update integrity value of an power line using alive target propriety
+                            power_line_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         end
                     end
                 end
             end
         end
     end
-	return sup_tab
+	return pow_tab
 end
 
--- Update supply Plant integrity and supply Line integrity in supply_tab, by using propriety alive in target list
+-- Update Power Plant integrity and Power Line integrity in power_tab, by using propriety alive in target list
 -- OK
-local function UpdateSupplyTabIntegrity( sup_tab )
+local function UpdatePowerTabIntegrity( pow_tab )
 
-    UpdateSupplyPlantIntegrity( sup_tab )
-    UpdateSupplyLineIntegrity( sup_tab )
+    UpdatePowerPlantIntegrity( pow_tab )
+    UpdateAPowerLineIntegrity( pow_tab )
 
-	  return sup_tab
+	  return pow_tab
 
 end
 
--- Update the supply propriety in airbase_tab using integrity propriety from supply_tab
+-- Update the power propriety in airbase_tab using integrity propriety from power_tab
 -- OK
-local function UpdateSupplyAirbase( airb_tab, sup_tab )
+local function UpdatePowerAirbase( airb_tab, pow_tab )
 
     for side_base, side_values in pairs( airb_tab ) do
 
         for base_name, base_values in pairs( side_values ) do
 
-            for supply_plant_name, supply_plant_values in pairs( sup_tab[side_base] ) do
+            for power_plant_name, power_plant_values in pairs( pow_tab[side_base] ) do
 
-                for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do
+                for power_line_name, power_line_values in pairs( power_plant_values.power_line_names ) do
 
-                    for airbase_name, airbase_values in pairs( supply_line_values.airbase_supply ) do
-                        --print("air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
-                        --print("supply_plant: " .. supply_plant_name .. ", supply_line_name: " .. supply_line_name .. "\n")
+                    for airbase_name, airbase_values in pairs( power_line_values.airbase_supply ) do
+                        --print("air_tab.airbase: " .. base_name .. ", power_line.airbase: " .. airbase_name .. "\n")
+                        --print("power_plant: " .. power_plant_name .. ", power_line_name: " .. power_line_name .. "\n")
 
                         if base_name == airbase_name then
-                            -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
-                            local supply = supply_plant_values.integrity * supply_line_values.integrity  -- update supply value of an airbase
-                            --print("air_tab.airbase.supply: " .. base_values.supply .. ", calculated supply: " .. supply .. "\n")
-                            --print("supply_plant_values.integrity: " .. supply_plant_values.integrity .. ", supply_line_values.integrity: " .. supply_line_values.integrity .. ", calculated supply: " .. supply .. "\n")
+                            -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", power_line.airbase: " .. airbase_name .. "\n")
+                            local power = power_plant_values.integrity * power_line_values.integrity  -- update power value of an airbase
+                            --print("air_tab.airbase.power: " .. base_values.power .. ", calculated power: " .. power .. "\n")
+                            --print("power_plant_values.integrity: " .. power_plant_values.integrity .. ", power_line_values.integrity: " .. power_line_values.integrity .. ", calculated power: " .. power .. "\n")
 
-                            if ( base_values.supply == 1 and supply > 0 ) or ( supply > base_values.supply ) then -- select supply value from highest supply supply integrity calculated
-                                --print("air_tab.supply ==1 or calculated supply > air_tab.supply(" .. base_values.supply .. ") --> update air_tab.supplyt: air_tab.supply = supply(" .. supply .. ") \n")
-                                base_values.supply  = supply
+                            if ( base_values.power == 1 and power > 0 ) or ( power > base_values.power ) then -- select power value from highest power supply integrity calculated
+                                --print("air_tab.power ==1 or calculated power > air_tab.power(" .. base_values.power .. ") --> update air_tab.powert: air_tab.power = power(" .. power .. ") \n")
+                                base_values.power  = power
                             end
                         end
                     end
@@ -596,9 +585,9 @@ local function UpdateAirbaseEfficiency( airb_tab )
 	for side, side_val in pairs( airb_tab ) do
 
 		for base, airbase_values in pairs( side_val ) do
-			airbase_values.efficiency = airbase_values.integrity * airbase_values.supply
+			airbase_values.efficiency = airbase_values.integrity * airbase_values.power
 			--print("airbase: " .. base  .. "\n" )
-			--print("airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.supply: " ..  airbase_values.supply .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency .. "\n" )
+			--print("airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.power: " ..  airbase_values.power .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency .. "\n" )
 		end
   end
 	return airb_tab
@@ -611,11 +600,11 @@ function UpdateOobAir()
 	local percentage_efficiency_effect_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
 	local airbase_tab = InitializeAirbaseTab()
 
-  if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
-	   UpdateSupplyTabIntegrity( supply_tab )
+  if not executeTest then -- delete this condition in operative version and insert UpdatePowerTestIntegrity in a new line
+	   UpdatePowerTabIntegrity( power_tab )
   end
 
-	airbase_tab = UpdateSupplyAirbase( airbase_tab, supply_tab )
+	airbase_tab = UpdatePowerAirbase( airbase_tab, power_tab )
 	airbase_tab = UpdateAirbaseIntegrity( airbase_tab )
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
 
@@ -659,19 +648,19 @@ function UpdateOobAir()
     -- print("\n--->: " .. dump(airbase_tab).. " <----\n")
 	-- print("\n--->: " .. dump(oob_air).. " <----\n")
   SaveTabOnDisk( "airbase_tab", airbase_tab )
-  SaveTabOnDisk( "supply_tab", supply_tab )
+  SaveTabOnDisk( "power_tab", power_tab )
 
 	return result
 end
 
 
--- Save table on disk supply_tab.lua
+-- Save table on disk power_tab.lua
 function SaveTabOnDisk( table_name, table )
     local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
     local tgtFile = nil
 
     if executeTest then
-      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/" .. table_name .. ".lua", "w")	--open supply_tab file
+      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/" .. table_name .. ".lua", "w")	--open power_tab file
     else
       tgtFile = io.open("Active/" .. table_name .. ".lua", "w")
     end
@@ -699,7 +688,7 @@ local function Test_InitializeAirbaseTab()
                 [aircraft_2] true
             ["efficiency"] 0.72 -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
             ["damage"] 0.8 -- same of targetlist.alive
-            ["supply"] 0.9 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
+            ["power"] 0.9 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
 
         --......
         [base_n]
@@ -715,9 +704,9 @@ local function Test_InitializeAirbaseTab()
 	for side_base, side_values in pairs( airbase_tab ) do --
 
         for base_name, base_values in pairs( side_values ) do --
-			--print( base_values["efficiency"] .. ", " .. base_values["integrity"] .. ", " .. base_values["supply"] .. "\n" )
+			--print( base_values["efficiency"] .. ", " .. base_values["integrity"] .. ", " .. base_values["power"] .. "\n" )
 
-			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["supply"] ~= 1 then
+			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["power"] ~= 1 then
 
 				result = false
 				break;
@@ -740,7 +729,7 @@ local function Test_InitializeAirbaseTab()
         --print("\nside: " .. side .." ========================== \n")
         --for base_name, base_values in pairs(sideval) do
             --print("\nbase: " .. base_name .." ----------------------------- \n")
-            --print("efficiency: " .. base_values.efficiency ..",  " .. "integrity: " .. base_values.integrity ..",  " .. "supply: " .. base_values.supply)
+            --print("efficiency: " .. base_values.efficiency ..",  " .. "integrity: " .. base_values.integrity ..",  " .. "power: " .. base_values.power)
 
             --for aircraft_type, value in pairs(base_values.aircraft_types) do
                 --print("\naircraft type: " .. aircraft_type ..",  value: " .. tostring(value) .."\n--------------------------------------\n")
@@ -750,91 +739,91 @@ local function Test_InitializeAirbaseTab()
 	return result
 end
 
-local function Test_UpdateSupplyPlantIntegrity()
+local function Test_UpdatePowerPlantIntegrity()
 
     local result = false
-	local _supply_tab = UpdateSupplyPlantIntegrity( deepcopy( supply_tab ) )
-	--print( dump( supply_tab) .. "\n"  )
+	local _power_tab = UpdatePowerPlantIntegrity( deepcopy( power_tab ) )
+	--print( dump( power_tab) .. "\n"  )
 
-    if _supply_tab.blue['Sukhumi Airbase Strategics'].integrity == 1 and _supply_tab.red["Mineralnye-Vody Airbase"].integrity == 1 then
+    if _power_tab.blue['Sukhumi Airbase Strategics'].integrity == 1 and _power_tab.red["Mineralnye-Vody Airbase"].integrity == 1 then
         result = true
     end
 
-    print("Test function UpdateSupplyPlantIntegrity(): " .. tostring(result) .."\n")
+    print("Test function UpdatePowerPlantIntegrity(): " .. tostring(result) .."\n")
 
 
     return result
 end
 
-local function Test_UpdateSupplyLineIntegrity()
+local function Test_UpdateAPowerLineIntegrity()
 
     local result = false
-    local _supply_tab = UpdateSupplyLineIntegrity( deepcopy( supply_tab ) )
+    local _power_tab = UpdateAPowerLineIntegrity( deepcopy( power_tab ) )
 
-	--print( dump( supply_tab) .. "\n"  )
+	--print( dump( power_tab) .. "\n"  )
 
-    if _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
-    _supply_tab.blue["Novyy Afon Train Station - FH57"]["supply_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
-    _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
-    _supply_tab.red["Prohladniy Depot MP 24"]["supply_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
+    if _power_tab.blue["Sukhumi Airbase Strategics"]["power_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and _power_tab.blue["Sukhumi Airbase Strategics"]["power_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
+    _power_tab.blue["Novyy Afon Train Station - FH57"]["power_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
+    _power_tab.red["Mineralnye-Vody Airbase"]["power_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and _power_tab.red["Mineralnye-Vody Airbase"]["power_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
+    _power_tab.red["Prohladniy Depot MP 24"]["power_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
         result = true
     end
 
-    print("Test function UpdateSupplyLineIntegrity(): " .. tostring(result) .."\n")
+    print("Test function UpdateAPowerLineIntegrity(): " .. tostring(result) .."\n")
 
-    --print( dump( supply_tab ) )
+    --print( dump( power_tab ) )
 
     return result
 end
 
-local function Test_UpdateSupplyTabIntegrity()
+local function Test_UpdatePowerTabIntegrity()
 
 	local result = false
-	local _supply_tab = UpdateSupplyTabIntegrity( deepcopy( supply_tab ) )
+	local _power_tab = UpdatePowerTabIntegrity( deepcopy( power_tab ) )
 
-	--print( dump( supply_tab) .. "\n"  )
+	--print( dump( power_tab) .. "\n"  )
 
-    if _supply_tab.blue['Sukhumi Airbase Strategics'].integrity == 1 and _supply_tab.red["Mineralnye-Vody Airbase"].integrity == 1 and
-	_supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and
-	_supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
-    _supply_tab.blue["Novyy Afon Train Station - FH57"]["supply_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
-    _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and
-	_supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
-    _supply_tab.red["Prohladniy Depot MP 24"]["supply_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
+    if _power_tab.blue['Sukhumi Airbase Strategics'].integrity == 1 and _power_tab.red["Mineralnye-Vody Airbase"].integrity == 1 and
+	_power_tab.blue["Sukhumi Airbase Strategics"]["power_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and
+	_power_tab.blue["Sukhumi Airbase Strategics"]["power_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
+    _power_tab.blue["Novyy Afon Train Station - FH57"]["power_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
+    _power_tab.red["Mineralnye-Vody Airbase"]["power_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and
+	_power_tab.red["Mineralnye-Vody Airbase"]["power_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
+    _power_tab.red["Prohladniy Depot MP 24"]["power_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
         result = true
     end
 
-    print("Test function UpdateSupplyTabIntegrity(): " .. tostring(result) .."\n")
+    print("Test function UpdatePowerTabIntegrity(): " .. tostring(result) .."\n")
 
     return result
 end
 
-local function Test_UpdateSupplyAirbase()
+local function Test_UpdatePowerAirbase()
 
-	--print( dump( supply_tab) .. "\n"  )
+	--print( dump( power_tab) .. "\n"  )
 
-	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), deepcopy( supply_tab ))
+	local airbase_tab = UpdatePowerAirbase( InitializeAirbaseTab(), deepcopy( power_tab ))
 
     local result = false
 
     --[[
-    print("airbase_tab.red.Beslan.supply: " .. airbase_tab.red.Beslan.supply .. ", airbase_tab.red.Mozdok.supply: " .. airbase_tab.red.Mozdok.supply
-    .. ", airbase_tab.red.Nalchik.supply: " .. airbase_tab.red.Nalchik.supply .. ", airbase_tab.red['Mineralnye-Vody'].supply :"
-    .. airbase_tab.red['Mineralnye-Vody'].supply .. ", airbase_tab.red['Maykop-Khanskaya'].supply :" .. airbase_tab.red['Maykop-Khanskaya'].supply
-    .. ", airbase_tab.red['Sochi-Adler'].supply :" .. airbase_tab.red['Sochi-Adler'].supply .. ", airbase_tab.blue.Batumi.supply :"
-    .. airbase_tab.blue.Batumi.supply .. ", airbase_tab.blue.Vaziani.supply :" .. airbase_tab.blue.Vaziani.supply .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.supply
-    .. ", airbase_tab.blue.Reserves.supply: " .. airbase_tab.blue.Reserves.supply .. ", airbase_tab.red.Reserves.supply: "
-    .. airbase_tab.red.Reserves.supply .. "\n")
+    print("airbase_tab.red.Beslan.power: " .. airbase_tab.red.Beslan.power .. ", airbase_tab.red.Mozdok.power: " .. airbase_tab.red.Mozdok.power
+    .. ", airbase_tab.red.Nalchik.power: " .. airbase_tab.red.Nalchik.power .. ", airbase_tab.red['Mineralnye-Vody'].power :"
+    .. airbase_tab.red['Mineralnye-Vody'].power .. ", airbase_tab.red['Maykop-Khanskaya'].power :" .. airbase_tab.red['Maykop-Khanskaya'].power
+    .. ", airbase_tab.red['Sochi-Adler'].power :" .. airbase_tab.red['Sochi-Adler'].power .. ", airbase_tab.blue.Batumi.power :"
+    .. airbase_tab.blue.Batumi.power .. ", airbase_tab.blue.Vaziani.power :" .. airbase_tab.blue.Vaziani.power .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.power
+    .. ", airbase_tab.blue.Reserves.power: " .. airbase_tab.blue.Reserves.power .. ", airbase_tab.red.Reserves.power: "
+    .. airbase_tab.red.Reserves.power .. "\n")
     ]]
 
-    if airbase_tab.red.Beslan.supply == 0.4 and airbase_tab.red.Mozdok.supply == 0.5 and airbase_tab.red.Nalchik.supply == 0.2 and
-    airbase_tab.red['Mineralnye-Vody'].supply == 0.5 and airbase_tab.red['Maykop-Khanskaya'].supply == 0.15 and
-    airbase_tab.red['Sochi-Adler'].supply == 0.3 and airbase_tab.blue.Batumi.supply == 0.2 and airbase_tab.blue.Vaziani.supply == 0.4
-    and airbase_tab.red.Reserves.supply == 0.25 and airbase_tab.blue.Reserves.supply == 0.4 and airbase_tab.blue.Kutaisi.supply == 0.2 then
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and
+    airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4
+    and airbase_tab.red.Reserves.power == 0.25 and airbase_tab.blue.Reserves.power == 0.4 and airbase_tab.blue.Kutaisi.power == 0.2 then
         result = true
     end
 
-    print("Test_UpdateSupplyAirbase(): " .. tostring(result) .. "\n")
+    print("Test_UpdatePowerAirbase(): " .. tostring(result) .. "\n")
 
     --print( dump( airbase_tab) )
 
@@ -877,15 +866,15 @@ local function Test_UpdateAirbaseEfficiency()
 	--local airbase_tab = InitializeAirbaseTab()
 	--print( dump( airbase_tab).."\n" )
 
-	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), deepcopy( supply_tab ) )
+	local airbase_tab = UpdatePowerAirbase( InitializeAirbaseTab(), deepcopy( power_tab ) )
 	--print( dump( airbase_tab).."\n" )
 
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
     local result = false
 
-    if airbase_tab.red.Beslan.supply == 0.4 and airbase_tab.red.Mozdok.supply == 0.5 and airbase_tab.red.Nalchik.supply == 0.2 and
-    airbase_tab.red['Mineralnye-Vody'].supply == 0.5 and airbase_tab.red['Maykop-Khanskaya'].supply == 0.15 and
-    airbase_tab.red['Sochi-Adler'].supply == 0.3 and airbase_tab.blue.Batumi.supply == 0.2 and airbase_tab.blue.Vaziani.supply == 0.4 then
+    if airbase_tab.red.Beslan.power == 0.4 and airbase_tab.red.Mozdok.power == 0.5 and airbase_tab.red.Nalchik.power == 0.2 and
+    airbase_tab.red['Mineralnye-Vody'].power == 0.5 and airbase_tab.red['Maykop-Khanskaya'].power == 0.15 and
+    airbase_tab.red['Sochi-Adler'].power == 0.3 and airbase_tab.blue.Batumi.power == 0.2 and airbase_tab.blue.Vaziani.power == 0.4 then
         result = true
     end
 
@@ -947,11 +936,11 @@ end
 
 local function Test_SaveTabOnDisk()
 
-    supply_tab_test = {
+    power_tab_test = {
         ['red'] = {
             ['Prohladniy Depot MP 24'] = {
                 ['integrity'] = 1,
-                ['supply_line_names'] = {
+                ['power_line_names'] = {
                     ['Bridge Alagir MN 36'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
@@ -971,7 +960,7 @@ local function Test_SaveTabOnDisk()
             },
             ['Mineralnye-Vody Airbase'] = {
                 ['integrity'] = 1,
-                ['supply_line_names'] = {
+                ['power_line_names'] = {
                     ['Rail Bridge SE Mayskiy MP 23'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
@@ -996,7 +985,7 @@ local function Test_SaveTabOnDisk()
             },
             ['101 EWR Site'] = {
                 ['integrity'] = 1,
-                ['supply_line_names'] = {
+                ['power_line_names'] = {
                     ['Russian Convoy 1'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
@@ -1020,7 +1009,7 @@ local function Test_SaveTabOnDisk()
         ['blue'] = {
             ['Sukhumi Airbase Strategics'] = {
                 ['integrity'] = 1,
-                ['supply_line_names'] = {
+                ['power_line_names'] = {
                     ['Rail Bridge Grebeshok-EH99'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
@@ -1040,7 +1029,7 @@ local function Test_SaveTabOnDisk()
             },
             ['Novyy Afon Train Station - FH57'] = {
                 ['integrity'] = 1,
-                ['supply_line_names'] = {
+                ['power_line_names'] = {
                     ['Bridge Tagrskiy-FH08'] = {
                         ['integrity'] = 1,
                         ['airbase_supply'] = {
@@ -1061,37 +1050,37 @@ local function Test_SaveTabOnDisk()
         },
     }
 
-    SaveTabOnDisk( "supply_tab_test", supply_tab_test )
-    supply_tab_test = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab_test.lua")
-    local result = supply_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 1
-    supply_tab_test = {
+    SaveTabOnDisk( "power_tab_test", power_tab_test )
+    power_tab_test = nil
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab_test.lua")
+    local result = power_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 1
+    power_tab_test = {
 
         ["red"] = {
 
-            ["Prohladniy Depot MP 24"] = { -- supply plant
-                integrity = 0.8, -- integrity (property alive in targetlist) of supply plant
-                ["supply_line_names"] = { -- table of supply line supplyed of supply plant
-                    ["Bridge Alagir MN 36"] = { -- supply line n.1
-                        integrity = 0.5, -- integrity (property alive in targetlist) of supply line
-                        ["airbase_supply"] = {  -- airbases supplyed from this supply line n.1
+            ["Prohladniy Depot MP 24"] = { -- power plant
+                integrity = 0.8, -- integrity (property alive in targetlist) of power plant
+                ["power_line_names"] = { -- table of power line powered of power plant
+                    ["Bridge Alagir MN 36"] = { -- power line n.1
+                        integrity = 0.5, -- integrity (property alive in targetlist) of power line
+                        ["airbase_supply"] = {  -- airbases powered from this power line n.1
                             ["Beslan"] = true,
                             ["Reserves"] = true,
                             ["Mozdok"] = true
                         }
                     },
-                    ["Bridge South Beslan MN 68"] = { -- supply line n.2
+                    ["Bridge South Beslan MN 68"] = { -- power line n.2
                         integrity = 0.25,
-                        ["airbase_supply"] = { -- airbases supplyed from this supply line n.2
+                        ["airbase_supply"] = { -- airbases powered from this power line n.2
                             ["Nalchik"] = true,
                             ["Mineralnye-Vody"] = true
                         }
                     }
                 }
             },
-            ["Mineralnye-Vody Airbase"] = { -- another supply plant and
+            ["Mineralnye-Vody Airbase"] = { -- another power plant and
                 integrity = 0.4,
-                ["supply_line_names"] = {
+                ["power_line_names"] = {
                     ["Rail Bridge SE Mayskiy MP 23"] = {
                         integrity = 0.5,
                         ["airbase_supply"] = {
@@ -1116,7 +1105,7 @@ local function Test_SaveTabOnDisk()
 
             ["Novyy Afon Train Station - FH57"] = {
                 integrity = 0.8,
-                ["supply_line_names"] = {
+                ["power_line_names"] = {
                     ["Bridge Nizh Armyanskoe Uschele-FH47"] = {
                         integrity = 0.5,
                         ["airbase_supply"] = {
@@ -1136,7 +1125,7 @@ local function Test_SaveTabOnDisk()
             },
             ["Sukhumi Airbase Strategics"] = {
                 integrity = 0.4,
-                ["supply_line_names"] = {
+                ["power_line_names"] = {
                     ["Bridge Anaklia-GG19"] = {
                         integrity = 0.5,
                         ["airbase_supply"] = {
@@ -1157,143 +1146,14 @@ local function Test_SaveTabOnDisk()
             }
         }
     }
-    SaveTabOnDisk( "supply_tab_test", supply_tab_test )
-    supply_tab_test = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab_test.lua")
-    result = result and ( supply_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
+    SaveTabOnDisk( "power_tab_test", power_tab_test )
+    power_tab_test = nil
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/power_tab_test.lua")
+    result = result and ( power_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
     print("Test_SaveTabOnDisk(): " .. tostring(result) .. "\n")
     return result
 
 end
-
-local function Test_CopySupplyTab()
-
-    supply_tab = {
-        ['red'] = {
-            ['Prohladniy Depot MP 24'] = {
-                ['integrity'] = 1,
-                ['supply_line_names'] = {
-                    ['Bridge Alagir MN 36'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Beslan'] = true,  -- Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
-                            ['Mozdok'] = true,
-                        },
-                    },
-                    ['Bridge South Beslan MN 68'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Beslan'] = true,
-                            ['Nalchik'] = true, -- Nalchik dovrebbe prendere 0.8*0.25=0.2 efficiency
-                            ['Sochi-Adler'] = true,
-                        },
-                    },
-                },
-            },
-            ['Mineralnye-Vody Airbase'] = {
-                ['integrity'] = 1,
-                ['supply_line_names'] = {
-                    ['Rail Bridge SE Mayskiy MP 23'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Mozdok'] = true,
-                            ['Sochi-Adler'] = true,  -- Sochi-Adler dovrebbe prendere 0.6*0.5=0.3 efficiency
-                            ['Beslan'] = true,
-                        },
-                    },
-                    ['Bridge South Elhotovo MN 39'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Reserves'] = true,
-                            ['Sochi-Adler'] = true,
-                            ['Maykop-Khanskaya'] = true, -- Maykop-Khanskaya dovrebbe prendere 0.6*0.25=0.15 efficiency
-                            ['Nalchik'] = true,
-                            ['Mozdok'] = true,
-                            ['Beslan'] = true,
-                            ['Mineralnye-Vody'] = true,
-                        },
-                    },
-                },
-            },
-            ['101 EWR Site'] = {
-                ['integrity'] = 1,
-                ['supply_line_names'] = {
-                    ['Russian Convoy 1'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Mozdok'] = true, -- Mozdok dovrebbe prendere 1*0.5=0.5 efficiency
-                            ['Mineralnye-Vody'] = true,-- Mineralnye-Vody dovrebbe prendere 1*0.5=0.5 efficiency
-                        },
-                    },
-                    ['Bridge SW Kardzhin MN 49'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Reserves'] = true, -- Reserves dovrebbe prendere 1*0.25=0.25 efficiency
-                            ['Sochi-Adler'] = true,
-                            ['Mineralnye-Vody'] = true,
-                            ['Beslan'] = true,
-                            ['Mozdok'] = true,
-                        },
-                    },
-                },
-            },
-        },
-        ['blue'] = {
-            ['Sukhumi Airbase Strategics'] = {
-                ['integrity'] = 1,
-                ['supply_line_names'] = {
-                    ['Rail Bridge Grebeshok-EH99'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Kutaisi'] = true,
-                            ['Vaziani'] = true,
-                        },
-                    },
-                    ['Bridge Anaklia-GG19'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Senaki-Kolkhi'] = true,
-                            ['Batumi'] = true,
-                            ['Reserves'] = true,
-                        },
-                    },
-                },
-            },
-            ['Novyy Afon Train Station - FH57'] = {
-                ['integrity'] = 1,
-                ['supply_line_names'] = {
-                    ['Bridge Tagrskiy-FH08'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Kutaisi'] = true,
-                            ['Batumi'] = true,
-                        },
-                    },
-                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
-                        ['integrity'] = 1,
-                        ['airbase_supply'] = {
-                            ['Vaziani'] = true,
-                            ['Senaki-Kolkhi'] = true,
-                            ['Reserves'] = true,
-                        },
-                    },
-                },
-            },
-        },
-    }
-
-    SaveTabOnDisk( "supply_tab_test", supply_tab )
-    supply_tab = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab.lua")
-    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 1
-    supply_tab = nil
-    copySupplyTab()
-    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 0.8
-    print("Test_CopySupplyTab(): " .. tostring(result) .. "\n")
-    return result
-
-end
-
 
 local function executeAllTest()
 
@@ -1302,16 +1162,16 @@ local function executeAllTest()
 	Test_InitializeAirbaseTab()
 	-- OK
 
-	Test_UpdateSupplyPlantIntegrity()
+	Test_UpdatePowerPlantIntegrity()
 	-- OK
 
-	Test_UpdateSupplyLineIntegrity()
+	Test_UpdateAPowerLineIntegrity()
 	-- OK
 
-	Test_UpdateSupplyTabIntegrity()
+	Test_UpdatePowerTabIntegrity()
 	-- OK
 
-	Test_UpdateSupplyAirbase()
+	Test_UpdatePowerAirbase()
 	-- OK
 
 	Test_UpdateAirbaseIntegrity()
@@ -1325,10 +1185,6 @@ local function executeAllTest()
 
     Test_SaveTabOnDisk()
     -- OK
-
-    Test_CopySupplyTab()
-    --
-
 end
 
 if executeTest then
@@ -1337,7 +1193,7 @@ end
 
 --[[
 att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
-teoricamente si potrebbbe distinguere le riserve in supply tab identificandole per i due parametri (che palle)
+teoricamente si potrebbbe distinguere le riserve in power tab identificandole per i due parametri (che palle)
 
 oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
 molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
