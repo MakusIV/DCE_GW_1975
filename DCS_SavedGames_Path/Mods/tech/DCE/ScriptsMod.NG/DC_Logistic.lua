@@ -589,7 +589,8 @@ local function UpdateAirbaseIntegrity( airb_tab )
                 if target_name == base or target_name  == base .. " Airbase" or  target_name == base .. " FARP" or  target_name == "FARP " .. base then
                     --print("==============================\nairbase_tab airbase == targetlist airbase\n==============================\n")
                     --print("airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name .. "\n")
-                    airbase_values.integrity = target_value.alive / 100                
+                    --print("airbase_tab integrity: " .. airbase_values.integrity .. " ---> " .. target_value.alive / 100 .. "\n")
+                    airbase_values.integrity = target_value.alive / 100                               
                     break
                 end
             end            
@@ -616,9 +617,12 @@ end
 -- Update oob_air number propriety considering airbase efficiency propriety
 function UpdateOobAir()
 
-  local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
+    local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
 	local percentage_efficiency_effect_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
-	local airbase_tab = InitializeAirbaseTab()
+	airbase_tab = nil
+    airbase_tab = InitializeAirbaseTab()
+
+
 
   if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
 	   UpdateSupplyTabIntegrity( supply_tab )
@@ -739,9 +743,9 @@ local function Test_InitializeAirbaseTab()
 	end
 
 	if result then
-		print("Test_InitalizeAirbaseAndAircraft(): true\n")
+		print("-------------------------> Test_InitalizeAirbaseAndAircraft(): true\n")
 	else
-		print("Test_InitalizeAirbaseAndAircraft(): false\n")
+		print("-------------------------> Test_InitalizeAirbaseAndAircraft(): false\n")
 	end
 
 
@@ -769,7 +773,7 @@ local function Test_UpdateSupplyPlantIntegrity()
         result = true
     end
 
-    print("Test function UpdateSupplyPlantIntegrity(): " .. tostring(result) .."\n")
+    print("-------------------------> Test function UpdateSupplyPlantIntegrity(): " .. tostring(result) .."\n")
 
 
     return result
@@ -789,7 +793,7 @@ local function Test_UpdateSupplyLineIntegrity()
         result = true
     end
 
-    print("Test function UpdateSupplyLineIntegrity(): " .. tostring(result) .."\n")
+    print("-------------------------> Test function UpdateSupplyLineIntegrity(): " .. tostring(result) .."\n")
 
     --print( dump( supply_tab ) )
 
@@ -813,7 +817,7 @@ local function Test_UpdateSupplyTabIntegrity()
         result = true
     end
 
-    print("Test function UpdateSupplyTabIntegrity(): " .. tostring(result) .."\n")
+    print("-------------------------> Test function UpdateSupplyTabIntegrity(): " .. tostring(result) .."\n")
 
     return result
 end
@@ -821,9 +825,123 @@ end
 local function Test_UpdateSupplyAirbase()
 
 	--print( dump( supply_tab) .. "\n"  )
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
 
-    local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
+    supply_tab = {
+        ['red'] = {
+            ['Mineralnye-Vody Airbase'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Nalchik'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                            ['Maykop-Khanskaya'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.6,
+            },
+            ['Prohladniy Depot MP 24'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Beslan MN 68'] = {
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Nalchik'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Alagir MN 36'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['101 EWR Site'] = {
+                ['supply_line_names'] = {
+                    ['Bridge SW Kardzhin MN 49'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Russian Convoy 1'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Mineralnye-Vody'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 1,
+            },
+        },
+        ['blue'] = {
+            ['Novyy Afon Train Station - FH57'] = {
+                ['supply_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['Sukhumi Airbase Strategics'] = {
+                ['supply_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Anaklia-GG19'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.4,
+            },
+        },
+    }
+    
+    airbase_tab = nil
+    airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
     local result = false
 
     --[[
@@ -843,7 +961,7 @@ local function Test_UpdateSupplyAirbase()
         result = true
     end
 
-    print("Test_UpdateSupplyAirbase(): " .. tostring(result) .. "\n")
+    print("-------------------------> Test_UpdateSupplyAirbase(): " .. tostring(result) .. "\n")
 
     --print( dump( airbase_tab) )
 
@@ -853,29 +971,202 @@ end
 local function Test_UpdateAirbaseIntegrity()
 
 	local result = true
-	airbase_tab = UpdateAirbaseIntegrity( InitializeAirbaseTab() )
+   
+    airbase_tab = {
+        ['blue'] = {
+            ['Reserves'] = {
+                ['aircraft_types'] = {
+                    ['KC-135'] = true,
+                    ['F/A-18C'] = true,
+                    ['KC135MPRS'] = true,
+                    ['AJS37'] = true,
+                    ['AV8BNA'] = true,
+                    ['E-2C'] = true,
+                    ['F-16C_50'] = true,
+                    ['F-15C'] = true,
+                    ['S-3B Tanker'] = true,
+                    ['F-15E'] = true,
+                    ['F-14B'] = true,
+                    ['M-2000C'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['LHA_Tarawa'] = {
+                ['aircraft_types'] = {
+                    ['AV8BNA'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['CVN-71 Theodore Roosevelt'] = {
+                ['aircraft_types'] = {
+                    ['F-14B'] = true,
+                    ['FA-18C_hornet'] = true,
+                    ['S-3B Tanker'] = true,
+                    ['E-2C'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Soganlug'] = {
+                ['aircraft_types'] = {
+                    ['F-117A'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Senaki-Kolkhi'] = {
+                ['aircraft_types'] = {
+                    ['F-16C_50'] = true,
+                    ['KC-135'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Tbilissi-Lochini'] = {
+                ['aircraft_types'] = {
+                    ['KC135MPRS'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Kutaisi'] = {
+                ['aircraft_types'] = {
+                    ['E-3A'] = true,
+                    ['M-2000C'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Vaziani'] = {
+                ['aircraft_types'] = {
+                    ['F-15C'] = true,
+                    ['F-15E'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Sukhumi'] = {
+                ['aircraft_types'] = {
+                    ['AJS37'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Batumi'] = {
+                ['aircraft_types'] = {
+                    ['KC135MPRS'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+        },
+        ['red'] = {
+            ['Beslan'] = {
+                ['aircraft_types'] = {
+                    ['MiG-29A'] = true,
+                    ['An-26B'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Reserves'] = {
+                ['aircraft_types'] = {
+                    ['Su-27'] = true,
+                    ['Tu-22M3'] = true,
+                    ['Su-24M'] = true,
+                    ['MiG-29A'] = true,
+                    ['Su-25T'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Mineralnye-Vody'] = {
+                ['aircraft_types'] = {
+                    ['Su-24M'] = true,
+                    ['Su-27'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Maykop-Khanskaya'] = {
+                ['aircraft_types'] = {
+                    ['Tu-22M3'] = true,
+                    ['Su-24M'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Nalchik'] = {
+                ['aircraft_types'] = {
+                    ['A-50'] = true,
+                    ['MiG-29A'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Sochi-Adler'] = {
+                ['aircraft_types'] = {
+                    ['An-26B'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+            ['Mozdok'] = {
+                ['aircraft_types'] = {
+                    ['MiG-31'] = true,
+                    ['MiG-29A'] = true,
+                    ['Su-25T'] = true,
+                },
+                ['supply'] = 0.5,
+                ['efficiency'] = 0.5,
+                ['integrity'] = 0.5,
+            },
+        },
+    }
+    
+	airbase_tab = UpdateAirbaseIntegrity( airbase_tab )
 
-	for side_base, side_values in pairs( airbase_tab ) do --
+    for side, side_values in pairs(targetlist) do
+        local side_base = "red"
 
-        for base_name, base_values in pairs( side_values ) do --
+        if side == "red" then
+            side_base = "blue"
+        end
 
-			if base_values.integrity ~= 1 then
+        for target_name, target_values in pairs(side_values) do
 
+            if airbase_tab[side_base][target_name] and target_values.integrity ~= 1 then
+                print("wrong integrity value in airbase_tab airbase: " .. target_name .. ", integrity: " .. target_values.integrity .. "\n")
 				result = false
 				break
-			end
+			end 
+        end
+    end
 
-			if not result then
-				break
-			end
-		end
-	end
-
+	
 	if result then
-		print("Test_UpdateAirbaseIntegrity(): true" .. "\n")
+		print("-------------------------> Test_UpdateAirbaseIntegrity(): true" .. "\n")
 
 	else
-		print("Test_UpdateAirbaseIntegrity(): false" .. "\n")
+		print("-------------------------> Test_UpdateAirbaseIntegrity(): false" .. "\n")
 
 	end
 
@@ -885,14 +1176,139 @@ local function Test_UpdateAirbaseEfficiency()
 
 	--local airbase_tab = InitializeAirbaseTab()
 	--print( dump( airbase_tab).."\n" )
-
+    supply_tab = {
+        ['red'] = {
+            ['Mineralnye-Vody Airbase'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Nalchik'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                            ['Maykop-Khanskaya'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.6,
+            },
+            ['Prohladniy Depot MP 24'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Beslan MN 68'] = {
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Nalchik'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Alagir MN 36'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['101 EWR Site'] = {
+                ['supply_line_names'] = {
+                    ['Bridge SW Kardzhin MN 49'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Russian Convoy 1'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Mineralnye-Vody'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 1,
+            },
+        },
+        ['blue'] = {
+            ['Novyy Afon Train Station - FH57'] = {
+                ['supply_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['Sukhumi Airbase Strategics'] = {
+                ['supply_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Anaklia-GG19'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.4,
+            },
+        },
+    }
     
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
-	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
+    airbase_tab = nil
+
+    airbase_tab = InitializeAirbaseTab()
+    --dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
+	airbase_tab = UpdateSupplyAirbase( airbase_tab, supply_tab )
 	--print( dump( airbase_tab).."\n" )
 
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
     local result = false
+
+      --[[
+    print("airbase_tab.red.Beslan.supply: " .. airbase_tab.red.Beslan.supply .. ", airbase_tab.red.Mozdok.supply: " .. airbase_tab.red.Mozdok.supply
+    .. ", airbase_tab.red.Nalchik.supply: " .. airbase_tab.red.Nalchik.supply .. ", airbase_tab.red['Mineralnye-Vody'].supply :"
+    .. airbase_tab.red['Mineralnye-Vody'].supply .. ", airbase_tab.red['Maykop-Khanskaya'].supply :" .. airbase_tab.red['Maykop-Khanskaya'].supply
+    .. ", airbase_tab.red['Sochi-Adler'].supply :" .. airbase_tab.red['Sochi-Adler'].supply .. ", airbase_tab.blue.Batumi.supply :"
+    .. airbase_tab.blue.Batumi.supply .. ", airbase_tab.blue.Vaziani.supply :" .. airbase_tab.blue.Vaziani.supply .. ", airbase_tab.blue.Kutaisi: " .. airbase_tab.blue.Kutaisi.supply
+    .. ", airbase_tab.blue.Reserves.supply: " .. airbase_tab.blue.Reserves.supply .. ", airbase_tab.red.Reserves.supply: "
+    .. airbase_tab.red.Reserves.supply .. "\n")
+    ]]
 
     if airbase_tab.red.Beslan.supply == 0.4 and airbase_tab.red.Mozdok.supply == 0.5 and airbase_tab.red.Nalchik.supply == 0.2 and
     airbase_tab.red['Mineralnye-Vody'].supply == 0.5 and airbase_tab.red['Maykop-Khanskaya'].supply == 0.15 and
@@ -900,7 +1316,7 @@ local function Test_UpdateAirbaseEfficiency()
         result = true
     end
 
-    print("Test_UpdateAirbaseEfficiency(): " .. tostring(result) .. "\n")
+    print("-------------------------> Test_UpdateAirbaseEfficiency(): " .. tostring(result) .. "\n")
 
     --print( dump( airbase_tab) )
 
@@ -921,6 +1337,120 @@ local function Test_UpdateOobAir()
     dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/oob_air.lua")
     oob_air_old = deepcopy ( oob_air )
 
+    supply_tab = {
+        ['red'] = {
+            ['Mineralnye-Vody Airbase'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Nalchik'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                            ['Maykop-Khanskaya'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.6,
+            },
+            ['Prohladniy Depot MP 24'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Beslan MN 68'] = {
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Nalchik'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Alagir MN 36'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['101 EWR Site'] = {
+                ['supply_line_names'] = {
+                    ['Bridge SW Kardzhin MN 49'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Russian Convoy 1'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Mineralnye-Vody'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 1,
+            },
+        },
+        ['blue'] = {
+            ['Novyy Afon Train Station - FH57'] = {
+                ['supply_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['Sukhumi Airbase Strategics'] = {
+                ['supply_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Anaklia-GG19'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.4,
+            },
+        },
+    }
+    
     UpdateOobAir()
 
 
@@ -932,7 +1462,7 @@ local function Test_UpdateOobAir()
 
             if oob_value.base == "Mozdok" or oob_value.base == "Mineralnye-Vody"  then
                 result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
-
+                
             elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi"
                 or ( oob_value.base == "Reserves" and side == "blue") then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
@@ -952,7 +1482,155 @@ local function Test_UpdateOobAir()
             end
         end
 	end
-	print("Test_UpdateOobAir(): " .. tostring(result) .. "\n")
+	
+    --print("-------------------------> FIRST Test_UpdateOobAir(): " .. tostring(result) .. "\n")
+    supply_tab = {
+        ['red'] = {
+            ['Mineralnye-Vody Airbase'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Nalchik'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                            ['Maykop-Khanskaya'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.6,
+            },
+            ['Prohladniy Depot MP 24'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Beslan MN 68'] = {
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Nalchik'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Alagir MN 36'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['101 EWR Site'] = {
+                ['supply_line_names'] = {
+                    ['Bridge SW Kardzhin MN 49'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Russian Convoy 1'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Mineralnye-Vody'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 1,
+            },
+        },
+        ['blue'] = {
+            ['Novyy Afon Train Station - FH57'] = {
+                ['supply_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['Sukhumi Airbase Strategics'] = {
+                ['supply_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Anaklia-GG19'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.4,
+            },
+        },
+    }
+    targetlist.blue["Mozdok Airbase"].alive = 50
+    targetlist.blue["Beslan Airbase"].alive = 50
+    targetlist.blue["Nalchik Airbase"].alive = 50
+    targetlist.red["Kutaisi Airbase"].alive = 50
+    targetlist.red["Batumi Airbase"].alive = 50
+    oob_air = deepcopy(oob_air_old)
+    UpdateOobAir()
+
+	for side, index in pairs(oob_air) do
+
+        for index_value, oob_value in pairs(index) do
+            --print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.roster.ready, "\n" )
+            --print("old oob_air value: ", side, oob_air_old[side][index_value].base, oob_air_old[side][index_value].type, oob_air_old[side][index_value].roster.ready, "\n" )
+            --rispetto il test precedente ho eliminato le airbase non presenti in targetlist che, pertanto, vengono escluse dall'aggiornamento dell'integrity in airbase_tab 
+            --effettuato in base alle info presenti in targetlist. Nel precedente funzionava perche il calcolo considera i valori di integrity=1(alive=100)
+            
+            if oob_value.base == "Mozdok"  then
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+                --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+
+            elseif oob_value.base == "Beslan" then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
+
+            
+            elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
+
+            end
+        end
+	end
+
+    print("-------------------------> Test_UpdateOobAir(): " .. tostring(result) .. "\n")
     return result
 end
 
@@ -1172,7 +1850,7 @@ local function Test_SaveTabOnDisk()
     supply_tab_test = nil
     dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/supply_tab_test.lua")
     result = result and ( supply_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
-    print("Test_SaveTabOnDisk(): " .. tostring(result) .. "\n")
+    print("-------------------------> Test_SaveTabOnDisk(): " .. tostring(result) .. "\n")
     return result
 
 end
@@ -1300,7 +1978,7 @@ local function Test_CopySupplyTab()
     supply_tab = nil
     copySupplyTab()
     local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 0.8
-    print("Test_CopySupplyTab(): " .. tostring(result) .. "\n")
+    print("-------------------------> Test_CopySupplyTab(): " .. tostring(result) .. "\n")
     return result
 
 end

@@ -1,4 +1,4 @@
-targetlist = {
+targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase + " Airbase"- es. Senaki vs Senaki-Kolchi. Devi riallienarli eventualemente modificando il mission_base.miz (da ME)
 	["blue"] = {
 		["Vaziani Alert"] = {
 			task = "Intercept",
