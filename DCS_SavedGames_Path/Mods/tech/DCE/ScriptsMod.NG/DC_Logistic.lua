@@ -572,19 +572,28 @@ end
 -- OK
 local function UpdateAirbaseIntegrity( airb_tab )
 
-    for base, airbase_values in pairs( airb_tab ) do
-        -- base = base .. " " .."Airbase"
+    for side, side_values in pairs( airb_tab ) do
+        
+        local target_side = "red"
 
-        for side, targets in pairs( targetlist ) do
+        if side == "red" then            
+            target_side = "blue"
+        end
 
-            for target_name, target_value in pairs( targets ) do
+        for base, airbase_values in pairs( side_values ) do
 
-                if target_name == base or target_name == base .. " " .."Airbase" or  target_name == base .. " " .."FARP" then
-                    airbase_values.integrity = target_value.alive / 100
+            -- base = base .." Airbase" or " FARP"
+            for target_name, target_value in pairs( targetlist[target_side] ) do
+                --print("airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name .. "\n")
+    
+                if target_name == base or target_name  == base .. " Airbase" or  target_name == base .. " FARP" or  target_name == "FARP " .. base then
+                    --print("==============================\nairbase_tab airbase == targetlist airbase\n==============================\n")
+                    --print("airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name .. "\n")
+                    airbase_values.integrity = target_value.alive / 100                
                     break
                 end
-            end
-        end
+            end            
+       end
     end
 	return airb_tab
 end
@@ -671,7 +680,7 @@ function SaveTabOnDisk( table_name, table )
     local tgtFile = nil
 
     if executeTest then
-      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/" .. table_name .. ".lua", "w")	--open supply_tab file
+      tgtFile = io.open("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/" .. table_name .. ".lua", "w")	--open supply_tab file
     else
       tgtFile = io.open("Active/" .. table_name .. ".lua", "w")
     end
@@ -812,9 +821,9 @@ end
 local function Test_UpdateSupplyAirbase()
 
 	--print( dump( supply_tab) .. "\n"  )
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
 
-	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), deepcopy( supply_tab ))
-
+    local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
     local result = false
 
     --[[
@@ -853,7 +862,7 @@ local function Test_UpdateAirbaseIntegrity()
 			if base_values.integrity ~= 1 then
 
 				result = false
-				break;
+				break
 			end
 
 			if not result then
@@ -877,7 +886,9 @@ local function Test_UpdateAirbaseEfficiency()
 	--local airbase_tab = InitializeAirbaseTab()
 	--print( dump( airbase_tab).."\n" )
 
-	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), deepcopy( supply_tab ) )
+    
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
+	local airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
 	--print( dump( airbase_tab).."\n" )
 
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
@@ -902,13 +913,13 @@ local function Test_UpdateOobAir()
     --[[
 
     NOTE:
-    In UpdateOobAir() apply this: local percentage_efficiency_effect_for_airbases = 100, local percentage_efficiency_effect_for_resupplies = 100
+    In UpdateOobAir() needed: local percentage_efficiency_effect_for_airbases = 100, local percentage_efficiency_effect_for_resupplies = 100
 
     ]]
 
     local result = true
-
-    oob_air_old = deepcopy (oob_air)
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/oob_air.lua")
+    oob_air_old = deepcopy ( oob_air )
 
     UpdateOobAir()
 
@@ -1063,7 +1074,7 @@ local function Test_SaveTabOnDisk()
 
     SaveTabOnDisk( "supply_tab_test", supply_tab_test )
     supply_tab_test = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab_test.lua")
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/supply_tab_test.lua")
     local result = supply_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 1
     supply_tab_test = {
 
@@ -1159,7 +1170,7 @@ local function Test_SaveTabOnDisk()
     }
     SaveTabOnDisk( "supply_tab_test", supply_tab_test )
     supply_tab_test = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab_test.lua")
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/supply_tab_test.lua")
     result = result and ( supply_tab_test.blue["Novyy Afon Train Station - FH57"].integrity == 0.8 )
     print("Test_SaveTabOnDisk(): " .. tostring(result) .. "\n")
     return result
@@ -1283,8 +1294,8 @@ local function Test_CopySupplyTab()
     }
 
     SaveTabOnDisk( "supply_tab_test", supply_tab )
-    supply_tab = nil
-    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Active/supply_tab.lua")
+    supply_tab = supply_tab_test
+    dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/supply_tab_test.lua")
     local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 1
     supply_tab = nil
     copySupplyTab()

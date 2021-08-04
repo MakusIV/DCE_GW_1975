@@ -1,4 +1,4 @@
-supply_tab = {
+supply_tab_test = {
 	['blue'] = {
 		['Sukhumi Airbase Strategics'] = {
 			['supply_line_names'] = {
@@ -8,17 +8,17 @@ supply_tab = {
 						['Senaki-Kolkhi'] = true,
 						['Batumi'] = true,
 					},
-					['integrity'] = 0.5,
+					['integrity'] = 1,
 				},
 				['Rail Bridge Grebeshok-EH99'] = {
 					['airbase_supply'] = {
 						['Vaziani'] = true,
 						['Kutaisi'] = true,
 					},
-					['integrity'] = 0.25,
+					['integrity'] = 1,
 				},
 			},
-			['integrity'] = 0.4,
+			['integrity'] = 1,
 		},
 		['Novyy Afon Train Station - FH57'] = {
 			['supply_line_names'] = {
@@ -27,7 +27,7 @@ supply_tab = {
 						['Batumi'] = true,
 						['Kutaisi'] = true,
 					},
-					['integrity'] = 0.25,
+					['integrity'] = 1,
 				},
 				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
 					['airbase_supply'] = {
@@ -35,10 +35,10 @@ supply_tab = {
 						['Vaziani'] = true,
 						['Senaki-Kolkhi'] = true,
 					},
-					['integrity'] = 0.5,
+					['integrity'] = 1,
 				},
 			},
-			['integrity'] = 0.8,
+			['integrity'] = 1,
 		},
 	},
 	['red'] = {
@@ -50,7 +50,7 @@ supply_tab = {
 						['Mozdok'] = true,
 						['Sochi-Adler'] = true,
 					},
-					['integrity'] = 0.5,
+					['integrity'] = 1,
 				},
 				['Bridge South Elhotovo MN 39'] = {
 					['airbase_supply'] = {
@@ -62,10 +62,10 @@ supply_tab = {
 						['Sochi-Adler'] = true,
 						['Mozdok'] = true,
 					},
-					['integrity'] = 0.25,
+					['integrity'] = 1,
 				},
 			},
-			['integrity'] = 0.6,
+			['integrity'] = 1,
 		},
 		['Prohladniy Depot MP 24'] = {
 			['supply_line_names'] = {
@@ -75,17 +75,17 @@ supply_tab = {
 						['Sochi-Adler'] = true,
 						['Nalchik'] = true,
 					},
-					['integrity'] = 0.25,
+					['integrity'] = 1,
 				},
 				['Bridge Alagir MN 36'] = {
 					['airbase_supply'] = {
 						['Beslan'] = true,
 						['Mozdok'] = true,
 					},
-					['integrity'] = 0.5,
+					['integrity'] = 1,
 				},
 			},
-			['integrity'] = 0.8,
+			['integrity'] = 1,
 		},
 		['101 EWR Site'] = {
 			['supply_line_names'] = {
@@ -97,14 +97,14 @@ supply_tab = {
 						['Sochi-Adler'] = true,
 						['Mozdok'] = true,
 					},
-					['integrity'] = 0.25,
+					['integrity'] = 1,
 				},
 				['Russian Convoy 1'] = {
 					['airbase_supply'] = {
 						['Mineralnye-Vody'] = true,
 						['Mozdok'] = true,
 					},
-					['integrity'] = 0.5,
+					['integrity'] = 1,
 				},
 			},
 			['integrity'] = 1,
