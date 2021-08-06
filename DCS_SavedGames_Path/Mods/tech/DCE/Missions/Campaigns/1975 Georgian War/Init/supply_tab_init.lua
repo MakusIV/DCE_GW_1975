@@ -16,6 +16,8 @@ supply_tab = {
 						['Beslan'] = true,
 						['Nalchik'] = true,   
 						['Sochi-Adler'] = true,
+						['Reserves-3./31.IAP'] = true,
+						['Reserves-R./41.IAP'] = true,		
 					},
 				},
 			},
@@ -29,12 +31,13 @@ supply_tab = {
 						['Mozdok'] = true,
 						['Sochi-Adler'] = true,
 						['Beslan'] = true,
+						['Reserves-3./19.IAP'] = true,
+						['Reserves-2./14.IAP'] = true,
 					},
 				},
 				['Bridge South Elhotovo MN 39'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
-						['Reserves'] = true,
 						['Sochi-Adler'] = true,
 						['Maykop-Khanskaya'] = true,
 						['Nalchik'] = true,
@@ -53,12 +56,14 @@ supply_tab = {
 					['airbase_supply'] = {
 						['Mozdok'] = true,
 						['Mineralnye-Vody'] = true,
+						['Reserves-R./61.IAP'] = true,
+						['Reserves-R./81.IAP'] = true,
+						['Reserves-2./17.IAP'] = true,	
 					},
 				},
 				['Bridge SW Kardzhin MN 49'] = {
 					['integrity'] = 0.25,
 					['airbase_supply'] = {
-						['Reserves'] = true,
 						['Sochi-Adler'] = true,
 						['Mineralnye-Vody'] = true,
 						['Beslan'] = true,
@@ -84,7 +89,9 @@ supply_tab = {
 					['airbase_supply'] = {
 						['Senaki-Kolkhi'] = true,
 						['Batumi'] = true,
-						['Reserves'] = true,
+						['Reserves-R/VF-101'] = true,
+						['Reserves-EC 2/12'] = true,
+						['Reserves-R/801 ARS'] = true,	
 					},
 				},
 			},
@@ -97,6 +104,10 @@ supply_tab = {
 					['airbase_supply'] = {
 						['Kutaisi'] = true,
 						['Batumi'] = true,
+						['Reserves-F21'] = true,
+						['Reserves-VMA 331'] = true,
+						['Reserves-R/171 ARW'] = true,
+						['Reserves-R/58 TFS'] = true,						
 					},
 				},
 				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
@@ -104,7 +115,10 @@ supply_tab = {
 					['airbase_supply'] = {
 						['Vaziani'] = true,
 						['Senaki-Kolkhi'] = true,
-						['Reserves'] = true,
+						['Reserves-R/VFA-106'] = true,
+						['Reserves-R/174 ARW'] = true,
+						['Reserves-R/335 TFS'] = true,
+						['Reserves-R/13 TFS'] = true,	
 					},
 				},
 			},

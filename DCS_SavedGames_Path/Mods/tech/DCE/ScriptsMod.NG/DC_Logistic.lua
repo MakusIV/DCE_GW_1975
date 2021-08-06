@@ -21,7 +21,7 @@ airbase.supply = max( supply_plant.integrity * supply_line.integrity )
 supply_plant.integrity, supply_line.integrity and airbase.integrity are alive/100 values defined for specific asset
 
 This module use two new table: airbase_tab and supply_tab.
-airbase_tab include airbases with aircraft_type and efficiency values: propriety used for number of aircraft avalaibility calculation.
+airbase_tab include airbases with aircraft_type and efficiency values: property used for number of aircraft avalaibility calculation.
 airbase_tab is automatically created, used and saved (/Active) during mission generation.
 supply_tab is loaded initially from supply_tab_init.lua file (/Init), used and saved (/Active) during mission generation. 
 supply_tab define association from airbase and supply asset: supply_line, supply_plant).
@@ -316,13 +316,13 @@ Init/: supply_tab_init.lua --defined by campaign's maker
 file modified:
 
 DEBRIEF_Master.lua:
-87 --=====================  start marco implementation ==================================
-88
-89 --run logistic evalutation and save supply_tab
-90 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-91 UpdateOobAir()
-92
-93 --=====================  end marco implementation ==================================
+94 --=====================  start marco implementation ==================================
+95
+96 --run logistic evalutation and save supply_tab
+97 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+98 UpdateOobAir()
+99
+100 --=====================  end marco implementation ==================================
 
 BAT_FirstMission.lua:
 84 --====================  start marco implementation ==================================
@@ -342,6 +342,7 @@ BAT_FirstMission.lua:
 
 
 local executeTest = true
+local update_ready = false
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -381,6 +382,7 @@ local function dump(o)
 end
 
 -- copy the supply_tab from Init folder
+--from: https://stackoverflow.com/questions/2705793/how-to-get-number-of-entries-in-a-lua-table
 local function copySupplyTab()
     
     dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
@@ -394,18 +396,33 @@ local function copySupplyTab()
 
 end
 
--- Logistic function
+-- table lenght
+function tablelength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+  end
+  
+
+
+
+  -- Logistic function
 
 -- Initialize the airbase_tab by defining the planes operating in the airbase
 -- OK
 local function InitializeAirbaseTab()
 
-
     for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase
 
         for index_value, oob_value in pairs(index) do
             aircraft_type = oob_value.type
+            group_name = oob_value.name
             airbase_name = oob_value.base
+
+            if airbase_name == "Reserves" then
+                airbase_name = airbase_name .. "-" .. group_name
+            end
+            
             --print(side, airbase_name, aircraft_type)
 
             if airbase_tab == nil then
@@ -414,7 +431,7 @@ local function InitializeAirbaseTab()
                     [side] = {
                         [airbase_name] = {
                             ["aircraft_types"] = {
-                                [aircraft_type] = true,
+                                [aircraft_type] = group_name,
                             },
                             ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
                             ["integrity"] = 1, -- same of targetlist.alive
@@ -429,7 +446,7 @@ local function InitializeAirbaseTab()
                 airbase_tab[side] = {
                     [airbase_name] = {
                         ["aircraft_types"] = {
-                            [aircraft_type] = true,
+                            [aircraft_type] = group_name,
                         },
                         ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
                         ["integrity"] = 1, -- same of targetlist.alive
@@ -447,12 +464,12 @@ local function InitializeAirbaseTab()
 
                         if airbase_tab[side][airbase_name].aircraft_types[aircraft_type] == nil then
                             --print("oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab.\n")
-                            airbase_tab[side][airbase_name].aircraft_types[aircraft_type] = true
+                            airbase_tab[side][airbase_name].aircraft_types[aircraft_type] = group_name
                         end
                 else
                     --print("airbase not exists in airbase_tab\n")
                     airbase_tab[side][airbase_name] =  { -- insert new airbase, initializa property and assign aircraft
-                        ["aircraft_types"] = { [aircraft_type] = true },-- insert new airbase and assign aircraft
+                        ["aircraft_types"] = { [aircraft_type] = group_name },-- insert new airbase and assign aircraft
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max, 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
                         ["supply"]= 1 -- supply_<airbase> 1 = max, 0 = min
@@ -466,7 +483,7 @@ local function InitializeAirbaseTab()
 	return airbase_tab
 end
 
--- Update the integrity propriety for supply plant in supply_tab, by using propriety alive in targetlist
+-- Update the integrity property for supply plant in supply_tab, by using property alive in targetlist
 -- OK
 local function UpdateSupplyPlantIntegrity( sup_tab )
 
@@ -482,7 +499,7 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
                     --print("sup tab side: " .. sidepw .. " - " .. "sup_pl_name: " .. supply_plant_name .. " - " .. "targlist side: " .. side .. " - " .. "target name: " .. target_name .. "\n")
                     --print("sup tab integrity: " .. supply_plant_values['integrity'] .. " - " .. "target_value[\"alive\"]: " .. tostring( target_value['alive']) .. "\n")
 
-                    if supply_plant_name ==  target_name then  -- update integrity value of an supply plant using alive target propriety
+                    if supply_plant_name ==  target_name then  -- update integrity value of an supply plant using alive target property
                         --print( dump( target_value ) .. "\n")
                         supply_plant_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         -- eventuale codice per terminare l'iterazione
@@ -495,7 +512,7 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
 	return sup_tab
 end
 
--- Update the integrity propriety for supply line in supply_tab, by using propriety alive in targetlist
+-- Update the integrity property for supply line in supply_tab, by using property alive in targetlist
 -- OK
 local function UpdateSupplyLineIntegrity( sup_tab )
 
@@ -511,7 +528,7 @@ local function UpdateSupplyLineIntegrity( sup_tab )
 
                     for target_name, target_value in pairs( targets ) do -- iteration of targets from a single side
 
-                        if supply_line_name == target_name then -- update integrity value of an supply line using alive target propriety
+                        if supply_line_name == target_name then -- update integrity value of an supply line using alive target property
                             supply_line_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         end
                     end
@@ -522,8 +539,8 @@ local function UpdateSupplyLineIntegrity( sup_tab )
 	return sup_tab
 end
 
--- Update supply Plant integrity and supply Line integrity in supply_tab, by using propriety alive in target list
--- OK
+-- Update supply Plant integrity and supply Line integrity in supply_tab, by using property alive in target list
+-- OK .eliminare - deprecated
 local function UpdateSupplyTabIntegrity( sup_tab )
 
     UpdateSupplyPlantIntegrity( sup_tab )
@@ -533,7 +550,7 @@ local function UpdateSupplyTabIntegrity( sup_tab )
 
 end
 
--- Update the supply propriety in airbase_tab using integrity propriety from supply_tab
+-- Update the supply property in airbase_tab using integrity property from supply_tab
 -- OK
 local function UpdateSupplyAirbase( airb_tab, sup_tab )
 
@@ -568,7 +585,7 @@ local function UpdateSupplyAirbase( airb_tab, sup_tab )
 	return airb_tab
 end
 
--- Update the integrity propriety in airbase_tab using alive propriety from targetlist
+-- Update the integrity property in airbase_tab using alive property from targetlist
 -- OK
 local function UpdateAirbaseIntegrity( airb_tab )
 
@@ -599,7 +616,7 @@ local function UpdateAirbaseIntegrity( airb_tab )
 	return airb_tab
 end
 
--- Update the airbase efficiency propriety in airbase_tab
+-- Update the airbase efficiency property in airbase_tab
 -- OK
 local function UpdateAirbaseEfficiency( airb_tab )
 
@@ -614,18 +631,19 @@ local function UpdateAirbaseEfficiency( airb_tab )
 	return airb_tab
 end
 
--- Update oob_air number propriety considering airbase efficiency propriety
-function UpdateOobAir()
+-- Update oob_air number property considering airbase efficiency property
+function UpdateOobAir()    
 
-    local percentage_efficiency_effect_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
-	local percentage_efficiency_effect_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
+    local percentage_efficiency_influence_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
+	local percentage_efficiency_influence_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
 	airbase_tab = nil
     airbase_tab = InitializeAirbaseTab()
 
 
 
   if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
-	   UpdateSupplyTabIntegrity( supply_tab )
+    UpdateSupplyPlantIntegrity( sup_tab )
+    UpdateSupplyLineIntegrity( sup_tab )
   end
 
 	airbase_tab = UpdateSupplyAirbase( airbase_tab, supply_tab )
@@ -637,34 +655,49 @@ function UpdateOobAir()
         for index_value, oob_value in pairs(index) do
 			--print("airbase_tab is not nil\n")
 			--print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.roster.ready )
+            local existed_airbase_name = oob_value.base .. "-" .. oob_value.name
 
-			if airbase_tab[side][oob_value.base] then
-				--print("airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab\n")
+            if airbase_tab[side][oob_value.base] then
+                existed_airbase_name = oob_value.base
+            end
 
-				if airbase_tab[side][oob_value.base].aircraft_types[oob_value.type] then
+
+			if existed_airbase_name then -- airbase name in oob_air exists in airbase_tab
+				--print("airbase: " .. side .. " " .. existed_airbase_name .." exists in airbase_tab\n")
+
+				if airbase_tab[side][existed_airbase_name].aircraft_types[oob_value.type] then --aircraft_type in oob_air exist in airbase_tab
 					result = true
+                    local percentage_efficiency_influence = nil
 
-					if oob_value.base ~= "Reserves" then
-						--print("old airbase oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
-						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						-- oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
-                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_airbases/100 ) - 1 ) )
-						--print("new airbase oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
-					else
-						--print("old reserves oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
-						--print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][oob_value.base].efficiency .. "\n")
-						--oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
-                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][oob_value.base].efficiency * percentage_efficiency_effect_for_reserves/100 ) - 1 ) )
-						--print("new reserves oob_value.roster.ready: " .. oob_value.roster.ready .."\n")
-					end
+					if string.sub(oob_value.base, 1, 8) ~= "Reserves" then
+                        percentage_efficiency_influence = percentage_efficiency_influence_for_airbases/100
+                    
+                    else
+                        percentage_efficiency_influence = percentage_efficiency_influence_for_reserves/100
+                    end
 
+                    --print("old airbase oob_value.number: " .. oob_value.number .."\n")
+                    --print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][existed_airbase_name].efficiency .. "\n")
+                    
+                    ------ ELIMINARE SOSTITUNDO CON IL CRITERIO SCELTO PER UPDATE --------------
+                    if update_ready then
+                        local old_ready = oob_value.roster.ready
+                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_effect ) - 1 ) )
+                        local increment_lost = old_ready - oob_value.roster.ready 
+                        oob_value.roster.lost = oob_value.roster.ready + increment_lost
+                    
+                    else
+                        oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) )--  valutare l'opportunità di valutare il numero di aerei presenti nella base: tablelength( airbase_tab[side][existed_airbase_name].aircraft_types )                    
+                        --print("new airbase oob_value.number: " .. oob_value.number .."\n")
+                    end
+                    -----------------------------------------------------------------------------    
 				else
-					print("oob_air aircraft type: " .. oob_value.type .. " --> not exixst aircraft.\n")
+					print("oob_air aircraft type: " .. oob_value.type .. " --> not exist in airbase_tab\n")
 					result = false
 				end
 
 			else
-				print("airbase not exists in airbase_tab\n")
+				print( "airbase: " .. side .. " " .. airbase_name .. " not exists in airbase_tab\n" )
 				result = false
 			end
         end
@@ -744,6 +777,7 @@ local function Test_InitializeAirbaseTab()
 
 	if result then
 		print("-------------------------> Test_InitalizeAirbaseAndAircraft(): true\n")
+        SaveTabOnDisk("airbase_tab",  airbase_tab)
 	else
 		print("-------------------------> Test_InitalizeAirbaseAndAircraft(): false\n")
 	end
@@ -957,7 +991,7 @@ local function Test_UpdateSupplyAirbase()
     if airbase_tab.red.Beslan.supply == 0.4 and airbase_tab.red.Mozdok.supply == 0.5 and airbase_tab.red.Nalchik.supply == 0.2 and
     airbase_tab.red['Mineralnye-Vody'].supply == 0.5 and airbase_tab.red['Maykop-Khanskaya'].supply == 0.15 and
     airbase_tab.red['Sochi-Adler'].supply == 0.3 and airbase_tab.blue.Batumi.supply == 0.2 and airbase_tab.blue.Vaziani.supply == 0.4
-    and airbase_tab.red.Reserves.supply == 0.25 and airbase_tab.blue.Reserves.supply == 0.4 and airbase_tab.blue.Kutaisi.supply == 0.2 then
+    and airbase_tab.blue.Kutaisi.supply == 0.2 then -- and airbase_tab.red.Reserves.supply == 0.25 and airbase_tab.blue.Reserves.supply == 0.4 
         result = true
     end
 
@@ -1461,23 +1495,55 @@ local function Test_UpdateOobAir()
             --print("old oob_air value: ", side, oob_air_old[side][index_value].base, oob_air_old[side][index_value].type, oob_air_old[side][index_value].roster.ready )
 
             if oob_value.base == "Mozdok" or oob_value.base == "Mineralnye-Vody"  then
-                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
                 
-            elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi"
-                or ( oob_value.base == "Reserves" and side == "blue") then
+                if update_ready then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.5 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.5 ) - 1  ) ) )
+                end
+                                
+            elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi" then                
+
+                if update_ready then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
+                
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.4 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.4 ) - 1  ) ) )
+                end                    
 
             elseif oob_value.base == "Sochi-Adler"  then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.3 ) - 1  ) ) )
 
-            elseif oob_value.base == "Reserves" and side == "red" then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+                if update_ready then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.3 ) - 1  ) ) )
+                
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.3 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.3 ) - 1  ) ) )
+                end
+                   
 
             elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
+
+                if update_ready then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
+                    
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
+                end
+                    
 
             elseif oob_value.base == "Maykop-Khanskaya"  then
-                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
+
+                if update_ready then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
+                
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.15 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.15 ) - 1  ) ) )
+                end
 
             end
         end
@@ -1614,18 +1680,38 @@ local function Test_UpdateOobAir()
             --effettuato in base alle info presenti in targetlist. Nel precedente funzionava perche il calcolo considera i valori di integrity=1(alive=100)
             
             if oob_value.base == "Mozdok"  then
-                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
-                --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
 
+                if update_ready then
+                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.25 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.25 ) - 1  ) ) )
+                end                
+                
             elseif oob_value.base == "Beslan" then
+
+                if update_ready then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
                     --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
 
-            
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) ) 
+                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
+                    
+                end
+                    
             elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
+
+                if update_ready then
                     result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
                     --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
 
+                else
+                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.1 ) - 1  ) ) )
+                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.1 ) - 1  ) ) )
+                end                    
             end
         end
 	end
@@ -2017,7 +2103,7 @@ local function executeAllTest()
 
     Test_CopySupplyTab()
     --
-
+    
 end
 
 if executeTest then
