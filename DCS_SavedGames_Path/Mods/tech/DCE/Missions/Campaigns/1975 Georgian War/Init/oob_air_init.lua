@@ -61,12 +61,11 @@ oob_air = {
 		},
 		[2] = {
 			name = "R/III./JG-8",								--unit name
-			inactive = true,
 			type = "F-4E",									--aircraft type
 			country = "Germany",								--unit country
 			base = "Reserves",								--unit base
 			tasks = {},										--unit tasks
-			number = 4,
+			number = 10,
 		},
 		[3] = {
 			name = "TEF 1st AS",								--unit name
@@ -92,54 +91,8 @@ oob_air = {
 			country = "Turkey",								--unit country
 			base = "Reserves",								--unit base
 			tasks = {},										--unit tasks
-			number = 24,
+			number = 20,
 		},
-
-			-- [5] = {
-			-- name = "TEF 1st TS",								--unit name
-			-- player = false,									--player unit
-			-- type = "C-130",									--aircraft type
-			-- country = "Turkey",								--unit country
-			-- livery = "",				--unit livery
-			-- base = "Batumi",						--unit base
-			-- skill = "Random",									--unit skill
-			-- tasks = {										--unit tasks
-				-- ["Transport"] = true,
-			-- },
-			-- number = 1,
-		-- },
-		-- [6] = {
-			-- name = "R/TEF 1st TS",								--unit name
-			-- inactive = true,
-			-- type = "C-130",									--aircraft type
-			-- country = "Turkey",								--unit country
-			-- base = "Reserves",								--unit base
-			-- tasks = {},										--unit tasks
-			-- number = 5,
-		-- },
-		-- [7] = {
-			-- name = "TEF 2nd TS",								--unit name
-			-- player = false,									--player unit
-			-- type = "C-130",									--aircraft type
-			-- country = "Turkey",								--unit country
-			-- livery = "",				--unit livery
-			-- base = "Diyarbakir",						--unit base
-			-- skill = "Random",									--unit skill
-			-- tasks = {										--unit tasks
-				-- ["Transport"] = true,
-			-- },
-			-- number = 2,
-		-- },
-		-- [8] = {
-			-- name = "R/TEF 2nd TS",								--unit name
-			-- inactive = true,
-			-- type = "C-130",									--aircraft type
-			-- country = "Turkey",								--unit country
-			-- base = "Reserves",								--unit base
-			-- tasks = {},										--unit tasks
-			-- number = 4,
-		-- },
-
 		[5] = {
 			name = "1st THR",								--unit name
 			type = "UH-1H",								--aircraft type
@@ -152,7 +105,7 @@ oob_air = {
 				["Transport"] = true,
 				["Strike"] = true,
 			},
-			number = 4,
+			number = 8,
 		},
 		[6] = {
 			name = "R/1st THR",								--unit name
@@ -161,7 +114,7 @@ oob_air = {
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
-			number = 8,
+			number = 20,
 		},
 		[7] = {
 			name = "2nd THR",								--unit name
@@ -174,7 +127,7 @@ oob_air = {
 			tasks = {
 				["Strike"] = true,
 			},
-			number = 4,
+			number = 8,
 		},
 		[8] = {
 			name = "R/2nd THR",								--unit name
@@ -183,7 +136,7 @@ oob_air = {
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
-			number = 8,
+			number = 20,
 		},
 		[9] = {
 			name = "58 TFS",								--unit name
@@ -210,12 +163,30 @@ oob_air = {
 			country = "USA",								--unit country
 			base = "Reserves",								--unit base
 			tasks = {},										--unit tasks
-			number = 10,
+			number = 15,
+		},
+		[11] = {
+			name = "TEF 1st TS",								--unit name
+			type = "C-130",									--aircraft type
+			country = "Turkey",								--unit country
+			livery = "",				--unit livery
+			base = "Batumi",						--unit base
+			skill = "Random",									--unit skill
+			tasks = {										--unit tasks
+				["Transport"] = true,
+			},
+			number = 3,
+		},
+		[12] = {
+			name = "R/TEF 1st TS",								--unit name
+			type = "C-130",									--aircraft type
+			country = "Turkey",								--unit country
+			base = "Reserves",								--unit base
+			tasks = {},										--unit tasks
+			number = 7,
 		},
 
-
-
-		[12] = {
+		[13] = {
 			name = "69 BS",									--unit name
 			type = "B-52H",									--aircraft type
 			country = "USA",								--unit country
@@ -227,16 +198,16 @@ oob_air = {
 			},
 			number = 5,
 		},
-		[13] = {
+		[14] = {
 			name = "R/69 BS",								--unit name
 			inactive = true,
 			type = "B-52H",									--aircraft type
 			country = "USA",								--unit country
 			base = "Reserves",								--unit base
 			tasks = {},										--unit tasks
-			number = 5,
+			number = 15,
 		},
-		[12] = {
+		[15] = {
 			name = "7 ACCS",								--unit name
 			type = "E-3A",									--aircraft type
 			country = "USA",								--unit country
@@ -248,7 +219,7 @@ oob_air = {
 			},
 			number = 3,
 		},
-		[13] = {
+		[16] = {
 			name = "171 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
 			country = "USA",								--unit country
@@ -260,7 +231,7 @@ oob_air = {
 			},
 			number = 3,
 		},
-		[14] = {
+		[17] = {
 			name = "R/171 ARW",								--unit name
 			inactive = true,
 			type = "KC135MPRS",									--aircraft type
@@ -270,7 +241,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 9,
 		},
-		[15] = {
+		[18] = {
 			name = "801 ARS",								--unit name
 			type = "KC-135",								--aircraft type
 			country = "USA",								--unit country
@@ -280,9 +251,9 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 4,
+			number = 3,
 		},
-		[16] = {
+		[19] = {
 			name = "R/801 ARS",								--unit name
 			inactive = true,
 			type = "KC-135",									--aircraft type
@@ -290,9 +261,9 @@ oob_air = {
 			base = "Reserves",							--unit base
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
-			number = 6,
+			number = 7,
 		},
-		[17] = {
+		[20] = {
 			name = "174 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
 			country = "USA",								--unit country
@@ -302,9 +273,9 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 4,
+			number = 3,
 		},
-		[18] = {
+		[21] = {
 			name = "R/174 ARW",								--unit name
 			inactive = true,
 			type = "KC135MPRS",									--aircraft type
@@ -312,9 +283,9 @@ oob_air = {
 			base = "Reserves",							--unit base
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
-			number = 6,
+			number = 7,
 		},
-		[19] = {
+		[22] = {
 			name = "VF-101",							--unit name
 			player = true,									--player unit
 			type = "F-14A-135-GR",								--aircraft type
@@ -346,7 +317,7 @@ oob_air = {
 			},
 			number = 16,
 		},
-		[20] = {
+		[23] = {
 			name = "R/VF-101",								--unit name
 			inactive = true,
 			type = "F-14A-135-GR",								--aircraft type
@@ -356,7 +327,7 @@ oob_air = {
 			number = 30,
 		},
 
-		[23] = {
+		[24] = {
 			name = "F7",								--unit name
 			player = true,									--player unit
 			type = "AJS37",								--aircraft type
@@ -383,7 +354,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[24] = {
+		[25] = {
 			name = "F21",								--unit name
 			inactive = true,
 			type = "AJS37",									--aircraft type
@@ -392,7 +363,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 30,
 		},
-		[25] = {
+		[26] = {
 			name = "VAW-125",								--unit name
 			type = "E-2C",									--aircraft type
 			country = "USA",								--unit country
@@ -403,9 +374,9 @@ oob_air = {
 			tasks = {										--unit tasks
 				["AWACS"] = true,
 			},
-			number = 8,
+			number = 5,
 		},
-		[26] = {
+		[27] = {
 			name = "R/VAW-125",								--unit name
 			inactive = true,
 			type = "E-2C",									--aircraft type
@@ -413,9 +384,9 @@ oob_air = {
 			base = "Reserves",							--unit base
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
-			number = 1,
+			number = 5,
 		},
-		[27] = {
+		[28] = {
 			name = "174 ARW",								--unit name
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
@@ -426,9 +397,9 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 12,
+			number = 5,
 		},
-		[28] = {
+		[29] = {
 			name = "R/174 ARW",								--unit name
 			inactive = true,
 			type = "S-3B Tanker",									--aircraft type
@@ -436,9 +407,9 @@ oob_air = {
 			base = "Reserves",							--unit base
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
-			number = 10,
+			number = 7,
 		},
-		[29] = {
+		[30] = {
 			name = "175 ARW",								--unit name
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
@@ -449,7 +420,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 12,
+			number = 5,
 		},
 	},
 
@@ -545,7 +516,7 @@ oob_air = {
 			name = "1./19.IAP",							--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Russia",							--unit country
-			livery = "",						--unit livery
+			livery = "",							--unit livery
 			base = "Beslan",							--unit base
 			skill = "Random",								--unit skill
 			tasks = {										--unit tasks
@@ -801,7 +772,135 @@ oob_air = {
 		},
 
 		-------
+		[7] = {
+			name = "1./107.IAP",								--unit name
+			type = "MiG-27K",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Nalchik",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["SEAD"] = false,				
+			},
+			number = 12,
+		},
+		[8] = {
+			name = "R./107.IAP",								--unit name
+			inactive = true,
+			type = "MiG-27K",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 12,
+		},
 
+		[7] = {
+			name = "1./103.IAP",								--unit name
+			type = "MiG-23MLD",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Nalchik",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Intercept"] = true,
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = true,
+				["Strike"] = true,		
+			},
+			number = 12,
+		},
+		[8] = {
+			name = "R./103.IAP",								--unit name
+			inactive = true,
+			type = "MiG-23MLD",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 12,
+		},
+
+		[7] = {
+			name = "1./105.IAP",								--unit name
+			type = "Su-17M4",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Nalchik",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["Anti-ship Strike"] = true,			
+			},
+			number = 12,
+		},
+		[8] = {
+			name = "R./105.IAP",								--unit name
+			inactive = true,
+			type = "Su-17M4",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 12,
+		},
+
+		[7] = {
+			name = "1./111AS.IAP",								--unit name
+			type = "L-39A",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Nalchik",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["Anti-ship Strike"] = true,	
+				["Intercept"] = true,
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = true,		
+			},
+			number = 12,
+		},
+		[8] = {
+			name = "R./111AS.IAP",								--unit name
+			inactive = true,
+			type = "L-39A",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 24,
+		},
+
+		
+		[7] = {
+			name = "13.OSAP",								--unit name
+			type = "Il-76MD",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Nalchik",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Transport"] = true,				
+			},
+			number = 4,
+		},
+		[8] = {
+			name = "R./13.OSAP",								--unit name
+			inactive = true,
+			type = "Il-76MD",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 12,
+		},
+		
+		
+		
 		[7] = {
 			name = "GA 3rd AS",								--unit name
 			type = "MiG-27K",								--aircraft type
@@ -811,7 +910,7 @@ oob_air = {
 			skill = "Random",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,
+				["Anti-ship Strike"] = true,
 			},
 			number = 12,
 		},
@@ -825,6 +924,35 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 12,
 		},
+
+		[7] = {
+			name = "GA 3rd AS",								--unit name
+			type = "MiG-19P",								--aircraft type
+			country = "Georgia",								--unit country
+			livery = "",								--unit livery
+			base = "Kutaisi",							--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Intercept"] = true,
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = true,		
+			},
+			number = 12,
+		},
+		[8] = {
+			name = "R./GA 3rd AS",								--unit name
+			inactive = true,
+			type = "MiG-19P",								--aircraft type
+			country = "Georgia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 24,
+		},
+
+
+
 		[9] = {
 			name = "GA 1st TS",								--unit name
 			type = "An-26B",								--aircraft type
@@ -841,7 +969,7 @@ oob_air = {
 			name = "R/GA 1st TS",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			base = "Reserves",
 			skill = "Random",									--unit skill
 			tasks = {},										--unit tasks
@@ -850,7 +978,7 @@ oob_air = {
 		[11] = {
 			name = "GA 2nd TS",								--unit name
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Krasnodar-Center",						--unit base
 			skill = "Random",									--unit skill
@@ -862,16 +990,17 @@ oob_air = {
 		[12] = {
 			name = "R/GA 2nd TS",								--unit name
 			inactive = true,
-			type = "An-26B",								--aircraft type
+			type = "An-26B",									--aircraft type
+			country = "Russia",							
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
 			number = 4,
 		},
-		[13] = {
+		[13] = { -- no senaki è blue
 			name = "GA 3rd TS",								--unit name
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Senaki-Kolkhi",						--unit base
 			skill = "Random",									--unit skill
@@ -884,6 +1013,7 @@ oob_air = {
 			name = "R/GA 3rd TS",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
+			country = "Russia",								--unit country
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
@@ -892,7 +1022,7 @@ oob_air = {
 		[15] = {
 			name = "GA 4th TS",								--unit name
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Maykop-Khanskaya",						--unit base
 			skill = "Random",									--unit skill
@@ -905,7 +1035,7 @@ oob_air = {
 			name = "R/GA 4th TS",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			base = "Reserves",
 			skill = "Random",									--unit skill
 			tasks = {},										--unit tasks
@@ -914,7 +1044,7 @@ oob_air = {
 		[17] = {
 			name = "GA 5th TS",								--unit name
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Sochi-Adler",						--unit base
 			skill = "Random",									--unit skill
@@ -935,7 +1065,7 @@ oob_air = {
 		[19] = {
 			name = "GA 6th TS",								--unit name
 			type = "An-26B",								--aircraft type
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Nalchik",						--unit base
 			skill = "Random",									--unit skill
@@ -953,11 +1083,11 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 4,
 		},
-		[21] = {
+		[21] = { --- verifica posizione farp
 			name = "1st GHR",								--unit name
 			type = "Mi-8MT",								--aircraft type
 			helicopter = true,								--true for helicopter units
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "FARP-1st GHR",						--unit base
 			skill = "Random",									--unit skill
@@ -974,13 +1104,13 @@ oob_air = {
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
-			number = 8,
+			number = 12,
 		},
-		[23] = {
+		[23] = { -- verifica posizione farp
 			name = "2nd GHR",								--unit name
 			type = "Mi-24V",								--aircraft type
 			helicopter = true,								--true for helicopter units
-			country = "Georgia",								--unit country
+			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "FARP-2nd GHR",						--unit base
 			skill = "Random",									--unit skill
@@ -996,7 +1126,7 @@ oob_air = {
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
-			number = 8,
+			number = 12,
 		},
 	}
 }

@@ -328,9 +328,9 @@ BAT_FirstMission.lua:
 84 --====================  start marco implementation ==================================
 85
 86 dofile("Init/supply_tab_init.lua")
-87 local tgt_str = supply_tab .. " = " .. TableSerialization(supply_tab, 0)
+87 local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)
 88 local tgtFile = nil
-89 tgtFile = io.open("Active/" .. supply_tab .. ".lua", "w")
+89 tgtFile = io.open("Active/supply_tab.lua", "w")
 90 tgtFile:write(tgt_str)
 91 tgtFile:close()
 92
