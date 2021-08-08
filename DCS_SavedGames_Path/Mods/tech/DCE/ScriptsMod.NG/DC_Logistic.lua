@@ -341,7 +341,7 @@ BAT_FirstMission.lua:
 
 
 
-local executeTest = false
+local executeTest = true
 local update_ready = false
 
 if executeTest then
@@ -353,11 +353,8 @@ if executeTest then
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
 
 else
-  dofile("Init/db_airbases.lua")
-  dofile("Active/targetlist.lua")
-  dofile("Active/oob_air.lua")
+  
   dofile("Active/supply_tab.lua")
-  dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 end
 
@@ -433,10 +430,9 @@ local function InitializeAirbaseTab()
                             ["aircraft_types"] = {
                                 [aircraft_type] = group_name,
                             },
-                            ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
-                            ["integrity"] = 1, -- same of targetlist.alive
-                            ["supply"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
-
+                            ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
+                            ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
+                            ["supply"] = -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
                         }
                     }
                 }
@@ -448,10 +444,9 @@ local function InitializeAirbaseTab()
                         ["aircraft_types"] = {
                             [aircraft_type] = group_name,
                         },
-                        ["efficiency"] = 1, -- efficiency_<airbase> = ( damage_<airbase>  / 100 ) * energy_<airbase>; ( 0: min - 1: max )
-                        ["integrity"] = 1, -- same of targetlist.alive
-                        ["supply"] = 1 -- energy_<airbase> = energy_line_efficiency_<airbase> *  energy_request_<airbase> * total_energy_production ;   (  0: min - 1: max  )
-
+                        ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
+                        ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
+                        ["supply"] = -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
                     }
                 }
 
@@ -470,9 +465,9 @@ local function InitializeAirbaseTab()
                     --print("airbase not exists in airbase_tab\n")
                     airbase_tab[side][airbase_name] =  { -- insert new airbase, initializa property and assign aircraft
                         ["aircraft_types"] = { [aircraft_type] = group_name },-- insert new airbase and assign aircraft
-                        ["efficiency"] = 1, -- efficiency_<airbase>  1 = max, 0 = min
+                        ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
-                        ["supply"]= 1 -- supply_<airbase> 1 = max, 0 = min
+                        ["supply"]= -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
                     }
                 end
                 --print("\n--->: " .. dump(airbase_tab).. " <----\n")
@@ -562,8 +557,8 @@ local function UpdateSupplyAirbase( airb_tab, sup_tab )
                             --print("air_tab.airbase.supply: " .. base_values.supply .. ", calculated supply: " .. supply .. "\n")
                             --print("supply_plant_values.integrity: " .. supply_plant_values.integrity .. ", supply_line_values.integrity: " .. supply_line_values.integrity .. ", calculated supply: " .. supply .. "\n")
 
-                            if ( base_values.supply == 1 and supply > 0 ) or ( supply > base_values.supply ) then -- select supply value from highest supply supply integrity calculated
-                                --print("air_tab.supply ==1 or calculated supply > air_tab.supply(" .. base_values.supply .. ") --> update air_tab.supplyt: air_tab.supply = supply(" .. supply .. ") \n")
+                            if ( base_values.supply == -1 ) or ( supply > base_values.supply ) then -- select supply value from highest supply supply integrity calculated
+                                --print("air_tab.supply == 1 or calculated supply > air_tab.supply(" .. base_values.supply .. ") --> update air_tab.supplyt: air_tab.supply = supply(" .. supply .. ") \n")
                                 base_values.supply  = supply
                             end
                         end
@@ -753,7 +748,7 @@ local function Test_InitializeAirbaseTab()
         for base_name, base_values in pairs( side_values ) do --
 			--print( base_values["efficiency"] .. ", " .. base_values["integrity"] .. ", " .. base_values["supply"] .. "\n" )
 
-			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["supply"] ~= 1 then
+			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["supply"] ~= -1 then
 
 				result = false
 				break;
@@ -967,6 +962,8 @@ local function Test_UpdateSupplyAirbase()
 
     --print( dump( airbase_tab) )
 
+    return result
+
 
 end
 
@@ -1172,6 +1169,8 @@ local function Test_UpdateAirbaseIntegrity()
 
 	end
 
+    return result
+
 end
 
 local function Test_UpdateAirbaseEfficiency()
@@ -1321,6 +1320,7 @@ local function Test_UpdateAirbaseEfficiency()
     print("-------------------------> Test_UpdateAirbaseEfficiency(): " .. tostring(result) .. "\n")
 
     --print( dump( airbase_tab) )
+    return result
 
 
 
@@ -2040,38 +2040,15 @@ end
 
 local function executeAllTest()
 
-	print("\nExecuting test" .. "\n")
+	print("\nExecuting tests" .. "\n")
 
-	Test_InitializeAirbaseTab()
-	-- OK
+    local result = Test_InitializeAirbaseTab() and Test_UpdateSupplyPlantIntegrity()
+    and Test_UpdateSupplyLineIntegrity() and Test_UpdateSupplyAirbase() and Test_UpdateAirbaseIntegrity()
+    and Test_UpdateAirbaseEfficiency()and Test_UpdateOobAir() and Test_SaveTabOnDisk() and Test_CopySupplyTab() 
+    
+    print("-------------------------> executeAllTest(): " .. tostring(result) .. "\n")
 
-	Test_UpdateSupplyPlantIntegrity()
-	-- OK
-
-	Test_UpdateSupplyLineIntegrity()
-	-- OK
-
-	Test_UpdateSupplyTabIntegrity()
-	-- OK
-
-	Test_UpdateSupplyAirbase()
-	-- OK
-
-	Test_UpdateAirbaseIntegrity()
-	-- OK
-
-	Test_UpdateAirbaseEfficiency()
-    -- OK
-
-	Test_UpdateOobAir()
-	-- OK
-
-    Test_SaveTabOnDisk()
-    -- OK
-
-    Test_CopySupplyTab()
-    --
-
+    return result
 end
 
 if executeTest then
