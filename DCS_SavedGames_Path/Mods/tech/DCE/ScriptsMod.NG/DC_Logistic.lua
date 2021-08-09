@@ -341,8 +341,8 @@ BAT_FirstMission.lua:
 
 
 
-local executeTest = true
-local update_ready = false
+local executeTest = false
+local update_ready = true
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -537,7 +537,7 @@ end
 
 -- Update the supply property in airbase_tab using integrity property from supply_tab
 -- OK
-local function UpdateSupplyAirbase( airb_tab, sup_tab )
+local function UpdateAirbaseSupply( airb_tab, sup_tab )
 
     for side_base, side_values in pairs( airb_tab ) do
 
@@ -631,7 +631,7 @@ function UpdateOobAir()
     UpdateSupplyLineIntegrity( supply_tab )
   end
 
-	airbase_tab = UpdateSupplyAirbase( airbase_tab, supply_tab )
+	airbase_tab = UpdateAirbaseSupply( airbase_tab, supply_tab )
 	airbase_tab = UpdateAirbaseIntegrity( airbase_tab )
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )
 
@@ -819,7 +819,7 @@ local function Test_UpdateSupplyLineIntegrity()
     return result
 end
 
-local function Test_UpdateSupplyAirbase()
+local function Test_UpdateAirbaseSupply()
 
 	--print( dump( supply_tab) .. "\n"  )
 
@@ -938,7 +938,7 @@ local function Test_UpdateSupplyAirbase()
     }
 
     airbase_tab = nil
-    airbase_tab = UpdateSupplyAirbase( InitializeAirbaseTab(), supply_tab )
+    airbase_tab = UpdateAirbaseSupply( InitializeAirbaseTab(), supply_tab )
     local result = false
 
     --[[
@@ -2043,7 +2043,7 @@ local function executeAllTest()
 	print("\nExecuting tests" .. "\n")
 
     local result = Test_InitializeAirbaseTab() and Test_UpdateSupplyPlantIntegrity()
-    and Test_UpdateSupplyLineIntegrity() and Test_UpdateSupplyAirbase() and Test_UpdateAirbaseIntegrity()
+    and Test_UpdateSupplyLineIntegrity() and Test_UpdateAirbaseSupply() and Test_UpdateAirbaseIntegrity()
     and Test_UpdateAirbaseEfficiency()and Test_UpdateOobAir() and Test_SaveTabOnDisk() and Test_CopySupplyTab() 
     
     print("-------------------------> executeAllTest(): " .. tostring(result) .. "\n")
