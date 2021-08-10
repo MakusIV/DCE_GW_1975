@@ -341,7 +341,7 @@ BAT_FirstMission.lua:
 
 
 
-local executeTest = false
+local executeTest = true
 local update_ready = true
 
 if executeTest then
@@ -432,7 +432,7 @@ local function InitializeAirbaseTab()
                             },
                             ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
                             ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
-                            ["supply"] = -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
+                            ["supply"] = 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                         }
                     }
                 }
@@ -446,7 +446,7 @@ local function InitializeAirbaseTab()
                         },
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
-                        ["supply"] = -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
+                        ["supply"] = 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
                 }
 
@@ -467,7 +467,7 @@ local function InitializeAirbaseTab()
                         ["aircraft_types"] = { [aircraft_type] = group_name },-- insert new airbase and assign aircraft
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
-                        ["supply"]= -1 -- supply_<airbase> 1 (full supply) = max, 0 = min, -1 = init
+                        ["supply"]= 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
                 end
                 --print("\n--->: " .. dump(airbase_tab).. " <----\n")
@@ -539,6 +539,8 @@ end
 -- OK
 local function UpdateAirbaseSupply( airb_tab, sup_tab )
 
+    local max_supply_value = {}
+
     for side_base, side_values in pairs( airb_tab ) do
 
         for base_name, base_values in pairs( side_values ) do
@@ -553,17 +555,26 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
 
                         if base_name == airbase_name then
                             -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
-                            local supply = supply_plant_values.integrity * supply_line_values.integrity  -- update supply value of an airbase
+                            local supply = supply_plant_values.integrity * supply_line_values.integrity  -- update supply value of an airbase                            
+
+                            if max_supply_value[base_name] then -- check previous supply values for this airbase                                
+
+                                if supply > max_supply_value[base_name] then
+                                    max_supply_value[base_name] = supply                                                
+                                end
+
+                            else                                                                                        
+                                max_supply_value[base_name] = supply    
+                            end
                             --print("air_tab.airbase.supply: " .. base_values.supply .. ", calculated supply: " .. supply .. "\n")
                             --print("supply_plant_values.integrity: " .. supply_plant_values.integrity .. ", supply_line_values.integrity: " .. supply_line_values.integrity .. ", calculated supply: " .. supply .. "\n")
-
-                            if ( base_values.supply == -1 ) or ( supply > base_values.supply ) then -- select supply value from highest supply supply integrity calculated
-                                --print("air_tab.supply == 1 or calculated supply > air_tab.supply(" .. base_values.supply .. ") --> update air_tab.supplyt: air_tab.supply = supply(" .. supply .. ") \n")
-                                base_values.supply  = supply
-                            end
                         end
                     end
                 end
+            end
+            --select supply value from highest supply supply integrity calculated
+            if max_supply_value[base_name] then   
+                base_values.supply  = max_supply_value[base_name]
             end
         end
     end
@@ -667,7 +678,7 @@ function UpdateOobAir()
                     ------ ELIMINARE SOSTITUNDO CON IL CRITERIO SCELTO PER UPDATE --------------
                     if update_ready then
                         local old_ready = oob_value.roster.ready
-                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_effect ) - 1 ) )
+                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) )
                         local increment_lost = old_ready - oob_value.roster.ready
                         oob_value.roster.lost = oob_value.roster.ready + increment_lost
 
@@ -748,7 +759,7 @@ local function Test_InitializeAirbaseTab()
         for base_name, base_values in pairs( side_values ) do --
 			--print( base_values["efficiency"] .. ", " .. base_values["integrity"] .. ", " .. base_values["supply"] .. "\n" )
 
-			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["supply"] ~= -1 then
+			if base_values["efficiency"] ~= 1 or base_values["integrity"] ~= 1 or base_values["supply"] ~= 1 then
 
 				result = false
 				break;
@@ -1295,7 +1306,7 @@ local function Test_UpdateAirbaseEfficiency()
 
     airbase_tab = InitializeAirbaseTab()
     --dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Init/supply_tab_init.lua")
-	airbase_tab = UpdateSupplyAirbase( airbase_tab, supply_tab )
+	airbase_tab = UpdateAirbaseSupply( airbase_tab, supply_tab )
 	--print( dump( airbase_tab).."\n" )
 
 	airbase_tab = UpdateAirbaseEfficiency( airbase_tab )

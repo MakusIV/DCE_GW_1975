@@ -14,8 +14,8 @@ supply_tab_test = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Reserves'] = true,
-						['Senaki-Kolkhi'] = true,
 						['Batumi'] = true,
+						['Senaki-Kolkhi'] = true,
 					},
 				},
 			},
@@ -27,8 +27,8 @@ supply_tab_test = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Vaziani'] = true,
-						['Senaki-Kolkhi'] = true,
 						['Reserves'] = true,
+						['Senaki-Kolkhi'] = true,
 					},
 				},
 				['Bridge Tagrskiy-FH08'] = {
@@ -42,22 +42,27 @@ supply_tab_test = {
 		},
 	},
 	['red'] = {
-		['Prohladniy Depot MP 24'] = {
+		['Mineralnye-Vody Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge Alagir MN 36'] = {
+				['Bridge South Elhotovo MN 39'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Beslan'] = true,
-						['Mozdok'] = true,
-					},
-				},
-				['Bridge South Beslan MN 68'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
+						['Reserves'] = true,
 						['Nalchik'] = true,
 						['Beslan'] = true,
 						['Sochi-Adler'] = true,
+						['Mineralnye-Vody'] = true,
+						['Mozdok'] = true,
+						['Maykop-Khanskaya'] = true,
+					},
+				},
+				['Rail Bridge SE Mayskiy MP 23'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Sochi-Adler'] = true,
+						['Mozdok'] = true,
+						['Beslan'] = true,
 					},
 				},
 			},
@@ -65,16 +70,6 @@ supply_tab_test = {
 		['101 EWR Site'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge SW Kardzhin MN 49'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Mineralnye-Vody'] = true,
-						['Sochi-Adler'] = true,
-						['Beslan'] = true,
-						['Reserves'] = true,
-						['Mozdok'] = true,
-					},
-				},
 				['Russian Convoy 1'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
@@ -82,28 +77,33 @@ supply_tab_test = {
 						['Mineralnye-Vody'] = true,
 					},
 				},
-			},
-		},
-		['Mineralnye-Vody Airbase'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Bridge South Elhotovo MN 39'] = {
+				['Bridge SW Kardzhin MN 49'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Mozdok'] = true,
-						['Sochi-Adler'] = true,
-						['Beslan'] = true,
 						['Reserves'] = true,
-						['Maykop-Khanskaya'] = true,
-						['Nalchik'] = true,
 						['Mineralnye-Vody'] = true,
+						['Beslan'] = true,
+						['Sochi-Adler'] = true,
+						['Mozdok'] = true,
 					},
 				},
-				['Rail Bridge SE Mayskiy MP 23'] = {
+			},
+		},
+		['Prohladniy Depot MP 24'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Bridge South Beslan MN 68'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Sochi-Adler'] = true,
+						['Nalchik'] = true,
+						['Beslan'] = true,
+					},
+				},
+				['Bridge Alagir MN 36'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Mozdok'] = true,
-						['Sochi-Adler'] = true,
 						['Beslan'] = true,
 					},
 				},
