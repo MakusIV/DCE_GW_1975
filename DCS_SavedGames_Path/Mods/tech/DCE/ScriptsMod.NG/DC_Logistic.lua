@@ -342,7 +342,6 @@ BAT_FirstMission.lua:
 
 
 local executeTest = true
-local update_ready = true
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -637,10 +636,10 @@ function UpdateOobAir()
 
 
 
-  if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
-    UpdateSupplyPlantIntegrity( supply_tab )
-    UpdateSupplyLineIntegrity( supply_tab )
-  end
+    if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
+        UpdateSupplyPlantIntegrity( supply_tab )
+        UpdateSupplyLineIntegrity( supply_tab )
+    end
 
 	airbase_tab = UpdateAirbaseSupply( airbase_tab, supply_tab )
 	airbase_tab = UpdateAirbaseIntegrity( airbase_tab )
@@ -675,19 +674,12 @@ function UpdateOobAir()
                     --print("old airbase oob_value.number: " .. oob_value.number .."\n")
                     --print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][existed_airbase_name].efficiency .. "\n")
 
-                    ------ ELIMINARE SOSTITUNDO CON IL CRITERIO SCELTO PER UPDATE --------------
-                    if update_ready then
-                        local old_ready = oob_value.roster.ready
-                        oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) )
-                        local increment_lost = old_ready - oob_value.roster.ready
-                        oob_value.roster.lost = oob_value.roster.ready + increment_lost
-
-                    else
-                        oob_value.number = math.floor( 0.5 + oob_value.number * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) )--  valutare l'opportunità di valutare il numero di aerei presenti nella base: tablelength( airbase_tab[side][existed_airbase_name].aircraft_types )
-                        --print("new airbase oob_value.number: " .. oob_value.number .."\n")
-                    end
-                    -----------------------------------------------------------------------------
-				else
+                    local old_ready = oob_value.roster.ready
+                    oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) ) -- min: 0 max = actual roster.ready
+                    local increment_lost = old_ready - oob_value.roster.ready
+                    oob_value.roster.lost = oob_value.roster.lost + increment_lost --min: 0, Max 
+				
+                else
 					print("oob_air aircraft type: " .. oob_value.type .. " --> not exist in airbase_tab\n")
 					result = false
 				end
@@ -1474,55 +1466,19 @@ local function Test_UpdateOobAir()
             --print("old oob_air value: ", side, oob_air_old[side][index_value].base, oob_air_old[side][index_value].type, oob_air_old[side][index_value].roster.ready )
 
             if oob_value.base == "Mozdok" or oob_value.base == "Mineralnye-Vody"  then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.5 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.5 ) - 1  ) ) )
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.5 ) - 1  ) ) )
 
             elseif oob_value.base == "Beslan"  or oob_value.base == "Vaziani" or oob_value.base == "Senaki-Kolkhi" then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.4 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.4 ) - 1  ) ) )
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.4 ) - 1  ) ) )
 
             elseif oob_value.base == "Sochi-Adler"  then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.3 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.3 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.3 ) - 1  ) ) )
-                end
-
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.3 ) - 1  ) ) )
 
             elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
-                end
-
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
 
             elseif oob_value.base == "Maykop-Khanskaya"  then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.15 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - I Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.15 ) - 1  ) ) )
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.15 ) - 1  ) ) )
 
             end
         end
@@ -1659,38 +1615,16 @@ local function Test_UpdateOobAir()
             --effettuato in base alle info presenti in targetlist. Nel precedente funzionava perche il calcolo considera i valori di integrity=1(alive=100)
 
             if oob_value.base == "Mozdok"  then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.25 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.25 ) - 1  ) ) )
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
+                --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.25 ) - 1  ) ) )
 
             elseif oob_value.base == "Beslan" then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.2 ) - 1  ) ) )
-
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
+                --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.2 ) - 1  ) ) )
 
             elseif oob_value.base == "Nalchik" or oob_value.base == "Kutaisi" or oob_value.base == "Batumi" then
-
-                if update_ready then
-                    result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
-
-                else
-                    result = result and ( oob_value.number == math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.1 ) - 1  ) ) )
-                    --print( "Test_UpdateOobAir() - II Step oob_value.number", oob_value.number, math.floor( 0.5 + oob_air_old[side][index_value].number * ( 2^( 0.1 ) - 1  ) ) )
-                end
+                result = result and ( oob_value.roster.ready == math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
+                --print( "Test_UpdateOobAir() - II Step oob_value.roster.ready", oob_value.roster.ready, math.floor( 0.5 + oob_air_old[side][index_value].roster.ready * ( 2^( 0.1 ) - 1  ) ) )
             end
         end
 	end
@@ -2014,7 +1948,7 @@ local function Test_CopySupplyTab()
                 },
             },
             ['Novyy Afon Train Station - FH57'] = {
-                ['integrity'] = 1,
+                ['integrity'] = 0.8,
                 ['supply_line_names'] = {
                     ['Bridge Tagrskiy-FH08'] = {
                         ['integrity'] = 1,
@@ -2039,10 +1973,10 @@ local function Test_CopySupplyTab()
     SaveTabOnDisk( "supply_tab_test", supply_tab )
     supply_tab = supply_tab_test
     dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/Missions/Campaigns/1975 Georgian War/Test/supply_tab_test.lua")
-    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 1
+    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 0.8
     supply_tab = nil
     copySupplyTab()
-    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 0.8
+    local result = supply_tab.blue["Novyy Afon Train Station - FH57"].integrity == 1
     print("-------------------------> Test_CopySupplyTab(): " .. tostring(result) .. "\n")
     return result
 

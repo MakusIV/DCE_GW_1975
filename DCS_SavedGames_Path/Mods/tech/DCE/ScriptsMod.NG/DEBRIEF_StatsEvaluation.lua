@@ -378,7 +378,7 @@ for hit_unit,hitter in pairs(hit_table) do													--iterate through all rem
 					
 				end
 				unit.roster.ready = unit.roster.ready - 1									--decrease number of ready aircraft of air unit
-				unit.score_last.ready = unit.score_last.ready + 1							--decrease number of ready aircraft for this mission of air unit
+				unit.score_last.ready = unit.score_last.ready + 1							--decrease number of ready aircraft for this mission of air unit. modificato Era unit.score_last.ready = unit.score_last.ready + 1
 			end
 		end
 	end
