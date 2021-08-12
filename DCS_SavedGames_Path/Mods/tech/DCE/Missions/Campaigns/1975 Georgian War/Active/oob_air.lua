@@ -776,6 +776,32 @@ oob_air = {
 				['ready'] = 1,
 			},
 		},
+		[30] = {
+			['number'] = 5,
+			['type'] = 'S-3B Tanker',
+			['score'] = {
+				['kills_ship'] = 0,
+				['kills_air'] = 0,
+				['kills_ground'] = 0,
+			},
+			['country'] = 'USA',
+			['tasks'] = {
+				['Refueling'] = true,
+			},
+			['skill'] = 'High',
+			['sidenumber'] = {
+				[1] = 430,
+				[2] = 459,
+			},
+			['roster'] = {
+				['lost'] = 0,
+				['damaged'] = 0,
+				['ready'] = 5,
+			},
+			['name'] = '177 ARW',
+			['livery'] = '',
+			['base'] = 'CVN-74 John C. Stennis',
+		},
 	},
 	['red'] = {
 		[1] = {

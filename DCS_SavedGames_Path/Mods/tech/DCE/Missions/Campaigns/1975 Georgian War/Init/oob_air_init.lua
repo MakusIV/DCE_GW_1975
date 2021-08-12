@@ -410,7 +410,7 @@ oob_air = {
 			number = 7,
 		},
 		[30] = {
-			name = "175 ARW",								--unit name
+			name = "177 ARW",								--unit name
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery

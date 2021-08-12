@@ -1,46 +1,4 @@
 supply_tab_test = {
-	['blue'] = {
-		['Novyy Afon Train Station - FH57'] = {
-			['integrity'] = 0.8,
-			['supply_line_names'] = {
-				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Vaziani'] = true,
-						['Senaki-Kolkhi'] = true,
-						['Reserves'] = true,
-					},
-				},
-				['Bridge Tagrskiy-FH08'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Batumi'] = true,
-					},
-				},
-			},
-		},
-		['Sukhumi Airbase Strategics'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Bridge Anaklia-GG19'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Reserves'] = true,
-						['Senaki-Kolkhi'] = true,
-						['Batumi'] = true,
-					},
-				},
-				['Rail Bridge Grebeshok-EH99'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Vaziani'] = true,
-					},
-				},
-			},
-		},
-	},
 	['red'] = {
 		['Mineralnye-Vody Airbase'] = {
 			['integrity'] = 1,
@@ -49,20 +7,20 @@ supply_tab_test = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Mineralnye-Vody'] = true,
-						['Reserves'] = true,
 						['Nalchik'] = true,
-						['Sochi-Adler'] = true,
-						['Beslan'] = true,
 						['Mozdok'] = true,
+						['Reserves'] = true,
+						['Sochi-Adler'] = true,
 						['Maykop-Khanskaya'] = true,
+						['Beslan'] = true,
 					},
 				},
 				['Rail Bridge SE Mayskiy MP 23'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Sochi-Adler'] = true,
-						['Mozdok'] = true,
 						['Beslan'] = true,
+						['Mozdok'] = true,
 					},
 				},
 			},
@@ -70,19 +28,19 @@ supply_tab_test = {
 		['Prohladniy Depot MP 24'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge Alagir MN 36'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Beslan'] = true,
-						['Mozdok'] = true,
-					},
-				},
 				['Bridge South Beslan MN 68'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
+						['Nalchik'] = true,
 						['Sochi-Adler'] = true,
 						['Beslan'] = true,
-						['Nalchik'] = true,
+					},
+				},
+				['Bridge Alagir MN 36'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Mozdok'] = true,
+						['Beslan'] = true,
 					},
 				},
 			},
@@ -90,21 +48,63 @@ supply_tab_test = {
 		['101 EWR Site'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Russian Convoy 1'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Mozdok'] = true,
-						['Mineralnye-Vody'] = true,
-					},
-				},
 				['Bridge SW Kardzhin MN 49'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Mineralnye-Vody'] = true,
-						['Reserves'] = true,
-						['Beslan'] = true,
-						['Sochi-Adler'] = true,
 						['Mozdok'] = true,
+						['Reserves'] = true,
+						['Sochi-Adler'] = true,
+						['Mineralnye-Vody'] = true,
+						['Beslan'] = true,
+					},
+				},
+				['Russian Convoy 1'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Mineralnye-Vody'] = true,
+						['Mozdok'] = true,
+					},
+				},
+			},
+		},
+	},
+	['blue'] = {
+		['Novyy Afon Train Station - FH57'] = {
+			['integrity'] = 0.8,
+			['supply_line_names'] = {
+				['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Reserves'] = true,
+						['Vaziani'] = true,
+						['Senaki-Kolkhi'] = true,
+					},
+				},
+				['Bridge Tagrskiy-FH08'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Batumi'] = true,
+						['Kutaisi'] = true,
+					},
+				},
+			},
+		},
+		['Sukhumi Airbase Strategics'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Rail Bridge Grebeshok-EH99'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Vaziani'] = true,
+						['Kutaisi'] = true,
+					},
+				},
+				['Bridge Anaklia-GG19'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Batumi'] = true,
+						['Senaki-Kolkhi'] = true,
+						['Reserves'] = true,
 					},
 				},
 			},

@@ -341,7 +341,7 @@ BAT_FirstMission.lua:
 
 
 
-local executeTest = false
+local executeTest = true
 
 if executeTest then
   print("TEST EXECUTING\n")
@@ -554,7 +554,11 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
 
                         if base_name == airbase_name then
                             -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
-                            local supply = supply_plant_values.integrity * supply_line_values.integrity  -- update supply value of an airbase                            
+                            local supply = supply_plant_values.integrity --  -- update supply value of an airbase for power plantwithout power line (power_line_name == power_plant_name)                            
+                            
+                            if supply_plant_name ~= supply_line_name then
+                                supply = supply * supply_line_values.integrity  -- update supply value of an airbase for power line different from power plant                            
+                            end
 
                             if max_supply_value[base_name] then -- check previous supply values for this airbase                                
 
@@ -804,29 +808,7 @@ end
 local function Test_UpdateSupplyLineIntegrity()
 
     local result = false
-    local _supply_tab = UpdateSupplyLineIntegrity( deepcopy( supply_tab ) )
-
-	--print( dump( supply_tab) .. "\n"  )
-
-    if _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
-    _supply_tab.blue["Novyy Afon Train Station - FH57"]["supply_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
-    _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
-    _supply_tab.red["Prohladniy Depot MP 24"]["supply_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
-        result = true
-    end
-
-    print("-------------------------> Test function UpdateSupplyLineIntegrity(): " .. tostring(result) .."\n")
-
-    --print( dump( supply_tab ) )
-
-    return result
-end
-
-local function Test_UpdateAirbaseSupply()
-
-	--print( dump( supply_tab) .. "\n"  )
-
-    supply_tab = {
+    local supply_tab = {
         ['red'] = {
             ['Mineralnye-Vody Airbase'] = {
                 ['supply_line_names'] = {
@@ -849,7 +831,7 @@ local function Test_UpdateAirbaseSupply()
                             ['Beslan'] = true,
                         },
                         ['integrity'] = 0.5,
-                    },
+                    },                   
                 },
                 ['integrity'] = 0.6,
             },
@@ -937,6 +919,177 @@ local function Test_UpdateAirbaseSupply()
                 },
                 ['integrity'] = 0.4,
             },
+            ['Tbilissi'] = {
+                ['supply_line_names'] = {
+                    ['Tbilissi'] = {
+                        ['airbase_supply'] = {
+                            ['TF-71'] = true,                            
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                    ['LHA-Group'] = {
+                        ['airbase_supply'] = {
+                            ['TF-74'] = true,                            
+                        },
+                        ['integrity'] = 0.5,
+                    },               
+                },
+                ['integrity'] = 0.9,
+            },
+        },
+    }
+
+    local _supply_tab = UpdateSupplyLineIntegrity( deepcopy( supply_tab ) )
+
+	--print( dump( supply_tab) .. "\n"  )
+
+    if _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Rail Bridge Grebeshok-EH99'].integrity == 1 and _supply_tab.blue["Sukhumi Airbase Strategics"]["supply_line_names"]['Bridge Anaklia-GG19'].integrity == 1 and
+    _supply_tab.blue["Novyy Afon Train Station - FH57"]["supply_line_names"]['Bridge Tagrskiy-FH08'].integrity == 1 and
+    _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Bridge South Elhotovo MN 39'].integrity == 1 and _supply_tab.red["Mineralnye-Vody Airbase"]["supply_line_names"]['Rail Bridge SE Mayskiy MP 23'].integrity == 1 and
+    _supply_tab.red["Prohladniy Depot MP 24"]["supply_line_names"]['Bridge South Beslan MN 68'].integrity == 1 then
+        result = true
+    end
+
+    print("-------------------------> Test function UpdateSupplyLineIntegrity(): " .. tostring(result) .."\n")
+
+    --print( dump( supply_tab ) )
+
+    return result
+end
+
+local function Test_UpdateAirbaseSupply()
+
+	--print( dump( supply_tab) .. "\n"  )
+    -- watch: use Active/oob_air, so any modify should be cause test failure
+
+    supply_tab = {
+        ['red'] = {
+            ['Mineralnye-Vody Airbase'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Elhotovo MN 39'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Nalchik'] = true,
+                            ['Beslan'] = true,
+                            ['Mozdok'] = true,
+                            ['Maykop-Khanskaya'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Rail Bridge SE Mayskiy MP 23'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },                   
+                },
+                ['integrity'] = 0.6,
+            },
+            ['Prohladniy Depot MP 24'] = {
+                ['supply_line_names'] = {
+                    ['Bridge South Beslan MN 68'] = {
+                        ['airbase_supply'] = {
+                            ['Beslan'] = true,
+                            ['Sochi-Adler'] = true,
+                            ['Nalchik'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Alagir MN 36'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['101 EWR Site'] = {
+                ['supply_line_names'] = {
+                    ['Bridge SW Kardzhin MN 49'] = {
+                        ['airbase_supply'] = {
+                            ['Reserves'] = true,
+                            ['Mozdok'] = true,
+                            ['Beslan'] = true,
+                            ['Mineralnye-Vody'] = true,
+                            ['Sochi-Adler'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Russian Convoy 1'] = {
+                        ['airbase_supply'] = {
+                            ['Mozdok'] = true,
+                            ['Mineralnye-Vody'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 1,
+            },
+        },
+        ['blue'] = {
+            ['Novyy Afon Train Station - FH57'] = {
+                ['supply_line_names'] = {
+                    ['Bridge Tagrskiy-FH08'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Batumi'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Nizh Armyanskoe Uschele-FH47'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Reserves'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.8,
+            },
+            ['Sukhumi Airbase Strategics'] = {
+                ['supply_line_names'] = {
+                    ['Rail Bridge Grebeshok-EH99'] = {
+                        ['airbase_supply'] = {
+                            ['Kutaisi'] = true,
+                            ['Vaziani'] = true,
+                        },
+                        ['integrity'] = 0.25,
+                    },
+                    ['Bridge Anaklia-GG19'] = {
+                        ['airbase_supply'] = {
+                            ['Senaki-Kolkhi'] = true,
+                            ['Batumi'] = true,
+                            ['Reserves'] = true,
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                },
+                ['integrity'] = 0.4,
+            },
+            ['Tbilissi'] = {
+                ['supply_line_names'] = {
+                    ['Tbilissi'] = {
+                        ['airbase_supply'] = {
+                            ['CVN-71 Theodore Roosevelt'] = true,                            
+                        },
+                        ['integrity'] = 0.5,
+                    },
+                    ['LHA-Group'] = {
+                        ['airbase_supply'] = {
+                            ['CVN-74 John C. Stennis'] = true,                            
+                        },
+                        ['integrity'] = 0.5,
+                    },               
+                },
+                ['integrity'] = 0.9,
+            },
         },
     }
 
@@ -957,11 +1110,11 @@ local function Test_UpdateAirbaseSupply()
     if airbase_tab.red.Beslan.supply == 0.4 and airbase_tab.red.Mozdok.supply == 0.5 and airbase_tab.red.Nalchik.supply == 0.2 and
     airbase_tab.red['Mineralnye-Vody'].supply == 0.5 and airbase_tab.red['Maykop-Khanskaya'].supply == 0.15 and
     airbase_tab.red['Sochi-Adler'].supply == 0.3 and airbase_tab.blue.Batumi.supply == 0.2 and airbase_tab.blue.Vaziani.supply == 0.4
-    and airbase_tab.blue.Kutaisi.supply == 0.2 then -- and airbase_tab.red.Reserves.supply == 0.25 and airbase_tab.blue.Reserves.supply == 0.4
+    and airbase_tab.blue.Kutaisi.supply == 0.2 and airbase_tab.blue["CVN-71 Theodore Roosevelt"].supply == 0.9  and airbase_tab.blue["CVN-74 John C. Stennis"].supply == 0.45 then -- and airbase_tab.red.Reserves.supply == 0.25 and airbase_tab.blue.Reserves.supply == 0.4
         result = true
     end
-
-    print("-------------------------> Test_UpdateSupplyAirbase(): " .. tostring(result) .. "\n")
+    print("airbase_tab.blue[\"TF-71\"] == 0.9  and airbase_tab.blue[\"TF-74\"] == 0.45", airbase_tab.blue["CVN-71 Theodore Roosevelt"].supply, airbase_tab.blue["CVN-74 John C. Stennis"].supply)
+    print("-------------------------> Test_UpdateAirbaseSupply(): " .. tostring(result) .. "\n")
 
     --print( dump( airbase_tab) )
 

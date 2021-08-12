@@ -1461,7 +1461,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "airbase",
 			name = "Senaki-Kolkhi",
 		},
-		["TF-71"] = {
+		["CVN-71 Theodore Roosevelt"] = { -- was TF-71
 			task = "Anti-ship Strike",
 			priority = 1,
 			attributes = {"ship"},
@@ -1472,7 +1472,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "ship",
 			name = "TF-71",
 		},
-		["TF-74"] = {
+		["CVN-74 John C. Stennis"] = { -- was TF-74
 			task = "Anti-ship Strike",
 			priority = 1,
 			attributes = {"ship"},
@@ -4128,7 +4128,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 		},
 
-		["Tbilisi Airbase"] = {
+		["Tbilissi Airbase"] = {
 			task = "Strike",
 			priority = 5,
 			picture = {"Tbilisi Airbase.png"},
