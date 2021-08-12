@@ -104,7 +104,7 @@ for base_name,base in pairs(db_airbases) do
 		end
 	end
 	if base.y and base.y ~= 9999999999 then 
-		if base.y <box.min_y then
+		if base.y <box. min_y then
 			box.min_y = base.y
 		end
 		if base.y  > box.max_y then
@@ -222,7 +222,6 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					target.y = target.y + target.elements[e].y								--Sum y coordinates of all elements
 					if target.elements[e].dead then											--if target element is dead		
 						target.alive = target.alive - 100 / #target.elements				--reduce target alive percentage	
-						
 					end
 					if target.elements[e].dead_last then
 						target.dead_last = target.dead_last + 100 / #target.elements		--add target died in last mission percentage

@@ -84,10 +84,10 @@ dofile("Init/targetlist_init.lua")
 --=====================  start marco implementation ==================================
 
 dofile("Init/supply_tab_init.lua")
-local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)						    
+local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)						    --make a string
 local tgtFile = nil
 tgtFile = io.open("Active/supply_tab.lua", "w")
-tgtFile:write(tgt_str)																
+tgtFile:write(tgt_str)																		--save new data
 tgtFile:close()
 
 --=====================  end marco implementation ==================================

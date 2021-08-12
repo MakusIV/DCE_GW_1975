@@ -1,0 +1,141 @@
+Mission 1 - July 6, 2003 (H+1), 07:17
+-------------------------------------
+
+You have been tasked with escorting a strike against EWR 1. No damage was inflicted. EWR 1 remains 100% intact.
+
+EWR 1           (100%)
+- EWR 1 Radar   
+- EWR 1 CP      
+
+Your package has not scored any air-air kills nor sustained any losses.
+
+Package:
+Callsign      Type              Task       Kills Air     Kills Ground     Kills Ship     Lost     
+Chevy61       FA-18C_hornet     Strike     0             0                0              0        
+Chevy62       FA-18C_hornet     Strike     0             0                0              0        
+Chevy63       FA-18C_hornet     Strike     0             0                0              0        
+Chevy64       FA-18C_hornet     Strike     0             0                0              0        
+Pontiac91     FA-18C_hornet     SEAD       0             0                0              0        
+Pontiac92     FA-18C_hornet     SEAD       0             0                0              0        
+Enfield71     F-14B             Escort     0             0                0              0        (Player)
+Enfield72     F-14B             Escort     0             0                0              0        
+Enfield73     F-14B             Escort     0             0                0              0        
+Enfield74     F-14B             Escort     0             0                0              0        
+
+
+
+Order of Battle:
+----------------
+
+Blue Air Units:
+Unit                     Type              Base                          Kills Air     Kills Ground     Kills Ship     Lost     Damaged     Ready
+74th FS                  A-10C_2           Sharjah Intl                  0             0                0              0        0           4
+71st FS                  M-2000C           Al Dhafra AB                  0             0                0              0        0           12
+VFA-106                  FA-18C_hornet     CVN-71 Theodore Roosevelt     0             0                0              0        0           16
+VAW-125                  E-2C              CVN-71 Theodore Roosevelt     0             0                0              0        0           4
+174 ARW                  S-3B Tanker       CVN-71 Theodore Roosevelt     0             0                0              0        0           6
+171 ARW                  KC135MPRS         Dubai Intl                    0             0                0              0        0           3
+7 ACCS                   E-3A              Al Maktoum Intl               0             0                0              0        0           3
+VF-101                   F-14B             CVN-71 Theodore Roosevelt     0             0                0              0        0           16
+41 TAS                   CH-47D            LHA_Nassau                    0             0                0              0        0           1
+VMA 311                  AV8BNA            LHA_Tarawa                    0             0                0              0        0           4
+4eme RHA                 SA342M            Jazirat al Hamra FARP         0             0                0              0        0           6
+2nd Shaheen Squadron     F-16C_50          Dubai Intl                    0             0                0              0        0           12
+VMFA-312                 FA-18C_hornet     CVN-74 John C. Stennis        0             0                0              0        0           16
+VF-143                   F-14B             CVN-74 John C. Stennis        0             0                0              0        0           16
+175 ARW                  KC-135            Al Dhafra AB                  0             0                0              0        0           3
+
+
+Red Air Units:
+Unit                     Type              Base                          Kills Air     Kills Ground     Kills Ship     Lost     Damaged     Ready
+81 TFS                   F-14A-135-GR      Lar Airbase                   0             0                0              0        0           4
+23 TFS                   F-4E              Bandar Abbas Intl             0             0                0              0        0           4
+91 TFS                   F-4E              Bandar Abbas Intl             0             0                0              0        0           4
+41 TFS                   F-5E-3            Bandar Abbas Intl             0             0                0              0        0           4
+72 TFS                   Su-24M            Shiraz Intl                   0             0                0              0        0           6
+51 TFS                   MiG-29A           Bandar Abbas Intl             0             0                0              0        0           6
+21 TFS                   F-5E-3            Sirri Island                  0             0                0              0        0           6
+Tanker sqd               KC135MPRS         Shiraz Intl                   0             0                0              0        0           4
+83 TFS                   F-14A-135-GR      Shiraz Intl                   0             0                0              0        0           4
+21-2 TFS                 F-5E-3            Qeshm Island                  0             0                0              0        0           6
+50 Squadron              AH-1W             Al Ima FARP                   0             0                0              0        0           6
+51 Squadron              AH-1W             Khasab                        0             0                0              0        0           2
+21-3 TFS                 F-5E-3            Bandar e Jask airfield        0             0                0              0        0           10
+21-4 TFS                 F-5E-3            Khasab                        0             0                0              0        0           6
+
+
+
+Red Ground Assets:
+1st Iranian Transport fleet                    100%   
+2nd Iranian Transport fleet                    100%   
+3rd Iranian Transport fleet                    100%   
+4th Iranian Transport fleet                    100%   
+5th Iranian Transport fleet                    100%   
+Abu Musa Island Airport                        100%   
+Abu Musa Island Airport Strategics             100%   
+Abu Musa Ships Facilities - N255237 E0550065   100%   
+Al Mina Ships                                  100%   
+Bandar e Jask airfield                         100%   
+Bandar e Jask airfield Strategics              100%   
+Bandar-E-Jask Silkworm Battery                 100%   
+Bukha Iranian Command Post                     100%   
+Bukha Iranian Landing Troops                   100%   
+Bukha Iranian convoy 1                         100%   
+EWR 1                                          100%   
+EWR 2                                          100%   
+EWR 3                                          100%   
+Iranian West frontline 1st Bat                 100%   
+Iranian West frontline 2nd Bat                 100%   
+Iranian West frontline 3rd Bat                 100%   
+Iranian West frontline 4th Bat                 100%   
+Iranian West frontline 5th Bat                 100%   
+Iranian West frontline convoy 1                100%   
+Iranian West frontline convoy 2                100%   
+Iranian suicide speedboat fleet-1              100%   
+Khasab Airbase                                 100%   
+Khasab Airbase Strategics                      100%   
+Khasab debarqued Hawk batterie                 100%   
+Khasab debarqued Silkworms batteries           100%   
+Khasab debarqued troops                        100%   
+Mina Saqr convoy 1                             100%   
+Mina Saqr debarqued SAM systems                100%   
+Mina Saqr debarqued troops                     100%   
+Mountain Iranian convoy 1                      100%   
+Mountain Iranian convoy 2                      100%   
+Mountain Iranian convoy 3                      100%   
+Mountain Iranian convoy 4                      100%   
+SA-6 Gainful Site E-1                          100%   
+
+
+Blue Ground Assets:
+EAU East Front 4th Bat    100%   
+EAU East Front 5th Bat    100%   
+EAU East Front Convoy 1   100%   
+EAU East Front Convoy 2   100%   
+EAU East Front Convoy 3   100%   
+EAU East Front HQ         100%   
+EAU West Front 1st Bat    100%   
+EAU West Front 2nd Bat    100%   
+EAU West Front 3rd Bat    100%   
+EAU West Front Convoy 1   100%   
+EAU West Front Convoy 2   100%   
+EAU West Front Convoy 3   100%   
+EAU West Front HQ         100%   
+EWR-1                     100%   
+EWR-2                     100%   
+EWR-3                     100%   
+FR Hawk Site 1            100%   
+LHA Group                 100%   
+Patriot Battery 1         100%   
+TF-71                     100%   
+TF-74                     100%   
+US Army ELINT Station     100%   
+US Army ELINT Station 2   100%   
+
+
+
+Scoreboard:
+-----------
+
+Name     Missions     Kills Air     Kills Ground     Kills Ship     Crashed     Ejected     Dead
+CEF      0            0             0                0              0           0           0

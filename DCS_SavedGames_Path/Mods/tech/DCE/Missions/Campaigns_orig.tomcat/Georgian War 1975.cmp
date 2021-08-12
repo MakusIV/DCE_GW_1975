@@ -1,0 +1,54 @@
+campaign = 
+{
+	["picture"] = "Crisis in PG-Tomcat-CVN.png",
+	["startStage"] = 1,
+    ["name_EN"] = "Crisis in PG-Tomcat-CVN",
+    ["description_EN"] = "Iran attacked Oman and several landing points are reported north of the peninsula. We do not know what the final objective of the Iranians is, but it is feared that they will rush south to invade the UAE taking advantage of the surprise and the relatively weak forces at the moment.L Iran a attaqué Oman et plusieurs points de débarquement sont signalés au nord de la presqu île. Nous ignorons quel est l objectif final des Iraniens mais il est à craindre qu ils foncent vers le sud pour envahir les EAU en profitant de la surprise et des forces relativement faibles pour l instant.",
+    ["necessaryUnits"] = 
+    {
+        ["F-14"] = "F-14",
+    }, -- end of ["necessaryUnits"]
+    ["description"] = "Iran attacked Oman and several landing points are reported north of the peninsula. We do not know what the final objective of the Iranians is, but it is feared that they will rush south to invade the UAE taking advantage of the surprise and the relatively weak forces at the moment.L Iran a attaqué Oman et plusieurs points de débarquement sont signalés au nord de la presqu île. Nous ignorons quel est l objectif final des Iraniens mais il est à craindre qu ils foncent vers le sud pour envahir les EAU en profitant de la surprise et des forces relativement faibles pour l instant.",
+    ["stages"] = 
+    {
+        [1] = 
+        {
+            ["name"] = "Stage 1",
+            ["missions"] = 
+            {
+                [1] = 
+                {
+                    ["interval"] = 
+                    {
+                        [1] = 0,
+                        [2] = 100,
+                    }, -- end of ["interval"]
+                    ["file"] = "Crisis in PG-Tomcat-CVN_first.miz",
+                    ["description"] = "",
+                    ["fullpath"] = "C:\\Mods\\tech\\DCE\\Missions\\Campaigns\\Crisis in PG-Tomcat-CVN_first.miz",
+                }, -- end of [1]
+            }, -- end of ["missions"]
+        }, -- end of [1]
+        [2] = 
+        {
+            ["name"] = "Stage 2",
+            ["missions"] = 
+            {
+                [1] = 
+                {
+                    ["interval"] = 
+                    {
+                        [1] = 0,
+                        [2] = 100,
+                    }, -- end of ["interval"]
+                    ["file"] = "Crisis in PG-Tomcat-CVN_ongoing.miz",
+                    ["description"] = "",
+                    ["fullpath"] = "C:\\Mods\\tech\\DCE\\Missions\\Campaigns\\Crisis in PG-Tomcat-CVN_ongoing.miz",
+                }, -- end of [1]
+            }, -- end of ["missions"]
+        }, -- end of [2]
+    }, -- end of ["stages"]
+    ["version"] = 1,
+    ["fullPath"] = "C:\\Mods\\tech\\DCE\\Missions\\Campaigns\\Crisis in PG-Tomcat-CVN.cmp",
+    ["name"] = "Crisis in PG-Tomcat-CVN",
+} -- end of campaign

@@ -84,20 +84,21 @@ dofile("Init/conf_mod.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 
-
 --run log evaluation and status updates
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
 
+
 --=====================  start marco implementation ==================================
 
 --run logistic evalutation, save power_tab and airbase_tab
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
-UpdateOobAir()
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+UpdateOobAir()--mark
 
 --=====================  end marco implementation ==================================
+
 
 --update campaign time
 local elapsed_time = math.floor(events[#events].t - events[1].t)								--mission runtime in seconds
