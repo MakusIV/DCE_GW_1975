@@ -102,7 +102,7 @@ TargetPointF14 = true 						-- transforms IP, Station and Target points into IP,
 TargetPointF14_BullsToFP = true				-- assigns the BullsEye position to the NavPoint FP of the F-14
 
 -- limit the number of F-14s (in the same Flight as the player) on the CVN to avoid taxiing collisions
-limiteNbF14CVN = 4							-- advice 3 max is a good value
+limiteNbF14CVN = 3							-- advice 3 max is a good value
 
 
 

@@ -4,7 +4,7 @@
 
 camp = {
 	title = "1975 Georgian War",		--Title of campaign (name of missions)
-	version = "V0.9",
+	version = "V0.1",
 	mission = 1,					--campaig mission number
 	date = {						--campaign date
         day = 13,
