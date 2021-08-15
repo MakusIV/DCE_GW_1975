@@ -72,7 +72,7 @@ if Multi.NbGroup >= 1 then
 	mission_ini.Keep_USNdeckCrew = false					-- false = supprime US Navy deck crew dans la g�n�ration de mission. Miguel Modification M23
 	mission_ini.CVN_CleanDeck = true 							-- true: Remove all static aircraft from the deck. ( M31 )
 	
--- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent � ceux de PBO-CEF ^^
+	-- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent � ceux de PBO-CEF ^^
 	if not mission.forcedOptions then mission.forcedOptions = {} end
 	mission.forcedOptions.accidental_failures =  false
 	mission_forcedOptions.wakeTurbulence = false			-- False / true : turbulence  [MP: recommend: false]
@@ -81,7 +81,7 @@ if Multi.NbGroup >= 1 then
 
 	end
 	
------ D�sactive USN Mod -----Miguel21 modification M23
+	----- D�sactive USN Mod -----Miguel21 modification M23
 	if not mission_ini.Keep_USNdeckCrew then
 		mission.requiredModules = {
 			['USN-Deckcrew'] = nil,

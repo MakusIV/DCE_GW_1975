@@ -1,0 +1,31 @@
+db_loadout:
+
+F-14A-135-GR:
+Strike TF GBU-12*4, AIM-9M*2, AIM-7M*1, Lantirn, FT*2 no: -- lantirn 1980 (sviluppo)  1987 (in servizio) NO
+change AIM-54C with AIM-54-A
+inserire eventuale loadout con bombe e razzi
+
+
+AJS37: 
+antiship strike: usa RB-15 (dal 1985) cambiare o eliminare in quanto le navi sovietiche non sono presenti.
+verificare tutto
+
+Su-24M: 
+antiship strike: usa Kh59 in servizio dal 1980. Può essere giustificato considerando che le carrier hanno difese moderne (da 1980).
+
+
+Mi-8MT, Mi-24V hanno solo il loadou "Transport"
+
+Mig 21: 
+CAP, Intercept, Escort, Figther Sweep utilizzano solo R-3R e R-3S
+
+Su-17M4
+ha solo loadauts per strike e antiship strike, verificare se è possibile inserire un loadout per sead.
+
+Mig-27K:
+antiship: strike utilizza i Kh29 operativi dal 1980. Può essere giustificato considerando che le carrier hanno difese moderne (da 1980).
+strike: strike utilizza i Kh29 operativi dal 1980. Dovresti sostituirlo 
+
+
+db_airbase:
+Crea e/o verifica la presenza e la posizione delle farp in ME e aggiorna le informazioni nel db. 

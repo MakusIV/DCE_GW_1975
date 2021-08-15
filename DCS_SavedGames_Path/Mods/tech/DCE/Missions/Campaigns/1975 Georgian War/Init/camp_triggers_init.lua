@@ -58,8 +58,8 @@ camp_triggers = {
 		condition = 'true',											--Condition of the trigger to return true or false embedded as string
 		action = {													--Trigger action function embedded as string
 			[1] = 'Action.Text("After being relegated to Sakire, the Russian forces present in North Ossetia launch an immediate counterattack that allows them to consolidate their position in the areas of Didmukha, Tskhinvali and Sathiari by rejecting Georgian forces in the areas of Tsveri, Tkviavi and Kaspi. The goal is to cripple main Russians ground forces, resupply routes and airbases.")',
-			[2] = 'Action.Text("The US Air Force has sent considerable forces to Georgia in support of the operation. At the forefront are the F-5 and F-4E of the 58th Tactical Fighter Squadron who are tasked to attain air superiority and protect coalition strike aircraft against the Russian Air Force with the help of the VF-101 with their Legendary F-14A Tomcats. The brunt of daylight attack falls on the F-5 of the 13rd Tactical Fighter Squadron, and the F-14A Tomcat of the VFA-106 onboard of the CVN Theodore Roosevelt. Exceptionaly F7 Swedish Squadron will help NATO to attack ground and sea targets. Attack during the night is carried out by the F-4E Phantom of the 335th Tactical Fighter Squadron, who are looking forward to the types combat debut. Of considerable interest to the USAF is the deployment of the B-52 bomber with the 417th Tactical Fighter Squadron. The USAF contingent is completed by a deployment of E-3A Sentry from the 7th Airborne Command and Control Squadron. Together these squadrons form a powerful and mighty force.")',
-			[3] = 'Action.Text("The Russian Air Force is flying a mix of MiG-19, MiG-21, MiG-23, MiG-27, MiG-27, Su-17 and Su-24 fighters directed by ground based early warning radar but possibly by new A-50 AWACS. Air bases and target complexes of high value are protected by a variety of dangerous surface-air missile systems, such as the SA-10, the SA-8 Gecko and the SA-11, as well as short-range IR-SAMs and AAA. As part of the coalition air offensive, the US Air Force is tasked with neutralizing the Russian Air Force, both in the air and on the ground, as well as destroying Russian airbases.")',
+			[2] = 'Action.Text("The US Air Force has sent considerable forces to Georgia in support of the operation. At the forefront are the F-5 and F-4E of the 58th Tactical Fighter Squadron who are tasked to attain air superiority and protect coalition strike aircraft against the Russian Air Force with the help of the VF-101 with their Legendary F-14A Tomcats. The brunt of daylight attack falls on the F-5 of the 13rd Tactical Fighter Squadron, and the F-14A Tomcat of the VFA-106 onboard of the CVN Theodore Roosevelt. Exceptionaly F7 and F9 Swedish Squadron will help NATO to attack ground and sea targets. Attack during the night is carried out by the F-4E Phantom of the 335th Tactical Fighter Squadron, who are looking forward to the types combat debut. Of considerable interest to the USAF is the deployment of the B-52 bomber with the 417th Tactical Fighter Squadron. The USAF contingent is completed by a deployment of E-3A Sentry from the 7th Airborne Command and Control Squadron. Together these squadrons form a powerful and mighty force.")',
+			[3] = 'Action.Text("The Russian Air Force is flying a mix of MiG-21, MiG-23, MiG-27, MiG-27, Su-17 and Su-24 fighters directed by ground based early warning radar but possibly by new A-50 AWACS. Air bases and target complexes of high value are protected by a variety of dangerous surface-air missile systems, such as the SA-10, the SA-8 Gecko and the SA-11, as well as short-range IR-SAMs and AAA. As part of the coalition air offensive, the US Air Force is tasked with neutralizing the Russian Air Force, both in the air and on the ground, as well as destroying Russian airbases.")',
 			[4] = 'Action.AddImage("Newspaper_FirstNight_blue.jpg", "blue")',
 			[5] = 'Action.AddImage("Newspaper_FirstNight_red.jpg", "red")',
 		},
@@ -82,7 +82,7 @@ camp_triggers = {
 	["Campaign End Victory 2"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitReady("1./14.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("1./19.IAP") + Return.AirUnitReady("2./19.IAP") + Return.AirUnitReady("1./17.IAP") + Return.AirUnitReady("1./31.IAP") + Return.AirUnitReady("1./41.IAP") < 4',
+		condition = 'Return.AirUnitReady("1./113.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("1./123.IAP") + Return.AirUnitReady("1./37.IAP") + Return.AirUnitReady("1./19.IAP") + Return.AirUnitReady("1./133.IAP") + Return.AirUnitReady("1./793.IAP") + Return.AirUnitReady("1./153.IAP") < 8',
 		action = {
 			[1] = 'Action.CampaignEnd("win")',
 			[2] = 'Action.Text("The Russian Air Force is in ruins. After repeated air strikes and disastrous losses in air-air combat, the Russians are no longer able to produce any sorties or offer any resistance. The NATO now owns complete air superiority. With the disappearance of the air threat, the role of the F-15C Eagle and Mirage 2000C in this war comes to an end. Once again the victorious Eagle has proved to be to leading fighter in the world. Well done.")',
@@ -106,10 +106,10 @@ camp_triggers = {
 	["Campaign End Loss"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("F7") + Return.AirUnitReady("F21") < 5',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 5',
 		action = {
 			[1] = 'Action.CampaignEnd("loss")',
-			[2] = 'Action.Text("Ongoing combat operations have exhausted F7 Squadron. Loss rate has reached a level where reinforcements are no longer able to sustain combat operations. With the failure of Allied Air Force to attain air superiority, US Central Command has decided to call of the air campaign against the Russians. Without destroying Russians airbases it seems unlikely that the coalition will be able to win this war.")',
+			[2] = 'Action.Text("Ongoing combat operations have exhausted VF-101 Squadron. Loss rate has reached a level where reinforcements are no longer able to sustain combat operations. With the failure of Allied Air Force to attain air superiority, US Central Command has decided to call of the air campaign against the Russians. Without destroying Russians airbases it seems unlikely that the coalition will be able to win this war.")',
 			[3] = 'Action.AddImage("Newspaper_Victory_red.jpg", "red")',
 			[4] = 'Action.AddImage("Newspaper_Defeat_blue.jpg", "blue")',
 			[5] = 'NoMoreNewspaper = true',
@@ -118,10 +118,10 @@ camp_triggers = {
 	["Campaign End Loss 2"] = {
 		active = true,
 		once = true,
-		condition = 'Return.TargetAlive("Sukhumi Airbase") == 0',
+		condition = 'Return.TargetAlive("CVN-71 Theodore Roosevelt") == 0',
 		action = {
 			[1] = 'Action.CampaignEnd("loss")',
-			[2] = 'Action.Text("After the Sukhumi Airbase has been hit by air strikes and neutralised, F7 Squadron is no longer able to fly. Other US units will have to continue the fight without the F7 Squadron support. This is a bitter failure.")',
+			[2] = 'Action.Text("After the CVN-71 Theodore Roosevelt has been hit by air strikes and neutralised, VF-101 Squadron is no longer able to fly. Other US units will have to continue the fight without the VF-101 Squadron support. This is a bitter failure.")',
 			[3] = 'Action.AddImage("Newspaper_Victory_red.jpg", "red")',
 			[4] = 'Action.AddImage("Newspaper_Defeat_blue.jpg", "blue")',
 			[5] = 'NoMoreNewspaper = true',
@@ -136,6 +136,18 @@ camp_triggers = {
 			[2] = 'Action.Text("Russian airforce was able to destroy enough allied forces to decide US Command to ask for a cease fire  and stop any Air missions. This is a bitter failure for the Allies")',
 			[3] = 'Action.AddImage("Newspaper_Victory_red.jpg", "red")',
 			[4] = 'Action.AddImage("Newspaper_Defeat_blue.jpg", "blue")',
+			[5] = 'NoMoreNewspaper = true',
+		},
+	},
+	["Campaign End Loss 4"] = {
+		active = true,
+		once = true,
+		condition = 'Return.AirUnitReady("F7") + Return.AirUnitReady("F9") + Return.AirUnitReady("VMFA-151") + Return.AirUnitReady("GA 7rd AS") + Return.AirUnitReady("VMFA-157") + Return.AirUnitReady("GA 3rd AS") + Return.AirUnitReady("58 TFS") + Return.AirUnitReady("GA 4rd AS") < 8',
+		action = {
+			[1] = 'Action.CampaignEnd("win")',
+			[2] = 'Action.Text("The Russian Air Force is in ruins. After repeated air strikes and disastrous losses in air-air combat, the Russians are no longer able to produce any sorties or offer any resistance. The NATO now owns complete air superiority. With the disappearance of the air threat, the role of the F-15C Eagle and Mirage 2000C in this war comes to an end. Once again the victorious Eagle has proved to be to leading fighter in the world. Well done.")',
+			[3] = 'Action.AddImage("Newspaper_Victory_blue.jpg", "blue")',
+			[4] = 'Action.AddImage("Newspaper_Defeat_red.jpg", "red")',
 			[5] = 'NoMoreNewspaper = true',
 		},
 	},
@@ -154,7 +166,7 @@ camp_triggers = {
 	["Campaign first destructions"] = {
 		active = true,
 		once = true,
-		condition = 'GroundTarget["blue"].percent < 100',
+		condition = 'GroundTarget["red"].percent < 100',
 		action = {
 			[1] = 'Action.Text("First targets have been destroyed. Keep up the good work")',
 		},
@@ -162,7 +174,7 @@ camp_triggers = {
 	["Campaign 20 percents destructions"] = {
 		active = true,
 		once = true,
-		condition = 'GroundTarget["blue"].percent < 80',
+		condition = 'GroundTarget["red"].percent < 80',
 		action = {
 			[1] = 'Action.Text("Enemy targets have sustained fair damages. Keep up the good work")',
 		},
@@ -170,7 +182,7 @@ camp_triggers = {
 	["Campaign 40 percents destructions"] = {
 		active = true,
 		once = true,
-		condition = 'GroundTarget["blue"].percent < 60',
+		condition = 'GroundTarget["red"].percent < 60',
 		action = {
 			[1] = 'Action.Text("Enemy targets have sustained great damages. Strike missions are really efficient and we will win this war soon")',
 		},
@@ -178,7 +190,7 @@ camp_triggers = {
 	["Campaign 50 percents destructions"] = {
 		active = true,
 		once = true,
-		condition = 'GroundTarget["blue"].percent < 50',
+		condition = 'GroundTarget["red"].percent < 50',
 		action = {
 			[1] = 'Action.Text("More than half of our targets are neutralized. Intelligence think that the enemy will ask for a cease fire soon")',
 		},
@@ -690,28 +702,28 @@ camp_triggers = {
 	},
 
 	----- AVIATION UNIT STATUS -----
-	["F7 Alive 75%"] = {
+	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("F7") + Return.AirUnitReady("F21") < 8',
-		action = 'Action.Text("Aircraft strength of the F7 Squadron equiped with Viggen has fallen below 75%.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%.")',
 	},
-	["F7 Alive 50%"] = {
+	["VF-101 Alive 50%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("F7") + Return.AirUnitReady("F21") < 6',
-		action = 'Action.Text("Aircraft strength of the F7 Squadron equiped with Viggen has fallen below 50%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 8',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
 	},
-	["F7 Alive 25%"] = {
+	["VF-101 Alive 25%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("F7") + Return.AirUnitReady("F21") < 3',
-		action = 'Action.Text("Aircraft strength of the F7 Squadron equiped with Viggen has fallen below 25%. The number of available airframes is critically low. The squadron is short of destruction.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 6',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. The number of available airframes is critically low. The squadron is short of destruction.")',
 	},
 	["Newspaper Nighthawk Down"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("417 TFS") < 4',
+		condition = 'Return.AirUnitAlive("417 TFS") < 4', -- questa unità non esiste in oob_air_init
 		action = {
 			[1] = 'Action.AddImage("Newspaper_NighthawkDown.jpg", "blue")',
 			[2] = 'NoMoreNewspaper = true',

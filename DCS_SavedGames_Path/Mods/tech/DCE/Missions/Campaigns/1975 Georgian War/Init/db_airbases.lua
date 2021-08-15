@@ -383,7 +383,7 @@ db_airbases = {
 		startup = 300,
 		side = "blue",							-- side : info obligatoire
 		LimitedParkNb  = 10, 
-		ATC_frequency = "255.255",				--si ATC_frequency non present, on utilise la freq de base_mission
+		ATC_frequency = "255.000",				--si ATC_frequency non present, on utilise la freq de base_mission
 	},
 	['CVN-71 Theodore Roosevelt'] = {                            
 		unitname = "CVN-71 Theodore Roosevelt",
@@ -400,70 +400,138 @@ db_airbases = {
 		LimitedParkNb  = 4,
 	},
 
-	-- Red Farp
-	['Dyess AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
-		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
-	},	
+	-- Red Farp	da creare in ME e poi aggiornare le proprietà
 
-	['Didmukha AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+	['Didmukha AFB'] = {		
+		x =	-74348.375716192,
+		y = -67705.331836707,
 		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "128.500",
+		side = "red",								-- side : Required information for the divert
+		divert = false,
 	},	
 
 	['Tskhinvali AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+		x =	-74348.375716192,
+		y = -67705.331836707,
 		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "128.500",
+		side = "red",								-- side : Required information for the divert
+		divert = false,
 	},	
 
 	['Sathiari AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+		x =	-74348.375716192,
+		y = -67705.331836707,
 		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "128.500",
+		side = "red",								-- side : Required information for the divert
+		divert = false,
 	},	
 
 	-- Blue Farp
 
 	['Tsveri AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+		x =	-74348.375716192,
+		y = -67705.331836707,
 		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "243.000",
+		side = "blue",								-- side : Required information for the divert
+		divert = false,
 	},	
 
 	['Tkviavi AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+		x =	-74348.375716192,
+		y = -67705.331836707,
 		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "243.000",
+		side = "blue",								-- side : Required information for the divert
+		divert = false,
 	},
 	
 	['Kaspi AFB'] = {
-		x = -298118.0120668,
-		y = -89509.223854664, 
+		x =	-74348.375716192,
+		y = -67705.331836707,
+		elevation = 0,
+		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 837,
+		ATC_frequency = "243.000",
+		side = "blue",								-- side : Required information for the divert
+		divert = false,
+	},
+    
+	-------------  Exists in map (probably) from "Hot War in The Cold - Fishbed. Verify opportunity use of this map but watch: carrier not present"
+
+	['FARP-1st GHR'] = {
+		x = -315022.89737545,
+		y = 642447.20489601,
+        elevation = 180,
+		airdromeId = 606,
+		helipadId = 606,
+		ATC_frequency = "128.500",
+		side = "red",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
+		
+	},
+	['FARP-2nd GHR'] = {
+		["x"] = -314576.96039632,
+		["y"] = 642760.4924077,
+		elevation = 233,
+		airdromeId = 607,
+		helipadId = 607,
+		ATC_frequency = "128.600",
+		side = "red",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
+	},
+	['FARP-1st THR'] = {
+		x =	-335937.21377428,
+		y = 631659.43333671,
+		elevation = 236,
+		airdromeId = 592,
+		helipadId = 592,
+		ATC_frequency = "127.500",
+		side = "blue",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
+	},
+	['FARP-2nd THR'] = {
+		x =	-336409.15972482,
+		y = 632088.0792888,
+		elevation = 246,
+		airdromeId = 593,
+		helipadId = 593,
+		ATC_frequency = "127.600",
+		side = "blue",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
+	},
+	['Incirlik'] = {
+		x = -00446268,
+		y = 005117415, 
 		elevation = 0,
 		airdromeId = nil,
 		ATC_frequency = "0",
 		BaseAirStart = true,
+		side = "blue",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
+	},
+	['Diyarbakir'] = {
+		x = -00397596,
+		y = 00577160, 
+		elevation = 0,
+		airdromeId = nil,
+		ATC_frequency = "0",
+		BaseAirStart = true,
+		side = "blue",								-- side : Required information for the divert
+		divert = false,								-- divert : Required information for the divert)
 	},
 
 

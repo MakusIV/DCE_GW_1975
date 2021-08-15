@@ -39,7 +39,8 @@
 --- BLUE
 
 Batumi
-fighter/attack: 6+20 F-4E (VMFA-151), 7+20 F-5E (VMFA-157)
+fighter: 7+20 F-5E (VMFA-157)
+fighter/attack: 6+20 F-4E (VMFA-151),
 bomber: 5+21 B-52H (69 BS)
 transport: 3+7 C-130 (315th Air Division)
 refuelling: 3+9 KC135MPRS (171 ARW)
@@ -55,7 +56,7 @@ fighter: 12+24 MiG-19P (GA 4rd AS),
 bomber/attack: 12+36 MiG-27K (GA 3rd AS), 
 
 Kutaisi
-fighter: 6+20 F-4E (VMFA-151)
+fighter/attack: 6+20 F-4E (58 TFS)
 awacs: 3 E-3A (7 ACCS)
 
 Senaki-Kolkhi
@@ -64,7 +65,7 @@ refuelling: 3+9 KC135MPRS (801 ARS)
 transport: 6 An-26B GA 5rd TS)
 
 Tbilissi-Lochini
-fighter: 12+30 AJS37 (F9)
+fighter/attack: 12+30 AJS37 (F9)
 refuelling: 3+7 KC135MPRS (174 ARW)
 
 Sukhumi
@@ -72,12 +73,12 @@ fighter: 12+30 AJS37 (F7)
 bomber/attack: 12+36 F-4E (VMFA-159)
 
 CVN-71 Theodore Roosevelt
-fighter: 16+30 F-14A-135-GR (VF-101)
+fighter/attack: 16+30 F-14A-135-GR (VF-101)
 awacs: 5+5 E-2C (VAW-125)
 refuelling: 5+5 S-3B Tanker (174 ARW)
 
 CVN-74 John C. Stennis
-fighter: 12+20 F-14A-135-GR (VF-118/GA)
+bomber/attack: 12+20 F-14A-135-GR (VF-118/GA)
 refuelling: 8 S-3B Tanker (177 ARW)
 
 
@@ -85,22 +86,23 @@ refuelling: 8 S-3B Tanker (177 ARW)
 
 Mozdok
 fighter: 12+12 MiG-23MLD (113.IAP), 12 MiG-25PD (790.IAP), 
-attack/bomber: 12+24 MiG-27K (117.IAP), 12+12 Su-17M4 (115.IAP)
+attack/bomber: 6+24 MiG-27K (117.IAP), 12+12 Su-17M4 (115.IAP)
 
 Beslan
-fighter: 12+24 MiG-21Bis (37.IAP), 12+12 MiG-23MLD (123.IAP), 
-attack/bomber: 12+24 MiG-27K (127.IAP), 12+12 L-39A (115AS.IAP)
+fighter: 12+12 MiG-23MLD (123.IAP), 
+fighter/attack: 12+24 MiG-21Bis (37.IAP), 
+attack/bomber: 6+24 MiG-27K (127.IAP), 12+12 L-39A (115AS.IAP)
 transport: 6 An-26B (3.OSAP)
 
 Nalchik
-fighter: 8+24 MiG-21Bis (19.IAP) 
-attack/bomber: 12+24 MiG-27K (127.IAP), 12+24 L-39A (111AS.IAP)
+fighter/attack: 8+24 MiG-21Bis (19.IAP) 
+attack/bomber: 6+24 MiG-27K (107.IAP), 6+24 L-39A (111AS.IAP)
 awacs: 4 A-50 (2457 SDRLO)
 transport: 4+4 Il-76MD (13.OSAP)
 
 Mineralnye-Vody
 fighter: 12+12 MiG-23MLD (133.IAP), 12 MiG-25PD (793.IAP), 
-attack/bomber: 12+24 Su-24M (41.IAP), 12+24 Su-17M4 (135.IAP)
+attack/bomber: 6+24 Su-24M (41.IAP), 12+24 Su-17M4 (135.IAP)
 bomber: SU 17, Su 24
 transport: 2+4 An-26B (3.OSAP)
 
@@ -129,8 +131,8 @@ attack/transport 4+24 Mi-24V (2nd GHR)
 ---------------------- total ------------------------
 
 blue
-fighter:36
-fighter/attack:26+27+26+36+42+42+46 = 245
+fighter:27+32+36+32 = 127
+fighter/attack:26+26+32+46 = 130
 bomber/attack:48+48+32 = 128
 heaavy bomber = 26
 awacs:10+3 = 13
@@ -139,9 +141,9 @@ transport:6+10 = 16
 helicopter:28+28 = 56
 
 red
-fighter:12+12 = 24
-fighter/attack: 24+36+24+32+24+36 = 176
-bomber/attack:36+24+36+24+36+36+26 = 204
+fighter:24+12+24+24+12+36 = 132
+fighter/attack:32+36 = 68
+bomber/attack:30+24+30+30+30+30+36+36 = 234
 heavy bomber: 26 
 awacs: = 8
 refuelling: = 0
@@ -184,7 +186,7 @@ oob_air = {
 		},
 		[3] = {
 			name = "VMFA-157",								--unit name
-			player = true,									--player unit
+			--player = true,									--player unit
 			type = "F-5E-3",								--aircraft type
 			country = "USA",								--unit country
 			livery = {""},					--unit livery
@@ -194,7 +196,6 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
-				["Strike"] = true,
 				["Intercept"] = true,
 			},
 			number = 7,
@@ -271,7 +272,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 9,
 		},
-		---------------- FARP-17th Cavalry ------- non dovrebbe esistere, da creare
+		---------------- FARP-17th Cavalry Tsveri AFB------- non dovrebbe esistere, da creare
 		[11] = {
 			name = "17th Cavalry",								--unit name
 			type = "UH-1H",								--aircraft type
@@ -295,7 +296,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 20,
 		},
-		---------------- FARP-6th Cavalry ------- non dovrebbe esistere, da creare
+		---------------- FARP-6th Cavalry Tkviavi AFB, Kaspi AFB (utilizza il ch47)------- non dovrebbe esistere, da creare
 		[13] = {
 			name = "6th Cavalry",								--unit name
 			type = "AH-1W",								--aircraft type
@@ -370,7 +371,7 @@ oob_air = {
 		----------------------- Kutaisi -------------------------		
 		[19] = {
 			name = "58 TFS",								--unit name
-			player = false,									--player unit
+			--player = false,									--player unit
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
 			livery = {""},					--unit livery
@@ -488,7 +489,7 @@ oob_air = {
 		--------------------- Tbilissi-Lochini -------------------
 		[28] = {
 			name = "F9",								--unit name
-			player = true,									--player unit
+			--player = true,									--player unit
 			type = "AJS37",								--aircraft type
 			country = "Sweden",								--unit country
 			livery = {"#4 Splinter F7 Skaraborgs Flygflottilj 76"},					--unit livery
@@ -547,7 +548,7 @@ oob_air = {
         -------------------- Sukhumi -------------------------------------
 		[32] = {
 			name = "VMFA-159",								--unit name
-			player = false,									--player unit
+			--player = false,									--player unit
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
 			livery = {""},					--unit livery
@@ -570,7 +571,7 @@ oob_air = {
 		},
 		[34] = {
 			name = "F7",								--unit name
-			player = true,									--player unit
+			--player = true,									--player unit
 			type = "AJS37",								--aircraft type
 			country = "Sweden",								--unit country
 			livery = {"#4 Splinter F7 Skaraborgs Flygflottilj 76"},					--unit livery
@@ -579,17 +580,15 @@ oob_air = {
 			tasks = {										--unit tasks
 				["CAP"] = false,
 				["Escort"] = false,
-				["Fighter Sweep"] = false,
-				["Strike"] = true,
-				["Anti-ship Strike"] = true,
+				["Fighter Sweep"] = false,			
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 2,								-- coef normal : = 1
+				["Strike"] = 1,								-- coef normal : = 1
 				["SEAD"] = 1,
 				["Laser Illumination"] = 1,
 				["Intercept"] = 1,
 				["CAP"] = 1,
-				["Escort"] = 1,
+				["Escort"] = 2,
 				["Fighter Sweep"] = 1,
 				["Anti-ship Strike"] = 3,
 			},
@@ -695,7 +694,7 @@ oob_air = {
 		------------------ CVN-74 John C. Stennis --------------------
 		[42] = {
 			name = "VF-118/GA",							--unit name
-			player = true,									--player unit
+			--player = true,									--player unit
 			type = "F-14A-135-GR",								--aircraft type
 			country = "USA",								--unit country
 			livery = {"vf-101 grim reapers low vis", "vf-101 dark"},				--unit livery
@@ -761,9 +760,6 @@ oob_air = {
 				["Fighter Sweep"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
-				["Laser Illumination"] = 1,
 				["Intercept"] = 2,
 				["CAP"] = 1.5,
 				["Escort"] = 1,
@@ -805,8 +801,7 @@ oob_air = {
 				["Intercept"] = true,
 				["CAP"] = true,
 				["Escort"] = true,
-				["Fighter Sweep"] = true,
-				["Strike"] = true,		
+				["Fighter Sweep"] = true,				
 			},
 			number = 12,
 		},
@@ -856,6 +851,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
+				["Strike"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 1,								-- coef normal : = 1
@@ -911,8 +907,7 @@ oob_air = {
 				["Intercept"] = true,
 				["CAP"] = true,
 				["Escort"] = true,
-				["Fighter Sweep"] = true,
-				["Strike"] = true,		
+				["Fighter Sweep"] = true,				
 			},
 			number = 12,
 		},
@@ -935,11 +930,14 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["Anti-ship Strike"] = true,	
-				["Intercept"] = true,
-				["CAP"] = true,
-				["Escort"] = true,
-				["Fighter Sweep"] = true,		
+				["Anti-ship Strike"] = true,			
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
+				["Laser Illumination"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,			
 			},
 			number = 12,
 		},
@@ -978,6 +976,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
+				["Strike"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 1,								-- coef normal : = 1
@@ -1044,11 +1043,14 @@ oob_air = {
 			skill = "Random",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["Anti-ship Strike"] = true,	
-				["Intercept"] = true,
-				["CAP"] = true,
-				["Escort"] = true,
-				["Fighter Sweep"] = true,		
+				["Anti-ship Strike"] = true,						
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
+				["Laser Illumination"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,			
 			},
 			number = 12,
 		},
@@ -1098,11 +1100,8 @@ oob_air = {
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
 			},
-			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
-				["Laser Illumination"] = 1,
-				["Intercept"] = 2,
+			tasksCoef = {									
+				["Intercept"] = 2, --unit tasks coef (optional)-- coef normal : = 1
 				["CAP"] = 1.5,
 				["Escort"] = 1,
 				["Fighter Sweep"] = 1,
@@ -1155,7 +1154,6 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
-				["Strike"] = true,		
 			},
 			number = 12,
 		},
@@ -1213,7 +1211,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 4,
 		},
-		-------------------- FARP-1st GHR ------
+		-------------------- FARP-1st GHR ------ Didmukha AFB
 		[35] = { -- verifica posizione o crea farp
 			name = "1st GHR",								--unit name
 			type = "Mi-8MT",								--aircraft type
@@ -1237,7 +1235,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 24,
 		},
-		-------------------- FARP-2nd GHR ------
+		-------------------- FARP-2nd GHR ------ Tskhinvali AFB, Sathiari AFB
 		[37] = { -- verifica posizione o crea farp
 			name = "2nd GHR",								--unit name
 			type = "Mi-24V",								--aircraft type

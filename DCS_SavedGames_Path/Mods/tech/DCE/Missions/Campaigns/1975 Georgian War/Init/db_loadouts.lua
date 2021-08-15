@@ -74,6 +74,19 @@
 
 ]]-----------------------------------------------------------------------------------------------------
 
+--[[ 
+	
+la valutazione sull'idoneità di un aereo a svolgere una missione è effettuata  considerando i seguenti parametri:
+
+targetlist.target.firepower.min: rappresenta il valore minimo dei num.missili/bombe lanciati da tutti gli aerei impegnati sul quel target)
+unit.lodaout.firepower: rappresenta il valore  della capacità di tutti i num.missili/bombe montati sull'aereo e utilizzabili sul target elencato nel task
+
+(in ATO_Generator è presente la riga target.firepower.min <= aircraft_available * unit_loadouts[l].firepower)
+
+Il calcolo degli aerei necessari per una missione è fatto con:
+local aircraft_requested = target.firepower.max / unit_loadouts[l].firepower
+
+]]
 
 db_loadouts = {
 
@@ -144,7 +157,7 @@ db_loadouts = {
 		},
 	},
 
-	["F-14A-135-GR"] = { --1970 (primo volo) 1974 (entrata in servizio)
+	["F-14A-135-GR"] = { --1970 (primo volo) 1974 (entrata in servizio),
 		["Intercept"] = {
 			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
 				attributes = {},
@@ -481,7 +494,8 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {
-			["Strike TF GBU-12*4, AIM-9M*2, AIM-7M*1, Lantirn, FT*2"] = {
+			--[[
+			["Strike TF GBU-12*4, AIM-9M*2, AIM-7M*1, Lantirn, FT*2"] = { -- lantirn 1980 (sviluppo)  1987 (in servizio) NO
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -656,8 +670,8 @@ db_loadouts = {
 					["TacanChannel"] = 37,				preset TACAN channel
 					["LGB1000"] = 1,
 				}, -- lantirn 1980 (sviluppo)  1987 (in servizio) NO
-			},
-			["Strike TF GBU-10*2, AIM-54C,*2AIM-9M*2, AIM-7M*1,Lantirn, FT*2"] = { -- lantirn 1980 (sviluppo)  1987 (in servizio) NO
+			},			
+			["Strike TF GBU-10*2, AIM-54C,*2AIM-9M*2, AIM-7M*1,Lantirn, FT*2"] = { 
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -745,7 +759,8 @@ db_loadouts = {
 					["LGB1000"] = 1,
 				},
 			},
-			["Strike Mk 82"] = {
+			]]
+			["Strike Mk 82"] = { -- Use AIM_54A_Mk60 indeed AIM-54C (service after 1975)
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -883,11 +898,11 @@ db_loadouts = {
 							["num"] = 3,
 						},
 						[7] = {
-							["CLSID"] = "{AIM_54C_Mk47}",
+							["CLSID"] = "{AIM_54A_Mk60}",
 							["num"] = 7,
 						},
 						[4] = {
-							["CLSID"] = "{AIM_54C_Mk47}",
+							["CLSID"] = "{AIM_54A_Mk60}",
 							["num"] = 4,
 						},
 						[6] = {
@@ -1045,7 +1060,7 @@ db_loadouts = {
 
 	["AJS37"] = {-- 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
-			["Antiship - RB 15F*2 - RB-74J*2 - RB-24J*2 - FT"] = {
+			["Antiship - RB 15F*2 - RB-74J*2 - RB-24J*2 - FT"] = {--RB-15 dal 1985
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -1292,7 +1307,7 @@ db_loadouts = {
 				},
 			},
 			["CAS - BK90 (MJ1)*2 - ECM*2 - RB-24J*2 - XT"] = {
-			minscore = 0.3,
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -1580,34 +1595,34 @@ db_loadouts = {
 				stores = {
 					["pylons"] =
 					{
-				[1] = {
-					["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-					["num"] = 1,
-				},
-				[2] = {
-					["CLSID"] = "{Mk82SNAKEYE}",
-					["num"] = 2,
-				},
-				[3] = {
-					["CLSID"] = "{Mk82SNAKEYE}",
-					["num"] = 3,
-				},
-				[4] = {
-					["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-					["num"] = 4,
-				},
-				[5] = {
-					["CLSID"] = "{Mk82SNAKEYE}",
-					["num"] = 5,
-				},
-				[6] = {
-					["CLSID"] = "{Mk82SNAKEYE}",
-					["num"] = 6,
-				},
-				[7] = {
-					["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-					["num"] = 7,
-				}, -- end of [7]
+						[1] = {
+							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
+							["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{Mk82SNAKEYE}",
+							["num"] = 2,
+						},
+						[3] = {
+							["CLSID"] = "{Mk82SNAKEYE}",
+							["num"] = 3,
+						},
+						[4] = {
+							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
+							["num"] = 4,
+						},
+						[5] = {
+							["CLSID"] = "{Mk82SNAKEYE}",
+							["num"] = 5,
+						},
+						[6] = {
+							["CLSID"] = "{Mk82SNAKEYE}",
+							["num"] = 6,
+						},
+						[7] = {
+							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
+							["num"] = 7,
+						}, -- end of [7]
 					}, -- end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
@@ -1643,34 +1658,34 @@ db_loadouts = {
 					["pylons"] =
 					{
 						[1] = {
-				["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-					["num"] = 1,
-				},
-				[4] = {
-					["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-					["num"] = 4,
-				},
-				[7] = {
-					["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-					["num"] = 7,
-				},
-				[5] = {
-					["CLSID"] = "{CBU-52B}",
-					["num"] = 5,
-				},
-				[3] = {
-					["CLSID"] = "{CBU-52B}",
-					["num"] = 3,
-				},
-				[6] = {
-					["CLSID"] = "{CBU-52B}",
-					["num"] = 6,
-				},
-				[2] = {
-					["CLSID"] = "{CBU-52B}",
-					["num"] = 2,
-				},
-					}, -- end of ["pylons"]
+							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
+							["num"] = 1,
+					},
+						[4] = {
+							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
+							["num"] = 4,
+					},
+						[7] = {
+							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
+							["num"] = 7,
+					},
+						[5] = {
+							["CLSID"] = "{CBU-52B}",
+							["num"] = 5,
+					},
+						[3] = {
+							["CLSID"] = "{CBU-52B}",
+							["num"] = 3,
+					},
+						[6] = {
+							["CLSID"] = "{CBU-52B}",
+							["num"] = 6,
+					},
+						[2] = {
+							["CLSID"] = "{CBU-52B}",
+							["num"] = 2,
+						},
+						}, -- end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["chaff"] = 30,

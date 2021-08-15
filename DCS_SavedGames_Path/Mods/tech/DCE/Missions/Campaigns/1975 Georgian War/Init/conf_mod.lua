@@ -17,7 +17,7 @@ versionDCE["conf_mod.lua"] = "1.27.30"
 
 mission_ini = {
 	PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
-	PruneAggressiveness = 1.4,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
+	PruneAggressiveness = 1.5,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
 	PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
 	ForcedPruneSam = false,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
 
