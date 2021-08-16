@@ -17,15 +17,34 @@ antiship strike: usa Kh59 in servizio dal 1980. Può essere giustificato conside
 Mi-8MT, Mi-24V hanno solo il loadou "Transport"
 
 Mig 21: 
-CAP, Intercept, Escort, Figther Sweep utilizzano solo R-3R e R-3S
+CAP, Intercept, Escort, Figther Sweep utilizzano solo R-3R e R-3S. inserire Kh-66 (A2G), S-24 e/o S-21, RS2US (a/a radar missile)
 
 Su-17M4
 ha solo loadauts per strike e antiship strike, verificare se è possibile inserire un loadout per sead.
 
 Mig-27K:
 antiship: strike utilizza i Kh29 operativi dal 1980. Può essere giustificato considerando che le carrier hanno difese moderne (da 1980).
-strike: strike utilizza i Kh29 operativi dal 1980. Dovresti sostituirlo 
+strike: strike utilizza i Kh29 operativi dal 1980, dovresti sostituirlo. Inserisci loadout con bombe (FAB)
 
 
 db_airbase:
 Crea e/o verifica la presenza e la posizione delle farp in ME e aggiorna le informazioni nel db. 
+
+Images/ inserire target supply asset, 
+
+
+testo campagna F14A, AS37 ----------------------------------------------------------------------
+
+After the effective political action of the Minister of the Interior, a group of Georgian nationalists led by the Army Corps General Baaka Kobakhidze, carried out a coup by supporting Georgian military forces and with the political and military support of some western countries coordinated by the USA. On 9 September 1975, Tbilisi government buildings were occupied by Georgian military forces, at the same time the airports of Tbilisi, Soganlug, Vaziani, Kutaisi, Batumi, Kobuleti, Senaki, Sukhumi and Gudauta were occupied by Western coalition and/or Georgian military forces (Georgian War Coalition). 
+The Georgian War Coalition occupy the whole area of North Ossetia up to Kurta. During this expansion phase, Georgian forces manage to appropriate an important quantity of Russian military equipment, including: Mig-19, Mig-21, Mig-27, SU-17, AN-26 as well as SAM systems of the SA-2, SA-3, SA-6, SA-8, SA-9 with AAA ZSU-23, ZSU-57. 
+
+The goal of the Georgian War Coalition is to exploit the weakness of the Soviet Union to establish control in this important area through important and explicit military action. The decision made by Western countries to participate directly in the military action is based on the security that the conflict will remain localized in the Caucasian area due to the extreme weakness and instability facing the entire Soviet Union.
+
+Against all odds, Russia reacts swiftly and forcefully to the attack by engaging an impressive amount of military air forces in support of the ground operations necessary to restore military control over Georgia. After being relegated to Sakire, the Russian forces present in North Ossetia launch an immediate counterattack that allows them to consolidate their position in the areas of Didmukha, Tskhinvali and Sathiari by rejecting Georgian forces in the areas of Tsveri, Tkviavi and Kaspi. 
+At this stage of the conflict, the main Russian military air bases are Mineralnye, Nalchik, Beslan and Mozdok where are operative squadrons of Mig-21, Mig-23, Mig-25, Mig-27, Su-17, Su-24, L-39. Maykop and Mineralnye are used by heavy bomber Tu-22, Kransnodar and Nalchik are operative Tu-126 (A-50 :| ) Awacs. In many Russian airbases are operative An-26 for transport. Russian FARP are presents in Didmukha, Tskhinvali and Sathiari area, where are operative Mi-8MTV2 and Mi-24 squads.
+
+The main Georgian and Western Coalition military base are Batumi, Kutaisi, Tbilissi, Vaziani where are operative squadron of Mig-19, Mig-21, Mig-27, F-4E, F-5, AJS-37 (Sweden). Batumi airbase are operative heavy bomber B-52 and at Kutaisi airbase are operative some new E-3 Awacs. In many Georgian airbases are operative C-130 and An-26 for transport and KC135 for refuelling. Georgian FARP are presents in Gori, Tsveri, Tkviavi and Kaspi where are operative the 6th and 17th Cavalry with UH-1H and AH-1.
+US NAvy has sent the CVN-68 USS Nimitz (T.Roosvelt :|) and CV-67 USS John F. Kennedy (J.C. Stennis :|) which operates off the coast of Batumi, and VF 101 and VF 118/GA are ready for aggressive operation.
+
+The effectiveness of operations depends on obtaining air superiority, of destruction airbases, ground forces and on the integrity of supply asset (supply plant and supply line). Obviously, these assets are sensitive targets for the enemy, so it is very important to defend them and destroy those of the enemy. 
+--------------------------------------------------------------------------------------------------

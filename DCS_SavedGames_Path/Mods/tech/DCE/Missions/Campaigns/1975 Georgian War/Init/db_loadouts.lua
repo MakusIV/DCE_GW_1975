@@ -760,7 +760,7 @@ db_loadouts = {
 				},
 			},
 			]]
-			["Strike Mk 82"] = { -- Use AIM_54A_Mk60 indeed AIM-54C (service after 1975)
+			["Strike Mk 82"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4193,7 +4193,7 @@ db_loadouts = {
 		},
 	},
 
-	["MiG-21Bis"] = {--1955 (primo volo) 1959 (entrata in servizio)
+	["MiG-21Bis"] = {--1955 (primo volo) 1959 (entrata in servizio) inserire Kh-66, S-24 e/o S-21
 		["Anti-ship Strike"] = {
 			["Antiship IPW R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
 				minscore = 0.3,
@@ -5087,7 +5087,7 @@ db_loadouts = {
 		},
 	},
 
-	["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio)
+	["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
 		["Anti-ship Strike"] = {
 			["TF-Old-Kh-29L*2,R-60*2,Fuel"] = {
 				minscore = 0.7,

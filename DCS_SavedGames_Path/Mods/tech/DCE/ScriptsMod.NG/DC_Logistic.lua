@@ -22,12 +22,12 @@ supply_plant.integrity, supply_line.integrity and airbase.integrity are alive/10
 
 This module use two new table: airbase_tab and supply_tab.
 airbase_tab include airbases with aircraft_type and efficiency values: property used for number of aircraft avalaibility calculation.
-airbase_tab is automatically created, used and saved (/Active) during mission generation.
-supply_tab is loaded initially from supply_tab_init.lua file (/Init), used and saved (/Active) during mission generation.
-supply_tab define association from airbase and supply asset: supply_line, supply_plant).
+airbase_tab is automatically created, update and saved (/Active) during mission generation.
+supply_tab is loaded initially from supply_tab_init.lua file (/Init), update and saved (/Active) during mission generation.
+supply_tab define association from airbase and supply asset: supply_line, supply_plant.
 The Campaign Creator must define the supply_tab_init using targets presents in targetlist table and airbases presents in oob_air.
 Important: the names of the airbases must be the same as those used in the oob_air. The names of the airbases defined in targetlist must be
-the same as those used in oob_air, eventually with the addition of " Airbase" or " FARP".
+the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
 For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]
 
 ]]
@@ -55,7 +55,7 @@ airbase_tab = {
 
 -- supply_tab structure example
 --[[
--- this definition of supply_tab is dedicated for development enviroment
+-- this definition of supply_tab is dedicated only for development enviroment
 supply_tab = {
 	['red'] = {
 		['Prohladniy Depot MP 24'] = {--      supply plant
