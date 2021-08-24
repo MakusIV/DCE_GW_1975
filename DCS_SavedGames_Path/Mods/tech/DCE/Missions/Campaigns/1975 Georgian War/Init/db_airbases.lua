@@ -402,34 +402,34 @@ db_airbases = {
 
 	-- Red Farp	da creare in ME e poi aggiornare le proprietà
 
-	['Didmukha AFB'] = {		
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['LENIGORI FARP MN76'] = {		
+		x =	-267944.48171613,
+		y = 849346.36809242,
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 1218,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 1218,
 		ATC_frequency = "128.500",
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
 
-	['Tskhinvali AFB'] = {
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['TSKHINVALI FARP MM27'] = {
+		x = -262529.45557958,
+		y = 812409.45239818,		
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 1205,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 1205,
 		ATC_frequency = "128.500",
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
 
-	['Sathiari AFB'] = {
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['NOGIR FARP MN76'] = {
+		x =	-163275.31542855,
+		y = 849176.11057142,
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 635,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 635,
 		ATC_frequency = "128.500",
 		side = "red",								-- side : Required information for the divert
 		divert = false,
@@ -437,34 +437,34 @@ db_airbases = {
 
 	-- Blue Farp
 
-	['Tsveri AFB'] = {
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['KHASHURI FARP LM84'] = {
+		x =	-294718.48278189,
+		y = 781935.47111336,
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 1231,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 1231,
 		ATC_frequency = "243.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},	
 
-	['Tkviavi AFB'] = {
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['GORI FARP MM25'] = {
+		x =	-288062.30182442,
+		y = 820700.39289326,
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 1225,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 1225,
 		ATC_frequency = "243.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},
 	
-	['Kaspi AFB'] = {
-		x =	-74348.375716192,
-		y = -67705.331836707,
+	['AMBROLAURI FARP LN41'] = {
+		x =	-239194.51977966,
+		y = 731206.03012294,
 		elevation = 0,
-		airdromeId = 837,							--be careful this Id depends on units placements and is helipadID in fact
-		helipadId = 837,
+		airdromeId = 1236,							--be careful this Id depends on units placements and is helipadID in fact
+		helipadId = 1236,
 		ATC_frequency = "243.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
