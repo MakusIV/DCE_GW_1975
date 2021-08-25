@@ -3,22 +3,59 @@ supply_tab = {
 		['Prohladniy Depot MP 24'] = {--        supply plant
 			['integrity'] = 1, --             supply plant integrity    
 			['supply_line_names'] = {--         table of supply lines supplyed by supply plant
-				['Bridge Vladikavkaz North MN 76'] = {--   supply line
-					['integrity'] = 1,--      integrity of supply line
-					['airbase_supply'] = {--    table of airbases supplyd by supply line
-						['Beslan'] = true,--    test info: Beslan dovrebbe prendere 0.8*0.5=0.4 efficiency
-						['Mozdok'] = true,
-						['Sochi-Adler'] = true,
-						['Maykop-Khanskaya'] = true,
-					},
-				},
-				['Bridge Vladikavkaz South MN 76'] = {
+				['Mozdok Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Nalchik'] = true,   
-						['Mineralnye-Vody'] = true,						
+						['Mozdok'] = true,											
+					},
+				},			
+				['Prohladniy Depot MP 24-BESLAN SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						 	
+						['Beslan'] =  true,							
 					},
 				},
+			},
+		},
+		['SUPPLY PLANT BAKSAN LP83'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['BAKSAN-MINERALNYE SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {	
+						['Mineralnye-Vody'] = true,										
+					},
+				},
+				['Nalchik Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Nalchik'] = true,											
+					},
+				},
+				['BAKSAN-MOZDOK SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Mozdok'] = true,													
+					},
+				},
+			},
+		},
+		['CHERKESSK SUPPLY PLANT KP69'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Mineralnye-Vody Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Mineralnye-Vody'] = true,											
+					},
+				},
+				['Russian Convoy 2'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {												
+						['Sochi-Adler'] = true,
+						['Maykop-Khanskaya'] = true,				
+					},
+				},				
 			},
 		},
 		['Mineralnye-Vody Airbase'] = {
@@ -26,28 +63,11 @@ supply_tab = {
 			['supply_line_names'] = {
 				['Mineralnye-Vody Airbase'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {						
+					['airbase_supply'] = {					
 						['Reserves-3./19.IAP'] = true,
 						['Reserves-3./31.IAP'] = true,							
 					},
-				['Bridge SW Kardzhin MN 49'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Beslan'] = true,										
-					},
-				},
-				['Bridge SW Kardzhin MN 49'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Nalchik'] = true,											
-					},
-				},
-				['Bridge South Elhotovo MN 39'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Mozdok'] = true,													
-					},
-				},
+				},			
 			},
 		},
 		['Beslan Airbase'] = {
@@ -60,12 +80,24 @@ supply_tab = {
 						['Reserves-2./17.IAP'] = true,
 					},
 				},
-				['Russian Convoy 1'] = {
+				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {
-						["FARP Vladikavkaz - MN76"] = true,
+					['airbase_supply'] = {						
+						["NOGIR FARP MN76"] = true,
 					},
 				},
+				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						
+						["LENIGORI FARP MM56"] = true,
+					},
+				},		
+				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						
+						["TSKHINVALI FARP MM17"] = true,
+					},
+				},						
 			},
 		},
 		['Nalchik Airbase'] = {
@@ -77,7 +109,13 @@ supply_tab = {
 						['Reserves-2./14.IAP'] = true,	
 						['Reserves-R./41.IAP'] = true,					
 					},
-				},			
+				},	
+				['NALCHIK-TSKHINVALI FARP SUPPLY LINE'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						
+						["TSKHINVALI FARP MM17"] = true,
+					},
+				},				
 			},
 		},
 		['Mozdok Airbase'] = {
@@ -89,30 +127,7 @@ supply_tab = {
 						['Reserves-R./81.IAP'] = true,
 						['Reserves-R./61.IAP'] = true,
 					},
-				},
-				['Rail Bridge Kardzhin MN 49'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						["FARP Vladikavkaz - MN76"] = true,
-					},
-				},
-			},
-		},
-		['101 EWR Site'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Russian Convoy 2'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {						
-						['Beslan'] = true,							
-					},
-				},
-				['Bridge Alagir MN 36'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {						
-						["FARP Vladikavkaz - MN76"] = true,
-					},
-				},
+				},				
 			},
 		},
 	},
@@ -337,4 +352,6 @@ supply_tab = {
 	},
 }
 
-
+-- SUPPLY PLANT:
+-- RED: SUPPLY PLANT BAKSAN LP83, "CHERKESSK SUPPLY PLANT KP69, Prohladniy Depot MP 24
+-- BLUE: 

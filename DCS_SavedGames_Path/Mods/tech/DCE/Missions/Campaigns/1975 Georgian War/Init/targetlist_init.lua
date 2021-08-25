@@ -814,7 +814,405 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 
 			},
 		},
-		["FARP Vladikavkaz - MN76"] = {
+		["SUPPLY PLANT BAKSAN LP83"] = {
+			task = "Strike",
+			priority = 2,
+			--picture = {"Prohladniy_Depot.png"},
+			attributes = {{"Structure"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "static",
+			elements = {
+				[1] = {
+					name = "SUPPLY PLANT BAKSAN LP83",
+				},
+				[2] = {
+					name = "SUPPLY PLANT BAKSAN LP83-1",
+				},
+				[3] = {
+					name = "SUPPLY PLANT BAKSAN LP83-2",
+				},
+				[4] = {
+					name = "SUPPLY PLANT BAKSAN LP83-3",
+				},
+				[5] = {
+					name = "SUPPLY PLANT BAKSAN LP83-4",
+				},
+				[6] = {
+					name = "SUPPLY PLANT BAKSAN LP83-5",
+				},
+				[7] = {
+					name = "SUPPLY PLANT BAKSAN LP83-6",
+				},
+				[8] = {
+					name = "SUPPLY PLANT BAKSAN LP83-7",
+				},
+				[9] = {
+					name = "SUPPLY PLANT BAKSAN LP83-8",
+				},
+				[10] = {
+					name = "SUPPLY PLANT BAKSAN LP83-9",
+				},
+				[11] = {
+					name = "SUPPLY PLANT BAKSAN LP83-10",
+				},
+				[12] = {
+					name = "SUPPLY PLANT BAKSAN LP83-11",
+				},
+				[13] = {
+					name = "SUPPLY PLANT BAKSAN LP83-13",
+				},
+				[14] = {
+					name = "SUPPLY PLANT BAKSAN LP83-14",
+				},
+				[15] = {
+					name = "SUPPLY PLANT BAKSAN LP83-15",
+				},
+				[16] = {
+					name = "SUPPLY PLANT BAKSAN LP83-16",
+				},
+				[17] = {
+					name = "SUPPLY PLANT BAKSAN LP83-17",
+				},
+				[18] = {
+					name = "SUPPLY PLANT BAKSAN LP83-18",
+				},
+				[19] = {
+					name = "SUPPLY PLANT BAKSAN LP83-19",
+				},
+				[20] = {
+					name = "SUPPLY PLANT BAKSAN LP83-20",
+				},
+				[21] = {
+					name = "SUPPLY PLANT BAKSAN LP83-21",
+				},
+				[22] = {
+					name = "SUPPLY PLANT BAKSAN LP83-22",
+				},
+				[23] = {
+					name = "SUPPLY PLANT BAKSAN LP83-23",
+				},
+				[24] = {
+					name = "SUPPLY PLANT BAKSAN LP83-24",
+				},
+				[25] = {
+					name = "SUPPLY PLANT BAKSAN LP83-25",
+				},
+				[26] = {
+					name = "SUPPLY PLANT BAKSAN LP83-26",
+				},
+				[27] = {
+					name = "SUPPLY PLANT BAKSAN LP83-27",
+				},
+				[28] = {
+					name = "SUPPLY PLANT BAKSAN LP83-28",
+				},
+				[29] = {
+					name = "SUPPLY PLANT BAKSAN LP83-29",
+				},					
+			},
+		},
+		["CHERKESSK SUPPLY PLANT KP69"] = {
+			task = "Strike",
+			priority = 2,
+			--picture = {""},
+			attributes = {{"Structure"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "static",
+			elements = {
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-1",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-2",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-3",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-4",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-5",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-6",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-7",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-8",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-9",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-11",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-12",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-13",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-14",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-15",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-16",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-17",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-18",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-19",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-20",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-21",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-22",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-23",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-24",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-25",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-26",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-27",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-28",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-29",
+				},
+				[1] = {
+					name = "CHERKESSK SUPPLY PLANT KP69-30",
+				},
+			
+			},
+		},
+		["BAKSAN-MINERALNYE SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			elements = {
+				[1] = {
+					name = "bridge Progress ",
+					x = -94312.612672011,
+					y = 732728.82550397,
+				},
+				[2] = {
+					name = "bridge Kamennomostskoe",
+					x =-106420.67313121,
+					y = 709761.90427801,
+				},
+			},
+		},
+		["BAKSAN-MOZDOK SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Vladikavkaz MN 76",
+					x = -165689.171875,
+					y = 850781.9375,
+				},
+				[2] = {
+					name = "Bridge Vladikavkaz North MN 76",
+					x = -164245.28125,
+					y = 850403,
+				},
+				[3] = {
+					name = "Bridge Vladikavkaz South MN 76",
+					x = -168229.1875,
+					y = 852723.0625,
+				},
+			},
+		},
+		["BESLAN-NOGIR FARP SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 5,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Vladikavkaz MN 76",
+					x = -165689.171875,
+					y = 850781.9375,
+				},
+				[2] = {
+					name = "Bridge Vladikavkaz North MN 76",
+					x = -164245.28125,
+					y = 850403,
+				},				
+			},
+		},	
+		["BESLAN-LENIGORI FARP SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 5,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Vladikavkaz MN 76",
+					x = -165689.171875,
+					y = 850781.9375,
+				},				
+				[2] = {
+					name = "Bridge Vladikavkaz South MN 76",
+					x = -168229.1875,
+					y = 852723.0625,
+				},
+			},
+		},	
+		["BESLAN-TSKHINVALI FARP SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge north bank South Beslan",
+					x = -151580.80078125,
+					y = 835949.02734375,
+				},
+				[2] = {
+					name = "Bridge south bank South Beslan",
+					x = -151456.44921875,
+					y = 836013.34375,
+				},
+				[3] = {
+					name = "Bridge Alagir",
+					x = -173099.3125,
+					y = 815939.25,
+				},
+			},
+		},	
+		["NALCHIK-TSKHINVALI FARP SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Digora MN 38",
+					x = -157146.546875,
+					y = 809730.375,
+				},			
+				[2] = {
+					name = "Bridge Alagir",
+					x = -173099.3125,
+					y = 815939.25,
+				},
+			},
+		},			
+		["Prohladniy Depot MP 24-BESLAN SUPPLY LINE"] = {
+			task = "Strike",
+			priority = 3,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge right bank SE Mayskiy",
+					x = -111785.2421875,
+					y = 795963.7109375,
+				},
+				[2] = {
+					name = "Rail Bridge Center SE Mayskiy",
+					x = -111727.7109375,
+					y = 795881.91699219,
+				},
+				[3] = {
+					name = "Rail Bridge left bank SE Mayskiy",
+					x = -111670.1796875,
+					y = 795800.12207031,
+				},
+				[4] = {
+					name = "Bridge north bank South Elhotovo",
+					x = -140288.05761719,
+					y = 809993.75585938,
+				},
+				[5] = {
+					name = "Bridge south bank South Elhotovo",
+					x = -140195.16113281,
+					y = 810098.49414063,
+				},
+				[6] = {
+					name = "Rail Bridge right bank SW Kardzhin",
+					x = -145428.47167969,
+					y = 814533.16210938,
+				},
+				[7] = {
+					name = "Rail Bridge left bank SW Kardzhin",
+					x = -145376.90332031,
+					y = 814618.83789063,
+				},
+				[8] = {
+					name = "Rail Bridge Kardzhin MN 49",
+					x = -144986.53125,
+					y = 816502.625,
+				},				
+			},
+		},
+		["NOGIR FARP MN76"] = {
 			task = "Strike",
 			priority = 2,
 			picture = {"FARP_Vladikavkaz.png"},
@@ -879,6 +1277,59 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				[18] = {
 					name = "FARP 1 - Crew Tent 3",
 				},
+			},
+		},
+		["LENIGORI FARP MM56"] = {
+			task = "Strike",
+			priority = 2,
+			--picture = {"FARP_Vladikavkaz.png"},
+			attributes = {"soft"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "static",
+			elements = {
+				[1] = {
+					name = "LENIGORI FARP MM56",
+				},
+				[2] = {
+					name = "LENIGORI FARP MM56 - 1",
+				},
+				[3] = {
+					name = "LENIGORI FARP MM56 - 2",
+				},
+				[4] = {
+					name = "LENIGORI FARP MM56 - 3",
+				},			
+			},
+		},
+		["TSKHINVALI FARP MM17"] = {
+			task = "Strike",
+			priority = 2,
+			--picture = {"FARP_Vladikavkaz.png"},
+			attributes = {"soft"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "static",
+			elements = {
+				[1] = {
+					name = "TSKHINVALI FARP MM17",
+				},
+				[2] = {
+					name = "TSKHINVALI FARP MM17 - 1",
+				},
+				[3] = {
+					name = "TSKHINVALI FARP MM17 - 2",
+				},			
+				[4] = {
+					name = "TSKHINVALI FARP MM17 - 3",
+				},
+				[5] = {
+					name = "TSKHINVALI FARP MM17 - 5",
+				},			
 			},
 		},
 		["407 8th Army ELINT Station"] = {
