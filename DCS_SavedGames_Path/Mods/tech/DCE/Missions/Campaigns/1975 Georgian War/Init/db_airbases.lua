@@ -192,9 +192,7 @@ db_airbases = {
 		-- ILS = "",							-- ILS : optionnel
 		LimitedParkNb = 31,
 	},
-
 	-- Red Airbase
-
 	['Sochi-Adler'] = {
 		x =	-164474.73482633,
 		y = 462236.21834688,
@@ -375,9 +373,7 @@ db_airbases = {
 		-- ILS = "",							-- ILS : optionnel
 		LimitedParkNb = 19,
 	},
-
 	-- Blue Ship
-
 	['CVN-74 John C. Stennis'] = {                            
 		unitname = "CVN-74 John C. Stennis",
 		startup = 300,
@@ -399,9 +395,7 @@ db_airbases = {
 		ATC_frequency = "250.255",				--si ATC_frequency non present, on utilise la freq de base_mission
 		LimitedParkNb  = 4,
 	},
-
-	-- Red Farp	da creare in ME e poi aggiornare le proprietà
-
+	-- Red Farp
 	['LENIGORI FARP MN76'] = {		
 		x =	-267944.48171613,
 		y = 849346.36809242,
@@ -412,7 +406,6 @@ db_airbases = {
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
-
 	['TSKHINVALI FARP MM27'] = {
 		x = -262529.45557958,
 		y = 812409.45239818,		
@@ -423,7 +416,6 @@ db_airbases = {
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
-
 	['NOGIR FARP MN76'] = {
 		x =	-163275.31542855,
 		y = 849176.11057142,
@@ -436,10 +428,9 @@ db_airbases = {
 	},	
 
 	-- Blue Farp
-
 	['KHASHURI FARP LM84'] = {
-		x =	-294718.48278189,
-		y = 781935.47111336,
+		x =	-294722.58358377,
+		y = 781927.75608232,
 		elevation = 0,
 		airdromeId = 1231,							--be careful this Id depends on units placements and is helipadID in fact
 		helipadId = 1231,
@@ -447,7 +438,6 @@ db_airbases = {
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},	
-
 	['GORI FARP MM25'] = {
 		x =	-288062.30182442,
 		y = 820700.39289326,
@@ -457,8 +447,7 @@ db_airbases = {
 		ATC_frequency = "243.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
-	},
-	
+	},	
 	['AMBROLAURI FARP LN41'] = {
 		x =	-239194.51977966,
 		y = 731206.03012294,
@@ -469,72 +458,6 @@ db_airbases = {
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},
-    
-	-------------  Exists in map (probably) from "Hot War in The Cold - Fishbed. Verify opportunity use of this map but watch: carrier not present"
-
-	['FARP-1st GHR'] = {
-		x = -315022.89737545,
-		y = 642447.20489601,
-        elevation = 180,
-		airdromeId = 606,
-		helipadId = 606,
-		ATC_frequency = "128.500",
-		side = "red",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-		
-	},
-	['FARP-2nd GHR'] = {
-		["x"] = -314576.96039632,
-		["y"] = 642760.4924077,
-		elevation = 233,
-		airdromeId = 607,
-		helipadId = 607,
-		ATC_frequency = "128.600",
-		side = "red",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-	},
-	['FARP-1st THR'] = {
-		x =	-335937.21377428,
-		y = 631659.43333671,
-		elevation = 236,
-		airdromeId = 592,
-		helipadId = 592,
-		ATC_frequency = "127.500",
-		side = "blue",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-	},
-	['FARP-2nd THR'] = {
-		x =	-336409.15972482,
-		y = 632088.0792888,
-		elevation = 246,
-		airdromeId = 593,
-		helipadId = 593,
-		ATC_frequency = "127.600",
-		side = "blue",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-	},
-	['Incirlik'] = {
-		x = -00446268,
-		y = 005117415, 
-		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
-		side = "blue",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-	},
-	['Diyarbakir'] = {
-		x = -00397596,
-		y = 00577160, 
-		elevation = 0,
-		airdromeId = nil,
-		ATC_frequency = "0",
-		BaseAirStart = true,
-		side = "blue",								-- side : Required information for the divert
-		divert = false,								-- divert : Required information for the divert)
-	},
-
-
 	['Reserves'] = {						--dummy airbase to place virtual reserves
 		inactive = true,
 		x =	9999999999,						--position far away will make all range checks negative

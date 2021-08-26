@@ -1029,7 +1029,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			elements = {
 				[1] = {
-					name = "bridge Progress ",
+					name = "bridge Progress",
 					x = -94312.612672011,
 					y = 732728.82550397,
 				},
@@ -1719,7 +1719,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["SUPPLY PLANT  MARNEULI ML89"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {{"Structure"},
 			firepower = {
@@ -1871,7 +1871,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["GORI FARP MM25"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 4,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
@@ -1916,7 +1916,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["AMBROLAURI FARP LN41"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 3,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
@@ -3772,13 +3772,13 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			elements = {
 				[1] = {
 					name = "bridge GORI 1",
-					x = -170576,
-					y = 472735.90625,
+					x = -289338.90250721,
+					y = 821231.45182713,
 				},
 				[2] = {
 					name = "bridge GORI 2",
-					x = -170576,
-					y = 472735.90625,
+					x = -290558.91171324,
+					y = 820769.67147346,
 				},
 			},
 		},
@@ -3788,34 +3788,34 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
 					name = "Bridge Supply Line Gori - Tbilisi-1",
-					x = -170576,
-					y = 472735.90625,
+					x = -291901.15661608,
+					y = 836269.95717029,
 				},
 				[2] = {
 					name = "Bridge Supply Line Gori - Tbilisi-2",
-					x = -170576,
-					y = 472735.90625,
+					x = -293785.15756579,
+					y = 848374.93828642,
 				},
 				[3] = {
 					name = "Bridge Supply Line Gori - Tbilisi-3",
-					x = -170576,
-					y = 472735.90625,
+					x = -299055.94360335,
+					y = 864280.68645882,
 				},
 				[4] = {
 					name = "Bridge Supply Line Gori - Tbilisi-4",
-					x = -170576,
-					y = 472735.90625,
+					x = -299277.05648133,
+					y = 872977.58810726,
 				},
 				[5] = {
 					name = "Bridge Supply Line Gori - Tbilisi-5",
-					x = -170576,
-					y = 472735.90625,
+					x = -300308.92274769,
+					y = 878191.35657638,
 				},
 			},
 		},
@@ -3831,13 +3831,13 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			elements = {
 				[1] = {
 					name = "bridge TKIBULI river", -- cambia il nome
-					x = -170576,
-					y = 472735.90625,				
+					x = -263345.09071519,
+					y = 722875.74340048,				
 				},
 				[1] = {
 					name = "bridge TKIBULI lake", -- cambia il nome
-					x = -170576,
-					y = 472735.90625,				
+					x = -263318.92491384,
+					y = 722806.48098515,				
 				},			
 		},
 		["Bridge Supply Line Marneuli - Tbilisi"] = { -- kutaisi - farp ambrolauri
@@ -3852,18 +3852,18 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			elements = {
 				[1] = {
 					name = "Bridge Supply Line Marneuli - Tbilisi-1", -- cambia il nome
-					x = -170576,
-					y = 472735.90625,				
+					x = -324597.40552542,
+					y = 882950.48548748,				
 				},					
 				[2] = {
 					name = "Bridge Supply Line Marneuli - Tbilisi-2", -- cambia il nome
-					x = -170576,
-					y = 472735.90625,				
+					x = -317070.77633033,
+					y = 891234.90923188,				
 				},					
 				[3] = {
 					name = "Bridge Supply Line Marneuli - Tbilisi-3", -- cambia il nome
-					x = -170576,
-					y = 472735.90625,				
+					x = -313485.95939054,
+					y = 883397.98896592,				
 				},									
 		},
 		["Rail Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
