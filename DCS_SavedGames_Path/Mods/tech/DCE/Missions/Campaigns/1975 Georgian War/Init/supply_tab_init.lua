@@ -17,7 +17,7 @@ supply_tab = {
 				},
 			},
 		},
-		['SUPPLY PLANT BAKSAN LP83'] = {
+		['SUPPLY PLANT BAKSAN LP83'] = {--      supply plant
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['BAKSAN-MINERALNYE SUPPLY LINE'] = {
@@ -40,7 +40,7 @@ supply_tab = {
 				},
 			},
 		},
-		['CHERKESSK SUPPLY PLANT KP69'] = {
+		['CHERKESSK SUPPLY PLANT KP69'] = {--   supply plant
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['Mineralnye-Vody Airbase'] = {
@@ -132,7 +132,77 @@ supply_tab = {
 		},
 	},
 	['blue'] = {
-		['Sukhumi Airbase Strategics'] = {
+		['SUPPLY PLANT DAPNARI KM76'] = {--      supply plant: Gori Farp, Ambrolauri Farp, Kobuleti, Khashuri Farp
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Bridge Supply Line Marneuli - Tbilisi'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {	
+						['GORI FARP MM25'] = true,										
+					},
+				},
+				['Rail Bridge Dapnari-KM76'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,											
+					},
+				},
+				['Bridge Dapnari-KM76'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,											
+					},
+				},
+				['Bridge Vartsihe-LM16'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['KHASHURI FARP LM84'] = true,											
+					},
+				},
+				['Bridge Geguti-LM17'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['KHASHURI FARP LM84'] = true,											
+					},
+				},
+				['Bridge Kutaisi-LM18'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['AMBROLAURI FARP LN41'] = true,											
+					},
+				},
+				['Kutaisi Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,													
+					},
+				},
+				['bridge GORI'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['GORI FARP MM25'] = true,													
+					},
+				},
+			},
+		},
+		['SUPPLY PLANT  MARNEULI ML89'] = {--      supply plant: Gori Farp, Tbilissi
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Bridge Supply Line Gori - Tbilisi'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {	
+						['GORI FARP MM25'] = true,										
+					},
+				},
+				['Tbilissi Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Tbilissi-Lochini'] = true,											
+					},
+				},			
+			},
+		},
+		['Sukhumi Airbase Strategics'] = {  -- supply plant: Sukhumi, Senaki, Kobuleti
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['Sukhumi Airbase Strategics'] = {
@@ -141,37 +211,27 @@ supply_tab = {
 						['Sukhumi'] = true,
 					},
 				},
-				['Bridge Anaklia-GG19'] = {
+				['Rail Bridge Tagiloni-GH21'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Vaziani'] = true,													
+						['Senaki-Kolkhi'] = true,													
+					},
+				},
+				['Bridge Koki-GH20'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,													
 					},
 				},
 			},
 		},
-		['Novyy Afon Train Station - FH57'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Rail Bridge Tsalkoti-EJ80'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,																	
-					},
-				},
-				['Rail Bridge West Gantiadi-EJ80'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {						
-						['Senaki-Kolkhi'] = true,
-					},
-				},
-			},
-		},
-		['CVN-71 Theodore Roosevelt'] = {
+		['CVN-71 Theodore Roosevelt'] = {--supply: kutaisi
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['CVN-71 Theodore Roosevelt'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
+						['CVN-71 Theodore Roosevelt'] = true,
 						['Kutaisi'] = true,												
 						['Reserves-R/VFA-106'] = true,						
 						['Reserves-R/335 TFS'] = true,
@@ -180,12 +240,13 @@ supply_tab = {
 				},
 			},
 		},
-		['CVN-74 John C. Stennis'] = {
+		['CVN-74 John C. Stennis'] = {-- supply: batumi
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['CVN-74 John C. Stennis'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {						
+					['airbase_supply'] = {	
+						['CVN-74 John C. Stennis'] = true,					
 						['Batumi'] = true,	
 						['Reserves-R/VF-101'] = true,			
 						['Reserves-VMA 331'] = true,						
@@ -201,7 +262,6 @@ supply_tab = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Kutaisi'] = true,
-						['Batumi'] = true,
 						['Reserves-F21'] = true,						
 						['Reserves-R/171 ARW'] = true,
 						['Reserves-R/58 TFS'] = true,						
@@ -215,7 +275,7 @@ supply_tab = {
 				['Kobuleti Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Kutaisi'] = true,											
+						['Kobuleti'] = true,											
 					},
 				},
 			},
@@ -225,7 +285,8 @@ supply_tab = {
 			['supply_line_names'] = {
 				['Batumi Airbase'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {						
+					['airbase_supply'] = {	
+						['Batumi'] = true,						
 						['Reserves-F21'] = true,
 						['Reserves-R/171 ARW'] = true,	
 						['Reserves-EC 2/12'] = true,											
@@ -236,43 +297,23 @@ supply_tab = {
 		['Senaki-Kolkhi Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Senaki Airbase'] = {
+				['Senaki-Kolkhi Airbase'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {						
+					['airbase_supply'] = {		
+						['Senaki-Kolkhi'] = true,				
 						['Reserves-R/801 ARS'] = true,
 						['Reserves-R/58 TFS'] = true,						
 					},
 				},				
 			},
 		},
-		['Gudauta Airbase'] = { -- watch! Gudauta not exists in oob_air_init. Delete it or insert an air groub with base = Kobuleti
+		['Tbilissi Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Gudauta Airbase'] = { -- attention: not present in oob_air_init
+				['Tbilissi-Lochini'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,										
-					},
-				},
-			},
-		},
-		['Sukhumi Airbase'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Sukhumi Airbase'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,						
-					},
-				},			
-			},
-		},
-		['Tbilisi Airbase'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Tbilisi Airbase'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {						
+					['airbase_supply'] = {		
+						['Tbilissi'] = true,
 						['Reserves-R/174 ARW'] = true,
 						['Reserves-R/335 TFS'] = true,
 						['Reserves-R/13 TFS'] = true,							
@@ -282,16 +323,16 @@ supply_tab = {
 				},
 			},
 		},
-		['Gudauta Train Station - FH37'] = {
+		['Sukhumi Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Gudauta Train Station - FH37'] = {
+				['Sukhumi Airbase'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Gudauta'] = true, -- watch! Kobuleti not exists in oob_air_init. Delete it or insert an air groub with base = Kobuleti
-						['Kutaisi'] = true,
+					['airbase_supply'] = {	
+						['Sukhumi'] = true,						
+						['Reserves-R/171 ARW'] = true,					
 					},
-				},			
+				},				
 			},
 		},
 		['Sukhumi Train Station - FH66'] = {
@@ -338,20 +379,36 @@ supply_tab = {
 				},
 			},
 		},
-		['Sukhumi Airbase'] = {
+		--[[
+
+		['Gudauta Airbase'] = { -- watch! Gudauta not exists in oob_air_init. Delete it or insert an air groub with base = Kobuleti
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Sukhumi Airbase'] = {
+				['Gudauta Airbase'] = { -- attention: not present in oob_air_init
 					['integrity'] = 1,
-					['airbase_supply'] = {						
-						['Reserves-R/171 ARW'] = true,					
+					['airbase_supply'] = {
+						['Gudauta'] = true,										
 					},
-				},				
+				},
 			},
-		},	
+		},
+		['Gudauta Train Station - FH37'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Gudauta Train Station - FH37'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Gudauta'] = true, -- watch! Kobuleti not exists in oob_air_init. Delete it or insert an air groub with base = Kobuleti
+						['Kutaisi'] = true,
+					},
+				},			
+			},
+		},
+		]]	
 	},
 }
 
 -- SUPPLY PLANT:
 -- RED: SUPPLY PLANT BAKSAN LP83, "CHERKESSK SUPPLY PLANT KP69, Prohladniy Depot MP 24
--- BLUE: 
+-- BLUE:  SUPPLY PLANT DAPNARI KM76, 
+---
