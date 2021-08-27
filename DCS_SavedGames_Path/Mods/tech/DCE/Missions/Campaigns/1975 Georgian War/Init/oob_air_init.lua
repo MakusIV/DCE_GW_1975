@@ -533,7 +533,9 @@ oob_air = {
 			tasks = {										--unit tasks
 				["CAP"] = false,
 				["Escort"] = false,
-				["Fighter Sweep"] = false,			
+				["Fighter Sweep"] = false,	
+				["Strike"] = true,
+				["Anti-ship Strike"] = true,		
 			},
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 1,								-- coef normal : = 1
@@ -706,8 +708,8 @@ oob_air = {
 			skill = "Random",									--unit skill
 			tasks = {
 				["Transport"] = true,
-				["Strike"] = true,
-			},
+				["Strike"] = false, -- no loadouts for strike!!
+			}, 
 			number = 8,
 		},
 		[42] = {
@@ -752,7 +754,8 @@ oob_air = {
 			base = "AMBROLAURI FARP LN41",					--unit base
 			skill = "Random",									--unit skill
 			tasks = {
-				["Strike"] = true,
+				["Transport"] = true,
+				["Strike"] = false, -- no loadout for strike
 			},
 			number = 8,
 		},
@@ -778,7 +781,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Intercept"] = true,
 				["CAP"] = true,
-				["Escort"] = true,
+				["Escort"] = false,
 				["Fighter Sweep"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
@@ -798,7 +801,7 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,				
+				["SEAD"] = false,	-- no load out for sead			
 			},
 			number = 12,
 		},
@@ -904,7 +907,7 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,				
+				["SEAD"] = false,	-- no loadout 			
 			},
 			number = 12,
 		},
@@ -1429,7 +1432,7 @@ oob_air = {
 			skill = "Random",									--unit skill
 			tasks = {
 				["Transport"] = true,
-				["Strike"] = true,
+				["Strike"] = false,--no loadout
 			},
 			number = 4,
 		},
@@ -1452,7 +1455,8 @@ oob_air = {
 			base = "TSKHINVALI FARP MM27",						--unit base
 			skill = "Random",									--unit skill
 			tasks = {
-				["Strike"] = true,
+				["Transport"] = true,
+				["Strike"] = false, -- no loadout
 			},
 			number = 4,
 		},
@@ -1475,7 +1479,8 @@ oob_air = {
 			base = "LENIGORI FARP MN76",						--unit base
 			skill = "Random",									--unit skill
 			tasks = {
-				["Strike"] = true,
+				["Transport"] = true,
+				["Strike"] = false, -- no loadout
 			},
 			number = 4,
 		},

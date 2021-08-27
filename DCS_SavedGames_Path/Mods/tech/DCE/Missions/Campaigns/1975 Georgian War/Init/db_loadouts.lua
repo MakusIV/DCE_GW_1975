@@ -1058,6 +1058,40 @@ db_loadouts = {
 		},
 	},
 
+	["KC135MPRS"] = { --1957 (entrata in servizio)
+		["Refueling"] = {
+			["Default"] = {
+				attributes = {"KC135"},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 1,
+				firepower = 1,
+				vCruise = 216.66666666667,
+				vAttack = 216.66666666667,
+				hCruise = 7000,
+				hAttack = 7000,
+				standoff = nil,
+				tStation = 21600,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] =
+					{
+					}, ----end of ["pylons"]
+					["fuel"] = 90700,
+					["flare"] = 60,
+					["chaff"] = 120,
+					["gun"] = 100,
+				},
+			},
+		},
+	},
+
 	["AJS37"] = {-- 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["Antiship - RB 15F*2 - RB-74J*2 - RB-24J*2 - FT"] = {--RB-15 dal 1985
@@ -3387,6 +3421,7 @@ db_loadouts = {
 				},
 			},
 		},
+		-- insert loadout for strike mission
 	},
 
 	["AH-1W"] = {--1967 (primo volo) 1973 (entrata in servizio)
@@ -4125,6 +4160,7 @@ db_loadouts = {
 				},
 			},
 		},
+		-- insert loadout for strike mission or another version of Mi-24
 	},
 
 	["A-50"] = { -- 1978 (primo volo) 1984 (entrata in servizio) SI in quanto in DCS non esiste un'altro AWACS per l'USSR
@@ -5085,6 +5121,7 @@ db_loadouts = {
 				},
 			},
 		},
+		-- insert sead loadout 
 	},
 
 	["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
@@ -5890,6 +5927,96 @@ db_loadouts = {
 			},
 		},
 		["CAP"] = {
+			["R-40R*4"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 600000,
+				capability = 5,
+				firepower = 1,
+				vCruise = 600,
+				vAttack = 700,
+				hCruise = 12000,
+				hAttack = 12000,
+				standoff = 25000,
+				tStation = 3600,
+				LDSD = true,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[1] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [1]
+						[2] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [4]
+					}, ----end of ["pylons"]
+					["fuel"] = "15245",
+					["flare"] = 64,
+					["chaff"] = 64,
+					["gun"] = 100,
+				},
+			},
+			["R-40R*2, R-40T*2"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 200000,
+				capability = 5,
+				firepower = 1,
+				vCruise = 600,
+				vAttack = 700,
+				hCruise = 12000,
+				hAttack = 12000,
+				standoff = 25000,
+				tStation = nil,
+				LDSD = true,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[1] =
+						{
+							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
+						}, --end of [1]
+						[2] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
+						}, --end of [4]
+					}, ----end of ["pylons"]
+					["fuel"] = "15245",
+					["flare"] = 64,
+					["chaff"] = 64,
+					["gun"] = 100,
+				},
+			},
+		},
+		["Escort"] = {
 			["R-40R*4"] = {
 				attributes = {},
 				weaponType = nil,
