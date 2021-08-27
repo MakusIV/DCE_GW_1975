@@ -1,4 +1,4 @@
-targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase + " Airbase"- es. Senaki vs Senaki-Kolchi. Devi riallienarli eventualemente modificando il mission_base.miz (da ME)
+targetlist = {   -- att alcune airbase hanno nomi diversi rispetto oob_air.airbase + " Airbase"- es. Senaki vs Senaki-Kolchi. Devi riallienarli eventualemente modificando il mission_base.miz (da ME)
 	["blue"] = {
 		["Vaziani Alert"] = {
 			task = "Intercept",
@@ -113,29 +113,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			class = "ship",
 			name = "Russian Convoy 2",
-		},
-		-- ["CVN-74 John C. Stennis Alert"] = {
-			-- task = "Intercept",
-			-- priority = 10,
-			-- attributes = {},
-			-- firepower = {
-				-- min = 2,
-				-- max = 2,
-			-- },
-			-- base = "CVN-74 John C. Stennis",
-			-- radius = 250000,
-		-- },
-		-- ["Sukhumi 100"] = {
-			-- task = "Intercept",
-			-- priority = 10,
-			-- attributes = {},
-			-- firepower = {
-				-- min = 2,
-				-- max = 4,
-			-- },
-			-- base = "Sukhumi",
-			-- radius = 100000,
-		-- },
+		},		
 		["AWACS"] = {
 			task = "AWACS",
 			priority = 10,
@@ -297,7 +275,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			refpoint = "CAP Tbilissi",
 			radius = 50000,
 			text = "North west of Tbilissi",
-		},
+		},		
 		["CAP Kutaisi"] = {
 			task = "CAP",
 			priority = 20,
@@ -342,18 +320,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			class = "vehicle",
 			name = "206 SA-11 Site B-3",
-		},
-		-- ["207 SA-6 Gainful Site R-1 N441526 E0431537"] = {
-			-- task = "Strike",
-			-- priority = 6,
-			-- attributes = {"SAM"},
-			-- firepower = {
-				-- min = 2,
-				-- max = 8,
-			-- },
-			-- class = "vehicle",
-			-- name = "207 SA-6 Gainful Site R-1",
-		-- },
+		},		
 		["209 SA-11 Site R-3"] = {
 			task = "Strike",
 			priority = 6,
@@ -386,7 +353,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			class = "vehicle",
 			name = "104 SA-11 Site E-4",
-		},
+		},		
 		["106 SA-11 Site C-6"] = {
 			task = "Strike",
 			priority = 6,
@@ -399,28 +366,6 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "vehicle",
 			name = "106 SA-11 Site C-6",
 		},
-		-- ["107 SA-3 Goa Site C-7 N433338 E0434288"] = {
-			-- task = "Strike",
-			-- priority = 6,
-			-- attributes = {"SAM"},
-			-- firepower = {
-				-- min = 2,
-				-- max = 6,
-			-- },
-			-- class = "vehicle",
-			-- name = "107 SA-3 Goa Site C-7",
-		-- },
-		-- ["110 SA-3 Goa Site W-10 N440952 E0430940"] = {
-			-- task = "Strike",
-			-- priority = 6,
-			-- attributes = {"SAM"},
-			-- firepower = {
-				-- min = 2,
-				-- max = 6,
-			-- },
-			-- class = "vehicle",
-			-- name = "110 SA-3 Goa Site W-10",
-		-- },
 		["Beslan Airbase"] = {
 			task = "Strike",
 			priority = 4,
@@ -591,7 +536,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 832356.5625,
 				},
 			},
-		},
+		},		
 		["Mineralnye-Vody Airbase"] = {
 			task = "Strike",
 			priority = 3,
@@ -688,7 +633,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 708177.25,
 				},
 			},
-		},
+		},		
 		["Prohladniy Depot MP 24"] = {
 			task = "Strike",
 			priority = 3,
@@ -813,12 +758,12 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 
 			},
-		},
+		},		
 		["SUPPLY PLANT BAKSAN LP83"] = {
 			task = "Strike",
 			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
-			attributes = {{"Structure"},
+			attributes = {"Structure"},
 			firepower = {
 				min = 4,
 				max = 8,
@@ -913,12 +858,12 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					name = "SUPPLY PLANT BAKSAN LP83-29",
 				},					
 			},
-		},
+		},		
 		["CHERKESSK SUPPLY PLANT KP69"] = {
 			task = "Strike",
 			priority = 3,
 			--picture = {""},
-			attributes = {{"Structure"},
+			attributes = {"Structure"},
 			firepower = {
 				min = 4,
 				max = 8,
@@ -1011,13 +956,9 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 				[29] = {
 					name = "CHERKESSK SUPPLY PLANT KP69-29",
-				},
-				[30] = {
-					name = "CHERKESSK SUPPLY PLANT KP69-30",
-				},
-			
+				},			
 			},
-		},
+		},		
 		["BAKSAN-MINERALNYE SUPPLY LINE"] = {
 			task = "Strike",
 			priority = 4,
@@ -1039,7 +980,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 709761.90427801,
 				},
 			},
-		},
+		},		
 		["BAKSAN-MOZDOK SUPPLY LINE"] = {--change with new bridge elements
 			task = "Strike",
 			priority = 2,
@@ -1174,7 +1115,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 815939.25,
 				},				
 			},
-		},		
+		},				
 		["BESLAN-LENIGORI FARP SUPPLY LINE"] = {-- same BESLAN-NOGIR FARP SUPPLY LINE
 			task = "Strike",
 			priority = 1,
@@ -1223,7 +1164,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 5
+				min = 5,
 				max = 10,
 			},
 			elements = {
@@ -1421,58 +1362,58 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "static",
 			elements = {
 				[1] = {
-					name = "FARP 1 - Hind 1",
+					name = "NOGIR FARP - Hind 1",
 				},
 				[2] = {
-					name = "FARP 1 - Hind 2",
+					name = "NOGIR FARP - Hind 2",
 				},
 				[3] = {
-					name = "FARP 1 - Hind 3",
+					name = "NOGIR FARP - Hind 3",
 				},
 				[4] = {
-					name = "FARP 1 - Hip 1",
+					name = "NOGIR FARP - Hip 1",
 				},
 				[5] = {
-					name = "FARP 1 - Hip 2",
+					name = "NOGIR FARP - Hip 2",
 				},
 				[6] = {
-					name = "FARP 1 - Hip 3",
+					name = "NOGIR FARP - Hip 3",
 				},
 				[7] = {
-					name = "FARP 1 - Hip 4",
+					name = "NOGIR FARP - Hip 4",
 				},
 				[8] = {
-					name = "FARP 1 - Hip 5",
+					name = "NOGIR FARP - Hip 5",
 				},
 				[9] = {
-					name = "FARP 1 - Ammo depot 1",
+					name = "NOGIR FARP - Ammo depot 1",
 				},
 				[10] = {
-					name = "FARP 1 - Ammo depot 2",
+					name = "NOGIR FARP - Ammo depot 2",
 				},
 				[11] = {
-					name = "FARP 1 - Ammo depot 3",
+					name = "NOGIR FARP - Ammo depot 3",
 				},
 				[12] = {
-					name = "FARP 1 - Fuel depot 1",
+					name = "NOGIR FARP - Fuel depot 1",
 				},
 				[13] = {
-					name = "FARP 1 - Fuel depot 2",
+					name = "NOGIR FARP - Fuel depot 2",
 				},
 				[14] = {
-					name = "FARP 1 - Fuel depot 3",
+					name = "NOGIR FARP - Fuel depot 3",
 				},
 				[15] = {
-					name = "FARP 1 - Crew house",
+					name = "NOGIR FARP - Crew house",
 				},
 				[16] = {
-					name = "FARP 1 - Crew Tent 1",
+					name = "NOGIR FARP - Crew Tent 1",
 				},
 				[17] = {
-					name = "FARP 1 - Crew Tent 2",
+					name = "NOGIR FARP - Crew Tent 2",
 				},
 				[18] = {
-					name = "FARP 1 - Crew Tent 3",
+					name = "NOGIR FARP - Crew Tent 3",
 				},
 			},
 		},
@@ -1501,7 +1442,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},			
 			},
 		},
-		["TSKHINVALI FARP MM17"] = {
+		["TSKHINVALI FARP MM27"] = {
 			task = "Strike",
 			priority = 4,
 			--picture = {"FARP_Vladikavkaz.png"},
@@ -1513,19 +1454,19 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "static",
 			elements = {
 				[1] = {
-					name = "TSKHINVALI FARP MM17",
+					name = "TSKHINVALI FARP MM27",
 				},
 				[2] = {
-					name = "TSKHINVALI FARP MM17 - 1",
+					name = "TSKHINVALI FARP MM27-1",
 				},
 				[3] = {
-					name = "TSKHINVALI FARP MM17 - 2",
+					name = "TSKHINVALI FARP MM27-2",
 				},			
 				[4] = {
-					name = "TSKHINVALI FARP MM17 - 3",
+					name = "TSKHINVALI FARP MM27-3",
 				},
 				[5] = {
-					name = "TSKHINVALI FARP MM17 - 5",
+					name = "TSKHINVALI FARP MM27-5",
 				},			
 			},
 		},
@@ -1600,7 +1541,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			class = "vehicle",
 			name = "504 5th Artillery Division/4.Btry",
-		},
+		},		
 		["Bridge Alagir MN 36"] = {
 			task = "Strike",
 			priority = 3,
@@ -1818,13 +1759,68 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 			},
 		},
+		-- ["CVN-74 John C. Stennis Alert"] = {
+			-- task = "Intercept",
+			-- priority = 10,
+			-- attributes = {},
+			-- firepower = {
+				-- min = 2,
+				-- max = 2,
+			-- },
+			-- base = "CVN-74 John C. Stennis",
+			-- radius = 250000,
+		-- },
+		-- ["Sukhumi 100"] = {
+			-- task = "Intercept",
+			-- priority = 10,
+			-- attributes = {},
+			-- firepower = {
+				-- min = 2,
+				-- max = 4,
+			-- },
+			-- base = "Sukhumi",
+			-- radius = 100000,
+		-- },
+			-- ["107 SA-3 Goa Site C-7 N433338 E0434288"] = {
+			-- task = "Strike",
+			-- priority = 6,
+			-- attributes = {"SAM"},
+			-- firepower = {
+				-- min = 2,
+				-- max = 6,
+			-- },
+			-- class = "vehicle",
+			-- name = "107 SA-3 Goa Site C-7",
+		-- },
+		-- ["110 SA-3 Goa Site W-10 N440952 E0430940"] = {
+			-- task = "Strike",
+			-- priority = 6,
+			-- attributes = {"SAM"},
+			-- firepower = {
+				-- min = 2,
+				-- max = 6,
+			-- },
+			-- class = "vehicle",
+			-- name = "110 SA-3 Goa Site W-10",
+		-- },
+		-- ["207 SA-6 Gainful Site R-1 N441526 E0431537"] = {
+			-- task = "Strike",
+			-- priority = 6,
+			-- attributes = {"SAM"},
+			-- firepower = {
+				-- min = 2,
+				-- max = 8,
+			-- },
+			-- class = "vehicle",
+			-- name = "207 SA-6 Gainful Site R-1",
+		-- },		
 	},
-	["red"] = {
+	["red"] = {		
 		["SUPPLY PLANT DAPNARI KM76"] = {
 			task = "Strike",
 			priority = 3,
 			--picture = {"Prohladniy_Depot.png"},
-			attributes = {{"Structure"},
+			attributes = {"Structure"},
 			firepower = {
 				min = 4,
 				max = 8,
@@ -1914,11 +1910,11 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},							
 			},
 		},
-		["SUPPLY PLANT  MARNEULI ML89"] = {
+		["SUPPLY PLANT MARNEULI ML89"] = {
 			task = "Strike",
 			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
-			attributes = {{"Structure"},
+			attributes = {"Structure"},
 			firepower = {
 				min = 4,
 				max = 8,
@@ -1926,95 +1922,92 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			class = "static",
 			elements = {
 				[1] = {
-					name = "SUPPLY PLANT  MARNEULI ML89",
+					name = "SUPPLY PLANT MARNEULI ML89",
 				},	
 				[2] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-1",
+					name = "SUPPLY PLANT MARNEULI ML89-1",
 				},
 				[3] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-2",
+					name = "SUPPLY PLANT MARNEULI ML89-2",
 				},
 				[4] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-3",
+					name = "SUPPLY PLANT MARNEULI ML89-3",
 				},
 				[5] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-4",
+					name = "SUPPLY PLANT MARNEULI ML89-4",
 				},
 				[6] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-5",
+					name = "SUPPLY PLANT MARNEULI ML89-5",
 				},
 				[7] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-6",
+					name = "SUPPLY PLANT MARNEULI ML89-6",
 				},
 				[8] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-7",
+					name = "SUPPLY PLANT MARNEULI ML89-7",
 				},
 				[9] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-8",
+					name = "SUPPLY PLANT MARNEULI ML89-8",
 				},
 				[10] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-9",
+					name = "SUPPLY PLANT MARNEULI ML89-9",
 				},
 				[11] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-10",
+					name = "SUPPLY PLANT MARNEULI ML89-29",
 				},
 				[12] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-11",
+					name = "SUPPLY PLANT MARNEULI ML89-11",
 				},
 				[13] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-12",
+					name = "SUPPLY PLANT MARNEULI ML89-12",
 				},
 				[14] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-13",
+					name = "SUPPLY PLANT MARNEULI ML89-13",
 				},
 				[15] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-14",
+					name = "SUPPLY PLANT MARNEULI ML89-14",
 				},
 				[16] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-15",
+					name = "SUPPLY PLANT MARNEULI ML89-15",
 				},
 				[16] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-16",
+					name = "SUPPLY PLANT MARNEULI ML89-16",
 				},
 				[17] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-17",
+					name = "SUPPLY PLANT MARNEULI ML89-17",
 				},
 				[18] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-18",
+					name = "SUPPLY PLANT MARNEULI ML89-18",
 				},
 				[19] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-19",
+					name = "SUPPLY PLANT MARNEULI ML89-19",
 				},
 				[20] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-20",
+					name = "SUPPLY PLANT MARNEULI ML89-20",
 				},
 				[21] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-21",
+					name = "SUPPLY PLANT MARNEULI ML89-21",
 				},
 				[22] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-22",
+					name = "SUPPLY PLANT MARNEULI ML89-22",
 				},
 				[23] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-23",
+					name = "SUPPLY PLANT MARNEULI ML89-23",
 				},
 				[24] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-24",
+					name = "SUPPLY PLANT MARNEULI ML89-24",
 				},
 				[25] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-25",
+					name = "SUPPLY PLANT MARNEULI ML89-25",
 				},
 				[26] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-26",
+					name = "SUPPLY PLANT MARNEULI ML89-26",
 				},
 				[27] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-27",
+					name = "SUPPLY PLANT MARNEULI ML89-27",
 				},	
 				[28] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-28",
-				},	
-				[29] = {
-					name = "SUPPLY PLANT  MARNEULI ML89-29",
-				},											
+					name = "SUPPLY PLANT MARNEULI ML89-28",
+				},															
 			},
 		},
 		["KHASHURI FARP LM84"] = {
@@ -2109,7 +2102,8 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},			
 				[11] = {
 					name = "GORI FARP MM25-11",
-				},			
+				},	
+			},		
 		},
 		["AMBROLAURI FARP LN41"] = {
 			task = "Strike",
@@ -2153,12 +2147,9 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					name = "AMBROLAURI FARP LN41-9",
 				},
 				[11] = {
-					name = "AMBROLAURI FARP LN41-10",
-				},
-				[12] = {
 					name = "AMBROLAURI FARP LN41-11",
 				},
-				[13] = {
+				[12] = {
 					name = "AMBROLAURI FARP LN41-12",
 				},				
 			},
@@ -2374,7 +2365,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			radius = 50000,
 			text = "over Center front",
 			inactive = true,
-		},
+		},		
 		["Airlift Beslan"] = {
 			task = "Transport",
 			priority = 1,
@@ -2643,7 +2634,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			},
 			class = "vehicle",
 			name = "19 4th Army HQ",
-		},
+		},		
 		["Leselidze Train Station - EJ80"] = {
 			task = "Strike",
 			priority = 1,
@@ -2749,7 +2740,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 507998.1875,
 				},
 			},
-		},
+		},	
 		["Gudauta Train Station - FH37"] = {
 			task = "Strike",
 			priority = 1,
@@ -2954,7 +2945,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 557787.875,
 				},
 			},
-		},
+		},			
 		["Sukhumi-Babushara Train Station - FH74"] = {
 			task = "Strike",
 			priority = 2,
@@ -3126,838 +3117,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 			},
 		},		
-		--[[
-		["Rail Bridge Kul tubani-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Kul tubani-EJ80",
-					x = -169535.234375,
-					y = 468038.5625,
-				},
-			},
-		},
-		["Bridge Kul tubani-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Kul tubani-EJ80",
-					x = -169308.046875,
-					y = 468062.34375,
-				},
-			},
-		},
-		["Rail Bridge Tsalkoti-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Tsalkoti-EJ80",
-					x = -170051.65625,
-					y = 472717.5625,
-				},
-			},
-		},
-		["Bridge Tsalkoti-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Tsalkoti-EJ80",
-					x = -170576,
-					y = 472735.90625,
-				},
-			},
-		},		
-		["Rail Bridge West Gantiadi-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge West Gantiadi-EJ80",
-					x = -170473.796875,
-					y = 473638.875,
-				},
-			},
-		},
-		["Bridge West Gantiadi-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge West Gantiadi-EJ80",
-					x = -170589.21875,
-					y = 473621.0625,
-				},
-			},
-		},
-		["Rail Bridge East Gantiadi-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge East Gantiadi-EJ80",
-					x = -170816.078125,
-					y = 474374.84375,
-				},
-			},
-		},
-		["Bridge East Gantiadi-EJ80"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge East Gantiadi-EJ80",
-					x = -170287.515625,
-					y = 474441.984375,
-				},
-			},
-		},
-
-		["Rail Bridge Grebeshok-EH99"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Grebeshok-EH99",
-					x = -175437.140625,
-					y = 486008.4375,
-				},
-			},
-		},
-		["Bridge Grebeshok-EH99"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions EJ80-EH99.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Grebeshok-EH99",
-					x = -175487.625,
-					y = 485999.78125,
-				},
-			},
-		},
-		["Bridge Tagrskiy-FH08"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Tagrskiy-FH08",
-					x = -189757.84765625,
-					y = 493199.7578125,
-				},
-			},
-		},
-		["Rail Bridge Akvara-FH18"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Akvara-FH18",
-					x = -185827.1875,
-					y = 500617.84375,
-				},
-			},
-		},
-		["Bridge Akvara-FH18"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Akvara-FH18",
-					x = -185377.203125,
-					y = 501025.8671875,
-				},
-			},
-		},
-		["Bridge Adzhkhahara-FH28"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Adzhkhahara-FH28",
-					x = -186212.46875,
-					y = 510276.9375,
-				},
-			},
-		},
-		["Rail Bridge Mugudzyrhva-FH28"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Mugudzyrhva-FH28",
-					x = -190870.578125,
-					y = 513094.03125,
-				},
-			},
-		},
-		["Bridge Mugudzyrhva-FH28"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Mugudzyrhva-FH28",
-					x = -190062.953125,
-					y = 513422.03125,
-				},
-			},
-		},
-		["Rail Bridge Gudauta-FH27"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Gudauta-FH27",
-					x = -194627.296875,
-					y = 515373.625,
-				},
-			},
-		},
-		["Bridge Gudauta-FH27"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Gudauta-FH27",
-					x = -194555.703125,
-					y = 515508.125,
-				},
-			},
-		},
-		["Bridge Primorskoe North-FH37"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Primorskoe North-FH37",
-					x = -196679.6875,
-					y = 526428.625,
-				},
-			},
-		},
-		["Bridge Primorskoe-FH37"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Primorskoe-FH37",
-					x = -198076.4375,
-					y = 526178.4375,
-				},
-			},
-		},
-		["Rail Bridge Primorskoe-FH37"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Primorskoe-FH37",
-					x = -198137.234375,
-					y = 526192.0625,
-				},
-			},
-		},
-
-		["Rail Bridge Nizh Armyanskoe Uschele-FH47"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Nizh Armyanskoe Uschele-FH47",
-					x = -198041.84375,
-					y = 535039.0625,
-				},
-			},
-		},
-		["Bridge Nizh Armyanskoe Uschele-FH47"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Nizh Armyanskoe Uschele-FH47",
-					x = -198238.734375,
-					y = 535057.125,
-				},
-			},
-		},
-
-		["Rail Bridge Gumista West-FH56"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Gumista West-FH56",
-					x = -204594.21875,
-					y = 548287,
-				},
-			},
-		},
-		["Rail Bridge Gumista East-FH56"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Gumista East-FH56",
-					x = -204775.890625,
-					y = 548488.25,
-				},
-			},
-		},
-		["Bridge Gumista-FH56"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Gumista-FH56",
-					x = -204543.046875,
-					y = 548369.125,
-				},
-			},
-		},
-		["Bridge Uazabaa-FH66"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Uazabaa-FH66",
-					x = -199885.375,
-					y = 551708.625,
-				},
-			},
-		},
-		["Rail Bridge Kvemo-Merheuli North-FH65"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Kvemo-Merheuli North-FH65",
-					x = -208651.4375,
-					y = 558293.5625,
-				},
-			},
-		},
-		["Bridge Kvemo-Merheuli North-FH65"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Kvemo-Merheuli North-FH65",
-					x = -208624.78125,
-					y = 558366.9375,
-				},
-			},
-		},
-		["Rail Bridge Kvemo-Merheuli-FH65"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Kvemo-Merheuli-FH65",
-					x = -210831.09375,
-					y = 559669.4375,
-				},
-			},
-		},
-		["Bridge Kvemo-Merheuli-FH75"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Kvemo-Merheuli-FH75",
-					x = -210863.9375,
-					y = 560317.8125,
-				},
-			},
-		},
-		["Rail Bridge Pshap-FH75"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Pshap-FH75",
-					x = -216667.140625,
-					y = 563639.6875,
-				},
-			},
-		},
-		["Bridge Pshap West-FH75"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Pshap West-FH75",
-					x = -216871.515625,
-					y = 563349,
-				},
-			},
-		},
-		["Bridge Pshap East-FH75"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Pshap East-FH75",
-					x = -216795.40625,
-					y = 565105.875,
-				},
-			},
-		},
-		["Rail Bridge Sukhumi-Babushara North-FH74"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Sukhumi-Babushara North-FH74",
-					x = -218542.625,
-					y = 565109.875,
-				},
-			},
-		},
-		["Bridge Sukhumi-Babushara North East-FH74"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Sukhumi-Babushara North East-FH74",
-					x = -218727.34375,
-					y = 566000.125,
-				},
-			},
-		},
-		["Bridge Sukhumi-Babushara North-FH74"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Sukhumi-Babushara North-FH74",
-					x = -218590.5625,
-					y = 563885.9375,
-				},
-			},
-		},
-		["Bridge Sukhumi-Babushara North West-FH74"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges positions FH65-FH75-FH74.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Sukhumi-Babushara North West-FH74",
-					x = -219430.109375,
-					y = 562378,
-				},
-			},
-		},
-		
-		["Bridge Anaklia-GG19"] = {
-			task = "Strike",
-			priority = 2,
-			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Anaklia North part-GG19",
-					x = -267377.86865234,
-					y = 606642.265625,
-				},
-				[2] = {
-					name = "Bridge Anaklia South part-GG19",
-					x = -267516.02490234,
-					y = 606664.90625,
-				},
-			},
-		},
-		["Bridge Orsantia-GH10"] = {
-			task = "Strike",
-			priority = 2,
-			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Orsantia East part-GH10",
-					x = -260460.296875,
-					y = 612201.3203125,
-				},
-				[2] = {
-					name = "Bridge Orsantia West part-GH10",
-					x = -260463.796875,
-					y = 612061.3671875,
-				},
-			},
-		},		
-		["Bridge Rike-GH31"] = {
-			task = "Strike",
-			priority = 4,
-			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Rike West part-GH31",
-					x = -245409.5234375,
-					y = 626855.359375,
-				},
-				[2] = {
-					name = "Bridge Rike Center West part-GH31",
-					x = -245465.4453125,
-					y = 626983.703125,
-				},
-				[3] = {
-					name = "Bridge Rike Center East part-GH31",
-					x = -245521.3671875,
-					y = 627112.046875,
-				},
-				[4] = {
-					name = "Bridge Rike East part-GH31",
-					x = -245577.2890625,
-					y = 627240.390625,
-				},
-			},
-		},
-		["Bridge Pahulani-GH42"] = {
-			task = "Strike",
-			priority = 2,
-			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Pahulani North part-GH42",
-					x = -235275.5546875,
-					y = 637292.2578125,
-				},
-				[2] = {
-					name = "Bridge Pahulani Center part-GH42",
-					x = -235374.34375,
-					y = 637391.453125,
-				},
-				[3] = {
-					name = "Bridge Pahulani South part-GH42",
-					x = -235473.1328125,
-					y = 637490.65625,
-				},
-			},
-		},
-		["Bridge Patara-Poti East-GG27"] = {
-			task = "Strike",
-			priority = 2,
-			picture = {"Bridges Positions Patara-Poti-GG27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 2,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Patara-Poti East North part-GG27",
-					x = -290571.91992188,
-					y = 619661.9921875,
-				},
-				[2] = {
-					name = "Bridge Patara-Poti East South part-GH27",
-					x = -290689.265625,
-					y = 619585.6328125,
-				},
-			},
-		},
-		["Bridge Patara-Poti West-GG27"] = {
-			task = "Strike",
-			priority = 1,
-			picture = {"Bridges Positions Patara-Poti-GG27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Bridge Patara-Poti West North part-GG27",
-					x = -290212.75,
-					y = 619188.875,
-				},
-				[2] = {
-					name = "Bridge Patara-Poti West Center part-GG27",
-					x = -290330,
-					y = 619112.375,
-				},
-				[3] = {
-					name = "Bridge Patara-Poti West South part-GH27",
-					x = -290447.25,
-					y = 619035.875,
-				},
-			},
-		},
-		["Rail Bridge Patara-Poti-GG27"] = {
-			task = "Strike",
-			priority = 2,
-			picture = {"Bridges Positions Patara-Poti-GG27.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 2,
-				max = 4,
-			},
-			elements = {
-				[1] = {
-					name = "Rail Bridge Patara-Poti North part-GG27",
-					x = -290165.734375,
-					y = 619140.03125,
-				},
-				[2] = {
-					name = "Rail Bridge Patara-Poti Center part-GG27",
-					x = -290248.08398438,
-					y = 619083.296875,
-				},
-				[3] = {
-					name = "Rail Bridge Patara-Poti South part-GH27",
-					x = -290330.43359375,
-					y = 619026.5625,
-				},
-			},
-		},
-		]]
-		["bridge GORI"] = --{supply line  gori
+		["bridge GORI"] = {--{supply line  gori
 			task = "Strike",
 			priority = 5,
 			--picture = {"Bridges positions EJ80-EH99.png"},
@@ -3978,8 +3138,8 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 820769.67147346,
 				},
 			},
-		},
-		["Bridge Supply Line Gori - Tbilisi"] = --{supply line  gori
+		},		
+		["Bridge Supply Line Gori - Tbilisi"] =  {--{supply line  gori
 			task = "Strike",
 			priority = 5,
 			--picture = {"Bridges positions EJ80-EH99.png"},
@@ -4015,7 +3175,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 878191.35657638,
 				},
 			},
-		},
+		},		
 		["bridge TKIBULI"] = { -- supply line kutaisi - farp ambrolauri
 			task = "Strike",
 			priority = 4,
@@ -4031,12 +3191,13 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					x = -263345.09071519,
 					y = 722875.74340048,				
 				},
-				[1] = {
+				[2] = {
 					name = "bridge TKIBULI lake", -- cambia il nome
 					x = -263318.92491384,
 					y = 722806.48098515,				
-				},			
-		},
+				},
+			},							
+		},		
 		["Bridge Supply Line Marneuli - Tbilisi"] = { -- kutaisi - farp ambrolauri
 			task = "Strike",
 			priority = 6,
@@ -4061,8 +3222,9 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					name = "Bridge Supply Line Marneuli - Tbilisi-3", -- cambia il nome
 					x = -313485.95939054,
 					y = 883397.98896592,				
-				},									
-		},
+				},	
+			},								
+		},		
 		["Rail Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
 			task = "Strike",
 			priority = 4,
@@ -4089,7 +3251,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 671981.56445313,
 				},
 			},
-		},
+		},		
 		["Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
 			task = "Strike",
 			priority = 5,
@@ -4143,7 +3305,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 703255.578125,
 				},
 			},
-		},
+		},				
 		["Bridge Geguti-LM17"] = {--supply line kutaisi - farp khashuri, gori
 			task = "Strike",
 			priority = 5,
@@ -5341,6 +4503,831 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 896795.625,
 				},
 			},
+		},		
+		["Rail Bridge Kul tubani-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Kul tubani-EJ80",
+					x = -169535.234375,
+					y = 468038.5625,
+				},
+			},
 		},
-	}
+		["Bridge Kul tubani-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Kul tubani-EJ80",
+					x = -169308.046875,
+					y = 468062.34375,
+				},
+			},
+		},
+		["Rail Bridge Tsalkoti-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Tsalkoti-EJ80",
+					x = -170051.65625,
+					y = 472717.5625,
+				},
+			},
+		},
+		["Bridge Tsalkoti-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Tsalkoti-EJ80",
+					x = -170576,
+					y = 472735.90625,
+				},
+			},
+		},		
+		["Rail Bridge West Gantiadi-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge West Gantiadi-EJ80",
+					x = -170473.796875,
+					y = 473638.875,
+				},
+			},
+		},
+		["Bridge West Gantiadi-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge West Gantiadi-EJ80",
+					x = -170589.21875,
+					y = 473621.0625,
+				},
+			},
+		},
+		["Rail Bridge East Gantiadi-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge East Gantiadi-EJ80",
+					x = -170816.078125,
+					y = 474374.84375,
+				},
+			},
+		},
+		["Bridge East Gantiadi-EJ80"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge East Gantiadi-EJ80",
+					x = -170287.515625,
+					y = 474441.984375,
+				},
+			},
+		},
+		["Rail Bridge Grebeshok-EH99"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Grebeshok-EH99",
+					x = -175437.140625,
+					y = 486008.4375,
+				},
+			},
+		},
+		["Bridge Grebeshok-EH99"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions EJ80-EH99.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Grebeshok-EH99",
+					x = -175487.625,
+					y = 485999.78125,
+				},
+			},
+		},
+		["Bridge Tagrskiy-FH08"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Tagrskiy-FH08",
+					x = -189757.84765625,
+					y = 493199.7578125,
+				},
+			},
+		},
+		["Rail Bridge Akvara-FH18"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Akvara-FH18",
+					x = -185827.1875,
+					y = 500617.84375,
+				},
+			},
+		},
+		["Bridge Akvara-FH18"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Akvara-FH18",
+					x = -185377.203125,
+					y = 501025.8671875,
+				},
+			},
+		},
+		["Bridge Adzhkhahara-FH28"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Adzhkhahara-FH28",
+					x = -186212.46875,
+					y = 510276.9375,
+				},
+			},
+		},
+		["Rail Bridge Mugudzyrhva-FH28"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Mugudzyrhva-FH28",
+					x = -190870.578125,
+					y = 513094.03125,
+				},
+			},
+		},
+		["Bridge Mugudzyrhva-FH28"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Mugudzyrhva-FH28",
+					x = -190062.953125,
+					y = 513422.03125,
+				},
+			},
+		},
+		["Rail Bridge Gudauta-FH27"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Gudauta-FH27",
+					x = -194627.296875,
+					y = 515373.625,
+				},
+			},
+		},
+		["Bridge Gudauta-FH27"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH08-FH18-FH28-FH27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Gudauta-FH27",
+					x = -194555.703125,
+					y = 515508.125,
+				},
+			},
+		},
+		["Bridge Primorskoe North-FH37"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Primorskoe North-FH37",
+					x = -196679.6875,
+					y = 526428.625,
+				},
+			},
+		},
+		["Bridge Primorskoe-FH37"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Primorskoe-FH37",
+					x = -198076.4375,
+					y = 526178.4375,
+				},
+			},
+		},
+		["Rail Bridge Primorskoe-FH37"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Primorskoe-FH37",
+					x = -198137.234375,
+					y = 526192.0625,
+				},
+			},
+		},	
+		["Rail Bridge Nizh Armyanskoe Uschele-FH47"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Nizh Armyanskoe Uschele-FH47",
+					x = -198041.84375,
+					y = 535039.0625,
+				},
+			},
+		},
+		["Bridge Nizh Armyanskoe Uschele-FH47"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Nizh Armyanskoe Uschele-FH47",
+					x = -198238.734375,
+					y = 535057.125,
+				},
+			},
+		},
+		["Rail Bridge Gumista West-FH56"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Gumista West-FH56",
+					x = -204594.21875,
+					y = 548287,
+				},
+			},
+		},
+		["Rail Bridge Gumista East-FH56"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Gumista East-FH56",
+					x = -204775.890625,
+					y = 548488.25,
+				},
+			},
+		},
+		["Bridge Gumista-FH56"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Gumista-FH56",
+					x = -204543.046875,
+					y = 548369.125,
+				},
+			},
+		},
+		["Bridge Uazabaa-FH66"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridge Positions FH37-FH47-FH56-FH66.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Uazabaa-FH66",
+					x = -199885.375,
+					y = 551708.625,
+				},
+			},
+		},
+		["Rail Bridge Kvemo-Merheuli North-FH65"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Kvemo-Merheuli North-FH65",
+					x = -208651.4375,
+					y = 558293.5625,
+				},
+			},
+		},
+		["Bridge Kvemo-Merheuli North-FH65"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Kvemo-Merheuli North-FH65",
+					x = -208624.78125,
+					y = 558366.9375,
+				},
+			},
+		},		
+		["Rail Bridge Kvemo-Merheuli-FH65"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Kvemo-Merheuli-FH65",
+					x = -210831.09375,
+					y = 559669.4375,
+				},
+			},
+		},
+		["Bridge Kvemo-Merheuli-FH75"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Kvemo-Merheuli-FH75",
+					x = -210863.9375,
+					y = 560317.8125,
+				},
+			},
+		},
+		["Rail Bridge Pshap-FH75"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Pshap-FH75",
+					x = -216667.140625,
+					y = 563639.6875,
+				},
+			},
+		},
+		["Bridge Pshap West-FH75"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Pshap West-FH75",
+					x = -216871.515625,
+					y = 563349,
+				},
+			},
+		},
+		["Bridge Pshap East-FH75"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Pshap East-FH75",
+					x = -216795.40625,
+					y = 565105.875,
+				},
+			},
+		},
+		["Rail Bridge Sukhumi-Babushara North-FH74"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Sukhumi-Babushara North-FH74",
+					x = -218542.625,
+					y = 565109.875,
+				},
+			},
+		},
+		["Bridge Sukhumi-Babushara North East-FH74"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Sukhumi-Babushara North East-FH74",
+					x = -218727.34375,
+					y = 566000.125,
+				},
+			},
+		},
+		["Bridge Sukhumi-Babushara North-FH74"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Sukhumi-Babushara North-FH74",
+					x = -218590.5625,
+					y = 563885.9375,
+				},
+			},
+		},
+		["Bridge Sukhumi-Babushara North West-FH74"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges positions FH65-FH75-FH74.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Sukhumi-Babushara North West-FH74",
+					x = -219430.109375,
+					y = 562378,
+				},
+			},
+		},		
+		["Bridge Anaklia-GG19"] = {
+			task = "Strike",
+			priority = 2,
+			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Anaklia North part-GG19",
+					x = -267377.86865234,
+					y = 606642.265625,
+				},
+				[2] = {
+					name = "Bridge Anaklia South part-GG19",
+					x = -267516.02490234,
+					y = 606664.90625,
+				},
+			},
+		},
+		["Bridge Orsantia-GH10"] = {
+			task = "Strike",
+			priority = 2,
+			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Orsantia East part-GH10",
+					x = -260460.296875,
+					y = 612201.3203125,
+				},
+				[2] = {
+					name = "Bridge Orsantia West part-GH10",
+					x = -260463.796875,
+					y = 612061.3671875,
+				},
+			},
+		},		
+		["Bridge Rike-GH31"] = {
+			task = "Strike",
+			priority = 4,
+			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Rike West part-GH31",
+					x = -245409.5234375,
+					y = 626855.359375,
+				},
+				[2] = {
+					name = "Bridge Rike Center West part-GH31",
+					x = -245465.4453125,
+					y = 626983.703125,
+				},
+				[3] = {
+					name = "Bridge Rike Center East part-GH31",
+					x = -245521.3671875,
+					y = 627112.046875,
+				},
+				[4] = {
+					name = "Bridge Rike East part-GH31",
+					x = -245577.2890625,
+					y = 627240.390625,
+				},
+			},
+		},	
+		["Bridge Pahulani-GH42"] = {
+			task = "Strike",
+			priority = 2,
+			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Pahulani North part-GH42",
+					x = -235275.5546875,
+					y = 637292.2578125,
+				},
+				[2] = {
+					name = "Bridge Pahulani Center part-GH42",
+					x = -235374.34375,
+					y = 637391.453125,
+				},
+				[3] = {
+					name = "Bridge Pahulani South part-GH42",
+					x = -235473.1328125,
+					y = 637490.65625,
+				},
+			},
+		},
+		["Bridge Patara-Poti East-GG27"] = {
+			task = "Strike",
+			priority = 2,
+			picture = {"Bridges Positions Patara-Poti-GG27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 2,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Patara-Poti East North part-GG27",
+					x = -290571.91992188,
+					y = 619661.9921875,
+				},
+				[2] = {
+					name = "Bridge Patara-Poti East South part-GH27",
+					x = -290689.265625,
+					y = 619585.6328125,
+				},
+			},
+		},
+		["Bridge Patara-Poti West-GG27"] = {
+			task = "Strike",
+			priority = 1,
+			picture = {"Bridges Positions Patara-Poti-GG27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Patara-Poti West North part-GG27",
+					x = -290212.75,
+					y = 619188.875,
+				},
+				[2] = {
+					name = "Bridge Patara-Poti West Center part-GG27",
+					x = -290330,
+					y = 619112.375,
+				},
+				[3] = {
+					name = "Bridge Patara-Poti West South part-GH27",
+					x = -290447.25,
+					y = 619035.875,
+				},
+			},
+		},			
+		["Rail Bridge Patara-Poti-GG27"] = {
+			task = "Strike",
+			priority = 2,
+			picture = {"Bridges Positions Patara-Poti-GG27.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge Patara-Poti North part-GG27",
+					x = -290165.734375,
+					y = 619140.03125,
+				},
+				[2] = {
+					name = "Rail Bridge Patara-Poti Center part-GG27",
+					x = -290248.08398438,
+					y = 619083.296875,
+				},
+				[3] = {
+					name = "Rail Bridge Patara-Poti South part-GH27",
+					x = -290330.43359375,
+					y = 619026.5625,
+				},
+			},
+		},			
+	},
 }

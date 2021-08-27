@@ -312,7 +312,7 @@ oob_air = {
 			number = 12,
 		},
 		[14] = {
-			name = "R./GA 4rd AS",								--unit name
+			name = "R/GA 4rd AS",								--unit name
 			inactive = true,
 			type = "MiG-19P",								--aircraft type
 			country = "Georgia",								--unit country
@@ -742,29 +742,29 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 20,
 		},			
-			---------------- AMBROLAURI FARP LN41
-			[43] = {
-				name = "GAH 2rd",								--unit name
-				type = "Mi-24V",								--aircraft type
-				helicopter = true,								--true for helicopter units
-				country = "Georgia",								--unit country
-				livery = "",									--unit livery
-				base = "AMBROLAURI FARP LN41",					--unit base
-				skill = "Random",									--unit skill
-				tasks = {
-					["Strike"] = true,
-				},
-				number = 8,
+		---------------- AMBROLAURI FARP LN41
+		[45] = {
+			name = "GAH 2rd",								--unit name
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Georgia",								--unit country
+			livery = "",									--unit livery
+			base = "AMBROLAURI FARP LN41",					--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Strike"] = true,
 			},
-			[44] = {
-				name = "R/GAH 2rd",								--unit name
-				inactive = true,
-				type = "Mi-24V",								--aircraft type
-				base = "Reserves",
-				skill = "Random",								--unit skill
-				tasks = {},									--unit tasks
-				number = 20,
-			},			
+			number = 8,
+		},
+		[46] = {
+			name = "R/GAH 2rd",								--unit name
+			inactive = true,
+			type = "Mi-24V",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 20,
+		},			
 	},
 	["red"] = {	--side 2		
 		-------------------- Mozdok ---------------		
@@ -887,7 +887,7 @@ oob_air = {
 			number = 12,
 		},
 		[9] = {
-			name = "2./37.IAP",								--unit name
+			name = "R./37.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
 			base = "Reserves",
@@ -1012,7 +1012,7 @@ oob_air = {
 			number = 12,
 		},
 		[18] = {
-			name = "2./19.IAP",								--unit name
+			name = "R./19.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
 			base = "Reserves",
@@ -1213,7 +1213,7 @@ oob_air = {
 			number = 24,
 		},
 		[33] = {
-			name = "29.OSAP",								--unit name
+			name = "1./29.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1225,7 +1225,7 @@ oob_air = {
 			number = 2,
 		},
 		[34] = {
-			name = "R/29.OSAP",								--unit name
+			name = "R./29.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
 			base = "Reserves",
@@ -1373,7 +1373,7 @@ oob_air = {
 			number = 2,
 		},
 		[45] = {
-			name = "R./23.OSAP",								--unit name
+			name = "R/23.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1409,7 +1409,7 @@ oob_air = {
 			number = 2,
 		},
 		[48] = {
-			name = "R./25.OSAP",								--unit name
+			name = "R/25.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",									--aircraft type
 			country = "Russia",							

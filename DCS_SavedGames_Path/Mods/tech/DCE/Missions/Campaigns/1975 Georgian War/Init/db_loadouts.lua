@@ -111,12 +111,12 @@ db_loadouts = {
 				standoff = nil,
 				tStation = 36000,
 				LDSD = false,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 12,
 				stores = {
 					["pylons"] =
 					{
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "65000",
 					["flare"] = 60,
 					["chaff"] = 120,
@@ -147,7 +147,7 @@ db_loadouts = {
 				stores = {
 					["pylons"] =
 					{
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "65000",
 					["flare"] = 60,
 					["chaff"] = 120,
@@ -220,7 +220,7 @@ db_loadouts = {
 							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -230,15 +230,15 @@ db_loadouts = {
 					{
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				----preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		----fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				----preset TACAN channel
 					["LGB1000"] = 1,
 					},
 			},
@@ -305,7 +305,7 @@ db_loadouts = {
 							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -315,15 +315,15 @@ db_loadouts = {
 				{
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				----preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		----fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				----preset TACAN channel
 					["LGB1000"] = 1,
 				},
 			},
@@ -387,7 +387,7 @@ db_loadouts = {
 							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -396,15 +396,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				----preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		----fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				----preset TACAN channel
 					["LGB1000"] = 1,
 				},
 			},
@@ -471,7 +471,7 @@ db_loadouts = {
 							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -480,15 +480,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				--preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		--fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				--preset TACAN channel
 					["LGB1000"] = 1,
 				},
 			},
@@ -562,7 +562,7 @@ db_loadouts = {
 							["CLSID"] = "{BRU-32 GBU-12}",
 							["num"] = 5,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -571,15 +571,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				--preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		--fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				--preset TACAN channel
 					["LGB1000"] = 1,
 				},-- lantirn 1980 (sviluppo)  1987 (in servizio) NO SOSTITUIRE CON MKxx e Rockets
 			},
@@ -650,7 +650,7 @@ db_loadouts = {
 							["CLSID"] = "{BRU-32 GBU-16}",
 							["num"] = 5,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -659,15 +659,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				--preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		--fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				--preset TACAN channel
 					["LGB1000"] = 1,
 				}, -- lantirn 1980 (sviluppo)  1987 (in servizio) NO
 			},			
@@ -738,7 +738,7 @@ db_loadouts = {
 							["CLSID"] = "{AIM_54A_Mk60}",
 							["num"] = 5,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -747,15 +747,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				preset ILS channel
+					["IlsChannel"] = 11,				--preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				preset TACAN channel
+					["INSAlignmentStored"] = true,		--fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				--preset TACAN channel
 					["LGB1000"] = 1,
 				},
 			},
@@ -782,7 +782,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--- --- self_escort = true,
+				--- --self_escort = true,
 				sortie_rate = 10,
 				stores = {
 					["pylons"] = {
@@ -826,7 +826,7 @@ db_loadouts = {
 							["CLSID"] = "{MAK79_MK82 3L}",
 							["num"] = 5,
 						},
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -835,15 +835,15 @@ db_loadouts = {
 				AddPropAircraft = {
 						["LGB100"] = 6,
 						["M61BURST"] = 0,
-						["IlsChannel"] = 11,				-- preset ILS channel
+						["IlsChannel"] = 11,				-- --preset ILS channel
 						["LGB1"] = 8,
 						["KY28Key"] = 1,
 						["TacanBand"] = 0,
 						["ALE39Loadout"] = 3,
 						["UseLAU138"] = true,
 						["LGB10"] = 8,
-						["INSAlignmentStored"] = true,		-- fast alignment, remember to modify also the value: "startup_time_player" in this file
-						["TacanChannel"] = 37,				-- preset TACAN channel
+						["INSAlignmentStored"] = true,		-- --fast alignment, remember to modify also the value: "startup_time_player" in this file
+						["TacanChannel"] = 37,				-- --preset TACAN channel
 						["LGB1000"] = 1,
 					},
 			},
@@ -869,7 +869,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 10,
 				stores = {
 					["pylons"] = {
@@ -913,7 +913,7 @@ db_loadouts = {
 							["CLSID"] = "{BRU-32 MK-84}",
 							["num"] = 5,
 						},
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -922,15 +922,15 @@ db_loadouts = {
 				AddPropAircraft = {
 						["LGB100"] = 6,
 						["M61BURST"] = 0,
-						["IlsChannel"] = 11,				-- preset ILS channel
+						["IlsChannel"] = 11,				-- --preset ILS channel
 						["LGB1"] = 8,
 						["KY28Key"] = 1,
 						["TacanBand"] = 0,
 						["ALE39Loadout"] = 3,
 						["UseLAU138"] = true,
 						["LGB10"] = 8,
-						["INSAlignmentStored"] = true,		-- fast alignment, remember to modify also the value: "startup_time_player" in this file
-						["TacanChannel"] = 37,				-- preset TACAN channel
+						["INSAlignmentStored"] = true,		-- --fast alignment, remember to modify also the value: "startup_time_player" in this file
+						["TacanChannel"] = 37,				-- --preset TACAN channel
 						["LGB1000"] = 1,
 					},
 			},
@@ -956,7 +956,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 10,
 				stores = {
 					["pylons"] = {
@@ -1000,7 +1000,7 @@ db_loadouts = {
 							["CLSID"] = "{BRU-32 MK-20}",
 							["num"] = 5,
 						},
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "7348",
 					["flare"] = 60,
 					["chaff"] = 140,
@@ -1009,15 +1009,15 @@ db_loadouts = {
 				AddPropAircraft = {
 					["LGB100"] = 6,
 					["M61BURST"] = 0,
-					["IlsChannel"] = 11,				-- preset ILS channel
+					["IlsChannel"] = 11,				-- --preset ILS channel
 					["LGB1"] = 8,
 					["KY28Key"] = 1,
 					["TacanBand"] = 0,
 					["ALE39Loadout"] = 3,
 					["UseLAU138"] = true,
 					["LGB10"] = 8,
-					["INSAlignmentStored"] = true,		-- fast alignment, remember to modify also the value: "startup_time_player" in this file
-					["TacanChannel"] = 37,				-- preset TACAN channel
+					["INSAlignmentStored"] = true,		-- --fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				-- --preset TACAN channel
 					["LGB1000"] = 1,
 				},
 			},
@@ -1043,12 +1043,12 @@ db_loadouts = {
 				standoff = nil,
 				tStation = 21600,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 10,
 				stores = {
 					["pylons"] =
 					{
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 90700,
 					["flare"] = 60,
 					["chaff"] = 120,
@@ -1114,7 +1114,7 @@ db_loadouts = {
 							["CLSID"] = "{Robot74}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 4476,
 					["flare"] = 36,
 					["chaff"] = 105,
@@ -1145,7 +1145,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 				["pylons"] = {
@@ -1177,7 +1177,7 @@ db_loadouts = {
 						["CLSID"] = "{M71BOMB}",
 						["num"] = 3,
 					},
-				}, end of ["pylons"]
+				}, ----end of ["pylons"]
 				["fuel"] = 4476,
 				["flare"] = 36,
 				["chaff"] = 105,
@@ -1238,7 +1238,7 @@ db_loadouts = {
 						["CLSID"] = "{M71BOMBD}",
 						["num"] = 3,
 					},
-				}, end of ["pylons"]
+				}, ----end of ["pylons"]
 				["fuel"] = 4476,
 				["flare"] = 36,
 				["chaff"] = 105,
@@ -1299,7 +1299,7 @@ db_loadouts = {
 						["CLSID"] = "{RB75T}",
 						["num"] = 3,
 					},
-				}, end of ["pylons"]
+				}, ----end of ["pylons"]
 				["fuel"] = 4476,
 				["flare"] = 36,
 				["chaff"] = 105,
@@ -1360,7 +1360,7 @@ db_loadouts = {
 						["CLSID"] = "{Robot24J}",
 						["num"] = 1,
 					},
-				}, end of ["pylons"]
+				}, ----end of ["pylons"]
 				["fuel"] = 4476,
 				["flare"] = 36,
 				["chaff"] = 105,
@@ -1400,12 +1400,12 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{696CFFC4-0BDE-42A8-BE4B-0BE3D9DD723C}",
-						}, end of [1]
+						}, --end of [1]
 						[3] =
 						{
 							["CLSID"] = "{696CFFC4-0BDE-42A8-BE4B-0BE3D9DD723C}",
-						}, end of [3]
-					}, end of ["pylons"]
+						}, --end of [3]
+					}, ----end of ["pylons"]
 					["fuel"] = "141135",
 					["flare"] = 192,
 					["chaff"] = 1125,
@@ -1455,7 +1455,7 @@ db_loadouts = {
 							["CLSID"] = "{45447F82-01B5-4029-A572-9AAD28AF0275}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "141135",
 					["flare"] = 192,
 					["chaff"] = 1125,
@@ -1507,7 +1507,7 @@ db_loadouts = {
 							["CLSID"] = "{45447F82-01B5-4029-A572-9AAD28AF0275}",
 							["num"] = 1,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "141135",
 					["flare"] = 192,
 					["chaff"] = 1125,
@@ -1622,8 +1622,8 @@ db_loadouts = {
 						[7] = {
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
 							["num"] = 7,
-						}, -- end of [7]
-					}, -- end of ["pylons"]
+						}, -- --end of [7]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["chaff"] = 30,
@@ -1685,7 +1685,7 @@ db_loadouts = {
 							["CLSID"] = "{CBU-52B}",
 							["num"] = 2,
 						},
-						}, -- end of ["pylons"]
+						}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["chaff"] = 30,
@@ -1721,32 +1721,32 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}",
-						}, -- end of [5]
+						}, -- --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
+						}, -- --end of [7]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -1783,16 +1783,16 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{MER-5E_MK82x5}",
-						}, -- end of [4]
-					}, -- end of ["pylons"]
+						}, -- --end of [4]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -1829,24 +1829,24 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[3] =
 						{
 							["CLSID"] = "{7A44FF09-527C-4B7E-B42B-3F111CFE50FB}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{7A44FF09-527C-4B7E-B42B-3F111CFE50FB}",
-						}, -- end of [5]
+						}, -- --end of [5]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
+						}, -- --end of [7]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -1883,16 +1883,16 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{AB8B8299-F1CC-4359-89B5-2172E0CF4A5A}",
-						}, -- end of [4]
-					}, -- end of ["pylons"]
+						}, -- --end of [4]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -1921,7 +1921,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 2,
 				stores = {
 					["pylons"] =
@@ -1929,32 +1929,32 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{CBU-52B}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{CBU-52B}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{CBU-52B}",
-						}, -- end of [5]
+						}, -- --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CBU-52B}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
+						}, -- --end of [7]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -1980,16 +1980,16 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
-					}, -- end of ["pylons"]
+						}, -- --end of [4]
+					}, -- --end of ["pylons"]
 					["fuel"] = 2046,
 					["flare"] = 15,
 					["ammo_type"] = 1,
@@ -2024,15 +2024,15 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 					},
 					["fuel"] = 2046,
 					["flare"] = 15,
@@ -2068,15 +2068,15 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 					},
 					["fuel"] = 2046,
 					["flare"] = 15,
@@ -2112,15 +2112,15 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[7] =
 						{
 							["CLSID"] = "{9BFD8C90-F7AE-4e90-833B-BFD0CED0E536}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[4] =
 						{
 							["CLSID"] = "{0395076D-2F77-4420-9D33-087A4398130B}",
-						}, -- end of [4]
+						}, -- --end of [4]
 					},
 					["fuel"] = 2046,
 					["flare"] = 15,
@@ -2151,7 +2151,7 @@ db_loadouts = {
 				-- standoff = nil,
 				-- tStation = nil,
 				LDSD = true,
-				-- --- self_escort = true,
+				-- --self_escort = true,
 				sortie_rate = 10,
 				stores = {
 					["pylons"] = {
@@ -2202,36 +2202,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{AIM-7E}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{AIM-7E}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{AIM-7E}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{AIM-7E}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2263,28 +2263,28 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
-					}, -- end of ["pylons"]
+						}, -- --end of [8]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2310,7 +2310,7 @@ db_loadouts = {
 				standoff = 46300,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2370,36 +2370,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2431,36 +2431,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2486,7 +2486,7 @@ db_loadouts = {
 				standoff = 46300,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2546,36 +2546,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2601,7 +2601,7 @@ db_loadouts = {
 				standoff = 36000,
 				tStation = 1800,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2653,7 +2653,7 @@ db_loadouts = {
 				standoff = 36000,
 				tStation = 1800,
 				LDSD = true,
-				--- self_escort = true,
+				--self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2713,36 +2713,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{773675AB-7C29-422f-AFD8-32844A7B7F17}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2773,7 +2773,7 @@ db_loadouts = {
 				standoff = 2000,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2805,7 +2805,7 @@ db_loadouts = {
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
 							["num"] = 9,
 						},
-						}, -- end of ["pylons"]
+						}, -- --end of ["pylons"]
 							["fuel"] = "4864",
 							["flare"] = 30,
 							["chaff"] = 60,
@@ -2834,7 +2834,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2866,7 +2866,7 @@ db_loadouts = {
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
 							["num"] = 9,
 						},
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2895,7 +2895,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -2927,7 +2927,7 @@ db_loadouts = {
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
 							["num"] = 9,
 						},
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -2963,36 +2963,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3028,36 +3028,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{60CC734F-0AFA-4E2E-82B8-93B941AB11CF}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3093,36 +3093,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{51F9AAE5-964F-4D21-83FB-502E3BFE5F8A}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{51F9AAE5-964F-4D21-83FB-502E3BFE5F8A}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3158,36 +3158,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{D7670BC7-881B-4094-906C-73879CF7EB28}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{D7670BC7-881B-4094-906C-73879CF7EB27}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3221,36 +3221,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3282,36 +3282,36 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [1]
+						}, -- --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- end of [2]
+						}, -- --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- end of [3]
+						}, -- --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [4]
+						}, -- --end of [4]
 						[6] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [6]
+						}, -- --end of [6]
 						[7] =
 						{
 							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- end of [7]
+						}, -- --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- end of [8]
+						}, -- --end of [8]
 						[9] =
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- end of [9]
-					}, -- end of ["pylons"]
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
 					["chaff"] = 60,
@@ -3340,12 +3340,12 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] =
 					{
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "20830",
 					["flare"] = 60,
 					["chaff"] = 120,
@@ -3374,12 +3374,12 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] =
 					{
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = "631",
 					["flare"] = 60,
 					["chaff"] = 0,
@@ -3425,7 +3425,7 @@ db_loadouts = {
 					["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
 					["num"] = 1,
 				},
-			}, -- end of ["pylons"]
+			}, -- --end of ["pylons"]
                 ["fuel"] = 1250,
                 ["flare"] = 30,
                 ["chaff"] = 30,
@@ -3523,8 +3523,8 @@ db_loadouts = {
 						[3] = {
 						["CLSID"] = "{12429ECF-03F0-4DF6-BCBD-5D38B6343DE1}",
 						["num"] = 3,
-						}, end of [8]
-	        }, end of ["pylons"]
+						}, --end of [8]
+	        }, ----end of ["pylons"]
 					["fuel"] = "50000",
           ["flare"] = 48,
           ["chaff"] = 48,
@@ -3580,8 +3580,8 @@ db_loadouts = {
 						[8] = {
 							["CLSID"] = "{0519A261-0AB6-11d6-9193-00A0249B6F00}",
 							["num"] = 8,
-						}, end of [8]
-	        }, end of ["pylons"]
+						}, --end of [8]
+	        }, ----end of ["pylons"]
 					["fuel"] = "11700",
 	        ["flare"] = 96,
 	        ["chaff"] = 96,
@@ -3615,7 +3615,7 @@ db_loadouts = {
 				standoff = 40000,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] =
@@ -3623,24 +3623,24 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [1]
+						}, ----end of [1]
 						[2] =
 						{
 							["CLSID"] = "{40AB87E8-BEFB-4D85-90D9-B2753ACF9514}",
-						}, end of [2]
+						}, --end of [2]
 						[5] =
 						{
 							["CLSID"] = "{16602053-4A12-40A2-B214-AB60D481B20E}",
-						}, end of [5]
+						}, --end of [5]
 						[7] =
 						{
 							["CLSID"] = "{40AB87E8-BEFB-4D85-90D9-B2753ACF9514}",
-						}, end of [7]
+						}, --end of [7]
 						[8] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [8]
-	        }, end of ["pylons"]
+						}, --end of [8]
+	        }, ----end of ["pylons"]
 					["fuel"] = "11700",
 	        ["flare"] = 96,
 	        ["chaff"] = 96,
@@ -3666,7 +3666,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -3690,7 +3690,7 @@ db_loadouts = {
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 							["num"] = 8,
 						},
-						}, end of ["pylons"]
+						}, ----end of ["pylons"]
 	 				["fuel"] = "11700",
           ["flare"] = 96,
           ["chaff"] = 96,
@@ -3716,7 +3716,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -3772,7 +3772,7 @@ db_loadouts = {
 				standoff = 15000,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -3837,7 +3837,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -3910,7 +3910,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -3983,7 +3983,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = false,
+				self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -4068,7 +4068,7 @@ db_loadouts = {
 						["CLSID"] = "KORD_12_7",
 						["num"] = 7,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1929",
           ["flare"] = 128,
           ["chaff"] = 0,
@@ -4117,7 +4117,7 @@ db_loadouts = {
 							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
 							["num"] = 6,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1704",
 					["flare"] = 192,
 					["chaff"] = 0,
@@ -4149,7 +4149,7 @@ db_loadouts = {
 				stores = {
 					["pylons"] =
 					{
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "70000",
 					["flare"] = 192,
 					["chaff"] = 192,
@@ -4183,7 +4183,7 @@ db_loadouts = {
 				stores = {
 					["pylons"] =
 					{
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "5500",
 					["flare"] = 384,
 					["chaff"] = 384,
@@ -4243,7 +4243,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4298,7 +4298,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4348,7 +4348,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4398,7 +4398,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4448,7 +4448,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4498,7 +4498,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4554,7 +4554,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4608,7 +4608,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4662,7 +4662,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4716,7 +4716,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4770,7 +4770,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4825,7 +4825,7 @@ db_loadouts = {
 							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4877,7 +4877,7 @@ db_loadouts = {
 							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4927,7 +4927,7 @@ db_loadouts = {
 							["CLSID"] = "{3E35F8C1-052D-11d6-9191-00A0249B6F00}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -4977,7 +4977,7 @@ db_loadouts = {
 							["CLSID"] = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -5027,7 +5027,7 @@ db_loadouts = {
 							["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -5077,7 +5077,7 @@ db_loadouts = {
 							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "3770",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -5136,7 +5136,7 @@ db_loadouts = {
 							["CLSID"] = "{D4A8D9B9-5C45-42e7-BBD2-0E54F8308432}",
 							["num"] = 2,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "4500",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5192,7 +5192,7 @@ db_loadouts = {
 							["CLSID"] = "{601C99F7-9AF3-4ed7-A565-F8B8EC0D7AAC}",
 							["num"] = 2,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "4500",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5228,24 +5228,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5276,24 +5276,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{6980735A-44CC-4BB9-A1B5-591532F1DC69}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5326,24 +5326,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5374,24 +5374,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{6980735A-44CC-4BB9-A1B5-591532F1DC69}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5424,24 +5424,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5472,24 +5472,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{6980735A-44CC-4BB9-A1B5-591532F1DC69}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5522,24 +5522,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5571,24 +5571,24 @@ db_loadouts = {
 						[2] =
 						{
 							["CLSID"] = "{6980735A-44CC-4BB9-A1B5-591532F1DC69}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, end of [4]
+						}, --end of [4]
 						[5] =
 						{
 							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-						}, end of [5]
+						}, --end of [5]
 						[6] =
 						{
 							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
-						}, end of [6]
-					}, end of ["pylons"]
+						}, --end of [6]
+					}, ----end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -5734,20 +5734,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -5778,20 +5778,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -5824,20 +5824,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -5868,20 +5868,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -5914,20 +5914,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -5958,20 +5958,20 @@ db_loadouts = {
 						[1] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [1]
+						}, --end of [1]
 						[2] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [2]
+						}, --end of [2]
 						[3] =
 						{
 							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
-						}, end of [3]
+						}, --end of [3]
 						[4] =
 						{
 							["CLSID"] = "{5F26DBC2-FB43-4153-92DE-6BBCE26CB0FF}",
-						}, end of [4]
-					}, end of ["pylons"]
+						}, --end of [4]
+					}, ----end of ["pylons"]
 					["fuel"] = "15245",
 					["flare"] = 64,
 					["chaff"] = 64,
@@ -6025,7 +6025,7 @@ db_loadouts = {
 					["ADF_NEAR_Frequency"] = 303,
 					["ADF_FAR_Frequency"] = 625,
 					["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 			["Intercept  IPW K-13A*2, PTB-760*2"] = {
 				attributes = {},
@@ -6077,7 +6077,7 @@ db_loadouts = {
 					["ADF_NEAR_Frequency"] = 303,
 					["ADF_FAR_Frequency"] = 625,
 					["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 		},
 		["CAP"] = {
@@ -6131,7 +6131,7 @@ db_loadouts = {
 								["ADF_NEAR_Frequency"] = 303,
 								["ADF_FAR_Frequency"] = 625,
 								["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 		},
 		["Escort"] = {
@@ -6185,7 +6185,7 @@ db_loadouts = {
 							["ADF_NEAR_Frequency"] = 303,
 							["ADF_FAR_Frequency"] = 625,
 							["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 		},
 		["Fighter Sweep"] = {
@@ -6240,7 +6240,7 @@ db_loadouts = {
 																						["ADF_NEAR_Frequency"] = 303,
 																						["ADF_FAR_Frequency"] = 625,
 																						["MountSIRENA"] = true,
-																				}, end of ["AddPropAircraft"]
+																				}, --end of ["AddPropAircraft"]
 				},
 		},
 		["Anti-ship Strike"] = {
@@ -6288,7 +6288,7 @@ db_loadouts = {
 							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
 							["num"] = 2,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1800",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6301,7 +6301,7 @@ db_loadouts = {
 																						["ADF_NEAR_Frequency"] = 303,
 																						["ADF_FAR_Frequency"] = 625,
 																						["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 			["Antiship IPW - Strike SR - K-13A*2, ORO-57K*4"] = {
 					minscore = 0.3,
@@ -6355,7 +6355,7 @@ db_loadouts = {
 								["CLSID"] = "{ORO57K_S5M_HEFRAG}",
 								["num"] = 3,
 							},
-						}, end of ["pylons"]
+						}, ----end of ["pylons"]
 						["fuel"] = "1800",
 						["flare"] = 0,
 						["chaff"] = 0,
@@ -6368,7 +6368,7 @@ db_loadouts = {
 						["ADF_NEAR_Frequency"] = 303,
 						["ADF_FAR_Frequency"] = 625,
 						["MountSIRENA"] = true,
-					}, end of ["AddPropAircraft"]
+					}, --end of ["AddPropAircraft"]
 				},
 		},
 		["Strike"] = {
@@ -6395,7 +6395,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = true,
+				self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -6415,7 +6415,7 @@ db_loadouts = {
 							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
 							["num"] = 2,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1800",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6428,7 +6428,7 @@ db_loadouts = {
 						["ADF_NEAR_Frequency"] = 303,
 						["ADF_FAR_Frequency"] = 625,
 						["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike SR - K-13A*2, ORO-57K*4"] = {
 				minscore = 0.3,
@@ -6453,7 +6453,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = true,
+				self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -6481,7 +6481,7 @@ db_loadouts = {
 							["CLSID"] = "{ORO57K_S5M_HEFRAG}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1800",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6494,7 +6494,7 @@ db_loadouts = {
 						["ADF_NEAR_Frequency"] = 303,
 						["ADF_FAR_Frequency"] = 625,
 						["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike - K-13A*2, PTB-760*2, FAB-250*2"] = {
 				minscore = 0.3,
@@ -6519,7 +6519,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				- self_escort = true,
+				self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -6547,7 +6547,7 @@ db_loadouts = {
 							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
 							["num"] = 2,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "1800",
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6560,7 +6560,7 @@ db_loadouts = {
 						["ADF_NEAR_Frequency"] = 303,
 						["ADF_FAR_Frequency"] = 625,
 						["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike - K-13A*2, PTB-760*2, ORO-57K*2"] = {
 				minscore = 0.3,
@@ -6585,7 +6585,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				-self_escort = true,
+				self_escort = true,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
@@ -6613,7 +6613,7 @@ db_loadouts = {
 							["CLSID"] = "{ORO57K_S5M_HEFRAG}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 1800,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6626,7 +6626,7 @@ db_loadouts = {
 						["ADF_NEAR_Frequency"] = 303,
 						["ADF_FAR_Frequency"] = 625,
 						["MountSIRENA"] = true,
-				}, end of ["AddPropAircraft"]
+				}, --end of ["AddPropAircraft"]
 			},
 		},
 	},
@@ -6650,12 +6650,12 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				--- self_escort = false,
+				--self_escort = false,
 				sortie_rate = 6,
 				stores = {
 					["pylons"] =
 					{
-					}, -- end of ["pylons"]
+					}, -- --end of ["pylons"]
 					["fuel"] = 40000,
                     ["flare"] = 96,
                     ["chaff"] = 96,
@@ -6715,7 +6715,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6770,7 +6770,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6820,7 +6820,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6870,7 +6870,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6920,7 +6920,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -6970,7 +6970,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7026,7 +7026,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7080,7 +7080,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7134,7 +7134,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7188,7 +7188,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7242,7 +7242,7 @@ db_loadouts = {
 							["CLSID"] = "{PTB_800_MIG21}",
 							["num"] = 3,
 						},
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = 2280,
 					["flare"] = 0,
 					["chaff"] = 0,
@@ -7277,8 +7277,8 @@ db_loadouts = {
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
-						[1] = {}, end of [1]
-					}, end of ["pylons"]
+						[1] = {}, --end of [1]
+					}, ----end of ["pylons"]
 					["fuel"] = "1100",
 					["flare"] = 30,
 					["chaff"] = 30,
@@ -7368,7 +7368,7 @@ db_loadouts = {
 				sortie_rate = 6,
 				stores = {
 					["pylons"] = {
-					}, end of ["pylons"]
+					}, ----end of ["pylons"]
 					["fuel"] = "9600",
 					["flare"] = 192,
 					["chaff"] = 0,
@@ -7415,7 +7415,7 @@ db_loadouts = {
 							["CLSID"] = "{C42EE4C3-355C-4B83-8B22-B39430B8F4AE}",
 							["num"] = 1,
 						},
-	        }, end of ["pylons"]
+	        }, ----end of ["pylons"]
 					["fuel"] = "60000",
 	        ["flare"] = 48,
 	        ["chaff"] = 48,

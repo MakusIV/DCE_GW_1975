@@ -341,7 +341,7 @@ BAT_FirstMission.lua:
 
 
 
-local executeTest = true
+local executeTest = false
 
 if executeTest then
   print("TEST EXECUTING\n")

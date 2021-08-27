@@ -57,7 +57,7 @@ camp_triggers = {
 		once = true,												--Trigger is fired once
 		condition = 'true',											--Condition of the trigger to return true or false embedded as string
 		action = {													--Trigger action function embedded as string
-			[1] = 'Action.Text("After the effective political action of the Minister of the Interior, a group of Georgian nationalists led by the Army Corps General Baaka Kobakhidze, carried out a coup by supporting Georgian military forces and with the political and military support of some western countries coordinated by the USA. On 9 September 1975, Tbilisi government buildings were occupied by Georgian military forces, at the same time the airports of Tbilisi, Soganlug, Vaziani, Kutaisi, Batumi, Kobuleti, Senaki, Sukhumi and Gudauta were occupied by Western coalition and/or Georgian military forces (Georgian War Coalition).")',
+			[1] = 'Action.Text("After the effective political action of the Minister of the Interior, a group of Georgian nationalists led by the Army Corps General Baaka Kobakhidze, carried out a coup by supporting Georgian military forces and with the political and military support of some western countries coordinated by the USA. On 9 September 1975, Tbilissi government buildings were occupied by Georgian military forces, at the same time the airports of Tbilissi, Soganlug, Vaziani, Kutaisi, Batumi, Kobuleti, Senaki, Sukhumi and Gudauta were occupied by Western coalition and/or Georgian military forces (Georgian War Coalition).")',
 			[2] = 'Action.Text("The Georgian War Coalition occupy the whole area of North Ossetia up to Kurta. During this expansion phase, Georgian forces manage to appropriate an important quantity of Russian military equipment, including: Mig-19, Mig-21, Mig-27, SU-17, AN-26 as well as SAM systems of the SA-2, SA-3, SA-6, SA-8, SA-9 with AAA ZSU-23, ZSU-57. ")',
 			[3] = 'Action.Text("The goal of the Georgian War Coalition is to exploit the weakness of the Soviet Union to establish control in this important area through important and explicit military action. The decision made by Western countries to participate directly in the military action is based on the security that the conflict will remain localized in the Caucasian area due to the extreme weakness and instability facing the entire Soviet Union.")',
 			[4] = 'Action.Text("Against all odds, Russia reacts swiftly and forcefully to the attack by engaging an impressive amount of military air forces in support of the ground operations necessary to restore military control over Georgia. After being relegated to Sakire, the Russian forces present in North Ossetia launch an immediate counterattack that allows them to consolidate their position in the areas of Didmukha, Tskhinvali and Sathiari by rejecting Georgian forces in the areas of Tsveri, Tkviavi and Kaspi.")',
@@ -87,7 +87,7 @@ camp_triggers = {
 	["Campaign End Victory 2"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitReady("1./113.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("1./123.IAP") + Return.AirUnitReady("1./37.IAP") + Return.AirUnitReady("1./19.IAP") + Return.AirUnitReady("1./133.IAP") + Return.AirUnitReady("1./793.IAP") + Return.AirUnitReady("1./153.IAP") < 8',
+		condition = 'Return.AirUnitReady("1./113.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("1./123.IAP") + Return.AirUnitReady("1./37.IAP") + Return.AirUnitReady("1./19.IAP") + Return.AirUnitReady("1./133.IAP") + Return.AirUnitReady("1./153.IAP") < 8',
 		action = {
 			[1] = 'Action.CampaignEnd("win")',
 			[2] = 'Action.Text("The Russian Air Force is in ruins. After repeated air strikes and disastrous losses in air-air combat, the Russians are no longer able to produce any sorties or offer any resistance. The NATO now owns complete air superiority. With the disappearance of the air threat, the role of the F-15C Eagle and Mirage 2000C in this war comes to an end. Once again the victorious Eagle has proved to be to leading fighter in the world. Well done.")',
@@ -321,7 +321,7 @@ camp_triggers = {
 	},
 	["Tbilissi Airbase Disabled"] = {
 		active = true,
-		condition = 'Return.TargetAlive("Tbilisi Airbase") < 7',
+		condition = 'Return.TargetAlive("Tbilissi Airbase") < 7',
 		action = {
 			[1] = 'db_airbases["Tbilissi-Lochini"].inactive = true',
 		}
@@ -329,7 +329,7 @@ camp_triggers = {
 	["Tbilissi Airbase Disabled Text"] = {
 		active = true,
 		once = false,
-		condition = 'Return.TargetAlive("Tbilisi Airbase") < 7',
+		condition = 'Return.TargetAlive("Tbilissi Airbase") < 7',
 		action = {
 			[1] = 'Action.Text("The infrastructure at Tbilissi-Lochini Airbase has been destroyed by air strikes. Flying operations at this base have ceased completely and are unlikely to resume. This will ease our efforts to hit other targets in the Kutaisi Country area.")',
 		}
@@ -506,13 +506,18 @@ camp_triggers = {
 	["Reinforce GA 5rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 5rd AS", "GA 5rd AS", 12)',
+		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 12)',
 	},
 	["Reinforce GA 7rd AS"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/GA 7rd AS", "GA 7rd AS", 12)',
 	},	
+	["Reinforce GA 5rd TS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 3)',
+	},
 	["Reinforce VMFA-151"] = {
 		active = true,
 		condition = 'true',
@@ -532,7 +537,7 @@ camp_triggers = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 8)',
-	},		
+	},	
 	["Reinforce 171 ARW"] = {
 		active = true,
 		condition = 'true',
@@ -553,7 +558,7 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/VMFA-157", "VMFA-157", 16)',
 	},
-	["Reinforce 6th Cavalry"] = {
+	["Reinforce 6th Cvy"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/6th Cavalry", "6th Cavalry", 16)',
@@ -583,15 +588,20 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/801 ARS", "801 ARS", 4)',
 	},		
+	["Reinforce 1./117.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R./117.IAP", "1./117.IAP", 12)',
+	},
 	["Reinforce 1./19.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("2./19.IAP", "1./19.IAP", 12)',
+		action = 'Action.AirUnitReinforce("R./19.IAP", "1./19.IAP", 12)',
 	},
 	["Reinforce 1./37.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("2./37.IAP", "1./37.IAP", 12)',
+		action = 'Action.AirUnitReinforce("R./37.IAP", "1./37.IAP", 12)',
 	},
 	--[[ -- reparti post 1975
 	["Reinforce 1./17.IAP"] = {
@@ -623,17 +633,17 @@ camp_triggers = {
 	["Reinforce 1st GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./1st GHR", "1st GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/1st GHR", "1st GHR", 8)',
 	},	
 	["Reinforce 2nd GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./2nd GHR", "2nd GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/2nd GHR", "2nd GHR", 8)',
 	},	
 	["Reinforce 13th GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./13th GHR", "13th GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/13th GHR", "13th GHR", 8)',
 	},
 	["Reinforce 1./107.IAP"] = {
 		active = true,
@@ -648,22 +658,22 @@ camp_triggers = {
 	["Reinforce 13.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./13.OSAP", "1./13.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/13.OSAP", "13.OSAP", 4)',
 	},	
 	["Reinforce 23.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./23.OSAP", "1./23.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/23.OSAP", "23.OSAP", 4)',
 	},	
 	["Reinforce 25.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./25.OSAP", "1./25.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/25.OSAP", "25.OSAP", 4)',
 	},
 	["Reinforce 27.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./27.OSAP", "1./27.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/27.OSAP", "27.OSAP", 4)',
 	},
 	["Reinforce 29.OSAP"] = {
 		active = true,
@@ -710,11 +720,6 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R./135.IAP", "1./135.IAP", 8)',
 	},
-	["Reinforce 1./117AS.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./117AS.IAP", "1./117AS.IAP", 8)',
-	},
 
 	----- AVIATION UNIT STATUS -----
 	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
@@ -734,15 +739,6 @@ camp_triggers = {
 		once = true,
 		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 6',
 		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. The number of available airframes is critically low. The squadron is short of destruction.")',
-	},
-	["Newspaper Nighthawk Down"] = {
-		active = true,
-		once = true,
-		condition = 'Return.AirUnitAlive("417 TFS") < 4', -- questa unità non esiste in oob_air_init
-		action = {
-			[1] = 'Action.AddImage("Newspaper_NighthawkDown.jpg", "blue")',
-			[2] = 'NoMoreNewspaper = true',
-		},
 	},
 	
 	
