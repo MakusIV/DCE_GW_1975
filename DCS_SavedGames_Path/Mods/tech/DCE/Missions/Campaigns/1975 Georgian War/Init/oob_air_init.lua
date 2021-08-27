@@ -223,6 +223,7 @@ oob_air = {
 		},
 		[6] = {
 			name = "R/315th Air Division",								--unit name
+			inactive = true,
 			type = "C-130",									--aircraft type
 			country = "USA",								--unit country
 			base = "Reserves",								--unit base
@@ -307,7 +308,7 @@ oob_air = {
 				["Intercept"] = true,
 				["CAP"] = true,
 				["Escort"] = true,
-				["Fighter Sweep"] = true,		
+				["Fighter Sweep"] = false, -- no loadout		
 			},
 			number = 12,
 		},
@@ -323,8 +324,7 @@ oob_air = {
 		},		
 			----------------------- Kutaisi -------------------------		
 		[15] = {
-			name = "58 TFS",								--unit name
-			--player = false,									--player unit
+			name = "58 TFS",								--unit name			
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
 			livery = {""},					--unit livery
@@ -364,6 +364,7 @@ oob_air = {
 			---------------------- Senaki-Kolkhi ----------------------
 		[18] = {
 			name = "GA 7rd AS",							--unit name
+			--player = false,									--player unit
 			type = "MiG-21Bis",								--aircraft type
 			country = "Georgia",							--unit country
 			livery = "",							--unit livery
@@ -449,9 +450,9 @@ oob_air = {
 			base = "Tbilissi-Lochini",							--unit base
 			skill = "High",									--unit skill
 			tasks = {										--unit tasks
-				["CAP"] = false,
-				["Escort"] = false,
-				["Fighter Sweep"] = false,
+				["CAP"] = false, -- no loadout
+				["Escort"] = false, -- no loadout
+				["Fighter Sweep"] = false, -- no loadout
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,
 			},
