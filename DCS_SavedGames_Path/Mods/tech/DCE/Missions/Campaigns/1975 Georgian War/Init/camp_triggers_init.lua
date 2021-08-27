@@ -563,6 +563,11 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/17th Cavalry", "17th Cavalry", 16)',
 	},
+	["Reinforce GAH 2rd"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/GAH 2rd", "GAH 2rd", 16)',
+	},
 	["Reinforce VF-101"] = {
 		active = true,
 		condition = 'true',
@@ -625,6 +630,11 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R./2nd GHR", "2nd GHR", 8)',
 	},	
+	["Reinforce 13th GHR"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R./13th GHR", "13th GHR", 8)',
+	},
 	["Reinforce 1./107.IAP"] = {
 		active = true,
 		condition = 'true',

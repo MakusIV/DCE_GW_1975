@@ -271,56 +271,9 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
 			number = 9,
-		},
-		---------------- FARP-17th Cavalry Tsveri AFB------- non dovrebbe esistere, da creare
+		},		
+			------------------ Vaziani ---------------------		
 		[11] = {
-			name = "17th Cavalry",								--unit name
-			type = "UH-1H",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Turkey",								--unit country
-			livery = "Turkish Air Force",									--unit livery
-			base = "FARP-17th Cavalry", -- non dovrebbe esistere, da creare						--unit base
-			skill = "Random",									--unit skill
-			tasks = {
-				["Transport"] = true,
-				["Strike"] = true,
-			},
-			number = 8,
-		},
-		[12] = {
-			name = "R/17th Cavalry",								--unit name
-			inactive = true,
-			type = "UH-1H",								--aircraft type
-			base = "Reserves",
-			skill = "Random",								--unit skill
-			tasks = {},									--unit tasks
-			number = 20,
-		},
-		---------------- FARP-6th Cavalry Tkviavi AFB, Kaspi AFB (utilizza il ch47)------- non dovrebbe esistere, da creare
-		[13] = {
-			name = "6th Cavalry",								--unit name
-			type = "AH-1W",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Turkey",								--unit country
-			livery = "Turkey 2",									--unit livery
-			base = "FARP-6th Cavalry", ---da inserire						--unit base
-			skill = "Random",									--unit skill
-			tasks = {
-				["Strike"] = true,
-			},
-			number = 8,
-		},
-		[14] = {
-			name = "R/6th Cavalry",								--unit name
-			inactive = true,
-			type = "AH-1W",								--aircraft type
-			base = "Reserves",
-			skill = "Random",								--unit skill
-			tasks = {},									--unit tasks
-			number = 20,
-		},
-		------------------ Vaziani ---------------------		
-		[15] = {
 			name = "GA 3rd AS",								--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Georgia",								--unit country
@@ -333,7 +286,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[16] = {
+		[12] = {
 			name = "R/GA 3rd AS",								--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
@@ -343,7 +296,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 36,
 		},
-		[17] = {
+		[13] = {
 			name = "GA 4rd AS",								--unit name
 			type = "MiG-19P",								--aircraft type
 			country = "Georgia",								--unit country
@@ -358,7 +311,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[18] = {
+		[14] = {
 			name = "R./GA 4rd AS",								--unit name
 			inactive = true,
 			type = "MiG-19P",								--aircraft type
@@ -368,8 +321,8 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 24,
 		},		
-		----------------------- Kutaisi -------------------------		
-		[19] = {
+			----------------------- Kutaisi -------------------------		
+		[15] = {
 			name = "58 TFS",								--unit name
 			--player = false,									--player unit
 			type = "F-4E",								--aircraft type
@@ -387,7 +340,7 @@ oob_air = {
 			},
 			number = 6,
 		},
-		[20] = {
+		[16] = {
 			name = "R/58 TFS",								--unit name
 			inactive = true,
 			type = "F-4E",									--aircraft type
@@ -396,7 +349,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},
-		[21] = {
+		[17] = {
 			name = "7 ACCS",								--unit name
 			type = "E-3A",									--aircraft type
 			country = "USA",								--unit country
@@ -408,8 +361,8 @@ oob_air = {
 			},
 			number = 3,
 		},
-		---------------------- Senaki-Kolkhi ----------------------
-		[22] = {
+			---------------------- Senaki-Kolkhi ----------------------
+		[18] = {
 			name = "GA 7rd AS",							--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Georgia",							--unit country
@@ -433,7 +386,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[23] = {
+		[19] = {
 			name = "R/GA 7rd AS",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
@@ -442,7 +395,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 24,
 		},
-		[24] = {
+		[20] = {
 			name = "801 ARS",								--unit name
 			type = "KC-135",								--aircraft type
 			country = "USA",								--unit country
@@ -454,7 +407,7 @@ oob_air = {
 			},
 			number = 3,
 		},
-		[25] = {
+		[21] = {
 			name = "R/801 ARS",								--unit name
 			inactive = true,
 			type = "KC-135",									--aircraft type
@@ -464,7 +417,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 7,
 		},		
-		[26] = { 
+		[22] = { 
 			name = "GA 5rd TS",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Georgia",								--unit country
@@ -476,7 +429,7 @@ oob_air = {
 			},
 			number = 1,
 		},
-		[27] = {
+		[23] = {
 			name = "R/GA 5rd TS",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
@@ -486,8 +439,8 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 4,
 		},
-		--------------------- Tbilissi-Lochini -------------------
-		[28] = {
+			--------------------- Tbilissi-Lochini -------------------
+		[24] = {
 			name = "F9",								--unit name
 			--player = true,									--player unit
 			type = "AJS37",								--aircraft type
@@ -514,7 +467,7 @@ oob_air = {
 			},
 			number = 12,
 		},				
-		[29] = {
+		[25] = {
 			name = "F23",								--unit name
 			inactive = true,
 			type = "AJS37",									--aircraft type
@@ -523,7 +476,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 30,
 		},
-		[30] = {
+		[26] = {
 			name = "174 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
 			country = "USA",								--unit country
@@ -535,7 +488,7 @@ oob_air = {
 			},
 			number = 3,
 		},
-		[31] = {
+		[27] = {
 			name = "R/174 ARW",								--unit name
 			inactive = true,
 			type = "KC135MPRS",									--aircraft type
@@ -545,8 +498,8 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 7,
 		},
-        -------------------- Sukhumi -------------------------------------
-		[32] = {
+        	-------------------- Sukhumi -------------------------------------
+		[28] = {
 			name = "VMFA-159",								--unit name
 			--player = false,									--player unit
 			type = "F-4E",								--aircraft type
@@ -561,7 +514,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[33] = {
+		[29] = {
 			name = "R/VMFA-159",								--unit name
 			type = "F-4E",									--aircraft type
 			country = "Usa",								--unit country
@@ -569,7 +522,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[34] = {
+		[30] = {
 			name = "F7",								--unit name
 			--player = true,									--player unit
 			type = "AJS37",								--aircraft type
@@ -594,7 +547,7 @@ oob_air = {
 			},
 			number = 12,
 		},				
-		[35] = {
+		[31] = {
 			name = "F21",								--unit name
 			inactive = true,
 			type = "AJS37",									--aircraft type
@@ -603,8 +556,8 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 30,
 		},
-		--------------- CVN-71 Theodore Roosevelt ----------------------
-		[36] = {
+			--------------- CVN-71 Theodore Roosevelt ----------------------
+		[32] = {
 			name = "VF-101",							--unit name
 			player = true,									--player unit
 			type = "F-14A-135-GR",								--aircraft type
@@ -636,7 +589,7 @@ oob_air = {
 			},
 			number = 16,
 		},
-		[37] = {
+		[33] = {
 			name = "R/VF-101",								--unit name
 			inactive = true,
 			type = "F-14A-135-GR",								--aircraft type
@@ -645,7 +598,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 30,
 		},
-		[38] = {
+		[34] = {
 			name = "VAW-125",								--unit name
 			type = "E-2C",									--aircraft type
 			country = "USA",								--unit country
@@ -658,7 +611,7 @@ oob_air = {
 			},
 			number = 5,
 		},
-		[39] = {
+		[35] = {
 			name = "R/VAW-125",								--unit name
 			inactive = true,
 			type = "E-2C",									--aircraft type
@@ -668,7 +621,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 5,
 		},
-		[40] = {
+		[36] = {
 			name = "174 ARW",								--unit name
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
@@ -681,7 +634,7 @@ oob_air = {
 			},
 			number = 5,
 		},
-		[41] = {
+		[37] = {
 			name = "R/174 ARW",								--unit name
 			inactive = true,
 			type = "S-3B Tanker",									--aircraft type
@@ -691,8 +644,8 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 7,
 		},
-		------------------ CVN-74 John C. Stennis --------------------
-		[42] = {
+			------------------ CVN-74 John C. Stennis --------------------
+		[38] = {
 			name = "VF-118/GA",							--unit name
 			--player = true,									--player unit
 			type = "F-14A-135-GR",								--aircraft type
@@ -720,7 +673,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[43] = {
+		[39] = {
 			name = "R/VF-118/GA",								--unit name
 			inactive = true,
 			type = "F-14A-135-GR",								--aircraft type
@@ -729,7 +682,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 20,
 		},
-		[44] = {
+		[40] = {
 			name = "177 ARW",								--unit name
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
@@ -741,9 +694,78 @@ oob_air = {
 				["Refueling"] = true,
 			},
 			number = 8,
-		},				
+		},	
+			---------------- KHASHURI FARP LM84
+		[41] = {
+			name = "17th Cavalry",								--unit name
+			type = "UH-1H",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "USA",								--unit country
+			livery = "",									--unit livery
+			base = "KHASHURI FARP LM84",						--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Transport"] = true,
+				["Strike"] = true,
+			},
+			number = 8,
+		},
+		[42] = {
+			name = "R/17th Cavalry",								--unit name
+			inactive = true,
+			type = "UH-1H",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 20,
+		},
+			----------------  GORI FARP MM25
+		[43] = {
+			name = "6th Cavalry",								--unit name
+			type = "AH-1W",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "USA",								--unit country
+			livery = "",									--unit livery
+			base = "GORI FARP MM25",					--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Strike"] = true,
+			},
+			number = 8,
+		},
+		[44] = {
+			name = "R/6th Cavalry",								--unit name
+			inactive = true,
+			type = "AH-1W",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 20,
+		},			
+			---------------- AMBROLAURI FARP LN41
+			[43] = {
+				name = "GAH 2rd",								--unit name
+				type = "Mi-24V",								--aircraft type
+				helicopter = true,								--true for helicopter units
+				country = "Georgia",								--unit country
+				livery = "",									--unit livery
+				base = "AMBROLAURI FARP LN41",					--unit base
+				skill = "Random",									--unit skill
+				tasks = {
+					["Strike"] = true,
+				},
+				number = 8,
+			},
+			[44] = {
+				name = "R/GAH 2rd",								--unit name
+				inactive = true,
+				type = "Mi-24V",								--aircraft type
+				base = "Reserves",
+				skill = "Random",								--unit skill
+				tasks = {},									--unit tasks
+				number = 20,
+			},			
 	},
-
 	["red"] = {	--side 2		
 		-------------------- Mozdok ---------------		
 		[1] = {
@@ -1210,56 +1232,9 @@ oob_air = {
 			skill = "Random",								--unit skill
 			tasks = {},									--unit tasks
 			number = 4,
-		},
-		-------------------- FARP-1st GHR ------ Didmukha AFB
-		[35] = { -- verifica posizione o crea farp
-			name = "1st GHR",								--unit name
-			type = "Mi-8MT",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "FARP-1st GHR", 						--unit base
-			skill = "Random",									--unit skill
-			tasks = {
-				["Transport"] = true,
-				["Strike"] = true,
-			},
-			number = 4,
-		},
-		[36] = {
-			name = "R/1st GHR",								--unit name
-			inactive = true,
-			type = "Mi-8MT",								--aircraft type
-			base = "Reserves",
-			skill = "Random",								--unit skill
-			tasks = {},									--unit tasks
-			number = 24,
-		},
-		-------------------- FARP-2nd GHR ------ Tskhinvali AFB, Sathiari AFB
-		[37] = { -- verifica posizione o crea farp
-			name = "2nd GHR",								--unit name
-			type = "Mi-24V",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "FARP-2nd GHR",						--unit base
-			skill = "Random",									--unit skill
-			tasks = {
-				["Strike"] = true,
-			},
-			number = 4,
-		},
-		[38] = {
-			name = "R/2nd GHR",								--unit name
-			inactive = true,
-			type = "Mi-24V",								--aircraft type
-			base = "Reserves",
-			skill = "Random",								--unit skill
-			tasks = {},									--unit tasks
-			number = 24,
-		},
+		},		
 		--------------------- Sochi-Adler --------------
-		[39] = {
+		[35] = {
 			name = "2.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1272,7 +1247,7 @@ oob_air = {
 			number = 6,
 		},		
 		--------------------- Maykop-Khanskaya --------------
-		[40] = {
+		[36] = {
 			name = "1./153.IAP",								--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1286,7 +1261,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[41] = {
+		[37] = {
 			name = "R./153.IAP",								--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
@@ -1296,7 +1271,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 24,
 		},
-		[42] = {
+		[38] = {
 			name = "1./61.IAP",								--unit name
 			type = "Tu-22M3",								--aircraft type
 			country = "Russia",								--unit country
@@ -1319,7 +1294,7 @@ oob_air = {
 			},
 			number = 8,
 		},
-		[43] = {
+		[39] = {
 			name = "R./61.IAP",								--unit name
 			inactive = true,
 			type = "Tu-22M3",								--aircraft type
@@ -1328,7 +1303,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 18,
 		},
-		[44] = {
+		[40] = {
 			name = "1./81.IAP",								--unit name
 			type = "Su-24M",								--aircraft type
 			country = "Russia",								--unit country
@@ -1353,7 +1328,7 @@ oob_air = {
 			},
 			number = 8,
 		},
-		[45] = {
+		[41] = {
 			name = "R./81.IAP",								--unit name
 			inactive = true,
 			type = "Su-24M",								--aircraft type
@@ -1362,7 +1337,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 18,
 		},
-		[46] = {
+		[42] = {
 			name = "27.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1374,7 +1349,7 @@ oob_air = {
 			},
 			number = 1,
 		},
-		[47] = {
+		[43] = {
 			name = "R/27.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
@@ -1385,7 +1360,7 @@ oob_air = {
 			number = 4,
 		},
 		--------------------- Anapa-Vityazevo --------------
-		[48] = {
+		[44] = {
 			name = "23.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1397,7 +1372,7 @@ oob_air = {
 			},
 			number = 2,
 		},
-		[49] = {
+		[45] = {
 			name = "R./23.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
@@ -1408,7 +1383,7 @@ oob_air = {
 			number = 4,
 		},
 		--------------------- Krasnodar-Center --------------
-		[50] = {
+		[46] = {
 			name = "2457.I SDRLO",								--unit name
 			type = "A-50",								--aircraft type
 			country = "Russia",								--unit country
@@ -1421,7 +1396,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[51] = {
+		[47] = {
 			name = "25.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1433,7 +1408,7 @@ oob_air = {
 			},
 			number = 2,
 		},
-		[52] = {
+		[48] = {
 			name = "R./25.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",									--aircraft type
@@ -1443,8 +1418,76 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 4,
 		},		
-		
-
+		-------------------- NOGIR FARP MN76
+		[49] = { 
+			name = "1st GHR",								--unit name
+			type = "Mi-8MT",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "NOGIR FARP MN76", 						--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Transport"] = true,
+				["Strike"] = true,
+			},
+			number = 4,
+		},
+		[50] = {
+			name = "R/1st GHR",								--unit name
+			inactive = true,
+			type = "Mi-8MT",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 24,
+		},
+		-------------------- TSKHINVALI FARP MM27
+		[51] = {
+			name = "2nd GHR",								--unit name
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "TSKHINVALI FARP MM27",						--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Strike"] = true,
+			},
+			number = 4,
+		},
+		[52] = {
+			name = "R/2nd GHR",								--unit name
+			inactive = true,
+			type = "Mi-24V",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 24,
+		},
+		-------------------- LENIGORI FARP MN76
+		[53] = {
+			name = "13th GHR",								--unit name
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "LENIGORI FARP MN76",						--unit base
+			skill = "Random",									--unit skill
+			tasks = {
+				["Strike"] = true,
+			},
+			number = 4,
+		},
+		[54] = {
+			name = "R/13th GHR",								--unit name
+			inactive = true,
+			type = "Mi-24V",								--aircraft type
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},									--unit tasks
+			number = 24,
+		},
 		
 		------------ post 1975	
 		--[[	

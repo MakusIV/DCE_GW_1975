@@ -423,7 +423,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		-- },
 		["Beslan Airbase"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			picture = {"Beslan_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -485,7 +485,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Nalchik Airbase"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 3,
 			picture = {"Nalchik_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -594,7 +594,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Mineralnye-Vody Airbase"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 3,
 			picture = {"Mineralnye-Vody_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -1021,7 +1021,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		["BAKSAN-MINERALNYE SUPPLY LINE"] = {
 			task = "Strike",
 			priority = 4,
-			--picture = {"Vladikavkaz_Bridge.png"},
+			picture = {"Target - BAKSAN-MINERALNYE SUPPLY LINE.png"},
 			attributes = {"Bridge"},
 			firepower = {
 				min = 3,
@@ -1040,14 +1040,14 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 			},
 		},
-		["BAKSAN-MOZDOK SUPPLY LINE"] = {
+		["BAKSAN-MOZDOK SUPPLY LINE"] = {--change with new bridge elements
 			task = "Strike",
-			priority = 3,
-			--picture = {"Vladikavkaz_Bridge.png"},
+			priority = 2,
+			picture = {"Target - Vladikavkaz Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
 				min = 3,
-				max = 6,
+				max = 5,
 			},
 			elements = {
 				[1] = {
@@ -1067,13 +1067,55 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 				},
 			},
 		},
-		["BESLAN-NOGIR FARP SUPPLY LINE"] = {
+		["BESLAN-NOGIR FARP SUPPLY LINE"] = {--ok
 			task = "Strike",
-			priority = 5,
-			--picture = {"Vladikavkaz_Bridge.png"},
+			priority = 1,
+			--picture = {"Target - Beslan Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
+				min = 5,
+				max = 10,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Vladikavkaz MN 76",
+					x = -165689.171875,
+					y = 850781.9375,
+				},
+				[2] = {
+					name = "Bridge Vladikavkaz North MN 76",
+					x = -164245.28125,
+					y = 850403,
+				},
+				[3] = {
+					name = "Bridge Vladikavkaz South MN 76",
+					x = -168229.1875,
+					y = 852723.0625,
+				},
+				[4] = {
+					name = "Bridge north bank South Beslan",
+					x = -151580.80078125,
+					y = 835949.02734375,
+				},
+				[5] = {
+					name = "Bridge south bank South Beslan",
+					x = -151456.44921875,
+					y = 836013.34375,
+				},
+				[6] = {
+					name = "Bridge Alagir",
+					x = -173099.3125,
+					y = 815939.25,
+				},				
+			},
+		},	
+		["High priority Target BESLAN FARP SUPPLY LINE A"] = {--ok
+			task = "Strike",
+			priority = 6,
+			picture = {"Target - Vladikavkaz Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 4,
 				max = 5,
 			},
 			elements = {
@@ -1086,17 +1128,61 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					name = "Bridge Vladikavkaz North MN 76",
 					x = -164245.28125,
 					y = 850403,
-				},				
+				},
+				[3] = {
+					name = "Bridge Vladikavkaz South MN 76",
+					x = -168229.1875,
+					y = 852723.0625,
+				},
 			},
 		},	
-		["BESLAN-LENIGORI FARP SUPPLY LINE"] = {
+		["High priority Target BESLAN FARP SUPPLY LINE B"] = {--ok
 			task = "Strike",
-			priority = 4,
-			--picture = {"Vladikavkaz_Bridge.png"},
+			priority = 6,
+			picture = {"Target - Beslan Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
 				min = 3,
 				max = 5,
+			},
+			elements = {				
+				[1] = {
+					name = "Bridge north bank South Beslan",
+					x = -151580.80078125,
+					y = 835949.02734375,
+				},
+				[2] = {
+					name = "Bridge south bank South Beslan",
+					x = -151456.44921875,
+					y = 836013.34375,
+				},								
+			},
+		},
+		["High priority Target BESLAN FARP SUPPLY LINE C"] = {--ok
+			task = "Strike",
+			priority = 6,
+			picture = {"Target - Alagir Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {				
+				[1] = {
+					name = "Bridge Alagir",
+					x = -173099.3125,
+					y = 815939.25,
+				},				
+			},
+		},		
+		["BESLAN-LENIGORI FARP SUPPLY LINE"] = {-- same BESLAN-NOGIR FARP SUPPLY LINE
+			task = "Strike",
+			priority = 1,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 5,
+				max = 10,
 			},
 			elements = {
 				[1] = {
@@ -1109,65 +1195,100 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					x = -168229.1875,
 					y = 852723.0625,
 				},
-			},
-		},	
-		["BESLAN-TSKHINVALI FARP SUPPLY LINE"] = {
-			task = "Strike",
-			priority = 5,
-			--picture = {"Vladikavkaz_Bridge.png"},
-			attributes = {"Bridge"},
-			firepower = {
-				min = 3,
-				max = 6,
-			},
-			elements = {
-				[1] = {
+				[3] = {
+					name = "Bridge Vladikavkaz North MN 76",
+					x = -164245.28125,
+					y = 850403,
+				},
+				[4] = {
 					name = "Bridge north bank South Beslan",
 					x = -151580.80078125,
 					y = 835949.02734375,
 				},
-				[2] = {
+				[5] = {
 					name = "Bridge south bank South Beslan",
 					x = -151456.44921875,
 					y = 836013.34375,
 				},
-				[3] = {
+				[6] = {
 					name = "Bridge Alagir",
 					x = -173099.3125,
 					y = 815939.25,
 				},
 			},
 		},	
-		["NALCHIK-TSKHINVALI FARP SUPPLY LINE"] = {
+		["BESLAN-TSKHINVALI FARP SUPPLY LINE"] = {-- same BESLAN-NOGIR FARP SUPPLY LINE + Rail Bridge Digora MN 38
 			task = "Strike",
-			priority = 4,
+			priority = 1,
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 5
+				max = 10,
+			},
+			elements = {
+				[1] = {
+					name = "Bridge Vladikavkaz MN 76",
+					x = -165689.171875,
+					y = 850781.9375,
+				},				
+				[2] = {
+					name = "Bridge Vladikavkaz South MN 76",
+					x = -168229.1875,
+					y = 852723.0625,
+				},
+				[3] = {
+					name = "Bridge Vladikavkaz North MN 76",
+					x = -164245.28125,
+					y = 850403,
+				},
+				[4] = {
+					name = "Bridge north bank South Beslan",
+					x = -151580.80078125,
+					y = 835949.02734375,
+				},
+				[5] = {
+					name = "Bridge south bank South Beslan",
+					x = -151456.44921875,
+					y = 836013.34375,
+				},
+				[6] = {
+					name = "Bridge Alagir",
+					x = -173099.3125,
+					y = 815939.25,
+				},
+				[7] = {
+					name = "Rail Bridge Digora MN 38",
+					x = -157146.546875,
+					y = 809730.375,
+				},		
+			},
+		},		
+		["High priority Target Rail Bridge Digora MN 38"] = {
+			task = "Strike",
+			priority = 6,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 3,
 			},
 			elements = {
 				[1] = {
 					name = "Rail Bridge Digora MN 38",
 					x = -157146.546875,
 					y = 809730.375,
-				},			
-				[2] = {
-					name = "Bridge Alagir",
-					x = -173099.3125,
-					y = 815939.25,
-				},
+				},							
 			},
 		},			
 		["Prohladniy Depot MP 24-BESLAN SUPPLY LINE"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 1,
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 5,
+				max = 10,
 			},
 			elements = {
 				[1] = {
@@ -1206,6 +1327,82 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 					y = 814618.83789063,
 				},
 				[8] = {
+					name = "Rail Bridge Kardzhin MN 49",
+					x = -144986.53125,
+					y = 816502.625,
+				},				
+			},
+		},
+		["High priority Target Prohladniy Depot MP 24 SUPPLY LINE A"] = {
+			task = "Strike",
+			priority = 6,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 5,
+			},
+			elements = {
+				[1] = {
+					name = "Rail Bridge right bank SE Mayskiy",
+					x = -111785.2421875,
+					y = 795963.7109375,
+				},
+				[2] = {
+					name = "Rail Bridge Center SE Mayskiy",
+					x = -111727.7109375,
+					y = 795881.91699219,
+				},
+				[3] = {
+					name = "Rail Bridge left bank SE Mayskiy",
+					x = -111670.1796875,
+					y = 795800.12207031,
+				},				
+			},
+		},
+		["High priority Target Prohladniy Depot MP 24 SUPPLY LINE B"] = {
+			task = "Strike",
+			priority = 6,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			elements = {				
+				[1] = {
+					name = "Bridge north bank South Elhotovo",
+					x = -140288.05761719,
+					y = 809993.75585938,
+				},
+				[2] = {
+					name = "Bridge south bank South Elhotovo",
+					x = -140195.16113281,
+					y = 810098.49414063,
+				},			
+			},
+		},
+		["High priority Target Prohladniy Depot MP 24 SUPPLY LINE C"] = {
+			task = "Strike",
+			priority = 5,
+			--picture = {"Vladikavkaz_Bridge.png"},
+			attributes = {"Bridge"},
+			firepower = {
+				min = 3,
+				max = 5,
+			},
+			elements = {			
+				[1] = {
+					name = "Rail Bridge right bank SW Kardzhin",
+					x = -145428.47167969,
+					y = 814533.16210938,
+				},
+				[2] = {
+					name = "Rail Bridge left bank SW Kardzhin",
+					x = -145376.90332031,
+					y = 814618.83789063,
+				},
+				[3] = {
 					name = "Rail Bridge Kardzhin MN 49",
 					x = -144986.53125,
 					y = 816502.625,
@@ -3762,7 +3959,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		]]
 		["bridge GORI"] = --{supply line  gori
 			task = "Strike",
-			priority = 4,
+			priority = 5,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3784,11 +3981,11 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Supply Line Gori - Tbilisi"] = --{supply line  gori
 			task = "Strike",
-			priority = 4,
+			priority = 5,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -3842,7 +4039,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Supply Line Marneuli - Tbilisi"] = { -- kutaisi - farp ambrolauri
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3895,7 +4092,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
 			task = "Strike",
-			priority = 4,
+			priority = 5,
 			picture = {"Bridges positions Dapnari-KM76.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3917,7 +4114,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Vartsihe-LM16"] = { --supply line kutaisi - farp khashuri, gor
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3949,7 +4146,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Geguti-LM17"] = {--supply line kutaisi - farp khashuri, gori
 			task = "Strike",
-			priority = 4,
+			priority = 5,
 			--picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3976,7 +4173,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Kutaisi-LM18"] = {--supply line -kutaisi -ambrolauri
 			task = "Strike",
-			priority = 3,
+			priority = 5,
 			--picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -4025,7 +4222,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Bridge Koki-GH20"] = { --supply line sukhumi -senaki
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -4056,8 +4253,8 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 6,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -5035,7 +5232,7 @@ targetlist = {-- att alcune airbase hanno nomi diversi rispetto oob_air.airbase 
 		},
 		["Tbilissi Airbase"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			picture = {"Tbilisi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
