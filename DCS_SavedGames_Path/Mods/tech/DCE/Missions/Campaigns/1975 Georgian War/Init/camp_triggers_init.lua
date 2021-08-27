@@ -603,18 +603,6 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R./37.IAP", "1./37.IAP", 12)',
 	},
-	--[[ -- reparti post 1975
-	["Reinforce 1./17.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("2./17.IAP", "1./17.IAP", 12)',
-	},
-	["Reinforce 1./31.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("3./31.IAP", "1./31.IAP", 10)',
-	},
-	]]
 	["Reinforce 1./41.IAP"] = {
 		active = true,
 		condition = 'true',

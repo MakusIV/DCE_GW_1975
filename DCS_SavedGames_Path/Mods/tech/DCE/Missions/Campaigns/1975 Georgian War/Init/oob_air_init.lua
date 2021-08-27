@@ -159,8 +159,7 @@ oob_air = {
 	["blue"] = { --side 1
         -------------- Batumi -------------------------
 		[1] = {
-			name = "VMFA-151",								--unit name
-			player = false,									--player unit
+			name = "VMFA-151",								--unit name			
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
 			livery = {""},					--unit livery
