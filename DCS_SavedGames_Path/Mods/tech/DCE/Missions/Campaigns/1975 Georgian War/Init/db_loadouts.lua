@@ -2845,7 +2845,7 @@ db_loadouts = {
 							["chaff"] = 60,
 							["gun"] = 100,
 						},
-				},
+			},
 			["GTA strike Mk-82*6,AIM-7*2,Fuel*2,ECM"] = {
 				minscore = 0.3,
 				support = {
@@ -3616,11 +3616,65 @@ db_loadouts = {
 							["CLSID"] = "{0519A261-0AB6-11d6-9193-00A0249B6F00}",
 							["num"] = 8,
 						}, --end of [8]
-	        }, ----end of ["pylons"]
+	        		}, ----end of ["pylons"]
 					["fuel"] = "11700",
-	        ["flare"] = 96,
-	        ["chaff"] = 96,
-	        ["gun"] = 100,
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+		},
+		["AWACS"] = {
+			["Default"] = {
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = false,
+				night = true,
+				adverseWeather = true,
+				range = 900000,
+				capability = 10,
+				firepower = 1,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 10096,
+				hAttack = 10096,
+				standoff = nil,
+				tStation = 36000,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 12,
+				stores = {
+					["pylons"] = {
+						[1] = {
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+							["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 2,
+						},
+						[5] = {
+							["CLSID"] = "{0519A262-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 5,
+						},
+						[7] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 7,
+						},
+						[8] = {
+							["CLSID"] = "{0519A261-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 8,
+						}, --end of [8]
+	        		}, ----end of ["pylons"]
+					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
 				},
 			},
 		},
@@ -3727,9 +3781,9 @@ db_loadouts = {
 						},
 						}, ----end of ["pylons"]
 	 				["fuel"] = "11700",
-          ["flare"] = 96,
-          ["chaff"] = 96,
-          ["gun"] = 100,
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
 				},
 			},
 		},
@@ -3777,9 +3831,9 @@ db_loadouts = {
 						},
 					},
 					["fuel"] = "11700",
-	        ["flare"] = 96,
-	        ["chaff"] = 96,
-	        ["gun"] = 100,
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
 				},
 			},
 		},
@@ -4726,7 +4780,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
 				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
@@ -4767,8 +4821,8 @@ db_loadouts = {
 						},
 					}, ----end of ["pylons"]
 					["fuel"] = "3770",
-					["flare"] = 0,
-					["chaff"] = 0,
+					["flare"] = 96,
+					["chaff"] = 96,
 					["gun"] = 100,
 				},
 			},
@@ -4817,8 +4871,8 @@ db_loadouts = {
 						},
 					}, ----end of ["pylons"]
 					["fuel"] = "3770",
-					["flare"] = 0,
-					["chaff"] = 0,
+					["flare"] = 60,
+					["chaff"] = 60,
 					["gun"] = 100,
 				},
 			},
@@ -4867,8 +4921,8 @@ db_loadouts = {
 						},
 					}, ----end of ["pylons"]
 					["fuel"] = "3770",
-					["flare"] = 0,
-					["chaff"] = 0,
+					["flare"] = 60,
+					["chaff"] = 60,
 					["gun"] = 100,
 				},
 			},
@@ -4917,8 +4971,8 @@ db_loadouts = {
 						},
 					}, ----end of ["pylons"]
 					["fuel"] = "3770",
-					["flare"] = 0,
-					["chaff"] = 0,
+					["flare"] = 60,
+					["chaff"] = 60,
 					["gun"] = 100,
 				},
 			},
@@ -4967,8 +5021,8 @@ db_loadouts = {
 						},
 					}, ----end of ["pylons"]
 					["fuel"] = "3770",
-					["flare"] = 0,
-					["chaff"] = 0,
+					["flare"] = 60,
+					["chaff"] = 60,
 					["gun"] = 100,
 				},
 			},
@@ -7230,6 +7284,111 @@ db_loadouts = {
 			},
 		},
 	},
+
+	--[[
+	["MiG-25RBT"] = {--1964 (primo volo) 1970 (entrata in servizio)
+		["Reconnaissance"] = {
+			["R-40R*4"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 600000,
+				capability = 5,
+				firepower = 1,
+				vCruise = 600,
+				vAttack = 700,
+				hCruise = 12000,
+				hAttack = 12000,
+				standoff = 25000,
+				tStation = 3600,
+				LDSD = true,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[1] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [1]
+						[2] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{4EDBA993-2E34-444C-95FB-549300BF7CAF}",
+						}, --end of [4]
+					}, ----end of ["pylons"]
+					["fuel"] = "15245",
+					["flare"] = 64,
+					["chaff"] = 64,
+					["gun"] = 100,
+				},
+			},
+		},
+		["AWACS"] = {
+			["Default"] = {
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = false,
+				night = true,
+				adverseWeather = true,
+				range = 900000,
+				capability = 10,
+				firepower = 1,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 10096,
+				hAttack = 10096,
+				standoff = nil,
+				tStation = 36000,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 12,
+				stores = {
+					["pylons"] = {
+						[1] = {
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+							["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 2,
+						},
+						[5] = {
+							["CLSID"] = "{0519A262-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 5,
+						},
+						[7] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 7,
+						},
+						[8] = {
+							["CLSID"] = "{0519A261-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 8,
+						}, --end of [8]
+					}, ----end of ["pylons"]
+					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+		},
+	},
+	]]
 
     -- Not valid
 

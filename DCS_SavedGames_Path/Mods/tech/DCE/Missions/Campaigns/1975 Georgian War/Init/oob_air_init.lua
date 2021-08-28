@@ -1494,7 +1494,54 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 24,
 		},
-		
+		---------------- Integration 
+
+		--[[
+		[xx] = {
+			name = "157.I SDRLO",								--unit name
+			type = "Su-24MR",								--aircraft type
+			country = "Russia",								--unit country
+			sidenumber = {800, 805},						--unit range of sidenumbers (optional)
+			livery = {""},			--unit livery
+			base = "Krasnodar-Center",								--unit base
+			skill = "High",								--unit skill
+			tasks = {										--unit tasks
+				["AWACS"] = true,
+				["Reconnaissance"] = true
+			},
+			number = 4,
+		},
+		[xx] = {
+			name = "157.I SDRLO",								--unit name
+			type = "MiG-25RBT",								--aircraft type
+			country = "Russia",								--unit country
+			sidenumber = {800, 805},						--unit range of sidenumbers (optional)
+			livery = {""},			--unit livery
+			base = "Krasnodar-Center",								--unit base
+			skill = "High",								--unit skill
+			tasks = {										--unit tasks
+				["AWACS"] = true,
+				["Reconnaissance"] = true
+			},
+			number = 4,
+		},
+
+		]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		------------ post 1975	
 		--[[	
 		[40] = {
