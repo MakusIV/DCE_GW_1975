@@ -288,18 +288,18 @@ targetlist = {
 			radius = 50000,
 			text = "North of Kutaisi",
 		},
-		["203 SA-10 Site A-3"] = {
+		["203 SA-2 Site A-3"] = {
 			task = "Strike",
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
+				min = 3,
 				max = 8,
 			},
 			class = "vehicle",
-			name = "203 SA-10 Site A-3",
+			name = "203 SA-2 Site A-3",
 		},
-		["204 SA-10 Site B-1"] = {
+		["204 SA-6 Site B-1"] = {
 			task = "Strike",
 			priority = 6,
 			attributes = {"SAM"},
@@ -308,63 +308,96 @@ targetlist = {
 				max = 8,
 			},
 			class = "vehicle",
-			name = "204 SA-10 Site B-1",
+			name = "204 SA-6 Site B-1",
 		},
-		["206 SA-11 Site B-3"] = {
+		["206 SA-2 Site B-3"] = {
 			task = "Strike",
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
-				max = 8,
-			},
-			class = "vehicle",
-			name = "206 SA-11 Site B-3",
-		},		
-		["209 SA-11 Site R-3"] = {
-			task = "Strike",
-			priority = 6,
-			attributes = {"SAM"},
-			firepower = {
-				min = 2,
-				max = 8,
-			},
-			class = "vehicle",
-			name = "209 SA-11 Site R-3",
-		},
-		["101 SA-11 Site E-1"] = {
-			task = "Strike",
-			priority = 6,
-			attributes = {"SAM"},
-			firepower = {
-				min = 2,
+				min = 4,
 				max = 6,
 			},
 			class = "vehicle",
-			name = "101 SA-11 Site E-1",
-		},
-		["104 SA-11 Site E-4"] = {
+			name = "206 SA-2 Site B-3",
+		},		
+		["209 SA-2 Site R-3"] = {
 			task = "Strike",
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
+				min = 4,
 				max = 6,
 			},
 			class = "vehicle",
-			name = "104 SA-11 Site E-4",
+			name = "209 SA-2 Site R-3",
+		},
+		["101 SA-3 Site E-1"] = {
+			task = "Strike",
+			priority = 6,
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			class = "vehicle",
+			name = "101 SA-3 Site E-1",
+		},
+		["104 SA-6 Site E-4"] = {
+			task = "Strike",
+			priority = 6,
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			class = "vehicle",
+			name = "104 SA-6 Site E-4",
 		},		
-		["106 SA-11 Site C-6"] = {
+		["106 SA-2 Site C-6"] = {
 			task = "Strike",
 			priority = 6,
 			-- picture = {""},
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
+				min = 4,
 				max = 6,
 			},
 			class = "vehicle",
-			name = "106 SA-11 Site C-6",
+			name = "106 SA-2 Site C-6",
+		},
+		["LENIGORI FARP AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "LENIGORI FARP AA",
+		},
+		["TSKHINVALI FARP AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "TSKHINVALI FARP AA",
+		},
+		["TSKHINVALI FARP AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "TSKHINVALI FARP AA",
 		},
 		["Beslan Airbase"] = {
 			task = "Strike",
@@ -2487,27 +2520,71 @@ targetlist = {
 			class = "ship",
 			name = "NATO Convoy 1",
 		},
-		["Patriot Site West"] = {
+		["Hawk Site Kutaisi"] = {
 			task = "Strike",
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 3,
+				max = 6,
 			},
 			class = "vehicle",
-			name = "Patriot Site West",
+			name = "Hawk Site Kutaisi",
 		},
-		["Patriot Site East"] = {
+		["Hawk Site Vaziani"] = {
 			task = "Strike",
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 3,
+				max = 6,
 			},
 			class = "vehicle",
-			name = "Patriot Site East",
+			name = "Hawk Site Vaziani",
+		},
+		["bridge Vartsihe Geguti LM16-17 AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "bridge Vartsihe Geguti LM16-17 AA",
+		},
+		["GORI AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "GORI AA",
+		},
+		["KHASHURI FARP AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "KHASHURI FARP AA",
+		},
+		["AMBROLAURI FARP AA"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 2,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "AMBROLAURI FARP AA",
 		},
 		["10 US Army ELINT Station"] = {
 			task = "Strike",
@@ -2538,7 +2615,7 @@ targetlist = {
 		},
 		["11 1st Artillery Division/1.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 3,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2549,7 +2626,7 @@ targetlist = {
 		},
 		["12 1st Artillery Division/2.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 2,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2560,7 +2637,7 @@ targetlist = {
 		},
 		["13 1st Artillery Division/3.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 3,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2571,7 +2648,7 @@ targetlist = {
 		},
 		["14 1st Artillery Division/4.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 2,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2582,7 +2659,7 @@ targetlist = {
 		},
 		["15 1st Artillery Division/5.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 3,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2593,7 +2670,7 @@ targetlist = {
 		},
 		["16 1st Artillery Division/6.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 2,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2604,7 +2681,7 @@ targetlist = {
 		},
 		["17 1st Artillery Division/7.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 3,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -2615,7 +2692,7 @@ targetlist = {
 		},
 		["18 1st Artillery Division/8.Btry"] = {
 			task = "Strike",
-			priority = 1,
+			priority = 2,
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
@@ -3128,12 +3205,12 @@ targetlist = {
 			},
 			elements = {
 				[1] = {
-					name = "bridge GORI 1",
+					name = "bridge little river",
 					x = -289338.90250721,
 					y = 821231.45182713,
 				},
 				[2] = {
-					name = "bridge GORI 2",
+					name = "bridge big river",
 					x = -290558.91171324,
 					y = 820769.67147346,
 				},
@@ -5150,7 +5227,8 @@ targetlist = {
 					y = 562378,
 				},
 			},
-		},		
+		},	
+		]]		
 		["Bridge Anaklia-GG19"] = {
 			task = "Strike",
 			priority = 2,
@@ -5329,7 +5407,6 @@ targetlist = {
 					y = 619026.5625,
 				},
 			},
-		},
-		]]				
+		},					
 	},
 }

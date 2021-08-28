@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------------------------------
 
 camp = {
-	title = "1975 Georgian War",		--Title of campaign (name of missions)
+	title = "1975 Georgian War",	--Title of campaign (name of missions)
 	version = "V0.1",
 	mission = 1,					--campaig mission number
 	date = {						--campaign date
@@ -20,13 +20,13 @@ camp = {
 	startup = 900,					--time in seconds allocated for player start-up
 	units = "metric",				--unit output in briefing (imperial or metric)
 	weather = {						--campaign weather
-		pHigh = 60,				--probability of high pressure weather system
+		pHigh = 60,				    --probability of high pressure weather system
 		pLow = 40,					--probability of low pressure weather system
 		refTemp = 20,				--average day max temperature
 	},
 	variation = 4,					--variation in degrees from true north to magneitic north
 	debug = false,					--debug mode
-	-- hotstart = false,       --player flights starts with engines running     ---- change it  in init/conf_mod.lua
+	-- hotstart = false,       		--player flights starts with engines running     ---- change it  in init/conf_mod.lua
     -- intercept_hotstart = true,    --player flights with intercept task starts with engines running  ---- change it  in init/conf_mod.lua
 	-- ANY MODIFICATIONS IN THIS FILE NEED TO RESTART ALL THE CAMPAIGN USING FIRSTMISSION.BAT FILE
 

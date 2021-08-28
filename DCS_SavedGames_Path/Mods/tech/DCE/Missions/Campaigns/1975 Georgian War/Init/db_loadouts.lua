@@ -3483,7 +3483,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "SAM"},
+				attributes = {"Structure", "Bridge", "SAM", "hard"},
 				weaponType = "Bombs",
 				expend = "Auto",
 				attackType = nil,
@@ -3791,7 +3791,7 @@ db_loadouts = {
 					["SEAD"] = true,
 					["Laser Illumination"] = true,
 				},
-				attributes = {"soft", "Structure"},
+				attributes = {"soft", "Structure", "Bridge", "SAM", "hard"},
 				weaponType = "Guided bombs",
 				expend = "Auto",
 				day = true,
@@ -3845,9 +3845,9 @@ db_loadouts = {
 						},
 					},
 					["fuel"] = "11700",
-          ["flare"] = 96,
-          ["chaff"] = 96,
-          ["gun"] = 100,
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
 				},
 			},
 			["Bombs 1, R-60M*4, Fuel"] = {
@@ -3856,7 +3856,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "Structure", "Bridge"},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -3918,155 +3918,7 @@ db_loadouts = {
 						},
 					},
 					["fuel"] = "11700",
-          ["flare"] = 96,
-          ["chaff"] = 96,
-          ["gun"] = 100,
-				},
-			},
-			["Bombs 2, R-60M*4, Fuel"] = {
-				minscore = 0.3,
-				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
-				},
-				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
-				weaponType = "Bombs",
-				expend = "All",
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 900000,
-				capability = 1,
-				firepower = 1,
-				vCruise = 250,
-				vAttack = 300,
-				hCruise = 6096,
-				hAttack = 6096,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 6,
-				stores = {
-					["pylons"] = {
-						[1] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 1,
-						},
-						[2] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 2,
-						},
-						[3] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 3,
-						},
-						[4] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 4,
-						},
-						[5] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 5,
-						},
-						[6] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 6,
-						},
-						[7] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 7,
-						},
-						[8] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 8,
-						},
-					},
-					["fuel"] = "11700",
-	        ["flare"] = 96,
-	        ["chaff"] = 96,
-	        ["gun"] = 100,
-				},
-			},
-			["Bombs 3, R-60M*4, Fuel"] = {
-				minscore = 0.3,
-				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
-				},
-				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
-				weaponType = "Bombs",
-				expend = "All",
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 900000,
-				capability = 1,
-				firepower = 1,
-				vCruise = 250,
-				vAttack = 300,
-				hCruise = 6096,
-				hAttack = 6096,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 6,
-				stores = {
-					["pylons"] = {
-						[1] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 1,
-						},
-						[2] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 2,
-						},
-						[3] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 3,
-						},
-						[4] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 4,
-						},
-						[5] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 5,
-						},
-						[6] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 6,
-						},
-						[7] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 7,
-						},
-						[8] =
-						{
-							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
-							["num"] = 8,
-						},
-					},
-					["fuel"] = "11700",
-          ["flare"] = 96,
-          ["chaff"] = 96,
-          ["gun"] = 100,
+         
 				},
 			},
 		},
@@ -4876,7 +4728,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -4976,7 +4828,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -5188,7 +5040,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "Structure", "Bridge", "hard"},
 				weaponType = "ASM",
 				expend = "Auto",
 				attackType = "Dive",
@@ -5640,7 +5492,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -5694,7 +5546,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -7112,7 +6964,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -7166,7 +7018,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -7220,7 +7072,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM", "hard"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -7274,7 +7126,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -7378,9 +7230,6 @@ db_loadouts = {
 			},
 		},
 	},
-
-
-
 
     -- Not valid
 

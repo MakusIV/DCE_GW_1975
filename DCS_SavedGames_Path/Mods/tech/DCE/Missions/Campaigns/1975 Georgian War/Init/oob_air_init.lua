@@ -907,7 +907,7 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,	-- no loadout 			
+				--["SEAD"] = false,	-- no loadout 			
 			},
 			number = 12,
 		},
@@ -1045,7 +1045,7 @@ oob_air = {
 			skill = "Random",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,				
+				--["SEAD"] = false, --no loadout				
 			},
 			number = 12,
 		},
@@ -1316,6 +1316,7 @@ oob_air = {
 			tasks = {
 				["Strike"] = true,
 				["SEAD"] = true,
+				["Laser Illumination"] = true,
 				["Anti-ship Strike"] = true,
 
 			},
@@ -1432,7 +1433,7 @@ oob_air = {
 			skill = "Random",									--unit skill
 			tasks = {
 				["Transport"] = true,
-				["Strike"] = false,--no loadout
+				--["Strike"] = false,--no loadout
 			},
 			number = 4,
 		},
@@ -1456,7 +1457,7 @@ oob_air = {
 			skill = "Random",									--unit skill
 			tasks = {
 				["Transport"] = true,
-				["Strike"] = false, -- no loadout
+				--["Strike"] = false, -- no loadout
 			},
 			number = 4,
 		},
@@ -1480,7 +1481,7 @@ oob_air = {
 			skill = "Random",									--unit skill
 			tasks = {
 				["Transport"] = true,
-				["Strike"] = false, -- no loadout
+				--["Strike"] = false, -- no loadout
 			},
 			number = 4,
 		},
