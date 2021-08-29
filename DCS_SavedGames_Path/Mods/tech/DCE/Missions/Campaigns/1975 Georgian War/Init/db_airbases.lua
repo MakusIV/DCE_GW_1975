@@ -379,13 +379,13 @@ db_airbases = {
 		startup = 300,
 		side = "blue",							-- side : info obligatoire
 		LimitedParkNb  = 10, 
-		ATC_frequency = "255.000",				--si ATC_frequency non present, on utilise la freq de base_mission
+		ATC_frequency = "272.500",				--si ATC_frequency non present, on utilise la freq de base_mission
 	},
 	['CVN-71 Theodore Roosevelt'] = {                            
 		unitname = "CVN-71 Theodore Roosevelt",
 		startup = 300,
 		side = "blue",							-- side : info obligatoire
-		-- ATC_frequency = "255.500",			--si ATC_frequency non present, on utilise la freq de base_mission
+		ATC_frequency = "275.500",			--si ATC_frequency non present, on utilise la freq de base_mission
 		LimitedParkNb  = 9, 
 	},	
 	['LHA_Tarawa'] = {
@@ -412,7 +412,7 @@ db_airbases = {
 		elevation = 0,
 		airdromeId = 1205,							--be careful this Id depends on units placements and is helipadID in fact
 		helipadId = 1205,
-		ATC_frequency = "128.500",
+		ATC_frequency = "129.500",
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
@@ -422,7 +422,7 @@ db_airbases = {
 		elevation = 0,
 		airdromeId = 635,							--be careful this Id depends on units placements and is helipadID in fact
 		helipadId = 635,
-		ATC_frequency = "128.500",
+		ATC_frequency = "130.500",
 		side = "red",								-- side : Required information for the divert
 		divert = false,
 	},	
@@ -444,7 +444,7 @@ db_airbases = {
 		elevation = 0,
 		airdromeId = 1225,							--be careful this Id depends on units placements and is helipadID in fact
 		helipadId = 1225,
-		ATC_frequency = "243.000",
+		ATC_frequency = "244.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},	
@@ -454,7 +454,7 @@ db_airbases = {
 		elevation = 0,
 		airdromeId = 1236,							--be careful this Id depends on units placements and is helipadID in fact
 		helipadId = 1236,
-		ATC_frequency = "243.000",
+		ATC_frequency = "245.000",
 		side = "blue",								-- side : Required information for the divert
 		divert = false,
 	},

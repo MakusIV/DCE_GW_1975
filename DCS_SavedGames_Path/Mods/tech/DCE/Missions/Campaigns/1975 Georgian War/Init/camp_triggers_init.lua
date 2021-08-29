@@ -708,7 +708,11 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R./135.IAP", "1./135.IAP", 8)',
 	},
-
+	["Reinforce O/159.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/159.IAP", "O/159.IAP", 8)',
+	},
 	----- AVIATION UNIT STATUS -----
 	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
 		active = true,

@@ -162,7 +162,7 @@ oob_air = {
 			name = "VMFA-151",								--unit name			
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
-			livery = {""},					--unit livery
+			livery = "",					--unit livery
 			base = "Batumi",							--unit base
 			skill = "High",									--unit skill
 			tasks = {										--unit tasks
@@ -188,7 +188,7 @@ oob_air = {
 			--player = true,									--player unit
 			type = "F-5E-3",								--aircraft type
 			country = "USA",								--unit country
-			livery = {""},					--unit livery
+			livery = "",					--unit livery
 			base = "Batumi",							--unit base
 			skill = "High",									--unit skill
 			tasks = {										--unit tasks
@@ -326,7 +326,7 @@ oob_air = {
 			name = "58 TFS",								--unit name			
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
-			livery = {""},					--unit livery
+			livery = "",					--unit livery
 			base = "Kutaisi",							--unit base
 			skill = "High",									--unit skill
 			tasks = {										--unit tasks
@@ -504,7 +504,7 @@ oob_air = {
 			--player = false,									--player unit
 			type = "F-4E",								--aircraft type
 			country = "USA",								--unit country
-			livery = {""},					--unit livery
+			livery = "",					--unit livery
 			base = "Sukhumi",							--unit base
 			skill = "High",									--unit skill
 			tasks = {										--unit tasks				
@@ -605,7 +605,7 @@ oob_air = {
 			type = "E-2C",									--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
-			sidenumber = {600, 609},						--unit range of sidenumbers (optional)
+			--sidenumber = {600, 609},						--unit range of sidenumbers (optional)
 			base = "CVN-71 Theodore Roosevelt",							--unit base
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
@@ -628,7 +628,7 @@ oob_air = {
 			type = "S-3B Tanker",								--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
-			sidenumber = {400, 429},						--unit range of sidenumbers (optional)
+			--sidenumber = {400, 429},						--unit range of sidenumbers (optional)
 			base = "CVN-71 Theodore Roosevelt",							--unit base
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
@@ -731,7 +731,8 @@ oob_air = {
 			base = "GORI FARP MM25",					--unit base
 			skill = "High",									--unit skill
 			tasks = {
-				["Strike"] = true,
+				["Strike"] = false, --no loadout
+				["Transport"] = true,
 			},
 			number = 8,
 		},
@@ -801,7 +802,8 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				["SEAD"] = false,	-- no load out for sead			
+				["SEAD"] = true,
+				["Anti-ship Strike"] = true,
 			},
 			number = 12,
 		},
@@ -826,7 +828,8 @@ oob_air = {
 				["Intercept"] = true,
 				["CAP"] = true,
 				["Escort"] = true,
-				["Fighter Sweep"] = true,				
+				["Fighter Sweep"] = true,
+				["Strike"] = true,				
 			},
 			number = 12,
 		},
@@ -850,6 +853,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
+				["SEAD"] = true,
 			},
 			number = 12,
 		},
@@ -907,7 +911,8 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				--["SEAD"] = false,	-- no loadout 			
+				["SEAD"] = true,
+				["Anti-ship Strike"] = true,
 			},
 			number = 12,
 		},
@@ -933,6 +938,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,				
+				["Strike"] = true,
 			},
 			number = 12,
 		},
@@ -1027,7 +1033,7 @@ oob_air = {
 			name = "2457 SDRLO",								--unit name
 			type = "A-50",								--aircraft type
 			country = "Russia",								--unit country
-			sidenumber = {800, 805},						--unit range of sidenumbers (optional)
+			--sidenumber = {800, 805},						--unit range of sidenumbers (optional)
 			livery = {""},			--unit livery
 			base = "Nalchik",								--unit base
 			skill = "High",								--unit skill
@@ -1045,7 +1051,8 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
-				--["SEAD"] = false, --no loadout				
+				["SEAD"] = true,
+				["Anti-ship Strike"] = true,
 			},
 			number = 12,
 		},
@@ -1179,6 +1186,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
+				["Strike"] = true,
 			},
 			number = 12,
 		},
@@ -1202,6 +1210,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
+				["SEAD"] = true,
 			},
 			number = 12,
 		},
@@ -1255,12 +1264,13 @@ oob_air = {
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",								--unit livery
-			base = "Mineralnye-Vody",							--unit base
+			base = "Maykop-Khanskaya",							--unit base
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Intercept"] = true,
 				["CAP"] = true,
-				["Escort"] = true,			
+				["Escort"] = true,
+				["Strike"] = true,			
 			},
 			number = 12,
 		},
@@ -1272,7 +1282,7 @@ oob_air = {
 			base = "Reserves",
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
-			number = 24,
+			number = 36,
 		},
 		[38] = {
 			name = "1./61.IAP",								--unit name
@@ -1391,8 +1401,8 @@ oob_air = {
 			name = "2457.I SDRLO",								--unit name
 			type = "A-50",								--aircraft type
 			country = "Russia",								--unit country
-			sidenumber = {800, 805},						--unit range of sidenumbers (optional)
-			livery = {""},			--unit livery
+			--sidenumber = {800, 805},						--unit range of sidenumbers (optional)
+			livery = "",			--unit livery
 			base = "Krasnodar-Center",								--unit base
 			skill = "High",								--unit skill
 			tasks = {										--unit tasks
@@ -1421,9 +1431,34 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
 			number = 4,
+		},
+		[49] = {
+			name = "O/159.IAP",								--unit name
+			type = "MiG-23MLD",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",								--unit livery
+			base = "Krasnodar-Center",							--unit base
+			skill = "High",								--unit skill
+			tasks = {										--unit tasks
+				["Intercept"] = false,
+				["CAP"] = false,
+				["Escort"] = true,
+				["Strike"] = false,			
+			},
+			number = 12,
+		},
+		[50] = {
+			name = "R/159.IAP",								--unit name
+			inactive = true,
+			type = "MiG-23MLD",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "High",								--unit skill
+			tasks = {},									--unit tasks
+			number = 36,
 		},		
 		-------------------- NOGIR FARP MN76
-		[49] = { 
+		[51] = { 
 			name = "1st GHR",								--unit name
 			type = "Mi-8MT",								--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -1437,7 +1472,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[50] = {
+		[52] = {
 			name = "R/1st GHR",								--unit name
 			inactive = true,
 			type = "Mi-8MT",								--aircraft type
@@ -1447,7 +1482,7 @@ oob_air = {
 			number = 24,
 		},
 		-------------------- TSKHINVALI FARP MM27
-		[51] = {
+		[53] = {
 			name = "2nd GHR",								--unit name
 			type = "Mi-24V",								--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -1461,7 +1496,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[52] = {
+		[54] = {
 			name = "R/2nd GHR",								--unit name
 			inactive = true,
 			type = "Mi-24V",								--aircraft type
@@ -1471,7 +1506,7 @@ oob_air = {
 			number = 24,
 		},
 		-------------------- LENIGORI FARP MN76
-		[53] = {
+		[55] = {
 			name = "13th GHR",								--unit name
 			type = "Mi-24V",								--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -1485,7 +1520,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[54] = {
+		[56] = {
 			name = "R/13th GHR",								--unit name
 			inactive = true,
 			type = "Mi-24V",								--aircraft type
