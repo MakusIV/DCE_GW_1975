@@ -2485,7 +2485,7 @@ targetlist = {
 				max = 8,
 			},
 			class = "ship",
-			name = "CVN-71 Theodore Roosevelt",
+			name = "TF-71",
 		},
 		["CVN-74 John C. Stennis"] = { -- was TF-74
 			task = "Anti-ship Strike",
@@ -2496,7 +2496,7 @@ targetlist = {
 				max = 8,
 			},
 			class = "ship",
-			name = "CVN-74 John C. Stennis",
+			name = "TF-74",
 		},
 		["LHA-Group"] = {
 			task = "Anti-ship Strike",

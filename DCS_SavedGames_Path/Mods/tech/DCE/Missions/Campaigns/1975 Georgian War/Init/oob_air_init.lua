@@ -732,7 +732,6 @@ oob_air = {
 			skill = "High",									--unit skill
 			tasks = {
 				["Strike"] = false, --no loadout
-				["Transport"] = true,
 			},
 			number = 8,
 		},
