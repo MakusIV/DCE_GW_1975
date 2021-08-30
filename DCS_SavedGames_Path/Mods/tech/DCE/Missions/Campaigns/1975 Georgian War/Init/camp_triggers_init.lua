@@ -537,6 +537,16 @@ camp_triggers = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 8)',
+	},
+	["Reinforce 317th Air Division"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/317th Air Division", "317th Air Division", 8)',
+	},
+	["Reinforce 54 TFS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/54 TFS", "54 TFS", 6)',
 	},	
 	["Reinforce 171 ARW"] = {
 		active = true,
@@ -646,7 +656,7 @@ camp_triggers = {
 	["Reinforce 13.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/13.OSAP", "13.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R./13.OSAP", "13.OSAP", 4)',
 	},	
 	["Reinforce 23.OSAP"] = {
 		active = true,

@@ -572,6 +572,7 @@ oob_air = {
 		[29] = {
 			name = "R/VMFA-159",								--unit name
 			type = "F-4E",									--aircraft type
+			inactive = true,
 			country = "Usa",								--unit country
 			base = "Reserves",								--unit base
 			tasks = {},										--unit tasks
@@ -822,7 +823,64 @@ oob_air = {
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
 			number = 20,
-		},			
+		},
+		----------------------- Kobuleti -------------------------		
+		[47] = {
+			name = "54 TFS",								--unit name			
+			type = "F-4E",								--aircraft type
+			country = "USA",								--unit country
+			livery = "",					--unit livery
+			base = "Kobuleti",							--unit base
+			skill = "High",									--unit skill
+			tasks = {										--unit tasks
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = false,
+				["Strike"] = true,
+				["Anti-ship Strike"] = false,
+				["Laser Illumination"] = false,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1.5,								-- coef normal : = 1
+				["SEAD"] = 2,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 0.2,	
+			},
+			number = 6,
+		},
+		[48] = {
+			name = "R/54 TFS",								--unit name
+			inactive = true,
+			type = "F-4E",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			tasks = {},										--unit tasks
+			number = 20,
+		},	
+		[49] = {
+			name = "317th Air Division",								--unit name
+			type = "C-130",									--aircraft type
+			country = "USA",								--unit country
+			livery = "",				--unit livery
+			base = "Kobuleti",						--unit base
+			skill = "High",									--unit skill
+			tasks = {										--unit tasks
+				["Transport"] = true,
+			},
+			number = 3,
+		},
+		[50] = {
+			name = "R/317th Air Division",								--unit name
+			inactive = true,
+			type = "C-130",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			tasks = {},										--unit tasks
+			number = 7,
+		},		
 	},
 	["red"] = {	--side 2		
 		-------------------- Mozdok ---------------		
@@ -919,8 +977,8 @@ oob_air = {
 				["SEAD"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
 				["Laser Illumination"] = 1,
 				["Intercept"] = 1,
 				["CAP"] = 1,
@@ -1321,8 +1379,8 @@ oob_air = {
 				["SEAD"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
 				["Laser Illumination"] = 1,
 				["Intercept"] = 1,
 				["CAP"] = 1,
