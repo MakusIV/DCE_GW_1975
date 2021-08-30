@@ -2552,7 +2552,7 @@ targetlist = {
 				max = 12,
 			},
 			class = "vehicle",
-			name = "Hawk Site Vaziani",
+			name = "Rapier Site Tabakhmela",
 		},
 		["Vaziani Defenses"] = {
 			task = "Strike",
