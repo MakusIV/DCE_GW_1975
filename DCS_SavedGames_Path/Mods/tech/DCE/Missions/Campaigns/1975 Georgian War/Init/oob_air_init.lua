@@ -170,8 +170,18 @@ oob_air = {
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
 				["Strike"] = true,
+				["SEAD"] = true,
 				["Anti-ship Strike"] = false,
 				["Laser Illumination"] = false,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1.5,								-- coef normal : = 1
+				["SEAD"] = 2,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 0.3,
+				["Escort"] = 0.3,
+				["Fighter Sweep"] = 0.2,	
 			},
 			number = 6,
 		},
@@ -196,6 +206,15 @@ oob_air = {
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
 				["Intercept"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 0.7,
+				["Escort"] = 0.5,
+				["Fighter Sweep"] = 0.2,	
 			},
 			number = 7,
 		},
@@ -284,6 +303,15 @@ oob_air = {
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,
 			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1.5,								-- coef normal : = 1
+				["SEAD"] = 2,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 0.3,
+				["Escort"] = 0.3,
+				["Fighter Sweep"] = 0.2,	
+			},
 			number = 12,
 		},
 		[12] = {
@@ -308,6 +336,15 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = false, -- no loadout		
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 0.2,	
 			},
 			number = 12,
 		},
@@ -336,6 +373,15 @@ oob_air = {
 				["Strike"] = false,
 				["Anti-ship Strike"] = false,
 				["Laser Illumination"] = false,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 2,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 0.5,
+				["Escort"] = 0.3,
+				["Fighter Sweep"] = 0.2,	
 			},
 			number = 6,
 		},
@@ -379,10 +425,10 @@ oob_air = {
 				["Strike"] = 1,								-- coef normal : = 1
 				["SEAD"] = 1,
 				["Laser Illumination"] = 1,
-				["Intercept"] = 1.5,
+				["Intercept"] = 2,
 				["CAP"] = 1,
-				["Escort"] = 2,
-				["Fighter Sweep"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1.5,
 			},
 			number = 12,
 		},
@@ -457,13 +503,13 @@ oob_air = {
 			},
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 2,								-- coef normal : = 1
-				["SEAD"] = 1,
+				["SEAD"] = 1.5,
 				["Laser Illumination"] = 1,
 				["Intercept"] = 1,
-				["CAP"] = 1,
+				["CAP"] = 0.5,
 				["Escort"] = 1,
-				["Fighter Sweep"] = 1,
-				["Anti-ship Strike"] = 3,
+				["Fighter Sweep"] = 0.7,
+				["Anti-ship Strike"] = 2,
 			},
 			number = 12,
 		},				
@@ -512,6 +558,15 @@ oob_air = {
 				["Anti-ship Strike"] = false,
 				["Laser Illumination"] = false,
 			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1.5,								-- coef normal : = 1
+				["SEAD"] = 2,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 0.5,
+				["CAP"] = 0.5,
+				["Escort"] = 0.7,
+				["Fighter Sweep"] = 0.3,	
+			},
 			number = 12,
 		},
 		[29] = {
@@ -538,14 +593,14 @@ oob_air = {
 				["Anti-ship Strike"] = true,		
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
 				["Laser Illumination"] = 1,
-				["Intercept"] = 1,
+				["Intercept"] = 0.5,
 				["CAP"] = 1,
-				["Escort"] = 2,
-				["Fighter Sweep"] = 1,
-				["Anti-ship Strike"] = 3,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 0.5,
+				["Anti-ship Strike"] = 2,
 			},
 			number = 12,
 		},				
@@ -665,12 +720,12 @@ oob_air = {
 				["Strike"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
+				["Strike"] = 1.5,								-- coef normal : = 1
 				["SEAD"] = 1,
 				["Laser Illumination"] = 1,
-				["Intercept"] = 2,
-				["CAP"] = 2,
-				["Escort"] = 2,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
 				["Fighter Sweep"] = 1,
 			},
 			number = 12,
@@ -803,7 +858,7 @@ oob_air = {
 				["Strike"] = true,
 				["SEAD"] = true,
 				["Anti-ship Strike"] = true,
-			},
+			},		
 			number = 12,
 		},
 		[3] = {
@@ -830,6 +885,15 @@ oob_air = {
 				["Fighter Sweep"] = true,
 				["Strike"] = true,				
 			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 2,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 2,	
+			},
 			number = 12,
 		},
 		[5] = {
@@ -853,6 +917,15 @@ oob_air = {
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
 				["SEAD"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -885,9 +958,9 @@ oob_air = {
 				["Strike"] = 1,								-- coef normal : = 1
 				["SEAD"] = 1,
 				["Laser Illumination"] = 1,
-				["Intercept"] = 1.5,
+				["Intercept"] = 2,
 				["CAP"] = 1,
-				["Escort"] = 2,
+				["Escort"] = 1.5,
 				["Fighter Sweep"] = 1,
 			},
 			number = 12,
@@ -912,6 +985,15 @@ oob_air = {
 				["Strike"] = true,
 				["SEAD"] = true,
 				["Anti-ship Strike"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -938,6 +1020,15 @@ oob_air = {
 				["Escort"] = true,
 				["Fighter Sweep"] = true,				
 				["Strike"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -1052,6 +1143,15 @@ oob_air = {
 				["Strike"] = true,
 				["SEAD"] = true,
 				["Anti-ship Strike"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -1187,6 +1287,15 @@ oob_air = {
 				["Fighter Sweep"] = true,
 				["Strike"] = true,
 			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
+			},
 			number = 12,
 		},
 		[30] = {
@@ -1210,6 +1319,15 @@ oob_air = {
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
 				["SEAD"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -1270,6 +1388,15 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Strike"] = true,			
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
 			},
 			number = 12,
 		},
@@ -1444,6 +1571,15 @@ oob_air = {
 				["Escort"] = true,
 				["Strike"] = false,			
 			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 1,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 1,
+				["CAP"] = 1,
+				["Escort"] = 1,
+				["Fighter Sweep"] = 1,	
+			},
 			number = 12,
 		},
 		[50] = {
@@ -1475,6 +1611,7 @@ oob_air = {
 			name = "R/1st GHR",								--unit name
 			inactive = true,
 			type = "Mi-8MT",								--aircraft type
+			helicopter = true,								--true for helicopter units
 			base = "Reserves",
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
@@ -1499,6 +1636,7 @@ oob_air = {
 			name = "R/2nd GHR",								--unit name
 			inactive = true,
 			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
 			base = "Reserves",
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks
@@ -1523,6 +1661,7 @@ oob_air = {
 			name = "R/13th GHR",								--unit name
 			inactive = true,
 			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
 			base = "Reserves",
 			skill = "High",								--unit skill
 			tasks = {},									--unit tasks

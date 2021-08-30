@@ -112,7 +112,7 @@ db_loadouts = {
 				tStation = 36000,
 				LDSD = false,
 				--self_escort = false,
-				sortie_rate = 12,
+				sortie_rate = 1.2,
 				stores = {
 					["pylons"] =
 					{
@@ -143,7 +143,7 @@ db_loadouts = {
 				hCruise = 7315.2,
 				hAttack = 7315.2,
 				tStation = 14400,
-				sortie_rate = 12,
+				sortie_rate = 6,
 				stores = {
 					["pylons"] =
 					{
@@ -3501,7 +3501,7 @@ db_loadouts = {
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
-				sortie_rate = 6,
+				sortie_rate = 2,
 				stores = {
 					["pylons"] = {
 						[3] = {
@@ -3510,9 +3510,9 @@ db_loadouts = {
 						},
 					},
 					["fuel"] = "50000",
-          ["flare"] = 48,
-          ["chaff"] = 48,
-          ["gun"] = 100,
+					["flare"] = 48,
+					["chaff"] = 48,
+					["gun"] = 100,
 				},
 			},
 		},
@@ -3559,11 +3559,11 @@ db_loadouts = {
 						["CLSID"] = "{12429ECF-03F0-4DF6-BCBD-5D38B6343DE1}",
 						["num"] = 3,
 						}, --end of [8]
-	        }, ----end of ["pylons"]
+	       			}, ----end of ["pylons"]
 					["fuel"] = "50000",
-          ["flare"] = 48,
-          ["chaff"] = 48,
-          ["gun"] = 100,
+					["flare"] = 48,
+					["chaff"] = 48,
+					["gun"] = 100,
 				},
 			},
 		},
@@ -3735,7 +3735,7 @@ db_loadouts = {
 	["Su-24M"] = {--1967 (primo volo) 1974 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["Antiship, R-60M*4, Kh-59M*2, Fuel"] = { -- kh 59 1980
-				minscore = 0.7,
+				minscore = 0.5,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -3747,8 +3747,8 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 900000,
-				capability = 7,
-				firepower = 10,
+				capability = 1,
+				firepower = 1,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -3941,7 +3941,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
@@ -4051,7 +4051,7 @@ db_loadouts = {
 				minscore = 0.6,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"Structure", "Bridge"},
 				weaponType = "Bombs",
@@ -4164,8 +4164,8 @@ db_loadouts = {
 			["BAI Fab250*4 R-60M*4"] = {
 				minscore = 0.3,
 				support = {
-					["Escort"] = false,
-					["SEAD"] = false,
+					["Escort"] = true,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Structure"},
 				weaponType = "Bombs",
@@ -4763,7 +4763,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 10,
+				capability = 1,
 				firepower = 1,
 				vCruise = 231.25,
 				vAttack = 231.25,
@@ -4771,7 +4771,7 @@ db_loadouts = {
 				hAttack = 9753.6,
 				standoff = nil,
 				tStation = 36000,
-				sortie_rate = 12,
+				sortie_rate = 1.2,
 				stores = {
 					["pylons"] =
 					{

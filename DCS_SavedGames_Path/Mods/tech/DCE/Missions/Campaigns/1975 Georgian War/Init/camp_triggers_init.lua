@@ -745,4 +745,45 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AddGroundTargetIntel("red")',
 	},
+
+	--[[
+	--
+	--
+
+	--------------TARGETS LATE ACTIVATIONS	----------------------------
+	
+	["Scud launcher 1 Activation"] = {
+		active = true,
+		once = true,
+		condition = 'Return.Mission() > 4',
+		action = {
+			[1] = 'Action.TargetActive("Scud 1",true)',
+			[2] = 'Action.Text("A Scud launcher has been detected on the coastline far north of Bandar e Jask.")',
+			[3] = 'Action.Text("Un lanceur Scud a été détecté le long de la côte loin au nord de Bandar e Jask.")',	
+		}
+	},
+	["Scud launcher 2 Activation"] = {
+		active = true,
+		once = true,
+		condition = 'Return.Mission() > 5',
+		action = {
+			[1] = 'Action.TargetActive("Scud 2",true)',
+			[2] = 'Action.Text("A Scud launcher has been detected on Abu Musa Island.")',
+			[3] = 'Action.Text("Un lanceur Scud a été détecté sur l île de Abu Musa.")',	
+		}
+	},
+	["Scud launcher 3 Activation"] = {
+		active = true,
+		once = true,
+		condition = 'Return.Mission() > 7',
+		action = {
+			[1] = 'Action.TargetActive("Scud 3",true)',
+			[2] = 'Action.Text("A new Scud launcher has been detected on Abu Musa Island.")',
+			[3] = 'Action.Text("Un autre lanceur Scud a été détecté sur l île de Abu Musa.")',	
+		}
+	},
+
+
+
+	]]
 }
