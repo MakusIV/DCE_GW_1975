@@ -366,6 +366,18 @@ targetlist = {
 			class = "vehicle",
 			name = "106 SA-2 Site C-6",
 		},
+		["Maykop SA-2"] = {
+			task = "Strike",
+			priority = 4,
+			-- picture = {""},
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			class = "vehicle",
+			name = "Maykop SA-2",
+		},
 		["LENIGORI FARP AA"] = {
 			task = "Strike",
 			priority = 2,
@@ -2531,27 +2543,115 @@ targetlist = {
 			class = "vehicle",
 			name = "Hawk Site Kutaisi",
 		},
-		["Hawk Site Vaziani"] = {
+		["Rapier Site Tabakhmela"] = {
+			task = "Strike",
+			priority = 2,
+			attributes = {"SAM"},
+			firepower = {
+				min = 6,
+				max = 12,
+			},
+			class = "vehicle",
+			name = "Hawk Site Vaziani",
+		},
+		["Vaziani Defenses"] = {
+			task = "Strike",
+			priority = 2,
+			attributes = {"SAM"},
+			firepower = {
+				min = 6,
+				max = 12,
+			},
+			class = "vehicle",
+			name = "Vaziani Defenses",
+		},
+		["Tbilisi Defenses"] = {
+			task = "Strike",
+			priority = 2,
+			attributes = {"SAM"},
+			firepower = {
+				min = 6,
+				max = 12,
+			},
+			class = "vehicle",
+			name = "Tbilisi Defenses",
+		},
+		["Sukhumi Defenses"] = {
+			task = "Strike",
+			priority = 3,
+			attributes = {"SAM"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "vehicle",
+			name = "Sukhumi Defenses",
+		},
+		["Kobuleti Defenses"] = {
+			task = "Strike",
+			priority = 4,
+			attributes = {"SAM"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "vehicle",
+			name = "Kobuleti Defenses",
+		},
+		["Batumi Air Defenses"] = {
 			task = "Strike",
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
 				min = 4,
-				max = 6,
+				max = 8,
 			},
 			class = "vehicle",
-			name = "Hawk Site Vaziani",
+			name = "Batumi Air Defenses",
 		},
-		["bridge Vartsihe Geguti LM16-17 AA"] = {
+		["Kutaisi Defenses"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "vehicle",
-			name = "bridge Vartsihe Geguti LM16-17 AA",
+			name = "Kutaisi Defenses",
+		},
+		["Senaki Defenses"] = {
+			task = "Strike",
+			priority = 2,
+			attributes = {"SAM"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "vehicle",
+			name = "Senaki Defenses",
+		},
+		["Kobuleti Defenses"] = {
+			task = "Strike",
+			priority = 3,
+			attributes = {"SAM"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "vehicle",
+			name = "Kobuleti Defenses",
+		},
+		["Rapier Site bridge Vartsihe Geguti"] = {
+			task = "Strike",
+			priority = 6,
+			attributes = {"SAM"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			class = "vehicle",
+			name = "Rapier Site bridge Vartsihe Geguti",
 		},
 		["GORI AA"] = {
 			task = "Strike",
