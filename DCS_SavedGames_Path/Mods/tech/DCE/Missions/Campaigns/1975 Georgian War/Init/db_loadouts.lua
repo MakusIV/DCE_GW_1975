@@ -93,12 +93,13 @@ capability F-4E: intercept=5, sweep=5, cap=5, escort=5, strike=4, antiship=1, se
 
 
 capability Mig-21Bis: intercept=7, sweep=5, cap=5, escort=5, strike=3, antiship=1
-capability Mig-23MLD: intercept=10, sweep=5, cap=5, escort=5, strike=3, antiship=1
+capability Mig-25MLD: intercept=10, sweep=7, cap=10, escort=5
 capability Mig-19: intercept=3, sweep=2, cap=3, escort=3, strike=1, antiship=1
 capability L-39A: intercept=5, sweep=5, cap=5, escort=5, strike=3, antiship=1
 capability Su-24M: strike=3, antiship=nil, sead=3
 capability Su-17: strike=3, antiship=3, sead=5
 capability Mig-27K: strike=3, antiship=3, sead=5
+capability Mig-23: intercept=7, sweep=7, cap=7, escort=7, strike=3, antiship=1
 
 ]]
 
@@ -8130,7 +8131,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 300000,
-				capability = 2,
+				capability = 3,
 				firepower = 8,
 				vCruise = 250,
 				vAttack = 350,
@@ -8184,7 +8185,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 300000,
-				capability = 2,
+				capability = 3,
 				firepower = 4,
 				vCruise = 250,
 				vAttack = 350,
