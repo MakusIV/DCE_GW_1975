@@ -25,7 +25,7 @@ camp = {
 		refTemp = 20,				--average day max temperature
 	},
 	variation = 4,					--variation in degrees from true north to magneitic north
-	debug = false,					--debug mode
+	debug = true,					--debug mode
 	-- hotstart = false,       		--player flights starts with engines running     ---- change it  in init/conf_mod.lua
     -- intercept_hotstart = true,    --player flights with intercept task starts with engines running  ---- change it  in init/conf_mod.lua
 	-- ANY MODIFICATIONS IN THIS FILE NEED TO RESTART ALL THE CAMPAIGN USING FIRSTMISSION.BAT FILE
