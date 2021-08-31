@@ -681,7 +681,7 @@ targetlist = {
 		},		
 		["Prohladniy Depot MP 24"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			picture = {"Prohladniy_Depot.png"},
 			attributes = {"soft"},
 			firepower = {
@@ -806,7 +806,7 @@ targetlist = {
 		},		
 		["SUPPLY PLANT BAKSAN LP83"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -906,7 +906,7 @@ targetlist = {
 		},		
 		["CHERKESSK SUPPLY PLANT KP69"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			--picture = {""},
 			attributes = {"Structure"},
 			firepower = {
@@ -1150,8 +1150,8 @@ targetlist = {
 			picture = {"Target - Alagir Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3,
+				max = 5,
 			},
 			elements = {				
 				[1] = {
@@ -1256,8 +1256,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 3,
+				min = 3,
+				max = 5,
 			},
 			elements = {
 				[1] = {
@@ -1352,8 +1352,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3,
+				max = 5,
 			},
 			elements = {				
 				[1] = {
@@ -1397,12 +1397,12 @@ targetlist = {
 		},
 		["NOGIR FARP MN76"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 5,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -1468,8 +1468,8 @@ targetlist = {
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -1493,8 +1493,8 @@ targetlist = {
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -1863,12 +1863,12 @@ targetlist = {
 	["red"] = {		
 		["SUPPLY PLANT DAPNARI KM76"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 5,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 5,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -1957,12 +1957,12 @@ targetlist = {
 		},
 		["SUPPLY PLANT MARNEULI ML89"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 5,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 5,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -2057,12 +2057,12 @@ targetlist = {
 		},
 		["KHASHURI FARP LM84"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -2110,8 +2110,8 @@ targetlist = {
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -2156,8 +2156,8 @@ targetlist = {
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			class = "static",
 			elements = {
@@ -3296,12 +3296,12 @@ targetlist = {
 		},		
 		["bridge GORI"] = {--{supply line  gori
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3318,12 +3318,12 @@ targetlist = {
 		},		
 		["Bridge Supply Line Gori - Tbilisi"] =  {--{supply line  gori
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
 				min = 4,
-				max = 8,
+				max = 12,
 			},			
 			elements = {
 				[1] = {
@@ -3355,12 +3355,12 @@ targetlist = {
 		},		
 		["bridge TKIBULI"] = { -- supply line kutaisi - farp ambrolauri
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3381,8 +3381,8 @@ targetlist = {
 			--picture = {"Bridges positions EJ80-EH99.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3408,8 +3408,8 @@ targetlist = {
 			picture = {"Bridges positions Dapnari-KM76.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3435,8 +3435,8 @@ targetlist = {
 			picture = {"Bridges positions Dapnari-KM76.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 2,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3457,8 +3457,8 @@ targetlist = {
 			picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3485,12 +3485,12 @@ targetlist = {
 		},				
 		["Bridge Geguti-LM17"] = {--supply line kutaisi - farp khashuri, gori
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3512,12 +3512,12 @@ targetlist = {
 		},
 		["Bridge Kutaisi-LM18"] = {--supply line -kutaisi -ambrolauri
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 2,
+				min = 3,
+				max = 5,
 			},
 			elements = {
 				[1] = {
@@ -3538,8 +3538,8 @@ targetlist = {
 			picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3565,8 +3565,8 @@ targetlist = {
 			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3634,7 +3634,7 @@ targetlist = {
 			picture = {"Sukhumi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -3681,8 +3681,8 @@ targetlist = {
 			picture = {"Sukhumi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 6,
+				max = 12,
 			},
 			class = "static",
 			elements = {
@@ -3730,7 +3730,7 @@ targetlist = {
 			picture = {"Gudauta Airbase South.png", "Gudauta Airbase North"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -3917,7 +3917,7 @@ targetlist = {
 			picture = {"Senaki Airbase.png", "Senaki Airbase-Ammo"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -4109,7 +4109,7 @@ targetlist = {
 			picture = {"Kutaisi Airbase.png", "Kutaisi Airbase-AmmoFuel.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -4291,7 +4291,7 @@ targetlist = {
 			picture = {"Kobuleti Airbase.png", "Kobuleti Airbase-Ammo-Hangar-Command.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			elements = {
@@ -4474,12 +4474,12 @@ targetlist = {
 		},
 		["Batumi Airbase"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 2,
 			picture = {"Batumi Airbase.png", "Batumi Airbase-Ammo.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 6,
+				max = 12,
 			},
 			elements = {
 				[1] = {
@@ -4571,12 +4571,12 @@ targetlist = {
 		},
 		["Tbilissi Airbase"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 2,
 			picture = {"Tbilisi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 6,
+				max = 12,
 			},
 			elements = {
 				[1] = {
