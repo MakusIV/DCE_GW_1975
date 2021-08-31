@@ -187,6 +187,7 @@ oob_air = {
 		},
 		[2] = {
 			name = "R/VMFA-151",								--unit name
+			inactive = true,
 			type = "F-4E",									--aircraft type
 			country = "Usa",								--unit country
 			base = "Reserves",								--unit base
