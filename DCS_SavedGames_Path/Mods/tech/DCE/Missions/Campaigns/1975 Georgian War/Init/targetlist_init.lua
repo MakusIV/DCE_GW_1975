@@ -1,3 +1,19 @@
+-- CAP: p:20, fp: 2-2
+-- Ship convoy p:1, fp:6-12
+-- OCA Strike: p:1, fp: 2-4
+-- EWR/ELINT Site: p:5, fp: 2-4
+-- SAM Site: p:6, fp: 3-6
+-- FASP AA: p:2, fp: 2-4 
+-- FARP: p:6, fp 5-8
+-- Airbase: p:4, fp:4-8
+-- SUPPLY Plant: p:4, fp:4-10
+-- Long SUPPLY Line: p:1-2, fp:6-12
+-- SUPPLY Line: p:6, fp:4-8
+-- Ground Troops: p:1, fp:2-4
+-- Bidge: p:3, fp:2-4
+-- Airbase Defenses: p:2, fp:4-8
+
+
 targetlist = {   
 	["blue"] = {
 		["Vaziani Alert"] = {
@@ -686,7 +702,7 @@ targetlist = {
 			attributes = {"soft"},
 			firepower = {
 				min = 4,
-				max = 6,
+				max = 10,
 			},
 			class = "static",
 			elements = {
@@ -811,7 +827,7 @@ targetlist = {
 			attributes = {"Structure"},
 			firepower = {
 				min = 4,
-				max = 6,
+				max = 10,
 			},
 			class = "static",
 			elements = {
@@ -911,7 +927,7 @@ targetlist = {
 			attributes = {"Structure"},
 			firepower = {
 				min = 4,
-				max = 6,
+				max = 10,
 			},
 			class = "static",
 			elements = {
@@ -1010,8 +1026,8 @@ targetlist = {
 			picture = {"Target - BAKSAN-MINERALNYE SUPPLY LINE.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -1032,8 +1048,8 @@ targetlist = {
 			picture = {"Target - Vladikavkaz Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -1102,7 +1118,7 @@ targetlist = {
 			attributes = {"Bridge"},
 			firepower = {
 				min = 4,
-				max = 5,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -1128,8 +1144,8 @@ targetlist = {
 			picture = {"Target - Beslan Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {				
 				[1] = {
@@ -1150,8 +1166,8 @@ targetlist = {
 			picture = {"Target - Alagir Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {				
 				[1] = {
@@ -1209,8 +1225,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 5,
-				max = 10,
+				min = 6,
+				max = 12,
 			},
 			elements = {
 				[1] = {
@@ -1256,8 +1272,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -1273,8 +1289,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 5,
-				max = 10,
+				min = 6,
+				max = 12,
 			},
 			elements = {
 				[1] = {
@@ -1325,8 +1341,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -1352,8 +1368,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {				
 				[1] = {
@@ -1370,12 +1386,12 @@ targetlist = {
 		},
 		["High priority Target Prohladniy Depot MP 24 SUPPLY LINE C"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {			
 				[1] = {
@@ -1397,7 +1413,7 @@ targetlist = {
 		},
 		["NOGIR FARP MN76"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
@@ -1464,11 +1480,11 @@ targetlist = {
 		},
 		["LENIGORI FARP MM56"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			class = "static",
@@ -1489,11 +1505,11 @@ targetlist = {
 		},
 		["TSKHINVALI FARP MM27"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			class = "static",
@@ -1863,12 +1879,12 @@ targetlist = {
 	["red"] = {		
 		["SUPPLY PLANT DAPNARI KM76"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 5,
-				max = 8,
+				min = 4,
+				max = 10,
 			},
 			class = "static",
 			elements = {
@@ -1957,12 +1973,12 @@ targetlist = {
 		},
 		["SUPPLY PLANT MARNEULI ML89"] = {
 			task = "Strike",
-			priority = 5,
+			priority = 4,
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 5,
-				max = 8,
+				min = 4,
+				max = 10,
 			},
 			class = "static",
 			elements = {
@@ -2057,11 +2073,11 @@ targetlist = {
 		},
 		["KHASHURI FARP LM84"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			class = "static",
@@ -2106,11 +2122,11 @@ targetlist = {
 		},
 		["GORI FARP MM25"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			class = "static",
@@ -2152,11 +2168,11 @@ targetlist = {
 		},
 		["AMBROLAURI FARP LN41"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 5,
 				max = 8,
 			},
 			class = "static",
@@ -2201,33 +2217,33 @@ targetlist = {
 		},
 		["EWR-1 Site"] = {
 			task = "Strike",
-			priority = 6,
+			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "EWR-1",
 		},
 		["EWR-2 Site"] = {
 			task = "Strike",
-			priority = 6,
+			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "EWR-2",
 		},
 		["EWR-3 Site"] = {
 			task = "Strike",
-			priority = 6,
+			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "EWR-3",
@@ -2439,7 +2455,7 @@ targetlist = {
 			attributes = {"Parked Aircraft"},
 			firepower = {
 				min = 2,
-				max = 6,
+				max = 4,
 			},
 			class = "airbase",
 			name = "Tbilissi-Lochini",
@@ -2449,8 +2465,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "airbase",
 			name = "Sukhumi",
@@ -2460,8 +2476,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "airbase",
 			name = "Vaziani",
@@ -2471,8 +2487,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "airbase",
 			name = "Kutaisi",
@@ -2482,8 +2498,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "airbase",
 			name = "Senaki-Kolkhi",
@@ -2515,8 +2531,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"ship"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 6,
+				max = 12,
 			},
 			class = "ship",
 			name = "LHA-Group",
@@ -2526,18 +2542,18 @@ targetlist = {
 			priority = 1,
 			attributes = {"ship"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 6,
+				max = 12,
 			},
 			class = "ship",
 			name = "NATO Convoy 1",
 		},
 		["Hawk Site Kutaisi"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 4,
+				min = 3,
 				max = 6,
 			},
 			class = "vehicle",
@@ -2545,11 +2561,11 @@ targetlist = {
 		},
 		["Rapier Site Tabakhmela"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 6,
-				max = 12,
+				min = 3,
+				max = 6,
 			},
 			class = "vehicle",
 			name = "Rapier Site Tabakhmela",
@@ -2559,8 +2575,8 @@ targetlist = {
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 6,
-				max = 12,
+				min = 4,
+				max = 8,
 			},
 			class = "vehicle",
 			name = "Vaziani Defenses",
@@ -2570,15 +2586,15 @@ targetlist = {
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 6,
-				max = 12,
+				min = 4,
+				max = 8,
 			},
 			class = "vehicle",
 			name = "Tbilisi Defenses",
 		},
 		["Sukhumi Defenses"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
 				min = 4,
@@ -2589,7 +2605,7 @@ targetlist = {
 		},
 		["Kobuleti Defenses"] = {
 			task = "Strike",
-			priority = 4,
+			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
 				min = 4,
@@ -2633,7 +2649,7 @@ targetlist = {
 		},
 		["Kobuleti Defenses"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
 				min = 4,
@@ -2647,8 +2663,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 4,
-				max = 8,
+				min = 3,
+				max = 6,
 			},
 			class = "vehicle",
 			name = "Rapier Site bridge Vartsihe Geguti",
@@ -2688,10 +2704,10 @@ targetlist = {
 		},
 		["10 US Army ELINT Station"] = {
 			task = "Strike",
-			priority = 6,
+			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
+				min = 2,
 				max = 4,
 			},
 			class = "static",
@@ -2715,88 +2731,88 @@ targetlist = {
 		},
 		["11 1st Artillery Division/1.Btry"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "11 1st Artillery Division/1.Btry",
 		},
 		["12 1st Artillery Division/2.Btry"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "12 1st Artillery Division/2.Btry",
 		},
 		["13 1st Artillery Division/3.Btry"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "13 1st Artillery Division/3.Btry",
 		},
 		["14 1st Artillery Division/4.Btry"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "14 1st Artillery Division/4.Btry",
 		},
 		["15 1st Artillery Division/5.Btry"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "15 1st Artillery Division/5.Btry",
 		},
 		["16 1st Artillery Division/6.Btry"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "16 1st Artillery Division/6.Btry",
 		},
 		["17 1st Artillery Division/7.Btry"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "17 1st Artillery Division/7.Btry",
 		},
 		["18 1st Artillery Division/8.Btry"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "18 1st Artillery Division/8.Btry",
@@ -2806,8 +2822,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"soft"},
 			firepower = {
-				min = 4,
-				max = 6,
+				min = 2,
+				max = 4,
 			},
 			class = "vehicle",
 			name = "19 4th Army HQ",
@@ -3056,7 +3072,7 @@ targetlist = {
 		},
 		["Sukhumi Train Station - FH66"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			picture = {"Sukhumi Train Station.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -3125,7 +3141,7 @@ targetlist = {
 		},			
 		["Sukhumi-Babushara Train Station - FH74"] = {
 			task = "Strike",
-			priority = 2,
+			priority = 1,
 			picture = {"Sukhumi-Babushara Train Station.png"},
 			attributes = {"Structure"},
 			firepower = {
@@ -3404,7 +3420,7 @@ targetlist = {
 		},		
 		["Rail Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			picture = {"Bridges positions Dapnari-KM76.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3431,7 +3447,7 @@ targetlist = {
 		},		
 		["Bridge Dapnari-KM76"] = { --supply line kobuleti - kutaisi
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			picture = {"Bridges positions Dapnari-KM76.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3453,7 +3469,7 @@ targetlist = {
 		},
 		["Bridge Vartsihe-LM16"] = { --supply line kutaisi - farp khashuri, gor
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3516,8 +3532,8 @@ targetlist = {
 			--picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 5,
+				min = 4,
+				max = 8,
 			},
 			elements = {
 				[1] = {
@@ -3534,7 +3550,7 @@ targetlist = {
 		},
 		["Rail Bridge North Geguti-LM17"] = {--supply line kutaisi - farp khashuri, gori
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			picture = {"Bridges positions LM16-LM17-LM18.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3561,7 +3577,7 @@ targetlist = {
 		},
 		["Bridge Koki-GH20"] = { --supply line sukhumi -senaki
 			task = "Strike",
-			priority = 4,
+			priority = 6,
 			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3588,7 +3604,7 @@ targetlist = {
 		},
 		["Rail Bridge Tagiloni-GH21"] = { --supply line sukhumi -senaki
 			task = "Strike",
-			priority = 5,
+			priority = 6,
 			picture = {"Bridge positions GG19-GH10-GH20-GH21-GH31-GH42.png"},
 			attributes = {"Bridge"},
 			firepower = {
@@ -3630,11 +3646,11 @@ targetlist = {
 		},
 		["Sukhumi Airbase"] = {
 			task = "Strike",
-			priority = 3,
+			priority = 4,
 			picture = {"Sukhumi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 5,
+				min = 4,
 				max = 8,
 			},
 			elements = {
@@ -3681,8 +3697,8 @@ targetlist = {
 			picture = {"Sukhumi Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 6,
-				max = 12,
+				min = 4,
+				max = 10,
 			},
 			class = "static",
 			elements = {
