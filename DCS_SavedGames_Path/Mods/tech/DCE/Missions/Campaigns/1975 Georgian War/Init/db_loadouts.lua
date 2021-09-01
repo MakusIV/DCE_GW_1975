@@ -86,11 +86,50 @@ unit.lodaout.firepower: rappresenta il valore  della capacità di tutti i num.mi
 Il calcolo degli aerei necessari per una missione è fatto con:
 local aircraft_requested = target.firepower.max / unit_loadouts[l].firepower
 
-capability F-14A: intercept=10, sweep=5, cap=5, escort=5, strike=5
+-- general guideline for capablity & firepower assignment
+
+-- Fighter:  F-14A, Mig-21, Mig-23,       
+-- Attacker: L-39A, F-4E, F-5E, AJS37, Mig-27, Su-17,          
+-- Bomber: Tu-22M, B-52H, Su-24
+
+-- strike fighter capability: 1-3
+-- strike fighter firepower: 1*weapon firepower
+
+-- strike attacker capability: 5-7
+-- strike attacker firepower: 1.7*weapon firepower
+
+-- strike bomber capability: >9
+-- strike bomber firepower: 2.5*weapon firepower
+
+
+-- weapon firepower (fighter-attack-bomber)
+-- m/71, mk-82, fab-250= 1-3-5,   base unit: 4 weapon ( = 1fp) 
+-- m/75, mk-83, fab 500, KAB 500, GBU-10=3-5-8(9), base unit: 2 weapon ( = 3fp) 
+-- mk-84, mk-20(CBU), BK90 (CBU)=5-7-10(11), base unit: 1 weapon ( = 1fp) 
+-- fab-1500 = 7-9-12(13) base unit: 4 weapon ( = 1fp) 
+-- rockets =2-4-6, base unit: 1 launcher ( = 1fp)
+-- rockets heavy=2-4-6, base unit: 1 launcher ( = 2fp)
+-- ASM=3-5-7, base unit: 1 weapon ( = 3 fp) 
+
+-- m/71, mk-82, fab-100, fab-250 unit: 4 weapon = 1fp 
+-- fab-250 unit: 2 weapon = 1fp 
+-- m/75, mk-83, fab 500, KAB 500, GBU-10 unit: 2 weapon = 3fp
+-- mk-84 unit: 1 weapon = 3fp
+-- mk-20(CBU), BK90 (CBU): 1 weapon = 2fp
+-- fab-1500 unit: 1 weapon = 7fp
+-- rockets unit: 6 rockets = 1fp
+-- rockets heavy unit: 1 rockets = 1fp
+-- ASM unit: 1 weapon = 3 fp 
+
+
+
+-- specific capablity & firepower assignment
+
+general capability/firepower aircraft
+F-14A: intercept=10/8, sweep=10/8, cap=10/8, escort=10/8, strike=3
 capability AJS37: strike=5, antiship=7
 capability F-5E: intercept=1, sweep=3, cap=3, escort=5, strike=3, antiship=1
 capability F-4E: intercept=5, sweep=5, cap=5, escort=5, strike=4, antiship=1, sead=10
-
 
 capability Mig-21Bis: intercept=7, sweep=5, cap=5, escort=5, strike=3, antiship=1
 capability Mig-25MLD: intercept=10, sweep=7, cap=10, escort=5
@@ -101,28 +140,6 @@ capability Su-17: strike=3, antiship=3, sead=5
 capability Mig-27K: strike=3, antiship=3, sead=5
 capability Mig-23: intercept=7, sweep=7, cap=7, escort=7, strike=3, antiship=1
 
-
--- F-14A, Mig-21, Mig-23, F-5E Fighter
--- L-39A, F-4E, AJS37, Mig-27, Su-17,  Fighter bomber
--- Tu-22M, B-52H, Su-24 Bomber
-
--- strike fighter capability: 1-3
--- strike fighter firepower: 1*weapon firepower
-
--- strike fighter/bomber capability: 5-7
--- strike fighter/bomber firepower: 1.7*weapon firepower
-
--- strike bomber capability: >9
--- strike bomber firepower: 2.5*weapon firepower
-
-
--- weapon firepower
--- m/71, mk-82, fab-250=1-3-5, 
--- m/75, mk-83, fab 500, KAB 500, GBU-10=3-5-8(9), 
--- mk-84, mk-20(CBU), BK90 (CBU)=5-7-10(11),
--- fab-1500 = 7-9-12(13)
--- rockets=2-4-6, 
--- ASM=3-5-7 
 
 ]]
 
@@ -140,7 +157,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 1,
+				capability = 10,
 				firepower = 1,
 				vCruise = 231.25,
 				vAttack = 231.25,
@@ -798,13 +815,13 @@ db_loadouts = {
 				},
 			},
 			]]
-			["Strike Mk 82"] = {
+			["Strike AIM-9*2 AIM-7*2 FUEL*2 Mk 82*10"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -812,7 +829,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 650000,
 				capability = 3,
-				firepower = 1,
+				firepower = 3,
 				vCruise = 250,
 				vAttack = 300.5,
 				hCruise = 5486.4,
@@ -885,13 +902,13 @@ db_loadouts = {
 						["LGB1000"] = 1,
 					},
 			},
-			["Strike Mk 84"] = {
+			["Strike AIM-9*2 AIM-7*2 AIM-54A*2 FUEL*2 Mk 84*2"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure"},
+				attributes = {"Structure", "Bridge"},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -899,7 +916,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 650000,
 				capability = 3,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 215.83333333333,
 				vAttack = 300.5,
 				hCruise = 5486.4,
@@ -907,8 +924,8 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--self_escort = true,
-				sortie_rate = 3,
+				self_escort = true,
+				sortie_rate = 2,
 				stores = {
 					["pylons"] = {
 						[10] = {
@@ -972,11 +989,11 @@ db_loadouts = {
 						["LGB1000"] = 1,
 					},
 			},
-			["Strike Mk 20"] = {
+			["Strike AIM-9*2 AIM-7*2 Fuel*2 Mk 20 *4"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
@@ -986,7 +1003,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 650000,
 				capability = 3,
-				firepower = 5,
+				firepower = 8,
 				vCruise = 215.83333333333,
 				vAttack = 300.5,
 				hCruise = 5486.4,
@@ -994,7 +1011,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--self_escort = true,
+				self_escort = true,
 				sortie_rate = 3,
 				stores = {
 					["pylons"] = {
@@ -1132,7 +1149,7 @@ db_loadouts = {
 
 	["AJS37"] = {-- 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
-			["Antiship - RB 15F*2 - RB-74J*2 - RB-24J*2 - FT"] = {--RB-15 dal 1985
+			["Antiship - RB 15F*2(antiship) - RB-74J*2(aim9) - RB-24J*2(aim9) - FT"] = {--RB-15 dal 1985
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -1154,7 +1171,7 @@ db_loadouts = {
 				standoff = 35000,
 				tStation = nil,
 				LDSD = false,
-				self_escort = false,
+				self_escort = true,
 				sortie_rate = 3,
 				stores = {
 					["pylons"] = {
@@ -1209,7 +1226,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 1,
+				firepower = 2,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 500,
@@ -1270,7 +1287,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 1,
+				firepower = 2,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 500,
@@ -1321,17 +1338,17 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "ASM",
-				expend = "Auto",
+				expend = "All",
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 3,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 6000,
@@ -1382,17 +1399,17 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "ASM",
-				expend = "Auto",
+				expend = "All",
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 7,
+				firepower = 4,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 100,
@@ -1447,13 +1464,13 @@ db_loadouts = {
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
 				weaponType = "ASM",
-				expend = "Auto",
+				expend = "All",
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 5,
-				firepower = 3,
+				capability = 7,
+				firepower = 12,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 1000,
@@ -1742,7 +1759,7 @@ db_loadouts = {
 	["F-5E-3"] = {--1959 (primo volo) 1972 (entrata in servizio)
 		["Strike"] = {
 			["GTA CAS1/STRIKE Mk-82SE*4,AIM-9P*2,Fuel 275"] = {
-				minscore = 0.1,
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1754,7 +1771,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = true,
 				range = 360000,
-				capability = 3,
+				capability = 5,
 				firepower = 1,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
@@ -1804,9 +1821,9 @@ db_loadouts = {
 				},
 			},
 			["GTA CAS2/STRIKE CBU-52B*4,AIM-9P*2,Fuel 275"] = {
-				minscore = 0.1,
+				minscore = 0.2,
 				support = {
-					["Escort"] = false,
+					["Escort"] = true,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
@@ -1816,8 +1833,8 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 3,
-				firepower = 5,
+				capability = 5,
+				firepower = 8,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 2876.8,
@@ -1877,7 +1894,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 3,
+				capability = 5,
 				firepower = 1,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
@@ -1939,7 +1956,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 130000,
-				capability = 3,
+				capability = 5,
 				firepower = 1,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
@@ -1985,7 +2002,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 3,
+				capability = 5,
 				firepower = 3,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
@@ -2039,8 +2056,8 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 3,
-				firepower = 5,
+				capability = 5,
+				firepower = 3,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 5486.4,
@@ -2085,8 +2102,8 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 3,
-				firepower = 5,
+				capability = 5,
+				firepower = 8,
 				vCruise = 215.83333333333,
 				vAttack = 4572,
 				hCruise = 5486.4,
@@ -2094,7 +2111,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
-				--self_escort = false,
+				self_escort = false,
 				sortie_rate = 3,
 				stores = {
 					["pylons"] =
@@ -2930,7 +2947,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "SAM"},
 					weaponType = "ASM",
 					expend = "Auto",
 					day = true,
@@ -2938,7 +2955,7 @@ db_loadouts = {
 					adverseWeather = true,
 				range = 500000,
 				capability = 6,
-				firepower = 5,
+				firepower = 12,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -2946,7 +2963,7 @@ db_loadouts = {
 				standoff = 2000,
 				tStation = nil,
 				LDSD = true,
-				--self_escort = false,
+				self_escort = true,
 				sortie_rate = 4,
 				stores = {
 					["pylons"] = {
@@ -2991,7 +3008,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"SAM", "soft", "Parked Aircraft", "Structure", "SAM"},
+				attributes = {"SAM", "soft", "Parked Aircraft"},
 					weaponType = "Bombs",
 					expend = "All",
 					day = true,
@@ -2999,7 +3016,7 @@ db_loadouts = {
 					adverseWeather = false,
 				range = 500000,
 				capability = 6,
-				firepower = 3,
+				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -3007,7 +3024,7 @@ db_loadouts = {
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
-				--self_escort = false,
+				self_escort = true,
 				sortie_rate = 3,
 				stores = {
 					["pylons"] = {
@@ -3060,7 +3077,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 6,
-				firepower = 7,
+				firepower = 12,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -3110,7 +3127,7 @@ db_loadouts = {
 			["Mk-82*6, AIM-7M*3, ECM*1, Fuel*2"] = {
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weaponType = "Bombs",
@@ -3120,7 +3137,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 360000,
 				capability = 6,
-				firepower = 3,
+				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 5486.4,
@@ -3185,7 +3202,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 360000,
 				capability = 6,
-				firepower = 6,
+				firepower = 3,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 5486.4,
@@ -3194,7 +3211,7 @@ db_loadouts = {
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
-				sortie_rate = 2,
+				sortie_rate = 4,
 				stores = {
 					["pylons"] =
 					{
@@ -3250,7 +3267,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 360000,
 				capability = 6,
-				firepower = 7,
+				firepower = 6,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 5486.4,
@@ -3303,7 +3320,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 360000,
-				capability = 6,
+				capability = 3,
 				firepower = 5,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
@@ -3361,7 +3378,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "SAM", "Bridge"},
+				attributes = {"Structure", "SAM", "soft"},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -3369,7 +3386,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 360000,
 				capability = 6,
-				firepower = 5,
+				firepower = 12,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 4876.8,
@@ -3493,7 +3510,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 360000,
 				capability = 10,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 270,
 				vAttack = 270,
 				hCruise = 6096,
@@ -3554,7 +3571,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 360000,
 				capability = 10,
-				firepower = 5,
+				firepower = 12,
 				vCruise = 270,
 				vAttack = 270,
 				hCruise = 6096,
@@ -3677,7 +3694,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["Rockets Hydra-70*14 Minigun"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
@@ -3690,7 +3707,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 40000,
 				capability = 6,
-				firepower = 4,
+				firepower = 3,
 				vCruise = 55,
 				vAttack = 55,
 				hCruise = 50,
@@ -3731,7 +3748,7 @@ db_loadouts = {
 	["AH-1W"] = {--1967 (primo volo) 1973 (entrata in servizio)
 		["Strike"] = {
 			["Rockets Hard Hydra-70*28"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
@@ -3744,7 +3761,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 40000,
 				capability = 6,
-				firepower = 4,
+				firepower = 5,
 				vCruise = 55,
 				vAttack = 55,
 				hCruise = 50,
@@ -3779,13 +3796,13 @@ db_loadouts = {
                 ["gun"] = 100,
 				},
 			},
-			["ASM AGM-114*8"] = {
-				minscore = 0.3,
+			["ASM AGM-114*8"] = {--1982 (delete!?)
+				minscore = 0.2,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "SAM", "Structure"},
+				attributes = {"soft", "SAM"},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -4203,16 +4220,17 @@ db_loadouts = {
 			]]
 		},
 		["SEAD"] = {
-			["SEAD  Kh58*2_R60*4_L-081"] = { --kh 58  1978
+			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1978
 				attributes = {},
+				minscore = 0.1,
 				weaponType = "ASM",
-				expend = "Auto",
+				expend = "Auto",				
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 900000,
 				capability = 10,
-				firepower = 7,
+				firepower = 8,
 				vCruise = 330,
 				vAttack = 450,
 				hCruise = 8000,
@@ -4304,7 +4322,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["CAS Fab100*30"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -4317,7 +4335,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 5,
+				firepower = 8,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4356,7 +4374,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Rockets B-8*6"] = {
+			["CAS Rockets B-8*6(20*6=120 rocket)"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4370,7 +4388,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 6,
+				firepower = 15,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4414,7 +4432,7 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab1500*2 R-60*4"] = {
-				minscore = 0.6,
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -4427,7 +4445,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 12,
+				firepower = 14,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4476,7 +4494,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 7,
+				firepower = 4,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4541,7 +4559,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 5,
+				firepower = 2,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4584,7 +4602,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Fab-500*2 UB-13*4"] = {
+			["CAS Fab-500*2 UB-13*4 (4*5=20 rockets)"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4598,7 +4616,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 9,
+				firepower = 3,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4647,7 +4665,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Structure", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
@@ -4699,7 +4717,7 @@ db_loadouts = {
 				},
 			},
 			["CAS S25*2 Fuel*3"] = {
-				minscore = 0.3,
+				minscore = 0.7,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -4712,7 +4730,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 6,
+				firepower = 3,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4752,10 +4770,10 @@ db_loadouts = {
 				},
 			},
 			["CAS S25*6"] = {
-				minscore = 0.5,
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
@@ -4822,7 +4840,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 6,
+				firepower = 4,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 6096,
@@ -4888,7 +4906,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 900000,
 				capability = 9,
-				firepower = 10,
+				firepower = 6,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 7096,
@@ -4991,7 +5009,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 7,
 				vCruise = 100,
 				vAttack = 100,
 				hCruise = 100,
@@ -5173,7 +5191,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Rockets Hard S-13*10"] = {
+			["CAS Rockets S-13*10"] = {
 				attributes = {"soft", "hard", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
@@ -5182,7 +5200,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 6,
-				firepower = 4,
+				firepower = 5,
 				vCruise = 100,
 				vAttack = 100,
 				hCruise = 100,
@@ -5788,7 +5806,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -5842,7 +5860,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -5851,7 +5869,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 300000,
 				capability = 3,
-				firepower = 1,
+				firepower = 2,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 5500,
@@ -6067,7 +6085,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 3,
-				firepower = 5,
+				firepower = 4,
 				vCruise = 200,
 				vAttack = 250,
 				hCruise = 6500,
@@ -6183,7 +6201,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 3,
-				firepower = 3,
+				firepower = 6,
 				vCruise = 200,
 				vAttack = 250,
 				hCruise = 6500,
@@ -6284,12 +6302,12 @@ db_loadouts = {
 		},
 		["Strike"] = {			
 			["IPW - Strike - FAB 500 M62*4"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -6298,7 +6316,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 8,
+				firepower = 6,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -6348,7 +6366,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 5,
+				firepower = 8,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -6400,7 +6418,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-500*6 R-60M*2"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6423,7 +6441,7 @@ db_loadouts = {
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
-				sortie_rate = 3,
+				sortie_rate = 4,
 				stores = {
 					["pylons"] = {
 						[1] = 
@@ -6466,7 +6484,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - RBK-500 PTAB-10-5*4"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6480,7 +6498,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 11,
+				firepower = 8,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -6489,7 +6507,7 @@ db_loadouts = {
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
-				sortie_rate = 2,
+				sortie_rate = 4,
 				stores = {
 					["pylons"] = {
 						[8] = {
@@ -6571,7 +6589,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -6580,7 +6598,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 6,
+				firepower = 5,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 1500,
@@ -6630,7 +6648,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 6,
+				firepower = 4,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 1500,
@@ -6687,7 +6705,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"hard", "Structure"},
+				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -6696,7 +6714,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 6,
+				firepower = 12,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 1500,
@@ -6751,7 +6769,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
@@ -6762,7 +6780,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 6,
+				firepower = 8,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 1500,
@@ -6828,7 +6846,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -6879,7 +6897,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS ASM Kh-25ML-MPR R-60M*2 Fuel*2"] = {
+			["CAS ASM Kh-25ML-MPR*4 R-60M*2 Fuel*2"] = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -6894,7 +6912,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 7,
+				firepower = 12,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -6948,7 +6966,7 @@ db_loadouts = {
 		},
 		["SEAD"] = {
 			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.3,				
+				minscore = 0.2,				
 				attributes = {},
 				weaponType = "ASM",
 				expend = "All",
@@ -6958,7 +6976,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 700000,
 				capability = 9,
-				firepower = 7,
+				firepower = 12,
 				vCruise = 200,
 				vAttack = 280,
 				hCruise = 5500,
@@ -7077,7 +7095,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 				},
-				attributes = {"soft", "SAM", "Structure"},
+				attributes = {"SAM", "Structure"},
 				weaponType = "ASM",
 				expend = "All",
 				attackType = "Dive",
@@ -7086,7 +7104,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 5500,
@@ -7131,7 +7149,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "SAM", "Structure"},
+				attributes = {"SAM", "Structure"},
 				weaponType = "ASM",
 				expend = "All",
 				attackType = "Dive",
@@ -7140,7 +7158,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 5500,
@@ -7179,7 +7197,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["BAI Laser KAB-500LG R-60M*2 Fuel"] = {
+			["BAI Laser KAB-500LG*2 R-60M*2 Fuel"] = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -7195,7 +7213,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 4,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 5500,
@@ -7234,7 +7252,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Heavy Cluster RBK-500-255 R-60M*2 Fuel"] = {
+			["CAS Heavy Cluster RBK-500-255*2 R-60M*2 Fuel"] = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -7249,7 +7267,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 7,
+				firepower = 5,
 				vCruise = 250,
 				vAttack = 300,
 				hCruise = 5500,
@@ -7296,8 +7314,8 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Light Cluster RBK-500-250 R-60M*2 Fuel"] = {
-				minscore = 0.3,
+			["CAS Light Cluster RBK-500-250*2 R-60M*2 Fuel"] = {
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7311,7 +7329,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 7,
+				firepower = 5,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 5500,
@@ -7373,7 +7391,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 7,
+				firepower = 4,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 5500,
@@ -7412,8 +7430,8 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Heavy Cluster KMGU-96r R-60M*2 Fuel"] = {
-				minscore = 0.5,
+			["CAS Heavy Cluster KMGU-96r*2 R-60M*2 Fuel"] = {
+				minscore = 0.3,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7427,7 +7445,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 7,
+				firepower = 5,
 				vCruise = 300,
 				vAttack = 400,
 				hCruise = 5500,
@@ -7470,7 +7488,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weaponType = "Bombs",
@@ -7481,7 +7499,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 4,
+				firepower = 3,
 				vCruise = 300,
 				vAttack = 400,
 				hCruise = 5500,
@@ -7543,7 +7561,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 5,
+				firepower = 6,
 				vCruise = 300,
 				vAttack = 400,
 				hCruise = 5500,
@@ -7594,9 +7612,9 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
-				attributes = {"hard", "Parked Aircraft", "SAM", "Structure"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -7692,7 +7710,7 @@ db_loadouts = {
 		},
 		["SEAD"] = {
 			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
-				minscore = 0.3,				
+				minscore = 0.2,				
 				attributes = {},
 				weaponType = "ASM",
 				expend = "All",
@@ -7702,7 +7720,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 500000,
 				capability = 10,
-				firepower = 7,
+				firepower = 6,
 				vCruise = 300,
 				vAttack = 400,
 				hCruise = 5500,
@@ -8155,7 +8173,7 @@ db_loadouts = {
 				adverseWeather = false,
 				range = 300000,
 				capability = 3,
-				firepower = 4,
+				firepower = 6,
 				vCruise = 250,
 				vAttack = 350,
 				hCruise = 6000,
