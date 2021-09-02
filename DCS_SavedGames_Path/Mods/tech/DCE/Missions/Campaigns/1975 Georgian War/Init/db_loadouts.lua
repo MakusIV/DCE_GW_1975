@@ -191,7 +191,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 10,
+				capability = 7,
 				firepower = 1,
 				vCruise = 152.778,
 				vAttack = 138.889,
@@ -1564,7 +1564,7 @@ db_loadouts = {
 				},
 			},
 			["Strike Mk-20 Cluster Bombs "] = {
-				minscore = 0.2,
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -3968,7 +3968,7 @@ db_loadouts = {
 				},
 			},
 			["Antiship  Kh-22N"] = { --1962
-				minscore = 0.1,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -5016,6 +5016,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["CAS Rockets"] = {
+				minscore = 0.0,
 				attributes = {"soft", "SAM"},
 				weaponType = "Rockets",
 				expend = "Auto",
@@ -5060,6 +5061,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs"] = {
+				minscore = 0.1,
 				attributes = {"soft", "SAM", "Structure"},
 				weaponType = "Bombs",
 				expend = "Auto",
@@ -5163,6 +5165,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["CAS Rockets"] = {
+				minscore = 0.0,
 				attributes = {"soft", "SAM"},
 				weaponType = "Rockets",
 				expend = "Auto",
@@ -5207,6 +5210,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-13*10"] = {
+				minscore = 0.0,
 				attributes = {"soft", "hard", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
@@ -5243,6 +5247,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets Soft S-5KO*128"] = {
+				minscore = 0.1,
 				attributes = {"soft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
@@ -5287,6 +5292,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-8KOM*40"] = {
+				minscore = 0.0,
 				attributes = {"soft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
@@ -5323,6 +5329,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Cannon Soft UPK-23*4 9M114*4"] = {
+				minscore = 0.1,
 				attributes = {"soft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
@@ -5387,7 +5394,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 1,
+				capability = 10,
 				firepower = 1,
 				vCruise = 231.25,
 				vAttack = 231.25,
@@ -8707,7 +8714,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 900000,
-				capability = 10,
+				capability = 5,
 				firepower = 1,
 				vCruise = 250,
 				vAttack = 350,
