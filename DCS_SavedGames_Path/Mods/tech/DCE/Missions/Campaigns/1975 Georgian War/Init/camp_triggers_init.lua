@@ -167,7 +167,7 @@ camp_triggers = {
 		},
 	},
 
------ CAMPAIGN SITUATION -----
+	----- CAMPAIGN SITUATION -----
 	["Campaign first destructions"] = {
 		active = true,
 		once = true,
@@ -362,7 +362,7 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Beslan Airbase") < 2',
 		action = {
 			[1] = 'Action.Text("After the facilities at Beslan Airbase have been hit by air strikes, air operations at this base came to a complete stop. Intelligence believes that due to the heavy damage inflicted, the base is no longer ably to produce any aviation sorties.")',
---[[		[2] = 'Action.AddImage("BDA_Beatty.jpg")', ]]--  ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Beatty.jpg")', ]]--  ---A changer
 		}
 	},
 	["Nalchik Airbase Disabled"] = {
@@ -378,7 +378,7 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Nalchik Airbase") < 2',
 		action = {
 			[1] = 'Action.Text("The infrastructure at Nalchik Airbase has been destroyed by air strikes. Flying operations at this base have ceased completely and are unlikely to resume. This will ease our efforts to hit other targets in the Nalchik Country area.")',
---[[		[2] = 'Action.AddImage("BDA_Lincoln.jpg")', ]]--  ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Lincoln.jpg")', ]]--  ---A changer
 		}
 	},
 	["Mozdok Airbase Disabled"] = {
@@ -409,7 +409,7 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Mineralnye-Vody Airbase") < 3',
 		action = {
 			[1] = 'Action.Text("Thanks to the destruction of the fuel and ammunition stocks at Mineralnye Vody Airbase, air operations at that base have come to a complete halt. Intelligence estimates that interceptors at Mineralnye Vody Airbase no longer pose a threat to allied strike aircraft. This will considerably ease our access to targets in the enemy rear area.")',
---[[		[2] = 'Action.AddImage("BDA_Creech.jpg")', ]]-- ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Creech.jpg")', ]]-- ---A changer
 		}
 	},
 	["CVN-74 John C. Stennis sunk"] = {
@@ -727,20 +727,20 @@ camp_triggers = {
 	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 34',
 		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%.")',
 	},
 	["VF-101 Alive 50%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 8',
-		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 23',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 50%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
 	},
 	["VF-101 Alive 25%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 6',
-		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. The number of available airframes is critically low. The squadron is short of destruction.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 25%. The number of available airframes is critically low. The squadron is short of destruction.")',
 	},
 	
 	

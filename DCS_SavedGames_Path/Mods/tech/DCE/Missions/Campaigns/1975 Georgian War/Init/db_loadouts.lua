@@ -816,7 +816,7 @@ db_loadouts = {
 			},
 			]]
 			["Strike AIM-9*2 AIM-7*2 FUEL*2 Mk 82*10"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -903,7 +903,7 @@ db_loadouts = {
 					},
 			},
 			["Strike AIM-9*2 AIM-7*2 AIM-54A*2 FUEL*2 Mk 84*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -1150,7 +1150,7 @@ db_loadouts = {
 	["AJS37"] = {-- 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["Antiship - RB 15F*2(antiship) - RB-74J*2(aim9) - RB-24J*2(aim9) - FT"] = {--RB-15 dal 1985
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -1213,7 +1213,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["CAS - Bomb M/71*8 - ECM*2 - RB-24J*2 - FT"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1274,7 +1274,7 @@ db_loadouts = {
 				},
 			},
 			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1335,7 +1335,7 @@ db_loadouts = {
 				},
 			},
 			["CAS - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1457,7 +1457,7 @@ db_loadouts = {
 				},
 			},
 			["ASM AGM-65A-B TV Guided Rb-24 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1523,6 +1523,7 @@ db_loadouts = {
 	["B-52H"] = { --1952 (primo volo) 1955 (entrata in servizio)
 		["Strike"] = {
 			["Strike Mk-84*18"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -1563,6 +1564,7 @@ db_loadouts = {
 				},
 			},
 			["Strike Mk-20 Cluster Bombs "] = {
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -1759,7 +1761,7 @@ db_loadouts = {
 	["F-5E-3"] = {--1959 (primo volo) 1972 (entrata in servizio)
 		["Strike"] = {
 			["GTA CAS1/STRIKE Mk-82SE*4,AIM-9P*2,Fuel 275"] = {
-				minscore = 0.2,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1821,7 +1823,7 @@ db_loadouts = {
 				},
 			},
 			["GTA CAS2/STRIKE CBU-52B*4,AIM-9P*2,Fuel 275"] = {
-				minscore = 0.2,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1883,6 +1885,7 @@ db_loadouts = {
 				},
 			},
 			["MR, Mk-82*4, AIM-9P*2, Fuel_275*1"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1945,6 +1948,7 @@ db_loadouts = {
 				},
 			},
 			["SR, Mk-82*5, AIM-9P*2"] = {
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1991,6 +1995,7 @@ db_loadouts = {
 				},
 			},
 			["OCA, Mk-83*2, AIM-9P*2"] = {
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -2045,6 +2050,7 @@ db_loadouts = {
 				},
 			},
 			["Mk-84*1, AIM-9P*2"] = {
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -2091,6 +2097,7 @@ db_loadouts = {
 				},
 			},
 			["MR, CBU-52*4, AIM-9P*2, Fuel_275*1"] = {
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -2942,7 +2949,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["GTA CAS1 AGM-65K*4,AIM-7*2,Fuel*2,ECM"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -3003,7 +3010,7 @@ db_loadouts = {
 						},
 			},
 			["GTA strike Mk-82*6,AIM-7*2,Fuel*2,ECM"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -3064,7 +3071,7 @@ db_loadouts = {
 				},
 			},
 			["GTA CAS2 Mk20*6,AIM-7*2,Fuel*2,ECM"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -3125,6 +3132,7 @@ db_loadouts = {
 				},
 			},
 			["Mk-82*6, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -3190,6 +3198,7 @@ db_loadouts = {
 				},
 			},
 			["Mk-82*12, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -3255,6 +3264,7 @@ db_loadouts = {
 				},
 			},
 			["Mk-84*2 AIM-7*2 ECM"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -3308,6 +3318,7 @@ db_loadouts = {
 				},
 			},
 			["GBU-10*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,	
@@ -3374,6 +3385,7 @@ db_loadouts = {
 				},
 			},			
 			["ASN AGM-65D*4 AIM-7E ECM Fuel"] = {
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -3441,6 +3453,7 @@ db_loadouts = {
 		},
 		["SEAD"] = {
 			["Day, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.0,
 				attributes = {},
 				weaponType = "ASM",
 				expend = "Auto",
@@ -3502,6 +3515,7 @@ db_loadouts = {
 				},
 			},
 			["Night, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.0,
 				attributes = {},
 				weaponType = "ASM",
 				expend = "Auto",
@@ -3563,6 +3577,7 @@ db_loadouts = {
 				},
 			},
 			["ASM SEAD AGM45*4 AIM-7E EMC Fuel"] = {
+				minscore = 0.3,
 				attributes = {},
 				weaponType = "ASM",
 				expend = "Auto",
@@ -3694,7 +3709,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["Rockets Hydra-70*14 Minigun"] = {
-				minscore = 0.2,
+				minscore = 0.0,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
@@ -3748,7 +3763,7 @@ db_loadouts = {
 	["AH-1W"] = {--1967 (primo volo) 1973 (entrata in servizio)
 		["Strike"] = {
 			["Rockets Hard Hydra-70*28"] = {
-				minscore = 0.2,
+				minscore = 0.0,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
@@ -3797,7 +3812,7 @@ db_loadouts = {
 				},
 			},
 			["ASM AGM-114*8"] = {--1982 (delete!?)
-				minscore = 0.2,
+				minscore = 0.3,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
@@ -3848,7 +3863,7 @@ db_loadouts = {
 	["Tu-22M3"] = { --1969 (primo volo) 1972 (entrata in servizio)
 		["Strike"] = {
 			["BAI FAB-500*33 FAB -250*36"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -3953,7 +3968,7 @@ db_loadouts = {
 				},
 			},
 			["Antiship  Kh-22N"] = { --1962
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -4222,7 +4237,7 @@ db_loadouts = {
 		["SEAD"] = {
 			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1978
 				attributes = {},
-				minscore = 0.1,
+				minscore = 0.0,
 				weaponType = "ASM",
 				expend = "Auto",				
 				day = true,
@@ -4322,7 +4337,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["CAS Fab100*30"] = {
-				minscore = 0.2,
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -4432,7 +4447,7 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab1500*2 R-60*4"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -4481,7 +4496,7 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab250*8"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -4717,7 +4732,7 @@ db_loadouts = {
 				},
 			},
 			["CAS S25*2 Fuel*3"] = {
-				minscore = 0.7,
+				minscore = 0.5,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -5801,7 +5816,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-250*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -5855,7 +5870,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-100*8"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -5909,7 +5924,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -5963,7 +5978,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, UB16UM*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6017,7 +6032,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6129,7 +6144,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-5M*32 S-24*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6187,7 +6202,7 @@ db_loadouts = {
 				},
 			},
 			["BAI ASM -Kh66*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6352,7 +6367,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-250*16 R-60M*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6418,7 +6433,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-500*6 R-60M*2"] = {
-				minscore = 0.2,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6484,7 +6499,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - RBK-500 PTAB-10-5*4"] = {
-				minscore = 0.2,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6534,7 +6549,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - S-13*25"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = flase,
@@ -6584,7 +6599,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - S-24B*4"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6634,7 +6649,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-25*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -6700,7 +6715,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets UB-32*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6766,7 +6781,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets B-8*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6832,7 +6847,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-100*24 R-60M*2"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -6898,7 +6913,7 @@ db_loadouts = {
 				},
 			},
 			["CAS ASM Kh-25ML-MPR*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -7034,7 +7049,7 @@ db_loadouts = {
 	["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
 		["Anti-ship Strike"] = {
 			["GA Kh-25MPL*2 R-60M*2 Fuel"] = {
-				minscore = 0.5,
+				minscore = 0.3,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7090,7 +7105,7 @@ db_loadouts = {
 		},
 		["Strike"] = {			
 			["GA Kh-25MPR*2 R-60M*2 Fuel"] = {
-				minscore = 0.5,
+				minscore = 0.2,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -7144,7 +7159,7 @@ db_loadouts = {
 				},
 			},
 			["GA Kh-25MPL*2 R-60M*2 Fuel"] = {
-				minscore = 0.5,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -7253,7 +7268,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Heavy Cluster RBK-500-255*2 R-60M*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7377,7 +7392,7 @@ db_loadouts = {
 				},
 			},					
 			["BAI Bombs Structure"] = {
-				minscore = 0.5,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -7431,7 +7446,7 @@ db_loadouts = {
 				},
 			},
 			["CAS Heavy Cluster KMGU-96r*2 R-60M*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7485,7 +7500,7 @@ db_loadouts = {
 				},
 			},	
 			["BAI Fab-250*6 R-60M*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7547,7 +7562,7 @@ db_loadouts = {
 				},
 			},	
 			["BAI Fab-500*2 Fab-250*2 R-60M*2 Fuel"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -7609,7 +7624,7 @@ db_loadouts = {
 				},
 			},
 			["Heavy Rockets CAS B-8*4"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7658,7 +7673,7 @@ db_loadouts = {
 				},
 			},
 			["Rockets CAS UB-32*4"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -7710,7 +7725,7 @@ db_loadouts = {
 		},
 		["SEAD"] = {
 			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
-				minscore = 0.2,				
+				minscore = 0.0,				
 				attributes = {},
 				weaponType = "ASM",
 				expend = "All",
@@ -8213,7 +8228,7 @@ db_loadouts = {
 				},
 			},
 			["Strike FAB500*2, R-60*4, FT"] = {
-				minscore = 0.5,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -9722,7 +9737,7 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-250*2"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -9776,7 +9791,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-100*8"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -9830,7 +9845,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
-				minscore = 0.3,
+				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = true,
@@ -9884,7 +9899,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, UB16UM*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
@@ -9938,7 +9953,7 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
-				minscore = 0.3,
+				minscore = 0.1,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
