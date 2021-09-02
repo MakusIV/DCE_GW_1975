@@ -321,11 +321,7 @@ oob_air = {
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 1.5,							-- coef normal : = 1
 				["SEAD"] = 2,
-				["Laser Illumination"] = 1,
-				["Intercept"] = 0.5,
-				["CAP"] = 0.3,
-				["Escort"] = 0.3,
-				["Fighter Sweep"] = 0.2,	
+				["Laser Illumination"] = 1,				
 			},
 			number = 12,
 		},
@@ -355,7 +351,6 @@ oob_air = {
 			},
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
 				["Laser Illumination"] = 1,
 				["Intercept"] = 0.5,
 				["CAP"] = 1.5,
@@ -664,11 +659,10 @@ oob_air = {
 				["Strike"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1,								-- coef normal : = 1
-				["SEAD"] = 1,
+				["Strike"] = 1.7,								-- coef normal : = 1				
 				["Laser Illumination"] = 1,
-				["Intercept"] = 2,
-				["CAP"] = 2,
+				["Intercept"] = 1.5,
+				["CAP"] = 1,
 				["Escort"] = 2,
 				["Fighter Sweep"] = 1,
 			},
@@ -748,11 +742,10 @@ oob_air = {
 				["Strike"] = true,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1.5,							-- coef normal : = 1
-				["SEAD"] = 1,
+				["Strike"] = 1.3,							-- coef normal : = 1
 				["Laser Illumination"] = 1,
-				["Intercept"] = 1,
-				["CAP"] = 1,
+				["Intercept"] = 1.7,
+				["CAP"] = 1.5,
 				["Escort"] = 1,
 				["Fighter Sweep"] = 1,
 			},

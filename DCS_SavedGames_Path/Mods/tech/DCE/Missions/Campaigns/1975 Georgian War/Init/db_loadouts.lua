@@ -2963,6 +2963,8 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 12,
+				day = true,
+				night = false,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -3024,6 +3026,8 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 2,
+				day = true,
+				night = false,
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -3718,7 +3722,7 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
-				night = true,
+				night = false,
 				adverseWeather = true,
 				range = 40000,
 				capability = 6,
@@ -3772,7 +3776,7 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
-				night = true,
+				night = false,
 				adverseWeather = true,
 				range = 40000,
 				capability = 6,
@@ -3872,7 +3876,7 @@ db_loadouts = {
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = nil,
-				day = false,
+				day = true,
 				night = true,
 				adverseWeather = false,
 				range = 900000,
@@ -4233,6 +4237,116 @@ db_loadouts = {
 				},
 			},
 			]]
+			["Antiship S24/240mm.235kg.he.frag*6"] = {
+				minscore = 0.3,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"ship"},
+				weaponType = "Rockets",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = true,
+				range = 700000,
+				capability = 9,
+				firepower = 6,
+				vCruise = 250,
+				vAttack = 300,
+				hCruise = 6096,
+				hAttack = 1000,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [3]
+						[6] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",
+						}, -- end of [8]
+					},
+					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+			["Antiship  S25/340mm.480kg.pntr*2 Fuel*3"] = {
+				minscore = 0.5,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"ship"},
+				weaponType = "Rockets",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = true,
+				range = 900000,
+				capability = 9,
+				firepower = 3,
+				vCruise = 250,
+				vAttack = 300,
+				hCruise = 6096,
+				hAttack = 1000,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{A0648264-4BC0-4EE8-A543-D119F6BA4257}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+						}, -- end of [2]
+						[5] = 
+						{
+							["CLSID"] = "{16602053-4A12-40A2-B214-AB60D481B20E}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{A0648264-4BC0-4EE8-A543-D119F6BA4257}",
+						}, -- end of [8]
+					},
+					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
 		},
 		["SEAD"] = {
 			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1978
@@ -4389,7 +4503,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Rockets B-8*6(20*6=120 rocket)"] = {
+			["CAS Rockets B-8/80mm*6(20*6=120 rocket)"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4399,8 +4513,8 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 15,
@@ -4627,8 +4741,8 @@ db_loadouts = {
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 3,
@@ -4674,7 +4788,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS S24*6"] = {
+			["CAS S24/240mm.235kg.he.frag*6"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4684,8 +4798,8 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 6,
@@ -4731,18 +4845,18 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS S25*2 Fuel*3"] = {
+			["CAS S25/340mm.480kg.pntr*2 Fuel*3"] = {
 				minscore = 0.5,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"hard", "Structure", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 3,
@@ -4784,19 +4898,19 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS S25*6"] = {
+			["CAS S25/340mm.480kg.pntr*6"] = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"hard", "Structure", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 900000,
+				night = false,
+				adverseWeather = false,
+				range = 700000,
 				capability = 9,
 				firepower = 6,
 				vCruise = 250,
@@ -4851,8 +4965,8 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 4,
@@ -7285,7 +7399,7 @@ db_loadouts = {
 				expend = "All",
 				attackType = "Dive",
 				day = true,
-				night = false,
+				night = true,
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
@@ -7347,7 +7461,7 @@ db_loadouts = {
 				expend = "All",
 				attackType = "Dive",
 				day = true,
-				night = false,
+				night = true,
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
@@ -7463,7 +7577,7 @@ db_loadouts = {
 				expend = "All",
 				attackType = "Dive",
 				day = true,
-				night = false,
+				night = true,
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
@@ -7630,7 +7744,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Heavy Rockets CAS B-8*4"] = {
+			["Rockets CAS B-8*4/80mm heat/ap(20*4=80 rockests"] = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -7679,7 +7793,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Rockets CAS UB-32*4"] = {
+			["Rockets CAS UB-32*4/57mm(32*4=128 rockets)"] = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -9965,7 +10079,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
