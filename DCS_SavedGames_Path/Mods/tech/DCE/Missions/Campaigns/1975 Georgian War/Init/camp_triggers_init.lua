@@ -412,6 +412,23 @@ camp_triggers = {
 		--[[		[2] = 'Action.AddImage("BDA_Creech.jpg")', ]]-- ---A changer
 		}
 	},
+	--[[
+	["Maykop-Khanskaya Airbase Disabled"] = {
+		active = true,
+		condition = 'Return.TargetAlive("Maykop-Khanskaya Airbase") < 2',
+		action = {
+			[1] = 'db_airbases["Maykop-Khanskaya"].inactive = true',
+		}
+	},
+	["Maykop-Khanskaya Airbase Disabled Text"] = {
+		active = true,
+		once = true,
+		condition = 'Return.TargetAlive("Maykop-Khanskaya Airbase") < 2',
+		action = {
+			[1] = 'Action.Text("Recent air strikes have destroyed enemy ground elements running operations at Maykop-Khanskaya Airbase. Without their ground support, any remaining aircraft at the airstrip will no longer be able to launch on sorties.")',
+		}
+	},
+	]]
 	["CVN-74 John C. Stennis sunk"] = {
 		active = true,
 		condition = 'Return.TargetAlive("CVN-74 John C. Stennis") == 0',

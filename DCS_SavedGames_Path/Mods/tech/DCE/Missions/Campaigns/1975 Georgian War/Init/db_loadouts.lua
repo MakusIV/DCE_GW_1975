@@ -76,15 +76,6 @@
 
 --[[ 
 	
-la valutazione sull'idoneità di un aereo a svolgere una missione è effettuata  considerando i seguenti parametri:
-
-targetlist.target.firepower.min: rappresenta il valore minimo dei num.missili/bombe lanciati da tutti gli aerei impegnati sul quel target)
-unit.lodaout.firepower: rappresenta il valore  della capacità di tutti i num.missili/bombe montati sull'aereo e utilizzabili sul target elencato nel task
-
-(in ATO_Generator è presente la riga target.firepower.min <= aircraft_available * unit_loadouts[l].firepower)
-
-Il calcolo degli aerei necessari per una missione è fatto con:
-local aircraft_requested = target.firepower.max / unit_loadouts[l].firepower
 
 -- general guideline for capablity & firepower assignment
 

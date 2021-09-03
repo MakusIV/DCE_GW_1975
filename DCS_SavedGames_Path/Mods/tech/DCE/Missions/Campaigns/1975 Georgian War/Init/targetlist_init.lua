@@ -597,7 +597,71 @@ targetlist = {
 					y = 832356.5625,
 				},
 			},
-		},		
+		},	
+		--[[
+		["Maykop-Khanskaya Airbase"] = {
+			task = "Strike",
+			priority = 3,
+			picture = {"Maykop-Khanskaya_Airbase.png"},
+			attributes = {"Structure"},
+			firepower = {
+				min = 4,
+				max = 8,
+			},
+			elements = {
+				[1] = {
+					name = "Fuel Support House",
+					x = -84118.1328125,
+					y = 835186.75,
+				},
+				[2] = {
+					name = "Maykop-Khanskaya Control Tower",
+					x = -84169.25,
+					y = 834521,
+				},
+				[3] = {
+					name = "Maykop-Khanskaya Command House",
+					x = -84198.1640625,
+					y = 834535.3125,
+				},
+				[4] = {
+					name = "Maykop-Khanskaya Power Supply",
+					x = -84205.1796875,
+					y = 834497.9375,
+				},
+				[5] = {
+					name = "Hangar 1",
+					x = -84026.2890625,
+					y = 835012.6875,
+				},
+				[6] = {
+					name = "Hangar 2",
+					x = -84049.09375,
+					y = 835015.5,
+				},
+				[7] = {
+					name = "Hangar 3",
+					x = -83996.3828125,
+					y = 832570.8125,
+				},
+				[8] = {
+					name = "Deported Hangar 1",
+					x = -85358.21875,
+					y = 832253.125,
+				},
+				[9] = {
+					name = "Deported Hangar 2",
+					x = -85306.453125,
+					y = 832343.125,
+				},
+				[10] = {
+					name = "Deported Hangar 3",
+					x = -85320.0078125,
+					y = 832356.5625,
+				},
+			},
+		},	
+		]]	
 		["Mineralnye-Vody Airbase"] = {
 			task = "Strike",
 			priority = 3,

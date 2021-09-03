@@ -15,42 +15,47 @@ supply plant --- supplies ---->|----> supply line A -- supplies---> |--> airbase
                                |----> supply line C -- supplies---> |--> airbase 2
 
 calculus:
-aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance
-airbase.efficiency = airbase.integrity * airbase.supply
-airbase.supply = max( supply_plant.integrity * supply_line.integrity )
-supply_plant.integrity, supply_line.integrity and airbase.integrity are alive/100 values defined for specific asset
+aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance. k:(0,1]
+airbase.efficiency = airbase.integrity * airbase.supply. airbase.efficiency:[0,1]
+airbase.supply = max( supply_plant.integrity * supply_line.integrity ). airbase.supply:[0,1]
+<asset type>.integrity = <asset type>.alive/100.
 
-This module use two new table: airbase_tab and supply_tab.
-airbase_tab include airbases with aircraft_type and efficiency values: property used for number of aircraft avalaibility calculation.
-airbase_tab is automatically created, update and saved (/Active) during mission generation.
+This module use two table: airbase_tab and supply_tab.
+airbase_tab include airbases with aircraft_type and efficiency values: used for number of aircraft avalaibility calculation.
+airbase_tab is created, update and saved (/Active) during mission generation.
 supply_tab is loaded initially from supply_tab_init.lua file (/Init), update and saved (/Active) during mission generation.
-supply_tab define association from airbase and supply asset: supply_line, supply_plant.
-The Campaign Creator must define the supply_tab_init using targets presents in targetlist table and airbases presents in oob_air.
-Important: the names of the airbases must be the same as those used in the oob_air. The names of the airbases defined in targetlist must be
-the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
-For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]
+supply_tab define association from airbase and supply asset (supply_line, supply_plant).
+The campaign maker must initialize supply_tab_init using targets presents in targetlist table and airbases presents in oob_air.
+Important: 
+I) the names of the airbases written in supply_tab_init must be the same as those used in the oob_air. 
+II) the names of the airbases defined in targetlist must be the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
+For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]]]
 
-]]
-
--- airbase_tab structure example
 --[[
+
+airbase_tab structure example
+
 airbase_tab = {
 
-    [blue]
+    [blue] = {
         [base_1] = {
             ["aircraft_types"]
-                [aircraft_1] true
-                [aircraft_2] true
+                [aircraft_1] = name
+                [aircraft_2] = name
             ["efficiency"] 0.72
             ["integrity"] 0.8
             ["supply"] 0.9
-
-        --......
-    [red]
-        [base_n]
-            --......
         }
+        ......
+    }
+    [red] = {
+        [base_n] = {
+            ......
+        }
+        .......
+    }
 }
+
 ]]
 
 -- supply_tab structure example
@@ -310,12 +315,14 @@ DCE IMPLEMENTATION INFO
 
 new file:
 
-Active/: DC_Logistic.lua --marco
+ScriptsMod.NG/: DC_Logistic.lua
 Init/: supply_tab_init.lua --defined by campaign's maker
 
 file modified:
 
+
 DEBRIEF_Master.lua:
+
 94 --=====================  start marco implementation ==================================
 95
 96 --run logistic evalutation and save supply_tab
@@ -324,7 +331,9 @@ DEBRIEF_Master.lua:
 99
 100 --=====================  end marco implementation ==================================
 
+
 BAT_FirstMission.lua:
+
 84 --====================  start marco implementation ==================================
 85
 86 dofile("Init/supply_tab_init.lua")
@@ -2154,8 +2163,6 @@ if executeTest then
 end
 
 --[[
-att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
-teoricamente si potrebbbe distinguere le riserve in supply tab identificandole per i due parametri (che palle)
 
 oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
 molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
