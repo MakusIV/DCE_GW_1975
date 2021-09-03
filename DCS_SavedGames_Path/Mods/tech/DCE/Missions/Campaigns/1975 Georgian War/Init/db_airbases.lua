@@ -396,7 +396,7 @@ db_airbases = {
 		LimitedParkNb  = 4,
 	},
 	-- Red Farp
-	['LENIGORI FARP MN76'] = {		
+	['LENIGORI FARP MM56'] = {		
 		x =	-267944.48171613,
 		y = 849346.36809242,
 		elevation = 0,
