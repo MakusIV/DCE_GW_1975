@@ -74,8 +74,8 @@ mission =
     }, -- end of ["requiredModules"]
     ["date"] = 
     {
-        ["Day"] = 1,
         ["Year"] = 1975,
+        ["Day"] = 1,
         ["Month"] = 11,
     }, -- end of ["date"]
     ["result"] = 
@@ -173,14 +173,14 @@ mission =
             {
                 [1] = 
                 {
-                    ["seconds"] = 900,
                     ["scores"] = 100,
+                    ["seconds"] = 900,
                     ["predicate"] = "c_time_after",
                     ["zone"] = 3033,
                 }, -- end of [1]
             }, -- end of ["rules"]
-            ["score"] = 15,
             ["side"] = "OFFLINE",
+            ["score"] = 15,
             ["predicate"] = "score",
             ["comment"] = "Execute CAP",
         }, -- end of [1]
@@ -201,8 +201,8 @@ mission =
                     ["zone"] = 3033,
                 }, -- end of [2]
             }, -- end of ["rules"]
-            ["score"] = 70,
             ["side"] = "OFFLINE",
+            ["score"] = 70,
             ["predicate"] = "score",
             ["comment"] = "Destroy Enemy",
         }, -- end of [2]
@@ -211,8 +211,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 35,
             ["comment"] = "Destroy Zestafoni Warehouse",
+            ["score"] = 35,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [3]
@@ -221,8 +221,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Destroy Khashuri Warehouse",
             ["side"] = "OFFLINE",
+            ["comment"] = "Destroy Khashuri Warehouse",
             ["predicate"] = "score",
             ["score"] = 35,
         }, -- end of [4]
@@ -231,8 +231,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["score"] = 35,
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["comment"] = "Destroy Gori Warehouse",
         }, -- end of [5]
@@ -241,8 +241,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["score"] = 35,
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["comment"] = "Destroy Gori Station",
         }, -- end of [6]
@@ -251,8 +251,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 35,
             ["comment"] = "Destroy Gori Storage Area",
+            ["score"] = 35,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [7]
@@ -261,8 +261,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Destroy Khashuri Storage Area",
             ["side"] = "OFFLINE",
+            ["comment"] = "Destroy Khashuri Storage Area",
             ["predicate"] = "score",
             ["score"] = 60,
         }, -- end of [8]
@@ -271,8 +271,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 60,
             ["comment"] = "Destroy Zestafoni Storage Area",
+            ["score"] = 60,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [9]
@@ -281,8 +281,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 35,
             ["comment"] = "Destroy Zestafoni Station",
+            ["score"] = 35,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [10]
@@ -291,8 +291,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Destroy Kaspi Storage Area",
             ["side"] = "OFFLINE",
+            ["comment"] = "Destroy Kaspi Storage Area",
             ["predicate"] = "score",
             ["score"] = 70,
         }, -- end of [11]
@@ -301,8 +301,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["score"] = 100,
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["comment"] = "Destroy Manglisi EWR Site",
         }, -- end of [12]
@@ -311,8 +311,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 70,
             ["comment"] = "Destroy Mechanized Squad @ Tkviavi",
+            ["score"] = 70,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [13]
@@ -321,8 +321,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Nato Infantry Squad @ Tkviavi",
             ["side"] = "OFFLINE",
+            ["comment"] = "Nato Infantry Squad @ Tkviavi",
             ["predicate"] = "score",
             ["score"] = 70,
         }, -- end of [14]
@@ -331,8 +331,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["score"] = 100,
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["comment"] = "Destroy Kvitiri Helo Warehouse",
         }, -- end of [15]
@@ -341,8 +341,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["score"] = 100,
             ["comment"] = "Destroy Kvitiri Warehouse",
+            ["score"] = 100,
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [16]
@@ -351,8 +351,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Destroy Kutaisi Warehouse",
             ["side"] = "OFFLINE",
+            ["comment"] = "Destroy Kutaisi Warehouse",
             ["predicate"] = "score",
             ["score"] = 100,
         }, -- end of [17]
@@ -361,8 +361,8 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["score"] = 100,
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["comment"] = "Destroy Soganlugi Warehouse",
         }, -- end of [18]
@@ -372,14 +372,14 @@ mission =
             {
                 [1] = 
                 {
-                    ["scores"] = 100,
                     ["seconds"] = 900,
+                    ["scores"] = 100,
                     ["predicate"] = "c_time_after",
                     ["zone"] = 3033,
                 }, -- end of [1]
             }, -- end of ["rules"]
-            ["side"] = "OFFLINE",
             ["comment"] = "Execute CAP",
+            ["side"] = "OFFLINE",
             ["predicate"] = "score",
             ["score"] = 15,
         }, -- end of [19]
@@ -389,14 +389,14 @@ mission =
             {
                 [1] = 
                 {
-                    ["seconds"] = 900,
                     ["scores"] = 100,
+                    ["seconds"] = 900,
                     ["predicate"] = "c_time_after",
                     ["zone"] = 3033,
                 }, -- end of [1]
             }, -- end of ["rules"]
-            ["comment"] = "Execute CAP",
             ["score"] = 15,
+            ["comment"] = "Execute CAP",
             ["predicate"] = "score",
             ["side"] = "OFFLINE",
         }, -- end of [20]
@@ -412,29 +412,26 @@ mission =
                 ["speed"] = 0,
                 ["dir"] = 0,
             }, -- end of ["at8000"]
-            ["atGround"] = 
-            {
-                ["speed"] = 0,
-                ["dir"] = 0,
-            }, -- end of ["atGround"]
             ["at2000"] = 
             {
                 ["speed"] = 0,
                 ["dir"] = 0,
             }, -- end of ["at2000"]
+            ["atGround"] = 
+            {
+                ["speed"] = 0,
+                ["dir"] = 0,
+            }, -- end of ["atGround"]
         }, -- end of ["wind"]
         ["enable_fog"] = true,
-        ["modifiedTime"] = true,
-        ["visibility"] = 
-        {
-            ["distance"] = 80000,
-        }, -- end of ["visibility"]
+        ["qnh"] = 760,
+        ["enable_dust"] = false,
         ["season"] = 
         {
             ["temperature"] = 18,
         }, -- end of ["season"]
         ["type_weather"] = 0,
-        ["qnh"] = 760,
+        ["modifiedTime"] = true,
         ["cyclones"] = 
         {
             [1] = 
@@ -476,17 +473,20 @@ mission =
         }, -- end of ["cyclones"]
         ["name"] = "GW_1975_Cyclone",
         ["dust_density"] = 0,
+        ["groundTurbulence"] = 3,
         ["fog"] = 
         {
             ["thickness"] = 40,
             ["visibility"] = 3280,
         }, -- end of ["fog"]
-        ["groundTurbulence"] = 3,
-        ["enable_dust"] = false,
+        ["visibility"] = 
+        {
+            ["distance"] = 80000,
+        }, -- end of ["visibility"]
         ["clouds"] = 
         {
-            ["density"] = 0,
             ["thickness"] = 0,
+            ["density"] = 0,
             ["base"] = 300,
             ["iprecptns"] = 0,
         }, -- end of ["clouds"]
@@ -520,24 +520,12 @@ mission =
     }, -- end of ["triggers"]
     ["map"] = 
     {
-        ["centerY"] = 515848.70302011,
-        ["zoom"] = 594446.31521115,
-        ["centerX"] = -389981.59456806,
+        ["centerY"] = 459103.03834703,
+        ["zoom"] = 2794.5790494551,
+        ["centerX"] = -26905.233867216,
     }, -- end of ["map"]
     ["coalitions"] = 
     {
-        ["blue"] = 
-        {
-            [1] = 21,
-            [2] = 5,
-            [3] = 16,
-            [4] = 6,
-            [5] = 15,
-            [6] = 46,
-            [7] = 4,
-            [8] = 1,
-            [9] = 2,
-        }, -- end of ["blue"]
         ["neutrals"] = 
         {
             [1] = 70,
@@ -613,6 +601,18 @@ mission =
             [71] = 84,
             [72] = 85,
         }, -- end of ["neutrals"]
+        ["blue"] = 
+        {
+            [1] = 21,
+            [2] = 5,
+            [3] = 16,
+            [4] = 6,
+            [5] = 15,
+            [6] = 46,
+            [7] = 4,
+            [8] = 1,
+            [9] = 2,
+        }, -- end of ["blue"]
         ["red"] = 
         {
             [1] = 18,
@@ -632,21 +632,6 @@ mission =
     }, -- end of ["pictureFileNameB"]
     ["coalition"] = 
     {
-        ["neutrals"] = 
-        {
-            ["bullseye"] = 
-            {
-                ["y"] = 100,
-                ["x"] = 100,
-            }, -- end of ["bullseye"]
-            ["nav_points"] = 
-            {
-            }, -- end of ["nav_points"]
-            ["name"] = "neutrals",
-            ["country"] = 
-            {
-            }, -- end of ["country"]
-        }, -- end of ["neutrals"]
         ["blue"] = 
         {
             ["bullseye"] = 
@@ -700,10 +685,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -826,10 +811,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -917,8 +902,9 @@ mission =
                                 {
                                 }, -- end of ["tasks"]
                                 ["radioSet"] = false,
-                                ["task"] = "CAS",
+                                ["task"] = "Ground Attack",
                                 ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
                                 ["route"] = 
                                 {
                                     ["points"] = 
@@ -942,24 +928,6 @@ mission =
                                                 {
                                                     ["tasks"] = 
                                                     {
-                                                        [1] = 
-                                                        {
-                                                            ["enabled"] = true,
-                                                            ["key"] = "CAS",
-                                                            ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
-                                                            ["auto"] = true,
-                                                            ["params"] = 
-                                                            {
-                                                                ["targetTypes"] = 
-                                                                {
-                                                                    [1] = "Helicopters",
-                                                                    [2] = "Ground Units",
-                                                                    [3] = "Light armed ships",
-                                                                }, -- end of ["targetTypes"]
-                                                                ["priority"] = 0,
-                                                            }, -- end of ["params"]
-                                                        }, -- end of [1]
                                                     }, -- end of ["tasks"]
                                                 }, -- end of ["params"]
                                             }, -- end of ["task"]
@@ -991,7 +959,7 @@ mission =
                                         ["psi"] = 0,
                                         ["y"] = 533342.40886775,
                                         ["x"] = -334358.40364473,
-                                        ["name"] = "Rotary-1-1",
+                                        ["name"] = "ASM BGM-71D * 8",
                                         ["payload"] = 
                                         {
                                             ["pylons"] = 
@@ -1005,7 +973,7 @@ mission =
                                                     ["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
                                                 }, -- end of [4]
                                             }, -- end of ["pylons"]
-                                            ["fuel"] = "1250.0",
+                                            ["fuel"] = 1125,
                                             ["flare"] = 30,
                                             ["chaff"] = 30,
                                             ["gun"] = 100,
@@ -1023,7 +991,7 @@ mission =
                                 }, -- end of ["units"]
                                 ["y"] = 533342.40886775,
                                 ["x"] = -334358.40364473,
-                                ["name"] = "Rotary-1",
+                                ["name"] = "ASM BGM-71D * 8",
                                 ["communication"] = true,
                                 ["start_time"] = 0,
                                 ["frequency"] = 127.5,
@@ -1063,10 +1031,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -1107,8 +1075,8 @@ mission =
                                         ["speed"] = 44.444444444444,
                                         ["AddPropAircraft"] = 
                                         {
-                                            ["GunnersAISkill"] = 90,
                                             ["ExhaustScreen"] = true,
+                                            ["GunnersAISkill"] = 90,
                                         }, -- end of ["AddPropAircraft"]
                                         ["type"] = "UH-1H",
                                         ["unitId"] = 2581,
@@ -1128,14 +1096,14 @@ mission =
                                                 {
                                                     ["CLSID"] = "XM158_MK5",
                                                 }, -- end of [2]
-                                                [5] = 
-                                                {
-                                                    ["CLSID"] = "XM158_MK5",
-                                                }, -- end of [5]
                                                 [6] = 
                                                 {
                                                     ["CLSID"] = "M134_R",
                                                 }, -- end of [6]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "XM158_MK5",
+                                                }, -- end of [5]
                                             }, -- end of ["pylons"]
                                             ["fuel"] = "631",
                                             ["flare"] = 60,
@@ -1164,6 +1132,422 @@ mission =
                     }, -- end of ["helicopter"]
                     ["name"] = "USA",
                     ["id"] = 2,
+                    ["static"] = 
+                    {
+                        ["group"] = 
+                        {
+                            [1] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 459714.12029112,
+                                            ["speed"] = 0,
+                                            ["x"] = -25626.210368722,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 837,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2603,
+                                        ["rate"] = 3,
+                                        ["y"] = 459714.12029112,
+                                        ["x"] = -25626.210368722,
+                                        ["name"] = "Maykop Fuel support house",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 459714.12029112,
+                                ["x"] = -25626.210368722,
+                                ["name"] = "Maykop Fuel support house",
+                                ["dead"] = false,
+                            }, -- end of [1]
+                            [2] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458080.20081024,
+                                            ["speed"] = 0,
+                                            ["x"] = -26609.600935969,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 838,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2604,
+                                        ["rate"] = 3,
+                                        ["y"] = 458080.20081024,
+                                        ["x"] = -26609.600935969,
+                                        ["name"] = "Maykop  Control tower",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458080.20081024,
+                                ["x"] = -26609.600935969,
+                                ["name"] = "Maykop  Control tower",
+                                ["dead"] = false,
+                            }, -- end of [2]
+                            [3] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 457898.61932232,
+                                            ["speed"] = 0,
+                                            ["x"] = -27909.578430298,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 839,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2605,
+                                        ["rate"] = 3,
+                                        ["y"] = 457898.61932232,
+                                        ["x"] = -27909.578430298,
+                                        ["name"] = "Maykop Command house",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 457898.61932232,
+                                ["x"] = -27909.578430298,
+                                ["name"] = "Maykop Command house",
+                                ["dead"] = false,
+                            }, -- end of [3]
+                            [4] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 459533.14364873,
+                                            ["speed"] = 0,
+                                            ["x"] = -26750.182378145,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 840,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2606,
+                                        ["rate"] = 3,
+                                        ["y"] = 459533.14364873,
+                                        ["x"] = -26750.182378145,
+                                        ["name"] = "Maykop Power Supply",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 459533.14364873,
+                                ["x"] = -26750.182378145,
+                                ["name"] = "Maykop Power Supply",
+                                ["dead"] = false,
+                            }, -- end of [4]
+                            [5] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458753.34034553,
+                                            ["speed"] = 0,
+                                            ["x"] = -27095.421929516,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 841,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2607,
+                                        ["rate"] = 3,
+                                        ["y"] = 458753.34034553,
+                                        ["x"] = -27095.421929516,
+                                        ["name"] = "Maykop Hangar 1",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458753.34034553,
+                                ["x"] = -27095.421929516,
+                                ["name"] = "Maykop Hangar 1",
+                                ["dead"] = false,
+                            }, -- end of [5]
+                            [6] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458777.92501568,
+                                            ["speed"] = 0,
+                                            ["x"] = -27044.613611215,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 842,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2608,
+                                        ["rate"] = 3,
+                                        ["y"] = 458777.92501568,
+                                        ["x"] = -27044.613611215,
+                                        ["name"] = "Maykop Hangar 2",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458777.92501568,
+                                ["x"] = -27044.613611215,
+                                ["name"] = "Maykop Hangar 2",
+                                ["dead"] = false,
+                            }, -- end of [6]
+                            [7] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458800.87070781,
+                                            ["speed"] = 0,
+                                            ["x"] = -26990.527336894,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 843,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2609,
+                                        ["rate"] = 3,
+                                        ["y"] = 458800.87070781,
+                                        ["x"] = -26990.527336894,
+                                        ["name"] = "Maykop Hangar 3",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458800.87070781,
+                                ["x"] = -26990.527336894,
+                                ["name"] = "Maykop Hangar 3",
+                                ["dead"] = false,
+                            }, -- end of [7]
+                            [8] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458262.61709523,
+                                            ["speed"] = 0,
+                                            ["x"] = -26869.132821437,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 844,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2610,
+                                        ["rate"] = 3,
+                                        ["y"] = 458262.61709523,
+                                        ["x"] = -26869.132821437,
+                                        ["name"] = "Maykop Deported Hangar 1",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458262.61709523,
+                                ["x"] = -26869.132821437,
+                                ["name"] = "Maykop Deported Hangar 1",
+                                ["dead"] = false,
+                            }, -- end of [8]
+                            [9] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458936.15460273,
+                                            ["speed"] = 0,
+                                            ["x"] = -26327.536576484,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 845,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2611,
+                                        ["rate"] = 3,
+                                        ["y"] = 458936.15460273,
+                                        ["x"] = -26327.536576484,
+                                        ["name"] = "Maykop Deported Hangar 1-1",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458936.15460273,
+                                ["x"] = -26327.536576484,
+                                ["name"] = "Maykop Deported Hangar 1-1",
+                                ["dead"] = false,
+                            }, -- end of [9]
+                            [10] = 
+                            {
+                                ["heading"] = 0,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 0,
+                                            ["type"] = "",
+                                            ["name"] = "",
+                                            ["y"] = 458692.63445234,
+                                            ["speed"] = 0,
+                                            ["x"] = -27122.013356338,
+                                            ["formation_template"] = "",
+                                            ["action"] = "",
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 846,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["category"] = "Fortifications",
+                                        ["shape_name"] = "H-flag_R",
+                                        ["type"] = "Red_Flag",
+                                        ["unitId"] = 2612,
+                                        ["rate"] = 3,
+                                        ["y"] = 458692.63445234,
+                                        ["x"] = -27122.013356338,
+                                        ["name"] = "Maykop Deported Hangar 1-2",
+                                        ["heading"] = 0,
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 458692.63445234,
+                                ["x"] = -27122.013356338,
+                                ["name"] = "Maykop Deported Hangar 1-2",
+                                ["dead"] = false,
+                            }, -- end of [10]
+                        }, -- end of ["group"]
+                    }, -- end of ["static"]
                     ["plane"] = 
                     {
                         ["group"] = 
@@ -1202,10 +1586,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["id"] = "WrappedAction",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["params"] = 
                                                             {
                                                                 ["action"] = 
@@ -1320,10 +1704,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["id"] = "WrappedAction",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["params"] = 
                                                             {
                                                                 ["action"] = 
@@ -1788,10 +2172,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "SEAD",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -1804,10 +2188,10 @@ mission =
                                                         }, -- end of [1]
                                                         [2] = 
                                                         {
-                                                            ["number"] = 2,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["id"] = "WrappedAction",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 2,
                                                             ["params"] = 
                                                             {
                                                                 ["action"] = 
@@ -1946,10 +2330,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "SEAD",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -1962,10 +2346,10 @@ mission =
                                                         }, -- end of [1]
                                                         [2] = 
                                                         {
-                                                            ["number"] = 2,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["id"] = "WrappedAction",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 2,
                                                             ["params"] = 
                                                             {
                                                                 ["action"] = 
@@ -2348,10 +2732,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -2458,6 +2842,7 @@ mission =
                                 ["tasks"] = 
                                 {
                                 }, -- end of ["tasks"]
+                                ["radioSet"] = false,
                                 ["task"] = "CAS",
                                 ["uncontrolled"] = false,
                                 ["taskSelected"] = true,
@@ -2486,10 +2871,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -2596,6 +2981,7 @@ mission =
                                 ["tasks"] = 
                                 {
                                 }, -- end of ["tasks"]
+                                ["radioSet"] = false,
                                 ["task"] = "Ground Attack",
                                 ["uncontrolled"] = false,
                                 ["taskSelected"] = true,
@@ -2716,6 +3102,7 @@ mission =
                                 ["tasks"] = 
                                 {
                                 }, -- end of ["tasks"]
+                                ["radioSet"] = false,
                                 ["task"] = "SEAD",
                                 ["uncontrolled"] = false,
                                 ["taskSelected"] = true,
@@ -2744,10 +3131,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "SEAD",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -2760,10 +3147,10 @@ mission =
                                                         }, -- end of [1]
                                                         [2] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 2,
                                                             ["auto"] = true,
                                                             ["id"] = "WrappedAction",
-                                                            ["number"] = 2,
+                                                            ["enabled"] = true,
                                                             ["params"] = 
                                                             {
                                                                 ["action"] = 
@@ -2871,11 +3258,685 @@ mission =
                                 ["start_time"] = 0,
                                 ["frequency"] = 305,
                             }, -- end of [13]
+                            [14] = 
+                            {
+                                ["modulation"] = 0,
+                                ["tasks"] = 
+                                {
+                                }, -- end of ["tasks"]
+                                ["radioSet"] = false,
+                                ["task"] = "Antiship Strike",
+                                ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 2000,
+                                            ["action"] = "Turning Point",
+                                            ["alt_type"] = "BARO",
+                                            ["properties"] = 
+                                            {
+                                                ["addopt"] = 
+                                                {
+                                                }, -- end of ["addopt"]
+                                            }, -- end of ["properties"]
+                                            ["speed"] = 152.77777777778,
+                                            ["task"] = 
+                                            {
+                                                ["id"] = "ComboTask",
+                                                ["params"] = 
+                                                {
+                                                    ["tasks"] = 
+                                                    {
+                                                        [1] = 
+                                                        {
+                                                            ["enabled"] = true,
+                                                            ["key"] = "AntiShip",
+                                                            ["id"] = "EngageTargets",
+                                                            ["number"] = 1,
+                                                            ["auto"] = true,
+                                                            ["params"] = 
+                                                            {
+                                                                ["targetTypes"] = 
+                                                                {
+                                                                    [1] = "Ships",
+                                                                }, -- end of ["targetTypes"]
+                                                                ["priority"] = 0,
+                                                            }, -- end of ["params"]
+                                                        }, -- end of [1]
+                                                    }, -- end of ["tasks"]
+                                                }, -- end of ["params"]
+                                            }, -- end of ["task"]
+                                            ["type"] = "Turning Point",
+                                            ["ETA"] = 0,
+                                            ["ETA_locked"] = true,
+                                            ["y"] = 532493.19984602,
+                                            ["x"] = -380045.84901382,
+                                            ["formation_template"] = "",
+                                            ["speed_locked"] = true,
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 831,
+                                ["hidden"] = false,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["alt"] = 2000,
+                                        ["hardpoint_racks"] = true,
+                                        ["alt_type"] = "BARO",
+                                        ["livery_id"] = "37",
+                                        ["skill"] = "High",
+                                        ["speed"] = 152.77777777778,
+                                        ["AddPropAircraft"] = 
+                                        {
+                                            ["Rb04GroupTarget"] = 3,
+                                            ["WeapSafeHeight"] = 1,
+                                            ["Rb04VinkelHopp"] = 0,
+                                            ["MissionGeneratorSetting"] = 0,
+                                        }, -- end of ["AddPropAircraft"]
+                                        ["type"] = "AJS37",
+                                        ["unitId"] = 2597,
+                                        ["psi"] = 0,
+                                        ["y"] = 532493.19984602,
+                                        ["x"] = -380045.84901382,
+                                        ["name"] = "AJS37 Antiship RB-04R*2 RB-74*2, FUEL",
+                                        ["payload"] = 
+                                        {
+                                            ["pylons"] = 
+                                            {
+                                                [2] = 
+                                                {
+                                                    ["CLSID"] = "{Rb04}",
+                                                }, -- end of [2]
+                                                [3] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [3]
+                                                [4] = 
+                                                {
+                                                    ["CLSID"] = "{VIGGEN_X-TANK}",
+                                                }, -- end of [4]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [5]
+                                                [6] = 
+                                                {
+                                                    ["CLSID"] = "{Rb04}",
+                                                }, -- end of [6]
+                                            }, -- end of ["pylons"]
+                                            ["fuel"] = 4476,
+                                            ["flare"] = 72,
+                                            ["chaff"] = 210,
+                                            ["gun"] = 100,
+                                        }, -- end of ["payload"]
+                                        ["heading"] = 0,
+                                        ["callsign"] = 
+                                        {
+                                            [1] = 2,
+                                            [2] = 3,
+                                            [3] = 1,
+                                            ["name"] = "Springfield31",
+                                        }, -- end of ["callsign"]
+                                        ["onboard_num"] = "027",
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 532493.19984602,
+                                ["x"] = -380045.84901382,
+                                ["name"] = "AJS37 Antiship RB-04R*2 RB-74*2, FUEL",
+                                ["communication"] = true,
+                                ["start_time"] = 0,
+                                ["frequency"] = 305,
+                            }, -- end of [14]
+                            [15] = 
+                            {
+                                ["modulation"] = 0,
+                                ["tasks"] = 
+                                {
+                                }, -- end of ["tasks"]
+                                ["radioSet"] = false,
+                                ["task"] = "Antiship Strike",
+                                ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 2000,
+                                            ["action"] = "Turning Point",
+                                            ["alt_type"] = "BARO",
+                                            ["properties"] = 
+                                            {
+                                                ["addopt"] = 
+                                                {
+                                                }, -- end of ["addopt"]
+                                            }, -- end of ["properties"]
+                                            ["speed"] = 152.77777777778,
+                                            ["task"] = 
+                                            {
+                                                ["id"] = "ComboTask",
+                                                ["params"] = 
+                                                {
+                                                    ["tasks"] = 
+                                                    {
+                                                        [1] = 
+                                                        {
+                                                            ["enabled"] = true,
+                                                            ["key"] = "AntiShip",
+                                                            ["id"] = "EngageTargets",
+                                                            ["number"] = 1,
+                                                            ["auto"] = true,
+                                                            ["params"] = 
+                                                            {
+                                                                ["targetTypes"] = 
+                                                                {
+                                                                    [1] = "Ships",
+                                                                }, -- end of ["targetTypes"]
+                                                                ["priority"] = 0,
+                                                            }, -- end of ["params"]
+                                                        }, -- end of [1]
+                                                    }, -- end of ["tasks"]
+                                                }, -- end of ["params"]
+                                            }, -- end of ["task"]
+                                            ["type"] = "Turning Point",
+                                            ["ETA"] = 0,
+                                            ["ETA_locked"] = true,
+                                            ["y"] = 541494.81547636,
+                                            ["x"] = -379536.32360078,
+                                            ["formation_template"] = "",
+                                            ["speed_locked"] = true,
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 832,
+                                ["hidden"] = false,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["alt"] = 2000,
+                                        ["hardpoint_racks"] = true,
+                                        ["alt_type"] = "BARO",
+                                        ["livery_id"] = "37",
+                                        ["skill"] = "High",
+                                        ["speed"] = 152.77777777778,
+                                        ["AddPropAircraft"] = 
+                                        {
+                                            ["Rb04GroupTarget"] = 3,
+                                            ["WeapSafeHeight"] = 1,
+                                            ["Rb04VinkelHopp"] = 0,
+                                            ["MissionGeneratorSetting"] = 0,
+                                        }, -- end of ["AddPropAircraft"]
+                                        ["type"] = "AJS37",
+                                        ["unitId"] = 2598,
+                                        ["psi"] = 0,
+                                        ["y"] = 541494.81547636,
+                                        ["x"] = -379536.32360078,
+                                        ["name"] = "AJS37 Antiship ECM Escort KB pod RB-04R*1RB-74*2, FUEL-1",
+                                        ["payload"] = 
+                                        {
+                                            ["pylons"] = 
+                                            {
+                                                [2] = 
+                                                {
+                                                    ["CLSID"] = "{Rb04}",
+                                                }, -- end of [2]
+                                                [3] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [3]
+                                                [4] = 
+                                                {
+                                                    ["CLSID"] = "{VIGGEN_X-TANK}",
+                                                }, -- end of [4]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [5]
+                                                [6] = 
+                                                {
+                                                    ["CLSID"] = "{KB}",
+                                                }, -- end of [6]
+                                            }, -- end of ["pylons"]
+                                            ["fuel"] = 4476,
+                                            ["flare"] = 72,
+                                            ["chaff"] = 210,
+                                            ["gun"] = 100,
+                                        }, -- end of ["payload"]
+                                        ["heading"] = 0,
+                                        ["callsign"] = 
+                                        {
+                                            [1] = 3,
+                                            [2] = 3,
+                                            [3] = 1,
+                                            ["name"] = "Uzi31",
+                                        }, -- end of ["callsign"]
+                                        ["onboard_num"] = "028",
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 541494.81547636,
+                                ["x"] = -379536.32360078,
+                                ["name"] = "AJS37 Antiship ECM Escort KB pod RB-04R*1RB-74*2, FUEL-1",
+                                ["communication"] = true,
+                                ["start_time"] = 0,
+                                ["frequency"] = 305,
+                            }, -- end of [15]
+                            [16] = 
+                            {
+                                ["modulation"] = 0,
+                                ["tasks"] = 
+                                {
+                                }, -- end of ["tasks"]
+                                ["radioSet"] = false,
+                                ["task"] = "Antiship Strike",
+                                ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 2000,
+                                            ["action"] = "Turning Point",
+                                            ["alt_type"] = "BARO",
+                                            ["properties"] = 
+                                            {
+                                                ["addopt"] = 
+                                                {
+                                                }, -- end of ["addopt"]
+                                            }, -- end of ["properties"]
+                                            ["speed"] = 152.77777777778,
+                                            ["task"] = 
+                                            {
+                                                ["id"] = "ComboTask",
+                                                ["params"] = 
+                                                {
+                                                    ["tasks"] = 
+                                                    {
+                                                        [1] = 
+                                                        {
+                                                            ["enabled"] = true,
+                                                            ["key"] = "AntiShip",
+                                                            ["id"] = "EngageTargets",
+                                                            ["number"] = 1,
+                                                            ["auto"] = true,
+                                                            ["params"] = 
+                                                            {
+                                                                ["targetTypes"] = 
+                                                                {
+                                                                    [1] = "Ships",
+                                                                }, -- end of ["targetTypes"]
+                                                                ["priority"] = 0,
+                                                            }, -- end of ["params"]
+                                                        }, -- end of [1]
+                                                    }, -- end of ["tasks"]
+                                                }, -- end of ["params"]
+                                            }, -- end of ["task"]
+                                            ["type"] = "Turning Point",
+                                            ["ETA"] = 0,
+                                            ["ETA_locked"] = true,
+                                            ["y"] = 550496.4311067,
+                                            ["x"] = -379196.63999209,
+                                            ["formation_template"] = "",
+                                            ["speed_locked"] = true,
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 833,
+                                ["hidden"] = false,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["alt"] = 2000,
+                                        ["hardpoint_racks"] = true,
+                                        ["alt_type"] = "BARO",
+                                        ["livery_id"] = "37",
+                                        ["skill"] = "High",
+                                        ["speed"] = 152.77777777778,
+                                        ["AddPropAircraft"] = 
+                                        {
+                                            ["Rb04GroupTarget"] = 3,
+                                            ["WeapSafeHeight"] = 1,
+                                            ["Rb04VinkelHopp"] = 0,
+                                            ["MissionGeneratorSetting"] = 0,
+                                        }, -- end of ["AddPropAircraft"]
+                                        ["type"] = "AJS37",
+                                        ["unitId"] = 2599,
+                                        ["psi"] = 0,
+                                        ["y"] = 550496.4311067,
+                                        ["x"] = -379196.63999209,
+                                        ["name"] = "AJS37 Antiship Mav-TV RB-75T*4 FUEL",
+                                        ["payload"] = 
+                                        {
+                                            ["pylons"] = 
+                                            {
+                                                [2] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [2]
+                                                [3] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [3]
+                                                [4] = 
+                                                {
+                                                    ["CLSID"] = "{VIGGEN_X-TANK}",
+                                                }, -- end of [4]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [5]
+                                                [6] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [6]
+                                            }, -- end of ["pylons"]
+                                            ["fuel"] = 4476,
+                                            ["flare"] = 72,
+                                            ["chaff"] = 210,
+                                            ["gun"] = 100,
+                                        }, -- end of ["payload"]
+                                        ["heading"] = 0,
+                                        ["callsign"] = 
+                                        {
+                                            [1] = 4,
+                                            [2] = 3,
+                                            [3] = 1,
+                                            ["name"] = "Colt31",
+                                        }, -- end of ["callsign"]
+                                        ["onboard_num"] = "029",
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 550496.4311067,
+                                ["x"] = -379196.63999209,
+                                ["name"] = "AJS37 Antiship Mav-TV RB-75T*4 FUEL",
+                                ["communication"] = true,
+                                ["start_time"] = 0,
+                                ["frequency"] = 305,
+                            }, -- end of [16]
+                            [18] = 
+                            {
+                                ["modulation"] = 0,
+                                ["tasks"] = 
+                                {
+                                }, -- end of ["tasks"]
+                                ["radioSet"] = false,
+                                ["task"] = "CAP",
+                                ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 2000,
+                                            ["action"] = "Turning Point",
+                                            ["alt_type"] = "BARO",
+                                            ["properties"] = 
+                                            {
+                                                ["addopt"] = 
+                                                {
+                                                }, -- end of ["addopt"]
+                                            }, -- end of ["properties"]
+                                            ["speed"] = 152.77777777778,
+                                            ["task"] = 
+                                            {
+                                                ["id"] = "ComboTask",
+                                                ["params"] = 
+                                                {
+                                                    ["tasks"] = 
+                                                    {
+                                                        [1] = 
+                                                        {
+                                                            ["enabled"] = true,
+                                                            ["key"] = "CAP",
+                                                            ["id"] = "EngageTargets",
+                                                            ["number"] = 1,
+                                                            ["auto"] = true,
+                                                            ["params"] = 
+                                                            {
+                                                                ["targetTypes"] = 
+                                                                {
+                                                                    [1] = "Air",
+                                                                }, -- end of ["targetTypes"]
+                                                                ["priority"] = 0,
+                                                            }, -- end of ["params"]
+                                                        }, -- end of [1]
+                                                    }, -- end of ["tasks"]
+                                                }, -- end of ["params"]
+                                            }, -- end of ["task"]
+                                            ["type"] = "Turning Point",
+                                            ["ETA"] = 0,
+                                            ["ETA_locked"] = true,
+                                            ["y"] = 563404.408237,
+                                            ["x"] = -379536.32360078,
+                                            ["formation_template"] = "",
+                                            ["speed_locked"] = true,
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 836,
+                                ["hidden"] = false,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["alt"] = 2000,
+                                        ["hardpoint_racks"] = true,
+                                        ["alt_type"] = "BARO",
+                                        ["livery_id"] = "37",
+                                        ["skill"] = "High",
+                                        ["speed"] = 152.77777777778,
+                                        ["AddPropAircraft"] = 
+                                        {
+                                            ["Rb04GroupTarget"] = 3,
+                                            ["WeapSafeHeight"] = 1,
+                                            ["Rb04VinkelHopp"] = 0,
+                                            ["MissionGeneratorSetting"] = 0,
+                                        }, -- end of ["AddPropAircraft"]
+                                        ["type"] = "AJS37",
+                                        ["unitId"] = 2602,
+                                        ["psi"] = 0,
+                                        ["y"] = 563404.408237,
+                                        ["x"] = -379536.32360078,
+                                        ["name"] = "AJS37 Intercept RB-05A*2 RB-74*2 FUEL",
+                                        ["payload"] = 
+                                        {
+                                            ["pylons"] = 
+                                            {
+                                                [2] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [2]
+                                                [3] = 
+                                                {
+                                                    ["CLSID"] = "{Robot05}",
+                                                }, -- end of [3]
+                                                [4] = 
+                                                {
+                                                    ["CLSID"] = "{VIGGEN_X-TANK}",
+                                                }, -- end of [4]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{Robot05}",
+                                                }, -- end of [5]
+                                                [6] = 
+                                                {
+                                                    ["CLSID"] = "{Robot74}",
+                                                }, -- end of [6]
+                                            }, -- end of ["pylons"]
+                                            ["fuel"] = 4476,
+                                            ["flare"] = 72,
+                                            ["chaff"] = 210,
+                                            ["gun"] = 100,
+                                        }, -- end of ["payload"]
+                                        ["heading"] = 0,
+                                        ["callsign"] = 
+                                        {
+                                            [1] = 6,
+                                            [2] = 3,
+                                            [3] = 1,
+                                            ["name"] = "Ford31",
+                                        }, -- end of ["callsign"]
+                                        ["onboard_num"] = "031",
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 563404.408237,
+                                ["x"] = -379536.32360078,
+                                ["name"] = "AJS37 Intercept RB-05A*2 RB-74*2 FUEL",
+                                ["communication"] = true,
+                                ["start_time"] = 0,
+                                ["frequency"] = 305,
+                            }, -- end of [18]
+                            [17] = 
+                            {
+                                ["modulation"] = 0,
+                                ["tasks"] = 
+                                {
+                                }, -- end of ["tasks"]
+                                ["radioSet"] = false,
+                                ["task"] = "Ground Attack",
+                                ["uncontrolled"] = false,
+                                ["taskSelected"] = true,
+                                ["route"] = 
+                                {
+                                    ["points"] = 
+                                    {
+                                        [1] = 
+                                        {
+                                            ["alt"] = 2000,
+                                            ["action"] = "Turning Point",
+                                            ["alt_type"] = "BARO",
+                                            ["properties"] = 
+                                            {
+                                                ["addopt"] = 
+                                                {
+                                                }, -- end of ["addopt"]
+                                            }, -- end of ["properties"]
+                                            ["speed"] = 152.77777777778,
+                                            ["task"] = 
+                                            {
+                                                ["id"] = "ComboTask",
+                                                ["params"] = 
+                                                {
+                                                    ["tasks"] = 
+                                                    {
+                                                    }, -- end of ["tasks"]
+                                                }, -- end of ["params"]
+                                            }, -- end of ["task"]
+                                            ["type"] = "Turning Point",
+                                            ["ETA"] = 0,
+                                            ["ETA_locked"] = true,
+                                            ["y"] = 557629.78688924,
+                                            ["x"] = -379366.48179643,
+                                            ["formation_template"] = "",
+                                            ["speed_locked"] = true,
+                                        }, -- end of [1]
+                                    }, -- end of ["points"]
+                                }, -- end of ["route"]
+                                ["groupId"] = 834,
+                                ["hidden"] = false,
+                                ["units"] = 
+                                {
+                                    [1] = 
+                                    {
+                                        ["alt"] = 2000,
+                                        ["hardpoint_racks"] = true,
+                                        ["alt_type"] = "BARO",
+                                        ["livery_id"] = "37",
+                                        ["skill"] = "High",
+                                        ["speed"] = 152.77777777778,
+                                        ["AddPropAircraft"] = 
+                                        {
+                                            ["Rb04GroupTarget"] = 3,
+                                            ["WeapSafeHeight"] = 1,
+                                            ["Rb04VinkelHopp"] = 0,
+                                            ["MissionGeneratorSetting"] = 0,
+                                        }, -- end of ["AddPropAircraft"]
+                                        ["type"] = "AJS37",
+                                        ["unitId"] = 2600,
+                                        ["psi"] = 0,
+                                        ["y"] = 557629.78688924,
+                                        ["x"] = -379366.48179643,
+                                        ["name"] = "AJS37 SAM ECM MavTV  U25pod KBpod RB-75T*2 FUEL",
+                                        ["payload"] = 
+                                        {
+                                            ["pylons"] = 
+                                            {
+                                                [2] = 
+                                                {
+                                                    ["CLSID"] = "{KB}",
+                                                }, -- end of [2]
+                                                [3] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [3]
+                                                [4] = 
+                                                {
+                                                    ["CLSID"] = "{VIGGEN_X-TANK}",
+                                                }, -- end of [4]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{RB75T}",
+                                                }, -- end of [5]
+                                                [6] = 
+                                                {
+                                                    ["CLSID"] = "{U22}",
+                                                }, -- end of [6]
+                                            }, -- end of ["pylons"]
+                                            ["fuel"] = 4476,
+                                            ["flare"] = 72,
+                                            ["chaff"] = 210,
+                                            ["gun"] = 100,
+                                        }, -- end of ["payload"]
+                                        ["heading"] = 0,
+                                        ["callsign"] = 
+                                        {
+                                            [1] = 5,
+                                            [2] = 3,
+                                            [3] = 1,
+                                            ["name"] = "Dodge31",
+                                        }, -- end of ["callsign"]
+                                        ["onboard_num"] = "030",
+                                    }, -- end of [1]
+                                }, -- end of ["units"]
+                                ["y"] = 557629.78688924,
+                                ["x"] = -379366.48179643,
+                                ["name"] = "AJS37 SAM ECM MavTV  U25pod KBpod RB-75T*2 FUEL",
+                                ["communication"] = true,
+                                ["start_time"] = 0,
+                                ["frequency"] = 305,
+                            }, -- end of [17]
                         }, -- end of ["group"]
                     }, -- end of ["plane"]
                 }, -- end of [1]
             }, -- end of ["country"]
         }, -- end of ["blue"]
+        ["neutrals"] = 
+        {
+            ["bullseye"] = 
+            {
+                ["y"] = 100,
+                ["x"] = 100,
+            }, -- end of ["bullseye"]
+            ["nav_points"] = 
+            {
+            }, -- end of ["nav_points"]
+            ["name"] = "neutrals",
+            ["country"] = 
+            {
+            }, -- end of ["country"]
+        }, -- end of ["neutrals"]
         ["red"] = 
         {
             ["bullseye"] = 
@@ -2929,10 +3990,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -2973,8 +4034,8 @@ mission =
                                         ["speed"] = 44.444444444444,
                                         ["AddPropAircraft"] = 
                                         {
-                                            ["SimplifiedAI"] = false,
                                             ["OperatorNVG"] = true,
+                                            ["SimplifiedAI"] = false,
                                             ["ExhaustScreen"] = true,
                                             ["PilotNVG"] = true,
                                             ["GunnersAISkill"] = 90,
@@ -2999,14 +4060,14 @@ mission =
                                                 {
                                                     ["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
                                                 }, -- end of [2]
-                                                [5] = 
-                                                {
-                                                    ["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
-                                                }, -- end of [5]
                                                 [6] = 
                                                 {
                                                     ["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
                                                 }, -- end of [6]
+                                                [5] = 
+                                                {
+                                                    ["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
+                                                }, -- end of [5]
                                             }, -- end of ["pylons"]
                                             ["fuel"] = 1174,
                                             ["flare"] = 192,
@@ -3059,10 +4120,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -3103,8 +4164,8 @@ mission =
                                         ["speed"] = 44.444444444444,
                                         ["AddPropAircraft"] = 
                                         {
-                                            ["SimplifiedAI"] = false,
                                             ["OperatorNVG"] = true,
+                                            ["SimplifiedAI"] = false,
                                             ["ExhaustScreen"] = true,
                                             ["PilotNVG"] = true,
                                             ["GunnersAISkill"] = 90,
@@ -3197,10 +4258,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -3241,8 +4302,8 @@ mission =
                                         ["speed"] = 44.444444444444,
                                         ["AddPropAircraft"] = 
                                         {
-                                            ["SimplifiedAI"] = false,
                                             ["OperatorNVG"] = true,
+                                            ["SimplifiedAI"] = false,
                                             ["ExhaustScreen"] = true,
                                             ["PilotNVG"] = true,
                                             ["GunnersAISkill"] = 90,
@@ -3335,10 +4396,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -3447,10 +4508,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -3567,10 +4628,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -3679,10 +4740,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -7578,10 +8639,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "AntiShip",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -7683,10 +8744,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "AntiShip",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -7805,10 +8866,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -7934,10 +8995,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -8063,10 +9124,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -8192,10 +9253,10 @@ mission =
                                                     {
                                                         [1] = 
                                                         {
-                                                            ["enabled"] = true,
+                                                            ["number"] = 1,
                                                             ["key"] = "CAS",
                                                             ["id"] = "EngageTargets",
-                                                            ["number"] = 1,
+                                                            ["enabled"] = true,
                                                             ["auto"] = true,
                                                             ["params"] = 
                                                             {
@@ -8301,44 +9362,45 @@ mission =
             ["rules"] = 
             {
             }, -- end of ["rules"]
-            ["comment"] = "Trigger 1582143845",
             ["eventlist"] = "",
-            ["predicate"] = "triggerStart",
             ["actions"] = 
             {
                 [1] = 
                 {
-                    ["meters"] = 1000,
                     ["file"] = "ResKey_Action_5136",
+                    ["meters"] = 1000,
                     ["predicate"] = "a_do_script_file",
                     ["zone"] = 3033,
                 }, -- end of [1]
             }, -- end of ["actions"]
+            ["predicate"] = "triggerStart",
+            ["comment"] = "Trigger 1582143845",
         }, -- end of [1]
         [2] = 
         {
             ["rules"] = 
             {
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588443870",
             ["eventlist"] = "",
             ["actions"] = 
             {
                 [1] = 
                 {
-                    ["file"] = "ResKey_Action_6772",
                     ["meters"] = 1000,
+                    ["file"] = "ResKey_Action_6772",
                     ["predicate"] = "a_do_script_file",
                     ["zone"] = 3033,
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerStart",
-            ["comment"] = "Trigger 1588443870",
         }, -- end of [2]
         [3] = 
         {
             ["rules"] = 
             {
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313255",
             ["eventlist"] = "",
             ["actions"] = 
             {
@@ -8365,13 +9427,13 @@ mission =
                 }, -- end of [3]
             }, -- end of ["actions"]
             ["predicate"] = "triggerStart",
-            ["comment"] = "Trigger 1588313255",
         }, -- end of [3]
         [4] = 
         {
             ["rules"] = 
             {
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588344021",
             ["eventlist"] = "",
             ["actions"] = 
             {
@@ -8384,13 +9446,13 @@ mission =
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588344021",
         }, -- end of [4]
         [5] = 
         {
             ["rules"] = 
             {
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313348",
             ["eventlist"] = "pilot dead",
             ["actions"] = 
             {
@@ -8403,13 +9465,13 @@ mission =
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588313348",
         }, -- end of [5]
         [6] = 
         {
             ["rules"] = 
             {
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313377",
             ["eventlist"] = "eject",
             ["actions"] = 
             {
@@ -8422,7 +9484,6 @@ mission =
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588313377",
         }, -- end of [6]
         [7] = 
         {
@@ -8453,24 +9514,24 @@ mission =
                     ["zone"] = 3033,
                 }, -- end of [4]
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313416",
             ["eventlist"] = "",
             ["actions"] = 
             {
                 [1] = 
                 {
-                    ["seconds"] = 10,
+                    ["coalitionlist"] = "red",
                     ["start_delay"] = 0,
                     ["zone"] = 3033,
                     ["text"] = "DictKey_ActionText_6746",
                     ["predicate"] = "a_out_text_delay_s",
                     ["meters"] = 1000,
-                    ["coalitionlist"] = "red",
                     ["KeyDict_text"] = "DictKey_ActionText_6746",
+                    ["seconds"] = 10,
                     ["clearview"] = false,
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588313416",
         }, -- end of [7]
         [8] = 
         {
@@ -8517,24 +9578,24 @@ mission =
                     ["zone"] = 3033,
                 }, -- end of [7]
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313661",
             ["eventlist"] = "",
             ["actions"] = 
             {
                 [1] = 
                 {
-                    ["seconds"] = 10,
+                    ["coalitionlist"] = "red",
                     ["start_delay"] = 0,
                     ["zone"] = 3033,
                     ["text"] = "DictKey_ActionText_6747",
                     ["predicate"] = "a_out_text_delay_s",
                     ["meters"] = 1000,
-                    ["coalitionlist"] = "red",
                     ["KeyDict_text"] = "DictKey_ActionText_6747",
+                    ["seconds"] = 10,
                     ["clearview"] = false,
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588313661",
         }, -- end of [8]
         [9] = 
         {
@@ -8571,27 +9632,27 @@ mission =
                     ["zone"] = 3033,
                 }, -- end of [5]
             }, -- end of ["rules"]
+            ["comment"] = "Trigger 1588313920",
             ["eventlist"] = "",
             ["actions"] = 
             {
                 [1] = 
                 {
-                    ["seconds"] = 10,
+                    ["coalitionlist"] = "red",
                     ["start_delay"] = 0,
                     ["zone"] = 3033,
                     ["text"] = "DictKey_ActionText_6748",
                     ["predicate"] = "a_out_text_delay_s",
                     ["meters"] = 1000,
-                    ["coalitionlist"] = "red",
                     ["KeyDict_text"] = "DictKey_ActionText_6748",
+                    ["seconds"] = 10,
                     ["clearview"] = false,
                 }, -- end of [1]
             }, -- end of ["actions"]
             ["predicate"] = "triggerOnce",
-            ["comment"] = "Trigger 1588313920",
         }, -- end of [9]
     }, -- end of ["trigrules"]
-    ["currentKey"] = 7339008,
+    ["currentKey"] = 7340489,
     ["start_time"] = 61800,
     ["forcedOptions"] = 
     {
@@ -8601,15 +9662,15 @@ mission =
     }, -- end of ["forcedOptions"]
     ["failures"] = 
     {
-        ["ELEVONINNERRIGHT"] = 
+        ["CMS_FAILURE_RIGHT_DISPENSER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ELEVONINNERRIGHT",
+            ["id"] = "CMS_FAILURE_RIGHT_DISPENSER",
             ["mm"] = 0,
-        }, -- end of ["ELEVONINNERRIGHT"]
+        }, -- end of ["CMS_FAILURE_RIGHT_DISPENSER"]
         ["DMT_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
@@ -8745,15 +9806,15 @@ mission =
             ["id"] = "Failure_Fuel_RightBoostPump",
             ["mm"] = 0,
         }, -- end of ["Failure_Fuel_RightBoostPump"]
-        ["BACKUPGENERATOR"] = 
+        ["Failure_ECS_Valve"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "BACKUPGENERATOR",
+            ["id"] = "Failure_ECS_Valve",
             ["mm"] = 0,
-        }, -- end of ["BACKUPGENERATOR"]
+        }, -- end of ["Failure_ECS_Valve"]
         ["JESTER"] = 
         {
             ["hh"] = 0,
@@ -8781,15 +9842,15 @@ mission =
             ["id"] = "ppf_LeftGearbox",
             ["mm"] = 0,
         }, -- end of ["ppf_LeftGearbox"]
-        ["CADC_FAILURE_TOTAL"] = 
+        ["Failure_Elec_LeftGenerator"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "CADC_FAILURE_TOTAL",
+            ["id"] = "Failure_Elec_LeftGenerator",
             ["mm"] = 0,
-        }, -- end of ["CADC_FAILURE_TOTAL"]
+        }, -- end of ["Failure_Elec_LeftGenerator"]
         ["FUELTANK3R"] = 
         {
             ["hh"] = 0,
@@ -8817,15 +9878,15 @@ mission =
             ["id"] = "WEAPONS_FAILURE_TOTAL",
             ["mm"] = 0,
         }, -- end of ["WEAPONS_FAILURE_TOTAL"]
-        ["ppf_LeftNozzleControl"] = 
+        ["RWR_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ppf_LeftNozzleControl",
+            ["id"] = "RWR_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["ppf_LeftNozzleControl"]
+        }, -- end of ["RWR_FAILURE_TOTAL"]
         ["FUELTANK4L"] = 
         {
             ["hh"] = 0,
@@ -8844,15 +9905,15 @@ mission =
             ["id"] = "ppf_RightOil",
             ["mm"] = 0,
         }, -- end of ["ppf_RightOil"]
-        ["Failure_Elec_LeftTransformerRectifier"] = 
+        ["Failure_PP_EngR_Nozzle_CS"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_Elec_LeftTransformerRectifier",
+            ["id"] = "Failure_PP_EngR_Nozzle_CS",
             ["mm"] = 0,
-        }, -- end of ["Failure_Elec_LeftTransformerRectifier"]
+        }, -- end of ["Failure_PP_EngR_Nozzle_CS"]
         ["RADAR_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
@@ -9087,15 +10148,15 @@ mission =
             ["id"] = "Failure_Hyd_IsolatedHYD2BSystem_Leak",
             ["mm"] = 0,
         }, -- end of ["Failure_Hyd_IsolatedHYD2BSystem_Leak"]
-        ["RWR_FAILURE_CONTROL_BOX"] = 
+        ["RWR_FAILURE_COMPUTER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_CONTROL_BOX",
+            ["id"] = "RWR_FAILURE_COMPUTER",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_CONTROL_BOX"]
+        }, -- end of ["RWR_FAILURE_COMPUTER"]
         ["esf_LeftRectifier"] = 
         {
             ["hh"] = 0,
@@ -9105,15 +10166,15 @@ mission =
             ["id"] = "esf_LeftRectifier",
             ["mm"] = 0,
         }, -- end of ["esf_LeftRectifier"]
-        ["MSC_FAILURE_TOTAL"] = 
+        ["COM1_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "MSC_FAILURE_TOTAL",
+            ["id"] = "COM1_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["MSC_FAILURE_TOTAL"]
+        }, -- end of ["COM1_FAILURE_TOTAL"]
         ["AIRBRAKE"] = 
         {
             ["hh"] = 0,
@@ -9573,15 +10634,15 @@ mission =
             ["id"] = "Failure_Ctrl_FCS_Ch1",
             ["mm"] = 0,
         }, -- end of ["Failure_Ctrl_FCS_Ch1"]
-        ["TRN_FAIL_AUX"] = 
+        ["VHF_ARC_182_FAILURE_TRANSCEIVER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "TRN_FAIL_AUX",
+            ["id"] = "VHF_ARC_182_FAILURE_TRANSCEIVER",
             ["mm"] = 0,
-        }, -- end of ["TRN_FAIL_AUX"]
+        }, -- end of ["VHF_ARC_182_FAILURE_TRANSCEIVER"]
         ["CADC_STABILIZER_AUTHORITY_COMMAND"] = 
         {
             ["hh"] = 0,
@@ -9654,15 +10715,15 @@ mission =
             ["id"] = "RWR_FAILURE_QUAD45",
             ["mm"] = 0,
         }, -- end of ["RWR_FAILURE_QUAD45"]
-        ["JAMMER"] = 
+        ["Failure_PP_LeftPTS"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "JAMMER",
+            ["id"] = "Failure_PP_LeftPTS",
             ["mm"] = 0,
-        }, -- end of ["JAMMER"]
+        }, -- end of ["Failure_PP_LeftPTS"]
         ["INS_FAILURE_VELOCITY"] = 
         {
             ["hh"] = 0,
@@ -9717,15 +10778,15 @@ mission =
             ["id"] = "BURNER",
             ["mm"] = 0,
         }, -- end of ["BURNER"]
-        ["RWR_FAILURE_DISPLAY_RIO"] = 
+        ["AHRS_FAILURE_GYRO"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_DISPLAY_RIO",
+            ["id"] = "AHRS_FAILURE_GYRO",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_DISPLAY_RIO"]
+        }, -- end of ["AHRS_FAILURE_GYRO"]
         ["Failure_Fuel_ExtTankTransferL"] = 
         {
             ["hh"] = 0,
@@ -9735,24 +10796,24 @@ mission =
             ["id"] = "Failure_Fuel_ExtTankTransferL",
             ["mm"] = 0,
         }, -- end of ["Failure_Fuel_ExtTankTransferL"]
-        ["OIL_SYSTEM_FAIL_100"] = 
+        ["CMS_FAILURE_LEFT_DISPENSER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "OIL_SYSTEM_FAIL_100",
+            ["id"] = "CMS_FAILURE_LEFT_DISPENSER",
             ["mm"] = 0,
-        }, -- end of ["OIL_SYSTEM_FAIL_100"]
-        ["TACAN_FAILURE_RECEIVER"] = 
+        }, -- end of ["CMS_FAILURE_LEFT_DISPENSER"]
+        ["COM2_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "TACAN_FAILURE_RECEIVER",
+            ["id"] = "COM2_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["TACAN_FAILURE_RECEIVER"]
+        }, -- end of ["COM2_FAILURE_TOTAL"]
         ["Failure_Sens_RightPitotHeater"] = 
         {
             ["hh"] = 0,
@@ -9870,15 +10931,15 @@ mission =
             ["id"] = "RWR_FAILURE_SENSOR_RIGHT",
             ["mm"] = 0,
         }, -- end of ["RWR_FAILURE_SENSOR_RIGHT"]
-        ["Failure_Elec_EmergencyBattery"] = 
+        ["DOPPLER_UNIT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_Elec_EmergencyBattery",
+            ["id"] = "DOPPLER_UNIT",
             ["mm"] = 0,
-        }, -- end of ["Failure_Elec_EmergencyBattery"]
+        }, -- end of ["DOPPLER_UNIT"]
         ["FLIR_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
@@ -9924,24 +10985,24 @@ mission =
             ["id"] = "BCKGYRO",
             ["mm"] = 0,
         }, -- end of ["BCKGYRO"]
-        ["ELEVONSERVINNERRIGHT"] = 
+        ["CANARDFLAPRIGHT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ELEVONSERVINNERRIGHT",
+            ["id"] = "CANARDFLAPRIGHT",
             ["mm"] = 0,
-        }, -- end of ["ELEVONSERVINNERRIGHT"]
-        ["Failure_Elec_UtilityBattery"] = 
+        }, -- end of ["CANARDFLAPRIGHT"]
+        ["BCKPITOT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_Elec_UtilityBattery",
+            ["id"] = "BCKPITOT",
             ["mm"] = 0,
-        }, -- end of ["Failure_Elec_UtilityBattery"]
+        }, -- end of ["BCKPITOT"]
         ["FUELTANK5R"] = 
         {
             ["hh"] = 0,
@@ -10167,15 +11228,15 @@ mission =
             ["id"] = "HYDR1ACC",
             ["mm"] = 0,
         }, -- end of ["HYDR1ACC"]
-        ["DATACARTRIDGE"] = 
+        ["ELEVONINNERLEFT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "DATACARTRIDGE",
+            ["id"] = "ELEVONINNERLEFT",
             ["mm"] = 0,
-        }, -- end of ["DATACARTRIDGE"]
+        }, -- end of ["ELEVONINNERLEFT"]
         ["ENG_ALT_1_FAIL"] = 
         {
             ["hh"] = 0,
@@ -10185,15 +11246,15 @@ mission =
             ["id"] = "ENG_ALT_1_FAIL",
             ["mm"] = 0,
         }, -- end of ["ENG_ALT_1_FAIL"]
-        ["esf_RightGenerator"] = 
+        ["INS_PART_FAIL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "esf_RightGenerator",
+            ["id"] = "INS_PART_FAIL",
             ["mm"] = 0,
-        }, -- end of ["esf_RightGenerator"]
+        }, -- end of ["INS_PART_FAIL"]
         ["STRAKE_RIGHT_FAILURE"] = 
         {
             ["hh"] = 0,
@@ -10203,15 +11264,15 @@ mission =
             ["id"] = "STRAKE_RIGHT_FAILURE",
             ["mm"] = 0,
         }, -- end of ["STRAKE_RIGHT_FAILURE"]
-        ["SMS_FAILURE_TOTAL"] = 
+        ["RB05ANT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "SMS_FAILURE_TOTAL",
+            ["id"] = "RB05ANT",
             ["mm"] = 0,
-        }, -- end of ["SMS_FAILURE_TOTAL"]
+        }, -- end of ["RB05ANT"]
         ["ppf_FireLeft"] = 
         {
             ["hh"] = 0,
@@ -10221,24 +11282,24 @@ mission =
             ["id"] = "ppf_FireLeft",
             ["mm"] = 0,
         }, -- end of ["ppf_FireLeft"]
-        ["Failure_Sens_LeftPitotHeater"] = 
+        ["RWR_FAILURE_SENSOR_TAIL_R"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_Sens_LeftPitotHeater",
+            ["id"] = "RWR_FAILURE_SENSOR_TAIL_R",
             ["mm"] = 0,
-        }, -- end of ["Failure_Sens_LeftPitotHeater"]
-        ["COM1_FAILURE_TOTAL"] = 
+        }, -- end of ["RWR_FAILURE_SENSOR_TAIL_R"]
+        ["MSC_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "COM1_FAILURE_TOTAL",
+            ["id"] = "MSC_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["COM1_FAILURE_TOTAL"]
+        }, -- end of ["MSC_FAILURE_TOTAL"]
         ["RPMSENSOR"] = 
         {
             ["hh"] = 0,
@@ -10257,15 +11318,15 @@ mission =
             ["id"] = "SOPLO_FAILURE_PARTIAL",
             ["mm"] = 0,
         }, -- end of ["SOPLO_FAILURE_PARTIAL"]
-        ["RWR_FAILURE_COMPUTER"] = 
+        ["RWR_FAILURE_CONTROL_BOX"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_COMPUTER",
+            ["id"] = "RWR_FAILURE_CONTROL_BOX",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_COMPUTER"]
+        }, -- end of ["RWR_FAILURE_CONTROL_BOX"]
         ["Failure_Ctrl_FCS_Ch4"] = 
         {
             ["hh"] = 0,
@@ -10284,15 +11345,15 @@ mission =
             ["id"] = "EPRSENSOR",
             ["mm"] = 0,
         }, -- end of ["EPRSENSOR"]
-        ["ELEVONINNERLEFT"] = 
+        ["TURBINE"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ELEVONINNERLEFT",
+            ["id"] = "TURBINE",
             ["mm"] = 0,
-        }, -- end of ["ELEVONINNERLEFT"]
+        }, -- end of ["TURBINE"]
         ["AIRBRAKESERVO"] = 
         {
             ["hh"] = 0,
@@ -10329,15 +11390,15 @@ mission =
             ["id"] = "RWRUNIT",
             ["mm"] = 0,
         }, -- end of ["RWRUNIT"]
-        ["CMS_FAILURE_RIGHT_DISPENSER"] = 
+        ["ELEVONINNERRIGHT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "CMS_FAILURE_RIGHT_DISPENSER",
+            ["id"] = "ELEVONINNERRIGHT",
             ["mm"] = 0,
-        }, -- end of ["CMS_FAILURE_RIGHT_DISPENSER"]
+        }, -- end of ["ELEVONINNERRIGHT"]
         ["ENG_ALT_2_FAIL"] = 
         {
             ["hh"] = 0,
@@ -10401,24 +11462,24 @@ mission =
             ["id"] = "Failure_Fuel_LeftBoostPump",
             ["mm"] = 0,
         }, -- end of ["Failure_Fuel_LeftBoostPump"]
-        ["RB05ANT"] = 
+        ["esf_RightRectifier"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RB05ANT",
+            ["id"] = "esf_RightRectifier",
             ["mm"] = 0,
-        }, -- end of ["RB05ANT"]
-        ["INS_PART_FAIL"] = 
+        }, -- end of ["esf_RightRectifier"]
+        ["SMS_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "INS_PART_FAIL",
+            ["id"] = "SMS_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["INS_PART_FAIL"]
+        }, -- end of ["SMS_FAILURE_TOTAL"]
         ["ICS_FAILURE_AMPLIFIER_PILOT_NORM"] = 
         {
             ["hh"] = 0,
@@ -10446,51 +11507,51 @@ mission =
             ["id"] = "AOASENSOR",
             ["mm"] = 0,
         }, -- end of ["AOASENSOR"]
-        ["DOPPLER_UNIT"] = 
+        ["ELEVONSERVINNERRIGHT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "DOPPLER_UNIT",
+            ["id"] = "ELEVONSERVINNERRIGHT",
             ["mm"] = 0,
-        }, -- end of ["DOPPLER_UNIT"]
-        ["ICS_FAILURE_AMPLIFIER_RIO_NORM"] = 
+        }, -- end of ["ELEVONSERVINNERRIGHT"]
+        ["RWR_FAILURE_QUAD225"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ICS_FAILURE_AMPLIFIER_RIO_NORM",
+            ["id"] = "RWR_FAILURE_QUAD225",
             ["mm"] = 0,
-        }, -- end of ["ICS_FAILURE_AMPLIFIER_RIO_NORM"]
-        ["VHF_ARC_182_FAILURE_TRANSCEIVER"] = 
+        }, -- end of ["RWR_FAILURE_QUAD225"]
+        ["TRN_FAIL_AUX"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "VHF_ARC_182_FAILURE_TRANSCEIVER",
+            ["id"] = "TRN_FAIL_AUX",
             ["mm"] = 0,
-        }, -- end of ["VHF_ARC_182_FAILURE_TRANSCEIVER"]
-        ["Failure_PP_EngR_Nozzle_CS"] = 
+        }, -- end of ["TRN_FAIL_AUX"]
+        ["Failure_Elec_LeftTransformerRectifier"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_PP_EngR_Nozzle_CS",
+            ["id"] = "Failure_Elec_LeftTransformerRectifier",
             ["mm"] = 0,
-        }, -- end of ["Failure_PP_EngR_Nozzle_CS"]
-        ["RWR_FAILURE_TOTAL"] = 
+        }, -- end of ["Failure_Elec_LeftTransformerRectifier"]
+        ["ppf_LeftNozzleControl"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_TOTAL",
+            ["id"] = "ppf_LeftNozzleControl",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_TOTAL"]
+        }, -- end of ["ppf_LeftNozzleControl"]
         ["STATION_2_FAILURE"] = 
         {
             ["hh"] = 0,
@@ -10500,42 +11561,42 @@ mission =
             ["id"] = "STATION_2_FAILURE",
             ["mm"] = 0,
         }, -- end of ["STATION_2_FAILURE"]
-        ["GTS"] = 
+        ["FUELTANK3L"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "GTS",
+            ["id"] = "FUELTANK3L",
             ["mm"] = 0,
-        }, -- end of ["GTS"]
-        ["Failure_Elec_LeftGenerator"] = 
+        }, -- end of ["FUELTANK3L"]
+        ["CADC_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_Elec_LeftGenerator",
+            ["id"] = "CADC_FAILURE_TOTAL",
             ["mm"] = 0,
-        }, -- end of ["Failure_Elec_LeftGenerator"]
-        ["CANARDFLAPRIGHT"] = 
+        }, -- end of ["CADC_FAILURE_TOTAL"]
+        ["ELEVONSERVINNERLEFT"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "CANARDFLAPRIGHT",
+            ["id"] = "ELEVONSERVINNERLEFT",
             ["mm"] = 0,
-        }, -- end of ["CANARDFLAPRIGHT"]
-        ["COM2_FAILURE_TOTAL"] = 
+        }, -- end of ["ELEVONSERVINNERLEFT"]
+        ["TACAN_FAILURE_RECEIVER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "COM2_FAILURE_TOTAL",
+            ["id"] = "TACAN_FAILURE_RECEIVER",
             ["mm"] = 0,
-        }, -- end of ["COM2_FAILURE_TOTAL"]
+        }, -- end of ["TACAN_FAILURE_RECEIVER"]
         ["Failure_PP_RightPTS"] = 
         {
             ["hh"] = 0,
@@ -10563,42 +11624,42 @@ mission =
             ["id"] = "Failure_Hyd_HYD2B_Leak",
             ["mm"] = 0,
         }, -- end of ["Failure_Hyd_HYD2B_Leak"]
-        ["BCKPITOT"] = 
+        ["Failure_Elec_UtilityBattery"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "BCKPITOT",
+            ["id"] = "Failure_Elec_UtilityBattery",
             ["mm"] = 0,
-        }, -- end of ["BCKPITOT"]
-        ["FUELTANK3L"] = 
+        }, -- end of ["Failure_Elec_UtilityBattery"]
+        ["GTS"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "FUELTANK3L",
+            ["id"] = "GTS",
             ["mm"] = 0,
-        }, -- end of ["FUELTANK3L"]
-        ["Failure_PP_LeftPTS"] = 
+        }, -- end of ["GTS"]
+        ["JAMMER"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_PP_LeftPTS",
+            ["id"] = "JAMMER",
             ["mm"] = 0,
-        }, -- end of ["Failure_PP_LeftPTS"]
-        ["CMS_FAILURE_LEFT_DISPENSER"] = 
+        }, -- end of ["JAMMER"]
+        ["OIL_SYSTEM_FAIL_100"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "CMS_FAILURE_LEFT_DISPENSER",
+            ["id"] = "OIL_SYSTEM_FAIL_100",
             ["mm"] = 0,
-        }, -- end of ["CMS_FAILURE_LEFT_DISPENSER"]
+        }, -- end of ["OIL_SYSTEM_FAIL_100"]
         ["Failure_PP_EngL_Nozzle_CS"] = 
         {
             ["hh"] = 0,
@@ -10617,15 +11678,15 @@ mission =
             ["id"] = "RUDDERSERV",
             ["mm"] = 0,
         }, -- end of ["RUDDERSERV"]
-        ["ELEVONSERVINNERLEFT"] = 
+        ["TEMPSENSOR"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "ELEVONSERVINNERLEFT",
+            ["id"] = "TEMPSENSOR",
             ["mm"] = 0,
-        }, -- end of ["ELEVONSERVINNERLEFT"]
+        }, -- end of ["TEMPSENSOR"]
         ["TACAN_FAILURE_TRANSMITTER"] = 
         {
             ["hh"] = 0,
@@ -10635,15 +11696,15 @@ mission =
             ["id"] = "TACAN_FAILURE_TRANSMITTER",
             ["mm"] = 0,
         }, -- end of ["TACAN_FAILURE_TRANSMITTER"]
-        ["AHRS_FAILURE_GYRO"] = 
+        ["RWR_FAILURE_DISPLAY_RIO"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "AHRS_FAILURE_GYRO",
+            ["id"] = "RWR_FAILURE_DISPLAY_RIO",
             ["mm"] = 0,
-        }, -- end of ["AHRS_FAILURE_GYRO"]
+        }, -- end of ["RWR_FAILURE_DISPLAY_RIO"]
         ["ELEVONSERVOUTERLEFT"] = 
         {
             ["hh"] = 0,
@@ -10653,15 +11714,15 @@ mission =
             ["id"] = "ELEVONSERVOUTERLEFT",
             ["mm"] = 0,
         }, -- end of ["ELEVONSERVOUTERLEFT"]
-        ["Failure_ECS_Valve"] = 
+        ["BACKUPGENERATOR"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "Failure_ECS_Valve",
+            ["id"] = "BACKUPGENERATOR",
             ["mm"] = 0,
-        }, -- end of ["Failure_ECS_Valve"]
+        }, -- end of ["BACKUPGENERATOR"]
         ["ppf_LeftOil"] = 
         {
             ["hh"] = 0,
@@ -10716,15 +11777,6 @@ mission =
             ["id"] = "CADC_MANEUVER_FLAP_COMMAND",
             ["mm"] = 0,
         }, -- end of ["CADC_MANEUVER_FLAP_COMMAND"]
-        ["TEMPSENSOR"] = 
-        {
-            ["hh"] = 0,
-            ["prob"] = 100,
-            ["enable"] = false,
-            ["mmint"] = 1,
-            ["id"] = "TEMPSENSOR",
-            ["mm"] = 0,
-        }, -- end of ["TEMPSENSOR"]
         ["RWR_FAILURE_MBE"] = 
         {
             ["hh"] = 0,
@@ -10752,15 +11804,6 @@ mission =
             ["id"] = "RWR_FAILURE_DISPLAY_PILOT",
             ["mm"] = 0,
         }, -- end of ["RWR_FAILURE_DISPLAY_PILOT"]
-        ["W_S_L"] = 
-        {
-            ["hh"] = 0,
-            ["prob"] = 100,
-            ["enable"] = false,
-            ["mmint"] = 1,
-            ["id"] = "W_S_L",
-            ["mm"] = 0,
-        }, -- end of ["W_S_L"]
         ["UHF_ARC_159_FAILURE_REMOTE_DISPLAY_RIO"] = 
         {
             ["hh"] = 0,
@@ -10770,6 +11813,24 @@ mission =
             ["id"] = "UHF_ARC_159_FAILURE_REMOTE_DISPLAY_RIO",
             ["mm"] = 0,
         }, -- end of ["UHF_ARC_159_FAILURE_REMOTE_DISPLAY_RIO"]
+        ["W_S_L"] = 
+        {
+            ["hh"] = 0,
+            ["prob"] = 100,
+            ["enable"] = false,
+            ["mmint"] = 1,
+            ["id"] = "W_S_L",
+            ["mm"] = 0,
+        }, -- end of ["W_S_L"]
+        ["Failure_Elec_EmergencyBattery"] = 
+        {
+            ["hh"] = 0,
+            ["prob"] = 100,
+            ["enable"] = false,
+            ["mmint"] = 1,
+            ["id"] = "Failure_Elec_EmergencyBattery",
+            ["mm"] = 0,
+        }, -- end of ["Failure_Elec_EmergencyBattery"]
         ["RWR_FAILURE_QUAD315"] = 
         {
             ["hh"] = 0,
@@ -10806,6 +11867,24 @@ mission =
             ["id"] = "FUELTANK4R",
             ["mm"] = 0,
         }, -- end of ["FUELTANK4R"]
+        ["DATACARTRIDGE"] = 
+        {
+            ["hh"] = 0,
+            ["prob"] = 100,
+            ["enable"] = false,
+            ["mmint"] = 1,
+            ["id"] = "DATACARTRIDGE",
+            ["mm"] = 0,
+        }, -- end of ["DATACARTRIDGE"]
+        ["esf_RightGenerator"] = 
+        {
+            ["hh"] = 0,
+            ["prob"] = 100,
+            ["enable"] = false,
+            ["mmint"] = 1,
+            ["id"] = "esf_RightGenerator",
+            ["mm"] = 0,
+        }, -- end of ["esf_RightGenerator"]
         ["STATION_6_FAILURE"] = 
         {
             ["hh"] = 0,
@@ -10824,24 +11903,6 @@ mission =
             ["id"] = "sensf_PITOT_DAMAGE",
             ["mm"] = 0,
         }, -- end of ["sensf_PITOT_DAMAGE"]
-        ["esf_RightRectifier"] = 
-        {
-            ["hh"] = 0,
-            ["prob"] = 100,
-            ["enable"] = false,
-            ["mmint"] = 1,
-            ["id"] = "esf_RightRectifier",
-            ["mm"] = 0,
-        }, -- end of ["esf_RightRectifier"]
-        ["TURBINE"] = 
-        {
-            ["hh"] = 0,
-            ["prob"] = 100,
-            ["enable"] = false,
-            ["mmint"] = 1,
-            ["id"] = "TURBINE",
-            ["mm"] = 0,
-        }, -- end of ["TURBINE"]
         ["TRN_FAIL"] = 
         {
             ["hh"] = 0,
@@ -10860,15 +11921,15 @@ mission =
             ["id"] = "HYD_PUMP_2_FAIL_100",
             ["mm"] = 0,
         }, -- end of ["HYD_PUMP_2_FAIL_100"]
-        ["RWR_FAILURE_QUAD225"] = 
+        ["ICS_FAILURE_AMPLIFIER_RIO_NORM"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_QUAD225",
+            ["id"] = "ICS_FAILURE_AMPLIFIER_RIO_NORM",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_QUAD225"]
+        }, -- end of ["ICS_FAILURE_AMPLIFIER_RIO_NORM"]
         ["UHF_ARC_159_FAILURE_TOTAL"] = 
         {
             ["hh"] = 0,
@@ -10923,15 +11984,15 @@ mission =
             ["id"] = "VHF_ARC_182_FAILURE_REMOTE_DISPLAY",
             ["mm"] = 0,
         }, -- end of ["VHF_ARC_182_FAILURE_REMOTE_DISPLAY"]
-        ["RWR_FAILURE_SENSOR_TAIL_R"] = 
+        ["Failure_Sens_LeftPitotHeater"] = 
         {
             ["hh"] = 0,
             ["prob"] = 100,
             ["enable"] = false,
             ["mmint"] = 1,
-            ["id"] = "RWR_FAILURE_SENSOR_TAIL_R",
+            ["id"] = "Failure_Sens_LeftPitotHeater",
             ["mm"] = 0,
-        }, -- end of ["RWR_FAILURE_SENSOR_TAIL_R"]
+        }, -- end of ["Failure_Sens_LeftPitotHeater"]
         ["ppf_RightGearbox"] = 
         {
             ["hh"] = 0,

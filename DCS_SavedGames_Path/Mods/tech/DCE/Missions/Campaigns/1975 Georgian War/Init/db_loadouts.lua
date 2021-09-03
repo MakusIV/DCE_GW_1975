@@ -1139,7 +1139,59 @@ db_loadouts = {
 	},
 
 	["AJS37"] = {-- 1971 (entrata in servizio)
+		["Intercept"] = {
+			["Intercept RB-05A*2 RB-74*2 FUEL"] = {
+				minscore = 0.0,				
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 3,
+				firepower = 6,
+				vCruise = nil,
+				vAttack = nil,
+				hCruise = nil,
+				hAttack = nil,
+				standoff = nil,
+				tStation = nil,
+				LDSD = true,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{Robot05}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{Robot05}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+		},
 		["Anti-ship Strike"] = {
+			--[[
 			["Antiship - RB 15F*2(antiship) - RB-74J*2(aim9) - RB-24J*2(aim9) - FT"] = {--RB-15 dal 1985
 				minscore = 0.0,
 				support = {
@@ -1198,6 +1250,166 @@ db_loadouts = {
 					["fuel"] = 4476,
 					["flare"] = 36,
 					["chaff"] = 105,
+					["gun"] = 100,
+				},
+			},
+			]]
+			["Antiship RB-04R*2 RB-74*2, FUEL"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = false,
+					},
+				attributes = {"ship"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 7,
+				firepower = 7,
+				vCruise = 250.83333333333,
+				vAttack = 215.5,
+				hCruise = 3500,
+				hAttack = 1000,
+				standoff = 35000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{Rb04}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{Rb04}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+			["Antiship ECM Escort KB pod RB-04R*1RB-74*2, FUEL"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = false,
+					},
+				attributes = {"ship"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 7,
+				firepower = 7,
+				vCruise = 250.83333333333,
+				vAttack = 215.5,
+				hCruise = 3500,
+				hAttack = 1000,
+				standoff = 35000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{Rb04}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+			["Antiship Mav-TV RB-75T*4 FUEL"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = false,
+					},
+				attributes = {"ship"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 7,
+				firepower = 7,
+				vCruise = 250.83333333333,
+				vAttack = 215.5,
+				hCruise = 3500,
+				hAttack = 1000,
+				standoff = 35000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
 					["gun"] = 100,
 				},
 			},
@@ -1265,7 +1477,7 @@ db_loadouts = {
 				},
 			},
 			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT"] = {
-				minscore = 0.1,
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1325,13 +1537,13 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = {
-				minscore = 0.2,
+			["CAS Hard - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"Structure", "Bridge", "SAM"},
 				weaponType = "ASM",
 				expend = "All",
 				day = true,
@@ -1339,7 +1551,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 3,
+				firepower = 6,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 6000,
@@ -1386,8 +1598,8 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS - BK90 (MJ1)*2 - ECM*2 - RB-24J*2 - XT"] = {
-				minscore = 0.3,
+			["CAS Cluster- BK90 (MJ1)*2 - ECM*2 - RB-24J*2 - XT"] = {
+				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -1400,7 +1612,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 4,
+				firepower = 6,
 				vCruise = 250.83333333333,
 				vAttack = 350.5,
 				hCruise = 100,
@@ -1447,13 +1659,13 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["ASM AGM-65A-B TV Guided Rb-24 Fuel"] = {
+			["ASM hard RB-75(AGM-65A-B)*4 TV Guided Rb-24 Fuel"] = {
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM", "Structure"},
+				attributes = {"Structure", "Bridge", "SAM"},
 				weaponType = "ASM",
 				expend = "All",
 				day = true,
@@ -1502,6 +1714,58 @@ db_loadouts = {
 							["CLSID"] = "{Robot24}",
 						}, -- end of [7]
 					},
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+		},
+		["SEAD"] = {		
+			["ASM SEAD ECM MavTV  U25pod KBpod RB-75T*2 FUEL"] = {
+				minscore = 0.1,
+				attributes = {},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 5,
+				firepower = 6,
+				vCruise = 250.83333333333,
+				vAttack = 350.5,
+				hCruise = 1000,
+				hAttack = 1000,
+				standoff = 9000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 7,
+				stores = {
+					["pylons"] =
+					{
+						[2] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{U22}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
 					["fuel"] = 4476,
 					["flare"] = 72,
 					["chaff"] = 210,
@@ -3714,8 +3978,8 @@ db_loadouts = {
 				expend = "Auto",
 				day = true,
 				night = false,
-				adverseWeather = true,
-				range = 40000,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 3,
 				vCruise = 55,
@@ -3768,8 +4032,8 @@ db_loadouts = {
 				expend = "Auto",
 				day = true,
 				night = false,
-				adverseWeather = true,
-				range = 40000,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 5,
 				vCruise = 55,
@@ -3806,6 +4070,48 @@ db_loadouts = {
                 ["gun"] = 100,
 				},
 			},
+			["ASM BGM-71D * 8"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "SAM"},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 6,
+				firepower = 5,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+				["pylons"] = {
+					[1] = 
+					{
+						["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+					}, -- end of [1]
+					[4] = 
+					{
+						["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+					}, -- end of [4]
+				}, -- --end of ["pylons"]
+                ["fuel"] = 1125,
+				["flare"] = 30,
+				["chaff"] = 30,
+				["gun"] = 100,
+				},
+			},			
+			--[[
 			["ASM AGM-114*8"] = {--1982 (delete!?)
 				minscore = 0.3,
 				support = {
@@ -3816,8 +4122,8 @@ db_loadouts = {
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
-				night = true,
-				adverseWeather = true,
+				night = false,
+				adverseWeather = false,
 				range = 40000,
 				capability = 6,
 				firepower = 8,
@@ -3847,6 +4153,7 @@ db_loadouts = {
                 ["gun"] = 100,
 				},
 			},
+			]]
 		},
 	},
 
@@ -4239,7 +4546,7 @@ db_loadouts = {
 				expend = "All",
 				day = true,
 				night = false,
-				adverseWeather = true,
+				adverseWeather = false,
 				range = 700000,
 				capability = 9,
 				firepower = 6,
@@ -4296,7 +4603,7 @@ db_loadouts = {
 				expend = "All",
 				day = true,
 				night = false,
-				adverseWeather = true,
+				adverseWeather = false,
 				range = 900000,
 				capability = 9,
 				firepower = 3,
@@ -5089,7 +5396,7 @@ db_loadouts = {
 				day = true,
 				night = true,
 				adverseWeather = true,
-				range = 500000,
+				range = 200000,
 				capability = 7,
 				firepower = 1,
 				vCruise = 100,
@@ -5126,9 +5433,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 7,
 				firepower = 7,
 				vCruise = 100,
@@ -5171,9 +5478,9 @@ db_loadouts = {
 				weaponType = "Bombs",
 				expend = "Auto",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 7,
 				firepower = 9,
 				vCruise = 100,
@@ -5230,7 +5537,7 @@ db_loadouts = {
 				day = true,
 				night = true,
 				adverseWeather = true,
-				range = 500000,
+				range = 200000,
 				capability = 10,
 				firepower = 1,
 				vCruise = 100,
@@ -5275,9 +5582,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 4,
 				vCruise = 100,
@@ -5320,9 +5627,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 5,
 				vCruise = 100,
@@ -5357,9 +5664,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 4,
 				vCruise = 100,
@@ -5402,9 +5709,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 4,
 				vCruise = 100,
@@ -5439,9 +5746,9 @@ db_loadouts = {
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
 				capability = 6,
 				firepower = 2,
 				vCruise = 100,
@@ -7099,8 +7406,8 @@ db_loadouts = {
 				expend = "All",
 				attackType = "Dive",
 				day = true,
-				night = false,
-				adverseWeather = false,
+				night = true,
+				adverseWeather = true,
 				range = 700000,
 				capability = 9,
 				firepower = 12,
@@ -7843,8 +8150,8 @@ db_loadouts = {
 				expend = "All",
 				attackType = "Dive",
 				day = true,
-				night = false,
-				adverseWeather = false,
+				night = true,
+				adverseWeather = true,
 				range = 500000,
 				capability = 10,
 				firepower = 6,
