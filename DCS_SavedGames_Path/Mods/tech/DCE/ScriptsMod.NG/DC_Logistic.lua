@@ -29,7 +29,7 @@ The campaign maker must initialize supply_tab_init using targets presents in tar
 Important: 
 I) the names of the airbases written in supply_tab_init must be the same as those used in the oob_air. 
 II) the names of the airbases defined in targetlist must be the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
-For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]]]
+For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]]
 
 --[[
 
