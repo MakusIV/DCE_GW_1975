@@ -1038,39 +1038,9 @@ oob_air = {
 			skill = "Random",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
-		},
-		[6] = {
-			name = "1./115.IAP",							--unit name
-			type = "Su-17M4",								--aircraft type
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "Mozdok",								--unit base
-			skill = "Random",								--unit skill
-			tasks = {										--unit tasks
-				["Strike"] = true,
-				["Anti-ship Strike"] = true,			
-				["SEAD"] = true,
-			},
-			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 2,								-- coef normal : = 1
-				["SEAD"] = 1.5,
-				["Anti-ship Strike"] = 1,
-				["Laser Illumination"] = 1,				
-			},
-			number = 12,
-		},
-		[7] = {
-			name = "R./115.IAP",							--unit name
-			inactive = true,
-			type = "Su-17M4",								--aircraft type
-			country = "Russia",								--unit country
-			base = "Reserves",
-			skill = "Random",								--unit skill
-			tasks = {},										--unit tasks
-			number = 36,
-		},		
+		},				
 		-------------------- Beslan ---------------
-		[8] = {
+		[6] = {
 			name = "1./37.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Russia",								--unit country
@@ -1098,7 +1068,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[9] = {
+		[7] = {
 			name = "R./37.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
@@ -1107,7 +1077,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 36,
 		},
-		[10] = {
+		[8] = {
 			name = "1./127.IAP",							--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
@@ -1126,7 +1096,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[11] = {
+		[9] = {
 			name = "R./127.IAP",							--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
@@ -1136,7 +1106,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[12] = {
+		[10] = {
 			name = "1./123.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1160,7 +1130,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[13] = {
+		[11] = {
 			name = "R./123.IAP",							--unit name
 			inactive = true,	
 			type = "MiG-23MLD",								--aircraft type
@@ -1170,7 +1140,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,	
 		},		
-		[14] = {
+		[12] = {
 			name = "1./115AS.IAP",							--unit name
 			type = "L-39A",									--aircraft type
 			country = "Russia",								--unit country
@@ -1196,7 +1166,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[15] = {
+		[13] = {
 			name = "R./115AS.IAP",
 			inactive = true,								--unit name
 			type = "L-39A",									--aircraft type
@@ -1206,7 +1176,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[16] = {
+		[14] = {
 			name = "3.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1219,7 +1189,7 @@ oob_air = {
 			number = 6,
 		},
 		---------------------- Nalchik ---------------
-		[17] = {
+		[15] = {
 			name = "1./19.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Russia",								--unit country
@@ -1247,7 +1217,7 @@ oob_air = {
 			},
 			number = 18,
 		},
-		[18] = {
+		[16] = {
 			name = "R./19.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
@@ -1256,7 +1226,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[19] = {
+		[17] = {
 			name = "2457 SDRLO",							--unit name
 			type = "A-50",									--aircraft type
 			country = "Russia",								--unit country
@@ -1269,7 +1239,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[20] = {
+		[18] = {
 			name = "1./107.IAP",							--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
@@ -1289,7 +1259,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[21] = {
+		[19] = {
 			name = "R./107.IAP",							--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
@@ -1299,7 +1269,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[22] = {
+		[20] = {
 			name = "1./111AS.IAP",							--unit name
 			type = "L-39A",									--aircraft type
 			country = "Russia",								--unit country
@@ -1325,7 +1295,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[23] = {
+		[21] = {
 			name = "R./111AS.IAP",							--unit name
 			inactive = true,
 			type = "L-39A",									--aircraft type
@@ -1335,7 +1305,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[24] = {
+		[22] = {
 			name = "13.OSAP",								--unit name
 			type = "Il-76MD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1347,7 +1317,7 @@ oob_air = {
 			},
 			number = 4,
 		},
-		[25] = {
+		[23] = {
 			name = "R./13.OSAP",							--unit name
 			inactive = true,
 			type = "Il-76MD",								--aircraft type
@@ -1358,7 +1328,7 @@ oob_air = {
 			number = 4,
 		},
 		-------------------- Mineralnye-Vody ------
-		[26] = {
+		[24] = {
 			name = "793.IAP",								--unit name
 			type = "MiG-25PD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1379,7 +1349,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[27] = {
+		[25] = {
 			name = "1./41.IAP",								--unit name
 			type = "Su-24M",								--aircraft type
 			country = "Russia",								--unit country
@@ -1400,7 +1370,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[28] = {
+		[26] = {
 			name = "R./41.IAP",								--unit name
 			inactive = true,
 			type = "Su-24M",								--aircraft type
@@ -1409,7 +1379,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},		
-		[29] = {
+		[27] = {
 			name = "1./133.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1432,7 +1402,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[30] = {
+		[28] = {
 			name = "R./133.IAP",							--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
@@ -1442,7 +1412,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[31] = {
+		[29] = {
 			name = "1./135.IAP",							--unit name
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
@@ -1462,7 +1432,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[32] = {
+		[30] = {
 			name = "R./135.IAP",							--unit name
 			inactive = true,
 			type = "Su-17M4",								--aircraft type
@@ -1472,7 +1442,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[33] = {
+		[31] = {
 			name = "1./29.OSAP",							--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1484,7 +1454,7 @@ oob_air = {
 			},
 			number = 2,
 		},
-		[34] = {
+		[32] = {
 			name = "R./29.OSAP",							--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
@@ -1494,7 +1464,7 @@ oob_air = {
 			number = 4,
 		},		
 		--------------------- Sochi-Adler --------------
-		[35] = {
+		[33] = {
 			name = "2.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1507,7 +1477,7 @@ oob_air = {
 			number = 6,
 		},		
 		--------------------- Maykop-Khanskaya --------------
-		[36] = {
+		[34] = {
 			name = "1./153.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1530,7 +1500,7 @@ oob_air = {
 			},
 			number = 18,
 		},
-		[37] = {
+		[35] = {
 			name = "R./153.IAP",							--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
@@ -1540,7 +1510,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[38] = {
+		[36] = {
 			name = "1./61.IAP",								--unit name
 			type = "Tu-22M3",								--aircraft type
 			country = "Russia",								--unit country
@@ -1558,7 +1528,7 @@ oob_air = {
 			},
 			number = 8,
 		},
-		[39] = {
+		[37] = {
 			name = "R./61.IAP",								--unit name
 			inactive = true,
 			type = "Tu-22M3",								--aircraft type
@@ -1567,7 +1537,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 8,
 		},
-		[40] = {
+		[38] = {
 			name = "1./81.IAP",								--unit name
 			type = "Su-24M",								--aircraft type
 			country = "Russia",								--unit country
@@ -1588,7 +1558,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[41] = {
+		[39] = {
 			name = "R./81.IAP",								--unit name
 			inactive = true,
 			type = "Su-24M",								--aircraft type
@@ -1597,7 +1567,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[42] = {
+		[40] = {
 			name = "27.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
@@ -1609,7 +1579,7 @@ oob_air = {
 			},
 			number = 1,
 		},
-		[43] = {
+		[41] = {
 			name = "R/27.OSAP",								--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
@@ -1618,6 +1588,36 @@ oob_air = {
 			skill = "High",									--unit skill
 			tasks = {},										--unit tasks
 			number = 4,
+		},
+		[42] = {
+			name = "1./115.IAP",							--unit name
+			type = "Su-17M4",								--aircraft type
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "Maykop-Khanskaya",								--unit base
+			skill = "Random",								--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["Anti-ship Strike"] = true,			
+				["SEAD"] = true,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1.5,
+				["Anti-ship Strike"] = 1,
+				["Laser Illumination"] = 1,				
+			},
+			number = 12,
+		},
+		[43] = {
+			name = "R./115.IAP",							--unit name
+			inactive = true,
+			type = "Su-17M4",								--aircraft type
+			country = "Russia",								--unit country
+			base = "Reserves",
+			skill = "Random",								--unit skill
+			tasks = {},										--unit tasks
+			number = 36,
 		},
 		--------------------- Anapa-Vityazevo --------------
 		[44] = {
