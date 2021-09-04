@@ -723,7 +723,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 5,
 		},
-		[36] = {
+		[38] = {
 			name = "VS-21",									--unit name
 			type = "S-3B",									--aircraft type
 			country = "USA",								--unit country
@@ -738,7 +738,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[37] = {
+		[39] = {
 			name = "R/VS-21",								--unit name
 			inactive = true,
 			type = "S-3B",									--aircraft type
@@ -749,7 +749,7 @@ oob_air = {
 			number = 36,
 		},
 			------------------ CVN-74 John C. Stennis --------------------
-		[38] = {
+		[40] = {
 			name = "VF-118/GA",								--unit name
 			--player = true,								--player unit
 			type = "F-14A-135-GR",							--aircraft type
@@ -776,7 +776,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[39] = {
+		[41] = {
 			name = "R/VF-118/GA",							--unit name
 			inactive = true,
 			type = "F-14A-135-GR",							--aircraft type
@@ -785,7 +785,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-		[40] = {
+		[42] = {
 			name = "177 ARW",								--unit name
 			type = "S-3B Tanker",							--aircraft type
 			country = "USA",								--unit country
@@ -798,13 +798,13 @@ oob_air = {
 			},
 			number = 8,
 		},	
-		[36] = {
+		[43] = {
 			name = "VS-22",									--unit name
 			type = "S-3B",									--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
 			--sidenumber = {400, 429},						--unit range of sidenumbers (optional)
-			base = "CVN-71 Theodore Roosevelt",				--unit base
+			base = "CVN-74 John C. Stennis",				--unit base
 			skill = "High",									--unit skill			
 			tasks = {										--unit tasks
 				["Strike"] = true,
@@ -813,7 +813,7 @@ oob_air = {
 			},
 			number = 12,
 		},
-		[37] = {
+		[44] = {
 			name = "R/VS-22",								--unit name
 			inactive = true,
 			type = "S-3B",									--aircraft type
@@ -824,7 +824,7 @@ oob_air = {
 			number = 36,
 		},
 			---------------- KHASHURI FARP LM84
-		[41] = {
+		[45] = {
 			name = "17th Cavalry",							--unit name
 			type = "UH-1H",									--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -838,7 +838,7 @@ oob_air = {
 			}, 
 			number = 8,
 		},
-		[42] = {
+		[46] = {
 			name = "R/17th Cavalry",						--unit name
 			inactive = true,
 			type = "UH-1H",									--aircraft type
@@ -848,7 +848,7 @@ oob_air = {
 			number = 20,
 		},
 			----------------  GORI FARP MM25
-		[43] = {
+		[47] = {
 			name = "6th Cavalry",							--unit name
 			type = "AH-1W",									--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -861,7 +861,7 @@ oob_air = {
 			},
 			number = 8,
 		},
-		[44] = {
+		[48] = {
 			name = "R/6th Cavalry",							--unit name
 			inactive = true,
 			type = "AH-1W",									--aircraft type
@@ -871,7 +871,7 @@ oob_air = {
 			number = 20,
 		},			
 		---------------- AMBROLAURI FARP LN41
-		[45] = {
+		[49] = {
 			name = "GAH 2rd",								--unit name
 			type = "Mi-24V",								--aircraft type
 			helicopter = true,								--true for helicopter units
@@ -885,7 +885,7 @@ oob_air = {
 			},
 			number = 8,
 		},
-		[46] = {
+		[50] = {
 			name = "R/GAH 2rd",								--unit name
 			inactive = true,
 			type = "Mi-24V",								--aircraft type
@@ -895,7 +895,7 @@ oob_air = {
 			number = 20,
 		},
 		----------------------- Kobuleti -------------------------		
-		[47] = {
+		[51] = {
 			name = "54 TFS",								--unit name			
 			type = "F-4E",									--aircraft type
 			country = "USA",								--unit country
@@ -922,7 +922,7 @@ oob_air = {
 			},
 			number = 18,
 		},
-		[48] = {
+		[52] = {
 			name = "R/54 TFS",								--unit name
 			inactive = true,
 			type = "F-4E",									--aircraft type
@@ -931,7 +931,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},	
-		[49] = {
+		[53] = {
 			name = "317th Air Division",					--unit name
 			type = "C-130",									--aircraft type
 			country = "USA",								--unit country
@@ -943,7 +943,7 @@ oob_air = {
 			},
 			number = 3,
 		},
-		[50] = {
+		[54] = {
 			name = "R/317th Air Division",					--unit name
 			inactive = true,
 			type = "C-130",									--aircraft type
