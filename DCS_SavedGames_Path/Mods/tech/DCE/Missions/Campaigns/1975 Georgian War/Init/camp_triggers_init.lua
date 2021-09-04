@@ -568,6 +568,16 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/171 ARW", "171 ARW", 3)',
 	},
+	["Reinforce VS-21"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VS-21", "VS-21", 4)',
+	},
+	["Reinforce VS-22"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VS-22", "VS-22", 4)',
+	},
 	["Reinforce 174 ARW"] = {
 		active = true,
 		condition = 'true',

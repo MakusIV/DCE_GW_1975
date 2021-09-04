@@ -723,6 +723,31 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 5,
 		},
+		[36] = {
+			name = "VS-21",									--unit name
+			type = "S-3B",									--aircraft type
+			country = "USA",								--unit country
+			livery = "",									--unit livery
+			--sidenumber = {400, 429},						--unit range of sidenumbers (optional)
+			base = "CVN-71 Theodore Roosevelt",				--unit base
+			skill = "High",									--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["SEAD"] = true,
+				["Anti-ship Strike"] = true,
+			},
+			number = 12,
+		},
+		[37] = {
+			name = "R/VS-21",								--unit name
+			inactive = true,
+			type = "S-3B",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			skill = "High",									--unit skill
+			tasks = {},										--unit tasks
+			number = 36,
+		},
 			------------------ CVN-74 John C. Stennis --------------------
 		[38] = {
 			name = "VF-118/GA",								--unit name
@@ -773,6 +798,31 @@ oob_air = {
 			},
 			number = 8,
 		},	
+		[36] = {
+			name = "VS-22",									--unit name
+			type = "S-3B",									--aircraft type
+			country = "USA",								--unit country
+			livery = "",									--unit livery
+			--sidenumber = {400, 429},						--unit range of sidenumbers (optional)
+			base = "CVN-71 Theodore Roosevelt",				--unit base
+			skill = "High",									--unit skill			
+			tasks = {										--unit tasks
+				["Strike"] = true,
+				["SEAD"] = true,
+				["Anti-ship Strike"] = true,
+			},
+			number = 12,
+		},
+		[37] = {
+			name = "R/VS-22",								--unit name
+			inactive = true,
+			type = "S-3B",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			skill = "High",									--unit skill
+			tasks = {},										--unit tasks
+			number = 36,
+		},
 			---------------- KHASHURI FARP LM84
 		[41] = {
 			name = "17th Cavalry",							--unit name
