@@ -1,5 +1,5 @@
 REM Core or Main DCS ou DCS.beta path, always end the line with \ 
-set "pathDCS=G:\Programmi\Eagle Dynamics\DCS World OpenBeta Server\"
+set "pathDCS=G:\Gaming\DCS\DCS World OpenBeta\"
 REM Core or Main DCS ou DCS.beta path, always end the line with \ 
 set "pathSavedGames=C:\Users\marco\Saved Games\DCS.openbeta_server\"
 REM DCE ScriptMod version not any / or \ and no space before and after = 

@@ -1,0 +1,17 @@
+MODIFICHE DEBRIEF_StatEvalutation.lua
+
+righe 340-360
+
+-inserito: 
+
+353				if health_table[hit_unit] == nil then
+354					print("hit_unit:", hit_unit, "unit name:", unit.name)
+355				end
+
+modificato 
+
+357 if health_table[hit_unit] > 50 then	
+
+in
+
+357 if health_table[hit_unit] and health_table[hit_unit] > 50 then	
