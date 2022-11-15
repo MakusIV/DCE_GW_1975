@@ -2,10 +2,11 @@
 --Initiated by FirstMission.bat
 -------------------------------------------------------------------------------------------------------
 -- Miguel Fichier Revision  M47.c
+-- Marco Revision 1.0
 -------------------------------------------------------------------------------------------------------
 
-
--- adjustment A01.b : robust form
+-- Marco Modification implement Logistic code, insert logging utility 
+-- adjustment A01.b : robust form.
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M46.d  singlePlayer with dedicated server (c: DF choice)(c: D choice with AI AirSpawn)
 -- miguel21 modification M38.e  helps to balance the game
@@ -16,6 +17,7 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["BAT_FirstMission.lua"] = "1.7.33"
 
+require("UTIL_Log.lua") --=====================  Marco implementation ==================================
 
 local function AcceptMission()
 	repeat
@@ -83,7 +85,7 @@ dofile("Init/targetlist_init.lua")
 
 --=====================  start marco implementation ==================================
 
-dofile("Init/supply_tab_init.lua")
+dofile("Init/supply_tab_init.lua") -- load initial supply tab
 local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)						    --make a string
 local tgtFile = nil
 tgtFile = io.open("Active/supply_tab.lua", "w")

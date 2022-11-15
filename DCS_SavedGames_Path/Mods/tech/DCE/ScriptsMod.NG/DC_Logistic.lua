@@ -1,3 +1,14 @@
+-- ====================================== DC_Logistic =================================================================
+-- 
+-- UpdateOobAir():                        Update oob_air number property considering airbase efficiency property
+-- SaveTabOnDisk( table_name, table ):    Save table supply_tab.lua on disk
+-- 
+-- by Old_Boy 
+-- version 1.1
+
+
+
+
 --[[
 
 
@@ -348,7 +359,7 @@ BAT_FirstMission.lua:
 ]]
 
 
-
+require(UTIL_Log.lua)
 
 local executeTest = false
 
@@ -411,13 +422,16 @@ function tablelength(T)
 
 
 
-  -- Logistic function
+-- Logistic function
 
 -- Initialize the airbase_tab by defining the planes operating in the airbase
 -- OK
 local function InitializeAirbaseTab()
 
-    for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase
+    local nameFunction = "InitializeAirbaseTab --> "    
+    log.debug(nameFunction .. "Start")
+
+    for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
 
         for index_value, oob_value in pairs(index) do
             aircraft_type = oob_value.type
@@ -428,10 +442,10 @@ local function InitializeAirbaseTab()
                 airbase_name = airbase_name .. "-" .. group_name
             end
 
-            --print(side, airbase_name, aircraft_type)
+            log.trace(nameFunction .. airbase_name .. "." .. side .. ": " .. aircraft_type) --print(side, airbase_name, aircraft_type)
 
             if airbase_tab == nil then
-                --print("airbase_tab is nil\n")
+                log.trace(nameFunction .. "airbase_tab is nil") 
                 airbase_tab = {
                     [side] = {
                         [airbase_name] = {
@@ -444,9 +458,10 @@ local function InitializeAirbaseTab()
                         }
                     }
                 }
-                --print("\n--->: " .. dump(airbase_tab).. " <----\n")
+                log.trace(nameFunction .. dump(airbase_tab)) --print("\n--->: " .. dump(airbase_tab).. " <----\n")
 
             elseif airbase_tab[side] == nil then
+                log.trace(nameFunction .. "airbase_tab." .. side .. " is nil") 
                 airbase_tab[side] = {
                     [airbase_name] = {
                         ["aircraft_types"] = {
@@ -457,20 +472,23 @@ local function InitializeAirbaseTab()
                         ["supply"] = 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
                 }
+                log.trace(nameFunction .. "Created new airbase_tab." .. side .. ": " .. airbase_name .. ", aircraft_type: " .. aircraft_type .. ", group_name: " .. group_name)
 
             else
-                --print("airbase_tab is not nil\n")
-                --print("oob_air airbase_name: " .. side .. " " .. airbase_name .. "\n")
+                log.trace(nameFunction .. "airbase_tab." .. side .. " not nil") --print("airbase_tab is not nil\n")
+                log.trace(nameFunction .. "oob_air airbase_name: " .. side .. " " .. airbase_name)--print("oob_air airbase_name: " .. side .. " " .. airbase_name .. "\n")                
 
                 if airbase_tab[side][airbase_name] then
-                    --print("airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab\n")
+                    log.trace(nameFunction .. "airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab") --print("airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab\n")
+
 
                         if airbase_tab[side][airbase_name].aircraft_types[aircraft_type] == nil then
-                            --print("oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab.\n")
+                            log.trace(nameFunction .. "oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab")--print("oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab.\n")
                             airbase_tab[side][airbase_name].aircraft_types[aircraft_type] = group_name
                         end
+                        
                 else
-                    --print("airbase not exists in airbase_tab\n")
+                    log.trace(nameFunction .. "airbase not exists in airbase_tab") --print("airbase not exists in airbase_tab\n")
                     airbase_tab[side][airbase_name] =  { -- insert new airbase, initializa property and assign aircraft
                         ["aircraft_types"] = { [aircraft_type] = group_name },-- insert new airbase and assign aircraft
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
@@ -482,13 +500,17 @@ local function InitializeAirbaseTab()
             end
         end
     end
-
+    log.debug(nameFunction .. dump(airbase_tab) )
+    log.debug(nameFunction .. "End")
 	return airbase_tab
 end
 
 -- Update the integrity property for supply plant in supply_tab, by using property alive in targetlist
 -- OK
 local function UpdateSupplyPlantIntegrity( sup_tab )
+
+    local nameFunction = "UpdateSupplyPlantIntegrity( sup_tab ) --> "    
+    log.debug(nameFunction .. "Start")
 
     -- note: supply Plant are defined in supply_tab and also in targetlist like targets
 
@@ -512,6 +534,7 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
             end
         end
     end
+    log.debug(nameFunction .. "End")
 	return sup_tab
 end
 
@@ -520,6 +543,8 @@ end
 local function UpdateSupplyLineIntegrity( sup_tab )
 
     -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "UpdateSupplyLineIntegrity( sup_tab ) --> "    
+    log.debug(nameFunction .. "Start")
 
     for sidepw, side_val in pairs( sup_tab ) do
 
@@ -539,6 +564,7 @@ local function UpdateSupplyLineIntegrity( sup_tab )
             end
         end
     end
+    log.debug(nameFunction .. "End")
 	return sup_tab
 end
 
@@ -546,6 +572,9 @@ end
 -- Update the supply property in airbase_tab using integrity property from supply_tab
 -- OK
 local function UpdateAirbaseSupply( airb_tab, sup_tab )
+
+    local nameFunction = "UpdateAirbaseSupply( airb_tab, sup_tab ) --> "    
+    log.debug(nameFunction .. "Start")
 
     local max_supply_value = {}
 
@@ -590,12 +619,16 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
             end
         end
     end
+    log.debug(nameFunction .. "End")
 	return airb_tab
 end
 
 -- Update the integrity property in airbase_tab using alive property from targetlist
 -- OK
 local function UpdateAirbaseIntegrity( airb_tab )
+
+    local nameFunction = "UpdateAirbaseIntegrity( airb_tab ) --> "    
+    log.debug(nameFunction .. "Start")
 
     for side, side_values in pairs( airb_tab ) do
 
@@ -621,12 +654,16 @@ local function UpdateAirbaseIntegrity( airb_tab )
             end
        end
     end
+    log.debug(nameFunction .. "End")
 	return airb_tab
 end
 
 -- Update the airbase efficiency property in airbase_tab
 -- OK
 local function UpdateAirbaseEfficiency( airb_tab )
+
+    local nameFunction = "UpdateAirbaseEfficiency( airb_tab ) --> "    
+    log.debug(nameFunction .. "Start")
 
 	for side, side_val in pairs( airb_tab ) do
 
@@ -635,12 +672,16 @@ local function UpdateAirbaseEfficiency( airb_tab )
 			--print("airbase: " .. base  .. "\n" )
 			--print("airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.supply: " ..  airbase_values.supply .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency .. "\n" )
 		end
-  end
-	return airb_tab
+    end
+    log.debug(nameFunction .. "End")
+    return airb_tab
 end
 
 -- Update oob_air number property considering airbase efficiency property
 function UpdateOobAir()
+
+    local nameFunction = "UpdateOobAir() --> "    
+    log.debug(nameFunction .. "Start")
 
     local percentage_efficiency_influence_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
 	local percentage_efficiency_influence_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
@@ -705,15 +746,20 @@ function UpdateOobAir()
 	end
     -- print("\n--->: " .. dump(airbase_tab).. " <----\n")
 	-- print("\n--->: " .. dump(oob_air).. " <----\n")
-  SaveTabOnDisk( "airbase_tab", airbase_tab )
-  SaveTabOnDisk( "supply_tab", supply_tab )
-
-	return result
+    SaveTabOnDisk( "airbase_tab", airbase_tab )
+    SaveTabOnDisk( "supply_tab", supply_tab )
+  
+    log.debug(nameFunction .. "End")
+    return result
 end
 
 
 -- Save table on disk supply_tab.lua
 function SaveTabOnDisk( table_name, table )
+
+    local nameFunction = "SaveTabOnDisk( table_name, table ) --> "    
+    log.debug(nameFunction .. "Start")
+
     local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
     local tgtFile = nil
 
@@ -725,6 +771,7 @@ function SaveTabOnDisk( table_name, table )
 
     tgtFile:write(tgt_str)																		--save new data
     tgtFile:close()
+    log.debug(nameFunction .. "End")    
 end
 
 

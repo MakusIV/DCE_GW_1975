@@ -3,8 +3,10 @@
 -------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------
 -- Miguel Fichier Revision  M47.c
+-- Marco Revision 1.0
 -------------------------------------------------------------------------------------------------------
 
+-- Marco Modification implement Logistic code, insert logging utility 
 -- adjustment A01.b : robust form
 -- debug01.b EndMission
 
@@ -13,12 +15,27 @@
 -- Miguel21 modification M35.d version ScriptsMod + camp
 -- Miguel21 modification M14 : Versionning
 -- Miguel21 modification M11.q : Multiplayer (q: displays all tasks of several squadrons)
+--
+-- NOTE MARCO:
+-- nella riga 105 c'è una ripetizione del load di conf_mod.lua effettuato in 73
+-- nella riga 79 viene caricato MissionEventsLog.lua ma non trovo riscontro di questo file in DCE (viene generato dopo??)
+-- 
+-- le righe di codice da analizzare, verificare o correggere le identifico con la parola chiave -- VERIFICARE: 
 
 if not versionDCE then versionDCE = {} end
 versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 
+-- =====================  Marco implementation ==================================
+require("UTIL_Log.lua")
+local nameModule = "DEBRIEF_Master.lua --> "    
+log.debug(nameModule .. "Start")
+-- =====================  End Marco implementation ==================================
 
 local function AcceptMission()
+
+	local nameFunction = "AcceptMission() --> "    
+    log.debug(nameFunction .. "Start")
+
 	repeat
 		print("\n\n Night or Day ? : "..daytime)													-- info day or not
 		print("\n\nAccept Mission ?:")
@@ -34,13 +51,16 @@ local function AcceptMission()
 		end
 	until m ~= nil and ( m == "a" or m == "s" or m == "d")
 
+	log.debug(nameFunction .. "End")
+
 	if  m == "s" then
 		TaskRefused = true
 		return false
+
 	elseif  m == "d" then
-		os.execute('start "Debug" "notepad++.exe" "Debug/debugFlight' .. '.txt"')
+		os.execute('start "Debug" "notepad++.exe" "Debug/debugFlight' .. '.txt"')		
 		return true
-	else
+	else		
 		return true
 	end
 end
@@ -50,20 +70,25 @@ math.random(); math.random(); math.random()
 
 
 --load functions
+
+log.debug(nameModule .. "load: Init/conf_mod.lua")
 dofile("Init/conf_mod.lua")
 
 
 
 --load mission export files
-local logExport = loadfile("MissionEventsLog.lua")()											--mission events log
-local scenExport = loadfile("scen_destroyed.lua")()												--destroyed scenery objects
-local campExport = loadfile("camp_status.lua")()												--camp_status
+log.debug(nameModule .. "load mission export files: MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua")
+local logExport = loadfile("MissionEventsLog.lua")()											-- mission events log -- VERIFICARE: non trovo riscontro di questo modulo in DCE
+local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
+local campExport = loadfile("camp_status.lua")()												-- camp_status
 
 versionPackageICM = camp.versionPackageICM
 
 if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 modification M35.d version ScriptsMod
 	versionPackageICM = os.getenv('versionPackageICM')											-- Miguel21 modification M35.c version ScriptsMod
 end
+
+log.debug(nameModule .. versionPackageICM)
 
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
@@ -78,9 +103,9 @@ require("Active/oob_air")																		--load air oob
 require("Active/targetlist")																	--load targetlist
 require("Active/clientstats")																	--load clientstats
 
+log.debug(nameModule .. "required: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
 
-
-dofile("Init/conf_mod.lua")
+dofile("Init/conf_mod.lua") -- VERIFICARE: già caricato sopra
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 
@@ -89,15 +114,17 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua"
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
+log.debug(nameModule .. "load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua")
 
-
---=====================  start marco implementation ==================================
+--=====================  Marco implementation ======================================
 
 --run logistic evalutation, save power_tab and airbase_tab
+log.debug(nameModule .. "load: DC_Logistic.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+log.trace(nameModule .. "execute: UpdateOobAir()")
 UpdateOobAir()--mark
 
---=====================  end marco implementation ==================================
+--=====================  End Marco implementation ==================================
 
 
 --update campaign time
@@ -106,7 +133,7 @@ camp.time = camp.time + elapsed_time															--add mission time to campaig
 
 
 --create and view debriefing file for mission
-dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_Text.lua")														--In this script the actual text is created. Script loaded after oob modifications above have been made.
+dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_Text.lua")							--In this script the actual text is created. Script loaded after oob modifications above have been made.
 local debriefFile = io.open("Debriefing/Debriefing " .. camp.mission .. ".txt", "w")			--create new debriefing file
 debriefFile:write(debriefing)																	--write debriefing text into file (variable debriefing comes from DEBRIEF_Text.lua)
 debriefFile:close()
@@ -529,5 +556,7 @@ end
 os.remove("MissionEventsLog.lua")	--DISABLE FOR DEBUG
 os.remove("scen_destroyed.lua")		--DISABLE FOR DEBUG
 os.remove("camp_status.lua")		--DISABLE FOR DEBUG
+
+log.debug(nameModule .. "End") -- =====================  Marco implementation ==================================
 
 os.exit()
