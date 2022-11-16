@@ -25,16 +25,11 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 
--- =====================  Marco implementation ==================================
-require("UTIL_Log.lua")
-local nameModule = "DEBRIEF_Master.lua --> "    
-log.debug(nameModule .. "Start")
--- =====================  End Marco implementation ==================================
 
 local function AcceptMission()
 
 	local nameFunction = "AcceptMission() --> "    
-    log.debug(nameFunction .. "Start")
+
 
 	repeat
 		print("\n\n Night or Day ? : "..daytime)													-- info day or not
@@ -51,7 +46,7 @@ local function AcceptMission()
 		end
 	until m ~= nil and ( m == "a" or m == "s" or m == "d")
 
-	log.debug(nameFunction .. "End")
+
 
 	if  m == "s" then
 		TaskRefused = true
@@ -71,22 +66,33 @@ math.random(); math.random(); math.random()
 
 --load functions
 
-log.debug(nameModule .. "load: Init/conf_mod.lua")
+
 dofile("Init/conf_mod.lua")
 
 
 
 --load mission export files
-log.debug(nameModule .. "load mission export files: MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua")
 local logExport = loadfile("MissionEventsLog.lua")()											-- mission events log -- VERIFICARE: non trovo riscontro di questo modulo in DCE
 local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
 local campExport = loadfile("camp_status.lua")()												-- camp_status
+
 
 versionPackageICM = camp.versionPackageICM
 
 if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 modification M35.d version ScriptsMod
 	versionPackageICM = os.getenv('versionPackageICM')											-- Miguel21 modification M35.c version ScriptsMod
 end
+
+
+-- =====================  Marco implementation ==================================
+log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+log.level = "trace"
+log.outfile = "Log/LOG_DEBRIEF_Master"
+local nameModule = "DEBRIEF_Master.lua --> "    
+log.debug(nameModule .. "Start")
+-- =====================  End Marco implementation ==================================
+
+
 
 log.debug(nameModule .. versionPackageICM)
 

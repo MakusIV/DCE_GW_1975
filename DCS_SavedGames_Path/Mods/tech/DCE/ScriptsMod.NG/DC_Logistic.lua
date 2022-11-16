@@ -359,7 +359,9 @@ BAT_FirstMission.lua:
 ]]
 
 
-require(UTIL_Log.lua)
+--log = require("UTIL_Log.lua")
+log.level = "debug"
+log.outfile = "Log/LOG_DC_Logistic"
 
 local executeTest = false
 
