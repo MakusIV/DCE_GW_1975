@@ -7,8 +7,8 @@
 -- under the terms of the MIT license. See LICENSE for details.
 -- https://github.com/rxi/log.lua
 --
--- devi implementare la scelta della directory di salvataggio del log.outfile
---
+-- 
+-- https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 
 local log = { _version = "0.1.0" }
 

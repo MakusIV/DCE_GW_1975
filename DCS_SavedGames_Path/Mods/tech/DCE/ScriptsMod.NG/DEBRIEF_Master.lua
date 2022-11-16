@@ -18,9 +18,9 @@
 --
 -- NOTE MARCO:
 -- nella riga 105 c'è una ripetizione del load di conf_mod.lua effettuato in 73
--- nella riga 79 viene caricato MissionEventsLog.lua ma non trovo riscontro di questo file in DCE (viene generato dopo??)
 -- 
 -- le righe di codice da analizzare, verificare o correggere le identifico con la parola chiave -- VERIFICARE: 
+-- le note al codice sono identificate con la parola chiave NOTE MARCO
 
 if not versionDCE then versionDCE = {} end
 versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
@@ -86,8 +86,10 @@ end
 
 -- =====================  Marco implementation ==================================
 log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = "trace"
-log.outfile = "Log/LOG_DEBRIEF_Master"
+log.outfile = "Log/LOG_DEBRIEF_Master" -- "prova Log.LOG_DEVRIEF_Master"
 local nameModule = "DEBRIEF_Master.lua --> "    
 log.debug(nameModule .. "Start")
 -- =====================  End Marco implementation ==================================
