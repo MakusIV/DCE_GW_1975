@@ -2,6 +2,8 @@
 ------------------------------------------------------------------------------------------------------- 
 ------------------------------------------------------------------------------------------------------- 
 -- Miguel Fichier Revision M47.c
+--
+-- Marco: insert function: CopyFile(old_path, new_path) 
 ------------------------------------------------------------------------------------------------------- 
 
 
@@ -552,7 +554,7 @@ function _afficheTXT(_table, titre, prof)
 	
 end -- function affiche
 
---function pour assigner les fréquences pour tout le monde, Plane and vehicle (EWR)
+--function pour assigner les frï¿½quences pour tout le monde, Plane and vehicle (EWR)
 -- miguel21 modification M34.i  custom FrequenceRadio (i  3 frequency bands)(g: VHF helicopter)(h: bug Gazelle)
 
 function CreatePlageFrequency()																				--trouve une plage de frequence commune si c'est possible
@@ -570,7 +572,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 		},
 	}
 
-	-- miguel21 modification M38.g (g: prise en compte des 3 bandes de fréquence)(e: priority to the player's frequencies)
+	-- miguel21 modification M38.g (g: prise en compte des 3 bandes de frï¿½quence)(e: priority to the player's frequencies)
 	for side, oob_side in pairs(oob_air) do
 		for n, sqd in pairs(oob_side) do
 			if not sqd.inactive and sqd.player then
@@ -608,7 +610,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 										if not TempRadio[side][nr][bandFreq].min then TempRadio[side][nr][bandFreq].min = value.min  end
 										if not TempRadio[side][nr][bandFreq].max then TempRadio[side][nr][bandFreq].max = value.max  end
 								
-										if (value.min < TempRadio[side][nr][bandFreq].max)  then								--si une plage radio est en dehors des autres, on privilègie le joueur
+										if (value.min < TempRadio[side][nr][bandFreq].max)  then								--si une plage radio est en dehors des autres, on privilï¿½gie le joueur
 											if value.min > TempRadio[side][nr][bandFreq].min then 
 												TempRadio[side][nr][bandFreq].min =  value.min	
 											end
@@ -620,7 +622,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 									end
 								end
 							end
-						elseif typeRadio == "frequency"  then											-- frequence de base utilisé par FC3 ou gazelle
+						elseif typeRadio == "frequency"  then											-- frequence de base utilisï¿½ par FC3 ou gazelle
 								print("UTIL_F Type No Frequency FC3? "..sqd.type)
 						end
 					end
@@ -879,4 +881,24 @@ function GetParkingId(parkingId, base)
 
 end
 
-  
+-- MARCO copy file
+local function CopyFile(old_path, new_path)
+	local old_file = io.open(old_path, "rb")
+	local new_file = io.open(new_path, "wb")
+	local old_file_sz, new_file_sz = 0, 0
+	if not old_file or not new_file then
+	  return false
+	end
+	while true do
+	  local block = old_file:read(2^13)
+	  if not block then 
+		old_file_sz = old_file:seek( "end" )
+		break
+	  end
+	  new_file:write(block)
+	end
+	old_file:close()
+	new_file_sz = new_file:seek( "end" )
+	new_file:close()
+	return new_file_sz == old_file_sz
+  end
