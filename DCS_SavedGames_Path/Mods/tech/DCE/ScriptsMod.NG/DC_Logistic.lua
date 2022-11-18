@@ -359,8 +359,11 @@ BAT_FirstMission.lua:
 ]]
 
 
-require(UTIL_Log.lua)
+log = require("UTIL_Log.lua")
+log.level = "debug"
+log.outfile = "Log/LOG_DC_Logistic"
 
+local local_debug = true -- local debug
 local executeTest = false
 
 if executeTest then
@@ -434,7 +437,7 @@ local function InitializeAirbaseTab()
     for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
 
         for index_value, oob_value in pairs(index) do
-            aircraft_type = oob_value.type
+            aircraft_type = oob_value.type.
             group_name = oob_value.name
             airbase_name = oob_value.base
 
@@ -515,6 +518,8 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
     -- note: supply Plant are defined in supply_tab and also in targetlist like targets
 
     for sidepw, side_val in pairs( sup_tab ) do
+
+
 
         for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
 

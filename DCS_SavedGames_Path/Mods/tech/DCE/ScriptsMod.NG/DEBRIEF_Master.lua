@@ -18,19 +18,13 @@
 --
 -- NOTE MARCO:
 -- nella riga 105 c'è una ripetizione del load di conf_mod.lua effettuato in 73
--- nella riga 79 viene caricato MissionEventsLog.lua ma non trovo riscontro di questo file in DCE (viene generato dopo??)
 -- 
 -- le righe di codice da analizzare, verificare o correggere le identifico con la parola chiave -- VERIFICARE: 
+-- le note al codice sono identificate con la parola chiave NOTE MARCO
 
 if not versionDCE then versionDCE = {} end
 versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 
--- =====================  Marco implementation ==================================
-require("UTIL_Log.lua")
-local nameModule = "DEBRIEF_Master.lua --> "    
-log.debug(nameModule .. "Start")
-local local_debug = true -- local debug
--- =====================  End Marco implementation ==================================
 
 local function AcceptMission()
 
@@ -71,15 +65,12 @@ math.random(); math.random(); math.random()
 
 
 --load functions
-
-log.debug(nameModule .. "load: Init/conf_mod.lua")
 dofile("Init/conf_mod.lua")
 
 
 
---load mission export files
-log.debug(nameModule .. "load mission export files: MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua")
-local logExport = loadfile("MissionEventsLog.lua")()											-- mission events log -- VERIFICARE: non trovo riscontro di questo modulo in DCE
+-- questi file sono temporanei generati allo stop del server
+local logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
 local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
 local campExport = loadfile("camp_status.lua")()												-- camp_status
 
@@ -88,6 +79,18 @@ versionPackageICM = camp.versionPackageICM
 if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 modification M35.d version ScriptsMod
 	versionPackageICM = os.getenv('versionPackageICM')											-- Miguel21 modification M35.c version ScriptsMod
 end
+
+-- =====================  Marco implementation ==================================
+log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_DEBRIEF_Master" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug
+local nameModule = "DEBRIEF_Master.lua --> "    
+log.debug(nameModule .. "Start")
+-- =====================  End Marco implementation ==================================
+
 
 log.debug(nameModule .. versionPackageICM)
 
@@ -104,9 +107,9 @@ require("Active/oob_air")																		--load air oob
 require("Active/targetlist")																	--load targetlist
 require("Active/clientstats")																	--load clientstats
 
-log.debug(nameModule .. "required: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
+log.debug(nameModule .. "load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
 
-dofile("Init/conf_mod.lua") -- VERIFICARE: già caricato sopra
+--dofile("Init/conf_mod.lua") -- VERIFICARE: già caricato sopra
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 
@@ -122,7 +125,7 @@ log.debug(nameModule .. "load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, 
 --run logistic evalutation, save power_tab and airbase_tab
 log.debug(nameModule .. "load: DC_Logistic.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-log.trace(nameModule .. "execute: UpdateOobAir()")
+log.debug(nameModule .. "call: UpdateOobAir()")
 UpdateOobAir()--mark
 
 --=====================  End Marco implementation ==================================
@@ -627,7 +630,8 @@ end
 
 
 
-if local_debug then
+if local_debug then -- Copy file for Debug
+	log.debug(nameModule .. "copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: "..camp.mission)
 	CopyFile("MissionEventsLog.lua", "Debug/MissionEventsLog." .. camp.mission .. ".lua" )
 	CopyFile("scen_destroyed.lua", "Debug/scen_destroyed." .. camp.mission .. ".lua" )
 	CopyFile("camp_status.lua", "Debug/camp_status." .. camp.mission .. ".lua" )
