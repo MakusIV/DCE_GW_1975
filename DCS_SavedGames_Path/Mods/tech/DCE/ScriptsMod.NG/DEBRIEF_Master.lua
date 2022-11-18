@@ -29,7 +29,7 @@ versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 local function AcceptMission()
 
 	local nameFunction = "AcceptMission() --> "    
-    log.debug(nameFunction .. "Start")
+
 
 	repeat
 		print("\n\n Night or Day ? : "..daytime)													-- info day or not
@@ -46,7 +46,7 @@ local function AcceptMission()
 		end
 	until m ~= nil and ( m == "a" or m == "s" or m == "d")
 
-	log.debug(nameFunction .. "End")
+
 
 	if  m == "s" then
 		TaskRefused = true
@@ -73,6 +73,7 @@ dofile("Init/conf_mod.lua")
 local logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
 local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
 local campExport = loadfile("camp_status.lua")()												-- camp_status
+
 
 versionPackageICM = camp.versionPackageICM
 
