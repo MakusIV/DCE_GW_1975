@@ -359,7 +359,7 @@ BAT_FirstMission.lua:
 ]]
 
 
-log = require("UTIL_Log.lua")
+--log = require("UTIL_Log.lua")
 log.level = "debug"
 log.outfile = "Log/LOG_DC_Logistic"
 
@@ -437,7 +437,7 @@ local function InitializeAirbaseTab()
     for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
 
         for index_value, oob_value in pairs(index) do
-            aircraft_type = oob_value.type.
+            aircraft_type = oob_value.type
             group_name = oob_value.name
             airbase_name = oob_value.base
 

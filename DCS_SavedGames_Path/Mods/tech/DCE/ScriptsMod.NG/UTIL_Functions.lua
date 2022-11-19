@@ -882,7 +882,7 @@ function GetParkingId(parkingId, base)
 end
 
 -- MARCO copy file
-local function CopyFile(old_path, new_path)
+function CopyFile(old_path, new_path)
 	local old_file = io.open(old_path, "rb")
 	local new_file = io.open(new_path, "wb")
 	local old_file_sz, new_file_sz = 0, 0
