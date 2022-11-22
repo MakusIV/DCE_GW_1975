@@ -111,7 +111,7 @@ require("Active/clientstats")																	--load clientstats
 log.debug(nameModule .. "load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
 
 --dofile("Init/conf_mod.lua") -- VERIFICARE: già caricato sopra
-dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+--dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 
 --run log evaluation and status updates
@@ -188,10 +188,10 @@ if versionPackageICM then
 else
 	print("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =")
 end
-	--===================================================================================
-	-- Ecran N�0 Choix next campaign mission
+--===================================================================================
+-- Ecran N�0 Choix next campaign mission
 --ask for input to save results and continue with campaign or disregard the last mission
-print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")						--ask for user confirmation
+print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")					--ask for user confirmation
 log.debug(nameModule .. "Ask for input about confirm client results")
 local input
 local playable_type = {}
