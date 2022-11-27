@@ -18,6 +18,32 @@ log.debug(nameModule .. "Start")
 
 -- ================== Local Function ================================================
 
+
+--function to add new clients to clientstats -sposta sopra in local function
+local function AddClient(name)
+	log.info(nameModule .. " - AddClient(" .. name .. ")")														
+	if clientstats[name] == nil then														--if client has no previous stats entry, create a new one
+		clientstats[name] = {
+			kills_air = 0,
+			kills_ground = 0,
+			kills_ship = 0,
+			mission = 0,
+			crash = 0,
+			eject = 0,
+			dead = 0,
+			score_last = {
+				kills_air = 0,
+				kills_ground = 0,
+				kills_ship = 0,
+				mission = 0,
+				crash = 0,
+				eject = 0,
+				dead = 0
+			}
+		}
+	end
+end
+
 -- ==================================================================================
 
 
@@ -40,6 +66,7 @@ for side_name,side in pairs(oob_air) do														--iterate through all sides
 			ready = 0
 		}
 	end
+	log.trace(nameModule .. "End reset unit.score_last: ".. side_name .. "   =======================================================")														
 end
 
 --reset oob_ground table last mission stats ----------------------------------------
@@ -58,8 +85,8 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 					log.trace(nameModule .. "Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
-			end
-			log.trace(nameModule .. "End reset veihcle unit.dead_last   =======================================================")														
+				log.trace(nameModule .. "End reset veihcle unit.dead_last   =======================================================")														
+			end			
 		end
 
 		if country.static then --if country has static objects
@@ -71,8 +98,8 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 					log.trace(nameModule .. "Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
-			end
-			log.trace(nameModule .. "End reset static unit.dead_last   =======================================================")														
+				log.trace(nameModule .. "End reset static unit.dead_last   =======================================================")														
+			end			
 		end
 		
 		if country.ship then																--if country has ships
@@ -84,8 +111,8 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 					log.trace(nameModule .. "Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)										
 					unit.dead_last = false													--reset unit died in last mission
 				end
-			end
-			log.trace(nameModule .. "End reset ship unit.dead_last   =======================================================")														
+				log.trace(nameModule .. "End reset ship unit.dead_last   =======================================================")														
+			end			
 		end
 	end
 end
@@ -104,7 +131,7 @@ for side_name,side in pairs(targetlist) do	--iterate through targetlist
 				log.trace(nameModule .. "Reset element.dead_last: element_n: " .. element_n .. " - element: " .. element.name)														
 				element.dead_last = false													--reset element died in last mission
 			end
-			log.trace(nameModule .. "End reset targetlist element.dead_last   =======================================================")														
+			log.trace(nameModule .. "End reset targetlist element.dead_last   =======================================================")																	
 		end
 	end
 end
@@ -134,30 +161,6 @@ local client_hit_table = {} --local table to store if a client has hit a unit
 
 
 
---function to add new clients to clientstats -sposta sopra in local function
-local function AddClient(name)
-	log.info(nameModule .. " - AddClient(" .. name .. ")")														
-	if clientstats[name] == nil then														--if client has no previous stats entry, create a new one
-		clientstats[name] = {
-			kills_air = 0,
-			kills_ground = 0,
-			kills_ship = 0,
-			mission = 0,
-			crash = 0,
-			eject = 0,
-			dead = 0,
-			score_last = {
-				kills_air = 0,
-				kills_ground = 0,
-				kills_ship = 0,
-				mission = 0,
-				crash = 0,
-				eject = 0,
-				dead = 0
-			}
-		}
-	end
-end
 
 -----Last point for Coding logger functionality ----
 
