@@ -55,7 +55,7 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 				log.trace(nameModule .. "Start reset veihcle unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do --units table (number array)	
-					log.trace(nameModule .. "Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.unitname .. "-type: " .. unit.type)														
+					log.trace(nameModule .. "Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
 			end
@@ -68,7 +68,7 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
                 log.trace(nameModule .. "Start reset static unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do --units table (number array)						
-					log.trace(nameModule .. "Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.unitname .. "-type: " .. unit.type)														
+					log.trace(nameModule .. "Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
 			end
@@ -81,7 +81,7 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 				log.trace(nameModule .. "Start reset ship unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do									--units table (number array)	
-					log.trace(nameModule .. "Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.unitname .. "-type: " .. unit.type)										
+					log.trace(nameModule .. "Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)										
 					unit.dead_last = false													--reset unit died in last mission
 				end
 			end
@@ -98,7 +98,7 @@ for side_name,side in pairs(targetlist) do	--iterate through targetlist
 	for target_name,target in pairs(side) do --iterate through targets		
 		
 		if target.elements and target.elements[1].x then --if the target has subelements and is a scenery object target (element has x coordinate)
-			log.trace(nameModule .. "Start reset targetlist element.dead_last: ".. side_name .. ", target: " .. target.name .. "   =======================================================")														
+			log.trace(nameModule .. "Start reset targetlist element.dead_last: ".. side_name .. ", target: " .. target_name .. "   =======================================================")														
 			
 			for element_n,element in pairs(target.elements) do								--iterate through target elements
 				log.trace(nameModule .. "Reset element.dead_last: element_n: " .. element_n .. " - element: " .. element.name)														
@@ -109,7 +109,7 @@ for side_name,side in pairs(targetlist) do	--iterate through targetlist
 	end
 end
 
-.
+
 --reset client last mission stats
 log.info(nameModule .. "Reset score_last in clientstats table (kills, mission, crash, eject and dead)   =======================================================")														
 

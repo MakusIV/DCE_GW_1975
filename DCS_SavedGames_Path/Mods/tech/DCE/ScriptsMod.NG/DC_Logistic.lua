@@ -359,7 +359,7 @@ BAT_FirstMission.lua:
 ]]
 
 
---log = require("UTIL_Log.lua")
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua") --log = require("UTIL_Log.lua")
 log.level = "debug"
 log.outfile = "Log/LOG_DC_Logistic"
 local module_name = "DC_Logistic.lua"
