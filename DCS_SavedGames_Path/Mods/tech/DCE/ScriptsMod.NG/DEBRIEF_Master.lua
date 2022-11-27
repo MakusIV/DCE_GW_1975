@@ -82,7 +82,7 @@ if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 m
 end
 
 -- =====================  Marco implementation ==================================
-log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = "trace"
