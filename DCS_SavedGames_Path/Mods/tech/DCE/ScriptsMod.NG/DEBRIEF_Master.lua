@@ -75,7 +75,7 @@ local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scen
 local campExport = loadfile("camp_status.lua")()												-- camp_status
 
 
-versionPackageICM = camp.versionPackageICM
+versionPackageICM = camp.versionPackageICM -- camp is defined in camp_status
 
 if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 modification M35.d version ScriptsMod
 	versionPackageICM = os.getenv('versionPackageICM')											-- Miguel21 modification M35.c version ScriptsMod

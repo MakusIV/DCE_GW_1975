@@ -21,7 +21,7 @@ log.debug(nameModule .. "Start")
 
 --function to add new clients to clientstats -sposta sopra in local function
 local function AddClient(name)
-	log.info(nameModule .. " - AddClient(" .. name .. ")")														
+	log.debug(nameModule .. " - AddClient(" .. name .. ")")														
 	if clientstats[name] == nil then														--if client has no previous stats entry, create a new one
 		clientstats[name] = {
 			kills_air = 0,
@@ -41,6 +41,25 @@ local function AddClient(name)
 				dead = 0
 			}
 		}
+	end
+end
+
+
+--function to check if a kill loss is attributed to the player package
+local function AddPackstats(unitname, event)
+	log.debug(nameModule .. " - AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
+	
+	if packstats[unitname] then
+		log.trace(nameModule .. "unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
+		if event == "kill_air" then
+			packstats[unitname].kills_air = packstats[unitname].kills_air + 1
+		elseif event == "kill_ground" then
+			packstats[unitname].kills_ground = packstats[unitname].kills_ground + 1
+		elseif event == "kill_ship" then
+			packstats[unitname].kills_ship = packstats[unitname].kills_ship + 1
+		elseif event == "lost" then
+			packstats[unitname].lost = packstats[unitname].lost + 1
+		end	
 	end
 end
 
@@ -161,15 +180,17 @@ local client_hit_table = {} --local table to store if a client has hit a unit
 
 
 
-
------Last point for Coding logger functionality ----
-
 --track stats for player package
+log.info(nameModule .. "Start track stats for player package =======================================================")														
 packstats = {}
-for role_name, role in pairs(camp.player.pack) do														--iterate through roles in player package
-	for flight_n, flight in pairs(role) do																--iterate through flights
+
+for role_name, role in pairs(camp.player.pack) do	--iterate through roles in player package
+
+	for flight_n, flight in pairs(role) do 			--iterate through flights
+
 		for n = 1, flight.number do
 			local unitname = "Pack " .. camp.player.pack_n .. " - " .. flight.name .. " - " .. flight.task .. " " .. flight_n .. "-" .. n
+			log.trace(nameModule .. " create packstats for unitname: " .. unitname)																				
 			packstats[unitname] = {
 				kills_air = 0,
 				kills_ground = 0,
@@ -179,39 +200,34 @@ for role_name, role in pairs(camp.player.pack) do														--iterate through
 		end
 	end
 end
+log.info(nameModule .. "End track stats for player package =======================================================")														
 
---function to check if a kill loss is attributed to the player package
-local function AddPackstats(unitname, event)
-	if packstats[unitname] then																			--aircraft was part of the package
-		if event == "kill_air" then
-			packstats[unitname].kills_air = packstats[unitname].kills_air + 1
-		elseif event == "kill_ground" then
-			packstats[unitname].kills_ground = packstats[unitname].kills_ground + 1
-		elseif event == "kill_ship" then
-			packstats[unitname].kills_ship = packstats[unitname].kills_ship + 1
-		elseif event == "lost" then
-			packstats[unitname].lost = packstats[unitname].lost + 1
-		end	
-	end
-end
 
 --prepare client stats
+log.info(nameModule .. "Start prepare client stats =======================================================")														
+
 for e = 1, #events do																					--iterate through all events
 	if events[e].initiatorPilotName then																--event is by a client
 		AddClient(events[e].initiatorPilotName)
 		client_control[events[e].initiator] = events[e].initiatorPilotName								--store which unit name (initiaror) is controllen by cliend (initiatorPilotName)
 	end
 end
+log.info(nameModule .. "End prepare client stats =======================================================")														
 
 --evaluate log events
+log.info(nameModule .. "Start evaluate log events =======================================================")														
+
 for e = 1, #events do	
 	--review all events for stats updates
-	if events[e].type == "hit" then																		--hit events
+	if events[e].type == "hit" then																		--hit events		
 		hit_table[events[e].target] = events[e].initiator												--store who hits a target (subsequent hits overwrite previous hits)
 		health_table[events[e].target] = events[e].health												--store health of the target
 		client_hit_table[events[e].target] = client_control[events[e].initiator]						--store client name that has hit a unit (stores nil  if hitter is not a client)
+		log.trace(nameModule .. "event["..e.."] = hit, store hit in tables - target: " .. events[e].target .. "initiator: " .. events[e].initiator .. " - hit_table[" .. events[e].target .. "] = " .. hit_table[events[e].target] .. " - health_table[" .. events[e].target .. "] = " .. health_table[events[e].target] .. " - client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
+		
 		
 	elseif events[e].type == "crash" then
+		log.trace(nameModule .. "event["..e.."] = crash")																
 		--oob loss update for crashed aircraft
 		local crash_side																				--local variable to store the side of the crashed aircraft
 		for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
@@ -221,9 +237,12 @@ for e = 1, #events do
 					killer_unit.roster.lost = killer_unit.roster.lost + 1								--increase loss counter of air unit
 					killer_unit.score_last.lost = killer_unit.score_last.lost + 1						--increase loss counter for this mission of air unit
 					killer_unit.roster.ready = killer_unit.roster.ready - 1								--decrease number of ready aircraft of air unit
-					killer_unit.score_last.ready = killer_unit.score_last.ready + 1						--decrease number of ready aircraft for this mission of air unit
-					AddPackstats(events[e].initiator, "lost")											--check if loss was in player package
-					
+					killer_unit.score_last.ready = killer_unit.score_last.ready - 1 --era +1 errore?    --decrease number of ready aircraft for this mission of air unit
+					log.trace(nameModule .. "event["..e.."].initiator = oob_air killer_unit.name = " .. killer_unit.name .. "increments killer_unit.roster.lost and killer_unit.score_last.lost(" .. killer_unit.roster.lost .. ", " .. killer_unit.score_last.lost .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
+					AddPackstats(events[e].initiator, "lost")											--check if loss was in player package					
+-- ==================================================					
+-----Last point for Coding logger functionality ----		
+-- ==================================================					
 					--client stats for crashes
 					if client_control[events[e].initiator] then											--if crashed aircraft is a client
 						clientstats[client_control[events[e].initiator]].crash = clientstats[client_control[events[e].initiator]].crash + 1	--store crash for client
