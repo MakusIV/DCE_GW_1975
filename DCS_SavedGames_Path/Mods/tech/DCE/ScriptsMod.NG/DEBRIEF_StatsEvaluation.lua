@@ -19,10 +19,11 @@ log.debug(nameModule .. "Start")
 -- ================== Local Function ================================================
 
 
---function to add new clients to clientstats -sposta sopra in local function
+--function to add new clients to clientstats
 local function AddClient(name)
-	log.debug(nameModule .. " - AddClient(" .. name .. ")")														
-	if clientstats[name] == nil then														--if client has no previous stats entry, create a new one
+	log.debug(nameModule .. " - Start AddClient(" .. name .. ")")														
+	if clientstats[name] == nil then	
+		log.trace(nameModule .. " - AddClient(" .. name .. "): client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
 		clientstats[name] = {
 			kills_air = 0,
 			kills_ground = 0,
@@ -42,12 +43,13 @@ local function AddClient(name)
 			}
 		}
 	end
+	log.debug(nameModule .. " - End AddClient(" .. name .. ")")														
 end
 
 
 --function to check if a kill loss is attributed to the player package
 local function AddPackstats(unitname, event)
-	log.debug(nameModule .. " - AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
+	log.debug(nameModule .. " - Start AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
 	
 	if packstats[unitname] then
 		log.trace(nameModule .. "unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
@@ -61,6 +63,7 @@ local function AddPackstats(unitname, event)
 			packstats[unitname].lost = packstats[unitname].lost + 1
 		end	
 	end
+	log.debug(nameModule .. " - End AddPackstats(" .. unitname .. ", " .. event .. ")")														
 end
 
 -- ==================================================================================
@@ -172,12 +175,15 @@ for client_name, client in pairs(clientstats) do
 		dead = 0
 	}
 end
-log.info(nameModule .. "End reset clientstats =======================================================")														
+log.info(nameModule .. "End reset clientstats =======================================================")	
+
 local client_control = {} --local table to store which client controls which unit
 local hit_table = {} --local table to store who was the last hitter to hit a unit
 local health_table = {}	--local table to store health of a hit unit
 local client_hit_table = {} --local table to store if a client has hit a unit
-
+log.trace(nameModule .. "Created local client_control table: to store which client controls which unit")	
+log.trace(nameModule .. "Created hit_table: to store who was the last hitter to hit a unit")	
+log.trace(nameModule .. "Created local client_hit_table: table to store if a client has hit a unit")	
 
 
 --track stats for player package
@@ -207,9 +213,11 @@ log.info(nameModule .. "End track stats for player package =====================
 log.info(nameModule .. "Start prepare client stats =======================================================")														
 
 for e = 1, #events do																					--iterate through all events
-	if events[e].initiatorPilotName then																--event is by a client
-		AddClient(events[e].initiatorPilotName)
-		client_control[events[e].initiator] = events[e].initiatorPilotName								--store which unit name (initiaror) is controllen by cliend (initiatorPilotName)
+	if events[e].initiatorPilotName then		--event is by a client
+		AddClient(events[e].initiatorPilotName) --check if exist clientstats table if not create one new
+		client_control[events[e].initiator] = events[e].initiatorPilotName --store which unit name (initiator) is controlled by client (initiatorPilotName)
+		log.trace(nameModule .. "Event is by a client player: " .. events[e].initiatorPilotName .. ", store which unit name (initiator) is controlled by cliend (initiatorPilotName):" )
+		log.trace(nameModule .. "client_control[" .. events[e].initiator .. "] = " .. events[e].initiatorPilotName)
 	end
 end
 log.info(nameModule .. "End prepare client stats =======================================================")														
