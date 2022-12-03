@@ -230,8 +230,20 @@ for e = 1, #events do
 	if events[e].type == "hit" then																		--hit events		
 		hit_table[events[e].target] = events[e].initiator												--store who hits a target (subsequent hits overwrite previous hits)
 		health_table[events[e].target] = events[e].health												--store health of the target
-		client_hit_table[events[e].target] = client_control[events[e].initiator]						--store client name that has hit a unit (stores nil  if hitter is not a client)
-		log.trace(nameModule .. "event["..e.."] = hit, store hit in tables - target: " .. events[e].target .. "initiator: " .. events[e].initiator .. " - hit_table[" .. events[e].target .. "] = " .. hit_table[events[e].target] .. " - health_table[" .. events[e].target .. "] = " .. health_table[events[e].target] .. " - client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
+		client_hit_table[events[e].target] = client_control[events[e].initiator]						--store client name that has hit a unit (stores nil  if hitter is not a client)				
+		log.trace(nameModule .. "event["..e.."] = hit, store hit in tables - events[e].target: " .. events[e].target)																
+		
+		if hit_table[events[e].target] then
+			log.trace(nameModule .. "hit_table[" .. events[e].target .."] = " .. hit_table[events[e].target])																
+		end	
+
+		if health_table[events[e].target] then
+			log.trace(nameModule .. "health_table[" .. events[e].target .."] = " .. health_table[events[e].target])																
+		end	
+
+		if client_hit_table[events[e].target] then
+			log.trace(nameModule .. "client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
+		end	
 		
 		
 	elseif events[e].type == "crash" then
