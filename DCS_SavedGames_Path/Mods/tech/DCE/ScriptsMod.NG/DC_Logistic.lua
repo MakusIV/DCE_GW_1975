@@ -358,12 +358,10 @@ BAT_FirstMission.lua:
 
 ]]
 
-
+-- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua") --log = require("UTIL_Log.lua")
 log.level = "debug"
-log.outfile = "Log/LOG_DC_Logistic"
-local module_name = "DC_Logistic.lua"
-
+log.outfile = "Log/LOG_DC_Logistic." .. camp.mission .. ".txt.lua"
 local local_debug = true -- local debug
 local executeTest = false
 
@@ -384,7 +382,7 @@ end
 
 
 
--- Utility function
+--============ LOCAL FUNCTION =================================
 
 -- dump a table
 --from: https://stackoverflow.com/questions/9168058/how-to-dump-a-table-to-console
@@ -417,7 +415,7 @@ local function copySupplyTab()
 end
 
 -- table lenght
-function tablelength(T)
+local function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
     return count
@@ -432,7 +430,7 @@ function tablelength(T)
 -- OK
 local function InitializeAirbaseTab()
 
-    local nameFunction = module_name .. " - InitializeAirbaseTab() --> "    
+    local nameFunction = "InitializeAirbaseTab() --> "    
     log.debug(nameFunction .. "Start")
 
     for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
@@ -462,7 +460,7 @@ local function InitializeAirbaseTab()
                         }
                     }
                 }
-                log.trace(nameFunction .. dump(airbase_tab)) --print("\n--->: " .. dump(airbase_tab).. " <----\n")
+                log.trace(nameFunction .. " - airbase_tab:\n" .. inspect(airbase_tab)) --print("\n--->: " .. dump(airbase_tab).. " <----\n")
 
             elseif airbase_tab[side] == nil then
                 log.trace(nameFunction .. "airbase_tab." .. side .. " is nil") 
@@ -499,12 +497,11 @@ local function InitializeAirbaseTab()
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
                         ["supply"]= 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
-                end
-                --print("\n--->: " .. dump(airbase_tab).. " <----\n")
+                end                
             end
         end
     end
-    log.debug(nameFunction .. dump(airbase_tab) )
+    log.debug(nameFunction .. " - airbase_tab:\n" .. inspect(airbase_tab) )
     log.debug(nameFunction .. "End")
 	return airbase_tab
 end
@@ -513,7 +510,7 @@ end
 -- OK
 local function UpdateSupplyPlantIntegrity( sup_tab )
 
-    local nameFunction = module_name .. " - UpdateSupplyPlantIntegrity( sup_tab ) --> "    
+    local nameFunction = "UpdateSupplyPlantIntegrity( sup_tab ) --> "    
     log.debug(nameFunction .. "Start")
 
     -- note: supply Plant are defined in supply_tab and also in targetlist like targets
@@ -549,7 +546,7 @@ end
 local function UpdateSupplyLineIntegrity( sup_tab )
 
     -- note: supply Line are defined in supply_tab and also in targetlist like targets
-    local nameFunction = module_name .. " - UpdateSupplyLineIntegrity( sup_tab ) --> "    
+    local nameFunction = "UpdateSupplyLineIntegrity( sup_tab ) --> "    
     log.debug(nameFunction .. "Start")
 
     for sidepw, side_val in pairs( sup_tab ) do
@@ -579,7 +576,7 @@ end
 -- OK
 local function UpdateAirbaseSupply( airb_tab, sup_tab )
 
-    local nameFunction = module_name .. " - UpdateAirbaseSupply( airb_tab, sup_tab ) --> "    
+    local nameFunction = "UpdateAirbaseSupply( airb_tab, sup_tab ) --> "    
     log.debug(nameFunction .. "Start")
 
     local max_supply_value = {}
@@ -633,7 +630,7 @@ end
 -- OK
 local function UpdateAirbaseIntegrity( airb_tab )
 
-    local nameFunction = module_name .. " - UpdateAirbaseIntegrity( airb_tab ) --> "    
+    local nameFunction = "UpdateAirbaseIntegrity( airb_tab ) --> "    
     log.debug(nameFunction .. "Start")
 
     for side, side_values in pairs( airb_tab ) do
@@ -668,7 +665,7 @@ end
 -- OK
 local function UpdateAirbaseEfficiency( airb_tab )
 
-    local nameFunction = module_name .. " - UpdateAirbaseEfficiency( airb_tab ) --> "    
+    local nameFunction = "UpdateAirbaseEfficiency( airb_tab ) --> "    
     log.debug(nameFunction .. "Start")
 
 	for side, side_val in pairs( airb_tab ) do
@@ -686,7 +683,7 @@ end
 -- Update oob_air number property considering airbase efficiency property
 function UpdateOobAir()
 
-    local nameFunction = module_name .. " - UpdateOobAir() --> "    
+    local nameFunction = "UpdateOobAir() --> "    
     log.debug(nameFunction .. "Start")
 
     local percentage_efficiency_influence_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
@@ -763,7 +760,7 @@ end
 -- Save table on disk supply_tab.lua
 function SaveTabOnDisk( table_name, table )
 
-    local nameFunction = module_name .. " - SaveTabOnDisk( table_name, table ) --> "    
+    local nameFunction = "SaveTabOnDisk( table_name, table ) --> "    
     log.debug(nameFunction .. "Start")
 
     local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string

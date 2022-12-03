@@ -6,12 +6,23 @@
 ------------------------------------------------------------------------------------------------------- 
 
 -- ATO_RG_Debug03 supprime trop de waypoint lors de l'escorte
--- ATO_RG_Debug02 quand les EWR sont détruit: on active les CAP, si les CAP on besoin d'EWR c'est nul
+-- ATO_RG_Debug02 quand les EWR sont dï¿½truit: on active les CAP, si les CAP on besoin d'EWR c'est nul
 -- ATO_RG_Debug01 targetPoint ligne 473 Reconnaissance
 
 
 -- Miguel21 modification M16.d : SpawnAir B1b & B-52 need BaseAirStart = true in db_aibase
 -- Miguel21 modification M06 : helicoptere playable
+
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_ATO_RouteGenerator." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
 
 function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn, multipackmax, helicopter)							--enemy: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
 
@@ -38,9 +49,9 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		ewr = {},
 	}
 	
-	--M28 les helicoptere peuvent voir toutes les défense, meme celles hidden
+	--M28 les helicoptere peuvent voir toutes les dï¿½fense, meme celles hidden
 	local HiddenCheck = false																						-- l'avion vole haut et vite et ne voit pas les menaces
-	if helicopter then HiddenCheck = true end																		-- l'helicoptere vole bas et voit les menaces, meme caché
+	if helicopter then HiddenCheck = true end																		-- l'helicoptere vole bas et voit les menaces, meme cachï¿½
 	threat_table.ground[profile.hCruise] = {}
 	threat_table.ground[profile.hAttack] = {}
 	for threat_n,threat in pairs(groundthreats[enemy]) do																--iterate through ground threats
@@ -345,7 +356,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				ideal_axis = heading_min + (multipackn - 1) / (multipackmax - 1) * (MaxAttackOffset * 2)	--distribute ideal axis evenly across maximal left/right offset depending on package number
 			end
 			
-			for n = 0, 180, 5 do																			--find IP by evaluating threat level for IPs between heading min and heading max in 5° steps
+			for n = 0, 180, 5 do																			--find IP by evaluating threat level for IPs between heading min and heading max in 5ï¿½ steps
 				if initialPoint.x then																		--break loop if an IP is set																
 					break
 				else
@@ -415,12 +426,12 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			local egress_heading
 			
 			if task == "Strike" or task == "Anti-ship Strike" then
-				if standoff <= 15000 then																		--if standoff range is 15'000m or less, assume target will be overflown. Optimal egress should be 90° offset from ingress in direction of RTB
+				if standoff <= 15000 then																		--if standoff range is 15'000m or less, assume target will be overflown. Optimal egress should be 90ï¿½ offset from ingress in direction of RTB
 					egress_point_start = targetPoint															--egress starts from target
 					if GetDeltaHeading(route_axis, target_ip_heading) < 0 then									--homebase is on left side of ingress heading
-						egress_heading = target_ip_heading + 90													--optimal egress heading is 90° to left
+						egress_heading = target_ip_heading + 90													--optimal egress heading is 90ï¿½ to left
 					else																						--homebase is on right side of ingress heading
-						egress_heading = target_ip_heading - 90													--optimal egress heading is 90° to right
+						egress_heading = target_ip_heading - 90													--optimal egress heading is 90ï¿½ to right
 					end
 				else																							--if standoff range is bigger than 15'000m, optimal egrees should be in direction of home base
 					egress_point_start = attackPoint															--egress starts from attack point
@@ -431,12 +442,12 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 					egress_heading = GetHeading(attackPoint, basePoint)											--direct egress from attack point
 				end
 					
-				for n = 0, 180, 5 do																			--find egress point by evaluating threat level for egress between egress heading and +/- 135° offset in 5° steps
+				for n = 0, 180, 5 do																			--find egress point by evaluating threat level for egress between egress heading and +/- 135ï¿½ offset in 5ï¿½ steps
 					if egressPoint.x then																		--break loop if an egress point is set																
 						break
 					else
 						for m = 1, -1, -2 do																	--try left and right option for each offset from egress heading (*1, *-1)
-							if GetDeltaHeading(egress_heading + n * m, target_ip_heading) >= 15 or GetDeltaHeading(egress_heading + n * m, target_ip_heading) <= -15 then	--valid egresses must be at least 15° offset from ingress
+							if GetDeltaHeading(egress_heading + n * m, target_ip_heading) >= 15 or GetDeltaHeading(egress_heading + n * m, target_ip_heading) <= -15 then	--valid egresses must be at least 15ï¿½ offset from ingress
 								local draft_egress = GetOffsetPoint(egress_point_start, egress_heading + n * m, egress_distance)	--draft egress for current offset
 								local threat = ThreatOnLeg(egress_point_start, draft_egress, profile.hAttack)		--all threats between attack point and draft egress point
 								local total_threat_level = 0														--cumulated threat level for this leg
@@ -468,7 +479,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				
 			elseif task == "Reconnaissance" then																	--for recon missions
 				egress_heading = GetHeading(initialPoint, targetPoint)
-				for n = 0, 30, 5 do																					--find egress point by evaluating threat level for egress between egress heading and +/- 30° offset in 5° steps
+				for n = 0, 30, 5 do																					--find egress point by evaluating threat level for egress between egress heading and +/- 30ï¿½ offset in 5ï¿½ steps
 					if egressPoint.x then																			--break loop if an egress point is set																
 						break
 					else
@@ -527,7 +538,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 10)												--distance to climb from base elevation to cruise altitude with 6° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 10)												--distance to climb from base elevation to cruise altitude with 6ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--climb distance bigger than distance to first WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to first WP
 			elseif distance < 15000 then																				--climb distance less than 15 km
@@ -549,7 +560,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 4)												--distance to descend from cruise alt to base elevation with 15° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 4)												--distance to descend from cruise alt to base elevation with 15ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--descend distance bigger than distance to last WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to last WP
 			elseif distance < 15000 then																				--descend distance less than 15 km
@@ -650,7 +661,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 						if route[n].alt > route[n + 1].alt then															--but route segment is the descend leg
 							local descendPoint = {}																		--point to start descend
 							local heading = GetHeading(route[n + 1], route[n])											--descend point is on route leg
-							local distance = math.abs((profile.hCruise - profile.hAttack)) * 6							--distance to descend is 6 times the altitude difference (~-10° pitch) (make sure is positive)
+							local distance = math.abs((profile.hCruise - profile.hAttack)) * 6							--distance to descend is 6 times the altitude difference (~-10ï¿½ pitch) (make sure is positive)
 							if distance < GetDistance(route[n + 1], route[n]) then										--if descend distance is longer than route leg distance, ignore descend point
 								descendPoint = GetOffsetPoint(route[n + 1], heading, distance)							--define descend point position
 								descendPoint.id = "Nav"
@@ -701,7 +712,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 							descendPointEnd.id = "Nav"
 							descendPointEnd.alt = profile.hAttack
 							table.insert(route, n + 1, descendPointEnd)													--insert into route
-							local descend_distance = (profile.hCruise - profile.hAttack) * 6							--distance to descend is 6 times the altitude difference (~-10° pitch)
+							local descend_distance = (profile.hCruise - profile.hAttack) * 6							--distance to descend is 6 times the altitude difference (~-10ï¿½ pitch)
 							if descend_distance < distance then
 								local descendPointStart = {}															--point where descend starts
 								descendPointStart = GetOffsetPoint(route[n], heading, (distance - descend_distance))	--define descend point position
@@ -772,7 +783,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 						if route[n].alt > route[n - 1].alt then															--but route segment is the climb leg
 							local climbPoint = {}																		--point to start climb
 							local heading = GetHeading(route[n - 1], route[n])											--climb point is on route leg
-							local distance = math.abs((profile.hCruise - profile.hAttack)) * 10							--distance to climb is 10 times the altitude difference (~-6° pitch) (make sure is positive)
+							local distance = math.abs((profile.hCruise - profile.hAttack)) * 10							--distance to climb is 10 times the altitude difference (~-6ï¿½ pitch) (make sure is positive)
 							if distance < GetDistance(route[n - 1], route[n]) then										--if climb distance is longer than route leg distance, ignore clinb point
 								climbPoint = GetOffsetPoint(route[n - 1], heading, distance)							--define climb point position
 								climbPoint.id = "Nav"
@@ -823,7 +834,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 							climbPointStart.id = "Nav"
 							climbPointStart.alt = profile.hAttack
 							table.insert(route, n, climbPointStart)														--insert into route
-							local climb_distance = (profile.hCruise - profile.hAttack) * 10								--distance to climb is 10 times the altitude difference (~-6° pitch)
+							local climb_distance = (profile.hCruise - profile.hAttack) * 10								--distance to climb is 10 times the altitude difference (~-6ï¿½ pitch)
 							if climb_distance < distance then
 								local climbPointEnd = {}																--point where climb ends
 								climbPointEnd = GetOffsetPoint(route[n + 1], heading, (distance - climb_distance))		--define climb point position
@@ -842,7 +853,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt < route[n + 1].alt then																	--climb route leg
 					local climbPoint = {}																				--point to start climb
 					local heading = GetHeading(route[n + 1], route[n])													--climb point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n], route[n + 1]) then												--if climb distance is longer than route leg distance, ignore climb point
 						climbPoint = GetOffsetPoint(route[n + 1], heading, distance)									--define climb point position
 						climbPoint.id = "Nav"
@@ -856,7 +867,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt > route[n + 1].alt then																	--descend route leg
 					local descendPoint = {}																				--point to start descend
 					local heading = GetHeading(route[n], route[n + 1])													--descend point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n + 1], route[n]) then												--if descend distance is longer than route leg distance, ignore descend point
 						descendPoint = GetOffsetPoint(route[n], heading, distance)										--define descend point position
 						descendPoint.id = "Nav"
@@ -895,7 +906,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--climb distance bigger than distance to first WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to first WP
 			elseif distance < 15000 then																				--climb distance less than 15 km
@@ -917,7 +928,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--descend distance bigger than distance to last WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to last WP
 			elseif distance < 15000 then																				--descend distance less than 15 km
@@ -984,7 +995,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--climb distance bigger than distance to first WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to first WP
 			elseif distance < 15000 then																				--climb distance less than 15 km
@@ -1006,7 +1017,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--descend distance bigger than distance to last WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to last WP
 			elseif distance < 15000 then																				--descend distance less than 15 km
@@ -1039,7 +1050,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt < route[n + 1].alt then																	--climb route leg
 					local climbPoint = {}																				--point to start climb
 					local heading = GetHeading(route[n + 1], route[n])													--climb point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n], route[n + 1]) then												--if climb distance is longer than route leg distance, ignore climb point
 						climbPoint = GetOffsetPoint(route[n + 1], heading, distance)									--define climb point position
 						climbPoint.id = "Nav"
@@ -1053,7 +1064,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt > route[n + 1].alt then																	--descend route leg
 					local descendPoint = {}																				--point to start descend
 					local heading = GetHeading(route[n], route[n + 1])													--descend point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n + 1], route[n]) then												--if descend distance is longer than route leg distance, ignore descend point
 						descendPoint = GetOffsetPoint(route[n], heading, distance)										--define descend point position
 						descendPoint.id = "Nav"
@@ -1068,7 +1079,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt < route[n + 1].alt then																	--climb route leg
 					local climbPoint = {}																				--point to start climb
 					local heading = GetHeading(route[n], route[n + 1])													--climb point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to climb is 10 times the altitude difference (~6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n], route[n + 1]) then												--if climb distance is longer than route leg distance, ignore climb point
 						climbPoint = GetOffsetPoint(route[n], heading, distance)										--define climb point position
 						climbPoint.id = "Nav"
@@ -1082,7 +1093,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				if route[n].alt > route[n + 1].alt then																	--descend route leg
 					local descendPoint = {}																				--point to start descend
 					local heading = GetHeading(route[n + 1], route[n])													--descend point is on route leg
-					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6° pitch) (make sure is positive)
+					local distance = math.abs((profile.hCruise - profile.hAttack) * 10)									--distance to descend is 10 times the altitude difference (~-6ï¿½ pitch) (make sure is positive)
 					if distance < GetDistance(route[n + 1], route[n]) then												--if descend distance is longer than route leg distance, ignore descend point
 						descendPoint = GetOffsetPoint(route[n + 1], heading, distance)									--define descend point position
 						descendPoint.id = "Nav"
@@ -1111,7 +1122,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(basePoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to climb from base elevation to cruise altitude with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--climb distance bigger than distance to first WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to first WP
 			elseif distance < 15000 then																				--climb distance less than 15 km
@@ -1132,7 +1143,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 			local heading = GetHeading(targetPoint, point)
 			
-			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8° pitch (make sure distance is positive)
+			local distance = math.abs((profile.hCruise - basePoint.h) * 7)												--distance to descend from cruise alt to base elevation with 8ï¿½ pitch (make sure distance is positive)
 			if distance >= GetDistance(basePoint, point) then															--descend distance bigger than distance to last WP
 				distance = GetDistance(basePoint, point) / 3 * 2														--join point is 2/3 to last WP
 			elseif distance < 15000 then																				--descend distance less than 15 km
@@ -1219,7 +1230,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 								if fighterthreats[enemy][t].LDSD then																--if fighter is look down/shoot down capable
 									ewr_required = false																			--CAP does not need ewr to be a threat
 								else																								--if fighter is not look down/shoot down capable
-									-- ATO_RG_Debug02		quand les EWR sont détruit: on active les CAP, si les CAP on besoin d'EWR c'est nul
+									-- ATO_RG_Debug02		quand les EWR sont dï¿½truit: on active les CAP, si les CAP on besoin d'EWR c'est nul
 									-- ewr_required = true																				--CAP needs ewr to be a threat
 								end
 							end

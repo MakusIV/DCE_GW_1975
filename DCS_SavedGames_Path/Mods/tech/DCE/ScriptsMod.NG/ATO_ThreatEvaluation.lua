@@ -9,6 +9,18 @@
 -- Miguel21 modification  M07.g : EWR toujours affich� dans le briefing + 07g ajout des SAM et Boat dans la chaine de detection
 
 -- miguel21 modification M34.f custom FrequenceRadio
+
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_ATO_ThreatEvalutation." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 CreatePlageFrequency()																--trouve une plage de frequence commune si c'est possible
 
 --table to store ground/sea threats

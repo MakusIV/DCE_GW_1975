@@ -25,6 +25,9 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 
+local activate_testing_enviroment = true -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat)
+
+--================== LOCAL FUNCTION ===============================================
 
 local function AcceptMission()
 
@@ -59,6 +62,9 @@ local function AcceptMission()
 		return true
 	end
 end
+
+--================== END LOCAL FUNCTION ===============================================
+
 ----- random seed -----
 math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))
 math.random(); math.random(); math.random()
@@ -68,11 +74,18 @@ math.random(); math.random(); math.random()
 dofile("Init/conf_mod.lua")
 
 
+if not activate_testing_enviroment then
+	-- questi file sono temporanei generati allo stop del server (vedi script caricati nel Missione Generator)
+	local logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
+	local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
+	local campExport = loadfile("camp_status.lua")()												-- camp_status
 
--- questi file sono temporanei generati allo stop del server
-local logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
-local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
-local campExport = loadfile("camp_status.lua")()												-- camp_status
+else
+	-- test file
+	local logExport = loadfile("MissionEventsLog.2t.lua")() 											-- mission events log -- 
+	local scenExport = loadfile("scen_destroyed.2t.lua")()												-- destroyed scenery objects
+	local campExport = loadfile("camp_status.2t.lua")()												-- camp_status
+end
 
 
 versionPackageICM = camp.versionPackageICM -- camp is defined in camp_status
@@ -82,19 +95,19 @@ if not versionPackageICM or versionPackageICM == nil then										-- Miguel21 m
 end
 
 -- =====================  Marco implementation ==================================
+inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
+-- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = "trace"
-log.outfile = "Log/LOG_DEBRIEF_Master" -- "prova Log.LOG_DEVRIEF_Master"
+log.outfile = "Log/LOG_DEBRIEF_Master."  .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
 local local_debug = true -- local debug
-local nameModule = "DEBRIEF_Master.lua --> "    
-log.debug(nameModule .. "Start")
+log.debug("Start")
 -- =====================  End Marco implementation ==================================
 
 
-log.debug(nameModule .. versionPackageICM)
-
+log.debug(versionPackageICM)
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 -- if	camp.mission == 1 then																		--if this was a first campaign mission
@@ -108,10 +121,7 @@ require("Active/oob_air")																		--load air oob
 require("Active/targetlist")																	--load targetlist
 require("Active/clientstats")																	--load clientstats
 
-log.debug(nameModule .. "load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
-
---dofile("Init/conf_mod.lua") -- VERIFICARE: già caricato sopra
---dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
 
 
 --run log evaluation and status updates
@@ -119,14 +129,14 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua"
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
-log.debug(nameModule .. "load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua")
+log.debug("load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua")
 
 --=====================  Marco implementation ======================================
 
 --run logistic evalutation, save power_tab and airbase_tab
-log.debug(nameModule .. "load: DC_Logistic.lua")
+log.debug("load: DC_Logistic.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-log.debug(nameModule .. "call: UpdateOobAir()")
+log.debug("call: UpdateOobAir()")
 UpdateOobAir()--mark
 
 --=====================  End Marco implementation ==================================
@@ -135,7 +145,7 @@ UpdateOobAir()--mark
 --update campaign time
 local elapsed_time = math.floor(events[#events].t - events[1].t)								--mission runtime in seconds
 camp.time = camp.time + elapsed_time															--add mission time to campaign time
-log.trace(nameModule .. "update campaign time - elapsed_time: " .. elapsed_time .. ". camp.time: " .. camp.time)
+log.trace("update campaign time - elapsed_time: " .. elapsed_time .. ". camp.time: " .. camp.time)
 
 --create and view debriefing file for mission
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_Text.lua")							--In this script the actual text is created. Script loaded after oob modifications above have been made.
@@ -177,7 +187,7 @@ if  TestPath ~= nil then
 	io.close(TestPath)
 	dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua")
 	showVersion = showVersion.." ("..version_ScriptsMod.ScriptsMod..")"
-	log.trace(nameModule .. "file: " .. verScriptsModPath .. "open. Script Version: " .. showVersion)
+	log.trace("file: " .. verScriptsModPath .. "open. Script Version: " .. showVersion)
 end
 
 if versionPackageICM then
@@ -192,7 +202,7 @@ end
 -- Ecran N�0 Choix next campaign mission
 --ask for input to save results and continue with campaign or disregard the last mission
 print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")					--ask for user confirmation
-log.debug(nameModule .. "Ask for input about confirm client results")
+log.debug("Ask for input about confirm client results")
 local input
 local playable_type = {}
 
@@ -217,30 +227,30 @@ print("\n\n")
 if input == "y" or input == "yes" then
 
 	--save new data (remaining files are updated in MAIN_NextMission.lua)
-	log.debug(nameModule .. "Save client stats in clientstats.lua file")
+	log.debug("Save client stats in clientstats.lua file")
 	local client_str = "clientstats = " .. TableSerialization(clientstats, 0)					--make a string
 	local clientFile = io.open("Active/clientstats.lua", "w")									--open clientstats file
 	clientFile:write(client_str)																--save new data
 	clientFile:close()		
 
-	log.debug(nameModule .. "upload oob_scen file with new destroyed scenery objects")
+	log.debug("upload oob_scen file with new destroyed scenery objects")
 	local oob_scen_old = loadfile("Active/oob_scen.lua")()	
 	
 	--load oob_scen file
 	for scen_name,scen in pairs(scen_log) do													--iterate through destroyed scenery objects
 		if scen.x and scen.z then																--destroyed scenery object has x and z coordinates
 			oob_scen[scen_name] = scen															--add/update to oob_scen
-			log.trace(nameModule .. "upload oob_scen file with new destroyed scenery objects id.: " .. scen_name .. "position(x,z): " ..scen.x .. "," .. scen.z)
+			log.trace("upload oob_scen file with new destroyed scenery objects id.: " .. scen_name .. "position(x,z): " ..scen.x .. "," .. scen.z)
 		end
 	end
-	log.debug(nameModule .. "Save oob_scen.lua file")
+	log.debug("Save oob_scen.lua file")
 	local scen_str = "oob_scen = " .. TableSerialization(oob_scen, 0)							--make a string
 	local scenFile = io.open("Active/oob_scen.lua", "w")										--open oob_scen file
-	log.debug(nameModule .. "Save oob_scen.lua file")
+	log.debug("Save oob_scen.lua file")
 	scenFile:write(scen_str)																	--save new data
 	scenFile:close()	
 	
-	log.debug(nameModule .. "Ask for input about client's choice")
+	log.debug("Ask for input about client's choice")
 	repeat
 		--===================================================================================
 		-- Ecran N�1 Choix entre Single ou Multiplayer
@@ -274,10 +284,10 @@ if input == "y" or input == "yes" then
 
 			choix1 = io.read()
 			choix1 = string.lower(choix1)
-			log.trace(nameModule .. "client's choice: " .. choix1)
+			log.trace("client's choice: " .. choix1)
 			
 			if choix1 == "n" or  choix1 == "t"  then
-				log.debug(nameModule .. "Multiplayer choice")
+				log.debug("Multiplayer choice")
 				
 				if choix1 == "t"  then
 				--===================================================================================
@@ -508,17 +518,17 @@ if input == "y" or input == "yes" then
 				-- Ecran N�6 SinglePlayer
 
 		elseif choix1 == "s" then
-			log.debug(nameModule .. "SinglePlayer choice")
+			log.debug("SinglePlayer choice")
 		  	SinglePlayer = true
 
 		elseif choix1 == "d" then
-			log.debug(nameModule .. "SinglePlayer with Dedicated Server choice")
+			log.debug("SinglePlayer with Dedicated Server choice")
 		  	SinglePlayer = true
 		  	SingleWithDServer = true
 		  	SingleWithDServerAiAir = true
 
 		elseif choix1 == "df" then
-			log.debug(nameModule .. "SinglePlayer with Dedicated Server choice full deck")
+			log.debug("SinglePlayer with Dedicated Server choice full deck")
 		  	SinglePlayer = true
 		  	SingleWithDServer = true
 		end
@@ -542,13 +552,13 @@ if input == "y" or input == "yes" then
 		print("Generating Next Mission.\n")
 
 		MissionInstance = MissionInstance + 1													--count the number of times the mission is generated
-		log.debug(nameModule .. "load: MAIN_NextMission.lua")
+		log.debug("load: MAIN_NextMission.lua")
 		dofile("../../../ScriptsMod."..versionPackageICM.."/MAIN_NextMission.lua")				--generate next mission
 
 		if v_EndCampaign then 	
 																								-- debug01.b EndMission
 			if AcceptMission() then
-				log.debug(nameModule .. "End Campaign")
+				log.debug("End Campaign")
 				print("\nEND OF THE CAMPAIGN, SEE THE BRIEFING IN THE MISSION..\n")				-- end of camapaign
 				break
 			end
@@ -556,7 +566,7 @@ if input == "y" or input == "yes" then
 		elseif Multi.NbGroup >= 1 and PlayerFlight then
 			
 			if AcceptMission() then
-				log.debug(nameModule .. "Multi.NbGroup >= 1 and PlayerFlight is true -> MultiplayerCampaign Next mission generated")
+				log.debug("Multi.NbGroup >= 1 and PlayerFlight is true -> MultiplayerCampaign Next mission generated")
 				print("\nMultiplayerCampaign Next mission generated.\n")						--confirmation text
 				break
 			end
@@ -564,18 +574,18 @@ if input == "y" or input == "yes" then
 		elseif SinglePlayer and PlayerFlight  then												--mission has a player flight
 			
 			if AcceptMission() then
-				log.debug(nameModule .. "SinglePlayer and PlayerFlight is true -> MultiplayerCampaign Next mission generated")
+				log.debug("SinglePlayer and PlayerFlight is true -> MultiplayerCampaign Next mission generated")
 				print("\nNext mission generated.\n")											--confirmation text
 				break
 			end
 		
 		elseif stopBug then
-			log.debug(nameModule .. "Multi.NbGroup >= 1 or PlayerFlight or SinglePlayer is false and stopBug is true -> stopBug")																		--mission has a player flight
+			log.debug("Multi.NbGroup >= 1 or PlayerFlight or SinglePlayer is false and stopBug is true -> stopBug")																		--mission has a player flight
 			print("\n\n stopBug .\n")															--confirmation text
 			break
 		
 		elseif MissionInstance == 50 then
-			log.debug(nameModule .. "Mission Generation Error. No eligible player flight in 50 attempts")														--no player flight could be assigned in 50 tries, stop it
+			log.debug("Mission Generation Error. No eligible player flight in 50 attempts")														--no player flight could be assigned in 50 tries, stop it
 			print("Mission Generation Error. No eligible player flight in 50 attempts. Start a new campaign.\n\n")
 			break
 		else																					--no player flight could be assigned, advance time and try again
@@ -632,7 +642,7 @@ end
 
 
 if local_debug then -- Copy file for Debug
-	log.debug(nameModule .. "copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: "..camp.mission)
+	log.debug("copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: "..camp.mission)
 	CopyFile("MissionEventsLog.lua", "Debug/MissionEventsLog." .. camp.mission .. ".lua" )
 	CopyFile("scen_destroyed.lua", "Debug/scen_destroyed." .. camp.mission .. ".lua" )
 	CopyFile("camp_status.lua", "Debug/camp_status." .. camp.mission .. ".lua" )
@@ -643,6 +653,6 @@ os.remove("MissionEventsLog.lua")	--DISABLE FOR DEBUG
 os.remove("scen_destroyed.lua")		--DISABLE FOR DEBUG
 os.remove("camp_status.lua")		--DISABLE FOR DEBUG
 
-log.debug(nameModule .. "End") -- =====================  Marco implementation ==================================
+log.debug("End") -- =====================  Marco implementation ==================================
 
 os.exit()

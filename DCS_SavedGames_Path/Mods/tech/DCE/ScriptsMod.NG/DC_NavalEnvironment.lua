@@ -10,7 +10,7 @@
 -- Miguel21 modification M36.d	(d: add timer) MenuRadio request manual TurnIntoWind
 -- Miguel21 modification M33.e.b 	Custom Briefing (e: CVN Manual Freq)
 -- DC_NE_Debug02	maximizes the distance between two ship turns
--- DC_NE_Debug01	transforms an angle of more than 90° into 2 WPT of less than 90°
+-- DC_NE_Debug01	transforms an angle of more than 90ï¿½ into 2 WPT of less than 90ï¿½
 -- debugD staticPos
 -- debugC Angle et Bearing des statics sur PA
 -- Miguel21 modification M11 : Multiplayer
@@ -18,6 +18,16 @@
 
 if not versionDCE then versionDCE = {} end
 versionDCE["DC_NavalEnvironment.lua"] = "1.9.13"
+
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_DC_NavalEnvironment." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
 
 
 function pedro(GroupName, groupCVN, routeCVN, delta_heading, PaHeading)				
@@ -296,7 +306,7 @@ function ShipGroupMovement(GroupName, WPtable, CruiseSpeed, PatrolSpeed, StartTi
 									
 									local nextTime = route[#route].time + GetDistance(route[#route], nextWP) / PatrolSpeed	--time at next waypoint
 									
-									--DC_NE_Debug01	transforms an angle of more than 90° into 2 WPT of less than 90°
+									--DC_NE_Debug01	transforms an angle of more than 90ï¿½ into 2 WPT of less than 90ï¿½
 									if #route > 1 then
 										local h1 =GetHeading(route[#route-1],route[#route] )
 										local h2 =GetHeading(route[#route],nextWP )
@@ -529,7 +539,7 @@ for basename,base in pairs(db_airbases) do															--iterate through airba
 end
 
 
--- Miguel21 modification M11 : Multiplayer													-- pour donner de la place sur le PA, on supprime, à la demande, les statics présent
+-- Miguel21 modification M11 : Multiplayer													-- pour donner de la place sur le PA, on supprime, ï¿½ la demande, les statics prï¿½sent
 function deleteStaticOnCVN(GroupName)
 
 	--search for ship group

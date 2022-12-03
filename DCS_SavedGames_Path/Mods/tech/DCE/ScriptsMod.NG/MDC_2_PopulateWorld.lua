@@ -2,6 +2,17 @@
 --This file does the campaign bookkeeping (repair and reinforcements) at the start of a mission, spawns ground units and destroys killed static objects.
 --v1.1 21.02.2015
 ------------------------------------------------------------------------------------------------------------------------------
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_MDC_2_populateWorld." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 
 do
 -----------------------------------------------------------------------------------------------------------------

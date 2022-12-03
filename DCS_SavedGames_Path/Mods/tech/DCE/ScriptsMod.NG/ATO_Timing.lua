@@ -11,6 +11,17 @@
 -- Miguel21 modification M11.j : Multiplayer
 -- Miguel21 modification M06.e : helicoptere playable
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_ATO_Timing." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 local TOTtable = {}																								--table to store target TOT
 
 for side, pack in pairs(ATO) do	
@@ -289,7 +300,7 @@ for side, pack in pairs(ATO) do
 					start_up_time = db_airbases[flight[f].base].startup
 				end
 				if flight[f].player == true or flight[f].client then								--for player flight
-					if mission_ini.startup_time_player then							--if player value defined in camp -- Miguel21 modification M17.b Option F-14B, changement du temps avant start, possible à chaque mission plutot qu'au demarrage de la campagne
+					if mission_ini.startup_time_player then							--if player value defined in camp -- Miguel21 modification M17.b Option F-14B, changement du temps avant start, possible ï¿½ chaque mission plutot qu'au demarrage de la campagne
 						start_up_time = mission_ini.startup_time_player				--use this value instead
 					elseif camp.startup then										--if player value defined in camp
 						start_up_time = camp.startup							--time for player start-up

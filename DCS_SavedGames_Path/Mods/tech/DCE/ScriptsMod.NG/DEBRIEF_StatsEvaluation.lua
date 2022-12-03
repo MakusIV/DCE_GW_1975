@@ -10,10 +10,9 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = "trace"
-log.outfile = "Log/LOG_DEBRIEF_StatEvalutation.lua" -- "prova Log.LOG_DEVRIEF_Master"
-local local_debug = true -- local debug
-local nameModule = "DEBRIEF_StatEvalutation.lua --> "    
-log.debug(nameModule .. "Start")
+log.outfile = "Log/LOG_DEBRIEF_StatEvalutation." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
 -- =====================  End Marco implementation ==================================
 
 -- ================== Local Function ================================================
@@ -21,9 +20,9 @@ log.debug(nameModule .. "Start")
 
 --function to add new clients to clientstats
 local function AddClient(name)
-	log.debug(nameModule .. " - Start AddClient(" .. name .. ")")														
+	log.debug(" - Start AddClient(" .. name .. ")")														
 	if clientstats[name] == nil then	
-		log.trace(nameModule .. " - AddClient(" .. name .. "): client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
+		log.trace(" - AddClient(" .. name .. "): client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
 		clientstats[name] = {
 			kills_air = 0,
 			kills_ground = 0,
@@ -43,16 +42,16 @@ local function AddClient(name)
 			}
 		}
 	end
-	log.debug(nameModule .. " - End AddClient(" .. name .. ")")														
+	log.debug(" - End AddClient(" .. name .. ")")														
 end
 
 
 --function to check if a kill loss is attributed to the player package
 local function AddPackstats(unitname, event)
-	log.debug(nameModule .. " - Start AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
+	log.debug(" - Start AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
 	
 	if packstats[unitname] then
-		log.trace(nameModule .. "unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
+		log.trace("unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
 		if event == "kill_air" then
 			packstats[unitname].kills_air = packstats[unitname].kills_air + 1
 		elseif event == "kill_ground" then
@@ -63,7 +62,7 @@ local function AddPackstats(unitname, event)
 			packstats[unitname].lost = packstats[unitname].lost + 1
 		end	
 	end
-	log.debug(nameModule .. " - End AddPackstats(" .. unitname .. ", " .. event .. ")")														
+	log.debug(" - End AddPackstats(" .. unitname .. ", " .. event .. ")")														
 end
 
 -- ==================================================================================
@@ -72,13 +71,13 @@ end
 
 
 --reset oob_air table last mission stats -----------------------------------------
-log.info(nameModule .. "Reset oob_air table units last mission stats: kills, lost, damaged and ready")
+log.info("Reset oob_air table units last mission stats: kills, lost, damaged and ready")
 
 for side_name,side in pairs(oob_air) do														--iterate through all sides
-	log.trace(nameModule .. "Start reset unit.score_last: ".. side_name .. "   =======================================================")														
+	log.trace("Start reset unit.score_last: ".. side_name .. "   =======================================================")														
 	
 	for unit_n,unit in pairs(side) do--iterate through all air units
-		log.trace(nameModule .. "Reset unit.score_last: ".. side_name .. ", unit_n: " .. unit_n .. " - name: " .. unit.name .. " - type: " .. unit.type .. " - number(qty), lost, damaged, ready: " .. unit.number .. ", " .. unit.roster.lost .. ", " .. unit.roster.damaged .. ", " .. unit.roster.ready)	--iterate through all air units
+		log.trace("Reset unit.score_last: ".. side_name .. ", unit_n: " .. unit_n .. " - name: " .. unit.name .. " - type: " .. unit.type .. " - number(qty), lost, damaged, ready: " .. unit.number .. ", " .. unit.roster.lost .. ", " .. unit.roster.damaged .. ", " .. unit.roster.ready)	--iterate through all air units
 		unit.score_last = {
 			kills_air = 0,
 			kills_ground = 0,
@@ -88,11 +87,11 @@ for side_name,side in pairs(oob_air) do														--iterate through all sides
 			ready = 0
 		}
 	end
-	log.trace(nameModule .. "End reset unit.score_last: ".. side_name .. "   =======================================================")														
+	log.trace("End reset unit.score_last: ".. side_name .. "   =======================================================")														
 end
 
 --reset oob_ground table last mission stats ----------------------------------------
-log.info(nameModule .. "Reset oob_ground table last mission stat: dead state = false")
+log.info("Reset oob_ground table last mission stat: dead state = false")
 
 for side_name,side in pairs(oob_ground) do --side table(red/blue)											
 
@@ -101,70 +100,70 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 		if country.vehicle then	--if country has vehicles
 
 			for group_n,group in pairs(country.vehicle.group) do --groups table (number array)
-				log.trace(nameModule .. "Start reset veihcle unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
+				log.trace("Start reset veihcle unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do --units table (number array)	
-					log.trace(nameModule .. "Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
+					log.trace("Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
-				log.trace(nameModule .. "End reset veihcle unit.dead_last   =======================================================")														
+				log.trace("End reset veihcle unit.dead_last   =======================================================")														
 			end			
 		end
 
 		if country.static then --if country has static objects
 
 			for group_n,group in pairs(country.static.group) do --groups table (number array)
-                log.trace(nameModule .. "Start reset static unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
+                log.trace("Start reset static unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do --units table (number array)						
-					log.trace(nameModule .. "Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
+					log.trace("Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
 					unit.dead_last = false --reset unit died in last mission
 				end
-				log.trace(nameModule .. "End reset static unit.dead_last   =======================================================")														
+				log.trace("End reset static unit.dead_last   =======================================================")														
 			end			
 		end
 		
 		if country.ship then																--if country has ships
 			
 			for group_n,group in pairs(country.ship.group) do								--groups table (number array)
-				log.trace(nameModule .. "Start reset ship unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
+				log.trace("Start reset ship unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
 
 				for unit_n,unit in pairs(group.units) do									--units table (number array)	
-					log.trace(nameModule .. "Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)										
+					log.trace("Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)										
 					unit.dead_last = false													--reset unit died in last mission
 				end
-				log.trace(nameModule .. "End reset ship unit.dead_last   =======================================================")														
+				log.trace("End reset ship unit.dead_last   =======================================================")														
 			end			
 		end
 	end
 end
 
 --reset elements in targetlist table
-log.info(nameModule .. "Reset targetlist element state: dead state = false")
+log.info("Reset targetlist element state: dead state = false")
 
 for side_name,side in pairs(targetlist) do	--iterate through targetlist
 	
 	for target_name,target in pairs(side) do --iterate through targets		
 		
 		if target.elements and target.elements[1].x then --if the target has subelements and is a scenery object target (element has x coordinate)
-			log.trace(nameModule .. "Start reset targetlist element.dead_last: ".. side_name .. ", target: " .. target_name .. "   =======================================================")														
+			log.trace("Start reset targetlist element.dead_last: ".. side_name .. ", target: " .. target_name .. "   =======================================================")														
 			
 			for element_n,element in pairs(target.elements) do								--iterate through target elements
-				log.trace(nameModule .. "Reset element.dead_last: element_n: " .. element_n .. " - element: " .. element.name)														
+				log.trace("Reset element.dead_last: element_n: " .. element_n .. " - element: " .. element.name)														
 				element.dead_last = false													--reset element died in last mission
 			end
-			log.trace(nameModule .. "End reset targetlist element.dead_last   =======================================================")																	
+			log.trace("End reset targetlist element.dead_last   =======================================================")																	
 		end
 	end
 end
 
 
 --reset client last mission stats
-log.info(nameModule .. "Reset score_last in clientstats table (kills, mission, crash, eject and dead)   =======================================================")														
+log.info("Reset score_last in clientstats table (kills, mission, crash, eject and dead)   =======================================================")														
 
 for client_name, client in pairs(clientstats) do
-	log.trace(nameModule .. "Actual score for " .. client_name .. ", mission: " .. client.mission .. ", kills air-ground-ship, mission, eject, crash, dead: " .. client.kills_air .. ", " .. client.kills_ground .. ", " .. client.kills_ship .. ", " .. client.eject .. ", " .. client.crash .. ", " .. client.dead)														
-	log.trace(nameModule .. "Reset score_last for " .. client_name .. ", mission: " .. client.mission .. ", score_last(kills air-ground-ship, mission, eject, crash, dead: " .. client.score_last.kills_air .. ", " .. client.score_last.kills_ground .. ", " .. client.score_last.kills_ship .. ", " .. client.score_last.mission .. ", " .. client.score_last.eject .. ", " .. client.score_last.crash .. ", " .. client.score_last.dead)														
+	log.trace("Actual score for " .. client_name .. ", mission: " .. client.mission .. ", kills air-ground-ship, mission, eject, crash, dead: " .. client.kills_air .. ", " .. client.kills_ground .. ", " .. client.kills_ship .. ", " .. client.eject .. ", " .. client.crash .. ", " .. client.dead)														
+	log.trace("Reset score_last for " .. client_name .. ", mission: " .. client.mission .. ", score_last(kills air-ground-ship, mission, eject, crash, dead: " .. client.score_last.kills_air .. ", " .. client.score_last.kills_ground .. ", " .. client.score_last.kills_ship .. ", " .. client.score_last.mission .. ", " .. client.score_last.eject .. ", " .. client.score_last.crash .. ", " .. client.score_last.dead)														
 	client.score_last = {
 		kills_air = 0,
 		kills_ground = 0,
@@ -175,19 +174,19 @@ for client_name, client in pairs(clientstats) do
 		dead = 0
 	}
 end
-log.info(nameModule .. "End reset clientstats =======================================================")	
+log.info("End reset clientstats =======================================================")	
 
 local client_control = {} --local table to store which client controls which unit
 local hit_table = {} --local table to store who was the last hitter to hit a unit
 local health_table = {}	--local table to store health of a hit unit
 local client_hit_table = {} --local table to store if a client has hit a unit
-log.trace(nameModule .. "Created local client_control table: to store which client controls which unit")	
-log.trace(nameModule .. "Created hit_table: to store who was the last hitter to hit a unit")	
-log.trace(nameModule .. "Created local client_hit_table: table to store if a client has hit a unit")	
+log.trace("Created local client_control table: to store which client controls which unit")	
+log.trace("Created hit_table: to store who was the last hitter to hit a unit")	
+log.trace("Created local client_hit_table: table to store if a client has hit a unit")	
 
 
 --track stats for player package
-log.info(nameModule .. "Start track stats for player package =======================================================")														
+log.info("Start track stats for player package =======================================================")														
 packstats = {}
 
 for role_name, role in pairs(camp.player.pack) do	--iterate through roles in player package
@@ -196,34 +195,35 @@ for role_name, role in pairs(camp.player.pack) do	--iterate through roles in pla
 
 		for n = 1, flight.number do
 			local unitname = "Pack " .. camp.player.pack_n .. " - " .. flight.name .. " - " .. flight.task .. " " .. flight_n .. "-" .. n
-			log.trace(nameModule .. " create packstats for unitname: " .. unitname)																				
+			log.trace(" create packstats for unitname: " .. unitname)																				
 			packstats[unitname] = {
 				kills_air = 0,
 				kills_ground = 0,
 				kills_ship = 0,
 				lost = 0,
+				friendly_kills_air = 0,
 			}
 		end
 	end
 end
-log.info(nameModule .. "End track stats for player package =======================================================")														
+log.info("End track stats for player package =======================================================")														
 
 
 --prepare client stats
-log.info(nameModule .. "Start prepare client stats =======================================================")														
+log.info("Start prepare client stats =======================================================")														
 
 for e = 1, #events do																					--iterate through all events
 	if events[e].initiatorPilotName then		--event is by a client
 		AddClient(events[e].initiatorPilotName) --check if exist clientstats table if not create one new
 		client_control[events[e].initiator] = events[e].initiatorPilotName --store which unit name (initiator) is controlled by client (initiatorPilotName)
-		log.trace(nameModule .. "Event is by a client player: " .. events[e].initiatorPilotName .. ", store which unit name (initiator) is controlled by cliend (initiatorPilotName):" )
-		log.trace(nameModule .. "client_control[" .. events[e].initiator .. "] = " .. events[e].initiatorPilotName)
+		log.trace("Event is by a client player: " .. events[e].initiatorPilotName .. ", store which unit name (initiator) is controlled by cliend (initiatorPilotName):" )
+		log.trace("client_control[" .. events[e].initiator .. "] = " .. events[e].initiatorPilotName)
 	end
 end
-log.info(nameModule .. "End prepare client stats =======================================================")														
+log.info("End prepare client stats =======================================================")														
 
 --evaluate log events
-log.info(nameModule .. "Start evaluate log events =======================================================")														
+log.info("Start evaluate log events =======================================================")														
 
 for e = 1, #events do	
 	--review all events for stats updates
@@ -231,23 +231,23 @@ for e = 1, #events do
 		hit_table[events[e].target] = events[e].initiator												--store who hits a target (subsequent hits overwrite previous hits)
 		health_table[events[e].target] = events[e].health												--store health of the target
 		client_hit_table[events[e].target] = client_control[events[e].initiator]						--store client name that has hit a unit (stores nil  if hitter is not a client)				
-		log.trace(nameModule .. "event["..e.."] = hit, store hit in tables - events[e].target: " .. events[e].target)																
+		log.trace("event["..e.."] = hit, store hit in tables - events[e].target: " .. events[e].target)																
 		
 		if hit_table[events[e].target] then
-			log.trace(nameModule .. "hit_table[" .. events[e].target .."] = " .. hit_table[events[e].target])																
+			log.trace("hit_table[" .. events[e].target .."] = " .. hit_table[events[e].target])																
 		end	
 
 		if health_table[events[e].target] then
-			log.trace(nameModule .. "health_table[" .. events[e].target .."] = " .. health_table[events[e].target])																
+			log.trace("health_table[" .. events[e].target .."] = " .. health_table[events[e].target])																
 		end	
 
 		if client_hit_table[events[e].target] then
-			log.trace(nameModule .. "client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
+			log.trace("client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
 		end	
 		
 		
 	elseif events[e].type == "crash" then
-		log.trace(nameModule .. "event["..e.."] = crash")																
+		log.trace("event["..e.."] = crash")																
 		--oob loss update for crashed aircraft
 		local crash_side																				--local variable to store the side of the crashed aircraft
 		for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
@@ -256,9 +256,15 @@ for e = 1, #events do
 					crash_side = killer_side_name														--store side of the crashed aircraft
 					killer_unit.roster.lost = killer_unit.roster.lost + 1								--increase loss counter of air unit
 					killer_unit.score_last.lost = killer_unit.score_last.lost + 1						--increase loss counter for this mission of air unit
-					killer_unit.roster.ready = killer_unit.roster.ready - 1								--decrease number of ready aircraft of air unit
-					killer_unit.score_last.ready = killer_unit.score_last.ready - 1 --era +1 errore?    --decrease number of ready aircraft for this mission of air unit
-					log.trace(nameModule .. "event["..e.."].initiator = oob_air killer_unit.name = " .. killer_unit.name .. "increments killer_unit.roster.lost and killer_unit.score_last.lost(" .. killer_unit.roster.lost .. ", " .. killer_unit.score_last.lost .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
+					
+					if killer_unit.roster.ready > 0 then 
+						killer_unit.roster.ready = killer_unit.roster.ready - 1								--decrease number of ready aircraft of air unit
+					end
+
+					if killer_unit.score_last.ready > 0 then 
+						killer_unit.score_last.ready = killer_unit.score_last.ready - 1 --era +1 errore?    --decrease number of ready aircraft for this mission of air unit
+					end
+					log.trace("event["..e.."].initiator = oob_air killer_unit.name = " .. killer_unit.name .. "increments killer_unit.roster.lost and killer_unit.score_last.lost(" .. killer_unit.roster.lost .. ", " .. killer_unit.score_last.lost .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
 					AddPackstats(events[e].initiator, "lost")											--check if loss was in player package					
 -- ==================================================					
 -----Last point for Coding logger functionality ----		
@@ -275,9 +281,13 @@ for e = 1, #events do
 		
 		--oob kill update for crashed aircraft
 		for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
+			
 			for killer_unit_n,killer_unit in pairs(killer_side) do										--iterate through all air units
+				
 				if hit_table[events[e].initiator] ~= nil then											--check if the crashed aircraft has a hit entry
+					
 					if string.find(hit_table[events[e].initiator], " " .. killer_unit.name .. " ", 1, true) then			--if the hitting unit is part of air unit name
+						
 						if crash_side ~= killer_side_name then											--make sure that hitting unit and crashed aircraft are not on same side (friendly fire is not awarded as kill)
 							killer_unit.score.kills_air = killer_unit.score.kills_air + 1				--award air kill to air unit
 							killer_unit.score_last.kills_air = killer_unit.score_last.kills_air + 1		--increase kill counter for this mission of air unit
@@ -289,6 +299,11 @@ for e = 1, #events do
 								clientstats[client_hit_table[events[e].initiator]].score_last.kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.kills_air + 1
 							end
 							break
+						
+						elseif client_hit_table[events[e].initiator] then --client's friendly air kill								--if crashed aircraft was hit by a client
+							-- implements new stats
+							clientstats[client_hit_table[events[e].initiator]].friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].friendly_kills_air + 1	--award air kill to client
+							clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air + 1						 
 						end
 					end
 				end
@@ -454,7 +469,7 @@ for hit_unit,hitter in pairs(hit_table) do													--iterate through all rem
 	for side_name,side in pairs(oob_air) do													--iterate through all sides
 		for unit_n,unit in pairs(side) do													--iterate through all air units
 			if string.find(hit_unit, " " .. unit.name .. " ", 1, true) then					--if hit unit is part of air unit name
-				if health_table[hit_unit] > 50 then											--if health of hit unit is bigger than 50%
+				if health_table[hit_unit] and health_table[hit_unit] > 50 then											--if health of hit unit is bigger than 50%
 					unit.roster.damaged = unit.roster.damaged + 1							--increase counter for damaged aircraft total
 					unit.score_last.damaged = unit.score_last.damaged + 1					--increase counter for damaged aircraft in last mission
 				else																		--if health of hit unit is lower than 50%, the aircraft is written off

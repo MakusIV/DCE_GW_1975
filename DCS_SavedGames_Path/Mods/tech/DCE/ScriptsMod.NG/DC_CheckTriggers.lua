@@ -11,6 +11,17 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["DC_CheckTriggers.lua"] = "1.3.6"
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_DC_CheckTriggers." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 BriefingImagesB = {}                                         --reset stockImage
 BriefingImagesR = {}                                         --reset stockImage
 
@@ -469,7 +480,7 @@ Action = {}
 											
 											local test_prob = math.random(1,100)
 
-											-- si on ressucite l'élément
+											-- si on ressucite l'ï¿½lï¿½ment
 											if prob >= test_prob then
 												forcedReAlive = true
 												temp_dead = nil
@@ -501,9 +512,9 @@ Action = {}
 												target.dead_last = math.floor(target.dead_last -  (1/#target.elements *100))
 												 if target.dead_last < 0 then  target.dead_last = 0 end
 		
-											else -- sinon on met à jour la date de check pour y revenir seulement un jour apres
+											else -- sinon on met ï¿½ jour la date de check pour y revenir seulement un jour apres
 												temp_CheckDay = camp.day
-												target.elements[e].CheckDay = temp_CheckDay					-- pour mettre à jour les cible scenary qui ne sont pas dans oob_ground
+												target.elements[e].CheckDay = temp_CheckDay					-- pour mettre ï¿½ jour les cible scenary qui ne sont pas dans oob_ground
 											end
 										end
 									end

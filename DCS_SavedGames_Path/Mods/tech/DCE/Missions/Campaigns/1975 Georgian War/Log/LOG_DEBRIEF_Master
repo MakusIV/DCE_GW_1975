@@ -1,5 +1,0 @@
-[DEBUG Wed Nov 16 19:21:38 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:92: DEBRIEF_Master.lua --> Start
-[DEBUG Wed Nov 16 19:21:38 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:97: DEBRIEF_Master.lua --> NG
-[DEBUG Wed Nov 16 19:21:38 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:112: DEBRIEF_Master.lua --> required: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats
-[DEBUG Wed Nov 16 19:21:38 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:123: DEBRIEF_Master.lua --> load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua
-[DEBUG Wed Nov 16 19:21:38 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:128: DEBRIEF_Master.lua --> load: DC_Logistic.lua

@@ -222,7 +222,7 @@ supply_tab = {
 					},
 				},
 				['Bridge Geguti-LM17'] = {
-					['integrity'] = 1,
+					['integrity'] = 0.66,
 					['airbase_supply'] = {
 						['KHASHURI FARP LM84'] = true,
 					},
@@ -289,7 +289,7 @@ supply_tab = {
 					},
 				},
 				['Prohladniy Depot MP 24-BESLAN SUPPLY LINE'] = {
-					['integrity'] = 0.62,
+					['integrity'] = 0.5,
 					['airbase_supply'] = {
 						['Beslan'] = true,
 					},

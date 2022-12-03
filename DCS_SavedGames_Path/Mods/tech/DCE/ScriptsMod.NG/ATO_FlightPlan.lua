@@ -7,6 +7,17 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["ATO_FlightPlan.lua"] = "1.40.133"
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_ATO_FlightPlan." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 -- CHCM_FP_01 Check and Help CampaignMaker
 
 -- Eagle_01 Modification E02.a I16 and A-4e

@@ -40,9 +40,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R/VMFA-157'] = {
+		['Reserves-R/VAW-125'] = {
 			['aircraft_types'] = {
-				['F-5E-3'] = 'R/VMFA-157',
+				['E-2C'] = 'R/VAW-125',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -115,9 +115,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R/315th Air Division'] = {
+		['Reserves-R/17th Cavalry'] = {
 			['aircraft_types'] = {
-				['C-130'] = 'R/315th Air Division',
+				['UH-1H'] = 'R/17th Cavalry',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -191,25 +191,25 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
+		['Reserves-R/VMFA-159'] = {
+			['aircraft_types'] = {
+				['F-4E'] = 'R/VMFA-159',
+			},
+			['supply'] = 1,
+			['efficiency'] = 1,
+			['integrity'] = 1,
+		},
+		['KHASHURI FARP LM84'] = {
+			['aircraft_types'] = {
+				['UH-1H'] = '17th Cavalry',
+			},
+			['supply'] = 1,
+			['efficiency'] = 1,
+			['integrity'] = 1,
+		},
 		['Reserves-F23'] = {
 			['aircraft_types'] = {
 				['AJS37'] = 'F23',
-			},
-			['supply'] = 1,
-			['efficiency'] = 1,
-			['integrity'] = 1,
-		},
-		['Reserves-R/VAW-125'] = {
-			['aircraft_types'] = {
-				['E-2C'] = 'R/VAW-125',
-			},
-			['supply'] = 1,
-			['efficiency'] = 1,
-			['integrity'] = 1,
-		},
-		['Reserves-R/69 BS'] = {
-			['aircraft_types'] = {
-				['B-52H'] = 'R/69 BS',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -235,9 +235,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['KHASHURI FARP LM84'] = {
+		['Reserves-R/69 BS'] = {
 			['aircraft_types'] = {
-				['UH-1H'] = '17th Cavalry',
+				['B-52H'] = 'R/69 BS',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -262,16 +262,16 @@ airbase_tab = {
 		},
 		['Sukhumi'] = {
 			['aircraft_types'] = {
-				['F-4E'] = 'VMFA-159',
 				['AJS37'] = 'F7',
+				['F-4E'] = 'VMFA-159',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R/17th Cavalry'] = {
+		['Reserves-R/VMFA-157'] = {
 			['aircraft_types'] = {
-				['UH-1H'] = 'R/17th Cavalry',
+				['F-5E-3'] = 'R/VMFA-157',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -295,19 +295,19 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Senaki-Kolkhi'] = {
+		['Reserves-R/315th Air Division'] = {
 			['aircraft_types'] = {
-				['MiG-21Bis'] = 'GA 7rd AS',
-				['An-26B'] = 'GA 5rd TS',
-				['KC-135'] = '801 ARS',
+				['C-130'] = 'R/315th Air Division',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R/VMFA-159'] = {
+		['Senaki-Kolkhi'] = {
 			['aircraft_types'] = {
-				['F-4E'] = 'R/VMFA-159',
+				['KC-135'] = '801 ARS',
+				['An-26B'] = 'GA 5rd TS',
+				['MiG-21Bis'] = 'GA 7rd AS',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -315,9 +315,9 @@ airbase_tab = {
 		},
 	},
 	['red'] = {
-		['Reserves-R/1st GHR'] = {
+		['Reserves-R./127.IAP'] = {
 			['aircraft_types'] = {
-				['Mi-8MT'] = 'R/1st GHR',
+				['MiG-27K'] = 'R./127.IAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -326,9 +326,9 @@ airbase_tab = {
 		['Mineralnye-Vody'] = {
 			['aircraft_types'] = {
 				['MiG-25PD'] = '793.IAP',
-				['MiG-23MLD'] = '1./133.IAP',
 				['Su-24M'] = '1./41.IAP',
 				['An-26B'] = '1./29.OSAP',
+				['MiG-23MLD'] = '1./133.IAP',
 				['Su-17M4'] = '1./135.IAP',
 			},
 			['supply'] = 0.72,
@@ -359,12 +359,14 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./111AS.IAP'] = {
+		['Mozdok'] = {
 			['aircraft_types'] = {
-				['L-39A'] = 'R./111AS.IAP',
+				['MiG-25PD'] = '790.IAP',
+				['MiG-23MLD'] = '1./113.IAP',
+				['MiG-27K'] = '1./117.IAP',
 			},
-			['supply'] = 1,
-			['efficiency'] = 1,
+			['supply'] = 0.94,
+			['efficiency'] = 0.94,
 			['integrity'] = 1,
 		},
 		['Reserves-R./37.IAP'] = {
@@ -375,9 +377,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./123.IAP'] = {
+		['Reserves-R/13th GHR'] = {
 			['aircraft_types'] = {
-				['MiG-23MLD'] = 'R./123.IAP',
+				['Mi-24V'] = 'R/13th GHR',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -418,10 +420,10 @@ airbase_tab = {
 		['Maykop-Khanskaya'] = {
 			['aircraft_types'] = {
 				['Su-24M'] = '1./81.IAP',
-				['Tu-22M3'] = '1./61.IAP',
+				['Su-17M4'] = '1./115.IAP',
 				['An-26B'] = '27.OSAP',
 				['MiG-23MLD'] = '1./153.IAP',
-				['Su-17M4'] = '1./115.IAP',
+				['Tu-22M3'] = '1./61.IAP',
 			},
 			['supply'] = 0.612,
 			['efficiency'] = 0.612,
@@ -447,9 +449,9 @@ airbase_tab = {
 			['efficiency'] = 0.68,
 			['integrity'] = 1,
 		},
-		['Reserves-R./13.OSAP'] = {
+		['Reserves-R/27.OSAP'] = {
 			['aircraft_types'] = {
-				['Il-76MD'] = 'R./13.OSAP',
+				['An-26B'] = 'R/27.OSAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -463,13 +465,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Krasnodar-Center'] = {
+		['Reserves-R/2nd GHR'] = {
 			['aircraft_types'] = {
-				['A-50'] = '2457.I SDRLO',
-				['An-26B'] = '25.OSAP',
-				['Su-24MR'] = 'O7 SDRLO',
-				['MiG-25RBT'] = '09 SDRLO',
-				['MiG-23MLD'] = 'O/159.IAP',
+				['Mi-24V'] = 'R/2nd GHR',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -491,9 +489,17 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./19.IAP'] = {
+		['TSKHINVALI FARP MM27'] = {
 			['aircraft_types'] = {
-				['MiG-21Bis'] = 'R./19.IAP',
+				['Mi-24V'] = '2nd GHR',
+			},
+			['supply'] = 1,
+			['efficiency'] = 0.6,
+			['integrity'] = 0.6,
+		},
+		['Anapa-Vityazevo'] = {
+			['aircraft_types'] = {
+				['An-26B'] = '23.OSAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -507,17 +513,9 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./115.IAP'] = {
+		['Reserves-R/1st GHR'] = {
 			['aircraft_types'] = {
-				['Su-17M4'] = 'R./115.IAP',
-			},
-			['supply'] = 1,
-			['efficiency'] = 1,
-			['integrity'] = 1,
-		},
-		['Reserves-R./113.IAP'] = {
-			['aircraft_types'] = {
-				['MiG-23MLD'] = 'R./113.IAP',
+				['Mi-8MT'] = 'R/1st GHR',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -531,25 +529,29 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./127.IAP'] = {
+		['Reserves-R./13.OSAP'] = {
 			['aircraft_types'] = {
-				['MiG-27K'] = 'R./127.IAP',
+				['Il-76MD'] = 'R./13.OSAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['TSKHINVALI FARP MM27'] = {
+		['Reserves-R./111AS.IAP'] = {
 			['aircraft_types'] = {
-				['Mi-24V'] = '2nd GHR',
+				['L-39A'] = 'R./111AS.IAP',
 			},
 			['supply'] = 1,
-			['efficiency'] = 0.6,
-			['integrity'] = 0.6,
+			['efficiency'] = 1,
+			['integrity'] = 1,
 		},
-		['Reserves-R/2nd GHR'] = {
+		['Krasnodar-Center'] = {
 			['aircraft_types'] = {
-				['Mi-24V'] = 'R/2nd GHR',
+				['A-50'] = '2457.I SDRLO',
+				['An-26B'] = '25.OSAP',
+				['Su-24MR'] = 'O7 SDRLO',
+				['MiG-25RBT'] = '09 SDRLO',
+				['MiG-23MLD'] = 'O/159.IAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -563,22 +565,6 @@ airbase_tab = {
 			['efficiency'] = 0.612,
 			['integrity'] = 1,
 		},
-		['Anapa-Vityazevo'] = {
-			['aircraft_types'] = {
-				['An-26B'] = '23.OSAP',
-			},
-			['supply'] = 1,
-			['efficiency'] = 1,
-			['integrity'] = 1,
-		},
-		['Reserves-R/27.OSAP'] = {
-			['aircraft_types'] = {
-				['An-26B'] = 'R/27.OSAP',
-			},
-			['supply'] = 1,
-			['efficiency'] = 1,
-			['integrity'] = 1,
-		},
 		['Reserves-R/23.OSAP'] = {
 			['aircraft_types'] = {
 				['An-26B'] = 'R/23.OSAP',
@@ -587,9 +573,25 @@ airbase_tab = {
 			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R/13th GHR'] = {
+		['Reserves-R./135.IAP'] = {
 			['aircraft_types'] = {
-				['Mi-24V'] = 'R/13th GHR',
+				['Su-17M4'] = 'R./135.IAP',
+			},
+			['supply'] = 1,
+			['efficiency'] = 1,
+			['integrity'] = 1,
+		},
+		['Reserves-R./113.IAP'] = {
+			['aircraft_types'] = {
+				['MiG-23MLD'] = 'R./113.IAP',
+			},
+			['supply'] = 1,
+			['efficiency'] = 1,
+			['integrity'] = 1,
+		},
+		['Reserves-R./123.IAP'] = {
+			['aircraft_types'] = {
+				['MiG-23MLD'] = 'R./123.IAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,
@@ -598,28 +600,26 @@ airbase_tab = {
 		['Beslan'] = {
 			['aircraft_types'] = {
 				['MiG-21Bis'] = '1./37.IAP',
-				['An-26B'] = '3.OSAP',
-				['L-39A'] = '1./115AS.IAP',
 				['MiG-27K'] = '1./127.IAP',
+				['L-39A'] = '1./115AS.IAP',
+				['An-26B'] = '3.OSAP',
 				['MiG-23MLD'] = '1./123.IAP',
 			},
-			['supply'] = 0.5828,
-			['efficiency'] = 0.5828,
+			['supply'] = 0.47,
+			['efficiency'] = 0.47,
 			['integrity'] = 1,
 		},
-		['Mozdok'] = {
+		['Reserves-R./115.IAP'] = {
 			['aircraft_types'] = {
-				['MiG-25PD'] = '790.IAP',
-				['MiG-27K'] = '1./117.IAP',
-				['MiG-23MLD'] = '1./113.IAP',
+				['Su-17M4'] = 'R./115.IAP',
 			},
-			['supply'] = 0.94,
-			['efficiency'] = 0.94,
+			['supply'] = 1,
+			['efficiency'] = 1,
 			['integrity'] = 1,
 		},
-		['Reserves-R./135.IAP'] = {
+		['Reserves-R./19.IAP'] = {
 			['aircraft_types'] = {
-				['Su-17M4'] = 'R./135.IAP',
+				['MiG-21Bis'] = 'R./19.IAP',
 			},
 			['supply'] = 1,
 			['efficiency'] = 1,

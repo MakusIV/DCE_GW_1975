@@ -10,6 +10,17 @@
 -- Mod Zarbas Z01 Select Task possible
 -- Miguel21 modification M11.l : Multiplayer
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = "trace"
+log.outfile = "Log/LOG_ATO_PlayerAssign." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+local local_debug = true -- local debug   
+log.debug("Start")
+-- =====================  End Marco implementation ==================================
+
+
 local playable = {}																		--local table to store playable flights
 local tab_boublon = {}																	-- multiplayable tag
 selectMultiPackage = false

@@ -16,5 +16,6 @@ clientstats = {
 		['crash'] = 1,
 		['eject'] = 2,
 		['dead'] = 0,
+		['friendly_kills_air'] = 0,
 	},
 }
