@@ -11,10 +11,8 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[3] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = '209 SA-2 Site R-3-3',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[4] = {
 					['name'] = '209 SA-2 Site R-3-4',
@@ -54,23 +52,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 424,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 845506.11025898,
 			['x'] = -83928.376679949,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '209 SA-2 Site R-3',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 91,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Bridge Vladikavkaz MN 76'] = {
 			['elements'] = {
@@ -79,14 +77,12 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 1,
-					['dead'] = true,
 				},
 			},
 			['picture'] = {
 				[1] = 'Vladikavkaz_Bridge.png',
 			},
-			['ATO'] = false,
+			['ATO'] = true,
 			['y'] = 850781.9375,
 			['x'] = -165689.171875,
 			['firepower'] = {
@@ -94,7 +90,7 @@ targetlist = {
 				['max'] = 4,
 			},
 			['dead_last'] = 0,
-			['alive'] = 0,
+			['alive'] = 100,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -105,9 +101,9 @@ targetlist = {
 			['class'] = 'airbase',
 			['ATO'] = true,
 			['unit'] = {
-				['number'] = 2,
-				['type'] = 'MiG-27K',
-				['name'] = '1./117.IAP',
+				['number'] = 8,
+				['type'] = 'MiG-23MLD',
+				['name'] = '1./113.IAP',
 			},
 			['y'] = 834453.14285714,
 			['x'] = -83454.571428571,
@@ -131,8 +127,8 @@ targetlist = {
 			},
 			['text'] = '',
 			['ATO'] = true,
-			['y'] = 446178.66670643,
-			['x'] = -242008.3717094,
+			['y'] = 478315.66670643,
+			['x'] = -247104.3717094,
 			['firepower'] = {
 				['min'] = 1,
 				['max'] = 1,
@@ -177,6 +173,8 @@ targetlist = {
 					['x'] = -151580.80078125,
 					['name'] = 'Bridge north bank South Beslan',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 836013.34375,
@@ -196,7 +194,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 100,
+			['alive'] = 50,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -221,23 +219,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 442,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 66,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 812322.40525566,
 			['x'] = -262624.2327366,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'TSKHINVALI FARP AA',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 66,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Russian Convoy 1'] = {
 			['elements'] = {
@@ -248,46 +246,40 @@ targetlist = {
 					['dead'] = true,
 				},
 				[2] = {
-					['CheckDay'] = 1,
+					['CheckDay'] = 2,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-1',
 					['dead'] = true,
 				},
 				[3] = {
-					['CheckDay'] = 1,
+					['CheckDay'] = 3,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-2',
 					['dead'] = true,
 				},
 				[4] = {
-					['CheckDay'] = 1,
+					['CheckDay'] = 3,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-3',
 					['dead'] = true,
 				},
 				[5] = {
-					['CheckDay'] = 2,
+					['CheckDay'] = 3,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-4',
 					['dead'] = true,
 				},
 				[6] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-5',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[7] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-6',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[8] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-7',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[9] = {
 					['name'] = 'Russian Convoy 1-8',
@@ -298,46 +290,40 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[11] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-10',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[12] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-11',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[13] = {
 					['name'] = 'Russian Convoy 1-12',
 					['dead_last'] = false,
 				},
 				[14] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-13',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['groupId'] = 415,
-			['firepower'] = {
-				['min'] = 6,
-				['max'] = 12,
-			},
+			['alive'] = 64,
 			['class'] = 'ship',
 			['ATO'] = true,
 			['foundOobGround'] = true,
-			['y'] = 276791,
-			['x'] = -87835,
-			['attributes'] = {
-				[1] = 'ship',
+			['y'] = 282885,
+			['x'] = -93779,
+			['firepower'] = {
+				['min'] = 6,
+				['max'] = 12,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Russian Convoy 1',
 			['priority'] = 1,
 			['task'] = 'Anti-ship Strike',
-			['alive'] = 21,
+			['attributes'] = {
+				[1] = 'ship',
+			},
 		},
 		['High priority Target Prohladniy Depot MP 24 SUPPLY LINE A'] = {
 			['elements'] = {
@@ -345,9 +331,7 @@ targetlist = {
 					['y'] = 795963.7109375,
 					['x'] = -111785.2421875,
 					['name'] = 'Rail Bridge right bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[2] = {
 					['y'] = 795881.91699219,
@@ -359,9 +343,7 @@ targetlist = {
 					['y'] = 795800.12207031,
 					['x'] = -111670.1796875,
 					['name'] = 'Rail Bridge left bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['ATO'] = true,
@@ -371,8 +353,8 @@ targetlist = {
 				['min'] = 4,
 				['max'] = 8,
 			},
-			['dead_last'] = 66,
-			['alive'] = 33,
+			['dead_last'] = 0,
+			['alive'] = 100,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -522,7 +504,6 @@ targetlist = {
 					['groupId'] = 519,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[15] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-15',
@@ -535,28 +516,24 @@ targetlist = {
 					['groupId'] = 514,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[13] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-13',
 					['groupId'] = 503,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[26] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-26',
 					['groupId'] = 515,
-					['dead_last'] = true,
+					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[7] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-6',
 					['groupId'] = 497,
-					['dead_last'] = true,
+					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[27] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-27',
@@ -575,21 +552,18 @@ targetlist = {
 					['groupId'] = 517,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[23] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-23',
 					['groupId'] = 512,
-					['dead_last'] = true,
+					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[29] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-29',
 					['groupId'] = 518,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[19] = {
 					['name'] = 'CHERKESSK SUPPLY PLANT KP69-19',
@@ -600,19 +574,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 72,
-			['y'] = 627934.32395653,
-			['x'] = -63684.703816076,
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-			['dead_last'] = 10,
-			['foundOobGround'] = true,
-			['priority'] = 4,
-			['task'] = 'Strike',
 			['firepower'] = {
 				['min'] = 4,
 				['max'] = 10,
+			},
+			['y'] = 627934.32395653,
+			['x'] = -63684.703816076,
+			['alive'] = 100,
+			['dead_last'] = 0,
+			['foundOobGround'] = true,
+			['priority'] = 4,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
 			},
 		},
 		['Rail Bridge Kardzhin MN 49'] = {
@@ -622,12 +596,14 @@ targetlist = {
 					['x'] = -144986.53125,
 					['name'] = 'Rail Bridge Kardzhin MN 49',
 					['dead_last'] = false,
+					['CheckDay'] = 3,
+					['dead'] = true,
 				},
 			},
 			['picture'] = {
 				[1] = 'Kardzhin_Bridges.png',
 			},
-			['ATO'] = true,
+			['ATO'] = false,
 			['y'] = 816502.625,
 			['x'] = -144986.53125,
 			['firepower'] = {
@@ -635,7 +611,7 @@ targetlist = {
 				['max'] = 4,
 			},
 			['dead_last'] = 0,
-			['alive'] = 100,
+			['alive'] = 0,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -674,29 +650,31 @@ targetlist = {
 				},
 			},
 			['groupId'] = 97,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 833359.93142858,
 			['x'] = -152114.38857143,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '503 5th Artillery Division/3.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['502 5th Artillery Division/2.Btry'] = {
 			['elements'] = {
 				[1] = {
-					['name'] = 'BM-27 Uragan #7',
+					['CheckDay'] = 1,
 					['dead_last'] = false,
+					['name'] = 'BM-27 Uragan #7',
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'BM-27 Uragan #8',
@@ -724,23 +702,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 96,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 85,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 847405.6,
 			['x'] = -167568.67428572,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '502 5th Artillery Division/2.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['LENIGORI FARP MM56'] = {
 			['elements'] = {
@@ -755,12 +733,14 @@ targetlist = {
 					['groupId'] = 446,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[4] = {
 					['name'] = 'LENIGORI FARP MM56 - 3',
 					['groupId'] = 448,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[3] = {
 					['name'] = 'LENIGORI FARP MM56 - 2',
@@ -772,19 +752,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 75,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
 			['y'] = 849382.43963167,
 			['x'] = -267933.2319887,
-			['attributes'] = {
-				[1] = 'soft',
-			},
+			['alive'] = 25,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
+			['attributes'] = {
+				[1] = 'soft',
 			},
 		},
 		['Tanker Track West'] = {
@@ -837,16 +817,12 @@ targetlist = {
 		['106 SA-2 Site C-6'] = {
 			['elements'] = {
 				[1] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = '106 SA-2 Site C-6-1',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[2] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = '106 SA-2 Site C-6-2',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[3] = {
 					['name'] = '106 SA-2 Site C-6-3',
@@ -885,44 +861,42 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[12] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = '106 SA-2 Site C-6-12',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['groupId'] = 425,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 773679.40615594,
 			['x'] = -127419.38346039,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '106 SA-2 Site C-6',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 75,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Vaziani Alert'] = {
 			['radius'] = 200000,
 			['ATO'] = true,
 			['inactive'] = false,
+			['attributes'] = {
+			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 2,
 			},
-			['attributes'] = {
-			},
 			['priority'] = 5,
-			['base'] = 'Vaziani',
 			['task'] = 'Intercept',
+			['base'] = 'Vaziani',
 		},
 		['LENIGORI FARP AA'] = {
 			['elements'] = {
@@ -933,8 +907,10 @@ targetlist = {
 					['dead'] = true,
 				},
 				[2] = {
-					['name'] = 'LENIGORI FARP MM56 -6-1',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'LENIGORI FARP MM56 -6-1',
+					['dead'] = true,
 				},
 				[3] = {
 					['name'] = 'LENIGORI FARP MM56 -6-2',
@@ -942,23 +918,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 449,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 33,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 849397.34694202,
 			['x'] = -267892.24000401,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'LENIGORI FARP AA',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 66,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Sweep Center'] = {
 			['text'] = 'in the center front area',
@@ -981,8 +957,6 @@ targetlist = {
 					['x'] = -173099.3125,
 					['name'] = 'Bridge Alagir',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 850403,
@@ -1001,14 +975,14 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[4] = {
 					['y'] = 835949.02734375,
 					['x'] = -151580.80078125,
 					['name'] = 'Bridge north bank South Beslan',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[5] = {
 					['y'] = 836013.34375,
@@ -1018,14 +992,14 @@ targetlist = {
 				},
 			},
 			['ATO'] = true,
-			['y'] = 840301.60351563,
+			['y'] = 840301.60351562,
 			['x'] = -162383.3671875,
 			['firepower'] = {
 				['min'] = 4,
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 66,
+			['alive'] = 83,
 			['priority'] = 1,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1064,23 +1038,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 95,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 847995.06057145,
 			['x'] = -152508.20428572,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '501 5th Artillery Division/1.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Bridge Alagir MN 36'] = {
 			['elements'] = {
@@ -1089,14 +1063,12 @@ targetlist = {
 					['x'] = -173099.3125,
 					['name'] = 'Bridge Alagir',
 					['dead_last'] = false,
-					['CheckDay'] = 1,
-					['dead'] = true,
 				},
 			},
 			['picture'] = {
 				[1] = 'Alagir_Bridge.png',
 			},
-			['ATO'] = false,
+			['ATO'] = true,
 			['y'] = 815939.25,
 			['x'] = -173099.3125,
 			['firepower'] = {
@@ -1104,7 +1076,7 @@ targetlist = {
 				['max'] = 4,
 			},
 			['dead_last'] = 0,
-			['alive'] = 0,
+			['alive'] = 100,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1115,9 +1087,9 @@ targetlist = {
 			['class'] = 'airbase',
 			['ATO'] = true,
 			['unit'] = {
-				['number'] = 1,
-				['type'] = 'Il-76MD',
-				['name'] = '13.OSAP',
+				['number'] = 3,
+				['type'] = 'A-50',
+				['name'] = '2457 SDRLO',
 			},
 			['y'] = 760428.0733062,
 			['x'] = -124921.90954665,
@@ -1154,28 +1126,28 @@ targetlist = {
 			['radius'] = 100000,
 			['ATO'] = true,
 			['inactive'] = false,
+			['attributes'] = {
+			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 2,
 			},
-			['attributes'] = {
-			},
 			['priority'] = 7,
-			['base'] = 'Kutaisi',
 			['task'] = 'Intercept',
+			['base'] = 'Kutaisi',
 		},
 		['CVN-71 Theodore Roosevelt Alert'] = {
 			['radius'] = 250000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 2,
 			},
-			['base'] = 'CVN-71 Theodore Roosevelt',
-			['priority'] = 7,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 7,
 			['ATO'] = true,
+			['base'] = 'CVN-71 Theodore Roosevelt',
 		},
 		['Mineralnye-Vody airbase OCA Strike'] = {
 			['class'] = 'airbase',
@@ -1207,8 +1179,8 @@ targetlist = {
 			},
 			['text'] = '',
 			['ATO'] = true,
-			['y'] = 443448.49561254,
-			['x'] = -230650.22227524,
+			['y'] = 475585.49561254,
+			['x'] = -235746.22227524,
 			['firepower'] = {
 				['min'] = 1,
 				['max'] = 1,
@@ -1222,10 +1194,8 @@ targetlist = {
 		['Maykop SA-2'] = {
 			['elements'] = {
 				[1] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = 'Maykop SA-2-1',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[2] = {
 					['name'] = 'Maykop SA-2-2',
@@ -1269,23 +1239,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 428,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 459830.17957345,
 			['x'] = -16418.989261906,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Maykop SA-2',
 			['priority'] = 4,
 			['task'] = 'Strike',
-			['alive'] = 90,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['101 EWR Site'] = {
 			['elements'] = {
@@ -1299,23 +1269,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 21,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 700465.26372636,
 			['x'] = -44781.216798702,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '101 EWR Site',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['104 SA-6 Site E-4'] = {
 			['elements'] = {
@@ -1336,8 +1306,10 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[5] = {
-					['name'] = '104 SA-6 Site E-4-5',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = '104 SA-6 Site E-4-5',
+					['dead'] = true,
 				},
 				[6] = {
 					['name'] = '104 SA-6 Site E-4-6',
@@ -1352,12 +1324,16 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[9] = {
-					['name'] = '104 SA-6 Site E-4-9',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = '104 SA-6 Site E-4-9',
+					['dead'] = true,
 				},
 				[10] = {
-					['name'] = '104 SA-6 Site E-4-10',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = '104 SA-6 Site E-4-10',
+					['dead'] = true,
 				},
 				[11] = {
 					['name'] = '104 SA-6 Site E-4-11',
@@ -1369,23 +1345,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 423,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 75,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 842716.62772461,
 			['x'] = -152303.98677198,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '104 SA-6 Site E-4',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['High priority Target BESLAN FARP SUPPLY LINE A'] = {
 			['elements'] = {
@@ -1394,8 +1370,6 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 850403,
@@ -1421,7 +1395,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 66,
+			['alive'] = 100,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1440,23 +1414,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 19,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 838506.51200001,
 			['x'] = -110842.00914282,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '102 EWR Site',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Mozdok Airbase'] = {
 			['elements'] = {
@@ -1543,15 +1517,15 @@ targetlist = {
 			['radius'] = 200000,
 			['ATO'] = true,
 			['inactive'] = false,
+			['attributes'] = {
+			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 2,
 			},
-			['attributes'] = {
-			},
 			['priority'] = 5,
-			['base'] = 'Kutaisi',
 			['task'] = 'Intercept',
+			['base'] = 'Kutaisi',
 		},
 		['Bridge Vladikavkaz North MN 76'] = {
 			['elements'] = {
@@ -1592,23 +1566,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 20,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 902985.7142857,
 			['x'] = -125550,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '103 EWR Site',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Maykop-Khanskaya Airbase'] = {
 			['elements'] = {
@@ -1698,8 +1672,6 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 850403,
@@ -1725,7 +1697,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 66,
+			['alive'] = 100,
 			['priority'] = 2,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1820,7 +1792,7 @@ targetlist = {
 					['x'] = -145428.47167969,
 					['name'] = 'Rail Bridge right bank SW Kardzhin',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
+					['CheckDay'] = 4,
 					['dead'] = true,
 				},
 				[2] = {
@@ -1828,14 +1800,12 @@ targetlist = {
 					['x'] = -145376.90332031,
 					['name'] = 'Rail Bridge left bank SW Kardzhin',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 			},
 			['picture'] = {
 				[1] = 'Kardzhin_Bridges.png',
 			},
-			['ATO'] = false,
+			['ATO'] = true,
 			['y'] = 814576.00000001,
 			['x'] = -145402.6875,
 			['firepower'] = {
@@ -1843,7 +1813,7 @@ targetlist = {
 				['max'] = 4,
 			},
 			['dead_last'] = 0,
-			['alive'] = 0,
+			['alive'] = 50,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1883,23 +1853,24 @@ targetlist = {
 					['groupId'] = 441,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 60,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
 			['y'] = 812451.03644632,
 			['x'] = -262567.74074286,
-			['attributes'] = {
-				[1] = 'soft',
-			},
+			['alive'] = 40,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
+			['attributes'] = {
+				[1] = 'soft',
 			},
 		},
 		['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
@@ -1909,8 +1880,6 @@ targetlist = {
 					['x'] = -173099.3125,
 					['name'] = 'Bridge Alagir',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 852723.0625,
@@ -1929,14 +1898,14 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[4] = {
 					['y'] = 835949.02734375,
 					['x'] = -151580.80078125,
 					['name'] = 'Bridge north bank South Beslan',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[5] = {
 					['y'] = 836013.34375,
@@ -1949,7 +1918,7 @@ targetlist = {
 					['x'] = -157146.546875,
 					['name'] = 'Rail Bridge Digora MN 38',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
+					['CheckDay'] = 4,
 					['dead'] = true,
 				},
 			},
@@ -1961,7 +1930,7 @@ targetlist = {
 				['max'] = 12,
 			},
 			['dead_last'] = 0,
-			['alive'] = 57,
+			['alive'] = 71,
 			['priority'] = 1,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -1975,7 +1944,7 @@ targetlist = {
 					['x'] = -157146.546875,
 					['name'] = 'Rail Bridge Digora MN 38',
 					['dead_last'] = false,
-					['CheckDay'] = 1,
+					['CheckDay'] = 3,
 					['dead'] = true,
 				},
 			},
@@ -2015,6 +1984,7 @@ targetlist = {
 					['groupId'] = 176,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'NOGIR FARP - Hind 2',
@@ -2051,7 +2021,6 @@ targetlist = {
 					['groupId'] = 171,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[18] = {
 					['name'] = 'NOGIR FARP - Crew Tent 3',
@@ -2076,7 +2045,6 @@ targetlist = {
 					['groupId'] = 172,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[3] = {
 					['name'] = 'NOGIR FARP - Hind 3',
@@ -2126,19 +2094,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 88,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 			['y'] = 849272.30446303,
 			['x'] = -163312.17380486,
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
-			},
+			['alive'] = 94,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
 			},
 		},
 		['Nalchik Airbase'] = {
@@ -2207,10 +2175,8 @@ targetlist = {
 		['204 SA-6 Site B-1'] = {
 			['elements'] = {
 				[1] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = '204 SA-6 Site B-1-1',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[2] = {
 					['name'] = '204 SA-6 Site B-1-2',
@@ -2229,38 +2195,38 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[6] = {
-					['name'] = '204 SA-6 Site B-1-6',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = '204 SA-6 Site B-1-6',
+					['dead'] = true,
 				},
 				[7] = {
 					['name'] = '204 SA-6 Site B-1-7',
 					['dead_last'] = false,
 				},
 				[8] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = '204 SA-6 Site B-1-8',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['groupId'] = 426,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 87,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 774877.40617354,
 			['x'] = -110723.21403087,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '204 SA-6 Site B-1',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 75,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['CAP Tbilissi'] = {
 			['radius'] = 50000,
@@ -2345,23 +2311,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 421,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 903620.61498002,
 			['x'] = -138641.86587154,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '101 SA-3 Site E-1',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['407 8th Army ELINT Station'] = {
 			['elements'] = {
@@ -2401,19 +2367,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 			['y'] = 844145.07350899,
 			['x'] = -203621.68668514,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 		},
 		['Mineralnye-Vody Airbase'] = {
@@ -2546,6 +2512,8 @@ targetlist = {
 					['x'] = -145428.47167969,
 					['name'] = 'Rail Bridge right bank SW Kardzhin',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 795881.91699219,
@@ -2558,22 +2526,20 @@ targetlist = {
 					['x'] = -144986.53125,
 					['name'] = 'Rail Bridge Kardzhin MN 49',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[3] = {
 					['y'] = 795800.12207031,
 					['x'] = -111670.1796875,
 					['name'] = 'Rail Bridge left bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[1] = {
 					['y'] = 795963.7109375,
 					['x'] = -111785.2421875,
 					['name'] = 'Rail Bridge right bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[4] = {
 					['y'] = 809993.75585938,
@@ -2592,8 +2558,6 @@ targetlist = {
 					['x'] = -145376.90332031,
 					['name'] = 'Rail Bridge left bank SW Kardzhin',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 			},
 			['ATO'] = true,
@@ -2603,8 +2567,8 @@ targetlist = {
 				['min'] = 6,
 				['max'] = 12,
 			},
-			['dead_last'] = 25,
-			['alive'] = 62,
+			['dead_last'] = 0,
+			['alive'] = 75,
 			['priority'] = 1,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -2615,7 +2579,7 @@ targetlist = {
 			['class'] = 'airbase',
 			['ATO'] = true,
 			['unit'] = {
-				['number'] = 5,
+				['number'] = 9,
 				['type'] = 'MiG-21Bis',
 				['name'] = '1./37.IAP',
 			},
@@ -2640,10 +2604,8 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[2] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = '206 SA-2 Site B-3-2',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[3] = {
 					['name'] = '206 SA-2 Site B-3-3',
@@ -2682,30 +2644,28 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[12] = {
-					['CheckDay'] = 1,
-					['dead_last'] = false,
 					['name'] = '206 SA-2 Site B-3-12',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['groupId'] = 427,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 696007.89224936,
 			['x'] = -63181.709052048,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '206 SA-2 Site B-3',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 83,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Mission Support Tanker'] = {
 			['slaved'] = {
@@ -2715,8 +2675,8 @@ targetlist = {
 			},
 			['text'] = '',
 			['ATO'] = true,
-			['y'] = 451660,
-			['x'] = -230981.11086754,
+			['y'] = 483797,
+			['x'] = -236077.11086754,
 			['firepower'] = {
 				['min'] = 1,
 				['max'] = 1,
@@ -2734,7 +2694,6 @@ targetlist = {
 					['groupId'] = 460,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-1',
@@ -2759,7 +2718,6 @@ targetlist = {
 					['groupId'] = 475,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[17] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-17',
@@ -2772,14 +2730,12 @@ targetlist = {
 					['groupId'] = 469,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[18] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-18',
 					['groupId'] = 478,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[5] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-4',
@@ -2852,21 +2808,18 @@ targetlist = {
 					['groupId'] = 487,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[13] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-13',
 					['groupId'] = 472,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[26] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-26',
 					['groupId'] = 486,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[7] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-6',
@@ -2879,7 +2832,6 @@ targetlist = {
 					['groupId'] = 489,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[14] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-14',
@@ -2904,7 +2856,6 @@ targetlist = {
 					['groupId'] = 485,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[19] = {
 					['name'] = 'SUPPLY PLANT BAKSAN LP83-19',
@@ -2915,42 +2866,46 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 68,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 10,
+			},
 			['y'] = 753718.2539244,
 			['x'] = -108095.04005907,
-			['attributes'] = {
-				[1] = 'Structure',
-			},
+			['alive'] = 100,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 4,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 10,
+			['attributes'] = {
+				[1] = 'Structure',
 			},
 		},
 		['Russian Convoy 2'] = {
 			['elements'] = {
 				[1] = {
-					['CheckDay'] = 1,
+					['CheckDay'] = 2,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-1-1',
 					['dead'] = true,
 				},
 				[2] = {
-					['name'] = 'Russian Convoy 1-1-2',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Russian Convoy 1-1-2',
+					['dead'] = true,
 				},
 				[3] = {
-					['CheckDay'] = 1,
+					['CheckDay'] = 3,
 					['dead_last'] = false,
 					['name'] = 'Russian Convoy 1-1-3',
 					['dead'] = true,
 				},
 				[4] = {
-					['name'] = 'Russian Convoy 1-1-4',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Russian Convoy 1-1-4',
+					['dead'] = true,
 				},
 				[5] = {
 					['name'] = 'Russian Convoy 1-1-5',
@@ -2977,16 +2932,20 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[11] = {
-					['name'] = 'Russian Convoy 1-1-11',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Russian Convoy 1-1-11',
+					['dead'] = true,
 				},
 				[12] = {
 					['name'] = 'Russian Convoy 1-1-12',
 					['dead_last'] = false,
 				},
 				[13] = {
-					['name'] = 'Russian Convoy 1-1-13',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Russian Convoy 1-1-13',
+					['dead'] = true,
 				},
 				[14] = {
 					['name'] = 'Russian Convoy 1-1-14',
@@ -2994,29 +2953,31 @@ targetlist = {
 				},
 			},
 			['groupId'] = 416,
-			['firepower'] = {
-				['min'] = 6,
-				['max'] = 12,
-			},
+			['alive'] = 57,
 			['class'] = 'ship',
 			['ATO'] = true,
 			['foundOobGround'] = true,
-			['y'] = 320246,
-			['x'] = -140829,
-			['attributes'] = {
-				[1] = 'ship',
+			['y'] = 313446,
+			['x'] = -163204,
+			['firepower'] = {
+				['min'] = 6,
+				['max'] = 12,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Russian Convoy 2',
 			['priority'] = 1,
 			['task'] = 'Anti-ship Strike',
-			['alive'] = 85,
+			['attributes'] = {
+				[1] = 'ship',
+			},
 		},
 		['203 SA-2 Site A-3'] = {
 			['elements'] = {
 				[1] = {
-					['name'] = '203 SA-2 Gainful Site A-3-1',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = '203 SA-2 Gainful Site A-3-1',
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = '203 SA-2 Site A-3-2',
@@ -3056,23 +3017,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 422,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 90,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 883213.42857685,
 			['x'] = -132438.21387713,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = '203 SA-2 Site A-3',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
 			['elements'] = {
@@ -3081,8 +3042,6 @@ targetlist = {
 					['x'] = -173099.3125,
 					['name'] = 'Bridge Alagir',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 852723.0625,
@@ -3101,14 +3060,14 @@ targetlist = {
 					['x'] = -165689.171875,
 					['name'] = 'Bridge Vladikavkaz MN 76',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[4] = {
 					['y'] = 835949.02734375,
 					['x'] = -151580.80078125,
 					['name'] = 'Bridge north bank South Beslan',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[5] = {
 					['y'] = 836013.34375,
@@ -3118,14 +3077,14 @@ targetlist = {
 				},
 			},
 			['ATO'] = true,
-			['y'] = 840301.60351563,
+			['y'] = 840301.60351562,
 			['x'] = -162383.3671875,
 			['firepower'] = {
 				['min'] = 5,
 				['max'] = 10,
 			},
 			['dead_last'] = 0,
-			['alive'] = 66,
+			['alive'] = 83,
 			['priority'] = 1,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -3172,14 +3131,12 @@ targetlist = {
 					['x'] = -173099.3125,
 					['name'] = 'Bridge Alagir',
 					['dead_last'] = false,
-					['CheckDay'] = 1,
-					['dead'] = true,
 				},
 			},
 			['picture'] = {
 				[1] = 'Target - Alagir Bridge.png',
 			},
-			['ATO'] = false,
+			['ATO'] = true,
 			['y'] = 815939.25,
 			['x'] = -173099.3125,
 			['firepower'] = {
@@ -3187,7 +3144,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 0,
+			['alive'] = 100,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -3234,7 +3191,7 @@ targetlist = {
 					['x'] = -145428.47167969,
 					['name'] = 'Rail Bridge right bank SW Kardzhin',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
+					['CheckDay'] = 4,
 					['dead'] = true,
 				},
 				[2] = {
@@ -3242,14 +3199,14 @@ targetlist = {
 					['x'] = -145376.90332031,
 					['name'] = 'Rail Bridge left bank SW Kardzhin',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[3] = {
 					['y'] = 816502.625,
 					['x'] = -144986.53125,
 					['name'] = 'Rail Bridge Kardzhin MN 49',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 			},
 			['ATO'] = true,
@@ -3280,7 +3237,6 @@ targetlist = {
 					['groupId'] = 220,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[3] = {
 					['name'] = 'Prohladniy Depot 3',
@@ -3359,7 +3315,6 @@ targetlist = {
 					['groupId'] = 257,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 				[32] = {
 					['name'] = 'Prohladniy Depot Fuel tank 5',
@@ -3499,19 +3454,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 94,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 			['y'] = 790939.06271041,
 			['x'] = -94335.530200779,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 10,
-			},
+			['alive'] = 100,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 4,
 			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 10,
 			},
 		},
 		['Rail Bridge Digora MN 38'] = {
@@ -3521,7 +3476,7 @@ targetlist = {
 					['x'] = -157146.546875,
 					['name'] = 'Rail Bridge Digora MN 38',
 					['dead_last'] = false,
-					['CheckDay'] = 1,
+					['CheckDay'] = 3,
 					['dead'] = true,
 				},
 			},
@@ -3575,23 +3530,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 98,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 855014.36571429,
 			['x'] = -145299.40571429,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '504 5th Artillery Division/4.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Bridge South Beslan MN 68'] = {
 			['elements'] = {
@@ -3600,6 +3555,8 @@ targetlist = {
 					['x'] = -151580.80078125,
 					['name'] = 'Bridge north bank South Beslan',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 836013.34375,
@@ -3619,7 +3576,7 @@ targetlist = {
 				['max'] = 4,
 			},
 			['dead_last'] = 0,
-			['alive'] = 100,
+			['alive'] = 50,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -3668,8 +3625,8 @@ targetlist = {
 			},
 			['text'] = '',
 			['ATO'] = true,
-			['y'] = 448029.08691297,
-			['x'] = -215976.61064817,
+			['y'] = 480166.08691297,
+			['x'] = -221072.61064817,
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 2,
@@ -3686,9 +3643,7 @@ targetlist = {
 					['y'] = 795963.7109375,
 					['x'] = -111785.2421875,
 					['name'] = 'Rail Bridge right bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[2] = {
 					['y'] = 795881.91699219,
@@ -3700,9 +3655,7 @@ targetlist = {
 					['y'] = 795800.12207031,
 					['x'] = -111670.1796875,
 					['name'] = 'Rail Bridge left bank SE Mayskiy',
-					['dead_last'] = true,
-					['CheckDay'] = 2,
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 			},
 			['picture'] = {
@@ -3715,8 +3668,8 @@ targetlist = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['dead_last'] = 66,
-			['alive'] = 33,
+			['dead_last'] = 0,
+			['alive'] = 100,
 			['priority'] = 3,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -3728,8 +3681,8 @@ targetlist = {
 		['Rapier Site bridge Vartsihe Geguti'] = {
 			['elements'] = {
 				[1] = {
-					['CheckDay'] = 2,
-					['dead_last'] = true,
+					['CheckDay'] = 3,
+					['dead_last'] = false,
 					['name'] = 'Rapier Site bridge Vartsihe Geguti',
 					['dead'] = true,
 				},
@@ -3742,14 +3695,14 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[4] = {
-					['CheckDay'] = 2,
-					['dead_last'] = false,
 					['name'] = 'Rapier Site bridge Vartsihe Geguti-4',
-					['dead'] = true,
+					['dead_last'] = false,
 				},
 				[5] = {
-					['name'] = 'Rapier Site bridge Vartsihe Geguti-5',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Rapier Site bridge Vartsihe Geguti-5',
+					['dead'] = true,
 				},
 				[6] = {
 					['name'] = 'Rapier Site bridge Vartsihe Geguti-6',
@@ -3757,23 +3710,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 555,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 66,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 704388.19614653,
 			['x'] = -284796.67521752,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
-			['dead_last'] = 16,
+			['dead_last'] = 0,
 			['name'] = 'Rapier Site bridge Vartsihe Geguti',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 66,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['KHASHURI FARP AA'] = {
 			['elements'] = {
@@ -3823,23 +3776,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 455,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 781921.96393709,
 			['x'] = -294475.605951,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'KHASHURI FARP AA',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['AMBROLAURI FARP LN41'] = {
 			['elements'] = {
@@ -3918,19 +3871,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 100,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
 			['y'] = 731141.86888807,
 			['x'] = -239270.71041087,
-			['attributes'] = {
-				[1] = 'soft',
-			},
+			['alive'] = 100,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
+			['attributes'] = {
+				[1] = 'soft',
 			},
 		},
 		['CAP Beslan'] = {
@@ -3994,23 +3947,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 380,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 607800.50910075,
 			['x'] = -217638.71488428,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'EWR-1',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['CAP AWACS'] = {
 			['radius'] = 50000,
@@ -4179,9 +4132,9 @@ targetlist = {
 					['dead_last'] = false,
 					['foundOobGround'] = true,
 				},
-				[27] = {
-					['name'] = 'SUPPLY PLANT MARNEULI ML89-27',
-					['groupId'] = 610,
+				[7] = {
+					['name'] = 'SUPPLY PLANT MARNEULI ML89-6',
+					['groupId'] = 590,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
 				},
@@ -4209,42 +4162,42 @@ targetlist = {
 					['dead_last'] = false,
 					['foundOobGround'] = true,
 				},
-				[7] = {
-					['name'] = 'SUPPLY PLANT MARNEULI ML89-6',
-					['groupId'] = 590,
+				[27] = {
+					['name'] = 'SUPPLY PLANT MARNEULI ML89-27',
+					['groupId'] = 610,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
 				},
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 100,
-			['y'] = 885253.93765315,
-			['x'] = -334228.40621298,
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-			['dead_last'] = 0,
-			['foundOobGround'] = true,
-			['priority'] = 4,
-			['task'] = 'Strike',
 			['firepower'] = {
 				['min'] = 4,
 				['max'] = 10,
 			},
+			['y'] = 885253.93765315,
+			['x'] = -334228.40621298,
+			['alive'] = 100,
+			['dead_last'] = 0,
+			['foundOobGround'] = true,
+			['priority'] = 4,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
 		},
 		['Nalchik Alert 200 Km'] = {
 			['radius'] = 200000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Nalchik',
-			['priority'] = 7,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 7,
 			['ATO'] = true,
+			['base'] = 'Nalchik',
 		},
 		['Bridge Orsantia-GH10'] = {
 			['elements'] = {
@@ -4329,23 +4282,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 458,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 731473.75508866,
 			['x'] = -239244.87169413,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'AMBROLAURI FARP AA',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['SUPPLY PLANT DAPNARI KM76'] = {
 			['elements'] = {
@@ -4514,19 +4467,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 100,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 10,
+			},
 			['y'] = 672070.21513853,
 			['x'] = -293245.45203853,
-			['attributes'] = {
-				[1] = 'Structure',
-			},
+			['alive'] = 100,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 4,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 10,
+			['attributes'] = {
+				[1] = 'Structure',
 			},
 		},
 		['CAP Mozdok'] = {
@@ -4590,36 +4543,36 @@ targetlist = {
 				},
 			},
 			['groupId'] = 3,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 896176.28571429,
 			['x'] = -314913.14285713,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Tbilisi Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Nalchik Alert 100 Km'] = {
 			['radius'] = 100000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Nalchik',
-			['priority'] = 6,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 6,
 			['ATO'] = true,
+			['base'] = 'Nalchik',
 		},
 		['Rapier Site Tabakhmela'] = {
 			['elements'] = {
@@ -4657,36 +4610,36 @@ targetlist = {
 				},
 			},
 			['groupId'] = 434,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 880877.04850114,
 			['x'] = -318254.93802785,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Rapier Site Tabakhmela',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Mozdok Alert 200 Km'] = {
 			['radius'] = 200000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Mozdok',
-			['priority'] = 5,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 5,
 			['ATO'] = true,
+			['base'] = 'Mozdok',
 		},
 		['Bridge Koki-GH20'] = {
 			['elements'] = {
@@ -4695,8 +4648,6 @@ targetlist = {
 					['x'] = -255475.2109375,
 					['name'] = 'Bridge Koki North part-GH20',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 616673.2734375,
@@ -4709,8 +4660,6 @@ targetlist = {
 					['x'] = -255705.6484375,
 					['name'] = 'Bridge Koki South part-GH20',
 					['dead_last'] = false,
-					['CheckDay'] = 2,
-					['dead'] = true,
 				},
 			},
 			['picture'] = {
@@ -4724,7 +4673,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 33,
+			['alive'] = 100,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -4738,6 +4687,8 @@ targetlist = {
 					['x'] = -274859.59277344,
 					['name'] = 'Bridge Kutaisi West part-LM18',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 701140.4453125,
@@ -4754,7 +4705,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 100,
+			['alive'] = 50,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -4801,23 +4752,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 2,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 903071.13331539,
 			['x'] = -318042.2592941,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Vaziani Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['16 1st Artillery Division/6.Btry'] = {
 			['elements'] = {
@@ -4851,23 +4802,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 164,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 893868.6188572,
 			['x'] = -284523.6042857,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '16 1st Artillery Division/6.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Senaki Defenses'] = {
 			['elements'] = {
@@ -4897,23 +4848,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 138,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 647111.42857144,
 			['x'] = -281388.28571427,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Senaki Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['18 1st Artillery Division/8.Btry'] = {
 			['elements'] = {
@@ -4947,23 +4898,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 165,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 932179.25885715,
 			['x'] = -304359.74628569,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '18 1st Artillery Division/8.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['CAP Mineralnye-Vody'] = {
 			['radius'] = 50000,
@@ -5014,23 +4965,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 149,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 629740.3931429,
 			['x'] = -247760.61114286,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '12 1st Artillery Division/2.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['11 1st Artillery Division/1.Btry'] = {
 			['elements'] = {
@@ -5064,23 +5015,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 147,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 643080.57142862,
 			['x'] = -230897.14285715,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '11 1st Artillery Division/1.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['14 1st Artillery Division/4.Btry'] = {
 			['elements'] = {
@@ -5114,23 +5065,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 153,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 734869.19485719,
 			['x'] = -239619.54171429,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '14 1st Artillery Division/4.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['13 1st Artillery Division/3.Btry'] = {
 			['elements'] = {
@@ -5164,29 +5115,31 @@ targetlist = {
 				},
 			},
 			['groupId'] = 151,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 687491.57228577,
 			['x'] = -255942.71514287,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '13 1st Artillery Division/3.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['EWR-2 Site'] = {
 			['elements'] = {
 				[1] = {
-					['name'] = 'Unit #281',
+					['CheckDay'] = 2,
 					['dead_last'] = false,
+					['name'] = 'Unit #281',
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'Unit #282',
@@ -5194,41 +5147,47 @@ targetlist = {
 				},
 			},
 			['groupId'] = 384,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 50,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 775502.73257949,
 			['x'] = -242255.46591607,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'EWR-2',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Hawk Site Kutaisi'] = {
 			['elements'] = {
 				[1] = {
-					['name'] = 'Hawk Site West',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Hawk Site West',
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'Hawk Site West-1',
 					['dead_last'] = false,
 				},
 				[3] = {
-					['name'] = 'Hawk Site West-2',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Hawk Site West-2',
+					['dead'] = true,
 				},
 				[4] = {
-					['name'] = 'Hawk Site West-3',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Hawk Site West-3',
+					['dead'] = true,
 				},
 				[5] = {
 					['name'] = 'Hawk Site West-4',
@@ -5248,23 +5207,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 432,
-			['firepower'] = {
-				['min'] = 3,
-				['max'] = 6,
-			},
+			['alive'] = 62,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 668900.5784738,
 			['x'] = -282616.31197502,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 3,
+				['max'] = 6,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Hawk Site Kutaisi',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Bridge Geguti-LM17'] = {
 			['elements'] = {
@@ -5304,16 +5263,16 @@ targetlist = {
 		},
 		['Mozdok Alert 120 Km'] = {
 			['radius'] = 120000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Mozdok',
-			['priority'] = 7,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 7,
 			['ATO'] = true,
+			['base'] = 'Mozdok',
 		},
 		['Gudauta Train Station - FH37'] = {
 			['elements'] = {
@@ -5417,8 +5376,10 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[4] = {
-					['name'] = 'Unit #032',
+					['CheckDay'] = 2,
 					['dead_last'] = false,
+					['name'] = 'Unit #032',
+					['dead'] = true,
 				},
 				[5] = {
 					['name'] = 'Unit #033',
@@ -5430,36 +5391,36 @@ targetlist = {
 				},
 			},
 			['groupId'] = 137,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 83,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 684237.99942857,
 			['x'] = -283935.53342855,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Kutaisi Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Mineralnye-Vody Alert 280 Km'] = {
 			['radius'] = 280000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Mineralnye-Vody',
-			['priority'] = 4,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 4,
 			['ATO'] = true,
+			['base'] = 'Mineralnye-Vody',
 		},
 		['Rail Bridge Tagiloni-GH21'] = {
 			['elements'] = {
@@ -5538,7 +5499,7 @@ targetlist = {
 			['class'] = 'airbase',
 			['ATO'] = true,
 			['unit'] = {
-				['number'] = 7,
+				['number'] = 12,
 				['type'] = 'AJS37',
 				['name'] = 'F7',
 			},
@@ -5563,28 +5524,30 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[2] = {
-					['name'] = 'Unit #275',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Unit #275',
+					['dead'] = true,
 				},
 			},
 			['groupId'] = 382,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 50,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 865077.30898244,
 			['x'] = -296717.35832523,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = 'EWR-3',
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['Bridge Dapnari-KM76'] = {
 			['elements'] = {
@@ -5721,23 +5684,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 399,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 616590.12363405,
 			['x'] = -355051.19622369,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Batumi Air Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Bridge Patara-Poti East-GG27'] = {
 			['elements'] = {
@@ -5804,23 +5767,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 294,
-			['firepower'] = {
-				['min'] = 6,
-				['max'] = 12,
-			},
+			['alive'] = 100,
 			['class'] = 'ship',
 			['ATO'] = true,
 			['foundOobGround'] = true,
-			['y'] = 520125,
-			['x'] = -252064,
-			['attributes'] = {
-				[1] = 'ship',
+			['y'] = 498486,
+			['x'] = -228619,
+			['firepower'] = {
+				['min'] = 6,
+				['max'] = 12,
 			},
 			['dead_last'] = 0,
 			['name'] = 'LHA-Group',
 			['priority'] = 1,
 			['task'] = 'Anti-ship Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'ship',
+			},
 		},
 		['10 US Army ELINT Station'] = {
 			['elements'] = {
@@ -5836,6 +5799,7 @@ targetlist = {
 					['groupId'] = 143,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[1] = {
 					['name'] = 'US ELINT Antenna Truck 1',
@@ -5856,30 +5820,33 @@ targetlist = {
 					['groupId'] = 144,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 			},
 			['class'] = 'static',
-			['ATO'] = true,
-			['alive'] = 40,
+			['ATO'] = false,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
 			['y'] = 736692.7667227,
 			['x'] = -189961.64401334,
-			['attributes'] = {
-				[1] = 'soft',
-			},
+			['alive'] = 0,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 5,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
+			['attributes'] = {
+				[1] = 'soft',
 			},
 		},
 		['19 4th Army HQ'] = {
 			['elements'] = {
 				[1] = {
-					['name'] = 'Unit #174',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'Unit #174',
+					['dead'] = true,
 				},
 				[2] = {
 					['name'] = 'Unit #175',
@@ -5915,23 +5882,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 168,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 88,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 883576.93885714,
 			['x'] = -311166.24828569,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '19 4th Army HQ',
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['bridge GORI'] = {
 			['elements'] = {
@@ -5970,16 +5937,20 @@ targetlist = {
 					['dead_last'] = false,
 				},
 				[2] = {
-					['name'] = 'NATO Convoy 1-1-2',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'NATO Convoy 1-1-2',
+					['dead'] = true,
 				},
 				[3] = {
 					['name'] = 'NATO Convoy 1-1',
 					['dead_last'] = false,
 				},
 				[4] = {
-					['name'] = 'NATO Convoy 1-2',
+					['CheckDay'] = 3,
 					['dead_last'] = false,
+					['name'] = 'NATO Convoy 1-2',
+					['dead'] = true,
 				},
 				[5] = {
 					['name'] = 'NATO Convoy 1-3',
@@ -6007,23 +5978,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 418,
-			['firepower'] = {
-				['min'] = 6,
-				['max'] = 12,
-			},
+			['alive'] = 80,
 			['class'] = 'ship',
 			['ATO'] = true,
 			['foundOobGround'] = true,
-			['y'] = 582844,
-			['x'] = -310987,
-			['attributes'] = {
-				[1] = 'ship',
+			['y'] = 482668,
+			['x'] = -280317,
+			['firepower'] = {
+				['min'] = 6,
+				['max'] = 12,
 			},
 			['dead_last'] = 0,
 			['name'] = 'NATO Convoy 1',
 			['priority'] = 1,
 			['task'] = 'Anti-ship Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'ship',
+			},
 		},
 		['15 1st Artillery Division/5.Btry'] = {
 			['elements'] = {
@@ -6057,73 +6028,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 157,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 781437.60657145,
 			['x'] = -292056.23285715,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '15 1st Artillery Division/5.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
-		},
-		['CVN-74 John C. Stennis'] = {
-			['elements'] = {
-				[1] = {
-					['name'] = 'CVN-74 John C. Stennis',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['name'] = 'CG-68 Anzio',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['name'] = 'DDG-103 Truxtun',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['name'] = 'FFG-51 Gary',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['name'] = 'FFG-53 Hawes',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['name'] = 'FFG-59 Kauffman',
-					['dead_last'] = false,
-				},
-				[7] = {
-					['name'] = 'TF-74-1',
-					['dead_last'] = false,
-				},
-			},
-			['groupId'] = 292,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
-			['class'] = 'ship',
-			['ATO'] = true,
-			['foundOobGround'] = true,
-			['y'] = 530966,
-			['x'] = -334657,
 			['attributes'] = {
-				[1] = 'ship',
+				[1] = 'soft',
 			},
-			['dead_last'] = 0,
-			['name'] = 'TF-74',
-			['priority'] = 1,
-			['task'] = 'Anti-ship Strike',
-			['alive'] = 100,
 		},
 		['Bridge Pahulani-GH42'] = {
 			['elements'] = {
@@ -6162,6 +6083,56 @@ targetlist = {
 			['task'] = 'Strike',
 			['attributes'] = {
 				[1] = 'Bridge',
+			},
+		},
+		['CVN-74 John C. Stennis'] = {
+			['elements'] = {
+				[1] = {
+					['name'] = 'CVN-74 John C. Stennis',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['name'] = 'CG-68 Anzio',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['name'] = 'DDG-103 Truxtun',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['name'] = 'FFG-51 Gary',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['name'] = 'FFG-53 Hawes',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['name'] = 'FFG-59 Kauffman',
+					['dead_last'] = false,
+				},
+				[7] = {
+					['name'] = 'TF-74-1',
+					['dead_last'] = false,
+				},
+			},
+			['groupId'] = 292,
+			['alive'] = 100,
+			['class'] = 'ship',
+			['ATO'] = true,
+			['foundOobGround'] = true,
+			['y'] = 429720,
+			['x'] = -292824,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['name'] = 'TF-74',
+			['priority'] = 1,
+			['task'] = 'Anti-ship Strike',
+			['attributes'] = {
+				[1] = 'ship',
 			},
 		},
 		['Kobuleti Airbase'] = {
@@ -6454,6 +6425,8 @@ targetlist = {
 					['x'] = -280436.1328125,
 					['name'] = 'Rail Bridge North Geguti West part-LM17',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 				[2] = {
 					['y'] = 701748.8984375,
@@ -6466,6 +6439,8 @@ targetlist = {
 					['x'] = -280352.53515625,
 					['name'] = 'Rail Bridge North Geguti East part-LM17',
 					['dead_last'] = false,
+					['CheckDay'] = 4,
+					['dead'] = true,
 				},
 			},
 			['picture'] = {
@@ -6479,7 +6454,7 @@ targetlist = {
 				['max'] = 8,
 			},
 			['dead_last'] = 0,
-			['alive'] = 100,
+			['alive'] = 33,
 			['priority'] = 6,
 			['task'] = 'Strike',
 			['attributes'] = {
@@ -6493,6 +6468,7 @@ targetlist = {
 					['groupId'] = 406,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[1] = {
 					['name'] = 'Sukhumi Fuel Tank 1',
@@ -6566,19 +6542,19 @@ targetlist = {
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'Structure',
+			},
 			['y'] = 564375.94459601,
 			['x'] = -220076.4487766,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 10,
-			},
+			['alive'] = 91,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 4,
 			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 10,
 			},
 		},
 		['Bzyb Train Station - FH18'] = {
@@ -6626,6 +6602,256 @@ targetlist = {
 				[1] = 'Structure',
 			},
 		},
+		['Kutaisi OCA Strike'] = {
+			['class'] = 'airbase',
+			['ATO'] = true,
+			['unit'] = {
+				['number'] = 5,
+				['type'] = 'F-4E',
+				['name'] = '58 TFS',
+			},
+			['y'] = 683853.75717885,
+			['x'] = -284889.06283057,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['name'] = 'Kutaisi',
+			['foundOobGround'] = true,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Parked Aircraft',
+			},
+		},
+		['Airlift Mineralnye-Vody'] = {
+			['ATO'] = true,
+			['y'] = 705718.47981263,
+			['x'] = -51251.551717591,
+			['attributes'] = {
+			},
+			['firepower'] = {
+				['min'] = 1,
+				['max'] = 1,
+			},
+			['task'] = 'Transport',
+			['priority'] = 1,
+			['base'] = 'Beslan',
+			['destination'] = 'Mineralnye-Vody',
+		},
+		['Tbilissi-Lochini OCA Strike'] = {
+			['class'] = 'airbase',
+			['ATO'] = true,
+			['unit'] = {
+				['number'] = 9,
+				['type'] = 'AJS37',
+				['name'] = 'F9',
+			},
+			['y'] = 896538.85714286,
+			['x'] = -315478.57142857,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['name'] = 'Tbilissi-Lochini',
+			['foundOobGround'] = true,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Parked Aircraft',
+			},
+		},
+		['Senaki-Kolkhi OCA Strike'] = {
+			['class'] = 'airbase',
+			['ATO'] = true,
+			['unit'] = {
+				['number'] = 4,
+				['type'] = 'KC-135',
+				['name'] = '801 ARS',
+			},
+			['y'] = 647369.87369832,
+			['x'] = -281713.83114196,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['name'] = 'Senaki-Kolkhi',
+			['foundOobGround'] = true,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Parked Aircraft',
+			},
+		},
+		['KHASHURI FARP LM84'] = {
+			['elements'] = {
+				[7] = {
+					['name'] = 'KHASHURI FARP LM84-6',
+					['groupId'] = 536,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[1] = {
+					['name'] = 'KHASHURI FARP LM84',
+					['groupId'] = 454,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[2] = {
+					['name'] = 'KHASHURI FARP LM84-1',
+					['groupId'] = 456,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[4] = {
+					['name'] = 'KHASHURI FARP LM84-3',
+					['groupId'] = 533,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[8] = {
+					['name'] = 'KHASHURI FARP LM84-7',
+					['groupId'] = 537,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[9] = {
+					['name'] = 'KHASHURI FARP LM84-8',
+					['groupId'] = 538,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+					['dead'] = true,
+				},
+				[5] = {
+					['name'] = 'KHASHURI FARP LM84-4',
+					['groupId'] = 534,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+					['dead'] = true,
+				},
+				[10] = {
+					['name'] = 'KHASHURI FARP LM84-9',
+					['groupId'] = 615,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[3] = {
+					['name'] = 'KHASHURI FARP LM84-2',
+					['groupId'] = 532,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[6] = {
+					['name'] = 'KHASHURI FARP LM84-5',
+					['groupId'] = 535,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[12] = {
+					['name'] = 'KHASHURI FARP LM84-11',
+					['groupId'] = 540,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+				[11] = {
+					['name'] = 'KHASHURI FARP LM84-10',
+					['groupId'] = 539,
+					['dead_last'] = false,
+					['foundOobGround'] = true,
+				},
+			},
+			['class'] = 'static',
+			['ATO'] = true,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
+			['y'] = 781910.56879973,
+			['x'] = -294704.98561158,
+			['alive'] = 83,
+			['dead_last'] = 0,
+			['foundOobGround'] = true,
+			['priority'] = 6,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'soft',
+			},
+		},
+		['Sukhumi-Babushara Train Station - FH74'] = {
+			['elements'] = {
+				[7] = {
+					['y'] = 565530.51834106,
+					['x'] = -219203.48779297,
+					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 1',
+					['dead_last'] = false,
+				},
+				[1] = {
+					['y'] = 565464.4375,
+					['x'] = -219071.4375,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 565426.8125,
+					['x'] = -219023.4375,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 565629.19628906,
+					['x'] = -219001.41796875,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[8] = {
+					['y'] = 565561.22433472,
+					['x'] = -219196.45996094,
+					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 2',
+					['dead_last'] = false,
+				},
+				[9] = {
+					['y'] = 565517.56420898,
+					['x'] = -219146.88867188,
+					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 3',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 565555.05175781,
+					['x'] = -219245.6875,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 5',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 565502.9375,
+					['x'] = -219005.28125,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['y'] = 565595.43847656,
+					['x'] = -219235.99511719,
+					['name'] = 'Sukhumi-Babushara Train Station Hangar 6',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Sukhumi-Babushara Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 565531.46454535,
+			['x'] = -219125.56591797,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 6,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
 		['CVN-71 Theodore Roosevelt'] = {
 			['elements'] = {
 				[1] = {
@@ -6658,59 +6884,22 @@ targetlist = {
 				},
 			},
 			['groupId'] = 293,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'ship',
 			['ATO'] = true,
 			['foundOobGround'] = true,
-			['y'] = 469160,
-			['x'] = -261292,
-			['attributes'] = {
-				[1] = 'ship',
+			['y'] = 501297,
+			['x'] = -266388,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'TF-71',
 			['priority'] = 1,
 			['task'] = 'Anti-ship Strike',
-			['alive'] = 100,
-		},
-		['Airlift Mineralnye-Vody'] = {
-			['ATO'] = true,
-			['y'] = 705718.47981263,
-			['x'] = -51251.551717591,
 			['attributes'] = {
-			},
-			['firepower'] = {
-				['min'] = 1,
-				['max'] = 1,
-			},
-			['task'] = 'Transport',
-			['destination'] = 'Mineralnye-Vody',
-			['base'] = 'Beslan',
-			['priority'] = 1,
-		},
-		['Tbilissi-Lochini OCA Strike'] = {
-			['class'] = 'airbase',
-			['ATO'] = true,
-			['unit'] = {
-				['number'] = 5,
-				['type'] = 'AJS37',
-				['name'] = 'F9',
-			},
-			['y'] = 896538.85714286,
-			['x'] = -315478.57142857,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['name'] = 'Tbilissi-Lochini',
-			['foundOobGround'] = true,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Parked Aircraft',
+				[1] = 'ship',
 			},
 		},
 		['Adzhkhahara Train Station - FH28'] = {
@@ -6768,6 +6957,905 @@ targetlist = {
 			['task'] = 'Strike',
 			['attributes'] = {
 				[1] = 'Structure',
+			},
+		},
+		['GORI AA'] = {
+			['elements'] = {
+				[1] = {
+					['CheckDay'] = 2,
+					['dead_last'] = false,
+					['name'] = 'GORI AA-2',
+					['dead'] = true,
+				},
+				[2] = {
+					['name'] = 'GORI AA',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['name'] = 'GORI AA-1',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['name'] = 'GORI AA-3',
+					['dead_last'] = false,
+				},
+			},
+			['groupId'] = 551,
+			['alive'] = 75,
+			['class'] = 'vehicle',
+			['ATO'] = true,
+			['foundOobGround'] = true,
+			['y'] = 821157.72739438,
+			['x'] = -289332.65104885,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['dead_last'] = 0,
+			['name'] = 'GORI AA',
+			['priority'] = 2,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'SAM',
+			},
+		},
+		['Sukhumi Defenses'] = {
+			['elements'] = {
+				[1] = {
+					['name'] = 'Unit #260',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['name'] = 'Unit #261',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['name'] = 'Unit #262',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['CheckDay'] = 2,
+					['dead_last'] = false,
+					['name'] = 'Unit #263',
+					['dead'] = true,
+				},
+				[5] = {
+					['name'] = 'Unit #264',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['name'] = 'Unit #265',
+					['dead_last'] = false,
+				},
+			},
+			['groupId'] = 376,
+			['alive'] = 83,
+			['class'] = 'vehicle',
+			['ATO'] = true,
+			['foundOobGround'] = true,
+			['y'] = 564230.5130404,
+			['x'] = -219614.70047316,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['name'] = 'Sukhumi Defenses',
+			['priority'] = 2,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'SAM',
+			},
+		},
+		['Novyy Afon Train Station - FH57'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 538777.375,
+					['x'] = -198444.3125,
+					['name'] = 'Novyy Afon Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 538722.25,
+					['x'] = -198418.21875,
+					['name'] = 'Novyy Afon Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 538803.25,
+					['x'] = -198378.46875,
+					['name'] = 'Novyy Afon Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 538764.75,
+					['x'] = -198356.1875,
+					['name'] = 'Novyy Afon Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Novyy Afon Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 538766.90625,
+			['x'] = -198399.296875,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 4,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Bridge Supply Line Gori - Tbilisi'] = {
+			['elements'] = {
+				[2] = {
+					['y'] = 848374.93828642,
+					['x'] = -293785.15756579,
+					['name'] = 'Bridge Supply Line Gori - Tbilisi-2',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 864280.68645882,
+					['x'] = -299055.94360335,
+					['name'] = 'Bridge Supply Line Gori - Tbilisi-3',
+					['dead_last'] = false,
+				},
+				[1] = {
+					['y'] = 836269.95717029,
+					['x'] = -291901.15661608,
+					['name'] = 'Bridge Supply Line Gori - Tbilisi-1',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 872977.58810726,
+					['x'] = -299277.05648133,
+					['name'] = 'Bridge Supply Line Gori - Tbilisi-4',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 878191.35657638,
+					['x'] = -300308.92274769,
+					['name'] = 'Bridge Supply Line Gori - Tbilisi-5',
+					['dead_last'] = false,
+				},
+			},
+			['ATO'] = true,
+			['y'] = 860018.90531983,
+			['x'] = -296865.64740285,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 12,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 6,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Bridge',
+			},
+		},
+		['Batumi Airbase'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 617693,
+					['x'] = -355688.28125,
+					['name'] = 'Batumi Control Tower',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 617513.1875,
+					['x'] = -355414.625,
+					['name'] = 'Batumi Main Ammo Depot',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 617354.99682617,
+					['x'] = -355438.48291016,
+					['name'] = 'Batumi Ammo Depot 2',
+					['dead_last'] = false,
+				},
+				[8] = {
+					['y'] = 617921.95751953,
+					['x'] = -355586.30224609,
+					['name'] = 'Batumi Power Supply',
+					['dead_last'] = false,
+				},
+				[16] = {
+					['y'] = 617559.6875,
+					['x'] = -355499.375,
+					['name'] = 'Batumi Command Center 1',
+					['dead_last'] = false,
+				},
+				[17] = {
+					['y'] = 617541.6875,
+					['x'] = -355546.5,
+					['name'] = 'Batumi Command Center 2',
+					['dead_last'] = false,
+				},
+				[9] = {
+					['y'] = 618377,
+					['x'] = -356082.15625,
+					['name'] = 'Batumi Hangar 1',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 617296.9375,
+					['x'] = -355382.0625,
+					['name'] = 'Batumi Ammo Depot 3',
+					['dead_last'] = false,
+				},
+				[10] = {
+					['y'] = 618389.25,
+					['x'] = -356147.5,
+					['name'] = 'Batumi Hangar 2',
+					['dead_last'] = false,
+				},
+				[11] = {
+					['y'] = 618383.6875,
+					['x'] = -356193.8125,
+					['name'] = 'Batumi Hangar 3',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 617445.625,
+					['x'] = -355494.59375,
+					['name'] = 'Batumi Ammo Depot 1',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['y'] = 618273.875,
+					['x'] = -355929.40625,
+					['name'] = 'Batumi Fuel Depot 1',
+					['dead_last'] = false,
+				},
+				[12] = {
+					['y'] = 618359.375,
+					['x'] = -356258.34375,
+					['name'] = 'Batumi Hangar 4',
+					['dead_last'] = false,
+				},
+				[13] = {
+					['y'] = 617597.6875,
+					['x'] = -355467.21875,
+					['name'] = 'Batumi Hangar 5',
+					['dead_last'] = false,
+				},
+				[7] = {
+					['y'] = 618297.6875,
+					['x'] = -355926.875,
+					['name'] = 'Batumi Fuel Depot 2',
+					['dead_last'] = false,
+				},
+				[14] = {
+					['y'] = 617586.625,
+					['x'] = -355432.3125,
+					['name'] = 'Batumi Hangar 6',
+					['dead_last'] = false,
+				},
+				[15] = {
+					['y'] = 617639.3125,
+					['x'] = -355603.28125,
+					['name'] = 'Batumi Hangar 7',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Batumi Airbase.png',
+				[2] = 'Batumi Airbase-Ammo.png',
+			},
+			['ATO'] = true,
+			['y'] = 617837.15172622,
+			['x'] = -355711.24287684,
+			['firepower'] = {
+				['min'] = 6,
+				['max'] = 12,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 2,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Vaziani OCA Strike'] = {
+			['class'] = 'airbase',
+			['ATO'] = true,
+			['unit'] = {
+				['number'] = 7,
+				['type'] = 'MiG-19P',
+				['name'] = 'GA 4rd AS',
+			},
+			['y'] = 903150.625,
+			['x'] = -319069.063,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['name'] = 'Vaziani',
+			['foundOobGround'] = true,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Parked Aircraft',
+			},
+		},
+		['Kvemo-Merheuli Train Station - FH66'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 557894.3125,
+					['x'] = -207974.40625,
+					['name'] = 'Kvemo-Merheuli Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 557919.25,
+					['x'] = -208008.9375,
+					['name'] = 'Kvemo-Merheuli Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 557787.875,
+					['x'] = -207933.375,
+					['name'] = 'Kvemo-Merheuli Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 557755.5,
+					['x'] = -207881.71875,
+					['name'] = 'Kvemo-Merheuli Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Kvemo-Merheuli Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 557839.234375,
+			['x'] = -207949.609375,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 4,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Sukhumi Train Station - FH66'] = {
+			['elements'] = {
+				[2] = {
+					['y'] = 554377.1875,
+					['x'] = -204955.125,
+					['name'] = 'Sukhumi Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 554325.88476563,
+					['x'] = -204968.50488281,
+					['name'] = 'Sukhumi Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+				[1] = {
+					['y'] = 554344.375,
+					['x'] = -204884.0625,
+					['name'] = 'Sukhumi Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 554283,
+					['x'] = -204995.84375,
+					['name'] = 'Sukhumi Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 554210.63818359,
+					['x'] = -204949.65007019,
+					['name'] = 'Sukhumi Train Station Hangar 5',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Sukhumi Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 554308.21708984,
+			['x'] = -204950.6372406,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 6,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Airlift Beslan'] = {
+			['ATO'] = true,
+			['y'] = 843756.7533062,
+			['x'] = -148810.84954665,
+			['attributes'] = {
+			},
+			['firepower'] = {
+				['min'] = 1,
+				['max'] = 1,
+			},
+			['task'] = 'Transport',
+			['priority'] = 1,
+			['base'] = 'Maykop-Khanskaya',
+			['destination'] = 'Beslan',
+		},
+		['Leselidze Train Station - EJ80'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 470197.90625,
+					['x'] = -169643.34375,
+					['name'] = 'Leselidze Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 470258.59375,
+					['x'] = -169649.5,
+					['name'] = 'Leselidze Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 470219.125,
+					['x'] = -169724.6875,
+					['name'] = 'Leselidze Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 470377.88964844,
+					['x'] = -169836.35205078,
+					['name'] = 'Leselidze Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Leselidze Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 470263.37866211,
+			['x'] = -169713.47082519,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 4,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Senaki-Kolkhi Train Station - KM58'] = {
+			['elements'] = {
+				[7] = {
+					['y'] = 647905.97418213,
+					['x'] = -278419.37255859,
+					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 1',
+					['dead_last'] = false,
+				},
+				[1] = {
+					['y'] = 648014.0625,
+					['x'] = -278439.875,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 1',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 647955,
+					['x'] = -278455.3125,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 2',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 648212.17578125,
+					['x'] = -278343.05957031,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 4',
+					['dead_last'] = false,
+				},
+				[8] = {
+					['y'] = 647877.89447021,
+					['x'] = -278418.84960938,
+					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 2',
+					['dead_last'] = false,
+				},
+				[9] = {
+					['y'] = 647870.21691895,
+					['x'] = -278398.14453125,
+					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 3',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 648053.55078125,
+					['x'] = -278502.85058594,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 5',
+					['dead_last'] = false,
+				},
+				[10] = {
+					['y'] = 647898.79650879,
+					['x'] = -278397.734375,
+					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 4',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 648174.72851563,
+					['x'] = -278521.20019531,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 3',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['y'] = 647975.75,
+					['x'] = -278530.84375,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 6',
+					['dead_last'] = false,
+				},
+				[11] = {
+					['y'] = 648182.73242188,
+					['x'] = -278609.26757813,
+					['name'] = 'Senaki-Kolkhi Train Station Hangar 7',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Senaki-Kolkhi Train Station.png',
+			},
+			['ATO'] = true,
+			['y'] = 648010.98928001,
+			['x'] = -278457.86456854,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 2,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Bridge Vartsihe-LM16'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 702893.90625,
+					['x'] = -285269.1875,
+					['name'] = 'Bridge Vartsihe West part-LM16',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 703014.46484375,
+					['x'] = -285340.36523438,
+					['name'] = 'Bridge Vartsihe Center West part-LM16',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 703255.578125,
+					['x'] = -285482.71875,
+					['name'] = 'Bridge Vartsihe East part-LM16',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 703135.01953125,
+					['x'] = -285411.54101563,
+					['name'] = 'Bridge Vartsihe Center East part-LM16',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Bridges positions LM16-LM17-LM18.png',
+			},
+			['ATO'] = true,
+			['y'] = 703074.7421875,
+			['x'] = -285375.953125,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 6,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Bridge',
+			},
+		},
+		['Gudauta Airbase'] = {
+			['elements'] = {
+				[27] = {
+					['y'] = 515835.875,
+					['x'] = -197326.15625,
+					['name'] = 'Gudauta Hangar 2',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 514975.65625,
+					['x'] = -196462.671875,
+					['name'] = 'Gudauta Main Ammo Depot',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 514970.40625,
+					['x'] = -196499.59375,
+					['name'] = 'Gudauta Ammo Depot 1',
+					['dead_last'] = false,
+				},
+				[4] = {
+					['y'] = 514964,
+					['x'] = -196492.46875,
+					['name'] = 'Gudauta Ammo Depot 2',
+					['dead_last'] = false,
+				},
+				[5] = {
+					['y'] = 514951.40625,
+					['x'] = -196478.40625,
+					['name'] = 'Gudauta Ammo Depot 3',
+					['dead_last'] = false,
+				},
+				[6] = {
+					['y'] = 514957.8125,
+					['x'] = -196485.53125,
+					['name'] = 'Gudauta Ammo Depot 4',
+					['dead_last'] = false,
+				},
+				[7] = {
+					['y'] = 515021.125,
+					['x'] = -196457.453125,
+					['name'] = 'Gudauta Ammo Depot 5',
+					['dead_last'] = false,
+				},
+				[8] = {
+					['y'] = 515008.53125,
+					['x'] = -196443.375,
+					['name'] = 'Gudauta Ammo Depot 6',
+					['dead_last'] = false,
+				},
+				[10] = {
+					['y'] = 515002.125,
+					['x'] = -196436.296875,
+					['name'] = 'Gudauta Ammo Depot 8',
+					['dead_last'] = false,
+				},
+				[12] = {
+					['y'] = 515098.21875,
+					['x'] = -196543.375,
+					['name'] = 'Gudauta Ammo Depot 10',
+					['dead_last'] = false,
+				},
+				[14] = {
+					['y'] = 515085.625,
+					['x'] = -196529.3125,
+					['name'] = 'Gudauta Ammo Depot 12',
+					['dead_last'] = false,
+				},
+				[16] = {
+					['y'] = 515065.71875,
+					['x'] = -196507.125,
+					['name'] = 'Gudauta Ammo Depot 14',
+					['dead_last'] = false,
+				},
+				[20] = {
+					['y'] = 515077.96875,
+					['x'] = -196566.625,
+					['name'] = 'Gudauta Ammo Depot 18',
+					['dead_last'] = false,
+				},
+				[24] = {
+					['y'] = 517034,
+					['x'] = -198611.3125,
+					['name'] = 'Gudauta Fuel Depot 4',
+					['dead_last'] = false,
+				},
+				[28] = {
+					['y'] = 515832.21875,
+					['x'] = -197374.578125,
+					['name'] = 'Gudauta Hangar 3',
+					['dead_last'] = false,
+				},
+				[32] = {
+					['y'] = 515920.46875,
+					['x'] = -197491.546875,
+					['name'] = 'Gudauta Hangar 7',
+					['dead_last'] = false,
+				},
+				[33] = {
+					['y'] = 515958.34375,
+					['x'] = -197486.703125,
+					['name'] = 'Gudauta Hangar 8',
+					['dead_last'] = false,
+				},
+				[17] = {
+					['y'] = 515053.09375,
+					['x'] = -196493.0625,
+					['name'] = 'Gudauta Ammo Depot 15',
+					['dead_last'] = false,
+				},
+				[21] = {
+					['y'] = 516965.21875,
+					['x'] = -198426.40625,
+					['name'] = 'Gudauta Fuel Depot 1',
+					['dead_last'] = false,
+				},
+				[25] = {
+					['y'] = 516806.5,
+					['x'] = -198410.5,
+					['name'] = 'Gudauta Power Supply',
+					['dead_last'] = false,
+				},
+				[29] = {
+					['y'] = 515856.53125,
+					['x'] = -197416.390625,
+					['name'] = 'Gudauta Hangar 4',
+					['dead_last'] = false,
+				},
+				[34] = {
+					['y'] = 515649.80810547,
+					['x'] = -195456.59667969,
+					['name'] = 'Gudauta Command Center 1',
+					['dead_last'] = false,
+				},
+				[9] = {
+					['y'] = 515014.75,
+					['x'] = -196450.328125,
+					['name'] = 'Gudauta Ammo Depot 7',
+					['dead_last'] = false,
+				},
+				[11] = {
+					['y'] = 515104.625,
+					['x'] = -196550.5,
+					['name'] = 'Gudauta Ammo Depot 9',
+					['dead_last'] = false,
+				},
+				[13] = {
+					['y'] = 515092,
+					['x'] = -196536.4375,
+					['name'] = 'Gudauta Ammo Depot 11',
+					['dead_last'] = false,
+				},
+				[15] = {
+					['y'] = 515059.5,
+					['x'] = -196500.171875,
+					['name'] = 'Gudauta Ammo Depot 13',
+					['dead_last'] = false,
+				},
+				[18] = {
+					['y'] = 515005.59375,
+					['x'] = -196538.984375,
+					['name'] = 'Gudauta Ammo Depot 16',
+					['dead_last'] = false,
+				},
+				[22] = {
+					['y'] = 517047.53125,
+					['x'] = -198479.4375,
+					['name'] = 'Gudauta Fuel Depot 2',
+					['dead_last'] = false,
+				},
+				[26] = {
+					['y'] = 515917.8125,
+					['x'] = -197271.71875,
+					['name'] = 'Gudauta Hangar 1',
+					['dead_last'] = false,
+				},
+				[30] = {
+					['y'] = 515862.6875,
+					['x'] = -197445.5,
+					['name'] = 'Gudauta Hangar 5',
+					['dead_last'] = false,
+				},
+				[31] = {
+					['y'] = 515867.90625,
+					['x'] = -197469.203125,
+					['name'] = 'Gudauta Hangar 6',
+					['dead_last'] = false,
+				},
+				[1] = {
+					['y'] = 515805.6875,
+					['x'] = -196854.59375,
+					['name'] = 'Gudauta Control Tower',
+					['dead_last'] = false,
+				},
+				[19] = {
+					['y'] = 515011.96875,
+					['x'] = -196546.125,
+					['name'] = 'Gudauta Ammo Depot 17',
+					['dead_last'] = false,
+				},
+				[23] = {
+					['y'] = 517098.375,
+					['x'] = -198571.0625,
+					['name'] = 'Gudauta Fuel Depot 3',
+					['dead_last'] = false,
+				},
+				[35] = {
+					['y'] = 515642.35498047,
+					['x'] = -195480.84228516,
+					['name'] = 'Gudauta Command Center 2',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Gudauta Airbase South.png',
+				[2] = 'Gudauta Airbase North',
+			},
+			['ATO'] = true,
+			['y'] = 515560.61269531,
+			['x'] = -196945.439774,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 1,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Structure',
+			},
+		},
+		['Beslan Alert 120 Km'] = {
+			['radius'] = 120000,
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
+			},
+			['attributes'] = {
+			},
+			['task'] = 'Intercept',
+			['priority'] = 7,
+			['ATO'] = true,
+			['base'] = 'Beslan',
+		},
+		['Rail Bridge Dapnari-KM76'] = {
+			['elements'] = {
+				[1] = {
+					['y'] = 671988.8125,
+					['x'] = -292722.10351563,
+					['name'] = 'Rail Bridge Dapnari North part-KM76',
+					['dead_last'] = false,
+				},
+				[2] = {
+					['y'] = 671985.1875,
+					['x'] = -292822.03710938,
+					['name'] = 'Rail Bridge Dapnari Center part-KM76',
+					['dead_last'] = false,
+				},
+				[3] = {
+					['y'] = 671981.56445313,
+					['x'] = -292921.97070313,
+					['name'] = 'Rail Bridge Dapnari South part-KM76',
+					['dead_last'] = false,
+				},
+			},
+			['picture'] = {
+				[1] = 'Bridges positions Dapnari-KM76.png',
+			},
+			['ATO'] = true,
+			['y'] = 671985.18815104,
+			['x'] = -292822.03710938,
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
+			},
+			['dead_last'] = 0,
+			['alive'] = 100,
+			['priority'] = 6,
+			['task'] = 'Strike',
+			['attributes'] = {
+				[1] = 'Bridge',
 			},
 		},
 		['Senaki Airbase'] = {
@@ -7008,1112 +8096,6 @@ targetlist = {
 				[1] = 'Structure',
 			},
 		},
-		['Sukhumi-Babushara Train Station - FH74'] = {
-			['elements'] = {
-				[7] = {
-					['y'] = 565530.51834106,
-					['x'] = -219203.48779297,
-					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 1',
-					['dead_last'] = false,
-				},
-				[1] = {
-					['y'] = 565464.4375,
-					['x'] = -219071.4375,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 565426.8125,
-					['x'] = -219023.4375,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 565629.19628906,
-					['x'] = -219001.41796875,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[8] = {
-					['y'] = 565561.22433472,
-					['x'] = -219196.45996094,
-					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 2',
-					['dead_last'] = false,
-				},
-				[9] = {
-					['y'] = 565517.56420898,
-					['x'] = -219146.88867188,
-					['name'] = 'Sukhumi-Babushara Train Station Fuel Tank 3',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 565555.05175781,
-					['x'] = -219245.6875,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 5',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 565502.9375,
-					['x'] = -219005.28125,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['y'] = 565595.43847656,
-					['x'] = -219235.99511719,
-					['name'] = 'Sukhumi-Babushara Train Station Hangar 6',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Sukhumi-Babushara Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 565531.46454535,
-			['x'] = -219125.56591797,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 6,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Kutaisi OCA Strike'] = {
-			['class'] = 'airbase',
-			['ATO'] = true,
-			['unit'] = {
-				['number'] = 3,
-				['type'] = 'E-3A',
-				['name'] = '7 ACCS',
-			},
-			['y'] = 683853.75717885,
-			['x'] = -284889.06283057,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['name'] = 'Kutaisi',
-			['foundOobGround'] = true,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Parked Aircraft',
-			},
-		},
-		['Senaki-Kolkhi OCA Strike'] = {
-			['class'] = 'airbase',
-			['ATO'] = true,
-			['unit'] = {
-				['number'] = 5,
-				['type'] = 'An-26B',
-				['name'] = 'GA 5rd TS',
-			},
-			['y'] = 647369.87369832,
-			['x'] = -281713.83114196,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['name'] = 'Senaki-Kolkhi',
-			['foundOobGround'] = true,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Parked Aircraft',
-			},
-		},
-		['GORI AA'] = {
-			['elements'] = {
-				[1] = {
-					['name'] = 'GORI AA-2',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['name'] = 'GORI AA',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['name'] = 'GORI AA-1',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['name'] = 'GORI AA-3',
-					['dead_last'] = false,
-				},
-			},
-			['groupId'] = 551,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['class'] = 'vehicle',
-			['ATO'] = true,
-			['foundOobGround'] = true,
-			['y'] = 821157.72739438,
-			['x'] = -289332.65104885,
-			['attributes'] = {
-				[1] = 'SAM',
-			},
-			['dead_last'] = 0,
-			['name'] = 'GORI AA',
-			['priority'] = 2,
-			['task'] = 'Strike',
-			['alive'] = 100,
-		},
-		['Sukhumi Defenses'] = {
-			['elements'] = {
-				[1] = {
-					['name'] = 'Unit #260',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['name'] = 'Unit #261',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['name'] = 'Unit #262',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['name'] = 'Unit #263',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['name'] = 'Unit #264',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['name'] = 'Unit #265',
-					['dead_last'] = false,
-				},
-			},
-			['groupId'] = 376,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
-			['class'] = 'vehicle',
-			['ATO'] = true,
-			['foundOobGround'] = true,
-			['y'] = 564230.5130404,
-			['x'] = -219614.70047316,
-			['attributes'] = {
-				[1] = 'SAM',
-			},
-			['dead_last'] = 0,
-			['name'] = 'Sukhumi Defenses',
-			['priority'] = 2,
-			['task'] = 'Strike',
-			['alive'] = 100,
-		},
-		['Novyy Afon Train Station - FH57'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 538777.375,
-					['x'] = -198444.3125,
-					['name'] = 'Novyy Afon Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 538722.25,
-					['x'] = -198418.21875,
-					['name'] = 'Novyy Afon Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 538803.25,
-					['x'] = -198378.46875,
-					['name'] = 'Novyy Afon Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 538764.75,
-					['x'] = -198356.1875,
-					['name'] = 'Novyy Afon Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Novyy Afon Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 538766.90625,
-			['x'] = -198399.296875,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 4,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Bridge Supply Line Gori - Tbilisi'] = {
-			['elements'] = {
-				[2] = {
-					['y'] = 848374.93828642,
-					['x'] = -293785.15756579,
-					['name'] = 'Bridge Supply Line Gori - Tbilisi-2',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 864280.68645882,
-					['x'] = -299055.94360335,
-					['name'] = 'Bridge Supply Line Gori - Tbilisi-3',
-					['dead_last'] = false,
-				},
-				[1] = {
-					['y'] = 836269.95717029,
-					['x'] = -291901.15661608,
-					['name'] = 'Bridge Supply Line Gori - Tbilisi-1',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 872977.58810726,
-					['x'] = -299277.05648133,
-					['name'] = 'Bridge Supply Line Gori - Tbilisi-4',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 878191.35657638,
-					['x'] = -300308.92274769,
-					['name'] = 'Bridge Supply Line Gori - Tbilisi-5',
-					['dead_last'] = false,
-				},
-			},
-			['ATO'] = true,
-			['y'] = 860018.90531983,
-			['x'] = -296865.64740285,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 12,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 6,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Bridge',
-			},
-		},
-		['Batumi Airbase'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 617693,
-					['x'] = -355688.28125,
-					['name'] = 'Batumi Control Tower',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 617513.1875,
-					['x'] = -355414.625,
-					['name'] = 'Batumi Main Ammo Depot',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 617354.99682617,
-					['x'] = -355438.48291016,
-					['name'] = 'Batumi Ammo Depot 2',
-					['dead_last'] = false,
-				},
-				[8] = {
-					['y'] = 617921.95751953,
-					['x'] = -355586.30224609,
-					['name'] = 'Batumi Power Supply',
-					['dead_last'] = false,
-				},
-				[16] = {
-					['y'] = 617559.6875,
-					['x'] = -355499.375,
-					['name'] = 'Batumi Command Center 1',
-					['dead_last'] = false,
-				},
-				[17] = {
-					['y'] = 617541.6875,
-					['x'] = -355546.5,
-					['name'] = 'Batumi Command Center 2',
-					['dead_last'] = false,
-				},
-				[9] = {
-					['y'] = 618377,
-					['x'] = -356082.15625,
-					['name'] = 'Batumi Hangar 1',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 617296.9375,
-					['x'] = -355382.0625,
-					['name'] = 'Batumi Ammo Depot 3',
-					['dead_last'] = false,
-				},
-				[10] = {
-					['y'] = 618389.25,
-					['x'] = -356147.5,
-					['name'] = 'Batumi Hangar 2',
-					['dead_last'] = false,
-				},
-				[11] = {
-					['y'] = 618383.6875,
-					['x'] = -356193.8125,
-					['name'] = 'Batumi Hangar 3',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 617445.625,
-					['x'] = -355494.59375,
-					['name'] = 'Batumi Ammo Depot 1',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['y'] = 618273.875,
-					['x'] = -355929.40625,
-					['name'] = 'Batumi Fuel Depot 1',
-					['dead_last'] = false,
-				},
-				[12] = {
-					['y'] = 618359.375,
-					['x'] = -356258.34375,
-					['name'] = 'Batumi Hangar 4',
-					['dead_last'] = false,
-				},
-				[13] = {
-					['y'] = 617597.6875,
-					['x'] = -355467.21875,
-					['name'] = 'Batumi Hangar 5',
-					['dead_last'] = false,
-				},
-				[7] = {
-					['y'] = 618297.6875,
-					['x'] = -355926.875,
-					['name'] = 'Batumi Fuel Depot 2',
-					['dead_last'] = false,
-				},
-				[14] = {
-					['y'] = 617586.625,
-					['x'] = -355432.3125,
-					['name'] = 'Batumi Hangar 6',
-					['dead_last'] = false,
-				},
-				[15] = {
-					['y'] = 617639.3125,
-					['x'] = -355603.28125,
-					['name'] = 'Batumi Hangar 7',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Batumi Airbase.png',
-				[2] = 'Batumi Airbase-Ammo.png',
-			},
-			['ATO'] = true,
-			['y'] = 617837.15172622,
-			['x'] = -355711.24287684,
-			['firepower'] = {
-				['min'] = 6,
-				['max'] = 12,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 2,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Vaziani OCA Strike'] = {
-			['class'] = 'airbase',
-			['ATO'] = true,
-			['unit'] = {
-				['number'] = 10,
-				['type'] = 'MiG-19P',
-				['name'] = 'GA 4rd AS',
-			},
-			['y'] = 903150.625,
-			['x'] = -319069.063,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['name'] = 'Vaziani',
-			['foundOobGround'] = true,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Parked Aircraft',
-			},
-		},
-		['Kvemo-Merheuli Train Station - FH66'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 557894.3125,
-					['x'] = -207974.40625,
-					['name'] = 'Kvemo-Merheuli Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 557919.25,
-					['x'] = -208008.9375,
-					['name'] = 'Kvemo-Merheuli Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 557787.875,
-					['x'] = -207933.375,
-					['name'] = 'Kvemo-Merheuli Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 557755.5,
-					['x'] = -207881.71875,
-					['name'] = 'Kvemo-Merheuli Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Kvemo-Merheuli Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 557839.234375,
-			['x'] = -207949.609375,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 4,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Sukhumi Train Station - FH66'] = {
-			['elements'] = {
-				[2] = {
-					['y'] = 554377.1875,
-					['x'] = -204955.125,
-					['name'] = 'Sukhumi Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 554325.88476563,
-					['x'] = -204968.50488281,
-					['name'] = 'Sukhumi Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-				[1] = {
-					['y'] = 554344.375,
-					['x'] = -204884.0625,
-					['name'] = 'Sukhumi Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 554283,
-					['x'] = -204995.84375,
-					['name'] = 'Sukhumi Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 554210.63818359,
-					['x'] = -204949.65007019,
-					['name'] = 'Sukhumi Train Station Hangar 5',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Sukhumi Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 554308.21708984,
-			['x'] = -204950.6372406,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 6,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Bridge Vartsihe-LM16'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 702893.90625,
-					['x'] = -285269.1875,
-					['name'] = 'Bridge Vartsihe West part-LM16',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 703014.46484375,
-					['x'] = -285340.36523438,
-					['name'] = 'Bridge Vartsihe Center West part-LM16',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 703255.578125,
-					['x'] = -285482.71875,
-					['name'] = 'Bridge Vartsihe East part-LM16',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 703135.01953125,
-					['x'] = -285411.54101563,
-					['name'] = 'Bridge Vartsihe Center East part-LM16',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Bridges positions LM16-LM17-LM18.png',
-			},
-			['ATO'] = true,
-			['y'] = 703074.7421875,
-			['x'] = -285375.953125,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 6,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Bridge',
-			},
-		},
-		['Leselidze Train Station - EJ80'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 470197.90625,
-					['x'] = -169643.34375,
-					['name'] = 'Leselidze Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 470258.59375,
-					['x'] = -169649.5,
-					['name'] = 'Leselidze Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 470219.125,
-					['x'] = -169724.6875,
-					['name'] = 'Leselidze Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 470377.88964844,
-					['x'] = -169836.35205078,
-					['name'] = 'Leselidze Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Leselidze Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 470263.37866211,
-			['x'] = -169713.47082519,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 4,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Senaki-Kolkhi Train Station - KM58'] = {
-			['elements'] = {
-				[7] = {
-					['y'] = 647905.97418213,
-					['x'] = -278419.37255859,
-					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 1',
-					['dead_last'] = false,
-				},
-				[1] = {
-					['y'] = 648014.0625,
-					['x'] = -278439.875,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 1',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 647955,
-					['x'] = -278455.3125,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 2',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 648212.17578125,
-					['x'] = -278343.05957031,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 4',
-					['dead_last'] = false,
-				},
-				[8] = {
-					['y'] = 647877.89447021,
-					['x'] = -278418.84960938,
-					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 2',
-					['dead_last'] = false,
-				},
-				[9] = {
-					['y'] = 647870.21691895,
-					['x'] = -278398.14453125,
-					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 3',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 648053.55078125,
-					['x'] = -278502.85058594,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 5',
-					['dead_last'] = false,
-				},
-				[10] = {
-					['y'] = 647898.79650879,
-					['x'] = -278397.734375,
-					['name'] = 'Senaki-Kolkhi Train Station Fuel Tank 4',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 648174.72851563,
-					['x'] = -278521.20019531,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 3',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['y'] = 647975.75,
-					['x'] = -278530.84375,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 6',
-					['dead_last'] = false,
-				},
-				[11] = {
-					['y'] = 648182.73242188,
-					['x'] = -278609.26757813,
-					['name'] = 'Senaki-Kolkhi Train Station Hangar 7',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Senaki-Kolkhi Train Station.png',
-			},
-			['ATO'] = true,
-			['y'] = 648010.98928001,
-			['x'] = -278457.86456854,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 2,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Airlift Beslan'] = {
-			['ATO'] = true,
-			['y'] = 843756.7533062,
-			['x'] = -148810.84954665,
-			['attributes'] = {
-			},
-			['firepower'] = {
-				['min'] = 1,
-				['max'] = 1,
-			},
-			['task'] = 'Transport',
-			['destination'] = 'Beslan',
-			['base'] = 'Maykop-Khanskaya',
-			['priority'] = 1,
-		},
-		['Gudauta Airbase'] = {
-			['elements'] = {
-				[27] = {
-					['y'] = 515835.875,
-					['x'] = -197326.15625,
-					['name'] = 'Gudauta Hangar 2',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 514975.65625,
-					['x'] = -196462.671875,
-					['name'] = 'Gudauta Main Ammo Depot',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 514970.40625,
-					['x'] = -196499.59375,
-					['name'] = 'Gudauta Ammo Depot 1',
-					['dead_last'] = false,
-				},
-				[4] = {
-					['y'] = 514964,
-					['x'] = -196492.46875,
-					['name'] = 'Gudauta Ammo Depot 2',
-					['dead_last'] = false,
-				},
-				[5] = {
-					['y'] = 514951.40625,
-					['x'] = -196478.40625,
-					['name'] = 'Gudauta Ammo Depot 3',
-					['dead_last'] = false,
-				},
-				[6] = {
-					['y'] = 514957.8125,
-					['x'] = -196485.53125,
-					['name'] = 'Gudauta Ammo Depot 4',
-					['dead_last'] = false,
-				},
-				[7] = {
-					['y'] = 515021.125,
-					['x'] = -196457.453125,
-					['name'] = 'Gudauta Ammo Depot 5',
-					['dead_last'] = false,
-				},
-				[8] = {
-					['y'] = 515008.53125,
-					['x'] = -196443.375,
-					['name'] = 'Gudauta Ammo Depot 6',
-					['dead_last'] = false,
-				},
-				[10] = {
-					['y'] = 515002.125,
-					['x'] = -196436.296875,
-					['name'] = 'Gudauta Ammo Depot 8',
-					['dead_last'] = false,
-				},
-				[12] = {
-					['y'] = 515098.21875,
-					['x'] = -196543.375,
-					['name'] = 'Gudauta Ammo Depot 10',
-					['dead_last'] = false,
-				},
-				[14] = {
-					['y'] = 515085.625,
-					['x'] = -196529.3125,
-					['name'] = 'Gudauta Ammo Depot 12',
-					['dead_last'] = false,
-				},
-				[16] = {
-					['y'] = 515065.71875,
-					['x'] = -196507.125,
-					['name'] = 'Gudauta Ammo Depot 14',
-					['dead_last'] = false,
-				},
-				[20] = {
-					['y'] = 515077.96875,
-					['x'] = -196566.625,
-					['name'] = 'Gudauta Ammo Depot 18',
-					['dead_last'] = false,
-				},
-				[24] = {
-					['y'] = 517034,
-					['x'] = -198611.3125,
-					['name'] = 'Gudauta Fuel Depot 4',
-					['dead_last'] = false,
-				},
-				[28] = {
-					['y'] = 515832.21875,
-					['x'] = -197374.578125,
-					['name'] = 'Gudauta Hangar 3',
-					['dead_last'] = false,
-				},
-				[32] = {
-					['y'] = 515920.46875,
-					['x'] = -197491.546875,
-					['name'] = 'Gudauta Hangar 7',
-					['dead_last'] = false,
-				},
-				[33] = {
-					['y'] = 515958.34375,
-					['x'] = -197486.703125,
-					['name'] = 'Gudauta Hangar 8',
-					['dead_last'] = false,
-				},
-				[17] = {
-					['y'] = 515053.09375,
-					['x'] = -196493.0625,
-					['name'] = 'Gudauta Ammo Depot 15',
-					['dead_last'] = false,
-				},
-				[21] = {
-					['y'] = 516965.21875,
-					['x'] = -198426.40625,
-					['name'] = 'Gudauta Fuel Depot 1',
-					['dead_last'] = false,
-				},
-				[25] = {
-					['y'] = 516806.5,
-					['x'] = -198410.5,
-					['name'] = 'Gudauta Power Supply',
-					['dead_last'] = false,
-				},
-				[29] = {
-					['y'] = 515856.53125,
-					['x'] = -197416.390625,
-					['name'] = 'Gudauta Hangar 4',
-					['dead_last'] = false,
-				},
-				[34] = {
-					['y'] = 515649.80810547,
-					['x'] = -195456.59667969,
-					['name'] = 'Gudauta Command Center 1',
-					['dead_last'] = false,
-				},
-				[9] = {
-					['y'] = 515014.75,
-					['x'] = -196450.328125,
-					['name'] = 'Gudauta Ammo Depot 7',
-					['dead_last'] = false,
-				},
-				[11] = {
-					['y'] = 515104.625,
-					['x'] = -196550.5,
-					['name'] = 'Gudauta Ammo Depot 9',
-					['dead_last'] = false,
-				},
-				[13] = {
-					['y'] = 515092,
-					['x'] = -196536.4375,
-					['name'] = 'Gudauta Ammo Depot 11',
-					['dead_last'] = false,
-				},
-				[15] = {
-					['y'] = 515059.5,
-					['x'] = -196500.171875,
-					['name'] = 'Gudauta Ammo Depot 13',
-					['dead_last'] = false,
-				},
-				[18] = {
-					['y'] = 515005.59375,
-					['x'] = -196538.984375,
-					['name'] = 'Gudauta Ammo Depot 16',
-					['dead_last'] = false,
-				},
-				[22] = {
-					['y'] = 517047.53125,
-					['x'] = -198479.4375,
-					['name'] = 'Gudauta Fuel Depot 2',
-					['dead_last'] = false,
-				},
-				[26] = {
-					['y'] = 515917.8125,
-					['x'] = -197271.71875,
-					['name'] = 'Gudauta Hangar 1',
-					['dead_last'] = false,
-				},
-				[30] = {
-					['y'] = 515862.6875,
-					['x'] = -197445.5,
-					['name'] = 'Gudauta Hangar 5',
-					['dead_last'] = false,
-				},
-				[31] = {
-					['y'] = 515867.90625,
-					['x'] = -197469.203125,
-					['name'] = 'Gudauta Hangar 6',
-					['dead_last'] = false,
-				},
-				[1] = {
-					['y'] = 515805.6875,
-					['x'] = -196854.59375,
-					['name'] = 'Gudauta Control Tower',
-					['dead_last'] = false,
-				},
-				[19] = {
-					['y'] = 515011.96875,
-					['x'] = -196546.125,
-					['name'] = 'Gudauta Ammo Depot 17',
-					['dead_last'] = false,
-				},
-				[23] = {
-					['y'] = 517098.375,
-					['x'] = -198571.0625,
-					['name'] = 'Gudauta Fuel Depot 3',
-					['dead_last'] = false,
-				},
-				[35] = {
-					['y'] = 515642.35498047,
-					['x'] = -195480.84228516,
-					['name'] = 'Gudauta Command Center 2',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Gudauta Airbase South.png',
-				[2] = 'Gudauta Airbase North',
-			},
-			['ATO'] = true,
-			['y'] = 515560.61269531,
-			['x'] = -196945.439774,
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 1,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Structure',
-			},
-		},
-		['Beslan Alert 120 Km'] = {
-			['radius'] = 120000,
-			['attributes'] = {
-			},
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
-			['base'] = 'Beslan',
-			['priority'] = 7,
-			['task'] = 'Intercept',
-			['ATO'] = true,
-		},
-		['Rail Bridge Dapnari-KM76'] = {
-			['elements'] = {
-				[1] = {
-					['y'] = 671988.8125,
-					['x'] = -292722.10351563,
-					['name'] = 'Rail Bridge Dapnari North part-KM76',
-					['dead_last'] = false,
-				},
-				[2] = {
-					['y'] = 671985.1875,
-					['x'] = -292822.03710938,
-					['name'] = 'Rail Bridge Dapnari Center part-KM76',
-					['dead_last'] = false,
-				},
-				[3] = {
-					['y'] = 671981.56445313,
-					['x'] = -292921.97070313,
-					['name'] = 'Rail Bridge Dapnari South part-KM76',
-					['dead_last'] = false,
-				},
-			},
-			['picture'] = {
-				[1] = 'Bridges positions Dapnari-KM76.png',
-			},
-			['ATO'] = true,
-			['y'] = 671985.18815104,
-			['x'] = -292822.03710938,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
-			['dead_last'] = 0,
-			['alive'] = 100,
-			['priority'] = 6,
-			['task'] = 'Strike',
-			['attributes'] = {
-				[1] = 'Bridge',
-			},
-		},
-		['KHASHURI FARP LM84'] = {
-			['elements'] = {
-				[7] = {
-					['name'] = 'KHASHURI FARP LM84-6',
-					['groupId'] = 536,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[1] = {
-					['name'] = 'KHASHURI FARP LM84',
-					['groupId'] = 454,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[2] = {
-					['name'] = 'KHASHURI FARP LM84-1',
-					['groupId'] = 456,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[4] = {
-					['name'] = 'KHASHURI FARP LM84-3',
-					['groupId'] = 533,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[8] = {
-					['name'] = 'KHASHURI FARP LM84-7',
-					['groupId'] = 537,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[9] = {
-					['name'] = 'KHASHURI FARP LM84-8',
-					['groupId'] = 538,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[5] = {
-					['name'] = 'KHASHURI FARP LM84-4',
-					['groupId'] = 534,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[10] = {
-					['name'] = 'KHASHURI FARP LM84-9',
-					['groupId'] = 615,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[3] = {
-					['name'] = 'KHASHURI FARP LM84-2',
-					['groupId'] = 532,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[6] = {
-					['name'] = 'KHASHURI FARP LM84-5',
-					['groupId'] = 535,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[12] = {
-					['name'] = 'KHASHURI FARP LM84-11',
-					['groupId'] = 540,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-				[11] = {
-					['name'] = 'KHASHURI FARP LM84-10',
-					['groupId'] = 539,
-					['dead_last'] = false,
-					['foundOobGround'] = true,
-				},
-			},
-			['class'] = 'static',
-			['ATO'] = true,
-			['alive'] = 100,
-			['y'] = 781910.56879973,
-			['x'] = -294704.98561158,
-			['attributes'] = {
-				[1] = 'soft',
-			},
-			['dead_last'] = 0,
-			['foundOobGround'] = true,
-			['priority'] = 6,
-			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
-			},
-		},
 		['Sukhumi Airbase'] = {
 			['elements'] = {
 				[6] = {
@@ -8205,36 +8187,36 @@ targetlist = {
 				},
 			},
 			['groupId'] = 140,
-			['firepower'] = {
-				['min'] = 4,
-				['max'] = 8,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 636154.28571429,
 			['x'] = -317633.71428573,
-			['attributes'] = {
-				[1] = 'SAM',
+			['firepower'] = {
+				['min'] = 4,
+				['max'] = 8,
 			},
 			['dead_last'] = 0,
 			['name'] = 'Kobuleti Defenses',
 			['priority'] = 2,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'SAM',
+			},
 		},
 		['Mineralnye-Vody Alert 200 Km'] = {
 			['radius'] = 200000,
-			['attributes'] = {
-			},
 			['firepower'] = {
 				['min'] = 2,
 				['max'] = 4,
 			},
-			['base'] = 'Mineralnye-Vody',
-			['priority'] = 5,
+			['attributes'] = {
+			},
 			['task'] = 'Intercept',
+			['priority'] = 5,
 			['ATO'] = true,
+			['base'] = 'Mineralnye-Vody',
 		},
 		['Kutaisi Airbase'] = {
 			['elements'] = {
@@ -8469,6 +8451,7 @@ targetlist = {
 					['groupId'] = 527,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[1] = {
 					['name'] = 'GORI FARP MM25',
@@ -8493,6 +8476,7 @@ targetlist = {
 					['groupId'] = 528,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[9] = {
 					['name'] = 'GORI FARP MM25-8',
@@ -8505,6 +8489,7 @@ targetlist = {
 					['groupId'] = 525,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
+					['dead'] = true,
 				},
 				[10] = {
 					['name'] = 'GORI FARP MM25-9',
@@ -8529,24 +8514,23 @@ targetlist = {
 					['groupId'] = 531,
 					['dead_last'] = false,
 					['foundOobGround'] = true,
-					['dead'] = true,
 				},
 			},
 			['class'] = 'static',
 			['ATO'] = true,
-			['alive'] = 90,
+			['firepower'] = {
+				['min'] = 5,
+				['max'] = 8,
+			},
 			['y'] = 820682.53438785,
 			['x'] = -288159.08554975,
-			['attributes'] = {
-				[1] = 'soft',
-			},
+			['alive'] = 72,
 			['dead_last'] = 0,
 			['foundOobGround'] = true,
 			['priority'] = 6,
 			['task'] = 'Strike',
-			['firepower'] = {
-				['min'] = 5,
-				['max'] = 8,
+			['attributes'] = {
+				[1] = 'soft',
 			},
 		},
 		['17 1st Artillery Division/7.Btry'] = {
@@ -8581,23 +8565,23 @@ targetlist = {
 				},
 			},
 			['groupId'] = 159,
-			['firepower'] = {
-				['min'] = 2,
-				['max'] = 4,
-			},
+			['alive'] = 100,
 			['class'] = 'vehicle',
 			['ATO'] = true,
 			['foundOobGround'] = true,
 			['y'] = 824611.88228577,
 			['x'] = -292906.74285713,
-			['attributes'] = {
-				[1] = 'soft',
+			['firepower'] = {
+				['min'] = 2,
+				['max'] = 4,
 			},
 			['dead_last'] = 0,
 			['name'] = '17 1st Artillery Division/7.Btry',
 			['priority'] = 1,
 			['task'] = 'Strike',
-			['alive'] = 100,
+			['attributes'] = {
+				[1] = 'soft',
+			},
 		},
 		['CAP Nalchik'] = {
 			['radius'] = 50000,

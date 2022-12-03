@@ -15,7 +15,7 @@ camp_triggers = {
 		['condition'] = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
 		['once'] = true,
 		['action'] = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 25%. The number of available airframes is critically low. The squadron is short of destruction.")',
-		['active'] = true,
+		['active'] = false,
 	},
 	['Reinforce 315th Air Division'] = {
 		['condition'] = 'true',
@@ -184,7 +184,7 @@ camp_triggers = {
 		['action'] = {
 			[1] = 'Action.Text("First targets have been destroyed. Keep up the good work")',
 		},
-		['active'] = true,
+		['active'] = false,
 	},
 	['Reinforce 1./61.IAP'] = {
 		['condition'] = 'true',
@@ -454,7 +454,7 @@ camp_triggers = {
 			[4] = 'Action.AddImage("Newspaper_Defeat_blue.jpg", "blue")',
 			[5] = 'NoMoreNewspaper = true',
 		},
-		['active'] = true,
+		['active'] = false,
 	},
 	['NATO convoy 1 Patrol ATest Sea'] = {
 		['condition'] = 'Return.Mission() == 1',
@@ -486,16 +486,16 @@ camp_triggers = {
 		},
 		['active'] = true,
 	},
-	['Repair'] = {
-		['condition'] = 'true',
-		['action'] = 'Action.AirUnitRepair()',
-		['active'] = true,
-	},
 	['Tbilissi Airbase Disabled'] = {
 		['condition'] = 'Return.TargetAlive("Tbilissi Airbase") < 7',
 		['action'] = {
 			[1] = 'db_airbases["Tbilissi-Lochini"].inactive = true',
 		},
+		['active'] = true,
+	},
+	['Repair'] = {
+		['condition'] = 'true',
+		['action'] = 'Action.AirUnitRepair()',
 		['active'] = true,
 	},
 	['LHA-Group Patrol ATest Sea'] = {
@@ -509,11 +509,6 @@ camp_triggers = {
 		['action'] = 'Action.AirUnitReinforce("R/GAH 2rd", "GAH 2rd", 16)',
 		['active'] = true,
 	},
-	['Reinforce F9'] = {
-		['condition'] = 'true',
-		['action'] = 'Action.AirUnitReinforce("F23", "F9", 12)',
-		['active'] = true,
-	},
 	['Campaign End Victory 3'] = {
 		['condition'] = 'Return.TargetAlive("Beslan Airbase") < 2 and Return.TargetAlive("Nalchik Airbase") < 2 and Return.TargetAlive("Mozdok Airbase") < 2 and Return.TargetAlive("Mineralnye-Vody Airbase") < 3',
 		['once'] = true,
@@ -524,6 +519,11 @@ camp_triggers = {
 			[4] = 'Action.AddImage("Newspaper_Defeat_red.jpg", "red")',
 			[5] = 'NoMoreNewspaper = true',
 		},
+		['active'] = true,
+	},
+	['Reinforce F9'] = {
+		['condition'] = 'true',
+		['action'] = 'Action.AirUnitReinforce("F23", "F9", 12)',
 		['active'] = true,
 	},
 	['CAP After EWR Destroyed'] = {
