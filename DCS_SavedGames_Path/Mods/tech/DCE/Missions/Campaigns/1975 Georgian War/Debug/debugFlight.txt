@@ -1,199 +1,340 @@
 
+Pack: 1 Nb   1  F-14A-135-GR  Pack 1 - VF-101 - Intercept 1  CVN-71 Theodore Roosevelt  CVN-71 Theodore Roosevelt Alert  ETA -1  StartT: 0  EtaWPT: 0   // Good  Type: Turning Point   VOL FLAG decale _B   
+
+
+Pack: 2 Nb   2  F-4E  Pack 2 - 58 TFS - Strike 1  Kutaisi  407 8th Army ELINT Station  ETA 984  StartT: 1  EtaWPT: 984   // Good  Type: TakeOffParking  SOL/VOL decale_A 984    
+
+
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
-Pack: 1 Nb   1  F-14A-135-GR  Pack 1 - VF-101 - Intercept 1  CVN-71 Theodore Roosevelt  CVN-71 Theodore Roosevelt Alert  ETA -1  StartT: 1  EtaWPT: 1   // Client  Type: TakeOffParkingHot      
+Pack: 2 Nb   4  F-14A-135-GR  Pack 2 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  407 8th Army ELINT Station  ETA 900  StartT: 1  EtaWPT: 1   // Client  Type: TakeOffParking      
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
 
-Pack: 2 Nb   4  MiG-19P  Pack 2 - GA 4rd AS - Strike 1  Vaziani  TSKHINVALI FARP MM27  ETA 768  StartT: 1  EtaWPT: 768   // High  Type: TakeOffParking  SOL/VOL decale_A 768    
+Pack: 2 Nb   2  F-14A-135-GR  Pack 2 - VF-101 - Escort 2  CVN-71 Theodore Roosevelt  407 8th Army ELINT Station  ETA 682  StartT: 682  EtaWPT: 682   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 682 SOL/VOL decale_A   
 
 
-Pack: 2 Nb   2  MiG-19P  Pack 2 - GA 4rd AS - Strike 2  Vaziani  TSKHINVALI FARP MM27  ETA 775  StartT: 1  EtaWPT: 775   // High  Type: TakeOffParking  SOL/VOL decale_A 775    
+Pack: 3 Nb   4  F-4E  Pack 3 - VMFA-151 - Strike 1  Batumi  LENIGORI FARP MM56  ETA -258  StartT: 1  EtaWPT: -258   // Good  Type: Turning Point      
 
 
-Pack: 2 Nb   2  F-5E-3  Pack 2 - VMFA-157 - Escort 1  Batumi  TSKHINVALI FARP MM27  ETA -175  StartT: 1  EtaWPT: -175   // Good  Type: Turning Point      
+Pack: 4 Nb   3  F-4E  Pack 4 - VMFA-159 - Strike 1  Sukhumi  104 SA-6 Site E-4  ETA -247  StartT: 1  EtaWPT: -247   // Good  Type: Turning Point      
 
 
-Pack: 2 Nb   2  F-14A-135-GR  Pack 2 - VF-101 - Escort 2  CVN-71 Theodore Roosevelt  TSKHINVALI FARP MM27  ETA -203  StartT: 1  EtaWPT: -203   // High  Type: Turning Point      
+Pack: 5 Nb   3  F-4E  Pack 5 - VMFA-159 - Strike 1  Sukhumi  204 SA-6 Site B-1  ETA 2789  StartT: 1  EtaWPT: 2789   // High  Type: TakeOffParking  SOL/VOL decale_A 2789    
 
 
-Pack: 2 Nb   2  F-4E  Pack 2 - 58 TFS - Escort 3  Kutaisi  TSKHINVALI FARP MM27  ETA 516  StartT: 1  EtaWPT: 516   // High  Type: TakeOffParking  SOL/VOL decale_A 516    
+Pack: 6 Nb   3  F-4E  Pack 6 - 58 TFS - Strike 1  Kutaisi  101 SA-3 Site E-1  ETA 2504  StartT: 1  EtaWPT: 2504   // Good  Type: TakeOffParking  SOL/VOL decale_A 2504    
 
 
-Pack: 3 Nb   1  S-3B  Pack 3 - VS-22 - Anti-ship Strike 1  CVN-74 John C. Stennis  Russian Convoy 2  ETA 942  StartT: 942  EtaWPT: 942   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 942 SOL/VOL decale_A   
+Pack: 7 Nb   4  F-4E  Pack 7 - 58 TFS - Strike 1  Kutaisi  NOGIR FARP MN76  ETA -471  StartT: 1  EtaWPT: -471   // High  Type: Turning Point      
 
 
-Pack: 3 Nb   1  S-3B  Pack 3 - VS-22 - Anti-ship Strike 2  CVN-74 John C. Stennis  Russian Convoy 2  ETA 949  StartT: 949  EtaWPT: 949   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 949 SOL/VOL decale_A   
+Pack: 8 Nb   4  F-4E  Pack 8 - 54 TFS - Strike 1  Kobuleti  TSKHINVALI FARP MM27  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
-Pack: 3 Nb   2  MiG-21Bis  Pack 3 - GA 7rd AS - Escort 1  Senaki-Kolkhi  Russian Convoy 2  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 9 Nb   3  F-4E  Pack 9 - VMFA-151 - Strike 1  Batumi  206 SA-2 Site B-3  ETA -528  StartT: 1  EtaWPT: -528   // High  Type: Turning Point      
 
 
-Pack: 4 Nb   2  AJS37  Pack 4 - F7 - Anti-ship Strike 1  Sukhumi  Russian Convoy 1  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 10 Nb   1  F-4E  Pack 10 - 58 TFS - Strike 1  Kutaisi  101 EWR Site  ETA 2770  StartT: 1  EtaWPT: 2770   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2770    
 
 
-Pack: 5 Nb   3  AJS37  Pack 5 - F9 - Strike 1  Tbilissi-Lochini  LENIGORI FARP MM56  ETA 1297  StartT: 1  EtaWPT: 1297   // Good  Type: TakeOffParking  SOL/VOL decale_A 1297    
+Pack: 11 Nb   4  F-4E  Pack 11 - 54 TFS - Strike 1  Kobuleti  Prohladniy Depot MP 24  ETA 2127  StartT: 1  EtaWPT: 2127   // High  Type: TakeOffParking  SOL/VOL decale_A 2127    
 
 
-Pack: 6 Nb   1  F-5E-3  Pack 6 - VMFA-157 - Strike 1  Batumi  106 SA-2 Site C-6  ETA 586  StartT: 1  EtaWPT: 586   // High  Type: TakeOffParking  SOL/VOL decale_A 586    
+Pack: 12 Nb   2  F-4E  Pack 12 - VMFA-151 - Strike 1  Batumi  LENIGORI FARP AA  ETA -550  StartT: 1  EtaWPT: -550   // Good  Type: Turning Point      
 
 
-Pack: 7 Nb   1  B-52H  Pack 7 - 69 BS - Strike 1  Batumi  Maykop SA-2  ETA 1872  StartT: 1  EtaWPT: 1872   // High  Type: TakeOffParking  SOL/VOL decale_A 1872    
+Pack: 13 Nb   2  AJS37  Pack 13 - F7 - Anti-ship Strike 1  Sukhumi  Russian Convoy 2  ETA 2702  StartT: 1  EtaWPT: 2702   // High  Type: TakeOffParking  SOL/VOL decale_A 2702    
 
 
-Pack: 8 Nb   2  MiG-27K  Pack 8 - GA 3rd AS - Strike 1  Vaziani  204 SA-6 Site B-1  ETA 520  StartT: 1  EtaWPT: 520   // High  Type: TakeOffParking  SOL/VOL decale_A 520    
+Pack: 14 Nb   2  AJS37  Pack 14 - F7 - Anti-ship Strike 1  Sukhumi  Russian Convoy 1  ETA 3530  StartT: 1  EtaWPT: 3530   // High  Type: TakeOffParking  SOL/VOL decale_A 3530    
 
 
-Pack: 9 Nb   2  AJS37  Pack 9 - F7 - Strike 1  Sukhumi  407 8th Army ELINT Station  ETA -527  StartT: 1  EtaWPT: -527   // Excellent  Type: Turning Point      
+Pack: 15 Nb   2  F-4E  Pack 15 - VMFA-159 - Strike 1  Sukhumi  503 5th Artillery Division/3.Btry  ETA 132  StartT: 1  EtaWPT: 132   // Good  Type: TakeOffParking  SOL/VOL decale_A 132    
 
 
-Pack: 10 Nb   4  AJS37  Pack 10 - F7 - Strike 1  Sukhumi  NOGIR FARP MN76  ETA 1242  StartT: 1  EtaWPT: 1242   // High  Type: TakeOffParking  SOL/VOL decale_A 1242    
+Pack: 16 Nb   2  F-4E  Pack 16 - 54 TFS - Strike 1  Kobuleti  Nalchik airbase OCA Strike  ETA 2855  StartT: 1  EtaWPT: 2855   // High  Type: TakeOffParking  SOL/VOL decale_A 2855    
 
 
-Pack: 11 Nb   2  MiG-27K  Pack 11 - GA 3rd AS - Strike 1  Vaziani  206 SA-2 Site B-3  ETA 710  StartT: 1  EtaWPT: 710   // High  Type: TakeOffParking  SOL/VOL decale_A 710    
+Pack: 17 Nb   2  F-4E  Pack 17 - 54 TFS - Strike 1  Kobuleti  Beslan Airbase OCA Strike  ETA 504  StartT: 1  EtaWPT: 504   // High  Type: TakeOffParking  SOL/VOL decale_A 504    
 
 
-Pack: 12 Nb   1  MiG-27K  Pack 12 - GA 3rd AS - Strike 1  Vaziani  101 SA-3 Site E-1  ETA 3204  StartT: 1  EtaWPT: 3204   // High  Type: TakeOffParking  SOL/VOL decale_A 3204    
+Pack: 18 Nb   1  F-4E  Pack 18 - 54 TFS - Strike 1  Kobuleti  502 5th Artillery Division/2.Btry  ETA 2540  StartT: 1  EtaWPT: 2540   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2540    
 
 
-Pack: 13 Nb   2  AJS37  Pack 13 - F7 - Strike 1  Sukhumi  209 SA-2 Site R-3  ETA 1105  StartT: 1  EtaWPT: 1105   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 1105    
+Pack: 19 Nb   2  MiG-19P  Pack 19 - GA 4rd AS - Strike 1  Vaziani  Mozdok airbase OCA Strike  ETA 1562  StartT: 1  EtaWPT: 1562   // High  Type: TakeOffParking  SOL/VOL decale_A 1562    
 
 
-Pack: 14 Nb   1  E-3A  Pack 14 - 7 ACCS - AWACS 1  Kutaisi  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 20 Nb   2  MiG-27K  Pack 20 - GA 3rd AS - Strike 1  Vaziani  High priority Target Prohladniy Depot MP 24 SUPPLY LINE C  ETA -771  StartT: 1  EtaWPT: -771   // Good  Type: Turning Point      
 
 
-Pack: 15 Nb   1  S-3B  Pack 15 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  104 SA-6 Site E-4  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 21 Nb   2  MiG-27K  Pack 21 - GA 3rd AS - Strike 1  Vaziani  106 SA-2 Site C-6  ETA 3514  StartT: 1  EtaWPT: 3514   // High  Type: TakeOffParking  SOL/VOL decale_A 3514    
 
 
-Pack: 16 Nb   1  S-3B  Pack 16 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  102 EWR Site  ETA 502  StartT: 502  EtaWPT: 502   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 502 SOL/VOL decale_A   
+Pack: 22 Nb   1  B-52H  Pack 22 - 69 BS - Strike 1  Batumi  High priority Target Prohladniy Depot MP 24 SUPPLY LINE B  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
 
 
-Pack: 17 Nb   2  F-14A-135-GR  Pack 17 - VF-118/GA - Strike 1  CVN-74 John C. Stennis  High priority Target Prohladniy Depot MP 24 SUPPLY LINE C  ETA 382  StartT: 382  EtaWPT: 382   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 382 SOL/VOL decale_A   
+Pack: 23 Nb   2  AJS37  Pack 23 - F7 - Strike 1  Sukhumi  209 SA-2 Site R-3  ETA 2421  StartT: 1  EtaWPT: 2421   // High  Type: TakeOffParking  SOL/VOL decale_A 2421    
 
 
-Pack: 18 Nb   1  F-14A-135-GR  Pack 18 - VF-118/GA - Strike 1  CVN-74 John C. Stennis  High priority Target BESLAN FARP SUPPLY LINE A  ETA 208  StartT: 208  EtaWPT: 208   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 208 SOL/VOL decale_A   
+Pack: 24 Nb   1  S-3B  Pack 24 - VS-22 - Strike 1  CVN-74 John C. Stennis  203 SA-2 Site A-3  ETA -107  StartT: 1  EtaWPT: -107   // Excellent  Type: Turning Point      
 
 
-Pack: 19 Nb   1  MiG-21Bis  Pack 19 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep West  ETA 2011  StartT: 1  EtaWPT: 2011   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2011    
+Pack: 25 Nb   1  AJS37  Pack 25 - F9 - Strike 1  Tbilissi-Lochini  High priority Target BESLAN FARP SUPPLY LINE A  ETA 2838  StartT: 1  EtaWPT: 2838   // High  Type: TakeOffParking  SOL/VOL decale_A 2838    
 
 
-Pack: 20 Nb   1  MiG-21Bis  Pack 20 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep East  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 26 Nb   2  MiG-27K  Pack 26 - GA 3rd AS - Strike 1  Vaziani  Beslan Airbase  ETA 1867  StartT: 1  EtaWPT: 1867   // High  Type: TakeOffParking  SOL/VOL decale_A 1867    
 
 
-Pack: 21 Nb   1  MiG-21Bis  Pack 21 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep Center  ETA 313  StartT: 1  EtaWPT: 313   // High  Type: TakeOffParking  SOL/VOL decale_A 313    
+Pack: 27 Nb   2  MiG-27K  Pack 27 - GA 3rd AS - Strike 1  Vaziani  BAKSAN-MINERALNYE SUPPLY LINE  ETA 1445  StartT: 1  EtaWPT: 1445   // High  Type: TakeOffParking  SOL/VOL decale_A 1445    
 
 
-Pack: 22 Nb   1  AH-1W  Pack 22 - 6th Cavalry - Strike 1  GORI FARP MM25  LENIGORI FARP AA  ETA 3231  StartT: 1  EtaWPT: 3231   // Good  Type: TakeOffParking  SOL/VOL decale_A 3231 SOL/VOL decale_A   
+Pack: 28 Nb   1  E-3A  Pack 28 - 7 ACCS - AWACS 1  Kutaisi  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
 
 
-Pack: 23 Nb   1  AH-1W  Pack 23 - 6th Cavalry - Strike 1  GORI FARP MM25  TSKHINVALI FARP AA  ETA 33  StartT: 1  EtaWPT: 33   // High  Type: TakeOffParking  SOL/VOL decale_A 33 SOL/VOL decale_A   
+Pack: 29 Nb   1  S-3B  Pack 29 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  103 EWR Site  ETA 2951  StartT: 2951  EtaWPT: 2951   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 2951 SOL/VOL decale_A   
 
 
-Pack: 24 Nb   1  KC135MPRS  Pack 24 - 174 ARW - Refueling 1  Tbilissi-Lochini  Tanker Track East  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
+Pack: 30 Nb   1  S-3B  Pack 30 - VS-22 - Strike 1  CVN-74 John C. Stennis  Maykop SA-2  ETA 973  StartT: 973  EtaWPT: 973   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 973 SOL/VOL decale_A   
 
 
-Pack: 24 Nb   1  KC135MPRS  Pack 24 - 174 ARW - Refueling 2  Tbilissi-Lochini  Tanker Track East  ETA 10938  StartT: 1  EtaWPT: 10938   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 10938    
+Pack: 31 Nb   1  S-3B  Pack 31 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  High priority Target Rail Bridge Digora MN 38  ETA 1098  StartT: 1098  EtaWPT: 1098   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1098 SOL/VOL decale_A   
 
 
-Pack: 25 Nb   1  S-3B Tanker  Pack 25 - 177 ARW - Refueling 1  CVN-74 John C. Stennis  Mission Support Tanker  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
+Pack: 32 Nb   1  S-3B  Pack 32 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  High priority Target Prohladniy Depot MP 24 SUPPLY LINE A  ETA 2120  StartT: 2120  EtaWPT: 2120   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 2120 SOL/VOL decale_A   
 
 
-Pack: 25 Nb   1  S-3B Tanker  Pack 25 - 177 ARW - Refueling 2  CVN-74 John C. Stennis  Mission Support Tanker  ETA 7131  StartT: 7131  EtaWPT: 7131   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 7131 SOL/VOL decale_A   
+Pack: 33 Nb   1  S-3B  Pack 33 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  High priority Target BESLAN FARP SUPPLY LINE B  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
 
 
-Pack: 26 Nb   1  S-3B Tanker  Pack 26 - 174 ARW - Refueling 1  CVN-71 Theodore Roosevelt  Recovery Tanker  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 34 Nb   1  S-3B  Pack 34 - VS-22 - Strike 1  CVN-74 John C. Stennis  Mineralnye-Vody Airbase  ETA 1972  StartT: 1972  EtaWPT: 1972   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1972 SOL/VOL decale_A   
 
 
-Pack: 26 Nb   1  S-3B Tanker  Pack 26 - 174 ARW - Refueling 2  CVN-71 Theodore Roosevelt  Recovery Tanker  ETA 4465  StartT: 4465  EtaWPT: 4465   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 4465 SOL/VOL decale_A   
+Pack: 35 Nb   1  S-3B  Pack 35 - VS-22 - Strike 1  CVN-74 John C. Stennis  Bridge Alagir MN 36  ETA 683  StartT: 683  EtaWPT: 683   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 683 SOL/VOL decale_A   
 
 
-Pack: 1 Nb   1  MiG-25PD  Pack 1 - 790.IAP - CAP 1  Mozdok  CAP Beslan  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 36 Nb   1  S-3B  Pack 36 - VS-22 - Strike 1  CVN-74 John C. Stennis  Bridge Vladikavkaz North MN 76  ETA 1856  StartT: 1856  EtaWPT: 1856   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1856 SOL/VOL decale_A   
 
 
-Pack: 2 Nb   1  MiG-21Bis  Pack 2 - 1./37.IAP - Intercept 1  Beslan  Beslan Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+Pack: 37 Nb   1  S-3B  Pack 37 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  CHERKESSK SUPPLY PLANT KP69  ETA 1866  StartT: 1866  EtaWPT: 1866   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1866 SOL/VOL decale_A   
 
 
-Pack: 3 Nb   1  MiG-21Bis  Pack 3 - 1./37.IAP - CAP 1  Beslan  CAP AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 37 Nb   1  S-3B  Pack 37 - VS-21 - Strike 2  CVN-71 Theodore Roosevelt  CHERKESSK SUPPLY PLANT KP69  ETA 1874  StartT: 1874  EtaWPT: 1874   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1874 SOL/VOL decale_A   
 
 
-Pack: 3 Nb   1  MiG-21Bis  Pack 3 - 1./37.IAP - CAP 2  Beslan  CAP AWACS  ETA 890  StartT: 1  EtaWPT: 890   // Good  Type: TakeOffParking  SOL/VOL decale_A 890    
+Pack: 38 Nb   1  S-3B  Pack 38 - VS-22 - Strike 1  CVN-74 John C. Stennis  Bridge South Beslan MN 68  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
-Pack: 4 Nb   1  MiG-21Bis  Pack 4 - 1./19.IAP - Intercept 1  Nalchik  Nalchik Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+Pack: 39 Nb   1  S-3B  Pack 39 - VS-21 - Strike 1  CVN-71 Theodore Roosevelt  Rail Bridge SE Mayskiy MP 23  ETA 1819  StartT: 1819  EtaWPT: 1819   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1819 SOL/VOL decale_A   
 
 
-Pack: 5 Nb   1  MiG-21Bis  Pack 5 - 1./19.IAP - Intercept 1  Nalchik  Nalchik Alert 100 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+Pack: 40 Nb   1  S-3B  Pack 40 - VS-22 - Strike 1  CVN-74 John C. Stennis  SUPPLY PLANT BAKSAN LP83  ETA 1246  StartT: 1246  EtaWPT: 1246   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1246 SOL/VOL decale_A   
 
 
-Pack: 6 Nb   2  MiG-23MLD  Pack 6 - 1./133.IAP - CAP 1  Mineralnye-Vody  CAP Center  ETA 1172  StartT: 1  EtaWPT: 1172   // Good  Type: TakeOffParking  SOL/VOL decale_A 1172    
+Pack: 41 Nb   1  F-5E-3  Pack 41 - VMFA-157 - Strike 1  Batumi  TSKHINVALI FARP AA  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
 
 
-Pack: 7 Nb   2  Su-17M4  Pack 7 - 1./135.IAP - Strike 1  Mineralnye-Vody  Bridge Kutaisi-LM18  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 42 Nb   1  MiG-21Bis  Pack 42 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep Center  ETA 2261  StartT: 1  EtaWPT: 2261   // Good  Type: TakeOffParking  SOL/VOL decale_A 2261    
 
 
-Pack: 7 Nb   4  MiG-21Bis  Pack 7 - 1./19.IAP - Escort 1  Nalchik  Bridge Kutaisi-LM18  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+Pack: 43 Nb   1  MiG-21Bis  Pack 43 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep West  ETA 3410  StartT: 1  EtaWPT: 3410   // High  Type: TakeOffParking  SOL/VOL decale_A 3410    
 
 
-Pack: 7 Nb   2  MiG-21Bis  Pack 7 - 1./19.IAP - Escort 2  Nalchik  Bridge Kutaisi-LM18  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 44 Nb   1  MiG-21Bis  Pack 44 - GA 7rd AS - Fighter Sweep 1  Senaki-Kolkhi  Sweep East  ETA 1503  StartT: 1  EtaWPT: 1503   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 1503    
 
 
-Pack: 8 Nb   2  Su-17M4  Pack 8 - 1./115.IAP - Strike 1  Maykop-Khanskaya  Rail Bridge Tagiloni-GH21  ETA 1444  StartT: 1  EtaWPT: 1444   // Good  Type: TakeOffParking  SOL/VOL decale_A 1444    
+Pack: 45 Nb   1  F-5E-3  Pack 45 - VMFA-157 - Strike 1  Batumi  504 5th Artillery Division/4.Btry  ETA -505  StartT: 1  EtaWPT: -505   // High  Type: Turning Point      
 
 
-Pack: 8 Nb   2  MiG-27K  Pack 8 - 1./127.IAP - SEAD 1  Beslan  Rail Bridge Tagiloni-GH21  ETA 1190  StartT: 1  EtaWPT: 1190   // High  Type: TakeOffParking  SOL/VOL decale_A 1190    
+Pack: 46 Nb   1  F-5E-3  Pack 46 - VMFA-157 - Strike 1  Batumi  501 5th Artillery Division/1.Btry  ETA -27  StartT: 273  EtaWPT: -27   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100160   
 
 
-Pack: 8 Nb   2  MiG-21Bis  Pack 8 - 1./19.IAP - Escort 1  Nalchik  Rail Bridge Tagiloni-GH21  ETA 1188  StartT: 1  EtaWPT: 1188   // Good  Type: TakeOffParking  SOL/VOL decale_A 1188    
+Pack: 47 Nb   1  KC-135  Pack 47 - 801 ARS - Refueling 1  Senaki-Kolkhi  Tanker Track East  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
-Pack: 9 Nb   1  Su-17M4  Pack 9 - 1./135.IAP - Strike 1  Mineralnye-Vody  Bridge Dapnari-KM76  ETA 919  StartT: 1  EtaWPT: 919   // High  Type: TakeOffParking  SOL/VOL decale_A 919    
+Pack: 47 Nb   1  KC-135  Pack 47 - 801 ARS - Refueling 2  Senaki-Kolkhi  Tanker Track East  ETA 7465  StartT: 1  EtaWPT: 7465   // High  Type: TakeOffParking  SOL/VOL decale_A 7465    
 
 
-Pack: 10 Nb   2  Su-24M  Pack 10 - 1./41.IAP - Strike 1  Mineralnye-Vody  GORI FARP MM25  ETA 2758  StartT: 1  EtaWPT: 2758   // Good  Type: TakeOffParking  SOL/VOL decale_A 2758    
+Pack: 48 Nb   4  F-5E-3  Pack 48 - VMFA-157 - Strike 1  Batumi  Mineralnye-Vody airbase OCA Strike  ETA 2448  StartT: 1  EtaWPT: 2448   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2448    
 
 
-Pack: 10 Nb   2  MiG-27K  Pack 10 - 1./117.IAP - SEAD 1  Mozdok  GORI FARP MM25  ETA 2732  StartT: 1  EtaWPT: 2732   // High  Type: TakeOffParking  SOL/VOL decale_A 2732    
+Pack: 49 Nb   1  S-3B Tanker  Pack 49 - 177 ARW - Refueling 1  CVN-74 John C. Stennis  Mission Support Tanker  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
 
 
-Pack: 10 Nb   2  MiG-23MLD  Pack 10 - 1./123.IAP - Escort 1  Beslan  GORI FARP MM25  ETA 3001  StartT: 1  EtaWPT: 3001   // Good  Type: TakeOffParking  SOL/VOL decale_A 3001    
+Pack: 49 Nb   1  S-3B Tanker  Pack 49 - 177 ARW - Refueling 2  CVN-74 John C. Stennis  Mission Support Tanker  ETA 5860  StartT: 5860  EtaWPT: 5860   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 5860 SOL/VOL decale_A   
 
 
-Pack: 11 Nb   2  MiG-27K  Pack 11 - 1./127.IAP - Strike 1  Beslan  Bridge Supply Line Gori - Tbilisi  ETA 1537  StartT: 1  EtaWPT: 1537   // High  Type: TakeOffParking  SOL/VOL decale_A 1537    
+Pack: 50 Nb   1  S-3B Tanker  Pack 50 - 177 ARW - Refueling 1  CVN-74 John C. Stennis  Recovery Tanker  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
-Pack: 11 Nb   3  MiG-23MLD  Pack 11 - 1./123.IAP - Escort 1  Beslan  Bridge Supply Line Gori - Tbilisi  ETA 1447  StartT: 1  EtaWPT: 1447   // Good  Type: TakeOffParking  SOL/VOL decale_A 1447    
+Pack: 50 Nb   1  S-3B Tanker  Pack 50 - 177 ARW - Refueling 2  CVN-74 John C. Stennis  Recovery Tanker  ETA 7841  StartT: 7841  EtaWPT: 7841   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 7841 SOL/VOL decale_A   
 
 
-Pack: 12 Nb   1  Su-24M  Pack 12 - 1./81.IAP - Strike 1  Maykop-Khanskaya  bridge GORI  ETA -762  StartT: 1  EtaWPT: -762   // High  Type: Turning Point      
+Pack: 1 Nb   1  MiG-25PD  Pack 1 - 790.IAP - CAP 1  Mozdok  CAP AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
 
 
-Pack: 13 Nb   3  L-39A  Pack 13 - 1./115AS.IAP - Strike 1  Beslan  Bridge Koki-GH20  ETA 1942  StartT: 1  EtaWPT: 1942   // Good  Type: TakeOffParking  SOL/VOL decale_A 1942    
+Pack: 1 Nb   1  MiG-25PD  Pack 1 - 790.IAP - CAP 2  Mozdok  CAP AWACS  ETA 171  StartT: 1  EtaWPT: 171   // High  Type: TakeOffParking  SOL/VOL decale_A 171    
 
 
-Pack: 14 Nb   2  MiG-27K  Pack 14 - 1./117.IAP - Strike 1  Mozdok  bridge TKIBULI  ETA 2296  StartT: 1  EtaWPT: 2296   // High  Type: TakeOffParking  SOL/VOL decale_A 2296    
+Pack: 1 Nb   1  MiG-25PD  Pack 1 - 790.IAP - CAP 3  Mozdok  CAP AWACS  ETA 3771  StartT: 1  EtaWPT: 3771   // High  Type: TakeOffParking  SOL/VOL decale_A 3771    
 
 
-Pack: 15 Nb   3  L-39A  Pack 15 - 1./111AS.IAP - Strike 1  Nalchik  Rail Bridge North Geguti-LM17  ETA -244  StartT: 1  EtaWPT: -244   // High  Type: Turning Point      
+Pack: 2 Nb   1  MiG-25PD  Pack 2 - 790.IAP - CAP 1  Mozdok  CAP Beslan  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
-Pack: 16 Nb   3  L-39A  Pack 16 - 1./111AS.IAP - Strike 1  Nalchik  Rail Bridge Dapnari-KM76  ETA 2085  StartT: 1  EtaWPT: 2085   // High  Type: TakeOffParking  SOL/VOL decale_A 2085    
+Pack: 2 Nb   1  MiG-25PD  Pack 2 - 790.IAP - CAP 2  Mozdok  CAP Beslan  ETA -209  StartT: 1  EtaWPT: -209   // High  Type: Turning Point      
 
 
-Pack: 17 Nb   1  MiG-27K  Pack 17 - 1./117.IAP - Strike 1  Mozdok  19 4th Army HQ  ETA 1981  StartT: 1  EtaWPT: 1981   // High  Type: TakeOffParking  SOL/VOL decale_A 1981    
+Pack: 2 Nb   1  MiG-25PD  Pack 2 - 790.IAP - CAP 3  Mozdok  CAP Beslan  ETA 3391  StartT: 1  EtaWPT: 3391   // High  Type: TakeOffParking  SOL/VOL decale_A 3391    
 
 
-Pack: 18 Nb   1  A-50  Pack 18 - 2457 SDRLO - AWACS 1  Nalchik  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+Pack: 3 Nb   1  MiG-21Bis  Pack 3 - 1./37.IAP - Intercept 1  Beslan  Beslan Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
 
 
-Pack: 19 Nb   1  L-39A  Pack 19 - 1./111AS.IAP - Strike 1  Nalchik  Hawk Site Kutaisi  ETA 2394  StartT: 1  EtaWPT: 2394   // Good  Type: TakeOffParking  SOL/VOL decale_A 2394    
+Pack: 4 Nb   1  MiG-25PD  Pack 4 - 793.IAP - CAP 1  Mineralnye-Vody  CAP Center  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
 
 
-Pack: 20 Nb   2  MiG-27K  Pack 20 - 1./107.IAP - Strike 1  Nalchik  Bridge Supply Line Marneuli - Tbilisi  ETA -484  StartT: 1  EtaWPT: -484   // High  Type: Turning Point      
+Pack: 4 Nb   1  MiG-25PD  Pack 4 - 793.IAP - CAP 2  Mineralnye-Vody  CAP Center  ETA 812  StartT: 1  EtaWPT: 812   // Good  Type: TakeOffParking  SOL/VOL decale_A 812    
 
 
-Pack: 21 Nb   1  MiG-27K  Pack 21 - 1./107.IAP - Strike 1  Nalchik  Rapier Site Tabakhmela  ETA 1074  StartT: 1  EtaWPT: 1074   // Good  Type: TakeOffParking  SOL/VOL decale_A 1074    
+Pack: 4 Nb   1  MiG-25PD  Pack 4 - 793.IAP - CAP 3  Mineralnye-Vody  CAP Center  ETA 4412  StartT: 1  EtaWPT: 4412   // High  Type: TakeOffParking  SOL/VOL decale_A 4412    
 
 
-Pack: 22 Nb   2  MiG-21Bis  Pack 22 - 1./37.IAP - Fighter Sweep 1  Beslan  Sweep South  ETA 3234  StartT: 1  EtaWPT: 3234   // Good  Type: TakeOffParking  SOL/VOL decale_A 3234    
+Pack: 5 Nb   1  MiG-21Bis  Pack 5 - 1./19.IAP - Intercept 1  Nalchik  Nalchik Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 6 Nb   1  MiG-25PD  Pack 6 - 793.IAP - Intercept 1  Mineralnye-Vody  Mineralnye-Vody Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 7 Nb   1  MiG-21Bis  Pack 7 - 1./19.IAP - Intercept 1  Nalchik  Nalchik Alert 100 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 8 Nb   1  MiG-25PD  Pack 8 - 793.IAP - Intercept 1  Mineralnye-Vody  Mineralnye-Vody Alert 280 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 9 Nb   2  MiG-23MLD  Pack 9 - 1./113.IAP - Intercept 1  Mozdok  Mozdok Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 10 Nb   2  MiG-23MLD  Pack 10 - 1./113.IAP - Intercept 1  Mozdok  Mozdok Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+
+
+Pack: 11 Nb   1  Tu-22M3  Pack 11 - 1./61.IAP - Strike 1  Maykop-Khanskaya  bridge GORI  ETA 1568  StartT: 1  EtaWPT: 1568   // High  Type: TakeOffParking  SOL/VOL decale_A 1568    
+
+
+Pack: 11 Nb   4  MiG-23MLD  Pack 11 - 1./123.IAP - Escort 1  Beslan  bridge GORI  ETA 2628  StartT: 1  EtaWPT: 2628   // Good  Type: TakeOffParking  SOL/VOL decale_A 2628    
+
+
+Pack: 12 Nb   2  Su-17M4  Pack 12 - 1./115.IAP - Strike 1  Maykop-Khanskaya  Bridge Supply Line Gori - Tbilisi  ETA 1204  StartT: 1  EtaWPT: 1204   // High  Type: TakeOffParking  SOL/VOL decale_A 1204    
+
+
+Pack: 12 Nb   4  MiG-21Bis  Pack 12 - 1./19.IAP - Escort 1  Nalchik  Bridge Supply Line Gori - Tbilisi  ETA 2295  StartT: 1  EtaWPT: 2295   // Good  Type: TakeOffParking  SOL/VOL decale_A 2295    
+
+
+Pack: 13 Nb   2  Su-17M4  Pack 13 - 1./135.IAP - Strike 1  Mineralnye-Vody  AMBROLAURI FARP LN41  ETA -372  StartT: 1  EtaWPT: -372   // High  Type: Turning Point      
+
+
+Pack: 14 Nb   2  Su-17M4  Pack 14 - 1./135.IAP - Strike 1  Mineralnye-Vody  Rapier Site bridge Vartsihe Geguti  ETA 551  StartT: 1  EtaWPT: 551   // Good  Type: TakeOffParking  SOL/VOL decale_A 551    
+
+
+Pack: 15 Nb   1  Su-17M4  Pack 15 - 1./135.IAP - Strike 1  Mineralnye-Vody  Hawk Site Kutaisi  ETA 710  StartT: 1  EtaWPT: 710   // High  Type: TakeOffParking  SOL/VOL decale_A 710    
+
+
+Pack: 16 Nb   2  Su-17M4  Pack 16 - 1./115.IAP - Strike 1  Maykop-Khanskaya  GORI FARP MM25  ETA 1968  StartT: 1  EtaWPT: 1968   // High  Type: TakeOffParking  SOL/VOL decale_A 1968    
+
+
+Pack: 17 Nb   1  Su-17M4  Pack 17 - 1./115.IAP - Strike 1  Maykop-Khanskaya  KHASHURI FARP LM84  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+Pack: 18 Nb   1  Su-24M  Pack 18 - 1./81.IAP - Strike 1  Maykop-Khanskaya  Rail Bridge Tagiloni-GH21  ETA 1104  StartT: 1  EtaWPT: 1104   // Good  Type: TakeOffParking  SOL/VOL decale_A 1104    
+
+
+Pack: 18 Nb   2  MiG-27K  Pack 18 - 1./107.IAP - SEAD 1  Nalchik  Rail Bridge Tagiloni-GH21  ETA 1078  StartT: 1  EtaWPT: 1078   // Good  Type: TakeOffParking  SOL/VOL decale_A 1078    
+
+
+Pack: 19 Nb   1  Su-24M  Pack 19 - 1./41.IAP - Strike 1  Mineralnye-Vody  Bridge Vartsihe-LM16  ETA -175  StartT: 1  EtaWPT: -175   // High  Type: Turning Point      
+
+
+Pack: 19 Nb   2  MiG-27K  Pack 19 - 1./107.IAP - SEAD 1  Nalchik  Bridge Vartsihe-LM16  ETA -60  StartT: 1  EtaWPT: -60   // High  Type: Turning Point      
+
+
+Pack: 20 Nb   1  A-50  Pack 20 - 2457 SDRLO - AWACS 1  Nalchik  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+Pack: 20 Nb   1  A-50  Pack 20 - 2457 SDRLO - AWACS 2  Nalchik  AWACS  ETA 3293  StartT: 1  EtaWPT: 3293   // High  Type: TakeOffParking  SOL/VOL decale_A 3293    
+
+
+Pack: 21 Nb   2  MiG-27K  Pack 21 - 1./127.IAP - Strike 1  Beslan  Bridge Kutaisi-LM18  ETA 1214  StartT: 1  EtaWPT: 1214   // High  Type: TakeOffParking  SOL/VOL decale_A 1214    
+
+
+Pack: 21 Nb   2  MiG-27K  Pack 21 - 1./107.IAP - SEAD 1  Nalchik  Bridge Kutaisi-LM18  ETA 1159  StartT: 1  EtaWPT: 1159   // Good  Type: TakeOffParking  SOL/VOL decale_A 1159    
+
+
+Pack: 21 Nb   4  MiG-23MLD  Pack 21 - 1./123.IAP - Escort 1  Beslan  Bridge Kutaisi-LM18  ETA 1121  StartT: 1  EtaWPT: 1121   // High  Type: TakeOffParking  SOL/VOL decale_A 1121    
+
+
+Pack: 22 Nb   2  MiG-27K  Pack 22 - 1./127.IAP - Strike 1  Beslan  Bridge Geguti-LM17  ETA 1440  StartT: 1  EtaWPT: 1440   // Good  Type: TakeOffParking  SOL/VOL decale_A 1440    
+
+
+Pack: 22 Nb   2  MiG-27K  Pack 22 - 1./117.IAP - SEAD 1  Mozdok  Bridge Geguti-LM17  ETA 1203  StartT: 1  EtaWPT: 1203   // High  Type: TakeOffParking  SOL/VOL decale_A 1203    
+
+
+Pack: 23 Nb   2  MiG-27K  Pack 23 - 1./127.IAP - Strike 1  Beslan  bridge TKIBULI  ETA 952  StartT: 1  EtaWPT: 952   // Good  Type: TakeOffParking  SOL/VOL decale_A 952    
+
+
+Pack: 24 Nb   2  MiG-27K  Pack 24 - 1./127.IAP - Strike 1  Beslan  Rapier Site Tabakhmela  ETA 1853  StartT: 1  EtaWPT: 1853   // High  Type: TakeOffParking  SOL/VOL decale_A 1853    
+
+
+Pack: 25 Nb   1  MiG-27K  Pack 25 - 1./117.IAP - Strike 1  Mozdok  19 4th Army HQ  ETA 214  StartT: 1  EtaWPT: 214   // Good  Type: TakeOffParking  SOL/VOL decale_A 214    
+
+
+Pack: 26 Nb   2  MiG-27K  Pack 26 - 1./117.IAP - Strike 1  Mozdok  Bridge Koki-GH20  ETA -4  StartT: 1  EtaWPT: -4   // High  Type: Turning Point      
+
+
+Pack: 27 Nb   1  MiG-27K  Pack 27 - 1./107.IAP - Strike 1  Nalchik  Rail Bridge Dapnari-KM76  ETA 856  StartT: 1  EtaWPT: 856   // Good  Type: TakeOffParking  SOL/VOL decale_A 856    
+
+
+Pack: 28 Nb   2  L-39A  Pack 28 - 1./111AS.IAP - Strike 1  Nalchik  EWR-1 Site  ETA -146  StartT: 1  EtaWPT: -146   // High  Type: Turning Point      
+
+
+Pack: 29 Nb   2  L-39A  Pack 29 - 1./115AS.IAP - Strike 1  Beslan  EWR-3 Site  ETA 3540  StartT: 1  EtaWPT: 3540   // Good  Type: TakeOffParking  SOL/VOL decale_A 3540    
+
+
+Pack: 30 Nb   2  L-39A  Pack 30 - 1./115AS.IAP - Strike 1  Beslan  EWR-2 Site  ETA 1788  StartT: 1  EtaWPT: 1788   // High  Type: TakeOffParking  SOL/VOL decale_A 1788    
+
+
+Pack: 31 Nb   2  L-39A  Pack 31 - 1./111AS.IAP - Strike 1  Nalchik  10 US Army ELINT Station  ETA 1809  StartT: 1  EtaWPT: 1809   // High  Type: TakeOffParking  SOL/VOL decale_A 1809    
+
+
+Pack: 31 Nb   4  MiG-23MLD  Pack 31 - 1./113.IAP - Escort 1  Mozdok  10 US Army ELINT Station  ETA 1345  StartT: 1  EtaWPT: 1345   // High  Type: TakeOffParking  SOL/VOL decale_A 1345    
+
+
+Pack: 32 Nb   2  L-39A  Pack 32 - 1./115AS.IAP - Strike 1  Beslan  Bridge Rike-GH31  ETA 2097  StartT: 1  EtaWPT: 2097   // High  Type: TakeOffParking  SOL/VOL decale_A 2097    
+
+
+Pack: 33 Nb   3  L-39A  Pack 33 - 1./111AS.IAP - Strike 1  Nalchik  Bridge Dapnari-KM76  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+Pack: 33 Nb   4  MiG-21Bis  Pack 33 - 1./37.IAP - Escort 1  Beslan  Bridge Dapnari-KM76  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+Pack: 33 Nb   3  MiG-21Bis  Pack 33 - 1./37.IAP - Escort 2  Beslan  Bridge Dapnari-KM76  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+Pack: 34 Nb   2  L-39A  Pack 34 - 1./111AS.IAP - Strike 1  Nalchik  Rail Bridge North Geguti-LM17  ETA 3248  StartT: 1  EtaWPT: 3248   // Good  Type: TakeOffParking  SOL/VOL decale_A 3248    
+
+
+Pack: 35 Nb   2  MiG-25PD  Pack 35 - 793.IAP - Fighter Sweep 1  Mineralnye-Vody  Sweep South  ETA 3298  StartT: 1  EtaWPT: 3298   // High  Type: TakeOffParking  SOL/VOL decale_A 3298    
+
+
+Pack: 36 Nb   1  Mi-24V  Pack 36 - 2nd GHR - Strike 1  TSKHINVALI FARP MM27  15 1st Artillery Division/5.Btry  ETA 3061  StartT: 1  EtaWPT: 3061   // Good  Type: TakeOffParking  SOL/VOL decale_A 3061 SOL/VOL decale_A   
+
+
+Pack: 37 Nb   1  Mi-24V  Pack 37 - 2nd GHR - Strike 1  TSKHINVALI FARP MM27  17 1st Artillery Division/7.Btry  ETA 3141  StartT: 1  EtaWPT: 3141   // High  Type: TakeOffParking  SOL/VOL decale_A 3141 SOL/VOL decale_A   
+
+
+Pack: 38 Nb   1  An-26B  Pack 38 - 3.OSAP - Transport 1  Beslan  Airlift Mineralnye-Vody  ETA 1609  StartT: 1909  EtaWPT: 1609   // Good  Type: Turning Point   ATTENTION SECONDES a_activate_group 100328   
+
+
+Pack: 39 Nb   1  An-26B  Pack 39 - 27.OSAP - Transport 1  Maykop-Khanskaya  Airlift Beslan  ETA 2530  StartT: 1  EtaWPT: 2530   // Good  Type: TakeOffParking  SOL/VOL decale_A 2530    
 

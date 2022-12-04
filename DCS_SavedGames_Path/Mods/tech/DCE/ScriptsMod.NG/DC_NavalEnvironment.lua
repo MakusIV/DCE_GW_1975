@@ -23,7 +23,7 @@ versionDCE["DC_NavalEnvironment.lua"] = "1.9.13"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = "trace"
+log.level = LOGGING_LEVEL
 log.outfile = "Log/LOG_DC_NavalEnvironment." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
 local local_debug = true -- local debug   
 log.debug("Start")

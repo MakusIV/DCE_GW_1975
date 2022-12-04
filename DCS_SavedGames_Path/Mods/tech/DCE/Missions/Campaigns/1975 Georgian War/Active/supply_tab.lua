@@ -29,64 +29,11 @@ supply_tab = {
 				},
 			},
 		},
-		['SUPPLY PLANT DAPNARI KM76'] = {
+		['Sukhumi Airbase Strategics'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge Vartsihe-LM16'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['KHASHURI FARP LM84'] = true,
-					},
-				},
-				['Kutaisi Airbase'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kutaisi'] = true,
-					},
-				},
-				['Bridge Dapnari-KM76'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kobuleti'] = true,
-					},
-				},
-				['Bridge Supply Line Marneuli - Tbilisi'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['GORI FARP MM25'] = true,
-					},
-				},
-				['Bridge Geguti-LM17'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['KHASHURI FARP LM84'] = true,
-					},
-				},
-				['Rail Bridge Dapnari-KM76'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kobuleti'] = true,
-					},
-				},
-				['Bridge Kutaisi-LM18'] = {
-					['integrity'] = 0.5,
-					['airbase_supply'] = {
-						['AMBROLAURI FARP LN41'] = true,
-					},
-				},
-				['bridge GORI'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['GORI FARP MM25'] = true,
-					},
-				},
-			},
-		},
-		['Sukhumi Airbase Strategics'] = {
-			['integrity'] = 0.91,
-			['supply_line_names'] = {
 				['Sukhumi Airbase Strategics'] = {
-					['integrity'] = 0.91,
+					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Sukhumi'] = true,
 					},
@@ -105,14 +52,82 @@ supply_tab = {
 				},
 			},
 		},
-		['Sukhumi Airbase'] = {
+		['SUPPLY PLANT DAPNARI KM76'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Sukhumi Airbase'] = {
+				['Bridge Geguti-LM17'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Sukhumi'] = true,
+						['KHASHURI FARP LM84'] = true,
+					},
+				},
+				['Kutaisi Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kutaisi'] = true,
+					},
+				},
+				['bridge GORI'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['GORI FARP MM25'] = true,
+					},
+				},
+				['Bridge Supply Line Marneuli - Tbilisi'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['GORI FARP MM25'] = true,
+					},
+				},
+				['Bridge Vartsihe-LM16'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['KHASHURI FARP LM84'] = true,
+					},
+				},
+				['Rail Bridge Dapnari-KM76'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,
+					},
+				},
+				['Bridge Kutaisi-LM18'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['AMBROLAURI FARP LN41'] = true,
+					},
+				},
+				['Bridge Dapnari-KM76'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,
+					},
+				},
+			},
+		},
+		['Tbilissi Airbase'] = {
+			['integrity'] = 0.95,
+			['supply_line_names'] = {
+				['Tbilissi-Lochini'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Reserves-R/58 TFS'] = true,
 						['Reserves-R/171 ARW'] = true,
+						['Reserves-R/335 TFS'] = true,
+						['Reserves-R/174 ARW'] = true,
+						['Reserves-R/13 TFS'] = true,
+						['Tbilissi'] = true,
+					},
+				},
+			},
+		},
+		['Kobuleti Airbase'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Kobuleti Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,
 					},
 				},
 			},
@@ -128,17 +143,6 @@ supply_tab = {
 						['Batumi'] = true,
 						['Reserves-VMA 331'] = true,
 						['CVN-74 John C. Stennis'] = true,
-					},
-				},
-			},
-		},
-		['Kobuleti Airbase'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Kobuleti Airbase'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kobuleti'] = true,
 					},
 				},
 			},
@@ -167,7 +171,7 @@ supply_tab = {
 					},
 				},
 				['Tbilissi Airbase'] = {
-					['integrity'] = 1,
+					['integrity'] = 0.95,
 					['airbase_supply'] = {
 						['Tbilissi-Lochini'] = true,
 					},
@@ -231,18 +235,14 @@ supply_tab = {
 				},
 			},
 		},
-		['Tbilissi Airbase'] = {
-			['integrity'] = 1,
+		['Sukhumi Airbase'] = {
+			['integrity'] = 0.85,
 			['supply_line_names'] = {
-				['Tbilissi-Lochini'] = {
-					['integrity'] = 1,
+				['Sukhumi Airbase'] = {
+					['integrity'] = 0.85,
 					['airbase_supply'] = {
-						['Reserves-R/58 TFS'] = true,
+						['Sukhumi'] = true,
 						['Reserves-R/171 ARW'] = true,
-						['Reserves-R/335 TFS'] = true,
-						['Reserves-R/174 ARW'] = true,
-						['Reserves-R/13 TFS'] = true,
-						['Tbilissi'] = true,
 					},
 				},
 			},
@@ -289,7 +289,7 @@ supply_tab = {
 					},
 				},
 				['Prohladniy Depot MP 24-BESLAN SUPPLY LINE'] = {
-					['integrity'] = 0.75,
+					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Beslan'] = true,
 					},
@@ -306,7 +306,7 @@ supply_tab = {
 					},
 				},
 				['Russian Convoy 2'] = {
-					['integrity'] = 0.57,
+					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Sochi-Adler'] = true,
 						['Maykop-Khanskaya'] = true,
@@ -324,7 +324,7 @@ supply_tab = {
 					},
 				},
 				['BAKSAN-MOZDOK SUPPLY LINE'] = {
-					['integrity'] = 1,
+					['integrity'] = 0.66,
 					['airbase_supply'] = {
 						['Mozdok'] = true,
 					},
@@ -338,16 +338,16 @@ supply_tab = {
 			},
 		},
 		['Beslan Airbase'] = {
-			['integrity'] = 1,
+			['integrity'] = 0.9,
 			['supply_line_names'] = {
 				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
-					['integrity'] = 0.83,
+					['integrity'] = 0.66,
 					['airbase_supply'] = {
 						['LENIGORI FARP MM56'] = true,
 					},
 				},
 				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
-					['integrity'] = 0.83,
+					['integrity'] = 0.66,
 					['airbase_supply'] = {
 						['NOGIR FARP MN76'] = true,
 					},
@@ -359,7 +359,7 @@ supply_tab = {
 					},
 				},
 				['Beslan Airbase'] = {
-					['integrity'] = 1,
+					['integrity'] = 0.9,
 					['airbase_supply'] = {
 						['Reserves-3./19.IAP'] = true,
 						['Reserves-2./17.IAP'] = true,
