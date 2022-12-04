@@ -36,11 +36,12 @@ log.debug("Start")
 
 
 
-
 -- by Old_Boy
+local require = nil
+
 if activate_testing_enviroment then
 	log.warn("activate testing enviroment")
-	local require = _G.require -- needed to require minizip in testing environment 
+	require = _G.require -- needed to require minizip in testing environment 
 end
 
 ----- unpack template mission file ----
