@@ -28,22 +28,18 @@ versionDCE["MAIN_NextMission.lua"] = "1.15.38"
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
--- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2 j
 log.level = LOGGING_LEVEL
-log.outfile = "Log/LOG_MAIN_NextMission." .. camp.mission .. ".txt.lua" -- "prova Log.LOG_DEVRIEF_Master"
+log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".txt.lua"
 local local_debug = true -- local debug   
 log.debug("Start")
 
 
 
 -- by Old_Boy
-local require = nil
-
 if activate_testing_enviroment then
 	log.warn("activate testing enviroment")
-	require = _G.require -- needed to require minizip in testing environment 
 end
-
 ----- unpack template mission file ----
 local minizip = require('minizip')
 local zipFile = minizip.unzOpen("Init/base_mission.miz", 'rb')

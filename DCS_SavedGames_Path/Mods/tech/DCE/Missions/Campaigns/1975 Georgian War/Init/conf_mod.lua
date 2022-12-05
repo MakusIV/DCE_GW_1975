@@ -11,6 +11,7 @@ versionDCE["conf_mod.lua"] = "1.27.30"
 --By Old_Boy
 ACTIVATE_TESTING_ENVIROMENTS = true -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat). By Old_Boy
 LOGGING_LEVEL = "trace" -- trace, debug, info, warn, error, fatal     --By Old_Boy
+LOG_DIR = "Log/"
 
 -- 1 ############################################################################################################################################################
 -- 1 ############################################################################################################################################################
