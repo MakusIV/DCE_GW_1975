@@ -106,7 +106,7 @@ log.outfile = "Log/LOG_DEBRIEF_Master."  .. camp.mission .. ".txt.lua"
 local local_debug = true -- local debug
 log.debug("Start")
 
-if not activate_testing_enviroment then
+if activate_testing_enviroment then
 	log.warn("activate testing enviroment")
 end
 
