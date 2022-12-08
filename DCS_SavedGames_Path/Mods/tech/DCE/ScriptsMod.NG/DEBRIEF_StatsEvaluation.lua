@@ -522,8 +522,10 @@ for hit_unit,hitter in pairs(hit_table) do	--iterate through all remaining entri
 								if side_name ~= killer_side_name then --make sure that killer unit and hit aircraft are not on same side (friendly fire is not awarded as kill)
 									log.trace("hit unit have different side of oob_air unit - hit unit side, oob_air unit side: " .. side_name .. ", " .. killer_side_name)
 									-- FORSE SONO GLI AEREI PARCHEGGIATI. FORSE ERRORE: QUESTE STATS DOVREBBERO ESSERE AIR_KILL E NON GROUND_KILL: ITERAZIONE SU OOB_AIR E VERIFICA DIFFERENTE SIDE PORTEBBERO INDICARE CHE L'ERRORE E' NELL'AGGIORNARE LE GORUND_STATS INVECE CHE LE AIR_STATS
-									killer_unit.score.kills_ground = killer_unit.score.kills_ground + 1				--award ground kill to air unit
-									killer_unit.score_last.kills_ground = killer_unit.score_last.kills_ground + 1	--increase kill counter for this mission of air unit
+									-- killer_unit.score.kills_ground = killer_unit.score.kills_ground + 1				--award ground kill to air unit
+									-- killer_unit.score_last.kills_ground = killer_unit.score_last.kills_ground + 1	--increase kill counter for this mission of air unit
+									killer_unit.score.kills_air = killer_unit.score.kills_air + 1				--award air kill to air unit
+									killer_unit.score_last.kills_air = killer_unit.score_last.kills_air + 1	--increase air kill counter for this mission of air unit
 									log.trace("store stats for oob_air unit (killer)- update killer_unit.score.kills_ground, unit.score_last.damaged (" .. killer_unit.score.kills_ground .. ", " .. killer_unit.score_last.kills_ground .. ")")
 									log.trace("FORSE SONO GLI AEREI PARCHEGGIATI. ATTENZIONE FORSE ERRORE- VERIFICA hitter: " .. hitter .. ", killer_unit.name: " .. killer_unit.name .. ". Se non è una unit ground forse è presente un errore ")
 									AddPackstats(hitter, "kill_ground")												--check if kill was in player package
