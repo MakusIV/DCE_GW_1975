@@ -174,7 +174,7 @@ for client_name, client in pairs(clientstats) do
 		dead = 0
 	}
 end
-log.info("End reset clientstats =======================================================")	
+log.info("End reset clientstats")	
 
 local client_control = {} --local table to store which client controls which unit
 local hit_table = {} --local table to store who was the last hitter to hit a unit
@@ -216,14 +216,14 @@ for e = 1, #events do																					--iterate through all events
 	if events[e].initiatorPilotName then		--event is by a client
 		AddClient(events[e].initiatorPilotName) --check if exist clientstats table if not create one new
 		client_control[events[e].initiator] = events[e].initiatorPilotName --store which unit name (initiator) is controlled by client (initiatorPilotName)
-		log.trace("Event is by a client player: " .. events[e].initiatorPilotName .. ", store which unit name (initiator) is controlled by cliend (initiatorPilotName):" )
+		log.trace("Event: " .. events[e].type .. " is by a client player: " .. events[e].initiatorPilotName .. ", store which unit name (initiator) is controlled by cliend (initiatorPilotName):" )
 		log.trace("client_control[" .. events[e].initiator .. "] = " .. events[e].initiatorPilotName)
 	end
 end
 log.info("End prepare client stats =======================================================")														
 
 --evaluate log events
-log.info("Start evaluate log events =======================================================")														
+log.info("Start evaluate log events =====================================================")														
 
 for e = 1, #events do	
 	--review all events for stats updates
@@ -242,17 +242,22 @@ for e = 1, #events do
 		end	
 
 		if client_hit_table[events[e].target] then
+			log.info("client (player) had an event hit: hit this target: " .. events[e].target)
 			log.trace("client_hit_table[" .. events[e].target .."] = " .. client_hit_table[events[e].target])																
 		end	
 		
 		
 	elseif events[e].type == "crash" then
-		log.trace("event["..e.."] = crash")																
+		log.trace("event["..e.."] = crash. Iterated oob_air for search initiator air unit in oob_air for storing stats")																
 		--oob loss update for crashed aircraft
 		local crash_side																				--local variable to store the side of the crashed aircraft
+		
 		for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
+			
 			for killer_unit_n,killer_unit in pairs(killer_side) do										--iterate through all air units
+				
 				if string.find(events[e].initiator, " " .. killer_unit.name .. " ", 1, true) then		--if the crashed aircraft name is part of air unit name
+					log.info("found event.initiator in oob_air - event.initiator included in killer_unit.name (".. events[e].initiator .. ", " .. killer_unit.name)	
 					crash_side = killer_side_name														--store side of the crashed aircraft
 					killer_unit.roster.lost = killer_unit.roster.lost + 1								--increase loss counter of air unit
 					killer_unit.score_last.lost = killer_unit.score_last.lost + 1						--increase loss counter for this mission of air unit
@@ -264,73 +269,93 @@ for e = 1, #events do
 					if killer_unit.score_last.ready > 0 then 
 						killer_unit.score_last.ready = killer_unit.score_last.ready - 1 --era +1 errore?    --decrease number of ready aircraft for this mission of air unit
 					end
-					log.trace("event["..e.."].initiator = oob_air killer_unit.name = " .. killer_unit.name .. "increments killer_unit.roster.lost and killer_unit.score_last.lost(" .. killer_unit.roster.lost .. ", " .. killer_unit.score_last.lost .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
+					log.trace("event["..e.."].initiator = oob_air killer_unit.name = " .. killer_unit.name .. "increments killer_unit.roster.lost and killer_unit.score_last.lost (" .. killer_unit.roster.lost .. ", " .. killer_unit.score_last.lost .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
 					AddPackstats(events[e].initiator, "lost")											--check if loss was in player package					
--- ==================================================					
------Last point for Coding logger functionality ----		
--- ==================================================					
+			
 					--client stats for crashes
-					if client_control[events[e].initiator] then											--if crashed aircraft is a client
+					if client_control[events[e].initiator] then --if crashed aircraft is a client
+						log.info("client (player) had an event crash")											
 						clientstats[client_control[events[e].initiator]].crash = clientstats[client_control[events[e].initiator]].crash + 1	--store crash for client
 						clientstats[client_control[events[e].initiator]].score_last.crash =  1			--store crash for client
+						log.trace("update crash in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].crash = " .. clientstats[client_control[events[e].initiator]].crash .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.crash = " .. clientstats[client_control[events[e].initiator]].score_last.crash)
 					end
-					break
+					log.trace("crashed aircraft name is part of air unit name -> break from looping unit")		
+					break -- exit from the loop because the crashed aircraft name is part of air unit name. No more store stats for other unit??
 				end
 			end
 		end
 		
+		log.debug("iterate oob_air for kill update for crashed aircraft (if crashed aircraft have kill")																
 		--oob kill update for crashed aircraft
+		-- nota Old_Boy: questa iterazione è già presente sopra (255). Valutare se possibil inserire
+		-- il codice interno nelle iterazioni suddette.
 		for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
 			
 			for killer_unit_n,killer_unit in pairs(killer_side) do										--iterate through all air units
 				
 				if hit_table[events[e].initiator] ~= nil then											--check if the crashed aircraft has a hit entry
+					log.trace("crashed air unit have hit in hit_table - hit_table[" .. events[e].initiator .. "] = " .. hit_table[events[e].initiator])
 					
 					if string.find(hit_table[events[e].initiator], " " .. killer_unit.name .. " ", 1, true) then			--if the hitting unit is part of air unit name
+						log.trace("hitting unit is part of crashed air unit - hit_table[" .. events[e].initiator .. "] == " .. killer_unit.name)
 						
-						if crash_side ~= killer_side_name then											--make sure that hitting unit and crashed aircraft are not on same side (friendly fire is not awarded as kill)
+						if crash_side ~= killer_side_name then --make sure that hitting unit and crashed aircraft are not on same side (friendly fire is not awarded as kill)
+							log.debug("hitting unit have different side of the crashed air unit - crash_side: " .. crash_side .. " ~= killer_side_name: " .. killer_side_name)
 							killer_unit.score.kills_air = killer_unit.score.kills_air + 1				--award air kill to air unit
-							killer_unit.score_last.kills_air = killer_unit.score_last.kills_air + 1		--increase kill counter for this mission of air unit
-							AddPackstats(hit_table[events[e].initiator], "kill_air")					--check if kill was in player package
+							killer_unit.score_last.kills_air = killer_unit.score_last.kills_air + 1		--increase kill counter for this mission of air unit						
+							log.trace("store stats for killer unit - killer_unit.name = " .. killer_unit.name .. "update killer_unit.score.kills_air and killer_unit.score_last.kills_air (" .. killer_unit.score.kills_air .. ", " .. killer_unit.score_last.kills_air .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
+							AddPackstats(hit_table[events[e].initiator], "kill_air")					--check if kill was in player package							
 							
 							--client stats for kills
 							if client_hit_table[events[e].initiator] then								--if crashed aircraft was hit by a client
-								clientstats[client_hit_table[events[e].initiator]].kills_air = clientstats[client_hit_table[events[e].initiator]].kills_air + 1	--award air kill to client
+								log.info("crashed aircraft was hit by a client (player)")											
+								clientstats[client_hit_table[events[e].initiator]].kills_air = clientstats[client_hit_table[events[e].initiator]].kills_air + 1	--award air kill to client.
 								clientstats[client_hit_table[events[e].initiator]].score_last.kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.kills_air + 1
+								log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_air = " .. clientstats[client_hit_table[events[e].initiator]].kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_air = " .. clientstats[client_control[events[e].initiator]].score_last.kills_air)
 							end
 							break
 						
 						elseif client_hit_table[events[e].initiator] then --client's friendly air kill								--if crashed aircraft was hit by a client
 							-- implements new stats
+							log.debug("crashed aircraft was hit by a client (player) and have both same side - crash_side: " .. crash_side .. " ~= killer_side_name: " .. killer_side_name)
 							clientstats[client_hit_table[events[e].initiator]].friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].friendly_kills_air + 1	--award air kill to client
 							clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air + 1						 
+							log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_air = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_air)
 						end
 					end
 				end
 			end
-		end
+		end		
 		hit_table[events[e].initiator] = nil															--once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged.
-		
+		log.debug("once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged - hit_table[" .. events[e].initiator .. "] = nil")
+			
 	elseif events[e].type == "eject" then
 		--client stats for ejections
 		if client_control[events[e].initiator] then														--if ejected pilot is a client
+			log.info("client (player) had an event eject")	
 			clientstats[client_control[events[e].initiator]].eject = clientstats[client_control[events[e].initiator]].eject + 1	--store ejection for client
 			clientstats[client_control[events[e].initiator]].score_last.eject =  1						--store eject for client
+			log.trace("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].eject = " .. clientstats[client_control[events[e].initiator]].eject .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.eject = " .. clientstats[client_control[events[e].initiator]].score_last.eject)
 		end
 		
 	elseif events[e].type == "pilot dead" then
 		--client stats for dead pilots
-		if client_control[events[e].initiator] then														--if dead pilot is a client
+		if client_control[events[e].initiator] then																	--if dead pilot is a client
+			log.info("client (player) had an event pilot dead")	
 			clientstats[client_control[events[e].initiator]].dead = clientstats[client_control[events[e].initiator]].dead + 1	--store death for client
 			clientstats[client_control[events[e].initiator]].score_last.dead =  1						--store dead pilot for client
+			log.trace("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].dead = " .. clientstats[client_control[events[e].initiator]].dead .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.score_last.dead = " .. clientstats[client_control[events[e].initiator]].score_last.dead)
 		end
 		
 	elseif events[e].type == "takeoff" then
 		--client stats for flown missions
 		if client_control[events[e].initiator] then														--if take off is by a client
+			log.info("client (player) had an event takeoff")	
+			
 			if clientstats[client_control[events[e].initiator]].score_last.mission == 0 then			--client has no take off logged yet for this mission
 				clientstats[client_control[events[e].initiator]].mission = clientstats[client_control[events[e].initiator]].mission + 1	--increase flown mission number
 				clientstats[client_control[events[e].initiator]].score_last.mission = 1					--store mission for client
+				log.trace("if first takeoff, update mission in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].mission = " .. clientstats[client_control[events[e].initiator]].mission .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.score_last.dead = " .. clientstats[client_control[events[e].initiator]].score_last.mission)
 			end
 		end
 		
@@ -462,48 +487,77 @@ for e = 1, #events do
 		end
 	end
 end
-
-
+log.info("End evaluate log events =======================================================")														
+	
+log.info("Start evaluate log damaged aircraft in oob_air table ==========================")														
 --log damaged aircraft in oob_air
-for hit_unit,hitter in pairs(hit_table) do													--iterate through all remaining entries in the hit_table (all destroyed aircraft are removed meanwhile, damaged remain)
-	for side_name,side in pairs(oob_air) do													--iterate through all sides
-		for unit_n,unit in pairs(side) do													--iterate through all air units
+for hit_unit,hitter in pairs(hit_table) do	--iterate through all remaining entries in the hit_table (all destroyed aircraft are removed meanwhile, damaged remain)
+	
+	for side_name,side in pairs(oob_air) do --iterate through all sides
+		
+		for unit_n,unit in pairs(side) do	--iterate through all air units
+			
 			if string.find(hit_unit, " " .. unit.name .. " ", 1, true) then					--if hit unit is part of air unit name
-				if health_table[hit_unit] and health_table[hit_unit] > 50 then											--if health of hit unit is bigger than 50%
+				log.info("found hit unit in oob_air - hit_unit included in unit.name of oob_air table(".. hit_unit .. ", " .. unit.name .. ")")	
+
+				if health_table[hit_unit] and health_table[hit_unit] > 50 then				--if health of hit unit is bigger than 50%
 					unit.roster.damaged = unit.roster.damaged + 1							--increase counter for damaged aircraft total
 					unit.score_last.damaged = unit.score_last.damaged + 1					--increase counter for damaged aircraft in last mission
-				else																		--if health of hit unit is lower than 50%, the aircraft is written off
+					log.trace("healt_table[" .. hit_unit .. "] = " .. health_table[hit_unit] .. " > 50 hit unit was damaged, store stats for hit unit - update unit.roster.damaged, unit.score_last.damaged (" .. unit.roster.damaged .. ", " .. unit.score_last.damaged)
+				
+				elseif health_table[hit_unit] then-- modified by Old_Boy																		--if health of hit unit is lower than 50%, the aircraft is written off
 					unit.roster.lost = unit.roster.lost + 1									--increase counter for lost aircraft total
 					unit.score_last.lost = unit.score_last.lost + 1							--increase counter for lost aircraft in last mission
-					
+					log.trace("healt_table[" .. hit_unit .. "] = " .. health_table[hit_unit] .. " <= 50, hit unit was destroyed store stats for hit unit - update unit.roster.lost, unit.score_last.lost (" .. unit.roster.lost .. ", " .. unit.score_last.lost .. ")")
+										
+					log.info("update oob ground kill for written off aircraft")	
 					--oob ground kill update for written off aircraft
-					for killer_side_name,killer_side in pairs(oob_air) do											--iterate through all sides
-						for killer_unit_n,killer_unit in pairs(killer_side) do										--iterate through all air units
-							if string.find(hitter, " " .. killer_unit.name .. " ", 1, true) then					--if the hitter unit is part of air unit name
-								if side_name ~= killer_side_name then												--make sure that killer unit and hit aircraft are not on same side (friendly fire is not awarded as kill)
+					for killer_side_name,killer_side in pairs(oob_air) do -- forse errore: oob_ground??	--iterate through all sides
+						
+						for killer_unit_n,killer_unit in pairs(killer_side) do --iterate through all air units
+							
+							if string.find(hitter, " " .. killer_unit.name .. " ", 1, true) then --if the hitter unit is part of air unit name
+								log.info("found hit unit in oob_air - hit_unit included in unit.name of oob_air table (" .. hit_unit .. ", " .. killer_unit.name .. ")")	
+								
+								if side_name ~= killer_side_name then --make sure that killer unit and hit aircraft are not on same side (friendly fire is not awarded as kill)
+									log.trace("hit unit have different side of oob_air unit - hit unit side, oob_air unit side: " .. side_name .. ", " .. killer_side_name)
+									-- FORSE SONO GLI AEREI PARCHEGGIATI. FORSE ERRORE: QUESTE STATS DOVREBBERO ESSERE AIR_KILL E NON GROUND_KILL: ITERAZIONE SU OOB_AIR E VERIFICA DIFFERENTE SIDE PORTEBBERO INDICARE CHE L'ERRORE E' NELL'AGGIORNARE LE GORUND_STATS INVECE CHE LE AIR_STATS
 									killer_unit.score.kills_ground = killer_unit.score.kills_ground + 1				--award ground kill to air unit
 									killer_unit.score_last.kills_ground = killer_unit.score_last.kills_ground + 1	--increase kill counter for this mission of air unit
+									log.trace("store stats for oob_air unit (killer)- update killer_unit.score.kills_ground, unit.score_last.damaged (" .. killer_unit.score.kills_ground .. ", " .. killer_unit.score_last.kills_ground .. ")")
+									log.trace("FORSE SONO GLI AEREI PARCHEGGIATI. ATTENZIONE FORSE ERRORE- VERIFICA hitter: " .. hitter .. ", killer_unit.name: " .. killer_unit.name .. ". Se non è una unit ground forse è presente un errore ")
 									AddPackstats(hitter, "kill_ground")												--check if kill was in player package
 									
 									--client stats for kills
 									if client_hit_table[hit_unit] then												--if hitter was a client
+										log.info("hitter was a client (player): " .. client_hit_table[hit_unit] .. ", hit_unit: " .. hit_unit)
 										clientstats[client_hit_table[hit_unit]].kills_ground = clientstats[client_hit_table[hit_unit]].kills_ground + 1								--award ground kill to client
 										clientstats[client_hit_table[hit_unit]].score_last.kills_ground = clientstats[client_hit_table[hit_unit]].score_last.kills_ground + 1
+										log.trace("store client ground stats - update clientstats[" .. client_hit_table[hit_unit] .. "].kills_ground: " .. clientstats[client_hit_table[hit_unit]].kills_ground .. ", clientstats[" .. client_hit_table[hit_unit] .. "].score_last.kills_ground: " .. clientstats[client_hit_table[hit_unit]].score_last.kills_ground)
 									end
 									break
 								end
-							end
+	 						end
 						end
-					end
-					
+					end					
 				end
-				unit.roster.ready = unit.roster.ready - 1									--decrease number of ready aircraft of air unit
-				unit.score_last.ready = unit.score_last.ready + 1							--decrease number of ready aircraft for this mission of air unit
+				
+				if unit.roster.ready > 0 then
+					unit.roster.ready = unit.roster.ready - 1--decrease number of ready aircraft of air unit
+				end
+
+				if unit.score_last.ready > 0 then
+					unit.score_last.ready = unit.score_last.ready - 1 -- MODIFIED BY Old_Boy --decrease number of ready aircraft for this mission of air unit
+				end				
+				log.trace("store stat for hit unit.name: " .. unit.name .. ", unit.roster.ready: " .. unit.roster.ready .. ", unit.score_last.ready(this mission): " .. unit.score_last.ready)
 			end
 		end
 	end
 end
 
+-- ============================================================					
+-- Last point for coding logger functionality by Old_Boy ------		
+-- ============================================================		
 
 --evaluate destroyed scenery objects
 for scen_name,scen in pairs(scen_log) do													--iterate through destroyed scenery objects
