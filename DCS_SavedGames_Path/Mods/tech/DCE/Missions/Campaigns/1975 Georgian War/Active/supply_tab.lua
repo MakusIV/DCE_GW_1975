@@ -29,18 +29,25 @@ supply_tab = {
 				},
 			},
 		},
-		['Tbilissi Airbase'] = {
-			['integrity'] = 0.9,
+		['Sukhumi Airbase Strategics'] = {
+			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Tbilissi-Lochini'] = {
+				['Sukhumi Airbase Strategics'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Reserves-R/58 TFS'] = true,
-						['Reserves-R/171 ARW'] = true,
-						['Reserves-R/335 TFS'] = true,
-						['Reserves-R/174 ARW'] = true,
-						['Reserves-R/13 TFS'] = true,
-						['Tbilissi'] = true,
+						['Sukhumi'] = true,
+					},
+				},
+				['Rail Bridge Tagiloni-GH21'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Senaki-Kolkhi'] = true,
+					},
+				},
+				['Bridge Koki-GH20'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,
 					},
 				},
 			},
@@ -48,10 +55,10 @@ supply_tab = {
 		['SUPPLY PLANT DAPNARI KM76'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['bridge GORI'] = {
+				['Bridge Geguti-LM17'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['GORI FARP MM25'] = true,
+						['KHASHURI FARP LM84'] = true,
 					},
 				},
 				['Kutaisi Airbase'] = {
@@ -60,16 +67,16 @@ supply_tab = {
 						['Kutaisi'] = true,
 					},
 				},
-				['Bridge Dapnari-KM76'] = {
+				['bridge GORI'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Kobuleti'] = true,
+						['GORI FARP MM25'] = true,
 					},
 				},
-				['Bridge Kutaisi-LM18'] = {
+				['Bridge Supply Line Marneuli - Tbilisi'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['AMBROLAURI FARP LN41'] = true,
+						['GORI FARP MM25'] = true,
 					},
 				},
 				['Bridge Vartsihe-LM16'] = {
@@ -84,39 +91,43 @@ supply_tab = {
 						['Kobuleti'] = true,
 					},
 				},
-				['Bridge Supply Line Marneuli - Tbilisi'] = {
+				['Bridge Kutaisi-LM18'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['GORI FARP MM25'] = true,
+						['AMBROLAURI FARP LN41'] = true,
 					},
 				},
-				['Bridge Geguti-LM17'] = {
+				['Bridge Dapnari-KM76'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['KHASHURI FARP LM84'] = true,
+						['Kobuleti'] = true,
 					},
 				},
 			},
 		},
-		['Sukhumi Airbase'] = {
-			['integrity'] = 0.85,
+		['Tbilissi Airbase'] = {
+			['integrity'] = 0.95,
 			['supply_line_names'] = {
-				['Sukhumi Airbase'] = {
-					['integrity'] = 0.85,
+				['Tbilissi-Lochini'] = {
+					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Sukhumi'] = true,
+						['Reserves-R/58 TFS'] = true,
 						['Reserves-R/171 ARW'] = true,
+						['Reserves-R/335 TFS'] = true,
+						['Reserves-R/174 ARW'] = true,
+						['Reserves-R/13 TFS'] = true,
+						['Tbilissi'] = true,
 					},
 				},
 			},
 		},
-		['Sukhumi-Babushara Train Station - FH74'] = {
+		['Kobuleti Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Sukhumi-Babushara Train Station - FH74'] = {
+				['Kobuleti Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Sukhumi'] = true,
+						['Kobuleti'] = true,
 					},
 				},
 			},
@@ -150,13 +161,19 @@ supply_tab = {
 				},
 			},
 		},
-		['Kobuleti Train Station - GG44'] = {
+		['SUPPLY PLANT  MARNEULI ML89'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Kobuleti Train Station - GG44'] = {
+				['Bridge Supply Line Gori - Tbilisi'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Kutaisi'] = true,
+						['GORI FARP MM25'] = true,
+					},
+				},
+				['Tbilissi Airbase'] = {
+					['integrity'] = 0.95,
+					['airbase_supply'] = {
+						['Tbilissi-Lochini'] = true,
 					},
 				},
 			},
@@ -196,53 +213,36 @@ supply_tab = {
 				},
 			},
 		},
-		['SUPPLY PLANT  MARNEULI ML89'] = {
+		['Kobuleti Train Station - GG44'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge Supply Line Gori - Tbilisi'] = {
+				['Kobuleti Train Station - GG44'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['GORI FARP MM25'] = true,
-					},
-				},
-				['Tbilissi Airbase'] = {
-					['integrity'] = 0.9,
-					['airbase_supply'] = {
-						['Tbilissi-Lochini'] = true,
+						['Kutaisi'] = true,
 					},
 				},
 			},
 		},
-		['Kobuleti Airbase'] = {
+		['Sukhumi-Babushara Train Station - FH74'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Kobuleti Airbase'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kobuleti'] = true,
-					},
-				},
-			},
-		},
-		['Sukhumi Airbase Strategics'] = {
-			['integrity'] = 1,
-			['supply_line_names'] = {
-				['Sukhumi Airbase Strategics'] = {
+				['Sukhumi-Babushara Train Station - FH74'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Sukhumi'] = true,
 					},
 				},
-				['Bridge Koki-GH20'] = {
-					['integrity'] = 1,
+			},
+		},
+		['Sukhumi Airbase'] = {
+			['integrity'] = 0.85,
+			['supply_line_names'] = {
+				['Sukhumi Airbase'] = {
+					['integrity'] = 0.85,
 					['airbase_supply'] = {
-						['Kobuleti'] = true,
-					},
-				},
-				['Rail Bridge Tagiloni-GH21'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Senaki-Kolkhi'] = true,
+						['Sukhumi'] = true,
+						['Reserves-R/171 ARW'] = true,
 					},
 				},
 			},
@@ -273,8 +273,8 @@ supply_tab = {
 				['Mineralnye-Vody Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Reserves-3./31.IAP'] = true,
 						['Reserves-3./19.IAP'] = true,
+						['Reserves-3./31.IAP'] = true,
 					},
 				},
 			},
@@ -297,7 +297,7 @@ supply_tab = {
 			},
 		},
 		['CHERKESSK SUPPLY PLANT KP69'] = {
-			['integrity'] = 1,
+			['integrity'] = 0.89,
 			['supply_line_names'] = {
 				['Mineralnye-Vody Airbase'] = {
 					['integrity'] = 1,
@@ -315,7 +315,7 @@ supply_tab = {
 			},
 		},
 		['SUPPLY PLANT BAKSAN LP83'] = {
-			['integrity'] = 1,
+			['integrity'] = 0.75,
 			['supply_line_names'] = {
 				['Nalchik Airbase'] = {
 					['integrity'] = 1,
@@ -324,7 +324,7 @@ supply_tab = {
 					},
 				},
 				['BAKSAN-MOZDOK SUPPLY LINE'] = {
-					['integrity'] = 0.66,
+					['integrity'] = 0.33,
 					['airbase_supply'] = {
 						['Mozdok'] = true,
 					},
@@ -337,6 +337,36 @@ supply_tab = {
 				},
 			},
 		},
+		['Beslan Airbase'] = {
+			['integrity'] = 0.9,
+			['supply_line_names'] = {
+				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
+					['integrity'] = 0.49,
+					['airbase_supply'] = {
+						['LENIGORI FARP MM56'] = true,
+					},
+				},
+				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
+					['integrity'] = 0.49,
+					['airbase_supply'] = {
+						['NOGIR FARP MN76'] = true,
+					},
+				},
+				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
+					['integrity'] = 0.57,
+					['airbase_supply'] = {
+						['TSKHINVALI FARP MM17'] = true,
+					},
+				},
+				['Beslan Airbase'] = {
+					['integrity'] = 0.9,
+					['airbase_supply'] = {
+						['Reserves-3./19.IAP'] = true,
+						['Reserves-2./17.IAP'] = true,
+					},
+				},
+			},
+		},
 		['Mozdok Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
@@ -345,36 +375,6 @@ supply_tab = {
 					['airbase_supply'] = {
 						['Reserves-R./81.IAP'] = true,
 						['Reserves-R./61.IAP'] = true,
-					},
-				},
-			},
-		},
-		['Beslan Airbase'] = {
-			['integrity'] = 0.9,
-			['supply_line_names'] = {
-				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
-					['integrity'] = 0.71,
-					['airbase_supply'] = {
-						['TSKHINVALI FARP MM17'] = true,
-					},
-				},
-				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
-					['integrity'] = 0.66,
-					['airbase_supply'] = {
-						['NOGIR FARP MN76'] = true,
-					},
-				},
-				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
-					['integrity'] = 0.66,
-					['airbase_supply'] = {
-						['LENIGORI FARP MM56'] = true,
-					},
-				},
-				['Beslan Airbase'] = {
-					['integrity'] = 0.9,
-					['airbase_supply'] = {
-						['Reserves-2./17.IAP'] = true,
-						['Reserves-3./19.IAP'] = true,
 					},
 				},
 			},

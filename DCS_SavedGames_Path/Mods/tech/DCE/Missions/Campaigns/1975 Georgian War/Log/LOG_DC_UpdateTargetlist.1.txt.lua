@@ -1,7 +1,2 @@
-[DEBUG Mon Dec  5 18:53:05 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 19:02:55 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 19:14:45 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 19:17:00 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 19:18:13 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 19:22:41 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
-[DEBUG Mon Dec  5 20:09:48 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
+[DEBUG Sun Dec  4 17:38:18 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
+[DEBUG Sun Dec  4 18:10:43 2022] ../../../ScriptsMod.NG/DC_UpdateTargetlist.lua:18: Start
