@@ -201,11 +201,18 @@ do
 	local pack_kills_air = 0
 	local pack_kills_ground = 0
 	local pack_kills_ship = 0
+	local pack_friendly_kills_air = 0
+	local pack_friendly_kills_ground = 0
+	local pack_friendly_kills_ship = 0
 	local pack_lost = 0
+	
 	for k,v in pairs(packstats) do
 		pack_kills_air = pack_kills_air + v.kills_air
 		pack_kills_ground = pack_kills_ground + v.kills_ground
 		pack_kills_ship = pack_kills_ship + v.kills_ship
+		pack_friendly_kills_air = pack_friendly_kills_air + v.friendly_kills_air
+		pack_friendly_kills_ground = pack_friendly_kills_ground + v.friendly_kills_ground
+		pack_friendly_kills_ship = pack_friendly_kills_ship + v.friendly_kills_ship
 		pack_lost = pack_lost + v.lost
 	end
 
