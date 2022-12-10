@@ -331,10 +331,11 @@ for e = 1, #events do
 								log.info("crashed aircraft was hit by a client (player)")											
 								clientstats[client_hit_table[events[e].initiator]].kills_air = clientstats[client_hit_table[events[e].initiator]].kills_air + 1	--award air kill to client.
 								clientstats[client_hit_table[events[e].initiator]].score_last.kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.kills_air + 1
-								log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_air = " .. clientstats[client_hit_table[events[e].initiator]].kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_air = " .. clientstats[client_control[events[e].initiator]].score_last.kills_air)
-							end
-						else -- aggiunto 
-							log.trace("friendly kill air, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.kills_air and killer_unit.score_last.kills_air (" .. killer_unit.score.kills_air .. ", " .. killer_unit.score_last.kills_air .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
+								log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_air = " .. clientstats[client_hit_table[events[e].initiator]].kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator] .. "].score_last.kills_air = " .. clientstats[client_hit_table[events[e].initiator]].score_last.kills_air)
+							end							
+						
+						else --friendly kill air
+							log.trace("friendly kill air, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_ground and killer_unit.score_last.friendly_kills_ground () - to be implement")
 							AddPackstats(hit_table[events[e].initiator], "friendly_kill_air")
 
 							if client_hit_table[events[e].initiator] then --client's friendly air kill								--if crashed aircraft was hit by a client
@@ -342,9 +343,9 @@ for e = 1, #events do
 								log.debug("crashed aircraft was hit by a client (player) and have both same side - crash_side: " .. crash_side .. " ~= killer_side_name: " .. killer_side_name)
 								clientstats[client_hit_table[events[e].initiator]].friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].friendly_kills_air + 1	--award air kill to client
 								clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air + 1						 
-								log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_air = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_air)
+								log.trace("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator] .. "].score_last.friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air)
 							end
-						end -- aggiunto (tolto il break utilizzato per interrompere il ciclo in caso di stesso side e consentire il cambio di side nel ciclo esterno)
+						end
 					end
 				end
 			end
@@ -378,7 +379,7 @@ for e = 1, #events do
 			if clientstats[client_control[events[e].initiator]].score_last.mission == 0 then			--client has no take off logged yet for this mission
 				clientstats[client_control[events[e].initiator]].mission = clientstats[client_control[events[e].initiator]].mission + 1	--increase flown mission number
 				clientstats[client_control[events[e].initiator]].score_last.mission = 1					--store mission for client
-				log.trace("if first takeoff, update mission in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].mission = " .. clientstats[client_control[events[e].initiator]].mission .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.score_last.dead = " .. clientstats[client_control[events[e].initiator]].score_last.mission)
+				log.trace("if first takeoff, update mission in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].mission = " .. clientstats[client_control[events[e].initiator]].mission .. ", clientstats[" .. client_control[events[e].initiator] .. "].score_last.score_last.mission = " .. clientstats[client_control[events[e].initiator]].score_last.mission)
 			end
 		end
 		

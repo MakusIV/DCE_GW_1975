@@ -32,28 +32,22 @@ supply_tab = {
 		['SUPPLY PLANT DAPNARI KM76'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
-				['Bridge Vartsihe-LM16'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['KHASHURI FARP LM84'] = true,
-					},
-				},
 				['Kutaisi Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['Kutaisi'] = true,
 					},
 				},
-				['Bridge Dapnari-KM76'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['Kobuleti'] = true,
-					},
-				},
-				['Bridge Supply Line Marneuli - Tbilisi'] = {
+				['bridge GORI'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['GORI FARP MM25'] = true,
+					},
+				},
+				['Bridge Kutaisi-LM18'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['AMBROLAURI FARP LN41'] = true,
 					},
 				},
 				['Bridge Geguti-LM17'] = {
@@ -68,16 +62,16 @@ supply_tab = {
 						['Kobuleti'] = true,
 					},
 				},
-				['Bridge Kutaisi-LM18'] = {
-					['integrity'] = 1,
-					['airbase_supply'] = {
-						['AMBROLAURI FARP LN41'] = true,
-					},
-				},
-				['bridge GORI'] = {
+				['Bridge Supply Line Marneuli - Tbilisi'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['GORI FARP MM25'] = true,
+					},
+				},
+				['Bridge Dapnari-KM76'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Kobuleti'] = true,
 					},
 				},
 			},
@@ -297,7 +291,7 @@ supply_tab = {
 			},
 		},
 		['CHERKESSK SUPPLY PLANT KP69'] = {
-			['integrity'] = 1,
+			['integrity'] = 0.89,
 			['supply_line_names'] = {
 				['Mineralnye-Vody Airbase'] = {
 					['integrity'] = 1,
@@ -315,7 +309,7 @@ supply_tab = {
 			},
 		},
 		['SUPPLY PLANT BAKSAN LP83'] = {
-			['integrity'] = 1,
+			['integrity'] = 0.75,
 			['supply_line_names'] = {
 				['Nalchik Airbase'] = {
 					['integrity'] = 1,
@@ -324,7 +318,7 @@ supply_tab = {
 					},
 				},
 				['BAKSAN-MOZDOK SUPPLY LINE'] = {
-					['integrity'] = 0.66,
+					['integrity'] = 0.33,
 					['airbase_supply'] = {
 						['Mozdok'] = true,
 					},
@@ -341,19 +335,19 @@ supply_tab = {
 			['integrity'] = 0.9,
 			['supply_line_names'] = {
 				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
-					['integrity'] = 0.66,
+					['integrity'] = 0.49,
 					['airbase_supply'] = {
 						['LENIGORI FARP MM56'] = true,
 					},
 				},
 				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
-					['integrity'] = 0.66,
+					['integrity'] = 0.49,
 					['airbase_supply'] = {
 						['NOGIR FARP MN76'] = true,
 					},
 				},
 				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
-					['integrity'] = 0.71,
+					['integrity'] = 0.57,
 					['airbase_supply'] = {
 						['TSKHINVALI FARP MM17'] = true,
 					},
