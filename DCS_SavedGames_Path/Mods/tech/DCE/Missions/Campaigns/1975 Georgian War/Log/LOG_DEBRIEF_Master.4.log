@@ -1,0 +1,39 @@
+[DEBUG Sat Dec 10 20:53:03 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sat Dec 10 20:53:03 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sat Dec 10 20:55:42 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sat Dec 10 20:55:42 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sat Dec 10 22:11:39 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sat Dec 10 22:11:39 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sat Dec 10 22:14:17 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sat Dec 10 22:14:17 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sat Dec 10 22:45:11 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sat Dec 10 22:45:11 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sat Dec 10 22:45:11 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:130: load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats
+[DEBUG Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:138: load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua
+[DEBUG Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:143: load: DC_Logistic.lua
+[DEBUG Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:145: call: UpdateOobAir()
+[TRACE Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:152: update campaign time - elapsed_time: 1790. camp.time: 66400
+[TRACE Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:194: file: ../../../ScriptsMod.NG/UTIL_Version.luaopen. Script Version: NG (20.47.105)
+[DEBUG Sat Dec 10 22:45:16 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:209: Ask for input about confirm client results
+[DEBUG Sat Dec 10 22:46:04 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:649: copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: 4
+[DEBUG Sat Dec 10 22:46:04 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:660: End
+[DEBUG Sun Dec 11 12:12:15 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:107: Start
+[DEBUG Sun Dec 11 12:12:15 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:116: NG
+[DEBUG Sun Dec 11 12:12:15 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:130: load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats
+[DEBUG Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:138: load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua
+[DEBUG Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:143: load: DC_Logistic.lua
+[DEBUG Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:145: call: UpdateOobAir()
+[TRACE Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:152: update campaign time - elapsed_time: 591. camp.time: 65201
+[TRACE Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:194: file: ../../../ScriptsMod.NG/UTIL_Version.luaopen. Script Version: NG (20.47.105)
+[DEBUG Sun Dec 11 12:12:18 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:209: Ask for input about confirm client results
+[DEBUG Sun Dec 11 12:13:10 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:234: Save client stats in clientstats.lua file
+[DEBUG Sun Dec 11 12:13:10 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:240: upload oob_scen file with new destroyed scenery objects
+[DEBUG Sun Dec 11 12:13:10 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:250: Save oob_scen.lua file
+[DEBUG Sun Dec 11 12:13:10 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:253: Save oob_scen.lua file
+[DEBUG Sun Dec 11 12:13:10 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:257: Ask for input about client's choice
+[TRACE Sun Dec 11 12:13:30 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:291: client's choice: d
+[DEBUG Sun Dec 11 12:13:30 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:529: SinglePlayer with Dedicated Server choice
+[DEBUG Sun Dec 11 12:13:30 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:559: load: MAIN_NextMission.lua
+[DEBUG Sun Dec 11 12:14:21 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:581: SinglePlayer and PlayerFlight is true -> MultiplayerCampaign Next mission generated
+[DEBUG Sun Dec 11 12:14:22 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:649: copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: 5
+[DEBUG Sun Dec 11 12:14:22 2022] ..\..\..\ScriptsMod.NG\DEBRIEF_Master.lua:660: End

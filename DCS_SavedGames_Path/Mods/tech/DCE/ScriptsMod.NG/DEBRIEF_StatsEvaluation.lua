@@ -61,27 +61,27 @@ local function AddPackstats(unitname, event)
 		
 		if event == "kill_air" then
 			packstats[unitname].kills_air = packstats[unitname].kills_air + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kill_air, update packstats[" .. unitname .. "].kills_air; " .. packstats[unitname].kills_air)
+			log.trace("packstats[" .. unitname .. "] exist. Event == kills_air, update packstats[" .. unitname .. "].kills_air; " .. packstats[unitname].kills_air)
 		
 		elseif event == "kill_ground" then
 			packstats[unitname].kills_ground = packstats[unitname].kills_ground + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kill_ground, update packstats[" .. unitname .. "].kill_ground; " .. packstats[unitname].kill_ground)
+			log.trace("packstats[" .. unitname .. "] exist. Event == kills_ground, update packstats[" .. unitname .. "].kills_ground; " .. packstats[unitname].kills_ground)
 		
 		elseif event == "kill_ship" then
 			packstats[unitname].kills_ship = packstats[unitname].kills_ship + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kill_ship, update packstats[" .. unitname .. "].kill_ship; " .. packstats[unitname].kill_ship)
+			log.trace("packstats[" .. unitname .. "] exist. Event == kills_ship, update packstats[" .. unitname .. "].kills_ship; " .. packstats[unitname].kills_ship)
 		
 		elseif event == "friendly_kill_air" then
 			packstats[unitname].friendly_kills_air = packstats[unitname].friendly_kills_air + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kill_air, update packstats[" .. unitname .. "].friendly_kill_air; " .. packstats[unitname].friendly_kill_air)
+			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_air, update packstats[" .. unitname .. "].friendly_kills_air; " .. packstats[unitname].friendly_kills_air)
 		
 		elseif event == "friendly_kill_ground" then
 			packstats[unitname].friendly_kills_ground = packstats[unitname].friendly_kills_ground + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kill_ground, update packstats[" .. unitname .. "].friendly_kill_ground; " .. packstats[unitname].friendly_kill_ground)
+			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_ground, update packstats[" .. unitname .. "].friendly_kills_ground; " .. packstats[unitname].friendly_kills_ground)
 		
 		elseif event == "friendly_kill_ship" then
 			packstats[unitname].friendly_kills_ship = packstats[unitname].friendly_kills_ship + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kill_ship, update packstats[" .. unitname .. "].friendly_kill_ship; " .. packstats[unitname].friendly_kill_ship)
+			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_ship, update packstats[" .. unitname .. "].friendly_kills_ship; " .. packstats[unitname].friendly_kills_ship)
 		
 		elseif event == "lost" then
 			packstats[unitname].lost = packstats[unitname].lost + 1
@@ -194,6 +194,9 @@ for client_name, client in pairs(clientstats) do
 		kills_air = 0,
 		kills_ground = 0,
 		kills_ship = 0,
+		friendly_kills_air = 0,
+		friendly_kills_ground = 0,
+		friendly_kills_ship = 0,
 		mission = 0,
 		crash = 0,
 		eject = 0,
@@ -305,7 +308,7 @@ for e = 1, #events do
 						log.info("client (player) had an event crash")											
 						clientstats[client_control[events[e].initiator]].crash = clientstats[client_control[events[e].initiator]].crash + 1	--store crash for client
 						clientstats[client_control[events[e].initiator]].score_last.crash =  1			--store crash for client
-						log.debug("update crash in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].crash = " .. clientstats[client_control[events[e].initiator]].crash .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.crash = " .. clientstats[client_control[events[e].initiator]].score_last.crash)
+						log.debug("update crash in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].crash = " .. clientstats[client_control[events[e].initiator]].crash .. ", clientstats[" .. client_control[events[e].initiator] .. "].score_last.crash = " .. clientstats[client_control[events[e].initiator]].score_last.crash)
 					end
 					log.debug("crashed aircraft name is part of air unit name -> break looping unit")		
 					break -- exit from the loop because the crashed aircraft name is part of air unit name. No more store stats for other unit??
@@ -349,6 +352,7 @@ for e = 1, #events do
 							if client_hit_table[events[e].initiator] then --client's friendly air kill								--if crashed aircraft was hit by a client
 								-- implements new stats
 								log.debug("crashed aircraft was hit by a client (player) and have both same side - crash_side: " .. crash_side .. " ~= killer_side_name: " .. killer_side_name)
+								--log.debug(" - clientstats:\n" .. inspect(clientstats) )
 								clientstats[client_hit_table[events[e].initiator]].friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].friendly_kills_air + 1	--award air kill to client
 								clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air + 1						 
 								log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_air .. ", clientstats[" .. client_hit_table[events[e].initiator] .. "].score_last.friendly_kills_air = " .. clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_air)
@@ -367,7 +371,7 @@ for e = 1, #events do
 			log.info("client (player) had an event eject")	
 			clientstats[client_control[events[e].initiator]].eject = clientstats[client_control[events[e].initiator]].eject + 1	--store ejection for client
 			clientstats[client_control[events[e].initiator]].score_last.eject =  1						--store eject for client
-			log.debug("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].eject = " .. clientstats[client_control[events[e].initiator]].eject .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.eject = " .. clientstats[client_control[events[e].initiator]].score_last.eject)
+			log.debug("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].eject = " .. clientstats[client_control[events[e].initiator]].eject .. ", clientstats[" .. client_control[events[e].initiator] .. "].score_last.eject = " .. clientstats[client_control[events[e].initiator]].score_last.eject)
 		end
 		
 	elseif events[e].type == "pilot dead" then
@@ -376,7 +380,7 @@ for e = 1, #events do
 			log.info("client (player) had an event pilot dead")	
 			clientstats[client_control[events[e].initiator]].dead = clientstats[client_control[events[e].initiator]].dead + 1	--store death for client
 			clientstats[client_control[events[e].initiator]].score_last.dead =  1						--store dead pilot for client
-			log.debug("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].dead = " .. clientstats[client_control[events[e].initiator]].dead .. ", clientstats[" .. client_control[events[e].initiator]"].score_last.score_last.dead = " .. clientstats[client_control[events[e].initiator]].score_last.dead)
+			log.debug("update eject in clientstats: clientstats[" .. client_control[events[e].initiator] .. "].dead = " .. clientstats[client_control[events[e].initiator]].dead .. ", clientstats[" .. client_control[events[e].initiator] .. "].score_last.score_last.dead = " .. clientstats[client_control[events[e].initiator]].score_last.dead)
 		end
 		
 	elseif events[e].type == "takeoff" then

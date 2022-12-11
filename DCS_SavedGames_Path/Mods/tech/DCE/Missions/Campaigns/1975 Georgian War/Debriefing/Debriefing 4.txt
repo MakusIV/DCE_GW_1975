@@ -1,0 +1,238 @@
+Mission 4 - September 13, 1975 (H+1), 18:06
+-------------------------------------------
+
+You have been tasked with striking Beslan Airbase but were unable to inflict any damage. Beslan Airbase remains 90% intact.
+
+Beslan Airbase           (90%)
+- Beslan Control Tower   (destroyed)
+- Beslan Hangar 1        
+- Beslan Hangar 2        
+- Beslan Barrack         
+- Rescue Station         
+- Repair Hangar          
+- Refuel Station         
+- Beslan Terminal        
+- Beslan Hangar 3        
+- Beslan Power Supply    
+
+Your package has not scored any air-air kills nor sustained any losses.
+
+Package:
+Callsign          Type             Task       Kills Air     Kills Ground     Kills Ship     Lost     
+Springfield51     F-14A-135-GR     Strike     0             0                0              0        (Player)
+
+
+
+Order of Battle:
+----------------
+
+Blue Air Units:
+Unit                   Type             Base                          Kills Air     Kills Ground     Kills Ship     Lost        Damaged     Ready
+315th Air Division     C-130            Batumi                        0             0                0              0           0           36
+F7                     AJS37            Sukhumi                       1             5                0              11          0           8
+GAH 2rd                Mi-24V           AMBROLAURI FARP LN41          0             0                0              0           0           16
+177 ARW                S-3B Tanker      CVN-74 John C. Stennis        0             0                0              0           0           8
+F9                     AJS37            Tbilissi-Lochini              0             0                0              14          0           7
+801 ARS                KC-135           Senaki-Kolkhi                 0             0                0              0           0           4
+54 TFS                 F-4E             Kobuleti                      0             2                0              5 (+5)      2 (+1)      11
+GA 5rd TS              An-26B           Senaki-Kolkhi                 0             0                0              0           0           5
+VS-22                  S-3B             CVN-74 John C. Stennis        0             19               0              6           0           6
+171 ARW                KC135MPRS        Batumi                        0             0                0              0           0           3
+6th Cavalry            AH-1W            GORI FARP MM25                0             0                0              0           0           14
+17th Cavalry           UH-1H            KHASHURI FARP LM84            0             0                0              0           0           16
+VMFA-157               F-5E-3           Batumi                        0             7                0              11 (+2)     0           7
+VMFA-159               F-4E             Sukhumi                       1             2                0              8           0           4
+VAW-125                E-2C             CVN-71 Theodore Roosevelt     0             0                0              0           0           8
+174 ARW                KC135MPRS        Tbilissi-Lochini              0             0                0              0           0           4
+GA 7rd AS              MiG-21Bis        Senaki-Kolkhi                 8 (+1)        0                0              3 (+1)      0           11
+317th Air Division     C-130            Kobuleti                      0             0                0              0           0           8
+VMFA-151               F-4E             Batumi                        1 (+1)        0                0              8 (+5)      0           4
+VF-118/GA              F-14A-135-GR     CVN-74 John C. Stennis        0             0                0              0           0           16
+58 TFS                 F-4E             Kutaisi                       0             1                0              6 (+2)      1 (+1)      5
+7 ACCS                 E-3A             Kutaisi                       0             0                0              0           0           3
+174 ARW                S-3B Tanker      CVN-71 Theodore Roosevelt     0             0                0              0           0           5
+GA 3rd AS              MiG-27K          Vaziani                       0             0                0              9           1           8
+VF-101                 F-14A-135-GR     CVN-71 Theodore Roosevelt     44 (+3)       0                0              11          1           11
+VS-21                  S-3B             CVN-71 Theodore Roosevelt     0             8                0              6           1           5
+69 BS                  B-52H            Batumi                        0             1                0              5           0           6
+GA 4rd AS              MiG-19P          Vaziani                       0             10               0              16 (+2)     0           4
+
+
+Red Air Units:
+Unit                   Type             Base                          Kills Air     Kills Ground     Kills Ship     Lost        Damaged     Ready
+2457.I SDRLO           A-50             Krasnodar-Center              0             0                0              0           0           4
+1./19.IAP              MiG-21Bis        Nalchik                       2 (+1)        0                0              17 (+1)     1           4
+2.OSAP                 An-26B           Sochi-Adler                   0             0                0              2           0           4
+27.OSAP                An-26B           Maykop-Khanskaya              0             0                0              2           0           3
+13th GHR               Mi-24V           LENIGORI FARP MN76            0             0                0              0           0           8
+1./61.IAP              Tu-22M3          Maykop-Khanskaya              0             2                0              5           0           6
+1./135.IAP             Su-17M4          Mineralnye-Vody               1             2                0              11          1           4
+1./81.IAP              Su-24M           Maykop-Khanskaya              0             5                0              14          0           6
+O7 SDRLO               Su-24MR          Krasnodar-Center              0             0                0              0           0           5
+1./115AS.IAP           L-39A            Beslan                        0             0                0              8           0           3
+1./113.IAP             MiG-23MLD        Mozdok                        0             0                0              0           0           12
+1./153.IAP             MiG-23MLD        Maykop-Khanskaya              0             0                0              5           0           13
+1./37.IAP              MiG-21Bis        Beslan                        2 (+1)        0                0              8 (+1)      2           7
+09 SDRLO               MiG-25RBT        Krasnodar-Center              0             0                0              0           0           5
+790.IAP                MiG-25PD         Mozdok                        5 (+2)        0                0              6 (+2)      0           6
+1st GHR                Mi-8MT           NOGIR FARP MN76               0             0                0              13          0           1
+1./111AS.IAP           L-39A            Nalchik                       0             0                0              9           0           3
+1./127.IAP             MiG-27K          Beslan                        0             0                0              5           2           6
+2457 SDRLO             A-50             Nalchik                       0             0                0              2           0           2
+1./117.IAP             MiG-27K          Mozdok                        0             0                0              11 (+3)     3           2
+1./29.OSAP             An-26B           Mineralnye-Vody               0             0                0              2           0           3
+O/159.IAP              MiG-23MLD        Krasnodar-Center              0             0                0              0           0           12
+1./133.IAP             MiG-23MLD        Mineralnye-Vody               2             0                0              3           0           9
+23.OSAP                An-26B           Anapa-Vityazevo               0             0                0              0           0           4
+1./115.IAP             Su-17M4          Maykop-Khanskaya              0             0                0              16 (+2)     0           2
+1./107.IAP             MiG-27K          Nalchik                       1             1                0              12 (+1)     2 (+1)      4
+793.IAP                MiG-25PD         Mineralnye-Vody               5             0                0              8           0           4
+13.OSAP                Il-76MD          Nalchik                       0             0                0              2           0           3
+2nd GHR                Mi-24V           TSKHINVALI FARP MM27          0             0                0              2           1           7
+1./123.IAP             MiG-23MLD        Beslan                        5             0                0              4           3           7
+3.OSAP                 An-26B           Beslan                        0             0                0              3           0           3
+25.OSAP                An-26B           Krasnodar-Center              0             0                0              0           0           4
+1./41.IAP              Su-24M           Mineralnye-Vody               0             3                0              12          1           4
+
+
+
+Red Ground Assets:
+101 EWR Site                                                100%   
+101 SA-3 Site E-1                                           100%   
+102 EWR Site                                                0%     
+103 EWR Site                                                50%    
+104 SA-6 Site E-4                                           100%   
+106 SA-2 Site C-6                                           100%   
+203 SA-2 Site A-3                                           100%   
+204 SA-6 Site B-1                                           87%    
+206 SA-2 Site B-3                                           83%    
+209 SA-2 Site R-3                                           100%   
+407 8th Army ELINT Station                                  60%    
+501 5th Artillery Division/1.Btry                           100%   
+502 5th Artillery Division/2.Btry                           100%   
+503 5th Artillery Division/3.Btry                           100%   
+504 5th Artillery Division/4.Btry                           100%   
+BAKSAN-MINERALNYE SUPPLY LINE                               100%   
+BAKSAN-MOZDOK SUPPLY LINE                                   33%    
+BESLAN-LENIGORI FARP SUPPLY LINE                            49%    
+BESLAN-NOGIR FARP SUPPLY LINE                               49%    
+BESLAN-TSKHINVALI FARP SUPPLY LINE                          57%    
+Beslan Airbase                                              90%    
+Bridge Alagir MN 36                                         100%   
+Bridge SW Kardzhin MN 49                                    100%   
+Bridge South Beslan MN 68                                   50%    
+Bridge South Elhotovo MN 39                                 100%   
+Bridge Vladikavkaz MN 76                                    0%     
+Bridge Vladikavkaz North MN 76                              100%   
+Bridge Vladikavkaz South MN 76                              0%     
+CHERKESSK SUPPLY PLANT KP69                                 89%    
+High priority Target BESLAN FARP SUPPLY LINE A              33%    
+High priority Target BESLAN FARP SUPPLY LINE B              50%    
+High priority Target BESLAN FARP SUPPLY LINE C              100%   
+High priority Target Prohladniy Depot MP 24 SUPPLY LINE A   100%   
+High priority Target Prohladniy Depot MP 24 SUPPLY LINE B   100%   
+High priority Target Prohladniy Depot MP 24 SUPPLY LINE C   100%   
+High priority Target Rail Bridge Digora MN 38               100%   
+LENIGORI FARP AA                                            100%   
+LENIGORI FARP MM56                                          100%   
+Maykop SA-2                                                 100%   
+Maykop-Khanskaya Airbase                                    100%   
+Mineralnye-Vody Airbase                                     100%   
+Mozdok Airbase                                              100%   
+NOGIR FARP MN76                                             72%    
+Nalchik Airbase                                             100%   
+Prohladniy Depot MP 24                                      100%   
+Prohladniy Depot MP 24-BESLAN SUPPLY LINE                   100%   
+Rail Bridge Digora MN 38                                    100%   
+Rail Bridge Kardzhin MN 49                                  100%   
+Rail Bridge SE Mayskiy MP 23                                100%   
+Rail Bridge SW Kardzhin MN 49                               100%   
+Russian Convoy 1                                            100%   
+Russian Convoy 2                                            100%   
+SUPPLY PLANT BAKSAN LP83                                    75%    
+TSKHINVALI FARP AA                                          100%   
+TSKHINVALI FARP MM27                                        100%   
+
+
+Blue Ground Assets:
+10 US Army ELINT Station                 100%   
+11 1st Artillery Division/1.Btry         100%   
+12 1st Artillery Division/2.Btry         100%   
+13 1st Artillery Division/3.Btry         100%   
+14 1st Artillery Division/4.Btry         100%   
+15 1st Artillery Division/5.Btry         100%   
+16 1st Artillery Division/6.Btry         100%   
+17 1st Artillery Division/7.Btry         100%   
+18 1st Artillery Division/8.Btry         100%   
+19 4th Army HQ                           100%   
+AMBROLAURI FARP AA                       100%   
+AMBROLAURI FARP LN41                     100%   
+Adzhkhahara Train Station - FH28         100%   
+Batumi Air Defenses                      100%   
+Batumi Airbase                           100%   
+Bridge Anaklia-GG19                      100%   
+Bridge Dapnari-KM76                      100%   
+Bridge Geguti-LM17                       100%   
+Bridge Koki-GH20                         100%   
+Bridge Kutaisi-LM18                      100%   
+Bridge Orsantia-GH10                     100%   
+Bridge Pahulani-GH42                     100%   
+Bridge Patara-Poti East-GG27             100%   
+Bridge Patara-Poti West-GG27             100%   
+Bridge Rike-GH31                         75%    
+Bridge Supply Line Gori - Tbilisi        100%   
+Bridge Supply Line Marneuli - Tbilisi    100%   
+Bridge Vartsihe-LM16                     100%   
+Bzyb Train Station - FH18                100%   
+CVN-71 Theodore Roosevelt                100%   
+CVN-74 John C. Stennis                   100%   
+EWR-1 Site                               100%   
+EWR-2 Site                               100%   
+EWR-3 Site                               100%   
+GORI AA                                  50%    
+GORI FARP MM25                           100%   
+Gudauta Airbase                          100%   
+Gudauta Train Station - FH37             100%   
+Gumista Train Station - FH56             100%   
+Hawk Site Kutaisi                        100%   
+KHASHURI FARP AA                         100%   
+KHASHURI FARP LM84                       100%   
+Kobuleti Airbase                         100%   
+Kobuleti Defenses                        100%   
+Kobuleti Train Station - GG44            100%   
+Kutaisi Airbase                          100%   
+Kutaisi Defenses                         100%   
+Kvemo-Merheuli Train Station - FH66      100%   
+LHA-Group                                100%   
+Leselidze Train Station - EJ80           100%   
+NATO Convoy 1                            100%   
+Novyy Afon Train Station - FH57          100%   
+Rail Bridge Dapnari-KM76                 100%   
+Rail Bridge North Geguti-LM17            100%   
+Rail Bridge Patara-Poti-GG27             100%   
+Rail Bridge Tagiloni-GH21                100%   
+Rapier Site Tabakhmela                   100%   
+Rapier Site bridge Vartsihe Geguti       66%    
+SUPPLY PLANT DAPNARI KM76                100%   
+SUPPLY PLANT MARNEULI ML89               89%    
+Senaki Airbase                           100%   
+Senaki Defenses                          100%   
+Senaki-Kolkhi Train Station - KM58       100%   
+Sukhumi Airbase                          85%    
+Sukhumi Airbase Strategics               100%   
+Sukhumi Defenses                         100%   
+Sukhumi Train Station - FH66             100%   
+Sukhumi-Babushara Train Station - FH74   100%   
+Tbilisi Defenses                         100%   
+Tbilissi Airbase                         95%    
+Vaziani Defenses                         100%   
+bridge GORI                              100%   
+bridge TKIBULI                           100%   
+
+
+
+Scoreboard:
+-----------
+
+Name         Missions     Kills Air     Kills Ground     Kills Ship     Crashed     Ejected     Dead
+MarkusIV     1            2             0                0              0           0           0

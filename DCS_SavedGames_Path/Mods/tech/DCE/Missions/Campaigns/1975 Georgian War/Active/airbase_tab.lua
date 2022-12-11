@@ -282,8 +282,8 @@ airbase_tab = {
 				['KC135MPRS'] = 'R/174 ARW',
 				['S-3B Tanker'] = 'R/174 ARW',
 			},
-			['supply'] = 0.9,
-			['efficiency'] = 0.9,
+			['supply'] = 0.95,
+			['efficiency'] = 0.95,
 			['integrity'] = 1,
 		},
 		['Tbilissi-Lochini'] = {
@@ -291,8 +291,8 @@ airbase_tab = {
 				['AJS37'] = 'F9',
 				['KC135MPRS'] = '174 ARW',
 			},
-			['supply'] = 0.9,
-			['efficiency'] = 0.9,
+			['supply'] = 0.95,
+			['efficiency'] = 0.95,
 			['integrity'] = 1,
 		},
 		['Reserves-R/VMFA-159'] = {

@@ -1,119 +1,72 @@
 --Destroyed scenery objects
 
 scen_log = {
-	[73303027] = {
-		['lasthit'] = 'Pack 19 - 1./41.IAP - Strike 1-1',
+	[547684425] = {
+		['lasthit'] = 'Pack 33 - VS-21 - Strike 1-1',
 		['health0'] = 500,
 	},
-	[164168932] = {
-		['lasthit'] = 'Pack 5 - GA 4rd AS - Strike 1-4',
+	[100598330] = {
+		['lasthit'] = 'Pack 33 - VS-21 - Strike 1-1',
 		['health0'] = 500,
 	},
-	[72713034] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
+	[102991145] = {
+		['lasthit'] = 'Pack 10 - 54 TFS - Strike 1-1',
 		['health0'] = 500,
 	},
-	[165676672] = {
-		['lasthit'] = 'Pack 24 - VS-21 - Strike 1-1',
+	[73730574] = {
+		['lasthit'] = 'Pack 28 - 1./107.IAP - Strike 1-1',
 		['health0'] = 500,
 	},
-	[70948482] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
+	[318604536] = {
+		['lasthit'] = 'Pack 33 - VS-21 - Strike 1-1',
 		['health0'] = 500,
 	},
-	[72713036] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
+	[170299781] = {
+		['y'] = 430.01040649414,
+		['x'] = -124614.8046875,
+		['lasthit'] = 'Pack 33 - VS-21 - Strike 1-1',
+		['z'] = 760428.9375,
 		['health0'] = 500,
 	},
-	[165675286] = {
-		['lasthit'] = '104 SA-6 Site E-4-4',
+	[74090766] = {
+		['y'] = 652.04852294922,
+		['x'] = -164245.28125,
+		['lasthit'] = 'Pack 34 - VS-21 - Strike 1-1',
+		['z'] = 850403,
 		['health0'] = 500,
 	},
-	[136806435] = {
-		['lasthit'] = 'Pack 19 - 1./41.IAP - Strike 1-1',
+	[74058354] = {
+		['y'] = 356.17687988281,
+		['x'] = -145428.47167969,
+		['lasthit'] = 'Pack 28 - VS-22 - Strike 1-1',
+		['z'] = 814533.16210938,
 		['health0'] = 500,
 	},
-	[428179484] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
-		['health0'] = 100,
-	},
-	[96143618] = {
-		['lasthit'] = 'Sochi Defenses-2',
+	[72289822] = {
+		['lasthit'] = 'Pack 5 - 54 TFS - Strike 1-3',
 		['health0'] = 500,
 	},
-	[75563026] = {
-		['lasthit'] = 'Pack 26 - VS-22 - Strike 1-1',
+	[162923601] = {
+		['lasthit'] = 'Pack 7 - 58 TFS - Strike 1-2',
 		['health0'] = 500,
 	},
-	[96143619] = {
-		['lasthit'] = 'Sochi Defenses-2',
-		['health0'] = 500,
-	},
-	[74091508] = {
-		['y'] = 693.87512207031,
-		['x'] = -168229.1875,
-		['lasthit'] = 'Pack 30 - VS-22 - Strike 1-1',
-		['z'] = 852723.0625,
-		['health0'] = 500,
-	},
-	[88377524] = {
-		['lasthit'] = 'Pack 19 - 1./41.IAP - Strike 1-1',
-		['health0'] = 500,
-	},
-	[136806410] = {
-		['lasthit'] = 'Pack 19 - 1./41.IAP - Strike 1-1',
-		['health0'] = 500,
-	},
-	[96143621] = {
-		['lasthit'] = 'Sochi Defenses-2',
-		['health0'] = 500,
-	},
-	[175702594] = {
-		['lasthit'] = 'Pack 26 - VS-22 - Strike 1-1',
-		['health0'] = 500,
-	},
-	[329386301] = {
-		['lasthit'] = 'Pack 26 - VS-22 - Strike 1-1',
+	[74028260] = {
+		['lasthit'] = 'Pack 32 - VS-22 - Strike 1-1',
 		['health0'] = 500,
 	},
 	[301990153] = {
-		['lasthit'] = 'Pack 16 - F7 - Strike 1-1',
+		['lasthit'] = 'Pack 32 - VS-22 - Strike 1-1',
 		['health0'] = 500,
 	},
-	[329385681] = {
-		['lasthit'] = 'Pack 26 - VS-22 - Strike 1-1',
+	[102991160] = {
+		['lasthit'] = 'Pack 10 - 54 TFS - Strike 1-1',
 		['health0'] = 500,
 	},
-	[329385580] = {
-		['lasthit'] = 'Pack 26 - VS-22 - Strike 1-1',
-		['health0'] = 500,
-	},
-	[101975932] = {
-		['lasthit'] = '204 SA-6 Site B-1-2',
-		['health0'] = 500,
-	},
-	[256672174] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
-		['health0'] = 500,
-	},
-	[87463577] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
-		['health0'] = 500,
-	},
-	[174229635] = {
-		['lasthit'] = '204 SA-6 Site B-1-2',
-		['health0'] = 500,
-	},
-	[87463578] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
-		['health0'] = 500,
-	},
-	[138022089] = {
-		['lasthit'] = 'Pack 7 - 1./117.IAP - SEAD 1-2',
-		['health0'] = 500,
-	},
-	[256672177] = {
-		['lasthit'] = 'Pack 7 - 1./61.IAP - Strike 1-1',
+	[74058684] = {
+		['y'] = 380.54498291016,
+		['x'] = -144986.53125,
+		['lasthit'] = 'Pack 35 - VS-21 - Strike 1-1',
+		['z'] = 816502.625,
 		['health0'] = 500,
 	},
 }
