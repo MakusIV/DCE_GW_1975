@@ -346,7 +346,7 @@ for e = 1, #events do
 							end							
 						
 						else --friendly kill air
-							log.debug("friendly kill air, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_ground and killer_unit.score_last.friendly_kills_ground () - to be implement")
+							log.debug("friendly kill air, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_air and killer_unit.score_last.friendly_kills_air () - to be implement")
 							AddPackstats(hit_table[events[e].initiator], "friendly_kill_air")
 
 							if client_hit_table[events[e].initiator] then --client's friendly air kill								--if crashed aircraft was hit by a client
@@ -397,13 +397,13 @@ for e = 1, #events do
 		
 	elseif events[e].type == "dead" then
 		log.debug("event["..e.."] == dead. Iterated oob_ground for search dead unit")																
-		--ground/naval/static loss events																--iterate through all the sub-tables of the oob_ground files and try to find the matching unitId of the dead unit (vehicle/ship/static)
-		for side_name,side in pairs(oob_ground) do														--side table(red/blue)											
+		--ground/naval/static loss events															--iterate through all the sub-tables of the oob_ground files and try to find the matching unitId of the dead unit (vehicle/ship/static)
+		for side_name,side in pairs(oob_ground) do													--side table(red/blue)											
 			
-			for country_n,country in pairs(side) do														--country table (number array)
+			for country_n,country in pairs(side) do													--country table (number array)
 				
 				-- event analisys for vehicle unit
-				if country.vehicle then																	--if country has vehicles
+				if country.vehicle then																--if country has vehicles
 					
 					for group_n,group in pairs(country.vehicle.group) do								--groups table (number array)
 						
@@ -464,7 +464,7 @@ for e = 1, #events do
 					end
 				end
 				-- event evalutation for ship unit
-				if country.ship then																					--if country has ships
+				if country.ship then																--if country has ships
 
 					for group_n,group in pairs(country.ship.group) do								--groups table (number array)
 
@@ -580,19 +580,18 @@ for e = 1, #events do
 															clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground + 1		--award ground kill to client
 															log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_ship = " .. clientstats[client_control[events[e].initiator]].score_last.kills_ground)															
 														end
-													end
+													else --friendly kill  
+														log.debug("friendly kill ground, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_ship and killer_unit.score_last.friendly_kills_ground () - to be implement")
+														AddPackstats(hit_table[events[e].initiator], "friendly_kill_ground")
 
-												else --friendly kill ship  
-													log.debug("friendly kill ship, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_ship and killer_unit.score_last.friendly_kills_ship () - to be implement")
-													AddPackstats(hit_table[events[e].initiator], "friendly_kill_ship")
-
-													if client_hit_table[events[e].initiator] then									--client's friendly fire
-														log.info("dead static unit was hit by a client (player) and have both same side (friendly kill) - unit side: " .. side_name .. " ~= killer_side_name: " .. killer_side_name)
-														clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground + 1							--award ground kill to client
-														clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground + 1		--award ground kill to client
-														log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_ground)															
-													end
-												end		
+														if client_hit_table[events[e].initiator] then									--client's friendly fire
+															log.info("dead static unit was hit by a client (player) and have both same side (friendly kill) - unit side: " .. side_name .. " ~= killer_side_name: " .. killer_side_name)
+															clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground + 1							--award ground kill to client
+															clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground + 1		--award ground kill to client
+															log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_ground)															
+														end
+													end	
+												end	
 											end
 										end
 										hit_table[events[e].initiator] = nil						--after kills are assigned, remove hit unit from hit_table
