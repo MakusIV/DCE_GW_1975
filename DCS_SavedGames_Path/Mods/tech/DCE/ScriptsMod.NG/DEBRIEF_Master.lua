@@ -81,8 +81,8 @@ if not activate_testing_enviroment then
 	local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
 	local campExport = loadfile("camp_status.lua")()												-- camp_status
 
-else	
-	-- test file
+else		
+	-- test temporary file
 	local logExport = loadfile("MissionEventsLog.2t.lua")() 										-- mission events log -- 
 	local scenExport = loadfile("scen_destroyed.2t.lua")()											-- destroyed scenery objects
 	local campExport = loadfile("camp_status.2t.lua")()												-- camp_status
@@ -105,53 +105,53 @@ log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_Master."  .. camp.mission .. ".log"
 local local_debug = true -- local debug
 log.debug("Start")
-
-if activate_testing_enviroment then
-	log.warn("activate testing enviroment")
-end
-
-
-
-
 log.debug(versionPackageICM)--By Old_Boy
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
+if not activate_testing_enviroment then
+	log.warn("activate testing enviroment")	
+end
 -- if	camp.mission == 1 then																		--if this was a first campaign mission
 	-- dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_ResetCampaign.lua")					--reset the campaign status files
 -- end
 
 --load status file to be updated
+log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")--By Old_Boy
 require("Active/oob_ground")																		--load ground oob
 require("Init/db_airbases")																			--load db_airbases
 require("Active/oob_air")																			--load air oob
 require("Active/targetlist")																		--load targetlist
 require("Active/clientstats")																		--load clientstats
 
-log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")--By Old_Boy
-
+if local_debug then
+	log.warn("activate local debug")
+	log.debug("copy before updating (ante) Active/oob_ground, Active/oob_air, Active/targetlist and Active/clientstats in Debug for mission: "..camp.mission)
+	CopyFile("Active/oob_ground.lua", "Debug/oob_ground." .. camp.mission .. ".ante.lua" )
+	CopyFile("Active/oob_air.lua", "Debug/oob_air." .. camp.mission .. ".ante.lua" )
+	CopyFile("Active/targetlist.lua", "Debug/targetlist." .. camp.mission .. ".ante.lua" )
+	CopyFile("Active/clientstats.lua", "Debug/clientstats." .. camp.mission .. ".ante.lua" )
+end
 
 --run log evaluation and status updates
+log.debug("run run log evaluation and status updates (loading UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua)")--By Old_Boy
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
-log.debug("load: UTIL_Functions.lua, DEBRIEF_StatsEvaluation.lua, DC_DestroyTarget.lua, DC_UpdateTargetlist.lua")--By Old_Boy
-
-
 --By Old_Boy
 --run logistic evalutation, save power_tab and airbase_tab
-log.debug("load: DC_Logistic.lua")
+log.debug("run logistic evalutation (load DC_Logistic.lua and execute UpdateOobAir() function)")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-log.debug("call: UpdateOobAir()")
 UpdateOobAir()--mark
 
 
---update campaign time
+--update campaign time.
 local elapsed_time = math.floor(events[#events].t - events[1].t)								--mission runtime in seconds
 camp.time = camp.time + elapsed_time															--add mission time to campaign time
-log.trace("update campaign time - elapsed_time: " .. elapsed_time .. ". camp.time: " .. camp.time)
+log.debug("update campaign time - elapsed_time: " .. elapsed_time .. ". camp.time: " .. camp.time)
 
 --create and view debriefing file for mission
+log.debug("run debriefing visualization (load DEBRIEF_Text.lua)")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_Text.lua")							--In this script the actual text is created. Script loaded after oob modifications above have been made.
 local debriefFile = io.open("Debriefing/Debriefing " .. camp.mission .. ".txt", "w")			--create new debriefing file
 debriefFile:write(debriefing)																	--write debriefing text into file (variable debriefing comes from DEBRIEF_Text.lua)
@@ -205,8 +205,8 @@ end
 --===================================================================================
 -- Ecran N�0 Choix next campaign mission
 --ask for input to save results and continue with campaign or disregard the last mission
-print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")					--ask for user confirmation
 log.debug("Ask for input about confirm client results")--By Old_Boy
+print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")					--ask for user confirmation
 local input
 local playable_type = {}
 
@@ -231,30 +231,41 @@ print("\n\n")
 if input == "y" or input == "yes" then
 
 	--save new data (remaining files are updated in MAIN_NextMission.lua)
-	log.debug("Save client stats in clientstats.lua file")--By Old_Boy
-	local client_str = "clientstats = " .. TableSerialization(clientstats, 0)					--make a string
+	log.debug("Save updated clientstats in Active/clientstats.lua file")--By Old_Boy
+	local client_str = "clientstat.s = " .. TableSerialization(clientstats, 0)					--make a string
 	local clientFile = io.open("Active/clientstats.lua", "w")									--open clientstats file
 	clientFile:write(client_str)																--save new data
 	clientFile:close()		
 
-	log.debug("upload oob_scen file with new destroyed scenery objects")--By Old_Boy
-	local oob_scen_old = loadfile("Active/oob_scen.lua")()	
+	-- UPDATE OOB_SCEN 
+	log.debug("update oob_scen file with new destroyed scenery objects")--By Old_Boy
 	
-	--load oob_scen file
+	if local_debug then
+		log.debug("copy before updating (ante) Active/oob_scen in Debug for mission: "..camp.mission)
+		CopyFile("Active/oob_scen.lua", "Debug/oob_scen." .. camp.mission .. ".ante.lua" )
+	end	
+	local oob_scen_old = loadfile("Active/oob_scen.lua")()	
+		
+	--load oob_scen file. Note: scen_log is defined in scenery_destroyed.lua temp file
 	for scen_name,scen in pairs(scen_log) do													--iterate through destroyed scenery objects
 		if scen.x and scen.z then																--destroyed scenery object has x and z coordinates
 			oob_scen[scen_name] = scen															--add/update to oob_scen
-			log.trace("upload oob_scen file with new destroyed scenery objects id.: " .. scen_name .. "position(x,z): " ..scen.x .. "," .. scen.z)--By Old_Boy
+			log.trace("update oob_scen with new destroyed scenery objects id.: " .. scen_name .. "position(x,z): " ..scen.x .. "," .. scen.z)--By Old_Boy
 		end
 	end
-	log.debug("Save oob_scen.lua file")--By Old_Boy
+	log.debug("Save oob_scen.lua file")
 	local scen_str = "oob_scen = " .. TableSerialization(oob_scen, 0)							--make a string
 	local scenFile = io.open("Active/oob_scen.lua", "w")										--open oob_scen file
-	log.debug("Save oob_scen.lua file")--By Old_Boy
+	log.debug("Save oob_scen.lua file")
 	scenFile:write(scen_str)																	--save new data
 	scenFile:close()	
 	
-	log.debug("Ask for input about client's choice")--By Old_Boy
+	if local_debug then
+		log.debug("copy after updating (post) Active/oob_scen in Debug for mission: "..camp.mission)
+		CopyFile("Active/oob_scen.lua", "Debug/oob_scen." .. camp.mission .. ".post.lua" )
+	end	
+
+	log.debug("Ask for input about client's choice")
 	repeat
 		--===================================================================================
 		-- Ecran N�1 Choix entre Single ou Multiplayer
