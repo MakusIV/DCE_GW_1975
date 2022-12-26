@@ -143,7 +143,7 @@ local function sumAliveDeadPerc(unit, target, number) --summatory for media calc
 
 end
 
-local function searchTargetInGroup(group, target)
+local function searchTargetInGroup(group, target) -- update group and targetlist statistic
 	local break_loop = false
 
 	if group.name == target.name then							--if the target is found in group table
@@ -191,20 +191,21 @@ end
 	-- ["max_x"] = -9999999,
 	-- ["max_y"] = -9999999,
 -- }
--- box = {	--caucasus
-	-- ["min_x"] = -488954,
-	-- ["min_y"] = 199450,
-	-- ["max_x"] = 62058,
-	-- ["max_y"] = 942610,
--- }
+box = {	--caucasus
+	["min_x"] = -488954,
+	["min_y"] = 199450,
+	["max_x"] = 62058,
+	["max_y"] = 942610,
+ }
 
-box = {	--gulf
-	["min_x"] = -289090,
-	["min_y"] = -840909,
-	["max_x"] = 790909,
-	["max_y"] = 377272,
-}
+--box = {	--gulf
+--	["min_x"] = -289090,
+--	["min_y"] = -840909,
+--	["max_x"] = 790909,
+--	["max_y"] = 377272,
+--}
 
+-- ==== DEFINE BIGBOX ====
 
 -- define a box (min_x, max_x, min_y, max_y) to include more greater ground group 
 log.debug("define a box (min_x, max_x, min_y, max_y) to include more greater ground group. Actual box(" .. box.min_x .. ", " .. box.max_x .. ", " .. box.min_y .. ", " .. box.max_y .. ").  Iterate for oob_ground items")	
@@ -262,6 +263,9 @@ for base_name,base in pairs(db_airbases) do
 end
 log.debug("updated box(" .. box.min_x .. ", " .. box.max_x .. ", " .. box.min_y .. ", " .. box.max_y .. ")")	
 
+
+--==== UPDATING TARGET COORDINATE AND CALCULATE TARGET STATISTICS====
+
 -- _affiche(box, "DC_UT box")
 log.debug("Updating target coordinate. Iterate targetlist")	
 
@@ -284,7 +288,8 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		end
 		
 		log.trace("target_name: " .. target_name)	
-		--target position by refpoint 
+		
+		-- target position by refpoint (string value or table of string quindi un'etichetta che probabilmente viene utilizzata come chiave in una tabella di coordinate)
 		if target.refpoint then																--target coordinates are referenced by a refpoint
 			log.trace("target has refpoints")
 			
@@ -307,7 +312,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					log.trace("target x, y for target.Multipoints: " .. target.x .. ", " .. target.y)
 
 				else
-					log.trace("single refpoints")																		--only a single refoint
+					log.trace("single refpoints. target.refpoint: " .. target.refpoint)											--only a single refpoint
 					target.x = Refpoint[target.refpoint].x									--get x-coordinate
 					target.y = Refpoint[target.refpoint].y									--get y-coordinate
 					log.trace("target x, y for target single refpoints: " .. target.x .. ", " .. target.y)
@@ -364,7 +369,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		end
 	
 		if target.task == "Strike" then														
-			log.trace("target.task == Strike . Evalutate new target coordinate from media calculus of coordinate live elements")
+			log.debug("target.task == Strike . Evalutate new target coordinate from media calculus of coordinate live elements")
 
 			if target.class == nil then														--For scenery object targets
 				log.trace("scenery object targets, define dummy value for alive% and coordinate")
@@ -386,12 +391,12 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				target.y = target.y / #target.elements										--target y coordinate is average y coordinate of all elements
 				log.trace("media calculus: target.x = " .. target.x .. ",  target.y = " .. target.y)
 
-			elseif target.class == "vehicle" then											--target consist of vehciles
-				log.trace("vehicle target class. Iterate in oob_ground through countries and classes")
+			elseif target.class == "vehicle" then											--target consist of vehcles
+				log.trace("vehicle target class. Iterate in oob_ground through countries and classes for search group")
 
 				for country_n, country in pairs(oob_ground[targetside]) do					--iterate through countries
 
-					for classname,class in pairs(country) do								--iterate through classes in country 
+					for classname, class in pairs(country) do								--iterate through classes in country 
 
 						if classname == "vehicle" or classname == "ship" then				--for vehicles or ships
 							log.trace("classname of targets is vehicle or ship. Iterate through groups in country.vehcile.group or country.ship.group table")
@@ -400,7 +405,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 
 								checkBug(group.name, "base_mission", "vehicle")
 
-								if searchTargetInGroup(group, target) then
+								if searchTargetInGroup(group, target) then -- update group and targetlist statistics
 									break
 								end																
 							end
