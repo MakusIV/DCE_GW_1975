@@ -228,7 +228,7 @@ if input == "y" or input == "yes" then
 
 	--save new data (remaining files are updated in MAIN_NextMission.lua)
 	log.debug("Save updated clientstats in Active/clientstats.lua file")--By Old_Boy
-	local client_str = "clientstat.s = " .. TableSerialization(clientstats, 0)					--make a string
+	local client_str = "clientstats = " .. TableSerialization(clientstats, 0)					--make a string
 	local clientFile = io.open("Active/clientstats.lua", "w")									--open clientstats file
 	clientFile:write(client_str)																--save new data
 	clientFile:close()		

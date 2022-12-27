@@ -66,7 +66,18 @@ end
 
 -- set dead, dead_last true for items of oob_ground and targetlist
 function KillTarget(Target_Name, TargetPName)
-	local nameFunction = "function KillTarget(" .. Target_Name .. ", " .. TargetPName .."): "    
+	local tgn ="nil"
+	local tgpn ="nil"
+	
+	if Target_Name then
+		tgn = Target_Name
+	end
+		
+	if TargetPName then
+		tgpn = TargetPName
+	end
+
+	local nameFunction = "function KillTarget(" .. tgn .. ", " .. tgpn .."): "    
 	log.debug("Start " .. nameFunction)		
 	log.debug(nameFunction .. "set dead, dead_last true for vehicle, static and ship items in oob_ground. Start iteration in oob_ground")
 	-- set dead, dead_last true for vehicle, static and ship items in oob_ground
@@ -98,7 +109,7 @@ function KillTarget(Target_Name, TargetPName)
 		for target_name,target in pairs(side) do										--iterate through targets
 
 			if target_name == Target_Name or target_name == TargetPName then	
-				log.trace(nameFunction .. "target_name (" .. target_name .. ") == Target_Name (" .. Target_Name .. ") or TargetPName (" .. TargetPName .. ")")
+				log.trace(nameFunction .. "target_name (" .. target_name .. ") == Target_Name (" .. tgn .. ") or TargetPName (" .. tgpn .. ")")
 
 				if target.elements and target.elements[1].x then 						--if the target has subelements and is a scenery object target (element has x coordinate)
 
