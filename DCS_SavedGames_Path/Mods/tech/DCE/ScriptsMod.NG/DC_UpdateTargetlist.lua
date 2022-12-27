@@ -1,9 +1,10 @@
 --To update the targetlist (target position, alive precentage)
 --Initiated by MAIN_NextMission.lua
 ------------------------------------------------------------------------------------------------------- 
--- Miguel Fichier Revision  M38
+-- Old_Boy revision OB1
 -------------------------------------------------------------------------------------------------------
-
+-- Old_Boy rev. OB1: implements logging code and little(very) optimization
+-- Old_Boy rev. OB0: implements supply line sistems (logistics)
 -- Miguel21 modification M38 : Debug Name of TargetList 
 -- Miguel21 M26 destroys targets if below a certain value
 -- Miguel21 modification M19.e : Repair GROUND
@@ -12,7 +13,7 @@
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = LOGGING_LEVEL
+log.level = "debug" --LOGGING_LEVEL (variabile globale)
 log.outfile = LOG_DIR .. "LOG_DC_UpdateTargetlist." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
@@ -47,26 +48,27 @@ local function checkBug(name, origine, category) -- check SPACE char anomaly in 
 end 
 
 local function searchMasterCoord(country_group) -- search Master in oob_ground and returns his coordinate
-	log.debug("Start function searchMasterCoord(country_group)")	
-	log.debug("#country_group: " .. #country_group)	
+	local nameFunction = "function searchMasterCoord(country_group): "    
+    log.debug("Start " .. nameFunction)	
+	log.debug(nameFunction .. "#country_group: " .. #country_group)	
 	-- watch break instruction
 	for group_n,group in ipairs(country_group) do					--go through groups
-		log.trace("searchMasterCoord(country_group) - group.name: " .. group.name)
+		log.trace(nameFunction .. "group.name: " .. group.name)
 
 		if group.name == master then
-			log.trace("searchMasterCoord(country_group) - group.name == master (" .. master .. "): copy coord x,y: " .. group.x .. ", " .. group.y .. " and breaks iteration")
+			log.trace(nameFunction .. "group.name == master (" .. master .. "): copy coord x,y: " .. group.x .. ", " .. group.y .. " and breaks iteration")
 			master_x = group.x
 			master_y = group.y
 			break -- breaks because master founds!?
 
 		else
-			log.trace("searchMasterCoord(country_group) - group.name != master (" .. master .. "): iterate in group.units")
+			log.trace(nameFunction .. "group.name != master (" .. master .. "): iterate in group.units")
 			
 			for unit_n,unit in ipairs(group.units) do
-				log.trace("searchMasterCoord(country_group) - unit.name: " .. unit.name)				
+				log.trace(nameFunction .. "unit.name: " .. unit.name)				
 
 				if unit.name == master then
-					log.trace("searchMasterCoord(country_group) - unit.name == master (" .. master .. "): set master_x, master_y with unit x,y: " .. unit.x .. ", " .. unit.y .. " and breaks iteration")
+					log.trace(nameFunction .. "unit.name == master (" .. master .. "): set master_x, master_y with unit x,y: " .. unit.x .. ", " .. unit.y .. " and breaks iteration")
 					master_x = unit.x
 					master_y = unit.y					
 					break-- breaks because master founds!?
@@ -74,87 +76,92 @@ local function searchMasterCoord(country_group) -- search Master in oob_ground a
 			end
 		end
 	end
-	log.debug("End function searchMasterCoord(country_group) - return master_x, master_y")	
+	log.debug("End " .. nameFunction .. "return master_x, master_y")	
+	
 	return master_x, master_y
 end
 
 local function evalBigBox(country_group) --evalutate greater box
-	log.debug("Start function evalBigBox(country_group)")	
+	local nameFunction = "function evalBigBox(country_group): "    
+	log.debug("Start " .. nameFunction)	
 	-- watch the local box.min_x, box.max_x, box.min_y, box.max_y
 	for group_n,group in ipairs(country_group) do				--go through groups
-		log.trace("evalBigBox(country_group.name) - group.name: " .. group.name)
+		log.trace(nameFunction .. "group.name: " .. group.name)
 
 		if group.x < box.min_x then
-			log.trace("evalBigBox(country_group) - group.x < box.min_x -> box.min_x = group.x = " .. group.x)
+			log.trace(nameFunction .. "group.x < box.min_x -> box.min_x = group.x = " .. group.x)
 			box.min_x = group.x
 		end
 
 		if group.x  > box.max_x then
-			log.trace("evalBigBox(country_group) - group.x > box.max_x -> box.max_x = group.x = " .. group.x)
+			log.trace(nameFunction .. "group.x > box.max_x -> box.max_x = group.x = " .. group.x)
 			box.max_x = group.x
 		end
 
 		if group.y <box.min_y then
-			log.trace("evalBigBox(country_group) - group.y < box.min_y -> box.min_y = group.y = " .. group.y)
+			log.trace(nameFunction .. "group.y < box.min_y -> box.min_y = group.y = " .. group.y)
 			box.min_y = group.y
 		end
 
 		if group.y  > box.max_y then
-			log.trace("evalBigBox(country_group) - group.y > box.max_y -> box.max_y = group.y = " .. group.y)
+			log.trace(nameFunction .. "group.y > box.max_y -> box.max_y = group.y = " .. group.y)
 			box.max_y = group.y
 		end
 
 	end
-	log.debug("End function evalBigBox(country_group)")	
+	log.debug("End " .. nameFunction)
 	return
 end
 
 local function sumAliveDeadPerc(unit, target, number) --summatory for media calculus 
-	log.debug("Start function sumAliveDeadPerc(unit, target, number)")	
+	local nameFunction = "function sumAliveDeadPerc(unit, target, number): "    
+	log.debug("Start " .. nameFunction)		
 	local itemName
 	local element
 
 	if type(number) == 'number' and unit == nil and target ~= nil then		
 		itemName = "target.element[" .. number .. "]"
 		element = target.elements[number]
-		log.trace("sumAliveDeadPerc(unit, target, number) - setting for target.element[" .. number .. "]")
+		log.trace(nameFunction .. "setting for target.element[" .. number .. "]")
 
 	elseif unit ~= nil and target ~= nil and type(number) == "string" then
 		itemName = "unit_n: " .. number .. ", unit.name: " .. unit.name  
 		element = unit	
-		log.trace("sumAliveDeadPerc(unit, target, number) - setting for unit")
+		log.trace(nameFunction .. "setting for unit")
 
 	else
-		log.warning("Anomaly! type(unit) = " .. type(unit) .. ", type(number) = " .. type(number) .. "type(target) = " .. type(target))
+		log.warning(nameFunction .. "Anomaly! type(unit) = " .. type(unit) .. ", type(number) = " .. type(number) .. "type(target) = " .. type(target))
 	end
 
 	if element.dead then --target.elements[e].dead then									--Unit is dead
-		log.trace(itemName .. " is dead, Actual alive percentage = " .. target.alive)
+		log.trace(nameFunction .. itemName .. " is dead, Actual alive percentage = " .. target.alive)
 		target.alive = target.alive - 100 / #target.elements		--reduce target alive percentage		
-		log.trace("updated alive percentage = " .. target.alive)								
+		log.trace(nameFunction .. "updated alive percentage = " .. target.alive)								
 	end
 	
 	if element.dead_last then
-		log.trace(itemName .. " last mission is dead. Actual died percentage in last mission(.dead_last) = " .. target.dead_last)
+		log.trace(nameFunction .. itemName .. " last mission is dead. Actual died percentage in last mission(.dead_last) = " .. target.dead_last)
 		target.dead_last = target.dead_last + 100 / #target.elements	--add target died in last mission percentage
-		log.trace("add died in last mission in died percentage in last mission = " .. target.dead_last)
+		log.trace(nameFunction .. "add died in last mission in died percentage in last mission = " .. target.dead_last)
 	end
-	log.debug("End function sumAliveDeadPerc(unit, target, number)")
+	log.debug("End " .. nameFunction)		
 
 end
 
 local function searchTargetInGroup(group, target) -- update group and targetlist statistic
+	local nameFunction = "function searchTargetInGroup(group, target): "    
+	log.debug("Start " .. nameFunction)		
 	local break_loop = false
 
 	if group.name == target.name then							--if the target is found in group table
-		log.trace("target.name: " .. target.name .. " is found in group table")
+		log.trace(nameFunction .. "target.name: " .. target.name .. " is found in group table")
 		target.foundOobGround = true
 
 		if group.probability and group.probability < 1 then		--if group probability of spawn is less than 100%
-			log.trace("group probability of spawn is less than 100%")
+			log.trace(nameFunction .. "group probability of spawn is less than 100%")
 			target.ATO = false									--remove target to ATO
 		end
-		log.trace("target: define dummy value for alive% and coordinate and Iterate all group's units")
+		log.trace(nameFunction .. "target: define dummy value for alive% and coordinate and Iterate all group's units")
 		target.alive = 100										--Introduce percentage of alive target elements
 		target.groupId = group.groupId							--store target group ID
 		target.x = group.x										--add x coordinate of target
@@ -169,7 +176,7 @@ local function searchTargetInGroup(group, target) -- update group and targetlist
 				dead_last = unit.dead_last,						--store unit dead_last
 				CheckDay = unit.CheckDay						-- M19 ajoute la date destruction/ravito pour les futurs check de ravitaillement
 			}
-			log.trace("Create target.elements[" .. unit_n .."] for unit_n: " .. unit_n .. ", unit.name: " .. unit.name)
+			log.trace(nameFunction .. "Create target.elements[" .. unit_n .."] for unit_n: " .. unit_n .. ", unit.name: " .. unit.name)
 		end
 
 		for unit_n, unit in pairs(group.units) do						--Iterate through all units of group
@@ -177,10 +184,10 @@ local function searchTargetInGroup(group, target) -- update group and targetlist
 		end
 		target.alive = math.floor(target.alive)
 		target.dead_last = math.floor(target.dead_last)
-		log.trace("media calculus: target.alive = " .. target.alive .. ",  target.dead_last = " .. target.dead_last)
-		break_loop = true
+		log.trace(nameFunction .. "media calculus: target.alive = " .. target.alive .. ",  target.dead_last = " .. target.dead_last)
+		break_loop = true				
 	end
-
+	log.debug("End " .. nameFunction)
 	return break_loop
 end
 
@@ -267,7 +274,7 @@ log.debug("updated box(" .. box.min_x .. ", " .. box.max_x .. ", " .. box.min_y 
 --==== UPDATING TARGET COORDINATE AND CALCULATE TARGET STATISTICS====
 
 -- _affiche(box, "DC_UT box")
-log.debug("Updating target coordinate. Iterate targetlist")	
+log.info("Updating target coordinate. Iterate targetlist")	
 
 for side_name, side in pairs(targetlist) do													--Iterate through all side
 	
@@ -309,13 +316,13 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					end
 					target.x = target.MultiPoints[1].x										--for targets with multiple points use first point as target coordinates (proforma only, not needed for tasks with multiple points)
 					target.y = target.MultiPoints[1].y
-					log.trace("target x, y for target.Multipoints: " .. target.x .. ", " .. target.y)
+					log.debug("target x, y for target.Multipoints: " .. target.x .. ", " .. target.y)
 
 				else
 					log.trace("single refpoints. target.refpoint: " .. target.refpoint)											--only a single refpoint
 					target.x = Refpoint[target.refpoint].x									--get x-coordinate
 					target.y = Refpoint[target.refpoint].y									--get y-coordinate
-					log.trace("target x, y for target single refpoints: " .. target.x .. ", " .. target.y)
+					log.debug("target x, y for target single refpoints: " .. target.x .. ", " .. target.y)
 				end
 
 				if target.x == nil or target.y == nil then
@@ -323,12 +330,12 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					log.error("DC_UpdateTargetlist Error: Refpoint '" .. target.refpoint .. "' of target '" .. target.name .. "' not found!")
 				end
 			end
-			log.trace("Global Refpoint is not available -> UpdateTargelist is called by DEBRIEF_Master")
+			log.info("Global Refpoint is not available -> UpdateTargelist is called by DEBRIEF_Master")
 		end
 
 		--target position slaved to group/unit
 		if target.slaved then																--target coordinates are slaved relative to a group/unit
-			log.trace("target coordinates are slaved relative to a group/unit")
+			log.debug("target coordinates are slaved relative to a group/unit")
 			local master = target.slaved[1]
 			local bearing = target.slaved[2]
 			local distance = target.slaved[3]
@@ -337,7 +344,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			local master_y
 			
 			
-			log.trace("find either master group or units (vehicle or ship) and get master  x-y coordinates. Iterate in oob_ground")
+			log.debug("find either master group or units (vehicle or ship) and get master  x-y coordinates. Iterate in oob_ground")
 			--find either master group or units (vehicle or ship) and get master  x-y coordinates
 			for coal_name,coal in pairs(oob_ground) do										--go through sides(red/blue)	
 
@@ -345,22 +352,21 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					log.trace("country_n: " .. country_n .. ", country.name: " .. country.name)
 
 					if country.vehicle then													--country has vehicles
-						log.trace("country_n: " .. country_n .. ", country.name: " .. country.name .. " is a vehicle")
+						log.trace("country_n: " .. country_n .. ", country.name: " .. country.name .. " has vehicle, update master coordinate")
 						master_x, master_y = searchMasterCoord(country.vehicle)						
 					end
 				
 					if country.ship then													--country has ships
-						log.trace("country_n: " .. country_n .. ", country.name: " .. country.name .. " is a ship")
+						log.debug("country_n: " .. country_n .. ", country.name: " .. country.name .. " has ship, update master coordinate")
 						master_x, master_y = searchMasterCoord(country.ship)											
 					end
 				end
 			end
 			
-			if master_x and master_y then													--a master was found
-				log.trace("master_x: " .. master_x .. ", master_y: " .. master_y .. " -> master found")
+			if master_x and master_y then													--a master was found				
 				target.x = master_x + math.cos(math.rad(bearing)) * distance				--update target position relative to master position
 				target.y = master_y + math.sin(math.rad(bearing)) * distance				--update target position relative to master position
-				log.trace("update target position relative to master position, target.x = " .. target.x .. ", target.y = " .. target.y )				
+				log.debug("master_x: " .. master_x .. ", master_y: " .. master_y .. " -> master was updated. Update target position relative to master position, target.x = " .. target.x .. ", target.y = " .. target.y )				
 
 			else																			--no master was found
 				print("DC_UpdateTargetlist Error target position slaved to group/unit : Master '" .. master .. "' of target '" ..  "' not found!")
@@ -372,7 +378,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			log.debug("target.task == Strike . Evalutate new target coordinate from media calculus of coordinate live elements")
 
 			if target.class == nil then														--For scenery object targets
-				log.trace("scenery object targets, define dummy value for alive% and coordinate")
+				log.trace("scenery object targets, define dummy value for calculus alive% and coordinate")
 				target.alive = 100															--Introduce percentage of alive target elements
 				target.x = 0																--Introduce x coordinate for target
 				target.y = 0																--Introduce y coordinate for target
@@ -382,30 +388,30 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				for e = 1, #target.elements do												--Iterate through elements of target
 					target.x = target.x + target.elements[e].x								--Sum x coordinates of all elements (for calculate media)
 					target.y = target.y + target.elements[e].y								--Sum y coordinates of all elements (for calculate media)
-					log.trace("summmatory for media calculus, target.element[" .. e .. "] - sum.target.x = " .. target.x .. ", sum.target.y = " .. target.y)					
+					log.trace("sum coordinate for media calculus: target.element[" .. e .. "] - sum.target.x = " .. target.x .. ", sum.target.y = " .. target.y .. ". Update dead, dead_last and alive property")					
 					sumAliveDeadPerc(nil, target, e)					
 				end
 				target.alive = math.floor(target.alive)
 				target.dead_last = math.floor(target.dead_last)
 				target.x = target.x / #target.elements										--target x coordinate is average x coordinate of all elements
 				target.y = target.y / #target.elements										--target y coordinate is average y coordinate of all elements
-				log.trace("media calculus: target.x = " .. target.x .. ",  target.y = " .. target.y)
+				log.trace("media coordinate calculus for target.alive = " .. target.alive .. " and target.dead_last = " .. target.dead_last .. ": target.x = " .. target.x .. ",  target.y = " .. target.y)
 
 			elseif target.class == "vehicle" then											--target consist of vehcles
-				log.trace("vehicle target class. Iterate in oob_ground through countries and classes for search group")
+				log.debug("vehicle target class. Iterate in oob_ground through countries and classes for search group")
 
 				for country_n, country in pairs(oob_ground[targetside]) do					--iterate through countries
 
 					for classname, class in pairs(country) do								--iterate through classes in country 
 
 						if classname == "vehicle" or classname == "ship" then				--for vehicles or ships
-							log.trace("classname of targets is vehicle or ship. Iterate through groups in country.vehcile.group or country.ship.group table")
+							log.debug("classname of targets is vehicle or ship. Iterate through groups in country.vehcile.group or country.ship.group table to update dead, dead_last, alive property and calculus media coordiante for items of group and targetlist")
 
 							for group_n, group in pairs(class.group) do						--iterate through groups in country.vehcile.group or country.ship.group table
 
 								checkBug(group.name, "base_mission", "vehicle")
 
-								if searchTargetInGroup(group, target) then -- update group and targetlist statistics
+								if searchTargetInGroup(group, target) then -- update dead, dead_last, alive property and calculus media coordiante for items of group and targetlist 
 									break
 								end																
 							end
@@ -419,8 +425,8 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				end
 
 			elseif target.class == "static" then											--target consists of static objects
-				log.trace("static targets class. Iterate in oob_ground through countries and classes")
-				log.trace("static target: define dummy value for alive% and coordinate and Iterate all group's elements of oob_ground")
+				log.debug("static targets class. Iterate in oob_ground through countries and classes")
+				log.debug("static target: define dummy value for alive% and coordinate and Iterate all group's elements of oob_ground")
 				target.alive = 100															--Introduce percentage of alive target elements
 				target.x = 0																--Introduce x coordinate for target
 				target.y = 0																--Introduce y coordinate for target
@@ -434,7 +440,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 							
 							for e = 1, #target.elements do									--Iterate through elements of target						
 								checkBug(group.name, "base_mission", "static")
-								log.trace("evaluate target.elements[" .. e .. "].name: " .. target.elements[e].name)
+								log.trace("evaluate target.elements[" .. e .. "].name: " .. target.elements[e].name .. " to update dead, dead_last, alive property and calculus media coordiante for items of group and tragetlist")
 														
 								if group.name == target.elements[e].name then				--if the target element is found in group table									
 									target.x = target.x + group.x							--Sum x coordinates of all elements
@@ -446,8 +452,9 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 									log.trace("store in target.elements[" .. e .. "].name: " .. group.name .. " groupId: " .. group.groupId .. ", group.units[1].dead: " .. tostring(group.units[1].dead) .. "group.units[1].dead_last: " .. tostring(group.units[1].dead_last))									
 									-- comparePos = group
 									target.foundOobGround = true
-									target.elements[e].foundOobGround = true
-									sumAliveDeadPerc(nil, target, e)									
+									target.elements[e].foundOobGround = true									
+									sumAliveDeadPerc(nil, target, e)						 -- Update dead, dead_last and alive property
+									log.trace("updated dead, dead_last, alive property and calculus media coordiante for items of group and target")
 									break
 								end
 							end
@@ -524,7 +531,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			for country_n, country in pairs(oob_ground[targetside]) do						--iterate through countries
 				
 				if country.ship then
-					log.trace("country: " .. country.name .. " have ship. Iterate in country.groups.ship")
+					log.trace("country: " .. country.name .. " have ship. Iterate in country.groups.ship. Iterate through groups in country.vehcile.group or country.ship.group table to update dead, dead_last, alive property and calculus media coordiante for items of group and targetlist")
 
 					for group_n, group in pairs(country.ship.group) do						--Iterate through groups in country.ship.group table
 						checkBug(group.name, "base_mission", "Ship")

@@ -1,8 +1,10 @@
 --To evaluate the DCS debrief.log and update the campaign status files
 --Initiated by DEBRIEF_Master.lua
 -------------------------------------------------------------------------------------------------------
--- Miguel Fichier Revision  M19.f
-------------------------------------------------------------------------------------------------------- 
+-- Old_Boy revision OB1
+-------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB1: implements logging code and little(very) optimization
+-- Old_Boy rev. OB0: implements supply line sistems (logistics)
 -- Miguel21 modification M19.f : Repair SAM
 
 -- =====================  Marco implementation ==================================
@@ -20,9 +22,10 @@ log.debug("Start")
 
 --function to add new clients to clientstats
 local function AddClient(name)
-	log.debug("Start function AddClient(" .. name .. ")")														
+	local nameFunction = "function AddClient(" .. name .. "): "    
+	log.debug("Start " .. nameFunction)														
 	if clientstats[name] == nil then	
-		log.trace(" - AddClient(" .. name .. "): client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
+		log.trace(nameFunction .. "client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
 		clientstats[name] = {
 			kills_air = 0,
 			kills_ground = 0,
@@ -48,47 +51,48 @@ local function AddClient(name)
 			}
 		}
 	end
-	log.debug("End function AddClient(" .. name .. ")")														
+	log.debug("End " .. nameFunction)																		
 end
 
 
 --function to check if a kill loss is attributed to the player package
 local function AddPackstats(unitname, event)
-	log.debug("Start function AddPackstats(" .. unitname .. ", " .. event .. "): check if a loss is attributed to the player package")														
+	local nameFunction = "function AddPackstats(" .. unitname .. ", " .. event .. "): "    
+	log.debug("Start " .. nameFunction .. "check if a loss is attributed to the player package")														
 	
 	if packstats[unitname] then
-		log.trace("unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
+		log.trace(nameFunction .. "unitname is in packstats, increments packstats[" .. unitname .. "].".. event)																																	--aircraft was part of the package
 		
 		if event == "kill_air" then
 			packstats[unitname].kills_air = packstats[unitname].kills_air + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kills_air, update packstats[" .. unitname .. "].kills_air; " .. packstats[unitname].kills_air)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == kills_air, update packstats[" .. unitname .. "].kills_air; " .. packstats[unitname].kills_air)
 		
 		elseif event == "kill_ground" then
 			packstats[unitname].kills_ground = packstats[unitname].kills_ground + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kills_ground, update packstats[" .. unitname .. "].kills_ground; " .. packstats[unitname].kills_ground)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == kills_ground, update packstats[" .. unitname .. "].kills_ground; " .. packstats[unitname].kills_ground)
 		
 		elseif event == "kill_ship" then
 			packstats[unitname].kills_ship = packstats[unitname].kills_ship + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == kills_ship, update packstats[" .. unitname .. "].kills_ship; " .. packstats[unitname].kills_ship)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == kills_ship, update packstats[" .. unitname .. "].kills_ship; " .. packstats[unitname].kills_ship)
 		
 		elseif event == "friendly_kill_air" then
 			packstats[unitname].friendly_kills_air = packstats[unitname].friendly_kills_air + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_air, update packstats[" .. unitname .. "].friendly_kills_air; " .. packstats[unitname].friendly_kills_air)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == friendly_kills_air, update packstats[" .. unitname .. "].friendly_kills_air; " .. packstats[unitname].friendly_kills_air)
 		
 		elseif event == "friendly_kill_ground" then
 			packstats[unitname].friendly_kills_ground = packstats[unitname].friendly_kills_ground + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_ground, update packstats[" .. unitname .. "].friendly_kills_ground; " .. packstats[unitname].friendly_kills_ground)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == friendly_kills_ground, update packstats[" .. unitname .. "].friendly_kills_ground; " .. packstats[unitname].friendly_kills_ground)
 		
 		elseif event == "friendly_kill_ship" then
 			packstats[unitname].friendly_kills_ship = packstats[unitname].friendly_kills_ship + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == friendly_kills_ship, update packstats[" .. unitname .. "].friendly_kills_ship; " .. packstats[unitname].friendly_kills_ship)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == friendly_kills_ship, update packstats[" .. unitname .. "].friendly_kills_ship; " .. packstats[unitname].friendly_kills_ship)
 		
 		elseif event == "lost" then
 			packstats[unitname].lost = packstats[unitname].lost + 1
-			log.trace("packstats[" .. unitname .. "] exist. Event == lost, update packstats[" .. unitname .. "].lost; " .. packstats[unitname].lost)
+			log.trace(nameFunction .. "packstats[" .. unitname .. "] exist. Event == lost, update packstats[" .. unitname .. "].lost; " .. packstats[unitname].lost)
 		end	
 	end
-	log.debug("End function AddPackstats(" .. unitname .. ", " .. event .. ")")														
+	log.debug("End " .. nameFunction)														
 end
 
 -- ==================================================================================

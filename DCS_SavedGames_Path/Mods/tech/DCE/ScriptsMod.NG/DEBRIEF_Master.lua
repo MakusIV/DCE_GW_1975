@@ -2,14 +2,12 @@
 --Initiated by MissionEnd.lua running from within DCS
 -------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------
--- Miguel Fichier Revision  M47.c
--- Marco Revision 1.0
+-- Old_Boy revision OB1
 -------------------------------------------------------------------------------------------------------
-
--- Marco Modification implement Logistic code, insert logging utility 
+-- Old_Boy rev. OB1: implements logging code
+-- Old_Boy rev. OB0: implements supply line sistems (logistics)
 -- adjustment A01.b : robust form
 -- debug01.b EndMission
-
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M46.d  singlePlayer with dedicated server (c: DF choice)(c: D choice with AI AirSpawn)
 -- Miguel21 modification M35.d version ScriptsMod + camp
@@ -17,8 +15,6 @@
 -- Miguel21 modification M11.q : Multiplayer (q: displays all tasks of several squadrons)
 --
 -- NOTE MARCO:
--- nella riga 105 c'è una ripetizione del load di conf_mod.lua effettuato in 73
--- 
 -- le righe di codice da analizzare, verificare o correggere le identifico con la parola chiave -- VERIFICARE: 
 -- le note al codice sono identificate con la parola chiave NOTE MARCO
 
@@ -116,7 +112,7 @@ end
 -- end
 
 --load status file to be updated
-log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")--By Old_Boy
+log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
 require("Active/oob_ground")																		--load ground oob
 require("Init/db_airbases")																			--load db_airbases
 require("Active/oob_air")																			--load air oob
@@ -141,8 +137,8 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 --By Old_Boy
 --run logistic evalutation, save power_tab and airbase_tab
 log.debug("run logistic evalutation (load DC_Logistic.lua and execute UpdateOobAir() function)")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-UpdateOobAir()--mark
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
+UpdateOobAir()--update <logistics
 
 
 --update campaign time.
