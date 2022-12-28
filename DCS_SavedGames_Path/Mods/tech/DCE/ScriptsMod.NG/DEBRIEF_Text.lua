@@ -125,6 +125,14 @@ do
 				values = {},
 			},
 			[8] = {
+				header = "Friendly Kills Air",
+				values = {},
+			},
+			[9] = {
+				header = "Friendly Kills Ground",
+				values = {},
+			},
+			[10] = {
 				header = "",
 				values = {},
 			},
@@ -132,7 +140,9 @@ do
 	
 		--add list values
 		for role_name, role in pairs(camp.player.pack) do
+			
 			for flight_n, flight in ipairs(role) do
+				
 				for n = 1, flight.number do
 					local unit_name = "Pack " .. camp.player.pack_n .. " - " .. flight.name .. " - " .. flight.task .. " " .. flight_n .. "-" .. n
 					local callsign = string.sub(flight.callsign, 1, -2) .. n
@@ -143,10 +153,14 @@ do
 					table.insert(entries[5].values, packstats[unit_name].kills_ground)
 					table.insert(entries[6].values, packstats[unit_name].kills_ship)
 					table.insert(entries[7].values, packstats[unit_name].lost)
+					table.insert(entries[8].values, packstats[unit_name].friendly_kills_air)
+					table.insert(entries[9].values, packstats[unit_name].friendly_kills_ground)
+
 					if flight.player and n == 1 then
-						table.insert(entries[8].values, "(Player)")
+						table.insert(entries[10].values, "(Player)")
+					
 					else
-						table.insert(entries[8].values, "")
+						table.insert(entries[10].values, "")
 					end
 				end
 			end
@@ -155,8 +169,10 @@ do
 		--determine maximum string length for each entry
 		for e = 1, #entries do																		--iterate through entries
 			entries[e].str_length = string.len(entries[e].header)									--store string length of header for this entry
+			
 			for n = 1, #entries[e].values do														--iterate through values of this entry
 				local l = string.len(tostring(entries[e].values[n]))								--get string length of value of this entry
+				
 				if l > entries[e].str_length then													--if the string length is larger than the previous
 					entries[e].str_length = l														--make it the new length (find the largest)
 				end
@@ -166,8 +182,10 @@ do
 		--build the list header
 		for e = 1, #entries do																		--iterate through entries
 			t = t .. entries[e].header																--add header
+			
 			if e < #entries then																	--if this is not the last header, add spaces to the next header	
 				local space = entries[e].str_length + 5 - string.len(entries[e].header)				--calculate number of spaces that need to be added for alignement (string length of largest entry of same type + 3 - length of current entry = number of spaces)
+				
 				for m = 1, space do															
 					t = t .. " "																	--add one space for every missing letter
 				end
@@ -177,10 +195,13 @@ do
 	
 		--build the list		
 		for n = 1, #entries[1].values do															--iterate through number of values (number of units)
+			
 			for e = 1, #entries do																	--iterate through entries
 				t = t .. entries[e].values[n]														--add value to list
+			
 				if e < #entries then																--if this is not the last header, add spaces to the next header	
 					local space = entries[e].str_length + 5 - string.len(tostring(entries[e].values[n]))	--calculate number of spaces that need to be added for alignement (string length of largest entry of same type + 3 - length of current entry = number of spaces)
+			
 					for m = 1, space do													
 						t = t .. " "																--add one space for every missing letter
 					end
@@ -216,59 +237,44 @@ do
 		pack_lost = pack_lost + v.lost
 	end
 
+	local s1
+
+	if pack_kills_air == 0 then
+		s1 = "Your package has not scored any kills"
+	
+	else
+		s1 = "Your package has scored " .. pack_kills_air .. " air-air kills"
+	end
+		
+
+	if pack_lost == 0 then
+		s1 = s1 .. " without incurring losses.\n\n"
+	
+	else
+		s1 = s1 .. " suffering these losses " .. pack_lost .. ".\n\n"
+	end
+
+	if pack_friendly_kills_air > 0 then
+		s1 = s1 .. "Your package is responsible for destroying this number of friendly aircraft: " .. pack_friendly_kills_air .. ".\n\n"
+	end
+
+	if pack_friendly_kills_ground > 0 then
+		s1 = s1 .. "Your package is responsible for destroying this number of friendly ground asset: " .. pack_friendly_kills_ground .. ".\n\n"
+	end
 	
 	--CAP
 	if player_task == "CAP" then
-		s = s .. "You have been tasked to perform a Combat Air Patrol at " .. target_name .. ". "
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
+		s = s .. "You have been tasked to perform a Combat Air Patrol at " .. target_name .. ". " .. s1		
 		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--Intercept
 	elseif player_task == "Intercept" then
-		s = s .. "You have been tasked to perform an Intercept mission from " .. camp.player.target.base .. ". "
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
+		s = s .. "You have been tasked to perform an Intercept mission from " .. camp.player.target.base .. ". " .. s1
 		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 
 	--Fighter Sweep
 	elseif player_task == "Fighter Sweep" then
-		s = s .. "You have been tasked to perform a Fighter Sweep in the area of " .. target_name .. ". "
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
+		s = s .. "You have been tasked to perform a Fighter Sweep in the area of " .. target_name .. ". " .. s1
 		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--Airbase Strike
@@ -288,53 +294,53 @@ do
 		elseif player_task == "Laser Illumination" then
 			s = s .. "You have been tasked with providing target laser designation for a strike against " .. target_name .. " hosting " .. ReplaceTypeName(camp.player.pack[camp.player.role][camp.player.flight].target.unit.type) .. " of the " .. target_unit_name .. ". "
 		end
-		
-		if pack_kills_air > 0 then
-			for side_name,side in pairs(oob_air) do
-				for unit_n,unit in ipairs(side) do
-					if unit.name == target_unit_name then												--find target unit oob_air entry
-						if unit.score_last.lost > 0 and unit.score_last.damaged > 0 then				--target unit has losses and damages in last mission
-							s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.lost .. " aircraft lost and " .. unit.score_last.damaged .. " aircraft damaged. "
-						elseif unit.score_last.lost > 0 then											--target unit has losses in last mission
-							s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.lost .. " aircraft lost. "
-						elseif unit.score_last.damaged > 0 then											--target unit has damages in last mission
-							s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.damaged .. " aircraft damaged. "
-						else																			--target unit has no losses or damages in last mission
-							s = s .. "The " .. target_unit_name .. " has not sustained any damage. "
-						end
-						if unit.roster.ready > 0 then
-							s = s .. "It retains " .. unit.roster.ready .. " aircraft ready for operations.\n\n"
+
+		for side_name,side in pairs(oob_air) do
+
+			for unit_n,unit in ipairs(side) do
+
+				if unit.name == target_unit_name then												--find target unit oob_air entry
+
+					if unit.score_last.lost > 0 and unit.score_last.damaged > 0 then				--target unit has losses and damages in last mission
+						s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.lost .. " aircraft lost and " .. unit.score_last.damaged .. " aircraft damaged. "
+
+					elseif unit.score_last.lost > 0 then											--target unit has losses in last mission
+						s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.lost .. " aircraft lost. "
+
+					elseif unit.score_last.damaged > 0 then											--target unit has damages in last mission
+						s = s .. "The " .. target_unit_name .. " has suffered " .. unit.score_last.damaged .. " aircraft damaged. "
+
+					else																			--target unit has no losses or damages in last mission
+						s = s .. "The " .. target_unit_name .. " has not sustained any damage. "
+					end
+
+					if unit.roster.ready > 0 then
+						s = s .. "It retains " .. unit.roster.ready .. " aircraft ready for operations.\n\n"
+
+					else
+
+						if unit.roster.damaged > 0 then
+							s = s .. "It retains no undamaged aircraft ready for immediate operations.\n\n"
+
 						else
-							if unit.roster.damaged > 0 then
-								s = s .. "It retains no undamaged aircraft ready for immediate operations.\n\n"
-							else
-								s = s .. "It retains no additional aircraft and has been completely disabled.\n\n"
-							end
+							s = s .. "It retains no additional aircraft and has been completely disabled.\n\n"
 						end
 					end
 				end
 			end
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " aircraft destroyed against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " aircraft destroyed while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has not achieved to destroy any enemy aircraft.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without destroying any aircraft.\n\n"
-			end			
 		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--Strike
 	elseif player_task == "Strike" then
 		s = s .. "You have been tasked with striking " .. target_name
 		
 		local ship_hit
+
 		if targetlist[camp.player.side][target_name].elements then
+			
 			for e = 1, #targetlist[camp.player.side][target_name].elements do
+				
 				if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 					ship_hit = true
 					break
@@ -344,43 +350,34 @@ do
 		
 		if ship_hit then
 			s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 		elseif target_hit > 0 then
 			s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+			
 			if target_alive > 0 then
 				s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+			
 			else
 				s = s .. target_name .. " has been completely destroyed.\n\n"
 			end
+		
 		else
 			s = s .. " but were unable to inflict any damage. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 		end
 		
 		--list the target
-		s = s .. TargetStats(target_name)
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. TargetStats(target_name) .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 
 	--Anti-ship Strike
 	elseif player_task == "Anti-ship Strike" then
 		s = s .. "You have been tasked with an anti-ship strike against "  .. target_name
 		
 		local ship_hit
+		
 		if targetlist[camp.player.side][target_name].elements then
+			
 			for e = 1, #targetlist[camp.player.side][target_name].elements do
+				
 				if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 					ship_hit = true
 					break
@@ -402,36 +399,26 @@ do
 		end
 		
 		--list the target
-		s = s .. TargetStats(target_name)
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. TargetStats(target_name) .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Escort
 	elseif player_task == "Escort" then
+
 		if target_class == "airbase" then
 			s = s .. "You have been tasked with escorting a strike against " .. targetlist[camp.player.side][target_name].name .. ".\n\n"
+		
 		elseif targetlist[camp.player.side][target_name].task == "Reconnaissance" then
 			s = s .. "You have been tasked with escorting a recon mission " .. targetlist[camp.player.side][target_name].text .. ".\n\n"
+		
 		else
 			s = s .. "You have been tasked with escorting a strike against " .. target_name
 			
 			local ship_hit
+		
 			if targetlist[camp.player.side][target_name].elements then
+		
 				for e = 1, #targetlist[camp.player.side][target_name].elements do
+		
 					if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 						ship_hit = true
 						break
@@ -441,13 +428,17 @@ do
 			
 			if ship_hit then
 				s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 			elseif target_hit > 0 then
 				s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+		
 				if target_alive > 0 then
 					s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+		
 				else
 					s = s .. target_name .. " has been completely destroyed.\n\n"
 				end
+		
 			else
 				s = s .. ". No damage was inflicted. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 			end
@@ -455,35 +446,27 @@ do
 			--list the target
 			s = s .. TargetStats(target_name)
 		end
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--SEAD
 	elseif player_task == "SEAD" then
+		
 		if target_class == "airbase" then
 			s = s .. "You have been tasked with providing SEAD escort for a strike against " .. targetlist[camp.player.side][target_name].name .. ".\n\n"
+		
 		elseif targetlist[camp.player.side][target_name].task == "Reconnaissance" then
 			s = s .. "You have been tasked with providing SEAD escort for a recon mission " .. targetlist[camp.player.side][target_name].text .. ".\n\n"
+		
 		else
 			s = s .. "You have been tasked with providing SEAD escort for a strike against " .. target_name
 			
 			local ship_hit
+		
 			if targetlist[camp.player.side][target_name].elements then
+		
 				for e = 1, #targetlist[camp.player.side][target_name].elements do
+		
 					if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 						ship_hit = true
 						break
@@ -493,13 +476,17 @@ do
 			
 			if ship_hit then
 				s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 			elseif target_hit > 0 then
 				s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+		
 				if target_alive > 0 then
 					s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+		
 				else
 					s = s .. target_name .. " has been completely destroyed.\n\n"
 				end
+		
 			else
 				s = s .. ". No damage was inflicted. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 			end
@@ -507,33 +494,23 @@ do
 			--list the target
 			s = s .. TargetStats(target_name)
 		end
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Escort Jammer
 	elseif player_task == "Escort Jammer" then
+		
 		if targetlist[camp.player.side][target_name].task == "Reconnaissance" then
 			s = s .. "You have been tasked with providing jammer escort for a recon mission " .. targetlist[camp.player.side][target_name].text .. ".\n\n"
+		
 		else
 			s = s .. "You have been tasked with providing jammer escort for a strike against " .. target_name
 			
 			local ship_hit
+		
 			if targetlist[camp.player.side][target_name].elements then
+		
 				for e = 1, #targetlist[camp.player.side][target_name].elements do
+		
 					if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 						ship_hit = true
 						break
@@ -543,13 +520,17 @@ do
 			
 			if ship_hit then
 				s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 			elseif target_hit > 0 then
 				s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+		
 				if target_alive > 0 then
 					s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+		
 				else
 					s = s .. target_name .. " has been completely destroyed.\n\n"
 				end
+		
 			else
 				s = s .. ". No damage was inflicted. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 			end
@@ -557,33 +538,23 @@ do
 			--list the target
 			s = s .. TargetStats(target_name)
 		end
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Flare Illumination
 	elseif player_task == "Flare Illumination" then
+
 		if targetlist[camp.player.side][target_name].task == "Reconnaissance" then
 			s = s .. "You have been tasked with providing battlefield flare illumination for a recon mission " .. targetlist[camp.player.side][target_name].text .. ".\n\n"
+		
 		else
 			s = s .. "You have been tasked with providing battlefield flare illumination for a strike against " .. target_name
 			
 			local ship_hit
+		
 			if targetlist[camp.player.side][target_name].elements then
+		
 				for e = 1, #targetlist[camp.player.side][target_name].elements do
+		
 					if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 						ship_hit = true
 						break
@@ -593,13 +564,17 @@ do
 			
 			if ship_hit then
 				s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 			elseif target_hit > 0 then
 				s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+		
 				if target_alive > 0 then
 					s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+		
 				else
 					s = s .. target_name .. " has been completely destroyed.\n\n"
 				end
+		
 			else
 				s = s .. ". No damage was inflicted. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 			end
@@ -607,33 +582,23 @@ do
 			--list the target
 			s = s .. TargetStats(target_name)
 		end
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--Laser Illumination
 	elseif player_task == "Laser Illumination" then
+		
 		if targetlist[camp.player.side][target_name].task == "Reconnaissance" then
 			s = s .. "You have been tasked with providing target laser designation for a recon mission " .. targetlist[camp.player.side][target_name].text .. ".\n\n"
+		
 		else
 			s = s .. "You have been tasked with providing target laser designation for a strike against " .. target_name
 			
 			local ship_hit
+		
 			if targetlist[camp.player.side][target_name].elements then
+		
 				for e = 1, #targetlist[camp.player.side][target_name].elements do
+		
 					if camp.ShipDamagedLast and camp.ShipDamagedLast[targetlist[camp.player.side][target_name].elements[e].name] then
 						ship_hit = true
 						break
@@ -643,13 +608,17 @@ do
 			
 			if ship_hit then
 				s = s .. ". The target has been hit and has taken damage.\n\n"
+		
 			elseif target_hit > 0 then
 				s = s .. ". The target has been hit and sustained " .. target_hit .. "% damage. "
+		
 				if target_alive > 0 then
 					s = s .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
+		
 				else
 					s = s .. target_name .. " has been completely destroyed.\n\n"
 				end
+		
 			else
 				s = s .. ". No damage was inflicted. " .. target_name .. " remains " .. target_alive .. "% intact.\n\n"
 			end
@@ -657,51 +626,31 @@ do
 			--list the target
 			s = s .. TargetStats(target_name)
 		end
-		
-		--air-air stats
-		if pack_kills_air == 0 then
-			if pack_lost == 0 then
-				s = s .. "Your package has not scored any air-air kills nor sustained any losses.\n\n"
-			else
-				s = s .. "Your package has sustained " .. pack_lost .. " losses without scoring any air-air kills.\n\n"
-			end
-		else
-			if pack_lost == 0 then
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills against no own losses.\n\n"
-			else
-				s = s .. "Your package has scored " .. pack_kills_air .. " air-air kills while sustaining " .. pack_lost .. " losses.\n\n"
-			end
-		end
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--Reconnaissance
 	elseif player_task == "Reconnaissance" then
-		s = s .. "You have been tasked with reconnaissance of " .. target_name .. ".\n\n"
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. "You have been tasked with reconnaissance of " .. target_name .. ".\n\n" .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 	
 	--AWACAS
 	elseif player_task == "AWACS" then
-		s = s .. "You have been tasked with an AWACS patrol at " .. target_name .. ".\n\n"
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. "You have been tasked with an AWACS patrol at " .. target_name .. ".\n\n" .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Refuelling
 	elseif player_task == "Refueling" then
-		s = s .. "You have been tasked with a refuelling mission at " .. target_name .. ".\n\n"
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. "You have been tasked with a refuelling mission at " .. target_name .. ".\n\n" .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Transport
 	elseif player_task == "Transport" then
 		local from = camp.player.pack[camp.player.role][camp.player.flight].target.base
 		local to = camp.player.pack[camp.player.role][camp.player.flight].target.destination
-		s = s .. "You have been tasked with a transport  mission from " .. from .. " to " .. to .. ".\n\n"
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. "You have been tasked with a transport  mission from " .. from .. " to " .. to .. ".\n\n" .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 		
 	--Ferry/Nothing
 	elseif player_task == "Nothing" then
 		local from = camp.player.pack[camp.player.role][camp.player.flight].target.base
 		local to = camp.player.pack[camp.player.role][camp.player.flight].target.destination
-		s = s .. "You have been tasked with a ferry flight from " .. from .. " to " .. to .. ".\n\n"
-		s = s .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
+		s = s .. "You have been tasked with a ferry flight from " .. from .. " to " .. to .. ".\n\n" .. s1 .. PackageStats() .. "\n\n"																			--add stats list for each aircraft in package
 
 	end
 	
