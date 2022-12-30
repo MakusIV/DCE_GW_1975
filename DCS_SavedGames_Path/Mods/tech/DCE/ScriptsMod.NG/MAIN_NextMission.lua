@@ -34,30 +34,36 @@ log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 log.debug("Start")
 
-
-
--- by Old_Boy
 if activate_testing_enviroment then
 	log.warn("activate testing enviroment")
 end
+
+log.info("unpack template mission file")
 ----- unpack template mission file ----
 local minizip = require('minizip')
+log.debug("loaded minzip" .. tostring(minizip ~= nil))
 local zipFile = minizip.unzOpen("Init/base_mission.miz", 'rb')
+log.debug("open Init/base_mission.miz" .. tostring(zipFile ~= nil))
 zipFile:unzLocateFile('mission')
 local misStr = zipFile:unzReadAllCurrentFile()
 local misStrFunc = loadstring(misStr)()
+log.debug("unzip and load mission file" .. tostring(misStrFunc ~= nil))
 zipFile:unzLocateFile('options')
 local optStr = zipFile:unzReadAllCurrentFile()
 local optStrFunc = loadstring(optStr)()
+log.debug("unzip and load options file" .. tostring(optStrFunc ~= nil))
 zipFile:unzLocateFile('warehouses')
 local warStr = zipFile:unzReadAllCurrentFile()
 local warStrFunc = loadstring(warStr)()
+log.debug("unzip and load warehouses file" .. tostring(warStrFunc ~= nil))
 zipFile:unzLocateFile('l10n/DEFAULT/dictionary')
 local dicStr = zipFile:unzReadAllCurrentFile()
 local dicStrFunc = loadstring(dicStr)()
+log.debug("unzip and load l10n/DEFAULT/dictionary file" .. tostring(dicStrFunc ~= nil))
 zipFile:unzLocateFile('l10n/DEFAULT/mapResource')
 local resStr = zipFile:unzReadAllCurrentFile()
 local resStrFunc = loadstring(resStr)()
+log.debug("unzip and load l10n/DEFAULT/mapResource file" .. tostring(resStrFunc ~= nil))
 zipFile:unzClose()
 
 
