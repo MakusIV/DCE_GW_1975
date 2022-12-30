@@ -13,7 +13,7 @@ log.debug("Start")
 -- =====================  End Marco implementation ==================================
 
 
-local function createStaticDeadGroup(v1, country, group_type)
+local function createStaticDeadGroup(k1, country, group_type)
 	-- country = v2, group_type = ship or vehicle
 	local country_asset -- country.vehicle or country.ship
 
@@ -27,7 +27,7 @@ local function createStaticDeadGroup(v1, country, group_type)
 		log.warning("anomaly ....")
 	end
 
-	log.trace(v1 .. ".country: " .. v2.name .. " has " .. group_type .. ". Search into groups")
+	log.trace(k1 .. ".country: " .. country.name .. " has " .. group_type .. ". Search into groups")
 	local n = 1
 	local nEnd = #country_asset.group
 	
@@ -41,7 +41,7 @@ local function createStaticDeadGroup(v1, country, group_type)
 				log.trace(group_type .. ".group[" .. n .. "].units[" .. m .. "] is dead.")
 
 				if group_type == "vehicle" then
-					if v2.static == nil then													--country table has no other static objects
+					if country.static == nil then													--country table has no other static objects
 						log.trace("country table has not static objects. Create static.group for this group")
 						v2.static = {															--create static objects table
 							group = {}															--create group subtable
@@ -49,7 +49,7 @@ local function createStaticDeadGroup(v1, country, group_type)
 					end
 					
 					local dead_static_group = {													--define dead static group to replace dead unit 
-						["heading"] = v2.vehicle.group[n].units[m].heading,						--set static group heading according to dead unit
+						["heading"] = country_asset.group[n].units[m].heading,						--set static group heading according to dead unit
 						["route"] = {
 							["points"] = 
 							{
@@ -58,9 +58,9 @@ local function createStaticDeadGroup(v1, country, group_type)
 									["alt"] = 0,
 									["type"] = "",
 									["name"] = "",
-									["y"] = v2.vehicle.group[n].units[m].y,
+									["y"] = country_asset.group[n].units[m].y,
 									["speed"] = 0,
-									["x"] = v2.vehicle.group[n].units[m].x,
+									["x"] = country_asset.group[n].units[m].x,
 									["formation_template"] = "",
 									["action"] = "",
 								},
@@ -72,20 +72,20 @@ local function createStaticDeadGroup(v1, country, group_type)
 							[1] = {
 								["category"] = "Unarmed",
 								["canCargo"] = false,
-								["type"] = v2.vehicle.group[n].units[m].type,
+								["type"] = country_asset.group[n].units[m].type,
 								["unitId"] = GenerateID(),
-								["y"] = v2.vehicle.group[n].units[m].y,
-								["x"] = v2.vehicle.group[n].units[m].x,
-								["name"] = v2.vehicle.group[n].units[m].name,
-								["heading"] = v2.vehicle.group[n].units[m].heading,
+								["y"] = country_asset.group[n].units[m].y,
+								["x"] = country_asset.group[n].units[m].x,
+								["name"] = country_asset.group[n].units[m].name,
+								["heading"] = country_asset.group[n].units[m].heading,
 							},
 						},
-						["y"] = v2.vehicle.group[n].units[m].y,
-						["x"] = v2.vehicle.group[n].units[m].x,
-						["name"] = "Dead Static " .. v2.vehicle.group[n].units[m].name,
+						["y"] = country_asset.group[n].units[m].y,
+						["x"] = country_asset.group[n].units[m].x,
+						["name"] = "Dead Static " .. country_asset.group[n].units[m].name,
 						["dead"] = true,
 					}
-					table.insert(v2.static.group, dead_static_group)							--add group to static table
+					table.insert(country.static.group, dead_static_group)							--add group to static table
 					log.trace("created dead_static_group and add in static.group table")
 				end
 				
@@ -99,12 +99,12 @@ local function createStaticDeadGroup(v1, country, group_type)
 					table.remove(country_asset.group[n].units, m)									--remove dead unit from units table
 
 					if group_type == "vehicle" then
-						country_asset.group[n].route.points[1].x = v2.vehicle.group[n].units[1].x	--update group position to position of first units
-						country_asset.group[n].route.points[1].y = v2.vehicle.group[n].units[1].y	--update group position to position of first units						
+						country_asset.group[n].route.points[1].x = country_asset.group[n].units[1].x	--update group position to position of first units
+						country_asset.group[n].route.points[1].y = country_asset.group[n].units[1].y	--update group position to position of first units						
 					end
 					m = m - 1
 					mEnd = mEnd - 1
-					log.trace("group have units, remove dead unit from units table and update group position to position of first units x =" .. v2.vehicle.group[n].units[1].x .. ", y = " .. v2.vehicle.group[n].units[1].y .. ", m = " .. m .. ", mEnd = " .. mEnd)
+					log.trace("group have units, remove dead unit from units table and update group position to position of first units x =" .. country_asset.group[n].units[1].x .. ", y = " .. country_asset.group[n].units[1].y .. ", m = " .. m .. ", mEnd = " .. mEnd)
 				end
 			end
 			m = m + 1
@@ -116,7 +116,7 @@ end
 
 
 
---M33.f frequence des FARP selon db_airbase
+--M33.f frequence des F.ARP selon db_airbase
 log.info("Iterate group's item of oob_ground for search FARP items (heliport) and assign ATC Frequency")
 
 for coal_name,coal in pairs(oob_ground) do												--go through sides(red/blue)	
@@ -135,6 +135,7 @@ for coal_name,coal in pairs(oob_ground) do												--go through sides(red/blu
 					if group.units[n].type == 'FARP' and db_airbases[group.units[n].name] and db_airbases[group.units[n].name].ATC_frequency then
 						group.units[n].heliport_frequency = db_airbases[group.units[n].name].ATC_frequency
 						log.trace("group.units[".. n .. "]: " .. group.units[n].name .. " is FARP type and exist in db_airbases. Assign group.units[n].heliport_frequency = " .. group.units[n].heliport_frequency)
+					end
 				end
 			end
 		end
@@ -152,8 +153,8 @@ for k1,v1 in pairs(mission.coalition) do															--side table(red/blue)
 	for k2,v2 in pairs(v1.country) do																--country table (number array)
 
 		if v2.vehicle then																			--if country has vehicles
-			--createStaticDeadGroup(v1, v2.vehicle, "vehicle")
-			log.trace(v1 .. "country: " .. v2.name .. " has vehicle. Search into groups")
+			createStaticDeadGroup(k1, v2, "vehicle")
+			--[[log.trace(k1 .. "country: " .. v2.name .. " has vehicle. Search into groups")
 			local n = 1
 			local nEnd = #v2.vehicle.group
 			
@@ -232,12 +233,12 @@ for k1,v1 in pairs(mission.coalition) do															--side table(red/blue)
 					m = m + 1
 				until m > mEnd
 				n = n + 1
-			until n > nEnd
+			until n > nEnd]]
 		end
 
 		if v2.ship then																				--if country has ships			
-			--createStaticDeadGroup(v1, v2.ship, "ship")
-			log.trace(v1 .. "country: " .. v2.name .. " has ship. Search into groups")
+			createStaticDeadGroup(k1, v2, "ship")
+			--[[log.trace(k1 .. "country: " .. v2.name .. " has ship. Search into groups")
 			local n = 1
 			local nEnd = #v2.ship.group
 			
@@ -265,7 +266,7 @@ for k1,v1 in pairs(mission.coalition) do															--side table(red/blue)
 					m = m + 1
 				until m > mEnd
 				n = n + 1
-			until n > nEnd
+			until n > nEnd]]
 		end
 	end
 end
@@ -290,7 +291,7 @@ for basename,base in pairs(db_airbases) do															--iterate through airba
 						for unitn,unit in pairs(group.units) do										--units table
 
 							if unit.name == base.unitname then										--respective unit found
-								log.trace("ship unit.name: " .. unit.name .. "exist in db_airbase -> ship unit is carrier")
+								log.trace("ship unit.name: " .. unit.name .. " exist in db_airbase -> ship unit is carrier")
 
 								if unit.dead or (camp.ShipHealth and camp.ShipHealth[unit.name] and camp.ShipHealth[unit.name] < 66) or (group.probability and group.probability < 1) then	 --unit is dead, damaged or its group has a probability that is not 100%
 									base.x = nil													--remove base coordinates to prevent sortie generation from this abse
@@ -305,4 +306,3 @@ for basename,base in pairs(db_airbases) do															--iterate through airba
 		end
 	end
 end
-
