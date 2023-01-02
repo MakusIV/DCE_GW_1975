@@ -14,6 +14,8 @@ log.debug("Start")
 
 
 local function createStaticDeadGroup(k1, country, group_type)
+	local nameFunction = " function createStaticDeadGroup(k1, country, group_type): "    
+	log.debug("Start " .. nameFunction)
 	-- country = v2, group_type = ship or vehicle
 	local country_asset -- country.vehicle or country.ship
 
@@ -111,12 +113,14 @@ local function createStaticDeadGroup(k1, country, group_type)
 		until m > mEnd
 		n = n + 1
 	until n > nEnd
+	log.debug("End " .. nameFunction)
 end
 
 
 
 
 --M33.f frequence des F.ARP selon db_airbase
+--Iterate group's item of oob_ground for search FARP items (heliport) and assign ATC Frequency
 log.info("Iterate group's item of oob_ground for search FARP items (heliport) and assign ATC Frequency")
 
 for coal_name,coal in pairs(oob_ground) do												--go through sides(red/blue)	
@@ -146,8 +150,8 @@ end
 mission.coalition.blue.country = deepcopy(oob_ground.blue)											--copy blue oob into mission
 mission.coalition.red.country = deepcopy(oob_ground.red)											--copy red oob into mission
 
-log.info("iterate through all vehicles and ships to remove those marked as dead during previous debriefings (static objects need not be removed, as these are spawned in a destroyed state)")
 --iterate through all vehicles and ships to remove those marked as dead during previous debriefings (static objects need not be removed, as these are spawned in a destroyed state)
+log.info("iterate through all vehicles and ships to remove those marked as dead during previous debriefings (static objects need not be removed, as these are spawned in a destroyed state)")
 for k1,v1 in pairs(mission.coalition) do															--side table(red/blue)	
 
 	for k2,v2 in pairs(v1.country) do																--country table (number array)
