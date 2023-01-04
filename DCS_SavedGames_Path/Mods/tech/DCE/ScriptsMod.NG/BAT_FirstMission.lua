@@ -1,11 +1,17 @@
 --To manually generate the first campaign mission and reset the campaign to initial status. For manual use by campaign designer only, not required for normal campaign play.
 --Initiated by FirstMission.bat
 -------------------------------------------------------------------------------------------------------
--- Miguel Fichier Revision  M47.c
--- Marco Revision 1.0
--------------------------------------------------------------------------------------------------------
 
--- Marco Modification implement Logistic code, insert logging utility 
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["BAT_FirstMission.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code
 -- adjustment A01.b : robust form.
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M46.d  singlePlayer with dedicated server (c: DF choice)(c: D choice with AI AirSpawn)
@@ -14,8 +20,8 @@
 -- Miguel21 modification M14 : Versionning
 -- Miguel21 modification M11.q : Multiplayer (q: displays all tasks of several squadrons)(p: Task table)
 
-if not versionDCE then versionDCE = {} end
-versionDCE["BAT_FirstMission.lua"] = "1.7.33"
+--if not versionDCE then versionDCE = {} end
+--versionDCE["BAT_FirstMission.lua"] = "1.7.33"
 
 -- =====================  Marco implementation ==================================
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")

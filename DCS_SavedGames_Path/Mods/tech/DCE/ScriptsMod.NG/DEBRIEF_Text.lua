@@ -1,6 +1,19 @@
 --To create the debriefing text for the mission
 --Initiated by DEBRIEF_Master.lua
 ------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DEBRIEF_Text.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: added friendly_kills in stats
+---------------------------------------------------------------------------------------------------------
 
 debriefing = ""																						--Global debriefing text string. Will be used in DEBRIEF_Master.lua to write debriefing txt file with notepad
 

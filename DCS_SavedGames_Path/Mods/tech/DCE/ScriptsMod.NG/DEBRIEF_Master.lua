@@ -1,11 +1,18 @@
 --To evaluate the DCS debrief.log, update the campaign status files/OOBs, generate a debriefing and initiate generation of next campaign mission
 --Initiated by MissionEnd.lua running from within DCS
 -------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------
--- Old_Boy revision OB1
--------------------------------------------------------------------------------------------------------
--- Old_Boy rev. OB1: implements logging code
--- Old_Boy rev. OB0: implements supply line sistems (logistics)
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DEBRIEF_Master.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code
+-- Old_Boy rev. OB.0.0.0: implements supply line sistems (logistics)
 -- adjustment A01.b : robust form
 -- debug01.b EndMission
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
@@ -18,8 +25,8 @@
 -- le righe di codice da analizzare, verificare o correggere le identifico con la parola chiave -- VERIFICARE: 
 -- le note al codice sono identificate con la parola chiave NOTE MARCO
 
-if not versionDCE then versionDCE = {} end
-versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
+--if not versionDCE then versionDCE = {} end
+--versionDCE["DEBRIEF_Master.lua"] = "1.7.33"
 
 
 --================== LOCAL FUNCTION ===============================================

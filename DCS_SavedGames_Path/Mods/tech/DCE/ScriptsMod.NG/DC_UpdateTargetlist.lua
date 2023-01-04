@@ -1,10 +1,18 @@
 --To update the targetlist (target position, alive precentage)
 --Initiated by MAIN_NextMission.lua
-------------------------------------------------------------------------------------------------------- 
--- Old_Boy revision OB1
 -------------------------------------------------------------------------------------------------------
--- Old_Boy rev. OB1: implements logging code and little(very) optimization
--- Old_Boy rev. OB0: implements supply line sistems (logistics)
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DC_UpdateTargetlist.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code and (very) little optimization
+-- Old_Boy rev. OB.0.0.1: implements supply line sistems (logistics)
 -- Miguel21 modification M38 : Debug Name of TargetList 
 -- Miguel21 M26 destroys targets if below a certain value
 -- Miguel21 modification M19.e : Repair GROUND

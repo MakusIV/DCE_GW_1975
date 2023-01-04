@@ -2,6 +2,19 @@
 --Initiated by MAIN_NextMission.lua
 -------------------------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------------------------
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DC_UpdateOOBGround.lua"] = "OB.1.0.0"
+
+--------------------------------------------------------------------------------------------------------- Old_Boy rev. OB1: implements logging code and little(very) optimization
+-- Old_Boy rev. OB.1.0.0: implements logging code and (very) little optimization
+
 -- =====================  Marco implementation ==================================
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")

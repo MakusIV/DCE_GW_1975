@@ -1,9 +1,17 @@
 --To check oob_ground for threats and rate and store them in a table for later mission plannning
 --Initiated by Main_NextMission.lua
-------------------------------------------------------------------------------------------------------- 
--- Miguel Fichier Revision M34.k
-------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
 
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["ATO_ThreatEvaluation.lua"] = "OB.1.0.0"
+
+-------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code + new groundthreats and ewr items (from Reglage_f "war over tchad" campaign)
 -- miguel21 modification M34.k change freq EWR + custom FrequenceRadio (k: utilise les indicatifs WEST pour EWR)
 -- Miguel21 modification M28.b : helicoptere see all SAM
 -- Miguel21 modification  M07.g : EWR toujours affich� dans le briefing + 07g ajout des SAM et Boat dans la chaine de detection
@@ -75,7 +83,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,															--minimal threat altitute
 			max_alt = 1500,															--maximal threat altitude
 		}
-	-- table.insert(groundthreats[side], threatentry)									-- Miguel21 modification M28.b : helicoptere see all SAM (insertion se fera plus bas avec hide)
+	
 		
 	elseif unit.type == "ZSU-23-4 Shilka" then
 		threatentry = {
@@ -91,7 +99,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 2000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Gepard" then
 		threatentry = {
@@ -107,7 +115,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3500,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "M1097 Avenger" then
 		threatentry = {
@@ -123,7 +131,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "M48 Chaparral" then
 		threatentry = {
@@ -139,7 +147,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "M6 Linebacker" then
 		threatentry = {
@@ -155,7 +163,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Stinger manpad" then
 		threatentry = {
@@ -171,7 +179,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "SA-18 Igla-S manpad" then
 		threatentry = {
@@ -187,7 +195,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Strela-1 9P31" then
 		threatentry = {
@@ -203,7 +211,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	
 	elseif unit.type == "Strela-10M3" then
 		threatentry = {
@@ -219,7 +227,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "2S6 Tunguska" then
 		threatentry = {
@@ -235,7 +243,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 6500,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	
 	elseif unit.type == "rapier_fsa_blindfire_radar" then
 		threatentry = {
@@ -251,7 +259,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "rapier_fsa_optical_tracker_unit" then
 		threatentry = {
@@ -267,7 +275,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 3600,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	
 	elseif unit.type == "Roland ADS" then
 		threatentry = {
@@ -283,7 +291,39 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 8000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
+		
+	elseif unit.type == "HQ-7_STR_SP" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 3,
+			SEAD_offset = 1,
+			x = unit.x,
+			y = unit.y,
+			range = 12000,
+			night = true,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 5000,
+		}
+
+	
+	elseif unit.type == "HQ-7_LN_SP" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 2,
+			SEAD_offset = 1,
+			x = unit.x,
+			y = unit.y,
+			range = 12000,
+			night = true,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 5000,
+		}
+
 		
 	elseif unit.type == "Hawk tr" then
 		threatentry = {
@@ -299,7 +339,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 22000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Patriot str" then
 		threatentry = {
@@ -315,7 +355,23 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 32000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
+	
+	elseif unit.type == "NASAMS_Radar_MPQ64F1" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 8,
+			SEAD_offset = 2,
+			x = unit.x,
+			y = unit.y,
+			range = 15000,
+			night = true,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 15000,
+		}
+
 	
 	elseif unit.type == "SNR_75V" then
 		threatentry = {
@@ -331,7 +387,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 50,
 			max_alt = 20000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	
 	elseif unit.type == "snr s-125 tr" then
 		threatentry = {
@@ -347,7 +403,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 50,
 			max_alt = 20000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Kub 1S91 str" then
 		threatentry = {
@@ -363,7 +419,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 10000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Osa 9A33 ln" then
 		threatentry = {
@@ -379,7 +435,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 7000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "SA-11 Buk SR 9S18M1" then
 		threatentry = {
@@ -395,7 +451,23 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 24000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
+		
+	elseif unit.type == "SA-11 Buk LN 9S18M1" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 8,
+			SEAD_offset = 2,
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			night = true,
+			elevation = 7,
+			min_alt = 0,
+			max_alt = 24000,
+		}
+
 		
 	elseif unit.type == "Tor 9A331" then
 		threatentry = {
@@ -411,7 +483,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 8000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 			
 	elseif unit.type == "S-300PS 40B6M tr" then
 		threatentry = {
@@ -427,7 +499,38 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 29000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
+	
+	elseif unit.type == "RLS_19J6" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 7,
+			SEAD_offset = 4,
+			x = unit.x,
+			y = unit.y,
+			range = 150000,
+			night = true,
+			elevation = 27.5,
+			min_alt = 0,
+			max_alt = 35000,
+		}
+
+	elseif unit.type == "RPC_5N62V" then --SA-5
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 8,
+			SEAD_offset = 4,
+			x = unit.x,
+			y = unit.y,
+			range = 255000,
+			night = true,
+			elevation = 27.5,
+			min_alt = 0,
+			max_alt = 35000,
+		}
+
 	
 	elseif unit.type == "052B" then
 		threatentry = {
@@ -443,7 +546,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 25000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	
 	elseif unit.type == "052C" then
 		threatentry = {
@@ -459,7 +562,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 30000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "054A" then
 		threatentry = {
@@ -475,7 +578,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 25000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "MOLNIYA" then
 		threatentry = {
@@ -491,7 +594,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 1500,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "ALBATROS" then
 		threatentry = {
@@ -507,7 +610,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 5000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "REZKY" then
 		threatentry = {
@@ -523,7 +626,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 5000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "KUZNECOW" then
 		threatentry = {
@@ -539,7 +642,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 6000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 			
 	elseif unit.type == "NEUSTRASH" then
 		threatentry = {
@@ -555,7 +658,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 6000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "MOSCOW" then
 		threatentry = {
@@ -571,7 +674,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 27000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "PIOTR" then
 		threatentry = {
@@ -587,7 +690,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 27000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "PERRY" then
 		threatentry = {
@@ -603,7 +706,21 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 30000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
+	elseif unit.type == "USS_Arleigh_Burke_IIa" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 9,
+			SEAD_offset = 4,
+			x = unit.x,
+			y = unit.y,
+			range = 10000,
+			night = true,
+			elevation = 25,
+			min_alt = 0,
+			max_alt = 30000,
+		}
 		
 	elseif unit.type == "TICONDEROG" then
 		threatentry = {
@@ -619,7 +736,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 30000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "Stennis" then
 		threatentry = {
@@ -635,7 +752,52 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 15000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	elseif unit.type == "CVN_71" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 6,
+			SEAD_offset = 2,
+			x = unit.x,
+			y = unit.y,
+			range = 27000,
+			night = true,
+			elevation = 30,
+			min_alt = 0,
+			max_alt = 15000,
+		}		
+	
+	elseif unit.type == "CVN_75" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 6,
+			SEAD_offset = 2,
+			x = unit.x,
+			y = unit.y,
+			range = 27000,
+			night = true,
+			elevation = 30,
+			min_alt = 0,
+			max_alt = 15000,
+		}
+	
+	elseif unit.type == "CVN_72" then
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 6,
+			SEAD_offset = 2,
+			x = unit.x,
+			y = unit.y,
+			range = 27000,
+			night = true,
+			elevation = 30,
+			min_alt = 0,
+			max_alt = 15000,
+		}
+
+	
 		
 	elseif unit.type == "VINSON" then
 		threatentry = {
@@ -651,7 +813,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 15000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 		
 	elseif unit.type == "LHA_Tarawa" then
 		threatentry = {
@@ -667,7 +829,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 0,
 			max_alt = 15000,
 		}
-	-- table.insert(groundthreats[side], threatentry)
+	
 	log.debug(nameFunction .. "Added in threatentry table this unit: " .. unit.type .. "-" .. unit.name .. "\nthreathentry:\n" .. inspect(threatentry))
 	
 	end
@@ -712,7 +874,18 @@ GCI = {
 
 --function to add EWR units to EWR table
 local function AddEWR(unit, side, freq, call)
-	local nameFunction = "function AddEWR(unit, side, freq, call): "    
+	local call_str = "nil"
+	local freq_str = "nil"
+
+	if call then
+		call_str = tostring(cal)
+	end
+
+	if freq then
+		freq_str = tostring(freq)
+	end
+
+	local nameFunction = "function AddEWR(" .. unit.type .. "-" .. unit.name .. ", " .. side .. ", " ..  freq_str .. ", " .. call_str .. "): "    
 	log.debug("Start " .. nameFunction)
 	local entry
 
@@ -731,6 +904,40 @@ local function AddEWR(unit, side, freq, call)
 		}
 		table.insert(ewr[side], entry)
 		GCI.EWR[side][unit.name] = true		
+		
+	elseif unit.type == "55G6 EWR" then
+		local entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 340000,
+			frequency = freq,
+			callsign = call,
+			elevation = 39,
+			min_alt = 50,
+			max_alt = 30000,
+			[call] = true,
+		}
+		table.insert(ewr[side], entry)
+		GCI.EWR[side][unit.name] = true
+		
+	elseif unit.type == "FPS-117" then
+		local entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 461000,
+			frequency = freq,
+			callsign = call,
+			elevation = 39,
+			min_alt = 50,
+			max_alt = 30000,
+			[call] = true,
+		}
+		table.insert(ewr[side], entry)
+		GCI.EWR[side][unit.name] = true	
 		
 	elseif unit.type == "55G6 EWR" then
 		entry = {
@@ -787,21 +994,42 @@ local function AddEWR(unit, side, freq, call)
 	elseif unit.type == "snr s-125 tr" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
+	elseif unit.type == "RPC_5N62V" then	--SA-5		radar							--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+		
 	elseif unit.type == "S-300PS 40B6M tr" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "Patriot str" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
+	elseif unit.type == "NASAMS_Radar_MPQ64F1" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+			
 	elseif unit.type == "Hawk tr" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "TICONDEROG" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
+	elseif unit.type == "USS_Arleigh_Burke_IIa" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+	
 	elseif unit.type == "Stennis" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
+	elseif unit.type == "CVN_71" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+		
+	elseif unit.type == "CVN_72" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+
+	elseif unit.type == "CVN_73" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true	
+		
+	elseif unit.type == "CVN_75" then										--Participe � la chaine de detection
+		GCI.EWR[side][unit.name] = true
+	
 	elseif unit.type == "LHA_Tarawa" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
@@ -814,6 +1042,10 @@ local function AddEWR(unit, side, freq, call)
 	elseif unit.type == "KUZNECOW" then										--Participe � la chaine de detection
 		GCI.EWR[side][unit.name] = true
 		
+	else 
+		-- print("AtoTE ATTENTION, not found "..tostring(unit.type).." in data ATO_ThreatEvaluation. Side: "..tostring(side).." freq: "..tostring(freq).." call: "..tostring(call)) 
+		log.warn("unit.type .not found ".. unit.type .." in data ATO_ThreatEvaluation. Side: " .. side .. " freq: " .. freq_str .. " call: ".. call_str)
+			-- os.execute 'pause'
 	end
 
 	if GCI.EWR[side][unit.name] then
@@ -821,7 +1053,7 @@ local function AddEWR(unit, side, freq, call)
 	
 	elseif entry then
 		log.debug(nameFunction .. "Insert in  ewr[" .. side .. "] this unit: " .. unit.type .. "-" .. unit.name)
-		log.trace(nameFunction .. "Property inserted in  ewr[" .. side .. "] for this unit: " .. unit.type .. "-" .. unit.name .. ":\n" .. inspect(entry))
+			log.trace(nameFunction .. "Property inserted in  ewr[" .. side .. "] for this unit: " .. unit.type .. "-" .. unit.name .. ":\n" .. inspect(entry))
 	end
 	
 end

@@ -31,6 +31,17 @@ frequency = {
 			},
 		},
 	},
+	["A-4E-C"] = {							--A-4C
+		radio = {						--range of radio frequencies of player aircraft
+			[1] = {						--radio 1
+				UHF = {
+					min = 225,				--minimum radio frequency in mHz   UHF ARC-27 20 preset channels
+					max = 399,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 20,
+			},
+		},
+	},
 	["A-10C"] = {
 		radio = {						--range of radio frequencies of player aircraft
 			[1] = {						--radio 1 AN/ARC 164 UHF
@@ -75,7 +86,6 @@ frequency = {
 			},
 		},
 	},
-
 	["F-5E-3"] = {
 		radio = {						--range of radio frequencies of player aircraft
 			[1] = {				
@@ -156,7 +166,7 @@ frequency = {
 	["FA-18C_hornet"] = {
 		radio = {						--range of radio frequencies of player aircraft			
 			[1] = {						--radio 1
-				FM = {
+				LVHF = {
 					min = 30,				--minimum radio frequency in mHz   V/UHF FM ARC-210 20 preset channels
 					max = 87,				--maxium  radio frequency in mHz
 				},
@@ -171,7 +181,7 @@ frequency = {
 				nbCanal = 20,
 			},
 			[2] = {						--radio 2
-				FM = {
+				LVHF = {
 					min = 30,				--minimum radio frequency in mHz   V/UHF FM ARC-210 20 preset channels
 					max = 87,				--maxium  radio frequency in mHz
 				},
@@ -281,6 +291,31 @@ frequency = {
 			},
 		},
 	},
+	["Mirage-F1CE"] = {
+		radio = {						--range of radio frequencies of player aircraft
+			[1] = {						--radio 1
+				VHF = {
+					min = 118,				--minimum radio frequency in mHz   V/UHF FM ARC-210 20 preset channels
+					max = 143,				--maxium  radio frequency in mHz
+				},
+				UHF = {
+					min = 225,				--minimum radio frequency in mHz 
+					max = 400,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 20,
+				name = "Poste Vert",
+			},			
+			[2] = {						--radio 2
+				UHF = {
+					min = 225,				--minimum radio frequency in mHz  
+					max = 400,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 20,
+				name = "Poste Rouge",
+			},
+
+		},
+	},	
 	["MiG-19P"] = {
 		radio = {						--range of radio frequencies of player aircraft
 			[1] = {						--radio 1 RSIU 4 V VHF
@@ -304,13 +339,15 @@ frequency = {
 					max = 390,				--maxium  radio frequency in mHz
 				},
 				nbCanal = 20,
+				startCanal = 0,
+				name = "RS-832",
 			},
 		},
 	},
 	["JF-17"] = {
 		radio = {			
 			[1] = {						--radio 1
-				FM = {
+				LVHF = {
 					min = 30,				--minimum radio frequency in mHz 
 					max = 100,				--maxium  radio frequency in mHz
 				},
@@ -357,6 +394,55 @@ frequency = {
 		},
 
 	},
+	["AH-64D_BLK_II"] = {
+		helicopter = true,
+		-- prefFreqPackage = {
+			-- nRadio = 2,
+			-- range = "VHF",
+			-- },
+		radio = {								--range of radio frequencies of player aircraft
+			[1] = {								--radio 1 name = _("ARC-186"),
+				VHF = {
+					min = 108.0,				--minimum radio frequency in mHz
+					max = 151.975,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 10,
+				name = "VHF",
+			},
+			[2] = {								--radio 2 name = _("ARC-164"),
+				UHF = {
+					min = 225,					--minimum radio frequency in mHz
+					max = 399.975,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 10,
+				name = "UHF",
+			},
+			[3] = {								--radio 3 name = _("FM 1: ARC-201D"),
+				LVHF = {
+					min = 30.0,					--minimum radio frequency in mHz
+					max = 87.995,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 10,
+				name = "FM 1",
+			},
+			[4] = {								--radio 4 name = _("FM 2: ARC-201D"),
+				LVHF = {
+					min = 30.0,					--minimum radio frequency in mHz
+					max = 87.995,				--maxium  radio frequency in mHz
+				},
+				nbCanal = 10,
+				name = "FM 2",
+			},
+			[5] = {						--radio 3 Yadro1 HF
+				HF = {
+					min = 2,				--minimum radio frequency in mHz
+					max = 17.999,			--maxium  radio frequency in mHz
+				},
+				nbCanal = 0,
+				name = "HF  ",
+			},
+		},
+	},
 	["UH-1H"] = {
 		radio = {						--range of radio frequencies of player aircraft
 			[1] = {						--radio 1
@@ -368,6 +454,57 @@ frequency = {
 			},
 		},
 		helicopter = true,
+	},
+	["L-39C"] = {
+		radio = {
+			[1] = {
+				VHF = {
+					min = 118,
+					max = 224.995,
+				},
+				UHF = {
+					min = 225,
+					max = 399.95,
+				},
+				nbCanal = 20,
+				startCanal = 0,
+				name = "R-832M"
+			},
+		},	
+	},
+	["Su-25"] = {
+		radio = {						--range of radio frequencies of player aircraft
+			[1] = {
+				VHF = {
+					min = 100,
+					max = 224.995,
+				},
+				UHF = {
+					min = 225,
+					max = 399.98,
+				},
+				nbCanal = 0,
+				FC3 = true,
+				FC3Frequency = 124,
+			},
+		},	
+	},
+	["Su-25T"] = {
+		radio = {						--range of radio frequencies of player aircraft
+			[1] = {
+				VHF = {
+					min = 100,
+					max = 224.995,
+				},
+				UHF = {
+					min = 225,
+					max = 399.98,
+				},
+				nbCanal = 0,
+				FC3 = true,
+				FC3Frequency = 124,
+			},
+		},	
 	},
 	["Mi-8MT"] = {
 		helicopter = true,

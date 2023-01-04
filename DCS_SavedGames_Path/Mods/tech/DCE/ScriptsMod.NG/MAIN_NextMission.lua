@@ -1,9 +1,17 @@
 --To generate a new mission file. Unzips template mission, defines content of next missions and packs a new mission file
 --Initiated by Debrief_Master.lua, BAT_FirstMission.lua or BAT_RedoMission.lua
-------------------------------------------------------------------------------------------------------- 
--- Miguel Fichier Revision M47.c
-------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
 
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M40 Pedro
 -- miguel21 modification M38.d Check and Help CampaignMaker
@@ -21,8 +29,8 @@
 -- Miguel21 modification M00b	Integration de conf_mod
 -- -------------------------------------------------------------------------------------------------------
 
-if not versionDCE then versionDCE = {} end
-versionDCE["MAIN_NextMission.lua"] = "1.15.38"
+--if not versionDCE then versionDCE = {} end
+--versionDCE["MAIN_NextMission.lua"] = "1.15.38"
 
 --by Old_Boy
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
@@ -66,6 +74,13 @@ local resStrFunc = loadstring(resStr)()
 log.debug("unzip and load l10n/DEFAULT/mapResource file" .. tostring(resStrFunc ~= nil))
 zipFile:unzClose()
 
+if mission.version < 19 then --19ok 18bad
+	log.warning("(MainNM) ATTENTION: BaseMission.miz is too old. (prior to DCS version 2.7.0) try to save it again with the mission editor. Or ask the creator of this campaign to provide an update.")
+	--os.execute 'pause'
+	--os.exit()
+end
+
+NameTheatre =  string.lower(mission.theatre)
 
 ---- add trigger to destory scenery objects -----
 mission.trig.flag[1] = true
@@ -172,6 +187,7 @@ camp.SC_CarrierIntoWind = string.lower(mission_ini.SC_CarrierIntoWind)					-- Mi
 
 local verScriptsModPath = "../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua"
 local TestPath = io.open(verScriptsModPath, "r")
+
 if  TestPath ~= nil then
 	io.close(TestPath)
 	dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua")

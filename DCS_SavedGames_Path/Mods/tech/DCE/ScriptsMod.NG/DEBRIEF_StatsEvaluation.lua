@@ -1,9 +1,17 @@
 --To evaluate the DCS debrief.log and update the campaign status files
 --Initiated by DEBRIEF_Master.lua
 -------------------------------------------------------------------------------------------------------
--- Old_Boy revision OB1
--------------------------------------------------------------------------------------------------------
--- Old_Boy rev. OB1: implements logging code and little(very) optimization
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DEBRIEF_StatsEvalutation.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code and (very) little optimization
 -- Old_Boy rev. OB0: implements supply line sistems (logistics)
 -- Miguel21 modification M19.f : Repair SAM
 
@@ -23,7 +31,8 @@ log.debug("Start")
 --function to add new clients to clientstats
 local function AddClient(name)
 	local nameFunction = "function AddClient(" .. name .. "): "    
-	log.debug("Start " .. nameFunction)														
+	log.debug("Start " .. nameFunction)		
+
 	if clientstats[name] == nil then	
 		log.trace(nameFunction .. "client has no previous stats entry, create a new clientstats table")															--if client has no previous stats entry, create a new one
 		clientstats[name] = {
@@ -95,6 +104,18 @@ local function AddPackstats(unitname, event)
 	log.debug("End " .. nameFunction)														
 end
 
+local function setUnitDeadLast(group_obj, group_type, side_name, country_name)
+
+	for group_n,group in pairs(group_obj) do --groups table (number array)
+		log.debug("Start reset" .. group_type .. " unit.dead_last: ".. side_name .. ", country: " .. country_name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
+
+		for unit_n,unit in pairs(group.units) do --units table (number array)	
+			log.trace("Reset" .. group_type .." unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
+			unit.dead_last = false --reset unit died in last mission
+		end
+		log.debug("End reset" .. group_type .. " unit.dead_last   =======================================================")														
+	end
+end
 -- ==================================================================================
 
 
@@ -128,42 +149,15 @@ for side_name,side in pairs(oob_ground) do --side table(red/blue)
 	for country_n,country in pairs(side) do	--country table (number array)
 
 		if country.vehicle then	--if country has vehicles
-
-			for group_n,group in pairs(country.vehicle.group) do --groups table (number array)
-				log.debug("Start reset veihcle unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
-
-				for unit_n,unit in pairs(group.units) do --units table (number array)	
-					log.trace("Reset veihcle unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
-					unit.dead_last = false --reset unit died in last mission
-				end
-				log.debug("End reset veihcle unit.dead_last   =======================================================")														
-			end			
+			setUnitDeadLast(country.vehicle.group, "vehicle", side_name, country.name)						
 		end
 
 		if country.static then --if country has static objects
-
-			for group_n,group in pairs(country.static.group) do --groups table (number array)
-                log.debug("Start reset static unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
-
-				for unit_n,unit in pairs(group.units) do --units table (number array)						
-					log.trace("Reset static unit.dead_last: unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)														
-					unit.dead_last = false --reset unit died in last mission
-				end
-				log.debug("End reset static unit.dead_last   =======================================================")														
-			end			
+			setUnitDeadLast(country.static.group, "static", side_name, country.name)			
 		end
 		
-		if country.ship then																--if country has ships
-			
-			for group_n,group in pairs(country.ship.group) do								--groups table (number array)
-				log.debug("Start reset ship unit.dead_last: ".. side_name .. ", country: " .. country.name .. ", group: ".. group.name .. " - id: " .. group.groupId .. " - name: " .. group.name .. "   =======================================================")														
-
-				for unit_n,unit in pairs(group.units) do									--units table (number array)	
-					log.trace("Reset ship unit.dead_last:  unit_n: " ..unit_n ..  "-id: " .. unit.unitId .. "-name: " .. unit.name .. "-type: " .. unit.type)										
-					unit.dead_last = false													--reset unit died in last mission
-				end
-				log.debug("End reset ship unit.dead_last   =======================================================")														
-			end			
+		if country.ship then --if country has ships
+			setUnitDeadLast(country.static.group, "ship", side_name, country.name)					
 		end
 	end
 end
