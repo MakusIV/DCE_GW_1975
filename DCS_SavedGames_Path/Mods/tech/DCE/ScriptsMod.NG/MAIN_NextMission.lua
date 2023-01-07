@@ -83,6 +83,7 @@ end
 NameTheatre =  string.lower(mission.theatre)
 
 ---- add trigger to destory scenery objects -----
+log.info("add trigger to destory scenery objects. Iterate through destroyed scenery objects")
 mission.trig.flag[1] = true
 mission.trig.conditions[1] = "return(true)"
 mission.trig.actions[1] = ""
@@ -96,11 +97,12 @@ mission.trigrules[1] = {
 }
 
 require("Active/oob_scen")
-for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed scenery objects
+for scen_name,scen in pairs(oob_scen) do												--iterate through destroyed scenery objects
+	
 	if scen.x and scen.z then														--destroyed scenery object has x and z coordinates
 		
 		local zones_n = #mission.triggers.zones	+ 1									--trigger zone number
-		
+		log.debug("destroyed scenery object has x and z coordinates -> zones_n = " .. zones_n .. ", add trigger zone")
 		--add trigger zone
 		mission.triggers.zones[zones_n] = {
 			["x"] = scen.x,
@@ -117,10 +119,10 @@ for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed s
 			["hidden"] = true,
 			["name"] = "SceneryDestroyZone" .. #mission.trigrules[1].actions + 1,
 		}
-
+		log.trace("mission.triggers.zones[" .. zones_n .. "]:\n" .. inspect(mission.triggers.zones[zones_n]))
 		--add trigger
 		mission.trig.actions[1] = mission.trig.actions[1] ..  "a_scenery_destruction_zone(" .. zones_n .. ", 100);"
-		
+		log.trace("add trigger actions mission.trig.actions[1]:\n" .. mission.trig.actions[1])
 		mission.trigrules[1].actions[#mission.trigrules[1].actions + 1] = {
 			["ai_task"] = {
 				[1] = "",
@@ -130,13 +132,18 @@ for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed s
 			["destruction_level"] = 100,
 			["zone"] = zones_n,
 		}
+		log.trace("add trigger rules mission.trigrules[1].actions[" .. #mission.trigrules[1].actions + 1 .. "]:\n" .. inspect(mission.trigrules[1].actions[#mission.trigrules[1].actions + 1]))
+		log.debug("destroyed scenery object has x and z coordinates -> add new scenery destroyed zone: " .. zones_n .. " in mission.triggers.zone[" .. zones_n .. "]")
 	end
 end
 
 
 ----- prepare triggers to run files in mission -----
 local trig_n = 1
+
 local function AddFileTrigger(filename)
+	local nameFunction = "function AddFileTrigger(" .. filename .. "): "    
+	log.debug("Start " .. nameFunction)
 	trig_n = trig_n + 1
 	mapResource["ResKey_Action_" .. trig_n] = filename
 	mission.trig.funcStartup[trig_n] = 'if mission.trig.conditions[' .. trig_n .. ']() then mission.trig.actions[' .. trig_n .. ']() end'
@@ -160,17 +167,18 @@ local function AddFileTrigger(filename)
 			},
 		},
 	}
+	log.debug("End " .. nameFunction)
 end
 
 AddFileTrigger("camp_status.lua")
 AddFileTrigger("EventsTracker.lua")
-AddFileTrigger("AddCommandRadioF10.lua")											-- Miguel21 Modification M29
+AddFileTrigger("AddCommandRadioF10.lua")												-- Miguel21 Modification M29
 AddFileTrigger("GCIdata.lua")
 AddFileTrigger("GCIscript.lua")
 AddFileTrigger("ARM_Defence_Script.lua")
 AddFileTrigger("CustomTasksScript.lua")
 AddFileTrigger("CarrierIntoWindScript.lua")
-AddFileTrigger("Pedro.lua")															-- miguel21 modification M40 Pedro
+AddFileTrigger("Pedro.lua")																-- miguel21 modification M40 Pedro
 
 ----- run scripts to create content of next mission -----
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
@@ -215,12 +223,19 @@ require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 
+-- debug code
 if Debug.KillGround.flag then
+
 	for side_name,side in pairs(oob_ground) do														--side table(red/blue)											
+
 		if side_name == Debug.KillGround.sideGround then	
+
 			for country_n,country in pairs(side) do														--country table (number array)
+
 				if country.vehicle then																	--if country has vehicles
+
 					for group_n,group in pairs(country.vehicle.group) do								--groups table (number array)
+
 						for unit_n,unit in pairs(group.units) do										--units table (number array)					
 							
 							if not unit.dead and math.random(1, 100) <= Debug.KillGround.pourcent then
@@ -234,9 +249,13 @@ if Debug.KillGround.flag then
 						end
 					end
 				end
+	
 				if country.static then																--if country has static objects	
+	
 					for group_n,group in pairs(country.static.group) do								--groups table (number array)
+	
 						for unit_n,unit in pairs(group.units) do									--units table (number array)
+	
 							if not unit.dead and math.random(1, 100) <= Debug.KillGround.pourcent then			--check if unitId matches initiatorMissionID (string, needs to be converted to number)
 								
 								print("MainNT PasseDestroy static "..unit.name)
@@ -273,6 +292,8 @@ if Debug.KillGround.flag then
 	end
 end
 require("Active/targetlist")
+
+-- debug code
 if Debug.KillGround.flag then
 	for side_name,side in pairs(targetlist) do											--iterate through targetlist
 		if side_name == Debug.KillGround.sideTarget then
@@ -297,11 +318,12 @@ if Debug.KillGround.flag then
 		end
 	end
 end
+
 require("Active/camp_triggers")
 
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Refpoints.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_MissionScore.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Time.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Refpoints.lua") -- Check all trigger zones on base_mission and store their x-y coordinates for easier use (stored in Refpoint)
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_MissionScore.lua") -- define the mission score and mission goals
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Time.lua") -- --advance campaign time, set mission time, day, month and year
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Weather.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")			-- miguel21 Mod26
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_NavalEnvironment.lua")
