@@ -18,7 +18,7 @@ versionDCE["ATO_ThreatEvaluation.lua"] = "OB.1.0.0"
 
 -- miguel21 modification M34.f custom FrequenceRadio
 
--- =====================  Marco implementation ==================================
+
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
@@ -26,7 +26,7 @@ log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
--- =====================  End Marco implementation ==================================
+
 
 
 CreatePlageFrequency()																--trouve une plage de frequence commune si c'est possible
@@ -61,7 +61,7 @@ local callsign_west = {
 			[18] = "Mantis",	
 			[19] = "Badger",
 			}
-	}
+}
 	
 --function to check if a unit is a threat, assign threat values and add to threats table
 local function AddThreat(unit, side, hide)											--unput is side and unit-table from oob_ground	-- Miguel21 modification M28.b : helicoptere see all SAM (on ajoute Hide)							

@@ -579,7 +579,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 				if frequency[sqd.type] then					
 					for n = 1,  #frequency[sqd.type].radio do	
 						for bandFreq, value in pairs(frequency[sqd.type].radio[n]) do
-							if bandFreq == "FM" or bandFreq == "VHF" or bandFreq == "UHF" then								
+							if bandFreq == "FM" or bandFreq == "VHF"  or bandFreq == "LVHF" or bandFreq == "UHF" then								
 								
 								if not TempRadio[side][n] then TempRadio[side][n] = {} end	
 								if not TempRadio[side][n][bandFreq] then TempRadio[side][n][bandFreq] = {} end
