@@ -47,7 +47,7 @@ local function RadarHorizon(h1, h2)
 end
 
 -- evalutate threat radar detection for an altitude profile
-local function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry)
+local function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr)
 	log.debug(type_profile .. " profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hCruise: " .. tostring(profile_alt) .. ")")
 	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									--get the maximal range due to radar horizon (profile alt +100 m for safety)
 	log.debug("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
@@ -57,15 +57,20 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 		log.debug("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
 	end
 	
-	if profile_alt <= 100 then																			--if alt is lower than 100m
+	if profile_alt <= 100 and not_ewr then																			--if alt is lower than 100m
 		threatentry.level = threat.level / 2																--only 50% of threat level is applied as low level clutter bonus
-		log.debug(type_profile .. " alt(" .. type_profile .. ") is lower than 100m, only 50% of threat level is applied as low level clutter bonus")
-	
-	else																									--alt is higher than 100m
-		threatentry.level = threat.level																	--full threat level is applied
+		log.debug(type_profile .. " alt(" .. type_profile .. ") is lower than 100m, only 50% of threat level is applied as low level clutter bonus")		
 	end
-	log.debug("assigned threatentry.level = " .. threatentry.level)
-	table.insert(threat_table.ground[profile_alt], threatentry)
+
+	if not_ewr then
+		threatentry.level = threat.level																	--full threat level is applied
+		log.debug("assigned threatentry.level = " .. threatentry.level)
+		table.insert(threat_table.ground[profile_alt], threatentry)
+	
+	else
+		table.insert(threat_table.ewr[profile_alt], threatentry)
+	end
+
 	log.debug("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added new threat entry in threat_table.ground[" .. tostring(profile_alt) .. "] = \n" .. inspect(threatentry))
 end
 
@@ -87,21 +92,6 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 	log.trace("targetPoint: " .. tostring(targetPoint) .. ", basePoint: " .. tostring(basePoint) .. ", route_axis(heading): " .. route_axis)																--axis base-target
 	local standoff																										--standoff distance of attack WP from target
 		
-	--function to return radar horizon
-	--[[local function RadarHorizon(h1, h2)
-		local nameFunction = "function RadarHorizon(h1, h2): "    
-		log.debug("Start " .. nameFunction)						
-		r = 8500000																										--radius of earth (actual value 6371000 currected for refraction of radio waves)
-		d1 = math.sqrt(math.pow(r + h1, 2) - math.pow(r, 2))															--distance from radar height to earth tangent point
-		d2 = math.sqrt(math.pow(r + h2, 2) - math.pow(r, 2))															--distance from target altitude to earth tangent point
-		alpha1 = math.deg(math.atan(d1 / r))																			--angle between radar and earth tangent point
-		alpha2 = math.deg(math.atan(d2 / r))																			--angle beteen target and earth tangent point
-		u1 = 2 * r * math.pi / 360 * alpha1																				--ground distance from radar to earth tangent point
-		u2 = 2 * r * math.pi / 360 * alpha2						
-		log.trace("u1+u2 = " .. tostring(u1+u2))
-		log.debug("Exit " .. nameFunction)																				--ground distance from target to earth tangent point
-		return u1 + u2																									--return total ground distance from radar to target
-	end]]
 	
 	
 	--local threat table adjusted for cruise and attack altitudes
@@ -118,11 +108,11 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		log.trace("gelicopter == true -> HiddenCheck = true")
 	end																		
 	threat_table.ground[profile.hCruise] = {}
-	threat_table.ground[profile.hAttack] = {}
-	
+	threat_table.ground[profile.hAttack] = {}	
 	log.debug("iterate groundthreats[" .. enemy .. "] for threat radar detection")
+
 	for threat_n,threat in pairs(groundthreats[enemy]) do	
-		log.debug("evalutation with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)															--iterate through ground threats
+		log.debug("evalutation (threat) with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)															--iterate through ground threats
 		
 		if (time == "day" or threat.night == true) and threat.hidden == HiddenCheck then																	--during day or threat is night capable to be counted as threat			
 			local threatentry = {
@@ -134,29 +124,8 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			}
 			log.debug("time(" .. time .. ") == day or threat_n: " .. threat_n .." has night capability ( threat.night == " .. tostring(threat.night) .. "), define a new threatentry:\n" .. inspect(threatentry))			
 			
-			if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then								--threat covers cruise alt
-														
-				evalRadarDetection(profile.hCruise, threat, "cruise", threat_table, threatentry)
-
-				--[[log.debug("cruise profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hCruise: " .. tostring(profile.hCruise) .. ")")
-				local maxrange = RadarHorizon(threat.elevation, profile.hCruise + 100)									--get the maximal range due to radar horizon (profile alt +100 m for safety)
-				log.debug("maximal range due to radar horizon (cruise profile alt +100 m for safety): " .. tostring(maxrange))
-				
-				if maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range					
-					threatentry.range = maxrange																		--use maximal range due to radar horizon
-					log.debug("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
-				end
-				
-				if profile.hCruise <= 100 then																			--if alt is lower than 100m
-					threatentry.level = threat.level / 2																--only 50% of threat level is applied as low level clutter bonus
-					log.debug("alt is lower than 100m, only 50% of threat level is applied as low level clutter bonus")
-				
-				else																									--alt is higher than 100m
-					threatentry.level = threat.level																	--full threat level is applied
-				end
-				log.debug("assigned threatentry.level = " .. threatentry.level)
-				table.insert(threat_table.ground[profile.hCruise], threatentry)
-				log.debug("for this cruise profile added new threat entry in threat_table.ground[" .. tostring(profile.hCruise) .. "] = \n" .. inspect(threat_table.ground[profile.hCruise]))]]
+			if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then								--threat covers cruise alt														
+				evalRadarDetection(profile.hCruise, threat, "cruise", threat_table, threatentry, true)				
 			end
 			
 			if profile.hCruise ~= profile.hAttack then																--attack alt is different than cruise alt
@@ -164,48 +133,35 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				
 				if threat.min_alt <= profile.hAttack and threat.max_alt >= profile.hAttack then							--threat covers attack alt		
 					threatentry.range = threat.range
-					evalRadarDetection(profile.hAttack, threat, "attack", threat_table, threatentry)
-
-					--[[log.debug("attack profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hAttack: " .. tostring(profile.hAttack) .. ")")
-					threatentry.range = threat.range
-					local maxrange = RadarHorizon(threat.elevation, profile.hAttack + 100)								--get the maximal range due to radar horizon (profile alt +100 m for safety)
-					log.debug("maximal range due to radar horizon (attack profile alt +100 m for safety): " .. tostring(maxrange))
-					
-					if maxrange < threat.range then																		--maximal range due to radar horizon is smaller than threat range
-						threatentry.range = maxrange																	--use maximal range due to radar horizon
-						log.debug("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
-					end
-
-					if profile.hAttack <= 100 then																		--if alt is lower than 100m
-						threatentry.level = threat.level / 2															--only 50% of threat level is applied as low level clutter bonus
-					else																								--alt is higher than 100m
-						threatentry.level = threat.level																--full threat level is applied
-					end
-					table.insert(threat_table.ground[profile.hAttack], threatentry)]]
+					evalRadarDetection(profile.hAttack, threat, "attack", threat_table, threatentry, true)					
 				end
 			end
 		end
 	end
-	
-	-- ============================================================					
-	-- Last point for coding logger functionality by Old_Boy ------		
-	-- ============================================================	
-
+		
 	threat_table.ewr[profile.hCruise] = {}
 	threat_table.ewr[profile.hAttack] = {}
+	log.debug("iterate groundthreats[" .. enemy .. "] for ewr radar detection")
+
 	for threat_n,threat in pairs(ewr[enemy]) do																			--iterate through ewr threats
+		log.debug("evalutation (ewr) with threat_n: " .. threat_n .. " - type: ewr - class: " .. threat.class)															--iterate through ground threats
 		local cruisethreatentry = {
 			class = threat.class,
 			x = threat.x,
 			y = threat.y,
 			range = threat.range,
 		}
+
 		if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then									--threat covers cruise alt
-			local maxrange = RadarHorizon(threat.elevation, profile.hCruise + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
+			
+			evalRadarDetection(profile.hCruise, threat, "ewr", threat_table, cruisethreatentry, false)					
+			--[[local maxrange = RadarHorizon(threat.elevation, profile.hCruise + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
+			
 			if maxrange < threat.range then																				--maximal range due to radar horizon is smaller than threat range
-				cruisethreatentry.range = maxrange																			--use maximal range due to radar horizon
+				cruisethreatentry.range = maxrange																		--use maximal range due to radar horizon
 			end
-			table.insert(threat_table.ewr[profile.hCruise], cruisethreatentry)
+			table.insert(threat_table.ewr[profile.hCruise], cruisethreatentry)]]
+
 		end
 		local attackthreatentry = {
 			class = threat.class,
@@ -213,15 +169,23 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			y = threat.y,
 			range = threat.range,
 		}
+		
 		if threat.min_alt <= profile.hAttack and threat.max_alt >= profile.hAttack then									--threat covers attack alt		
-			local maxrange = RadarHorizon(threat.elevation, profile.hAttack + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
+			
+			evalRadarDetection(profile.hAttack, threat, "ewr", threat_table, attackthreatentry, false)					
+			--[[local maxrange = RadarHorizon(threat.elevation, profile.hAttack + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
+			
 			if maxrange < threat.range then																				--maximal range due to radar horizon is smaller than threat range
 				attackthreatentry.range = maxrange																		--use maximal range due to radar horizon
 			end
-			table.insert(threat_table.ewr[profile.hAttack], attackthreatentry)
+			table.insert(threat_table.ewr[profile.hAttack], attackthreatentry)]]
 		end
 	end
 	
+	-- ============================================================					
+	-- Last point for coding logger functionality by Old_Boy ------		
+	-- ============================================================	
+
 	
 	--function to check if a line between two points runs through a threat. Returns a table of threats
 	local function ThreatOnLeg(point1, point2, leg_alt)
