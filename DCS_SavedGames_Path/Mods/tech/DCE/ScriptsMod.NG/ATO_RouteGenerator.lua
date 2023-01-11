@@ -25,7 +25,7 @@ versionDCE["ATO_RouteGenerator.lua"] = "OB.1.0.0"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = "info" --LOGGING_LEVEL
+log.level = "debug" --LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_ATO_RouteGenerator." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
@@ -33,7 +33,7 @@ log.debug("Start")
 --function to return radar horizon
 local function RadarHorizon(h1, h2)
 	local nameFunction = "function RadarHorizon(h1, h2): "    
-	log.debug("Start " .. nameFunction)						
+	log.trace("Start " .. nameFunction)						
 	local r = 8500000																										--radius of earth (actual value 6371000 currected for refraction of radio waves)
 	local d1 = math.sqrt(math.pow(r + h1, 2) - math.pow(r, 2))															--distance from radar height to earth tangent point
 	local d2 = math.sqrt(math.pow(r + h2, 2) - math.pow(r, 2))															--distance from target altitude to earth tangent point
@@ -42,36 +42,39 @@ local function RadarHorizon(h1, h2)
 	local u1 = 2 * r * math.pi / 360 * alpha1																				--ground distance from radar to earth tangent point
 	local u2 = 2 * r * math.pi / 360 * alpha2						
 	log.trace("u1+u2 = " .. tostring(u1+u2))
-	log.debug("End " .. nameFunction)																				--ground distance from target to earth tangent point
+	log.trace("End " .. nameFunction)																				--ground distance from target to earth tangent point
 	return u1 + u2																									--return total ground distance from radar to target
 end
 
 -- evalutate threat radar detection for an altitude profile
 local function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr)
-	log.debug(type_profile .. " profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hCruise: " .. tostring(profile_alt) .. ")")
+	local nameFunction = "function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr: "    
+	log.trace("Start " .. nameFunction)						
+	log.trace(type_profile .. " profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hCruise: " .. tostring(profile_alt) .. ")")
 	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									--get the maximal range due to radar horizon (profile alt +100 m for safety)
-	log.debug("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
+	log.trace("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
 	
 	if maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range					
 		threatentry.range = maxrange																		--use maximal range due to radar horizon
-		log.debug("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
+		log.trace("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
 	end
 	
 	if profile_alt <= 100 and not_ewr then																			--if alt is lower than 100m
 		threatentry.level = threat.level / 2																--only 50% of threat level is applied as low level clutter bonus
-		log.debug(type_profile .. " alt(" .. type_profile .. ") is lower than 100m, only 50% of threat level is applied as low level clutter bonus")		
+		log.trace(type_profile .. " alt(" .. type_profile .. ") is lower than 100m, only 50% of threat level is applied as low level clutter bonus")		
 	end
 
 	if not_ewr then
 		threatentry.level = threat.level																	--full threat level is applied
-		log.debug("assigned threatentry.level = " .. threatentry.level)
+		log.trace("assigned threatentry.level = " .. threatentry.level)
 		table.insert(threat_table.ground[profile_alt], threatentry)
 	
 	else
 		table.insert(threat_table.ewr[profile_alt], threatentry)
 	end
 
-	log.debug("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added new threat entry in threat_table.ground[" .. tostring(profile_alt) .. "] = \n" .. inspect(threatentry))
+	log.trace("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added new threat entry in threat_table.ground[" .. tostring(profile_alt) .. "] = \n" .. inspect(threatentry))
+	log.trace("End " .. nameFunction)						
 end
 
 
@@ -89,7 +92,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 
 	local route = {}																									--table to store the route to be built
 	local route_axis = GetHeading(targetPoint, basePoint)
-	log.trace("targetPoint: " .. tostring(targetPoint) .. ", basePoint: " .. tostring(basePoint) .. ", route_axis(heading): " .. route_axis)																--axis base-target
+	log.debug("targetPoint: " .. tostring(targetPoint) .. ", basePoint: " .. tostring(basePoint) .. ", route_axis(heading): " .. route_axis)																--axis base-target
 	local standoff																										--standoff distance of attack WP from target
 		
 	
@@ -105,14 +108,14 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 	
 	if helicopter then -- M28 gli elicotteri possono vedere tutte le difese, anche quelle nascoste  mentre l'aereo vola alto e veloce e non vede minacce 
 		HiddenCheck = true 
-		log.trace("gelicopter == true -> HiddenCheck = true")
+		log.debug("gelicopter == true -> HiddenCheck = true")
 	end																		
 	threat_table.ground[profile.hCruise] = {}
 	threat_table.ground[profile.hAttack] = {}	
 	log.debug("iterate groundthreats[" .. enemy .. "] for threat radar detection")
 
 	for threat_n,threat in pairs(groundthreats[enemy]) do	
-		log.debug("evalutation (threat) with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)															--iterate through ground threats
+		log.trace("evalutation (threat) with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)															--iterate through ground threats
 		
 		if (time == "day" or threat.night == true) and threat.hidden == HiddenCheck then																	--during day or threat is night capable to be counted as threat			
 			local threatentry = {
@@ -122,7 +125,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				y = threat.y,
 				range = threat.range,
 			}
-			log.debug("time(" .. time .. ") == day or threat_n: " .. threat_n .." has night capability ( threat.night == " .. tostring(threat.night) .. "), define a new threatentry:\n" .. inspect(threatentry))			
+			log.trace("time(" .. time .. ") == day or threat_n: " .. threat_n .." has night capability ( threat.night == " .. tostring(threat.night) .. "), define a new threatentry:\n" .. inspect(threatentry))			
 			
 			if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then								--threat covers cruise alt														
 				evalRadarDetection(profile.hCruise, threat, "cruise", threat_table, threatentry, true)				
@@ -144,7 +147,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 	log.debug("iterate groundthreats[" .. enemy .. "] for ewr radar detection")
 
 	for threat_n,threat in pairs(ewr[enemy]) do																			--iterate through ewr threats
-		log.debug("evalutation (ewr) with threat_n: " .. threat_n .. " - type: ewr - class: " .. threat.class)															--iterate through ground threats
+		log.trace("evalutation (ewr) with threat_n: " .. threat_n .. " - type: ewr - class: " .. threat.class)															--iterate through ground threats
 		local cruisethreatentry = {
 			class = threat.class,
 			x = threat.x,
@@ -152,16 +155,8 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			range = threat.range,
 		}
 
-		if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then									--threat covers cruise alt
-			
-			evalRadarDetection(profile.hCruise, threat, "ewr", threat_table, cruisethreatentry, false)					
-			--[[local maxrange = RadarHorizon(threat.elevation, profile.hCruise + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
-			
-			if maxrange < threat.range then																				--maximal range due to radar horizon is smaller than threat range
-				cruisethreatentry.range = maxrange																		--use maximal range due to radar horizon
-			end
-			table.insert(threat_table.ewr[profile.hCruise], cruisethreatentry)]]
-
+		if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then									--threat covers cruise alt			
+			evalRadarDetection(profile.hCruise, threat, "ewr", threat_table, cruisethreatentry, false)								
 		end
 		local attackthreatentry = {
 			class = threat.class,
@@ -170,72 +165,98 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			range = threat.range,
 		}
 		
-		if threat.min_alt <= profile.hAttack and threat.max_alt >= profile.hAttack then									--threat covers attack alt		
-			
-			evalRadarDetection(profile.hAttack, threat, "ewr", threat_table, attackthreatentry, false)					
-			--[[local maxrange = RadarHorizon(threat.elevation, profile.hAttack + 100)										--get the maximal range due to radar horizon (profile alt +100 m for safety)
-			
-			if maxrange < threat.range then																				--maximal range due to radar horizon is smaller than threat range
-				attackthreatentry.range = maxrange																		--use maximal range due to radar horizon
-			end
-			table.insert(threat_table.ewr[profile.hAttack], attackthreatentry)]]
+		if threat.min_alt <= profile.hAttack and threat.max_alt >= profile.hAttack then									--threat covers attack alt					
+			evalRadarDetection(profile.hAttack, threat, "ewr", threat_table, attackthreatentry, false)							
 		end
 	end
-	
-	-- ============================================================					
-	-- Last point for coding logger functionality by Old_Boy ------		
-	-- ============================================================	
-
-	
+		
 	--function to check if a line between two points runs through a threat. Returns a table of threats
 	local function ThreatOnLeg(point1, point2, leg_alt)
-		local tbl = {}																									--local table to collect threats on route leg
-		
+		local nameFunction = "function ThreatOnLeg(point1, point2, leg_alt): "    		
+		log.trace("Start " .. nameFunction)						
+		log.trace("point1: (" .. point1.x .. "," .. point1.y .. "), point2: (" .. point2.x .. "," .. point2.y .. "), leg_alt: " .. leg_alt .. "")    
+		local tbl = {}																									--local table to collect threats on route leg		
+		log.trace("check ground threat -> iterate threat_table.ground[" .. leg_alt .. "]")
 		--check ground threats
 		for t = 1, #threat_table.ground[leg_alt] do																		--iterate through all ground threats
 			local threat_route_distance = GetTangentDistance(point1, point2, threat_table.ground[leg_alt][t])			--get closest distance from threat to route between point 1 and point 2
-			if threat_route_distance < threat_table.ground[leg_alt][t].range then										--if route passes threat
+			log.trace("compute closest distance from threat (pos x,y: " .. threat_table.ground[leg_alt][t].x .. ", " .. threat_table.ground[leg_alt][t].y .. ") to route between point 1 and point 2, threat_route_distance = " .. threat_route_distance)
+
+			if threat_route_distance < threat_table.ground[leg_alt][t].range then										--route line (p1-p2) it's inside threat range
+				log.debug("route line (p1-p2) it's inside threat range, threat_route_distance (" .. threat_route_distance .. ") < threat_table.ground[leg_alt][t].range (" .. threat_table.ground[leg_alt][t].range .. "). Insert threat in aux table threats (tbl), threat:\n" .. inspect(threat_table.ground[leg_alt][t]))
 				table.insert(tbl, threat_table.ground[leg_alt][t])
 				local approachfactor = 1 - threat_route_distance / threat_table.ground[leg_alt][t].range				--factor how close route passes to threat (1 = on top)
 				tbl[#tbl].approachfactor = approachfactor
+				log.debug("calculated approachfactor(1 = on top) = " .. approachfactor)
 			end
 		end
 
 		
-		--check EWR threats
-		if profile.avoid_EWR then																							--only count EWR asd threats if loadout should avoid them
+		--check EWR threats		
+		if profile.avoid_EWR then																									--only count EWR asd threats if loadout should avoid them
+			log.trace("check ewr threat -> iterate threat_table.ewr[" .. leg_alt .. "]")
+
 			for e = 1, #threat_table.ewr[leg_alt] do																		--iterate through all ewr/awacs
-				if threat_table.ewr[leg_alt][e].class == "EWR" then															--only do for EWR, ignore AWACS (too large area to avoid)
-					
+
+				if threat_table.ewr[leg_alt][e].class == "EWR" then															--only do for EWR, ignore AWACS (too large area to avoid))										
 					local entry = {
 						approachfactor = 0
 					}
 					
+					log.trace("iterate through all fighter threats")
+
 					for t = 1, #fighterthreats[enemy] do																	--iterate through all fighter threats
 						local ewr_required																					--boolean whether ewr is required for the fighter to be a threat
+						
 						if fighterthreats[enemy][t].class == "CAP" then														--if the fighter is CAP
+							log.trace("fighterthreats[" .. enemy .. "][" .. t .. "] is a CAP")
+							
 							if leg_alt >= 3000 then																			--if route leg is at high altitude
 								ewr_required = false																		--CAP does not need ewr to be a threat
+								log.trace("route leg (" .. leg_alt .. ") is at high altitude (>3000m) -> CAP does not need ewr to be a threat")
+
 							else																							--if route leg is at low altitude
+								
 								if fighterthreats[enemy][t].LDSD then														--if fighter is look down/shoot down capable
 									ewr_required = false																	--CAP does not need ewr to be a threat
+									log.trace("fighter is look down/shoot down (LDSD) capable -> CAP does not need ewr to be a threat")
+								
 								else																						--if fighter is not look down/shoot down capable
 									ewr_required = true																		--CAP needs ewr to be a threat
+									log.trace("fighter is not look down/shoot down (LDSD) capable -> CAP does need ewr to be a threat")
 								end
 							end
+						
 						elseif fighterthreats[enemy][t].class == "Intercept" then											--if the fighter is an interceptor
 							ewr_required = true																				--ewr is required for fighter to be a threat (needs early warning to take off)
+							log.trace("fighterthreats[" .. enemy .. "][" .. t .. "] is a Interceptor -> ewr is required for fighter to be a threat (needs early warning to take off)")
 						end
 						
 						if ewr_required == true then																		--EWR stations that can command fighters that require ewr guidance are counted as threats (AWACS and fighter areas are ignored, since these are too large areas to avoid anyway)
-							if GetDistance(threat_table.ewr[leg_alt][e], fighterthreats[enemy][t]) < threat_table.ewr[leg_alt][e].range + fighterthreats[enemy][t].range then	--if fighterthreats and ewr are overlapping
-								if GetTangentDistance(point1, point2, fighterthreats[enemy][t]) < fighterthreats[enemy][t].range then								--if route leg is in range of fighterthreat
-									if GetTangentDistance(point1, point2, threat_table.ewr[leg_alt][e]) < threat_table.ewr[leg_alt][e].range then					--if route leg is in range of ewr
-										local approachfactor = 1 - GetTangentDistance(point1, point2, threat_table.ewr[leg_alt][e]) / threat_table.ewr[leg_alt][e].range		--factor how close route passes to threat (1 = on top)
-										if approachfactor > entry.approachfactor then										--approach factor is higher than current entry for this ewr
+							log.trace("ewr is required")
+							local fighter_ewr_distance = GetDistance(threat_table.ewr[leg_alt][e], fighterthreats[enemy][t])
+							local sum_range_ewr_fighter = threat_table.ewr[leg_alt][e].range + fighterthreats[enemy][t].range
+							log.trace("calculated fighter_ewr_distance = " .. fighter_ewr_distance .. ", sum_range_ewr_fighter = " .. sum_range_ewr_fighter)
+
+							if fighter_ewr_distance <  sum_range_ewr_fighter then	--if fighterthreats and ewr are overlapping
+								log.trace("fighter_ewr_distance <  sum_range_ewr_fighter -> fighterthreats and ewr are overlapping")
+								local route_fighter_distance = GetTangentDistance(point1, point2, fighterthreats[enemy][t])
+								log.trace("calculated route_fighter_distance = " .. route_fighter_distance)
+
+								if route_fighter_distance < fighterthreats[enemy][t].range then								--if route leg is in range of fighterthreat
+									log.trace("route_fighter_distance < fighterthreats[enemy][t].range (" .. fighterthreats[enemy][t].range .. ") -> route leg is in range of fighterthreat")
+									local route_ewr_distance = GetTangentDistance(point1, point2, threat_table.ewr[leg_alt][e])
+									log.trace("calculated route_fighter_distance = " .. route_fighter_distance)
+
+									if route_ewr_distance < threat_table.ewr[leg_alt][e].range then					--if route leg is in range of ewr										
+										local approachfactor = 1 - route_ewr_distance / threat_table.ewr[leg_alt][e].range		--factor how close route passes to threat (1 = on top)
+										log.trace("route_ewr_distance < threat_table.ewr[leg_alt][e].range (" .. threat_table.ewr[leg_alt][e].range .. ") -> route leg is in range of ewr. Calculated approachfactor(1 = on top) = " .. approachfactor)	
+										
+										if approachfactor > entry.approachfactor then										--approach factor is higher than current entry for this ewr											
 											entry = threat_table.ewr[leg_alt][e]											--make this ewr the entry
 											entry.level = fighterthreats[enemy][t].level									--capability level of fighter becomes new threat level of EWR station
 											entry.approachfactor = approachfactor											--factor how close route passes to threat (1 = on top)
+											log.trace("calculated approach factor is higher than current entry for this ewr -> make this ewr the entry, capability level(" .. entry.level .. ") of fighter becomes new threat level of EWR station and calculated approachfactor(" .. approachfactor ..  ") become entry's approachfactor")
 										end						
 									end
 								end
@@ -245,14 +266,18 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 					
 					if entry.approachfactor > 0 then																		--if an approach factor for this ewr was found
 						table.insert(tbl, entry)																			--save ewr station as threat on this leg
+						log.debug("an approach factor for this ewr was defined (>0) -> insert ewr station in aux table threats (tbl)")
 					end
 				end
 			end
 		end
-		
+		log.debug("End " .. nameFunction)						
 		return tbl
 	end
 
+	-- ============================================================					
+	-- Last point for coding logger functionality by Old_Boy ------		
+	-- ============================================================	
 	
 	--function to define a set of nav points to make a route between two points that evades threats
 	local function FindPath(from, to)
