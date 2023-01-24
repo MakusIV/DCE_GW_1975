@@ -18,6 +18,8 @@ log.level = "trace"
 
 
 local modes = {
+  { name = "traceVeryLow", color = "\27[34m", },
+  { name = "traceLow", color = "\27[34m", },
   { name = "trace", color = "\27[34m", },
   { name = "debug", color = "\27[36m", },
   { name = "info",  color = "\27[32m", },

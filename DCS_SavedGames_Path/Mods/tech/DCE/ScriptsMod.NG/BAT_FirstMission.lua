@@ -23,7 +23,15 @@ versionDCE["BAT_FirstMission.lua"] = "OB.1.0.0"
 --if not versionDCE then versionDCE = {} end
 --versionDCE["BAT_FirstMission.lua"] = "1.7.33"
 
--- =====================  Marco implementation ==================================
+versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
+math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))										----- random seed -----
+math.random(); math.random(); math.random()																----- random seed -----
+dofile("Init/conf_mod.lua")
+dofile("Init/camp_init.lua")
+dofile("Init/oob_air_init.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+dofile("Init/targetlist_init.lua")
+
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
@@ -31,9 +39,6 @@ log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_BAT_FirstMission." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
--- =====================  End Marco implementation ==================================
-
-
 
 local function AcceptMission()
 	repeat
@@ -87,17 +92,6 @@ local TabTask = {
 		["Refueling"] = "u",
 	}
 
------ random seed -----
-math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))
-math.random(); math.random(); math.random()
-
-versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
-
-dofile("Init/conf_mod.lua")
-dofile("Init/camp_init.lua")
-dofile("Init/oob_air_init.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
-dofile("Init/targetlist_init.lua")
 
 --=====================  start marco implementation ==================================
 
