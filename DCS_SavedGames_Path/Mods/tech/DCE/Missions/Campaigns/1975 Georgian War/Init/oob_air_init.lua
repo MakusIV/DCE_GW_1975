@@ -268,7 +268,7 @@ oob_air = {
 			country = "USA",								--unit country
 			livery = "usaf standard",						--unit livery
 			base = "Batumi",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",									--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 			},
@@ -312,7 +312,7 @@ oob_air = {
 			country = "Georgia",							--unit country
 			livery = "af standard",							--unit livery
 			base = "Vaziani",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",									--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,
@@ -331,7 +331,7 @@ oob_air = {
 			type = "MiG-27K",								--aircraft type
 			country = "Georgia",							--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -427,7 +427,7 @@ oob_air = {
 			country = "Georgia",						--unit country
 			livery = "",								--unit livery
 			base = "Senaki-Kolkhi",						--unit base
-			skill = "High",								--unit skill
+			skill = "Random",							--unit skill
 			tasks = {									--unit tasks
 				["Intercept"] = true,
 				["CAP"] = true,
@@ -453,7 +453,7 @@ oob_air = {
 			inactive = true,
 			type = "MiG-21Bis",							--aircraft type
 			base = "Reserves",
-			skill = "High",								--unit skill
+			skill = "Random",							--unit skill
 			tasks = {},									--unit tasks
 			number = 36,
 		},
@@ -751,7 +751,7 @@ oob_air = {
 			------------------ CVN-74 John C. Stennis --------------------
 		[40] = {
 			name = "VF-118/GA",								--unit name
-			--player = true,								--player unit
+			player = false, 								--player unit
 			type = "F-14A-135-GR",							--aircraft type
 			country = "USA",								--unit country
 			livery = {"vf-101 grim reapers low vis", "vf-101 dark"},				--unit livery
@@ -764,17 +764,20 @@ oob_air = {
 			base = "CVN-74 John C. Stennis",				--unit base
 			skill = "Random",								--unit skill
 			tasks = {										--unit tasks				
+				["CAP"] = false,
+				["Intercept"] = true,
+				["Escort"] = false,
+				["Fighter Sweep"] = false,
 				["Strike"] = true,
+				["SEAD"] = false,
+				["Anti-ship Strike"] = false,
+				["Laser Illumination"] = false,
 			},
 			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 1.3,							-- coef normal : = 1
-				["Laser Illumination"] = 1,
+				["Strike"] = 1.3,							-- coef normal : = 1				
 				["Intercept"] = 1.7,
-				["CAP"] = 1.5,
-				["Escort"] = 1,
-				["Fighter Sweep"] = 1,
 			},
-			number = 12,
+			number = 8,
 		},
 		[41] = {
 			name = "R/VF-118/GA",							--unit name
@@ -783,7 +786,7 @@ oob_air = {
 			base = "Reserves",
 			skill = "Random",								--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 12,
 		},
 		[42] = {
 			name = "177 ARW",								--unit name
@@ -982,7 +985,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Mozdok",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["SEAD"] = true,
@@ -991,7 +994,8 @@ oob_air = {
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 2,								-- coef normal : = 1
 				["SEAD"] = 2,
-				["Laser Illumination"] = 1,			
+				["Laser Illumination"] = 1,	
+				["Anti-ship Strike"] = 1.5,		
 			},		
 			number = 12,
 		},
@@ -1001,7 +1005,7 @@ oob_air = {
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",									--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -1022,7 +1026,7 @@ oob_air = {
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 0.3,							-- coef normal : = 1				
 				["Laser Illumination"] = 1,
-				["Intercept"] = 0.5,
+				["Intercept"] = 1.5,
 				["CAP"] = 1.5,
 				["Escort"] = 2,
 				["Fighter Sweep"] = 1,	
@@ -1083,7 +1087,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Beslan",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["SEAD"] = true,
@@ -1092,7 +1096,8 @@ oob_air = {
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 2,								-- coef normal : = 1
 				["SEAD"] = 1.5,
-				["Laser Illumination"] = 1,				
+				["Laser Illumination"] = 1,	
+				["Anti-ship Strike"] = 1.5,			
 			},
 			number = 12,
 		},
@@ -1102,7 +1107,7 @@ oob_air = {
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -1245,7 +1250,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Nalchik",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["SEAD"] = true,
@@ -1265,7 +1270,7 @@ oob_air = {
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -1355,7 +1360,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Mineralnye-Vody",						--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {
 				["Strike"] = true,
 				["SEAD"] = true,
@@ -1375,7 +1380,7 @@ oob_air = {
 			inactive = true,
 			type = "Su-24M",								--aircraft type
 			base = "Reserves",
-			skill = "Random"	,							--unit skill
+			skill = "High"	,							--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},		
@@ -1418,7 +1423,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Mineralnye-Vody",						--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
@@ -1427,7 +1432,7 @@ oob_air = {
 			tasksCoef = {									--unit tasks coef (optional)
 				["Strike"] = 2,								-- coef normal : = 1
 				["SEAD"] = 1.5,
-				["Anti-ship Strike"] = 0.5,
+				["Anti-ship Strike"] = 1,
 				["Laser Illumination"] = 1,				
 			},
 			number = 12,
@@ -1438,7 +1443,7 @@ oob_air = {
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -1543,7 +1548,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Maykop-Khanskaya",						--unit base
-			sskill = "Random",								--unit skill
+			sskill = "High",								--unit skill
 			tasks = {
 				["Strike"] = true,
 				["SEAD"] = true,
@@ -1554,7 +1559,7 @@ oob_air = {
 				["Strike"] = 1.3,							-- coef normal : = 1
 				["SEAD"] = 2,
 				["Laser Illumination"] = 1,				
-				["Anti-ship Strike"] = 1,
+				["Anti-ship Strike"] = 1.7,
 			},
 			number = 12,
 		},
@@ -1563,7 +1568,7 @@ oob_air = {
 			inactive = true,
 			type = "Su-24M",								--aircraft type
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},
@@ -1595,7 +1600,7 @@ oob_air = {
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Maykop-Khanskaya",								--unit base
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,
 				["Anti-ship Strike"] = true,			
@@ -1615,7 +1620,7 @@ oob_air = {
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
-			skill = "Random",								--unit skill
+			skill = "High",								--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
 		},

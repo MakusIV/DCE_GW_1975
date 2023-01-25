@@ -22,9 +22,9 @@ LOG_DIR = "Log/"
 
 mission_ini = {
 	PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
-	PruneAggressiveness = 1.5,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
+	PruneAggressiveness = 1.9,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
 	PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
-	ForcedPruneSam = false,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
+	ForcedPruneSam = true,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
 
 	AIemergencyLaunch = true,					-- (default : false), Tanks and Bombs emergency In Task Strike: autorise ou non aux AI � larguer leur emport sous la menace pendant un strike
 
@@ -32,9 +32,9 @@ mission_ini = {
 	intercept_hotstart = true,					-- (default : true), true: player flights with intercept task starts with engines running on parking
 	startup_time_player = 900,					-- (default : 600), time in seconds allocated for startup, taxi and take off for player flight
 
-	failure = false,							-- (default : false), true = aircraft failures activated, works in SOLO, bug in MP, M20
-	failureProbMax = 10,						-- (1 to 100) probabilit� maximum sur une panne -- Miguel21 modification M20
-	failureNbMax = 5 ,							-- ( 1 to ...57?) Max failures number in one mission --Miguel21 modification M20
+	failure = true,								-- (default : false), true = aircraft failures activated, works in SOLO, bug in MP, M20
+	failureProbMax = 5,							-- (1 to 100) probabilit� maximum sur une panne -- Miguel21 modification M20
+	failureNbMax = 3 ,							-- ( 1 to ...57?) Max failures number in one mission --Miguel21 modification M20
 
 	Keep_USNdeckCrew = false,					-- (default : false), false = supprime US Navy deck crew dans la g�n�ration de mission (Ceci n'installe/desinstalle pas le MOD USN) Miguel Modification M23
 
@@ -47,8 +47,8 @@ mission_ini = {
 
 	CVN_CleanDeck = false, 						-- (default : false), true: Remove all static aircraft from the deck. ( M31 )
 	CVN_TimeBtwPlane = 45, 						-- (default : false), Time between each aircraft for catapulting
-	CVN_Vmax = 10,								-- (default = 15.4333( m/s)==30kts), can have bp with F14, go down to 10 m/s
-	CVN_windDeck = 9,							-- (default = 13.89( m/s)==27kts), can have bp with F14, go down to 9 m/s
+	CVN_Vmax = 15,								-- (default = 15.4333( m/s)==30kts), can have bp with F14, go down to 10 m/s
+	CVN_windDeck = 13,							-- (default = 13.89( m/s)==27kts), can have bp with F14, go down to 9 m/s
 	CVN_despawnAfterLanding = true,				-- (default = true) despawn aircraft landing on CVN and LHA ,this avoids collisions between taxxing and landing aircraft
 
 	SC_SpawnOn = {
@@ -59,7 +59,7 @@ mission_ini = {
 	},
 
 	MP_PlaneRecovery = false,					--  (defaut: false) In multiplayer, this allows you to control an aircraft already in flight in case of a crash. M11.q
-	SC_CarrierIntoWind = "man",				-- (defaut: "auto")("man"), "auto": Original Mbot code: the CVN rotates according to the air operations. "man": the CVN runs only once via the commands in the radio menu F10
+	SC_CarrierIntoWind = "auto",					-- (defaut: "auto")("man"), "auto": Original Mbot code: the CVN rotates according to the air operations. "man": the CVN runs only once via the commands in the radio menu F10
 
 	WrittenOnScratchpadMod = true,				-- (defaut: true) pre-fills the scratchpad MOD sheet, for the moment, only works if DCS is not launched.
 
@@ -70,14 +70,14 @@ mission_ini = {
 -- Force your own options rather than those of base_ini.miz, which correspond to those of PBO-CEF ^^
 -- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent � ceux de PBO-CEF ^^
 mission_forcedOptions = {
-	--["accidental_failures"] = true,						-- False / true : Panne al�atoire (sera automatiquement desactiv� en multijoueur dans DCE)
+	--["accidental_failures"] = true,					-- False / true : Panne al�atoire (sera automatiquement desactiv� en multijoueur dans DCE)
 	["wakeTurbulence"] = true,							-- False / true : turbulence  [MP: recommend: false]
 	["labels"] = 0,										-- etiquette : ( 0 : aucune �tiquette ) || ( 1 : �tiquette PLEINE ) || ( 2 : �tiquette abr�g�e )|| ( 3 : �tiquette Plate )
-	["optionsView"] = "optview_all",				-- Vue de la Map F10: ( "optview_onlymap": ONLY the MAP) || ( "optview_myaircraft": only my plane on map) || ( "optview_allies": fog of war) || ( "optview_onlyallies" : Allied only  ) || ( "optview_all" : every visible targets and planes on map allowed by campaign maker : usefull to program JDAM or JSAW - non target units will stay invisible to player )
+	["optionsView"] = "optview_all",					-- Vue de la Map F10: ( "optview_onlymap": ONLY the MAP) || ( "optview_myaircraft": only my plane on map) || ( "optview_allies": fog of war) || ( "optview_onlyallies" : Allied only  ) || ( "optview_all" : every visible targets and planes on map allowed by campaign maker : usefull to program JDAM or JSAW - non target units will stay invisible to player )
 	["externalViews"] = true,							-- False / true : Vue externe
 	["permitCrash"] = true,								-- False / true : R�cup�ration de crash
 	["miniHUD"] = false,								-- False / true : Mini HUD
-	["cockpitVisualRM"] = true,						-- False / true : Mod reconnaissance Visuel dans le cockoit
+	["cockpitVisualRM"] = true,							-- False / true : Mod reconnaissance Visuel dans le cockoit
 	["userMarks"] = true,								-- False / true : autorise les marqueurs sur la vue MAP F10
 	["civTraffic"] = "",								-- Traffic civil routier : ( "" : OFF ) || ( "low" : BAS ) || ( "medium" : MOYEN )|| ( "high" : ELEVE )  [MP: recommend: ""]
 	["birds"] = 50,										-- Collision volatile (probabilit�) ( 0 � 1000 )  [MP: recommend: 0]
@@ -237,7 +237,7 @@ campMod = {
 	Setting_Generation= {
 		["limit_escort"] = 8,												-- (default : 99)(recommended : 8), limit escort number to
 	},
-	StrikeOnlyWithEscorte = false, 											-- (default : true) strikes are possible with only one escort
+	StrikeOnlyWithEscorte = true, 											-- (default : true) strikes are possible with only one escort
 }
 
 
