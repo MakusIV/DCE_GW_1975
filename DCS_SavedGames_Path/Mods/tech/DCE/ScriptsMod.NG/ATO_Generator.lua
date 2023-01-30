@@ -286,7 +286,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 												-- end debug code
 
 												for target_name, target in pairs(target_side) do
-													log.info("A target: " .. target_name .. ", side: " .. side .. ", targetpoint: ".. target.x .. ", " .. target.y)													
+													log.info("target: " .. target_name .. ", side: " .. side)													
+													
+													if target.x ~= nil and target.y ~= nil then
+														log.info("target coord: ".. target.x .. ", " .. target.y)													
+													end
 
 													if target.inactive ~= true and target.ATO then											--if target is active and should be added to ATO
 														if target.task == task then															--if target is valid for aircaft-loadout
