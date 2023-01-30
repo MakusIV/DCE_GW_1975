@@ -30,7 +30,7 @@ versionDCE["ATO_Generator.lua"] = "1.15.52"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = LOGGING_LEVEL
+log.level = "warn" --LOGGING_LEVEL -- watch: info generate a very big log
 log.outfile = LOG_DIR .. "LOG_ATO_Generator." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
@@ -452,7 +452,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																					end
 																					log.info("E r: " .. r .. ", variant: " .. variant)						
 																					log.info("E base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
-																					log.info("E target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																					log.info("E target: " .. target_name)
+
+																					if target.x ~= nil and target.y ~= nil then
+																						log.info("target coord: ".. target.x .. ", " .. target.y)													
+																					end
 																					
 																					if route.lenght and route.lenght <= unit_loadouts[l].range * 2 and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * 2) then		--if sortie route lenght is within range of aircraft-loadout
 																						TrackPlayability(unit[n].player, "target_range")												--track playabilty criterium has been met
