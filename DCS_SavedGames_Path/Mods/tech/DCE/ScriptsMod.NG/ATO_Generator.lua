@@ -435,11 +435,16 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																					
 																					else		
 																						-- QUI BUG target.y nil
-																						log.info("B r: " .. r .. ", variant: " .. variant)						
-																						log.info("B base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
-																						log.info("B target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																						log.info("r: " .. r .. ", variant: " .. variant)						
+																						log.info("base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
+																						log.info("target: " .. target_name)
+
+																						if target.x ~= nil and target.y ~= nil then
+																							log.info("target coord: ".. target.x .. ", " .. target.y)													
+																						end
+
 																						local ToTarget = GetDistance(airbasePoint, target)											--direct distance to target
-																						log.info("C target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																						
 																						
 																						if ToTarget <= unit_loadouts[l].range and (unit_loadouts[l].minrange == nil or ToTarget * 1.5 > unit_loadouts[l].minrange) then	--basic feasibility check of range before performance intensive route calculations are done
 																							if variant == 1 or variant == 4 then
@@ -447,13 +452,9 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							elseif variant == 2 or variant == 3 then																
 																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy, task, "night", r, multipack, unit[n].helicopter)		--get the best route to this target at night-- Miguel21 modification M06 : helicoptere playable
 																							end
-																						end
-																						log.info("D target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																						end																						
 																					end
-																					log.info("E r: " .. r .. ", variant: " .. variant)						
-																					log.info("E base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
-																					log.info("E target: " .. target_name)
-
+																					
 																					if target.x ~= nil and target.y ~= nil then
 																						log.info("target coord: ".. target.x .. ", " .. target.y)													
 																					end
