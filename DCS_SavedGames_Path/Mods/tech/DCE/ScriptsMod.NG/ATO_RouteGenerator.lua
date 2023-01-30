@@ -1,6 +1,7 @@
 --To generate a flight route from base to target, evading as much threats as possible
 --Returns route points, route lenght and route threat level (unavoided threats)
 --Initiated by Main_NextMission.lua
+-- Usecase with two public functions: getRoute() and getEscortRoute()
 -------------------------------------------------------------------------------------------------------
 
 if not versionDCE then 
@@ -25,12 +26,12 @@ versionDCE["ATO_RouteGenerator.lua"] = "OB.1.0.0"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-local log_level = "traceVeryLow" --LOGGING_LEVEL
-local function_log_level = "debug"
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+local function_log_level = "info"
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_RouteGenerator." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 
 --function to return radar horizon
 local function RadarHorizon(h1, h2)
@@ -92,7 +93,7 @@ la route generation (in effetti sarà poi con queste info che il programma defin
 ]]
 
 function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn, multipackmax, helicopter)	--enemy: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
-	log.level = "traceVeryLow"
+	log.level = function_log_level -- "traceVeryLow"
 	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn, multipackmax, helicopter): "    
 	log.trace("Start " .. nameFunction)						
 	log.trace("GetRoute parameters:" .. tostring(basePoint) .. ",\n " .. tostring(targetPoint) .. ",\n " .. profile.name .. ",\n " .. enemy .. ",\n " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
@@ -456,7 +457,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 	end
 
 	local function threatEvalutationInRoute(threat, EWRpenality, total_threat_level, point1, point2, type_service, storage_table, computedPoint)
-		log.level = "traceVeryLow" -- = function_log_level
+		log.level = function_log_level
 		local break_loop = false
 		
 		for t = 1, #threat do																--iterate through all threats on this option				

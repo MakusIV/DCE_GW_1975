@@ -254,8 +254,40 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 										i_timmer01 = 0
 										for target_side_name, target_side in pairs(targetlist) do											--iterate through sides in targetlist				
 											i_timmer01 = i_timmer01 +1
-											if side == target_side_name then																--if the target is hostile
-												for target_name, target in pairs(target_side) do											--iterate through all hostile targets
+											if side == target_side_name then --if the target is hostile
+												
+												
+												-- debug code
+												for target_name, target in pairs(target_side) do
+													local attr = "attr: "
+													local xcoord, ycoord
+
+													if target.slaved then
+														attr = attr .. "slaved"	
+													end													
+
+													if target.x then 
+														xcoord = tostring(target.x )
+													else
+														xcoord = "not x"
+													end
+
+													if target.y then 
+														ycoord = tostring(target.y )
+													else
+														ycoord = "not y"
+													end		
+													
+													if ycoord == "not y" or xcoord == "not x" then											
+														log.info("target: " .. target_name .. ", task: " .. target.task .. ", side: " .. side .. " - coord: ".. xcoord .. ", " .. ycoord)																
+														log.info("attributes: " .. attr)																
+													end
+												end
+												-- end debug code
+
+												for target_name, target in pairs(target_side) do
+													log.info("A target: " .. target_name .. ", side: " .. side .. ", targetpoint: ".. target.x .. ", " .. target.y)													
+
 													if target.inactive ~= true and target.ATO then											--if target is active and should be added to ATO
 														if target.task == task then															--if target is valid for aircaft-loadout
 															
@@ -266,6 +298,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 															
 															--check target/loadout attributes
 															local loadout_eligible = true																					--boolean if loadout matches any target attributes (default true, because target might have no attributes)
+															
 															if target.attributes[1] then																					--target has attributes
 																loadout_eligible = false
 																for target_attribute_number, target_attribute in ipairs(target.attributes) do								--Iterate through target attributes
@@ -288,19 +321,27 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																	
 																		--check weather
 																		local weather_eligible = true
+																		
 																		if mission.weather["clouds"]["density"] > 8 then																				--overcast clouds
 																			local cloud_base = mission.weather["clouds"]["base"]
 																			local cloud_top = mission.weather["clouds"]["base"] + mission.weather["clouds"]["thickness"]
+																			
 																			if db_airbases[unit[n].base].elevation + 333 > cloud_base then																--cloud base is less than 1000 ft above airbase elevation
+																			
 																				if unit_loadouts[l].adverseWeather == false then																		--loadout is not adverse weather capable
 																					weather_eligible = false																							--not eligible for this weather
 																				end
+																			
 																			else
+																			
 																				if unit_loadouts[l].hCruise and unit_loadouts[l].hCruise > cloud_base and unit_loadouts[l].hCruise < cloud_top then			--cruise alt is in the clouds
+																			
 																					if unit_loadouts[l].adverseWeather == false then																	--loadout is not adverse weather capable
 																						weather_eligible = false																						--not eligible for this weather
 																					end
+																			
 																				elseif unit_loadouts[l].hAttack and unit_loadouts[l].hAttack > cloud_base and unit_loadouts[l].hAttack < cloud_top then		--attack alt is in the clouds
+																					
 																					if unit_loadouts[l].adverseWeather == false then																	--loadout is not adverse weather capable
 																						weather_eligible = false																						--not eligible for this weather
 																					end
@@ -315,9 +356,13 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																				end	
 																			end
 																		end
+																		
 																		if mission.weather["enable_fog"] == true then															--fog
+																			
 																			if db_airbases[unit[n].base].elevation < mission.weather["fog"]["thickness"] then					--base elevation in fog
+																				
 																				if mission.weather["fog"]["visibility"] < 5000 then												--less than 5000m visibility
+																					
 																					if unit_loadouts[l].adverseWeather == false then											--loadout is not adverse weather capable
 																						weather_eligible = false																--not eligible for this weather
 																					end
@@ -337,29 +382,37 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																			}
 																			
 																			local multipack = 1
+																			
 																			if target.firepower.packmax and unit_loadouts[l].MaxAttackOffset then								--target has a requirement for multiple packages and loadout is multipack capable (defined maximum attack offset)
 																				multipack = target.firepower.packmax															--create draft sorties for this target for the requested amount of packages
 																			end
+																			
 																			for r = 1, multipack do																				--repeat draft sortie generation for the requirement amount of packages (may create different routes each time)
 																				
 																				--determine route variants depending on daytime
 																				local variant
+																			
 																				if daytime == "day" then
 																					variant = 1
+																			
 																				elseif daytime == "night" then
 																					variant = 2
+																			
 																				elseif daytime == "night-day" then
 																					variant = 3
+																			
 																				elseif daytime == "day-night" then
 																					variant = 4
 																				end
 																			
 																				while variant > 0 do
 																					i_timmer01 = i_timmer01 +1
+																					
 																					if i_timmer01 >= 10  then io.write(".") i_timmer01 = 0 end
 																					--determine route
 																					status_counter_sorties = status_counter_sorties + 1													--status report
 																					local route = {}
+																					
 																					if task == "Intercept" then																			--intercept task only get a stub route
 																						route = {
 																							[1] = {
@@ -375,8 +428,15 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							},
 																							['lenght'] = target.radius * 2,																--interception task radius *2 because below it is compared with range *2
 																						}
-																					else																								--all other tasks than intercept
-																						local ToTarget = GetDistance(airbasePoint, target)												--direct distance to target
+																					
+																					else		
+																						-- QUI BUG target.y nil
+																						log.info("B r: " .. r .. ", variant: " .. variant)						
+																						log.info("B base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
+																						log.info("B target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																						local ToTarget = GetDistance(airbasePoint, target)											--direct distance to target
+																						log.info("C target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
+																						
 																						if ToTarget <= unit_loadouts[l].range and (unit_loadouts[l].minrange == nil or ToTarget * 1.5 > unit_loadouts[l].minrange) then	--basic feasibility check of range before performance intensive route calculations are done
 																							if variant == 1 or variant == 4 then
 																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy, task, "day", r, multipack, unit[n].helicopter)			--get the best route to this target at day-- Miguel21 modification M06 : helicoptere playable(ajout variable helico pour generer une route )
@@ -384,7 +444,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy, task, "night", r, multipack, unit[n].helicopter)		--get the best route to this target at night-- Miguel21 modification M06 : helicoptere playable
 																							end
 																						end
+																						log.info("D target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
 																					end
+																					log.info("E r: " .. r .. ", variant: " .. variant)						
+																					log.info("E base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
+																					log.info("E target: " .. target_name .. ", targetpoint: ".. target.x .. ", " .. target.y)
 																					
 																					if route.lenght and route.lenght <= unit_loadouts[l].range * 2 and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * 2) then		--if sortie route lenght is within range of aircraft-loadout
 																						TrackPlayability(unit[n].player, "target_range")												--track playabilty criterium has been met
@@ -392,27 +456,34 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						--determine number of aircraft needed for sortie
 																						local aircraft_requested = target.firepower.max / unit_loadouts[l].firepower					--how many aircraft are needed to satisfy the maximum firepower requirement of the target
 																						local flights_requested	
+																						
 																						if task == "CAP" or task == "AWACS" or task == "Refueling" then									--multiple flights are required to continously cover a station for the duration of the mission
 																							flights_requested = math.ceil((tot_to - tot_from) / unit_loadouts[l].tStation) + 1			--how many flights are needed to keep continous coverage of station, plus 1 for on station before mission start
 																							aircraft_requested = aircraft_requested * flights_requested									--total number of requested aircraft is number of aircraft needed to statisfy firepower requirement of station * number of flights needed for continous coverage
 																						end
+																						
 																						if task == "AWACS" or task == "Refueling" or task == "Transport" or task == "Nothing" or task == "Reconnaissance" then
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
+																						
 																						elseif unit[n].type == "S-3B" or unit[n].type == "F-117A" or unit[n].type == "B-1B" or unit[n].type == "B-52H" or unit[n].type == "Tu-22M3" or unit[n].type == "Tu-95MS" or unit[n].type == "Tu-142" or unit[n].type == "Tu-160" or unit[n].type == "MiG-25RBT" then
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
+																						
 																						else
 																							--aircraft_requested = math.ceil(aircraft_requested / 2) * 2								--round up to an even number
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
 																						end
 																						local aircraft_assign
+																				
 																						if aircraft_requested > aircraft_available then													--if more aircraft are requested than are available from this unit
 																							aircraft_assign = aircraft_available														--assign all available aircraft
+																				
 																						else																							--enough available aircraft to satisfy requested aircraft
 																							aircraft_assign = aircraft_requested														--assign all requested aicraft
 																						end
 																						
 																						-- miguel21 modification M11.o multiplayer
 																						if multiPlaneSet then
+																				
 																							if multiPlaneSet[unit[n].type]  and multiPlaneSet[unit[n].type][task] then	--and task ~= "CAP" and task ~= "Intercept"																							
 																								--M11.z
 																								if aircraft_assign < multiPlaneSet[unit[n].type][task].NbPlane then
@@ -471,14 +542,18 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							
 																							--score the sortie
 																							local route_threat = route.threats.ground_total + route.threats.air_total						--combine route ground and air threat
+																				
 																							if task == "CAP" or task == "Intercept" then
 																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority					--route threat does not matter for CAP and intercept
+																				
 																							else
 																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / route_threat	--calculate the score to measure the importance of the sortie
 																							end
 																							local reduce_score = 0																		--factor to reduce score for station missions with less aircraft than required to cover station
+																							
 																							if task == "CAP" then																		--station tasks with flights of 2
 																								reduce_score = flights_requested - aircraft_assign / math.ceil(target.firepower.max / unit_loadouts[l].firepower) --increase factor by one for each flight that is missing
+																							
 																							elseif task == "AWACS" or task == "Refueling"  then											--station tasks with flights of 1
 																								reduce_score = flights_requested - aircraft_assign										--increase factor by one for each flight that is missing
 																							end
@@ -488,17 +563,21 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then
 																								draft_sorties_entry.score = draft_sorties_entry.score * unit[n].tasksCoef[task]																						
 																							end
-																						
+																							
 																							-- miguel21 modification M11.q multiplayer
 																							if multiPlaneSet then
+																				
 																								if multiPlaneSet[unit[n].type] and  multiPlaneSet[unit[n].type][task]  then  --and task ~= "CAP" and task ~= "Intercept"
+																				
 																									if Multi.Target and Multi.Target[side] then
+																				
 																										if MultiPlayerOveRide then 	
 																											draft_sorties_entry.score = draft_sorties_entry.score * 50000
 																											-- print("ATO_G Type: "..unit[n].type.." AfterScore: "..draft_sorties_entry.score.." target_name: "..target_name)
 																										end
 																									else
 																									draft_sorties_entry.score = draft_sorties_entry.score * 10								-- augmente le score pour avoir plus de chance d'avoir l'avion dispo	
+																				
 																									if draft_sorties_entry.score < 200 then draft_sorties_entry.score = draft_sorties_entry.score + 150 end
 																									end
 																								end	
@@ -507,17 +586,23 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							if #draft_sorties[side] == 0 then															--if draft_sorties table is empty
 																								-- table.insert(draft_sorties[side], draft_sorties_entry)
 																								draft_sorties[side][#draft_sorties[side]+1] = draft_sorties_entry
+																				
 																							else
 																								for d = 1, #draft_sorties[side] do														--iterate through draft_sorties
+																				
 																									if draft_sorties_entry.score > draft_sorties[side][d].score then					--score is bigger than current table entry
 																										-- table.insert(draft_sorties[side], d, draft_sorties_entry)						--insert at current position in table
 																										draft_sorties[side][#draft_sorties[side]+1] = draft_sorties_entry
 																										break
+																				
 																									elseif draft_sorties_entry.score == draft_sorties[side][d].score then				--score is same as current table entry
 																										local sum = 1
+																				
 																										for s = d + 1, #draft_sorties[side] do											--iterate through subsequent table entries
+																				
 																											if draft_sorties_entry.score == draft_sorties[side][s].score then			--if these entries also have the same score
 																												sum = sum + 1															--sum them
+																				
 																											else
 																												break
 																											end
@@ -525,14 +610,17 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																										table.insert(draft_sorties[side], d + math.random(0, sum), draft_sorties_entry)	--insert random position position in table
 																										-- draft_sorties[side][d + math.random(0, sum)] = draft_sorties_entry
 																										break
+																				
 																									elseif d == #draft_sorties[side] then												--if end of table is reached
 																										-- draft_sorties_entry["id"] = "id"..#draft_sorties[side]+1
 																										draft_sorties[side][#draft_sorties[side]+1] = draft_sorties_entry
 																									end
 																								end
 																							end
+																				
 																							if task == "CAP" or task == "AWACS" or task == "Refueling"  then
 																								aircraft_assign = aircraft_assign - 1													--make additional draft sortie for lesser amount of aircraft
+																				
 																							else
 																								aircraft_assign = 0																		--do not make additional draft sorties
 																							end
@@ -540,7 +628,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						
 																						--print("ATO Generating Sortie (" .. status_counter_sorties .. ") - Complete")	--DEBUG
 																					end
-																				
+																					
 																					variant = variant - 2																			--determines if while-loop does another route variant depending on daytime
 																				end
 																			end

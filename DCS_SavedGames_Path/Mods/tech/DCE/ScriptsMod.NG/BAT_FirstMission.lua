@@ -38,7 +38,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_BAT_FirstMission." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 
 local function AcceptMission()
 	repeat

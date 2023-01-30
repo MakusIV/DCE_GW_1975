@@ -25,7 +25,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 
 
 

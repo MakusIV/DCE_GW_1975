@@ -13,6 +13,8 @@
 -- Bidge: p:3, fp:2-4
 -- Airbase Defenses: p:2, fp:4-8
 
+-- ATT: nella proprietà slaved = nome gruppo (NO nome unità o nome targetlist)
+
 
 targetlist = {   
 	["blue"] = {
@@ -71,7 +73,7 @@ targetlist = {
 				min = 2,
 				max = 2,
 			},
-			slaved = {"CVN-71 Theodore Roosevelt", 335, 50000},
+			slaved = {"TF-71", 335, 50000},
 			radius = 111000,
 			text = "",
 		},
@@ -83,7 +85,7 @@ targetlist = {
 				min = 1,
 				max = 1,
 			},
-			slaved = {"CVN-71 Theodore Roosevelt",320, 40000},
+			slaved = {"TF-71",320, 40000},
 			text = "",
 		},
 		["Mission Support Tanker"] = {
@@ -94,7 +96,7 @@ targetlist = {
 				min = 1,
 				max = 1,
 			},
-			slaved = {"CVN-71 Theodore Roosevelt", 330, 35000},
+			slaved = {"TF-71", 330, 35000},
 			text = "",
 		},
 		["Recovery Tanker"] = {
@@ -105,7 +107,7 @@ targetlist = {
 				min = 1,
 				max = 1,
 			},
-			slaved = {"CVN-71 Theodore Roosevelt", 310, 30000},
+			slaved = {"TF-71", 310, 30000},
 			text = "",
 		},
 		["Russian Convoy 1"] = {

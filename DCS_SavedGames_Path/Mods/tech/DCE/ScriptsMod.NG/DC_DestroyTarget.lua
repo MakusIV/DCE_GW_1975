@@ -20,10 +20,10 @@ versionDCE["DC_DestroyTarget.lua"] = "OB.1.0.0"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = "debug" --LOGGING_LEVEL (variabile globale)
+log.level = LOGGING_LEVEL --(variabile globale)
 log.outfile = LOG_DIR .. "LOG_DC_DestroyTarget." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 -- =====================  End Marco implementation ==================================
 
 --set dead, dead_last true for items of group_object

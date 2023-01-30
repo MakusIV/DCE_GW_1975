@@ -22,7 +22,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_StatEvalutation." .. camp.mission .. ".log" -- "prova Log.LOG_DEVRIEF_Master"
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 -- =====================  End Marco implementation ==================================
 
 -- ================== Local Function ================================================

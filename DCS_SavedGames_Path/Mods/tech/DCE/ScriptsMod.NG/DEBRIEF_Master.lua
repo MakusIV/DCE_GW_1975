@@ -107,7 +107,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_Master."  .. camp.mission .. ".log"
 local local_debug = true -- local debug
-log.debug("Start")
+log.info("Start")
 log.debug(versionPackageICM)--By Old_Boy
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 

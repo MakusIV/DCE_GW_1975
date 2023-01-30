@@ -21,10 +21,12 @@ versionDCE["DC_UpdateTargetlist.lua"] = "OB.1.0.0"
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = "debug" --LOGGING_LEVEL (variabile globale)
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+log.level = log_level
+local function_log_level = "warn"
 log.outfile = LOG_DIR .. "LOG_DC_UpdateTargetlist." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 -- =====================  End Marco implementation ==================================
 
 
@@ -55,38 +57,84 @@ local function checkBug(name, origine, category) -- check SPACE char anomaly in 
 	end
 end 
 
-local function searchMasterCoord(country_group) -- search Master in oob_ground and returns his coordinate
+local function searchMasterCoord(country_group, master) -- search Master in oob_ground and returns his coordinate
+	log.level = "trace" -- function_log_level
 	local nameFunction = "function searchMasterCoord(country_group): "    
     log.debug("Start " .. nameFunction)	
+
+	if country_group == nil  then 
+		log.warn("parameter country_group is nil")
+		return nil, nil, false
+	
+	elseif master == nil then
+		log.warn("parameter master is nil")
+		return nil, nil, false
+	
+	elseif #country_group == 0 then
+		log.warn("#country_group == 0")
+		return nil, nil, false
+	end
+
 	log.debug(nameFunction .. "#country_group: " .. #country_group)	
-	-- watch break instruction
+	local master_x, master_y
+	local master_found = false
+
+	-- per il debugginig analizza: targelist, oob_ground, targetlist_init
+
+	-- DEBUG MARCO ELIMINARE
+	--if #country_group == 0 then
+	--	log.trace(inspect(country_group))
+	--end
+	-- END DEBUG MARCO ELIMINARE
+
 	for group_n,group in ipairs(country_group) do					--go through groups
 		log.trace(nameFunction .. "group.name: " .. group.name)
+
+		-- il group è in  oob_ground (derivato da base_miz) 
+		-- il master è il target.slaved[1] (lo slaved definito nel targetlist)
 
 		if group.name == master then
 			log.trace(nameFunction .. "group.name == master (" .. master .. "): copy coord x,y: " .. group.x .. ", " .. group.y .. " and breaks iteration")
 			master_x = group.x
 			master_y = group.y
-			break -- breaks because master founds!?
+			master_found = true
+			break
 
 		else
-			log.trace(nameFunction .. "group.name != master (" .. master .. "): iterate in group.units")
+			log.trace(nameFunction .. "group.name (" .. group.name .. ") != master (" .. master .. "): iterate in group.units")
 			
 			for unit_n,unit in ipairs(group.units) do
 				log.trace(nameFunction .. "unit.name: " .. unit.name)				
 
 				if unit.name == master then
-					log.trace(nameFunction .. "unit.name == master (" .. master .. "): set master_x, master_y with unit x,y: " .. unit.x .. ", " .. unit.y .. " and breaks iteration")
+					log.trace(nameFunction .. "unit.name (" .. unit.name .. ") == master (" .. master .. "): set master_x, master_y with unit x,y: " .. unit.x .. ", " .. unit.y .. " and breaks iteration")
 					master_x = unit.x
 					master_y = unit.y					
-					break-- breaks because master founds!?
+					master_found = true
+					break
 				end
 			end
-		end
+			
+			if master_found then
+				break
+			end
+		end		
 	end
-	log.debug("End " .. nameFunction .. "return master_x, master_y")	
 	
-	return master_x, master_y
+	if not master then
+		log.debug(nameFunction .. "master == nil")
+		-- nota se master == nil dovresti uscire subito dalla funzione
+	end
+
+	if not master_found then
+		log.debug(nameFunction .. "master (" .. master .. ") coord wasn't found in country group")
+
+	else
+		log.debug(nameFunction .. "master coord was found in country group: master_x, master_y: " .. master_x .. ", " .. master_y)	
+	end
+	log.debug("End " .. nameFunction .. "return master_x, master_y, master_found(" .. tostring(master_found) .. ")")	
+	log.level = log_level
+	return master_x, master_y, master_found
 end
 
 local function evalBigBox(country_group) --evalutate greater box
@@ -333,8 +381,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					log.debug("target x, y for target single refpoints: " .. target.x .. ", " .. target.y)
 				end
 
-				if target.x == nil or target.y == nil then
-					print("DC_UpdateTargetlist Error: Refpoint '" .. target.refpoint .. "' of target '" .. target.name .. "' not found!")
+				if target.x == nil or target.y == nil then					
 					log.error("DC_UpdateTargetlist Error: Refpoint '" .. target.refpoint .. "' of target '" .. target.name .. "' not found!")
 				end
 			end
@@ -342,7 +389,9 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		end
 
 		--target position slaved to group/unit
-		if target.slaved then																--target coordinates are slaved relative to a group/unit
+		if target.slaved then	-- target è preso da targetlist
+			log.level = "trace"	-- DEBUG MARCO ELIMINARE														--target coordinates are slaved relative to a group/unit
+			log.trace("target_name: " .. target_name .. ", target side: " .. targetside)	
 			log.debug("target coordinates are slaved relative to a group/unit")
 			local master = target.slaved[1]
 			local bearing = target.slaved[2]
@@ -350,36 +399,64 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			log.trace("master: " .. tostring(master) .. ", bearing: " .. tostring(bearing) .. ", distance: " .. tostring(distance))
 			local master_x
 			local master_y
+			local master_found = false
 			
 			
 			log.debug("find either master group or units (vehicle or ship) and get master  x-y coordinates. Iterate in oob_ground")
 			--find either master group or units (vehicle or ship) and get master  x-y coordinates
-			for coal_name,coal in pairs(oob_ground) do										--go through sides(red/blue)	
+			
+			-- ottimizzare effettuando una ricerca in relazione al master tipo (ship o ground) e master coalizione, nazionalità
+			
+			for coal_name,coal in pairs(oob_ground) do					--go through sides(red/blue)	
 
-				for country_n,country in ipairs(coal) do									--go through countries
+				for country_n,country in ipairs(coal) do --( ottim: oob_ground.target elimina il for do sopra) 	--go through countries
 					log.trace("country_n: " .. country_n .. ", country.name: " .. country.name)
 
-					if country.vehicle then													--country has vehicles
-						log.trace("country_n: " .. country_n .. ", country.name: " .. country.name .. " has vehicle, update master coordinate")
-						master_x, master_y = searchMasterCoord(country.vehicle)						
+					if not master_found then
+
+						if country.vehicle then													--country has vehicles
+							log.trace("country_n: " .. country_n .. ", country.name: " .. country.name .. " has vehicle with " .. #country.vehicle.group .. " groups, update master coordinate")																		
+							master_x, master_y, master_found = searchMasterCoord(country.vehicle.group, master)	
+							log.debug("after searchMasterCoord(vehicle) master_found: " .. tostring(master_found))						
+						end
+					
+						if country.ship and not master_found then													--country has ships
+							log.debug("country_n: " .. country_n .. ", country.name: " .. country.name .. " has ship with " .. #country.ship.group .. " groups, update master coordinate")
+							master_x, master_y, master_found = searchMasterCoord(country.ship.group, master)	
+							log.debug("after searchMasterCoord(ship) master_found: " .. tostring(master_found))																						
+						end
+						log.debug("master_found: " .. tostring(master_found))
 					end
-				
-					if country.ship then													--country has ships
-						log.debug("country_n: " .. country_n .. ", country.name: " .. country.name .. " has ship, update master coordinate")
-						master_x, master_y = searchMasterCoord(country.ship)											
+						
+					if master_found then													--a master was found				
+						target.x = master_x + math.cos(math.rad(bearing)) * distance				--update target position relative to master position
+						target.y = master_y + math.sin(math.rad(bearing)) * distance				--update target position relative to master position
+						log.debug("master_x: " .. master_x .. ", master_y: " .. master_y .. " -> master was updated. Update target position relative to master position, target.x = " .. target.x .. ", target.y = " .. target.y )										
+						break
+
+					else
+						
+						if master_x ~= nil and master_y == nil then	
+							log.error("DC_UpdateTargetlist Error target(" .. target_name ..  ") position  to group/unit : Anomaly in  Master(" .. master .. ") coord x: " .. master_x .. ", coord y is nil")
+						
+						elseif master_x == nil and master_y ~= nil then
+							log.error("DC_UpdateTargetlist Error target(" .. target_name ..  ") position  to group/unit : Anomaly in  Master(" .. master .. ") coord x is nil, coord y: " .. master_y)
+						else
+							log.trace("master wasn't found in this group, continue searching in oob_ground")
+						end
 					end
 				end
+				
+				if master_found then
+					break
+				end			
 			end
 			
-			if master_x and master_y then													--a master was found				
-				target.x = master_x + math.cos(math.rad(bearing)) * distance				--update target position relative to master position
-				target.y = master_y + math.sin(math.rad(bearing)) * distance				--update target position relative to master position
-				log.debug("master_x: " .. master_x .. ", master_y: " .. master_y .. " -> master was updated. Update target position relative to master position, target.x = " .. target.x .. ", target.y = " .. target.y )				
-
-			else																			--no master was found
-				print("DC_UpdateTargetlist Error target position slaved to group/unit : Master '" .. master .. "' of target '" ..  "' not found!")
-				log.error("DC_UpdateTargetlist Error target position slaved to group/unit : Master '" .. master .. "' of target '" ..  "' not found!")
-			end
+			if not master_found then 	--no master was found				
+				log.error("DC_UpdateTargetlist Error target position  to group/unit : Master '" .. master .. "' of target " .. target_name ..  " not found!")
+			end			
+							
+			log.level = log_level -- DEBUG MARCO ELIMINARE
 		end
 	
 		if target.task == "Strike" then														
@@ -427,8 +504,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 					end
 				end
 
-				if not target.foundOobGround then 
-					print("DC_UT vehicle/ship error Not Found "..target_name) 
+				if not target.foundOobGround then 					
 					log.error("DC_UT vehicle/ship error Not Found "..target_name)
 				end
 
@@ -473,9 +549,8 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				
 				for e = 1, #target.elements do
 						
-					if not target.elements[e].foundOobGround then
-						 print("DC_UT Static ERROR Not Found "..target.elements[e].name) 
-						 log.error("DC_UT Static ERROR Not Found "..target.elements[e].name)
+					if not target.elements[e].foundOobGround then						
+						log.error("DC_UT Static ERROR Not Found "..target.elements[e].name)
 					end
 				end
 				
@@ -486,7 +561,6 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				log.trace("media calculus: target.alive = " .. target.alive .. ",  target.dead_last = " .. target.dead_last .. ", target.x = " .. target.x .. ", target.y = " .. target.y .. "target x,y are average coordiante of all elements")
 				
 				if not target.foundOobGround then
-					print("DC_UT Static ERROR Not Found "..target_name) 
 					log.error("DC_UT Static ERROR Not Found "..target_name)
 				end
 				
@@ -528,7 +602,6 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 				end
 				
 				if not target.foundOobGround then
-					print("DC_UT airbase error Not Found "..target_name)
 					log.error("DC_UT airbase error Not Found "..target_name)
 				end
 			end
@@ -552,7 +625,6 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			end
 			
 			if not target.foundOobGround then
-				print("DC_UT Anti-ship Strike error Not Found "..target_name) 
 				log.error("DC_UT Anti-ship Strike error Not Found "..target_name)
 			end
 			

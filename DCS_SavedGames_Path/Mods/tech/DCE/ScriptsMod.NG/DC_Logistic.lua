@@ -362,7 +362,7 @@ supply_tab = {
 
 -- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua") --log = require("UTIL_Log.lua")
-log.level = "debug" --LOGGING_LEVEL  (variabile globale)
+log.level = LOGGING_LEVEL  --(variabile globale)
 log.outfile = LOG_DIR .. "LOG_DC_Logistic." .. camp.mission .. ".log"
 local local_debug = true -- local debug
 local executeTest = false

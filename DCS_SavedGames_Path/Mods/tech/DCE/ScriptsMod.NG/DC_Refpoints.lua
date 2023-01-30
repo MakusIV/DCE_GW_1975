@@ -19,7 +19,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DC_Refpoints." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 
 
 --Check all trigger zones on base_mission and store their x-y coordinates for easier use (stored in Refpoint )

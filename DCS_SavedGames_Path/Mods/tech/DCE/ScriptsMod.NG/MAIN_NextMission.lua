@@ -34,13 +34,14 @@ versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
 
 --by Old_Boy
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
+inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2 j
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
-log.debug("Start")
+log.info("Start")
 
 if activate_testing_enviroment then
 	log.warn("activate testing enviroment")
@@ -143,7 +144,7 @@ local trig_n = 1
 
 local function AddFileTrigger(filename)
 	local nameFunction = "function AddFileTrigger(" .. filename .. "): "    
-	log.debug("Start " .. nameFunction)
+	log.trace("Start " .. nameFunction)
 	trig_n = trig_n + 1
 	mapResource["ResKey_Action_" .. trig_n] = filename
 	mission.trig.funcStartup[trig_n] = 'if mission.trig.conditions[' .. trig_n .. ']() then mission.trig.actions[' .. trig_n .. ']() end'
@@ -167,7 +168,7 @@ local function AddFileTrigger(filename)
 			},
 		},
 	}
-	log.debug("End " .. nameFunction)
+	log.trace("End " .. nameFunction)
 end
 
 AddFileTrigger("camp_status.lua")
@@ -216,6 +217,7 @@ else
 	camp["MissionFilename"] =  camp.title.."_ongoing.miz"	
 end
 
+log.info("require: Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
 require("Init/db_loadouts")
 require("Init/db_airbases")
 require("Active/oob_air")
