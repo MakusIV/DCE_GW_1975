@@ -33,53 +33,62 @@ log.outfile = LOG_DIR .. "LOG_ATO_RouteGenerator." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 log.info("Start")
 
+-- module parameters
+local PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000 -- min altitude for generic CAP detection (no need EWR support)(defautl=3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
+local ALT_MIN_FOR_CLUTTER_EFFECT = 100 -- (defalut = 100 m)
+local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default = 0.5)
+
+
 --function to return radar horizon
 local function RadarHorizon(h1, h2)
 	log.level = function_log_level
 	local nameFunction = "function RadarHorizon(h1, h2): "    
 	log.traceVeryLow("Start " .. nameFunction)						
-	local r = 8500000																										--radius of earth (actual value 6371000 currected for refraction of radio waves)
+	local r = 8500000																									--radius of earth (actual value 6371000 currected for refraction of radio waves)
 	local d1 = math.sqrt(math.pow(r + h1, 2) - math.pow(r, 2))															--distance from radar height to earth tangent point
 	local d2 = math.sqrt(math.pow(r + h2, 2) - math.pow(r, 2))															--distance from target altitude to earth tangent point
 	local alpha1 = math.deg(math.atan(d1 / r))																			--angle between radar and earth tangent point
 	local alpha2 = math.deg(math.atan(d2 / r))																			--angle beteen target and earth tangent point
-	local u1 = 2 * r * math.pi / 360 * alpha1																				--ground distance from radar to earth tangent point
+	local u1 = 2 * r * math.pi / 360 * alpha1																			--ground distance from radar to earth tangent point
 	local u2 = 2 * r * math.pi / 360 * alpha2						
 	log.traceVeryLow("u1+u2 = " .. tostring(u1+u2))
-	log.traceVeryLow("End " .. nameFunction)																				--ground distance from target to earth tangent point
+	log.traceVeryLow("End " .. nameFunction)																			--ground distance from target to earth tangent point
 	log.level = log_level
-	return u1 + u2																									--return total ground distance from radar to target
+	return u1 + u2																										--return total ground distance from radar to target
 end
 
--- evalutate threat radar detection for an altitude profile
+-- evalutate radar threat detection for an altitude profile, 
+-- if profile alt is in range of threat altitude detection threat will be add in threat_table[profile alt]
 local function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr)
 	log.level = function_log_level
 	local nameFunction = "function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr: "    
 	log.traceLow("Start " .. nameFunction)						
 	log.traceLow(type_profile .. " profile is within threat altitude detection range (threat.min_alt: " .. tostring(threat.min_alt) .. ", threat.max_alt: " .. tostring(threat.max_alt) ..", profile.hCruise: " .. tostring(profile_alt) .. ")")
-	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									--get the maximal range due to radar horizon (profile alt +100 m for safety)
+	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									    --get the maximal range due to radar horizon (profile alt +100 m for safety)
 	log.traceLow("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
 	
 	if maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range					
 		threatentry.range = maxrange																		--use maximal range due to radar horizon
 		log.traceLow("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
-	end
-	
-	if profile_alt <= 100 and not_ewr then																			--if alt is lower than 100m
-		threatentry.level = threat.level / 2																--only 50% of threat level is applied as low level clutter bonus
-		log.traceLow(type_profile .. " alt(" .. type_profile .. ") is lower than 100m, only 50% of threat level is applied as low level clutter bonus")		
-	end
+	end		
 
 	if not_ewr then
-		threatentry.level = threat.level																	--full threat level is applied
-		log.traceLow("assigned threatentry.level = " .. threatentry.level)
-		table.insert(threat_table.ground[profile_alt], threatentry)
+		
+		if profile_alt <= ALT_MIN_FOR_CLUTTER_EFFECT then																				--if alt is lower than 100m
+			threatentry.level = threat.level * (1 - PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER)																--only 50% of threat level is applied as low level clutter bonus
+			log.traceLow("type_profile: " .. type_profile .. " alt(" .. profile_alt .. "), threat isn't ewr and lower than 100m, only 50% of threat level is applied as low level clutter bonus, threatentry.level = " .. threatentry.level)		
+		else
+			threatentry.level = threat.level																	--full threat level is applied
+			log.traceLow("type_profile: " .. type_profile .. ", threat isn't ewr assigned full threatentry.level = " .. threatentry.level .. ", insert ewr in threat_table.ground[" .. profile_alt .. "]")
+			table.insert(threat_table.ground[profile_alt], threatentry)
+		end
 	
 	else
-		table.insert(threat_table.ewr[profile_alt], threatentry)
+		log.traceLow("type_profile: " .. type_profile .. ", threat is an ewr, insert ewr in threat_table.ewr[" .. profile_alt .. "]")
+		table.insert(threat_table.ewr[profile_alt], threatentry)												-- insert ewr in threat_table.ewr
 	end
 
-	log.traceLow("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added new threat entry in threat_table.ground[" .. tostring(profile_alt) .. "] = \n" .. inspect(threatentry))
+	log.traceVeryLow("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added this new threat entry:\n" .. inspect(threatentry))
 	log.traceLow("End " .. nameFunction)	
 	log.level = log_level					
 end
@@ -90,13 +99,22 @@ la valutazione della radar detection delle threats viene effettuata in base ai p
 presi dai profili degli aerei e dalle dotazioni: per ogni tipo di armamento viene definito la quota di attacco 
 e questo dato viene utilizzato per valutare il livello di minaccia che poi, verrà utilizzato per 
 la route generation (in effetti sarà poi con queste info che il programma definirà le quote di volo dei diversi asset)
+
+
+threat_table[cruise altitude o attack altitude]: tabella creata per contenere le minacce terrestri: vengono memorizzate 
+le minacce terrestri con altitudini operative (min e max) che includono le altitudini cruise e attack del profilo 
+di riferimento
+
 ]]
 
-function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn, multipackmax, helicopter)	--enemy: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
+
+
+
+function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter)	--side_: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
 	log.level = function_log_level -- "traceVeryLow"
-	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn, multipackmax, helicopter): "    
+	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter): "    
 	log.trace("Start " .. nameFunction)						
-	log.trace("GetRoute parameters:" .. tostring(basePoint) .. ",\n " .. tostring(targetPoint) .. ",\n " .. profile.name .. ",\n " .. enemy .. ",\n " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
+	log.trace("GetRoute parameters:" .. tostring(basePoint) .. ",\n " .. tostring(targetPoint) .. ",\n " .. profile.name .. ",\n " .. side_ .. ",\n " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
 	local route = {}																									--table to store the route to be built
 	local route_axis = GetHeading(targetPoint, basePoint)
 	log.trace("targetPoint: " .. tostring(targetPoint) .. ", basePoint: " .. tostring(basePoint) .. ", route_axis(heading): " .. route_axis)																--axis base-target
@@ -110,14 +128,17 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 	
 	if helicopter then -- M28 gli elicotteri possono vedere tutte le difese, anche quelle nascoste  mentre l'aereo vola alto e veloce e non vede minacce 
 		HiddenCheck = true 
-		log.traceLow("gelicopter == true -> HiddenCheck = true")
+		log.traceLow("helicopter == true -> HiddenCheck = true")
 	end																		
+	
+	-- DEFINE THREAT TABLE FOR GROUND THREAT (NOT EWR) FOR SPECIFIC PROFILE
+
 	threat_table.ground[profile.hCruise] = {}
 	threat_table.ground[profile.hAttack] = {}	
-	log.trace("iterate groundthreats[" .. enemy .. "] for threat radar detection")
+	log.trace("iterate groundthreats[" .. side_ .. "] for threat radar detection")
 
-	for threat_n,threat in pairs(groundthreats[enemy]) do	
-		log.traceLow("evalutation (threat) with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)															--iterate through ground threats
+	for threat_n,threat in pairs(groundthreats[side_]) do	
+		log.traceLow("evalutation (threat) with threat_n: " .. threat_n .. " - type: ".. threat.type .. " - class: " .. threat.class)						--iterate through ground threats
 		
 		if (time == "day" or threat.night == true) and threat.hidden == HiddenCheck then																	--during day or threat is night capable to be counted as threat			
 			local threatentry = {
@@ -133,23 +154,22 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 				evalRadarDetection(profile.hCruise, threat, "cruise", threat_table, threatentry, true)				
 			end
 			
-			if profile.hCruise ~= profile.hAttack then																--attack alt is different than cruise alt
-				log.traceVeryLow("attack alt (profile.hAttack: " .. profile.hAttack .. ") is different than cruise alt (profile.hCruise: " .. profile.hCruise .. ")")
-				
-				if threat.min_alt <= profile.hAttack and threat.max_alt >= profile.hAttack then							--threat covers attack alt		
-					threatentry.range = threat.range
-					evalRadarDetection(profile.hAttack, threat, "attack", threat_table, threatentry, true)					
-				end
+			if ( profile.hCruise ~= profile.hAttack ) and ( threat.min_alt <= profile.hAttack ) and ( threat.max_alt >= profile.hAttack ) then -- threat covers attack alt																--attack alt is different than cruise alt
+				log.traceVeryLow("attack alt (profile.hAttack: " .. profile.hAttack .. ") is different than cruise alt (profile.hCruise: " .. profile.hCruise .. ") and threat covers attack alt")								
+				threatentry.range = threat.range
+				evalRadarDetection(profile.hAttack, threat, "attack", threat_table, threatentry, true)					
 			end
 		end
 	end
-		
+	
+	-- DEFINE THREAT TABLE FOR EWR THREAT FOR SPECIFIC PROFILE
+
 	threat_table.ewr[profile.hCruise] = {}
 	threat_table.ewr[profile.hAttack] = {}
-	log.trace("iterate groundthreats[" .. enemy .. "] for ewr radar detection")
+	log.trace("iterate groundthreats[" .. side_ .. "] for ewr radar detection")
 
-	for threat_n,threat in pairs(ewr[enemy]) do																			--iterate through ewr threats
-		log.traceLow("evalutation (ewr) with threat_n: " .. threat_n .. " - type: ewr - class: " .. threat.class)															--iterate through ground threats
+	for threat_n, threat in pairs(ewr[side_]) do																			--iterate through ewr threats
+		log.traceLow("evalutation (ewr) with threat_n: " .. threat_n .. " - type: ewr - class: " .. threat.class)		--iterate through ground threats
 		local cruisethreatentry = {
 			class = threat.class,
 			x = threat.x,
@@ -172,7 +192,8 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		end
 	end
 		
-	--function to check if a line between two points runs through a threat. Returns a table of threats
+	--function to check if a line between two points runs through a threat. 
+	-- Returns a table of AAA or SAM threats with assigned threat level and approachfactor ( 1 -> profile directly up the threat, 0 -> profile very far from threat )
 	local function ThreatOnLeg(point1, point2, leg_alt)
 		log.level = function_log_level
 		local nameFunction = "function ThreatOnLeg(point1, point2, leg_alt): "    		
@@ -180,7 +201,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		log.traceLow("point1: (" .. point1.x .. "," .. point1.y .. "), point2: (" .. point2.x .. "," .. point2.y .. "), leg_alt: " .. leg_alt .. "")    
 		local tbl = {}																									--local table to collect threats on route leg		
 		log.traceLow("check ground threat -> iterate threat_table.ground[" .. leg_alt .. "]")
-		--check ground threats
+		--check ground threats:
 		for t = 1, #threat_table.ground[leg_alt] do																		--iterate through all ground threats
 			local threat_route_distance = GetTangentDistance(point1, point2, threat_table.ground[leg_alt][t])			--get closest distance from threat to route between point 1 and point 2
 			log.traceVeryLow("compute closest distance from threat (pos x,y: " .. threat_table.ground[leg_alt][t].x .. ", " .. threat_table.ground[leg_alt][t].y .. ") to route between point 1 and point 2, threat_route_distance = " .. threat_route_distance)
@@ -194,8 +215,22 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 			end
 		end
 		
+	
 		--check EWR threats		
-		if profile.avoid_EWR then																									--only count EWR asd threats if loadout should avoid them
+		--[[
+		fighterthreats store CAP and Intercept. Define in ATO_ThreatEvalutation
+		fighterthreats table entry:
+		entry = {	
+										name = unit[n].name,										--unit name
+										class = "CAP",												--class
+										x = db_airbases[unit[n].base].x,							--unit homebase position
+										y = db_airbases[unit[n].base].y,
+										level = loadout.capability * loadout.firepower * (unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft
+										range = loadout.range,										--Fighter action radius
+										LDSD = loadout.LDSD,	
+
+		]]
+		if profile.avoid_EWR then																							--only count EWR as threats if loadout should avoid them
 			log.traceLow("check ewr threat -> iterate threat_table.ewr[" .. leg_alt .. "]")
 
 			for e = 1, #threat_table.ewr[leg_alt] do																		--iterate through all ewr/awacs
@@ -207,19 +242,19 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 					
 					log.traceVeryLow("iterate through all fighter threats")
 
-					for t = 1, #fighterthreats[enemy] do																	--iterate through all fighter threats
+					for t = 1, #fighterthreats[side_] do																	--iterate through all fighter threats
 						local ewr_required																					--boolean whether ewr is required for the fighter to be a threat
 						
-						if fighterthreats[enemy][t].class == "CAP" then														--if the fighter is CAP
-							log.traceVeryLow("fighterthreats[" .. enemy .. "][" .. t .. "] is a CAP")
+						if fighterthreats[side_][t].class == "CAP" then														--if the fighter is CAP
+							log.traceVeryLow("fighterthreats[" .. side_ .. "][" .. t .. "] is a CAP")
 							
-							if leg_alt >= 3000 then																			--if route leg is at high altitude
+							if leg_alt >= PROFILE_MIN_ALT_FOR_CAP_DETECTION then											--if route leg is at high altitude 
 								ewr_required = false																		--CAP does not need ewr to be a threat
-								log.traceVeryLow("route leg (" .. leg_alt .. ") is at high altitude (>3000m) -> CAP does not need ewr to be a threat")
+								log.traceVeryLow("route leg (" .. leg_alt .. ") is at high altitude (> PROFILE_MIN_ALT_FOR_CAP_DETECTION(default 3000m)) -> CAP does not need ewr to be a threat")
 
 							else																							--if route leg is at low altitude
 								
-								if fighterthreats[enemy][t].LDSD then														--if fighter is look down/shoot down capable
+								if fighterthreats[side_][t].LDSD then														--if fighter is look down/shoot down capable
 									ewr_required = false																	--CAP does not need ewr to be a threat
 									log.traceVeryLow("fighter is look down/shoot down (LDSD) capable -> CAP does not need ewr to be a threat")
 								
@@ -229,24 +264,24 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 								end
 							end
 						
-						elseif fighterthreats[enemy][t].class == "Intercept" then											--if the fighter is an interceptor
+						elseif fighterthreats[side_][t].class == "Intercept" then											--if the fighter is an interceptor
 							ewr_required = true																				--ewr is required for fighter to be a threat (needs early warning to take off)
-							log.traceVeryLow("fighterthreats[" .. enemy .. "][" .. t .. "] is a Interceptor -> ewr is required for fighter to be a threat (needs early warning to take off)")
+							log.traceVeryLow("fighterthreats[" .. side_ .. "][" .. t .. "] is a Interceptor -> ewr is required for fighter to be a threat (needs early warning to take off)")
 						end
 						
 						if ewr_required == true then																		--EWR stations that can command fighters that require ewr guidance are counted as threats (AWACS and fighter areas are ignored, since these are too large areas to avoid anyway)
 							log.traceVeryLow("ewr is required")
-							local fighter_ewr_distance = GetDistance(threat_table.ewr[leg_alt][e], fighterthreats[enemy][t])
-							local sum_range_ewr_fighter = threat_table.ewr[leg_alt][e].range + fighterthreats[enemy][t].range
+							local fighter_ewr_distance = GetDistance(threat_table.ewr[leg_alt][e], fighterthreats[side_][t])
+							local sum_range_ewr_fighter = threat_table.ewr[leg_alt][e].range + fighterthreats[side_][t].range
 							log.traceVeryLow("calculated fighter_ewr_distance = " .. fighter_ewr_distance .. ", sum_range_ewr_fighter = " .. sum_range_ewr_fighter)
 
 							if fighter_ewr_distance <  sum_range_ewr_fighter then	--if fighterthreats and ewr are overlapping
 								log.traceVeryLow("fighter_ewr_distance <  sum_range_ewr_fighter -> fighterthreats and ewr are overlapping")
-								local route_fighter_distance = GetTangentDistance(point1, point2, fighterthreats[enemy][t])
+								local route_fighter_distance = GetTangentDistance(point1, point2, fighterthreats[side_][t])
 								log.traceVeryLow("calculated route_fighter_distance = " .. route_fighter_distance)
 
-								if route_fighter_distance < fighterthreats[enemy][t].range then								--if route leg is in range of fighterthreat
-									log.traceVeryLow("route_fighter_distance < fighterthreats[enemy][t].range (" .. fighterthreats[enemy][t].range .. ") -> route leg is in range of fighterthreat")
+								if route_fighter_distance < fighterthreats[side_][t].range then								--if route leg is in range of fighterthreat
+									log.traceVeryLow("route_fighter_distance < fighterthreats[side_][t].range (" .. fighterthreats[side_][t].range .. ") -> route leg is in range of fighterthreat")
 									local route_ewr_distance = GetTangentDistance(point1, point2, threat_table.ewr[leg_alt][e])
 									log.traceVeryLow("calculated route_fighter_distance = " .. route_fighter_distance)
 
@@ -256,7 +291,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 										
 										if approachfactor > entry.approachfactor then										--approach factor is higher than current entry for this ewr											
 											entry = threat_table.ewr[leg_alt][e]											--make this ewr the entry
-											entry.level = fighterthreats[enemy][t].level									--capability level of fighter becomes new threat level of EWR station
+											entry.level = fighterthreats[side_][t].level									--capability level of fighter becomes new threat level of EWR station
 											entry.approachfactor = approachfactor											--factor how close route passes to threat (1 = on top)
 											log.traceLow("calculated approach factor is higher than current entry for this ewr -> make this ewr the entry, capability level(" .. entry.level .. ") of fighter becomes new threat level of EWR station and calculated approachfactor(" .. approachfactor ..  ") become entry's approachfactor")
 										end						
@@ -277,6 +312,10 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		log.level = log_level
 		return tbl
 	end
+
+	--< ===============================================================					
+	--<                Last point for code analisys 		
+	--< ===============================================================	
 	
 	--function to define a set of nav points to make a route between two points that evades threats
 	local function FindPath(from, to)
@@ -288,7 +327,8 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		local direct_distance = GetDistance(from, to)																				--distance of direct path between start and end of route
 		local no_threat_route = {}																									--to collect route branches that found a no threat route in order to cancel other arms of that branch
 		
-		local function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt)	--find a route between point1 and point2	
+		--find a route between point1 and point2
+		local function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt)		
 			log.level = function_log_level	
 			local nameFunction = "function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt): "    		
 			log.traceVeryLow("Start " .. nameFunction)									
@@ -600,40 +640,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 							
 							if break_loop then
 								break
-							end
-							
-							--[[for t = 1, #threat do																--iterate through all threats on this option				
-								
-								if threat[t].class == "EWR" then												--threat is an EWR
-									
-									if EWRpenality == false then												--threat is the first EWR encountered
-										total_threat_level = total_threat_level + 0.1							--add a small threat level once if there are any EWR encountered betwen draft IP and draft attack point (this means there will be a small bias for IPs that are not under any EWR, but multiple EWR will not affect IP direction).
-										EWRpenality = true														--mark that the threat penality for one EWR has been marked 
-										log.traceVeryLow("threat is the first EWR encountered, set true for EWRPenality and update total_threat_level: " .. total_threat_level)
-									end
-								
-								else
-									local closest_approach = GetTangentDistance(draft_IP, draft_attackPoint, threat[t])	--closest approach distance to threat
-									local closest_approach_factor = 1 - closest_approach / threat[t].range		--factor how close threat is approached (1 = on top, 0 not at all)
-									local lenght_in_threat = GetTangentLenght(draft_IP, draft_attackPoint, threat[t], threat[t].range)	--distance that is traveled within threat range
-									local threat_level = threat[t].level * (lenght_in_threat / (threat[t].range * 2)) * closest_approach_factor --threat level for this indiviudal threat (path lenght in threat circle compared to threat diameter * approach factor)
-									total_threat_level = total_threat_level + threat_level						--sum all threat levels to total threat level
-									log.traceVeryLow("computed closest_approach: " .. closest_approach .. ", factor how close threat is approached (1 = on top, 0 not at all): " .. closest_approach_factor)
-									log.traceVeryLow("distance that is traveled within threat range: " ..  lenght_in_threat .. ", threat_level: " .. threat_level .. ", update total_threat_level: " .. total_threat_level)
-								end
-							end
-							log.traceVeryLow("calculated total_threat_level = " .. total_threat_level .. "")
-							
-							if total_threat_level == 0 then														--if there is no threat, make this the IP and stop evaluation
-								initialPoint = draft_IP
-								log.traceVeryLow("there isn't threat, make this the IP and stop evaluation -> make initialPoint the IP and stop evaluation, initialPoint = (" .. initialPoint.x .. ", " .. initialPoint.y .. ")")
-								break
-
-							else																				--if there are threats
-								table.insert(IP_table, {point = draft_IP, threat = total_threat_level})			--store current draft IP in IP table
-								log.traceVeryLow("there isn't threat -> store current draft IP in IP table, draft_IP = (" .. draft_IP.x .. ", " .. draft_IP.y .. "), stored threat level for this IP: " .. total_threat_level)
-							end
-							]]
+							end							
 						end
 					end
 				end
@@ -735,37 +742,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 									
 								if break_loop then
 									break
-								end
-							
-								--[[for t = 1, #threat do																--iterate through all threats on this option				
-									
-									if threat[t].class == "EWR" then												--threat is an EWR
-										
-										if EWRpenality == false then												--threat is the first EWR encountered
-											total_threat_level = total_threat_level + 0.1							--add a small threat level once if there are any EWR encountered betwen attack point and draft egress point (this means there will be a small bias for IPs that are not under any EWR, but multiple EWR will not affect IP direction).
-											EWRpenality = true														--mark that the threat penality for one EWR has been marked 
-											log.traceVeryLow("threat is the first EWR encountered, set true for EWRPenality and update total_threat_level: " .. total_threat_level)
-										end
-									
-									else
-										local closest_approach = GetTangentDistance(egress_point_start, draft_egress, threat[t])	--closest approach distance to threat
-										local closest_approach_factor = 1 - closest_approach / threat[t].range		--factor how close threat is approached (1 = on top, 0 not at all)
-										local lenght_in_threat = GetTangentLenght(egress_point_start, draft_egress, threat[t], threat[t].range)	--distance that is traveled within threat range
-										local threat_level = threat[t].level * (lenght_in_threat / (threat[t].range * 2)) * closest_approach_factor --threat level for this indiviudal threat (path lenght in threat circle compared to threat diameter * approach factor)
-										total_threat_level = total_threat_level + threat_level						--sum all threat levels to total threat level
-									end
-								end							
-								log.traceVeryLow("calculated total_threat_level = " .. total_threat_level .. "")
-										
-								if total_threat_level == 0 then														--if there is no threat, make this the egress point and stop evaluation
-									egressPoint = draft_egress
-									log.traceVeryLow("there isn't threat, make this the egressPoint and stop evaluation -> make initialPoint the IP and stop evaluation, initialPoint = (" .. egressPoint.x .. ", " .. egressPoint.y .. ")")
-									break
-								
-								else
-									table.insert(egress_table, {point = draft_egress, threat = total_threat_level})	--store current draft egress in egress table
-									log.traceVeryLow("there isn't threat -> store current draft_egress point in egress table, draft_egress = (" .. draft_egress.x .. ", " .. draft_egress.y .. "), stored threat level for this IP: " .. total_threat_level)
-								end]]								
+								end		
 							end
 						end
 					end
@@ -793,32 +770,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 							
 							if break_loop then
 								break
-							end
-							--[[for t = 1, #threat do																--iterate through all threats on this option				
-								if threat[t].class == "EWR" then												--threat is an EWR
-									if EWRpenality == false then												--threat is the first EWR encountered
-										total_threat_level = total_threat_level + 0.1							--add a small threat level once if there are any EWR encountered betwen attack point and draft egress point (this means there will be a small bias for IPs that are not under any EWR, but multiple EWR will not affect IP direction).
-										EWRpenality = true														--mark that the threat penality for one EWR has been marked 
-										log.traceVeryLow("threat is the first EWR encountered, set true for EWRPenality and update total_threat_level: " .. total_threat_level)
-									end
-								
-								else
-									local threat_level = GetTangentLenght(targetPoint, draft_egress, threat[t], threat[t].range) / (threat[t].range * 2) * threat[t].level		--threat level for this indiviudal threat (path lenght in threat circle compared to threat diameter)
-									total_threat_level = total_threat_level + threat_level							--sum all threat levels to total threat level
-									log.traceVeryLow("threat_level: " .. threat_level .. ", update total_threat_level: " .. total_threat_level)
-								end
-							end
-							log.traceVeryLow("calculated total_threat_level = " .. total_threat_level .. "")
-
-							if total_threat_level == 0 then															--if there is no threat, make this the egress point and stop evaluation
-								egressPoint = draft_egress
-								log.traceVeryLow("there isn't threat, make this the egressPoint and stop evaluation -> make initialPoint the IP and stop evaluation, egressPoint = (" .. egressPoint.x .. ", " .. egressPoint.y .. ")")
-								break
-
-							else
-								table.insert(egress_table, {point = draft_egress, threat = total_threat_level})		--store current draft IP in IP table
-								log.traceVeryLow("there isn't threat -> store current egress point in egress_table, draft_IP = (" .. draft_IP.x .. ", " .. draft_IP.y .. "), stored threat level for this IP: " .. total_threat_level)
-							end]]
+							end							
 						end
 					end
 				end
@@ -939,18 +891,18 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 					for t = 1, #threat do																				--iterate through threats
 						if threat[t].class == "EWR" then																--threat is an EWR
 							local newEWRrange = 0																		--reduce EWR range to point where route enters the first fighter threat
-							for f = 1, #fighterthreats[enemy] do														--iterate through fighter threats to find the first fighter threat that route enters into
-								if GetTangentDistance(route[n], route[n + 1], fighterthreats[enemy][f]) < fighterthreats[enemy][f].range then	--route passes though fighter threat circle
+							for f = 1, #fighterthreats[side_] do														--iterate through fighter threats to find the first fighter threat that route enters into
+								if GetTangentDistance(route[n], route[n + 1], fighterthreats[side_][f]) < fighterthreats[side_][f].range then	--route passes though fighter threat circle
 									--find point where route enters fighter circle					
 									local heading1 = GetHeading(route[n], route[n + 1])									--route heading
-									local heading2 = GetHeading(route[n], fighterthreats[enemy][f])						--heading to center of threat circle
+									local heading2 = GetHeading(route[n], fighterthreats[side_][f])						--heading to center of threat circle
 									local alpha = math.abs(heading1 - heading2)											--angle beteen both headings
 									if alpha > 180 then
 										alpha = math.abs(alpha - 360)
 									end
 									alpha = math.rad(alpha)
-									local a = fighterthreats[enemy][f].range											--radius of threat circle
-									local b = GetDistance(route[n], fighterthreats[enemy][f])							--distance to center of threat circle
+									local a = fighterthreats[side_][f].range											--radius of threat circle
+									local b = GetDistance(route[n], fighterthreats[side_][f])							--distance to center of threat circle
 									local beta = math.asin(b / (a / math.sin(alpha)))									--sinus sentence
 									beta = math.pi - beta																--since sinus sentence results in two possible angles for beta and only the second is valid, use the second
 									local gamma = math.pi - alpha - beta
@@ -961,7 +913,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 										newEWRrange = EWR_p
 									end
 									
-									local heading_p_t = GetHeading(p, fighterthreats[enemy][f])							--heading from intersection point to fighter threat
+									local heading_p_t = GetHeading(p, fighterthreats[side_][f])							--heading from intersection point to fighter threat
 									local heading_p_EWR = GetHeading(p, threat[t])										--heading from intersection point to EWR
 									local angle = math.abs(heading_p_t - heading_p_EWR)									--angle beteen both headings
 									if angle > 180 then
@@ -1062,18 +1014,18 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 					for t = 1, #threat do																				--iterate through threats
 						if threat[t].class == "EWR" then																--threat is an EWR
 							local newEWRrange = 0																		--reduce EWR range to point where route enters the first fighter threat
-							for f = 1, #fighterthreats[enemy] do														--iterate through fighter threats to find the first fighter threat that route enters into
-								if GetTangentDistance(route[n], route[n - 1], fighterthreats[enemy][f]) < fighterthreats[enemy][f].range then	--route passes though fighter threat circle
+							for f = 1, #fighterthreats[side_] do														--iterate through fighter threats to find the first fighter threat that route enters into
+								if GetTangentDistance(route[n], route[n - 1], fighterthreats[side_][f]) < fighterthreats[side_][f].range then	--route passes though fighter threat circle
 									--find point where route enters fighter circle					
 									local heading1 = GetHeading(route[n], route[n - 1])									--route heading
-									local heading2 = GetHeading(route[n], fighterthreats[enemy][f])						--heading to center of threat circle
+									local heading2 = GetHeading(route[n], fighterthreats[side_][f])						--heading to center of threat circle
 									local alpha = math.abs(heading1 - heading2)											--angle beteen both headings
 									if alpha > 180 then
 										alpha = math.abs(alpha - 360)
 									end
 									alpha = math.rad(alpha)
-									local a = fighterthreats[enemy][f].range											--radius of threat circle
-									local b = GetDistance(route[n], fighterthreats[enemy][f])							--distance to center of threat circle
+									local a = fighterthreats[side_][f].range											--radius of threat circle
+									local b = GetDistance(route[n], fighterthreats[side_][f])							--distance to center of threat circle
 									local beta = math.asin(b / (a / math.sin(alpha)))									--sinus sentence
 									beta = math.pi - beta																--since sinus sentence results in two possible angles for beta and only the second is valid, use the second
 									local gamma = math.pi - alpha - beta
@@ -1084,7 +1036,7 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 										newEWRrange = EWR_p
 									end
 									
-									local heading_p_t = GetHeading(p, fighterthreats[enemy][f])							--heading from intersection point to fighter threat
+									local heading_p_t = GetHeading(p, fighterthreats[side_][f])							--heading from intersection point to fighter threat
 									local heading_p_EWR = GetHeading(p, threat[t])										--heading from intersection point to EWR
 									local angle = math.abs(heading_p_t - heading_p_EWR)									--angle beteen both headings
 									if angle > 180 then
@@ -1531,8 +1483,8 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 		
 		--air threats
 		route.threats.air = {}																										--table to store air threats for route
-		for t = 1, #fighterthreats[enemy] do																						--iterate through all fighter threats
-			if fighterthreats[enemy][t].class == "CAP" or fighterthreats[enemy][t].class == "Intercept" then
+		for t = 1, #fighterthreats[side_] do																						--iterate through all fighter threats
+			if fighterthreats[side_][t].class == "CAP" or fighterthreats[side_][t].class == "Intercept" then
 				for n = 1, #route - 1 do																							--iterate through all route segements
 					local route_leg_alt
 					local route_leg_band
@@ -1543,36 +1495,36 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 						route_leg_alt = profile.hAttack
 						route_leg_band = "low"
 					end
-					if GetTangentDistance(route[n], route[n + 1], fighterthreats[enemy][t]) < fighterthreats[enemy][t].range then	--if route segment is in range of fighter threat
+					if GetTangentDistance(route[n], route[n + 1], fighterthreats[side_][t]) < fighterthreats[side_][t].range then	--if route segment is in range of fighter threat
 						local ewr_required																							--boolean whether ewr is required for the fighter to be a threat
-						if fighterthreats[enemy][t].class == "CAP" then																--if the fighter is CAP
+						if fighterthreats[side_][t].class == "CAP" then																--if the fighter is CAP
 							if route_leg_band == "high" then																		--if route leg is at high altitude
 								ewr_required = false																				--CAP does not need ewr to be a threat
 							else																									--if route leg is at low altitude
-								if fighterthreats[enemy][t].LDSD then																--if fighter is look down/shoot down capable
+								if fighterthreats[side_][t].LDSD then																--if fighter is look down/shoot down capable
 									ewr_required = false																			--CAP does not need ewr to be a threat
 								else																								--if fighter is not look down/shoot down capable
 									-- ATO_RG_Debug02		quand les EWR sont d�truit: on active les CAP, si les CAP on besoin d'EWR c'est nul
 									-- ewr_required = true																				--CAP needs ewr to be a threat
 								end
 							end
-						elseif fighterthreats[enemy][t].class == "Intercept" then													--if the fighter is an interceptor
+						elseif fighterthreats[side_][t].class == "Intercept" then													--if the fighter is an interceptor
 							ewr_required = true																						--ewr is required for fighter to be a threat (needs early warning to take off)
 						end
 						
 						if ewr_required == true then																				--fighter needs ewr/awacs station to be a threat
 							local break_loop = false
 							for e = 1, #threat_table.ewr[route_leg_alt] do															--iterate through all ewr/awacs
-								if GetDistance(threat_table.ewr[route_leg_alt][e], fighterthreats[enemy][t]) < threat_table.ewr[route_leg_alt][e].range + fighterthreats[enemy][t].range then	--fighter operation area and ewr coverage are overlapping
-									if GetTangentDistance(route[n], route[n + 1], fighterthreats[enemy][t]) < fighterthreats[enemy][t].range then				--if route leg is in range of fighter
+								if GetDistance(threat_table.ewr[route_leg_alt][e], fighterthreats[side_][t]) < threat_table.ewr[route_leg_alt][e].range + fighterthreats[side_][t].range then	--fighter operation area and ewr coverage are overlapping
+									if GetTangentDistance(route[n], route[n + 1], fighterthreats[side_][t]) < fighterthreats[side_][t].range then				--if route leg is in range of fighter
 										if GetTangentDistance(route[n], route[n + 1], threat_table.ewr[route_leg_alt][e]) < threat_table.ewr[route_leg_alt][e].range then	--if route leg is in range of ewr/awacs
-											if route.threats.air[fighterthreats[enemy][t].name] then															--if this fighter unit already has a threat entry for this route
-												if route.threats.air[fighterthreats[enemy][t].name].level < fighterthreats[enemy][t].level then					--if the existing threat entry is lower than the new one
-													route.threats.air[fighterthreats[enemy][t].name].level = fighterthreats[enemy][t].level						--overwrite threat entry with new one
+											if route.threats.air[fighterthreats[side_][t].name] then															--if this fighter unit already has a threat entry for this route
+												if route.threats.air[fighterthreats[side_][t].name].level < fighterthreats[side_][t].level then					--if the existing threat entry is lower than the new one
+													route.threats.air[fighterthreats[side_][t].name].level = fighterthreats[side_][t].level						--overwrite threat entry with new one
 												end
 											else																					--if this fighter unit has no threat entry for this route yet
-												route.threats.air[fighterthreats[enemy][t].name] = {								--make new threat entry for this fighter unit
-													level = fighterthreats[enemy][t].level,
+												route.threats.air[fighterthreats[side_][t].name] = {								--make new threat entry for this fighter unit
+													level = fighterthreats[side_][t].level,
 												}
 											end
 											break_loop = true																		--two breaks would be required to break ewr loop and route loop
@@ -1585,13 +1537,13 @@ function GetRoute(basePoint, targetPoint, profile, enemy, task, time, multipackn
 								break																								--break route segemnt loop and go to next threat
 							end
 						else																										--no ewr is needed for fighter to be a threat
-							if route.threats.air[fighterthreats[enemy][t].name] then												--if this fighter unit already has a threat entry for this route
-								if route.threats.air[fighterthreats[enemy][t].name].level < fighterthreats[enemy][t].level then		--if the existing threat entry is lower than the new one
-									route.threats.air[fighterthreats[enemy][t].name].level = fighterthreats[enemy][t].level			--overwrite threat entry with new one
+							if route.threats.air[fighterthreats[side_][t].name] then												--if this fighter unit already has a threat entry for this route
+								if route.threats.air[fighterthreats[side_][t].name].level < fighterthreats[side_][t].level then		--if the existing threat entry is lower than the new one
+									route.threats.air[fighterthreats[side_][t].name].level = fighterthreats[side_][t].level			--overwrite threat entry with new one
 								end
 							else																									--if this fighter unit has no threat entry for this route yet
-								route.threats.air[fighterthreats[enemy][t].name] = {												--make new threat entry for this fighter unit
-									level = fighterthreats[enemy][t].level,
+								route.threats.air[fighterthreats[side_][t].name] = {												--make new threat entry for this fighter unit
+									level = fighterthreats[side_][t].level,
 								}
 							end
 							break																									--break route segemnt loop and go to next threat
