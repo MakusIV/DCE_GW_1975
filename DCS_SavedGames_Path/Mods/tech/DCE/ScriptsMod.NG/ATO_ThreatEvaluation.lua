@@ -27,6 +27,8 @@ log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 log.info("Start")
 
+local MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3
+local MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3
 
 
 CreatePlageFrequency()																--trouve une plage de frequence commune si c'est possible
@@ -844,6 +846,32 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 	
 end
 
+local function computeAssetAvalaiability(task_type, unit_roster_ready)  --(unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft --rivedere se roster.ready è opportuno: la quantità di aerei disponibili non dovrebbe influenzare la sua letalità se ci sono un numero minimo disponibile
+	local min_asset
+	local asset_avalaiability
+
+	if task_type == "Intercept" then
+		min_asset = MIN_ASSET_FOR_COMPUTE_LEVEL_CAP
+	
+	elseif task_type == "CAP" then
+		min_asset = MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT
+	
+	else
+		min_asset = 1
+	end
+
+	
+	if unit_roster_ready < 	min_asset then
+		asset_avalaiability = roster.ready/min_asset
+	
+	else
+		asset_avalaiability = 1
+	end
+
+	return asset_avalaiability
+
+end
+
 
 --table to store ewr
 ewr = {
@@ -1229,7 +1257,7 @@ for side,unit in pairs(oob_air) do																--iterate through all sides
 										class = "CAP",												--class
 										x = db_airbases[unit[n].base].x,							--unit homebase position
 										y = db_airbases[unit[n].base].y,
-										level = loadout.capability * loadout.firepower * (unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft
+										level = loadout.capability * loadout.firepower * computeAssetAvalaiability("CAP", unit[n].roster.ready),  --(unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft --rivedere se roster.ready è opportuno: la quantità di aerei disponibili non dovrebbe influenzare la sua letalità se ci sono un numero minimo disponibile										
 										range = loadout.range,										--Fighter action radius
 										LDSD = loadout.LDSD,										--Look Down/Shoot Down
 									}									
@@ -1241,7 +1269,7 @@ for side,unit in pairs(oob_air) do																--iterate through all sides
 										class = "Intercept",										--class
 										x = db_airbases[unit[n].base].x,							--unit homebase position
 										y = db_airbases[unit[n].base].y,
-										level = loadout.capability * loadout.firepower * (unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft
+										level = loadout.capability * loadout.firepower * computeAssetAvalaiability("Intercept", unit[n].roster.ready),  --(unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft --rivedere se roster.ready è opportuno: la quantità di aerei disponibili non dovrebbe influenzare la sua letalità se ci sono un numero minimo disponibile												--total unit threat is capability * firepower * one third of ready aircraft
 										range = loadout.range,										--Fighter action radius
 									}									
 									table.insert(fighterthreats[side], entry)
