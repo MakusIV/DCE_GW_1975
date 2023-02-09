@@ -38,7 +38,7 @@ inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2 j
-log.level = LOGGING_LEVEL
+log.level = "traceVeryLow" -- LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 log.info("Start")
@@ -224,6 +224,50 @@ require("Active/oob_air")
 require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
+
+-- INSERISCI QUI IL PREPROCESSING: 
+-- Blue_task_table, red_task_table dove la key = task (CAP, INTERCEPT,...) e value = tutte le info relative alle unità con quel task (sottotabella unità).
+-- ed_rooster con key = lost, ready e damaged e value nome unità
+--  red_base_asset con key = base con value le sottotabelle unità con tutti le proprietà relativa a quella unità
+
+-- create table blue_air_task
+blue_air_task = {}
+local blue_air_units = oob_air.blue
+local red_air_units = oob_air.red
+local air_task = {"CAP", "Escort", "Fighter Sweep", "Intercept", "Strike", "SEAD", "Anti-ship Strike", "Laser Illumination", "Refueling", "Transport", "Reconnaissance"}
+--local entry_task = {}
+-- local key_task 
+
+for n = 1, #air_task do 
+	log.traceLow("blue_air_task - task: " .. air_task[n])
+	blue_air_task[air_task[n]] = {}
+	local key_task
+
+	for n_unit = 1, #blue_air_units do
+		log.traceLow("blue_air_units[" .. n_unit .. "]: " .. inspect(blue_air_units[n_unit]))
+
+		for task_name, task_value in pairs (blue_air_units[n_unit].tasks) do
+			log.traceVeryLow("blue_air_task - task_name: " .. task_name .. ", task_value: " .. tostring(task_value))
+			
+			if air_task[n] == task_name and task_value then	
+				key_task = blue_air_units[n_unit].name .. "/" .. blue_air_units[n_unit].type
+				local entry_task = {}
+				entry_task[key_task] = { 					 
+						name =  blue_air_units[n_unit].name,
+						type =  blue_air_units[n_unit].type,
+						country =  blue_air_units[n_unit].country,
+						base =  blue_air_units[n_unit].base,
+						skill =  blue_air_units[n_unit].skill,
+						number =  blue_air_units[n_unit].number,
+						num_unit =  blue_air_units[n_unit].num_unit,
+				}
+				table.insert(blue_air_task[air_task[n]], entry_task)
+				log.traceLow("blue_air_task - unit added: " .. inspect(blue_air_task[air_task[n]]) )
+			end
+		end
+	end
+end
+log.trace("preprocessing: created table blue_air_task:\n" .. inspect(blue_air_task))
 
 -- debug code
 if Debug.KillGround.flag then

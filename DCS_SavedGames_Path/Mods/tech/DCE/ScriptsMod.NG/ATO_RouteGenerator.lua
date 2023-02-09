@@ -27,7 +27,7 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 local log_level = LOGGING_LEVEL -- "traceVeryLow" --
-local function_log_level = "info"
+local function_log_level = "info" --log_level
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_RouteGenerator." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
@@ -304,10 +304,12 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					if entry.approachfactor > 0 then																		--if an approach factor for this ewr was found
 						table.insert(tbl, entry)																			--save ewr station as threat on this leg
 						log.traceLow("an approach factor for this ewr was defined (>0) -> insert ewr station in aux table threats (tbl)")
+						log.traceVeryLow("entry: \n" .. inspect(entry))
 					end
 				end
 			end
 		end
+		log.traceVeryLow("return aux table threats (tbl):\n" .. inspect(tbl))
 		log.traceLow("End " .. nameFunction)						
 		log.level = log_level
 		return tbl
@@ -495,7 +497,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		log.traceVeryLow("End " .. nameFunction)
 		log.level = log_level						
 	end
-
+	
 	local function threatEvalutationInRoute(threat, EWRpenality, total_threat_level, point1, point2, type_service, storage_table, computedPoint)
 		log.level = function_log_level
 		local break_loop = false

@@ -18,18 +18,62 @@ versionDCE["ATO_ThreatEvaluation.lua"] = "OB.1.0.0"
 
 -- miguel21 modification M34.f custom FrequenceRadio
 
+--[[ NOTE: launcher, tracker e hq vengono definiti con il livello di minaccia: se la valutazione delle minaccia per il calcolo della rotta dovrebbe 
+considerare solo traker e radar rilevati dall'"intelligence" e dalle reco quindi verificare se la tabella delle minaccie viene popolata includendo 
+in modo casuale una percentuale degli asset totali differenziando dai grandi SAM che é molto probabile che vengano immediatamente rilevati: 
+
+igla.rilevability = 0.3
+Shilka.rilevability = 0.5 (ha il radar)
+S2.rilevability = 0.9
+
+ground_threat_rilevability_capacity[0-1] = (air_recon_efficency [0-1] + air_recon_efficency[0-1])/2
+
+ground_threat_rilevability_capacity = 1 -> rilev_success = 0.5 + rand(0-1)
+ground_threat_rilevability_capacity = 0.5 -> rilev_success = 0.25 + rand(0-1)
+rilev_success = ground_threat_rilevability_capacity/2 + rand(0, 1)
+if rilev_success > 1 then rilev_success = 1
+
+se rand > (1-sam.rilevability)
+  add.table(sam)
+
+teoricamente igla e sam IR (senza radar)  non dovrebbero essere rilevati inoltre solo i radar 
+sam (tracker ecc) dovrebbero essere rilevati
+
+controlla se SA-3 e SA-2 sono inseriti boh non ci sono neanche nel modulo aggiornato, verifica le unit.tyope
+è preso da miz e qual'è quello del sa-2
+
+]]
+
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = LOGGING_LEVEL
+local log_level = "trace" --LOGGING_LEVEL -- "traceVeryLow" --
+local function_log_level = log_level --log_level
+log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.info("Start")
 
 local MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3
 local MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3
+local GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1
+local GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY = 1
+local GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1
+local GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY = 1
 
+local MAN_SAM_RILEVABILITY = 0.2
+local SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.4
+local SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.5
+local MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.6
+local MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.7
+local LARGE_SAM_VEHICLE_RILEVABILITY = 0.8
+local SMALL_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.6
+local MEDIUM_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.8
+local LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.9
+local SMALL_SHIP_RILEVABILITY = 0.7
+local MEDIUM_SHIP_RILEVABILITY = 0.8
+local LARGE_SHIP_RILEVABILITY = 0.95
 
 CreatePlageFrequency()																--trouve une plage de frequence commune si c'est possible
 
@@ -64,12 +108,53 @@ local callsign_west = {
 			[19] = "Badger",
 			}
 }
+
+-- evalutate threat rilevability from recognition capability of a specific side
+local function evalutateThreatRilevation(unit_rilevability, side_)
+	log.level ="trace" -- function_log_level
+	local nameFunction = "function evalutateThreatRilevation(unit_rilevability: " .. unit_rilevability .. ", side_: " .. side_ .. "): "    
+	log.debug("Start " .. nameFunction)
+	local ret = false
+
+	if side_ == "blue" then
+		ground_threat_rilevability_air_capacity = GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY
+		ground_threat_rilevability_ground_capacity = GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY
+	
+	elseif side_ == "red" then
+		ground_threat_rilevability_air_capacity = GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY
+		ground_threat_rilevability_ground_capacity = GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY
+
+	else
+		log.warn(nameFunction .. "Anomaly: undefined side")
+		ground_threat_rilevability_air_capacity = 1
+		ground_threat_rilevability_ground_capacity = 1
+	end
+
+	local a = 1 -- weig.ht factor for ground_threat_rilevability_air_capacity
+	local b = 3 -- weight factor for ground_threat_rilevability_ground_capacity
+	local ground_threat_rilevability_capacity = ( ground_threat_rilevability_air_capacity * a + ground_threat_rilevability_ground_capacity * b ) / ( a + b ) -- ground_threat_rilevability_capacity = 0 - 1 (max)
+	local rilev_success = ground_threat_rilevability_capacity / 3.33 + math.random() -- with ground_... = 1 -> always success for unit with rilevability >= 0.7
+	log.trace("ground_threat_rilevability_air_capacity: " .. ground_threat_rilevability_air_capacity .. ", ground_threat_rilevability_ground_capacity: " .. ground_threat_rilevability_ground_capacity .. ", ground_threat_rilevability_capacity: " .. ground_threat_rilevability_capacity .. ", rilev_success: " .. rilev_success)
+
+	if rilev_success >= (1 - unit_rilevability)  then
+		ret = true
+
+	else
+		ret = false
+	end	 	
+
+	log.trace("return: " .. tostring(ret))
+	log.level = log_level
+	return ret
+end
 	
 --function to check if a unit is a threat, assign threat values and add to threats table
 local function AddThreat(unit, side, hide)											--unput is side and unit-table from oob_ground	-- Miguel21 modification M28.b : helicoptere see all SAM (on ajoute Hide)							
+	log.level = function_log_level
 	local nameFunction = "function AddThreat(" .. unit.type .. "-" .. unit.name .. ", " .. side .. ", " .. tostring(hide) .. "): "    
 	log.debug("Start " .. nameFunction)
-	local threatentry = {}
+	local threatentry = {}	
+		
 
 	if unit.type == "Vulcan" then
 		threatentry = {
@@ -84,6 +169,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,															--sensor elevation above ground
 			min_alt = 0,															--minimal threat altitute
 			max_alt = 1500,															--maximal threat altitude
+			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,														--rilevability level: from 0 to 1 (max)
 		}
 	
 		
@@ -100,6 +186,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3.5,
 			min_alt = 0,
 			max_alt = 2000,
+			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -116,6 +203,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 0,
 			max_alt = 3500,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -132,7 +220,9 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
+		
 	
 		
 	elseif unit.type == "M48 Chaparral" then
@@ -148,6 +238,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -164,6 +255,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -180,6 +272,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
 		
@@ -196,6 +289,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
 		
@@ -212,6 +306,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
 	
@@ -228,6 +323,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3.5,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -244,6 +340,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3.5,
 			min_alt = 0,
 			max_alt = 6500,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 	
@@ -260,6 +357,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 2.5,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
 		
@@ -276,6 +374,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 1.5,
 			min_alt = 0,
 			max_alt = 3600,
+			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
 	
@@ -292,6 +391,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 0,
 			max_alt = 8000,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -308,6 +408,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 0,
 			max_alt = 5000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 
 	
@@ -324,6 +425,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 0,
 			max_alt = 5000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 
 		
@@ -340,6 +442,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 22000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -356,6 +459,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 6,
 			min_alt = 0,
 			max_alt = 32000,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 	
@@ -372,6 +476,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 
 	
@@ -388,6 +493,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 50,
 			max_alt = 20000,
+			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
 	
@@ -404,6 +510,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 50,
 			max_alt = 20000,
+			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
 		
@@ -420,6 +527,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 6,
 			min_alt = 0,
 			max_alt = 10000,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -436,6 +544,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 5.5,
 			min_alt = 0,
 			max_alt = 7000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -452,6 +561,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 7,
 			min_alt = 0,
 			max_alt = 24000,
+			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -468,6 +578,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 7,
 			min_alt = 0,
 			max_alt = 24000,
+			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 
 		
@@ -484,6 +595,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 5,
 			min_alt = 0,
 			max_alt = 8000,
+			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
 			
@@ -500,6 +612,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 27.5,
 			min_alt = 0,
 			max_alt = 29000,
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 	
@@ -516,6 +629,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 27.5,
 			min_alt = 0,
 			max_alt = 35000,
+			rilevability =  LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 
 	elseif unit.type == "RPC_5N62V" then --SA-5
@@ -531,6 +645,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 27.5,
 			min_alt = 0,
 			max_alt = 35000,
+			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 
 	
@@ -547,6 +662,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 25000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 	
@@ -563,6 +679,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 25,
 			min_alt = 0,
 			max_alt = 30000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -579,6 +696,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 25000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -595,6 +713,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 10,
 			min_alt = 0,
 			max_alt = 1500,
+			rilevability = MEDIUM_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -611,6 +730,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 5000,
+			rilevability =  MEDIUM_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -627,6 +747,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 5000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -643,6 +764,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 6000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 			
@@ -659,6 +781,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 6000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -675,6 +798,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 25,
 			min_alt = 0,
 			max_alt = 27000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -691,6 +815,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 27000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -707,6 +832,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 20,
 			min_alt = 0,
 			max_alt = 30000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 	elseif unit.type == "USS_Arleigh_Burke_IIa" then
@@ -722,6 +848,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 25,
 			min_alt = 0,
 			max_alt = 30000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 		
 	elseif unit.type == "TICONDEROG" then
@@ -737,6 +864,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 25,
 			min_alt = 0,
 			max_alt = 30000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -753,6 +881,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	elseif unit.type == "CVN_71" then
 		threatentry = {
@@ -767,6 +896,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}		
 	
 	elseif unit.type == "CVN_75" then
@@ -782,6 +912,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 	elseif unit.type == "CVN_72" then
@@ -797,6 +928,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 
 	
@@ -814,6 +946,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
 		}
 	
 		
@@ -830,22 +963,34 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 30,
 			min_alt = 0,
 			max_alt = 15000,
-		}
-	
-	log.debug(nameFunction .. "Added in threatentry table this unit: " .. unit.type .. "-" .. unit.name .. "\nthreathentry:\n" .. inspect(threatentry))
+			rilevability = LARGE_SHIP_RILEVABILITY,
+		}		
 	
 	end
-
+	
+	
+    
+	log.level = "traceVeryLow"
 	-- Miguel21 modification M28.b : helicoptere see all SAM
 	if threatentry and threatentry.type then 
 		threatentry.hidden = hide
-		table.insert(groundthreats[side], threatentry)
-		log.debug(nameFunction .. "inserted in groundthreats[" .. side .. "] table current threatentry tab")
-		log.trace(nameFunction .. "current threatentry tab inserted in groundthreats[" .. side .. "]:\n" .. inspect(threatentry))
-	end
-	
+		log.trace(nameFunction .. "defined threatentry for this unit: " .. unit.type .. " - " .. unit.name .. "\nthreathentry:\n" .. inspect(threatentry))			
+		-- local result = true
+		--result = evalutateThreatRilevation(threatentry.rilevability, side) -- ATT NON FUNZIONA: LA FUNZIONE RESTITUISCE IL RITORNO CORRETTO (TRUE O False) ma il codice "salta" alla fine di questa funzione ???????
+		--log.trace(nameFunction .. "result evalutation: " .. tostring(result))			
+
+		if evalutateThreatRilevation(threatentry.rilevability, side) then
+			table.insert(groundthreats[side], threatentry)			
+			log.trace(nameFunction .. "current threatentry tab, inserted in groundthreats[" .. side .. "]")			
+
+		else					
+			log.trace(nameFunction .. "current threatentry tab, NOT inserted in groundthreats[" .. side .. "] table")
+		end
+	end	
+	log.level = log_level
 end
 
+-- function used to comupute level threat of CAP and Intercept task, level = ... * firepower * asset_avalaiability
 local function computeAssetAvalaiability(task_type, unit_roster_ready)  --(unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft --rivedere se roster.ready è opportuno: la quantità di aerei disponibili non dovrebbe influenzare la sua letalità se ci sono un numero minimo disponibile
 	local min_asset
 	local asset_avalaiability
@@ -1038,24 +1183,129 @@ local function AddEWR(unit, side, freq, call)
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "TICONDEROG" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "USS_Arleigh_Burke_IIa" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 	
 	elseif unit.type == "Stennis" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "CVN_71" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 		
 	elseif unit.type == "CVN_72" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 
 	elseif unit.type == "CVN_73" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true	
 		
 	elseif unit.type == "CVN_75" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 4,
+			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
 		GCI.EWR[side][unit.name] = true
 	
 	elseif unit.type == "LHA_Tarawa" then										--Participe � la chaine de detection
@@ -1078,10 +1328,11 @@ local function AddEWR(unit, side, freq, call)
 
 	if GCI.EWR[side][unit.name] then
 		log.debug(nameFunction .. "Insert in  GCI[" .. side .. "] this unit: " .. unit.type .. "-" .. unit.name)
+	end
 	
-	elseif entry then
+	if entry then
 		log.debug(nameFunction .. "Insert in  ewr[" .. side .. "] this unit: " .. unit.type .. "-" .. unit.name)
-			log.trace(nameFunction .. "Property inserted in  ewr[" .. side .. "] for this unit: " .. unit.type .. "-" .. unit.name .. ":\n" .. inspect(entry))
+		log.trace(nameFunction .. "Property inserted in  ewr[" .. side .. "] for this unit: " .. unit.type .. "-" .. unit.name .. ":\n" .. inspect(entry))
 	end
 	
 end
@@ -1103,9 +1354,8 @@ for sidename, side in pairs(oob_ground) do									--Iterate through all sides
 					for unit_n, unit in pairs(group.units) do				--Iterate through all units
 						
 						if unit.dead ~= true then							--If unit is not dead					
-							log.debug("Evaluate group's unit: " .. sidename .. "-" .. unit.type .. "-" .. unit.name .. " as threat and add to groundthreats table")							
-							AddThreat(unit, sidename, group.hidden)						--Evaluate unit as threat and add to groundthreats table	 --Miguel21 modification M28.b (ajout hidden)
-							
+							log.debug("Evaluate group's unit: " .. sidename .. "-" .. unit.type .. "-" .. unit.name .. " as threat")													
+							AddThreat(unit, sidename, group.hidden)						--Evaluate unit as threat and add to groundthreats table	 --Miguel21 modification M28.b (ajout hidden)							
 							local ewr_task = false							--group has EWR task
 							local ewr_freq = nil							--group has a communications frequency
 							local ewr_call = nil							--group has a communications callsign
