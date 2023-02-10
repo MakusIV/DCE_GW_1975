@@ -13,6 +13,45 @@ ACTIVATE_TESTING_ENVIROMENTS = true -- false: for running in DCE enviroment (DEB
 LOGGING_LEVEL = "info" -- trace, debug, info, warn, error, fatal     --By Old_Boy
 LOG_DIR = "Log/"
 
+--[[
+	-- START SKILL AIR UNITS (info per la funzione di aggiornamento skill in mission_ini)
+	min_skill_blue_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_helicopter = "Excellent",	-- Average, Good, High, Excellent
+
+	min_skill_red_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_red_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_red_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_red_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_red_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_red_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_red_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_red_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_helicopter = "Excellent",	-- Average, Good, High, Excellent
+]]
+
+
+
 -- 1 ############################################################################################################################################################
 -- 1 ############################################################################################################################################################
 -- The options in this first part of the file can be modified by players. Changes do not require the campaign to be restarted. They will automatically be taken
@@ -21,6 +60,41 @@ LOG_DIR = "Log/"
 -- 1 ############################################################################################################################################################
 
 mission_ini = {
+
+	min_skill_blue_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_helicopter = "Excellent",	-- Average, Good, High, Excellent
+
+	min_skill_red_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_red_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_red_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_red_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_red_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_red_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_red_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_red_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_helicopter = "Excellent",	-- Average, Good, High, Excellent
+
 	PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
 	PruneAggressiveness = 1.9,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
 	PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]

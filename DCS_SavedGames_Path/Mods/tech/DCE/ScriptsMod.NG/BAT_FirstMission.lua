@@ -26,10 +26,10 @@ versionDCE["BAT_FirstMission.lua"] = "OB.1.0.0"
 versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
 math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))										----- random seed -----
 math.random(); math.random(); math.random()																----- random seed -----
+dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 dofile("Init/conf_mod.lua")
 dofile("Init/camp_init.lua")
 dofile("Init/oob_air_init.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 dofile("Init/targetlist_init.lua")
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")

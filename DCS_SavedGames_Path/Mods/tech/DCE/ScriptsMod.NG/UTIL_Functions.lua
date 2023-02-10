@@ -901,4 +901,59 @@ function CopyFile(old_path, new_path)
 	new_file_sz = new_file:seek( "end" )
 	new_file:close()
 	return new_file_sz == old_file_sz
-  end
+end
+
+-- return random skill within min_skill and max_kill. If min_skill = nil -> min_skill = Random or max_skill = nil -> max_skill = Random
+function getSkill(min_skill, max_skill)
+	local skill = {"Average" , "Good", "High", "Excellent"}
+	local skill_found
+	local compute_skill
+
+	if min_skill and type(min_skill) == "string" then
+		skill_found = false
+
+		for n = 1, 4 do
+			
+			if skill[n] == min_skill then 
+				skill_found = true
+				min_skill = n
+				break
+			end
+		end
+
+		if not skill_found then
+			min_skill = math.random(1,4)
+		end
+	
+	elseif type(min_skill) ~= "number" or min_skill < 1 or min_skill > 4 then
+		min_skill = math.random(1,4)
+	end
+
+	if max_skill and type(max_skill) == "string" then
+		skill_found = false
+
+		for n = 1, 4 do
+			
+			if skill[n] == max_skill then 
+				skill_found = true
+				max_skill = n
+				break
+			end
+		end
+
+		if not skill_found then
+			max_skill = math.random(1,4)
+		end
+	
+	elseif type(max_skill) ~= "number" or max_skill < 1 or max_skill > 4 then
+		max_skill = math.random(1,4)
+	end
+
+	if min_skill >= max_skill then
+		compute_skill = skill[min_skill]
+	
+	else
+		compute_skill = skill[ math.random(min_skill, max_skill)]
+	end
+	return compute_skill
+end
