@@ -134,6 +134,10 @@ capability Su-17: strike=7, antiship=3, sead=5
 capability Mig-27K: strike=7, antiship=3, sead=5
 capability Mig-23: intercept=7, sweep=7, cap=7, escort=7, strike=3
 
+note:
+To set missions with routes that evade radars you must first act on the 
+attack altitude (hattack) < 100 if the weapons allow use at this altitude, 
+otherwise you must set the travel altitude (hcruise) < 100
 
 ]]
 
