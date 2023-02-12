@@ -40,8 +40,9 @@ local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default 
 local MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5 -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
 local MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300 -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
 local FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE = 1.34 --default = 1.34, factor distance to compute alternate point route right or left side from threat[1].range (dista) * 
+local MIN_SEPARATION_DISTANCE_FROM_THREAT_ZONE = 500 -- min distance from threat.range border
 
--- note: verificare se possibile calcolare FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE in rela<ione alla distanza del punto o della leg dalla minaccia e dal suo range: calcolare la distanza tra leg (punto della rotta più vicino alla minaccia) 
+-- note: verificare se possibile calcolare FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE in relazione alla distanza del punto o della leg dalla minaccia e dal suo range: calcolare la distanza tra leg (punto della rotta più vicino alla minaccia) 
 -- diff = threat.range - threat_leg_distance, se diff > 0 (leg interno al threat.range -> ragiona sul punto precedente in cui viene calcolato il punto alternativo a 90 gradi e in base a quanto questo punto rispetto si trova interno al range, calcolare il FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE
 
 local MAX_NUM_ISTANCE_PATH_FINDING = 9 -- max number of istances of function findPathLeg(), default = 7
@@ -86,6 +87,7 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 		if profile_alt <= ALT_MIN_FOR_CLUTTER_EFFECT then																				--if alt is lower than 100m
 			threatentry.level = threat.level * (1 - PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER)																--only 50% of threat level is applied as low level clutter bonus
 			log.traceLow("type_profile: " .. type_profile .. " alt(" .. profile_alt .. "), threat isn't ewr and lower than 100m, only 50% of threat level is applied as low level clutter bonus, threatentry.level = " .. threatentry.level)		
+		
 		else
 			threatentry.level = threat.level																	--full threat level is applied
 			log.traceLow("type_profile: " .. type_profile .. ", threat isn't ewr assigned full threatentry.level = " .. threatentry.level .. ", insert ewr in threat_table.ground[" .. profile_alt .. "]")
@@ -156,6 +158,8 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				x = threat.x,
 				y = threat.y,
 				range = threat.range,
+				min_alt = threat.min_alt,-- eliminare se non è possibile inserire le quote per i singoli points
+				max_alt = threat.max_alt,-- eliminare se non è possibile inserire le quote per i singoli points				
 			}
 			log.traceLow("time(" .. time .. ") == day or threat_n: " .. threat_n .." has night capability ( threat.night == " .. tostring(threat.night) .. "), define a new threatentry:\n" .. inspect(threatentry))			
 			
@@ -184,6 +188,8 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			x = threat.x,
 			y = threat.y,
 			range = threat.range,
+			min_alt = threat.min_alt,-- eliminare se non è possibile inserire le quote per i singoli points
+			max_alt = threat.max_alt,-- eliminare se non è possibile inserire le quote per i singoli points				
 		}
 
 		if threat.min_alt <= profile.hCruise and threat.max_alt >= profile.hCruise then									--threat covers cruise alt			
@@ -201,7 +207,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		end
 	end
 		
-	--function to check if a line between two points runs through a threat. 
+	-- function to check if a line between two points runs through a threat. 
 	-- Returns a table of AAA or SAM threats with assigned threat level and approachfactor ( 1 -> profile directly up the threat, 0 -> profile very far from threat )
 	local function ThreatOnLeg(point1, point2, leg_alt)
 		log.level = function_log_level
@@ -224,23 +230,8 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			end
 		end
 		
-	
-		--check EWR threats		
-		--[[
-		fighterthreats store CAP and Intercept. Define in ATO_ThreatEvalutation
-		fighterthreats table entry:
-		entry = {	
-										name = unit[n].name,										--unit name
-										class = "CAP",												--class
-										x = db_airbases[unit[n].base].x,							--unit homebase position
-										y = db_airbases[unit[n].base].y,
-										level = loadout.capability * loadout.firepower * (unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft
-										range = loadout.range,										--Fighter action radius
-										LDSD = loadout.LDSD,	
-
-		]]
 		if profile.avoid_EWR then																							--only count EWR as threats if loadout should avoid them
-			log.traceLow("check ewr threat -> iterate threat_table.ewr[" .. leg_alt .. "]")
+			log.traceLow("profile.avoid_EWR = true, check ewr threat -> iterate threat_table.ewr[" .. leg_alt .. "]")
 
 			for e = 1, #threat_table.ewr[leg_alt] do																		--iterate through all ewr/awacs
 
@@ -318,6 +309,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				end
 			end
 		end
+		
 		log.traceVeryLow("return aux table threats (tbl):\n" .. inspect(tbl))
 		log.traceLow("End " .. nameFunction)						
 		log.level = log_level
@@ -362,14 +354,32 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			instance = instance + 1																									--increase instance of the function
 
 			--also try a low variant
-			if instance == 1 and MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
-				log.traceVeryLow(" cruise alt (" .. leg_alt ..") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
+			if instance == 1 and MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack ) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
+				log.traceVeryLow(" cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
 				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 1, route, instance - 1, profile.hAttack})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high6
-			end			
+			end
+			
+			--[[
+			
+			-- upgrading: insert variant with modified leg_alt over threat.max_alt (if possible) or threat.min_alt (if possible)
+			
+			if instance == 1 and leg_alt < threat.max_alt and profile.max_altitude >= threat.max_alt + 500 then
+				verificare dove vengono aggiornate le quote di volo relative ai singoli points della route
+				verificare se questa condizione deve essere inserita qui (il punto può essere già inserito come valido nella route in quanto evade la minaccia (necessario riverificare con tutte le minacce?))
+				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 2, route, instance - 1, threat.max_alt + 500})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
+			end	
+
+			if instance == 1 and leg_alt > threat.min_alt and profile.min_altitude <= threat.min_alt - 100 then
+				verificare dove vengono aggiornate le quote di volo relative ai singoli points della route
+				verificare se questa condizione deve essere inserita qui (il punto può essere già inserito come valido nella route in quanto evade la minaccia (necessario riverificare con tutte le minacce?))
+				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 3, route, instance - 1, threat.min_alt - 100})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
+			end	
+				
+			]]
 			
 			--abort unneeded pathfinding after a valid route has been found
 			if no_threat_route[leg_alt] and instance > no_threat_route[leg_alt] then												--if a no threat route has been found for this altitue, stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)
-				log.traceVeryLow("no threat route has been found for this altitue(" .. leg_alt .."), end function: stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)\nEnd " .. nameFunction)					
+				log.traceVeryLow("no threat route has been found for this altitude(" .. leg_alt .."), end function: stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)\nEnd " .. nameFunction)					
 				return																												--stop this route branch
 			end
 			
@@ -430,17 +440,56 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					log.traceVeryLow("point2 is not the end(pointEnd), add point2 to route, continue find route from point2 to end (added {point2, pointEnd, pointEnd, distance(" .. distance .."), route, instance(".. instance .."), leg_alt(" .. leg_alt ..")}")
 				end
 			
-			else																													--if there is a threat on leg			
+			else									--if there is a threat on leg			
+				--log.level = "traceVeryLow"																				
 				--find left/right side alternates around threat
 				local point1_point2_heading = GetHeading(point1, point2)														--get heading from point1 to point2
 				log.traceVeryLow("find left/right side routes alternates around threat, heading from point1 to point2 = " .. point1_point2_heading)
 				
-				for s = 1, -1, -2 do																							--repeat twice for left and right side
-					local new_heading = point1_point2_heading + (s * 90)
-					local point2alt = GetOffsetPoint(threat[1], new_heading, threat[1].range * FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE)		--get alternate point2 on left/right side of current threat (1/3 out of threat range)
-					local threat_leg = ThreatOnLeg(point1, point2alt, leg_alt)													--get threat between point1 and alternate point2
-					log.traceVeryLow("calculated alternate point2 (point2alt) on left/right side (new heading: " .. new_heading ..") of current threat (over 1/3 out of threat range(" .. threat[1].range .. ")) and threats between point1 and point2alt #threats = " .. #threat_leg)
+				local lenght_p1_p2 = GetDistance(point1, point2) 
+				local lenght_p2_threat = GetDistance(threat[1], point2) 				
+				local tan_distance = GetTangentDistance(point1, point2, threat[1]) -- distance of line point1_point2 from center of threat					
+				local lenght_p2_h_chord = math.sqrt(lenght_p2_threat*lenght_p2_threat - tan_distance*tan_distance)
+				local offset_lenght
+				local original_offset_lenght = threat[1].range * FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE -- calculated offset for new alternative point2 (original method)												
+				log.traceVeryLow("point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", FACTOR_FOR_...: " .. FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE)
+				
+				log.traceVeryLow("lenght_p1_p2: " .. lenght_p1_p2 .. ", lenght_p2_threat: " .. lenght_p2_threat .. ", tan_distance: " .. tan_distance .. ", lenght_p2_h_chord: " .. lenght_p2_h_chord)
+				
+				if lenght_p2_h_chord > 0 then
+					local h_chord = threat[1].range - tan_distance -- maximum lenght from line and the border of threat range circle 					
+					offset_lenght = MIN_SEPARATION_DISTANCE_FROM_THREAT_ZONE + threat[1].range + lenght_p1_p2 * h_chord / lenght_p2_h_chord -- calculated offset for new alternative point2 (new method)													
+					log.traceVeryLow("lenght_p1_p2: " .. lenght_p1_p2 .. ", tan_distance: " .. tan_distance .. ", offset_lenght: " .. offset_lenght)				
+					local ratio_offsets_lenght = offset_lenght / original_offset_lenght
+
+					if  ( ratio_offsets_lenght > 4 and original_offset_lenght > 7000 ) or ( ratio_offsets_lenght > 3 and original_offset_lenght > 20000 ) or ( ratio_offsets_lenght > 2 and original_offset_lenght > 40000 ) or ( ratio_offsets_lenght > 1.5 and original_offset_lenght > 100000 )  or ratio_offsets_lenght < 0.1  then
+						--log.warn("ANOMALY: point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", FACTOR_FOR_...: " .. FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE)
+						--log.warn("ANOMALY: lenght_p1_p2: " .. lenght_p1_p2 .. ", lenght_p2_threat: " .. lenght_p2_threat .. ", tan_distance: " .. tan_distance .. ", lenght_p2_h_chord: " .. lenght_p2_h_chord)				
+						--log.warn("ANOMALY: lenght_p1_p2: " .. lenght_p1_p2 .. ", tan_distance: " .. tan_distance .. ", offset_lenght: " .. offset_lenght)
+						offset_lenght = original_offset_lenght
+						--log.warn("ANOMALY: the ratio of offset_lenght (" .. ratio_offsets_lenght .. ") computed with new method has factor over limits respect the compute with the original method, offset_lenght is compute with original method: " .. offset_lenght)
+					end
+
+					if tan_distance > threat[1].range then -- the line point1-point2 is within threat range
+						log.warn("CODE ANOMALY: the line point1-point2 is outside threat range, offset_lenght is compute with original method")
+						offset_lenght = original_offset_lenght
+					end
+
+				else
+					offset_lenght = original_offset_lenght
+				end
+
+				for s = 1, -1, -2 do --repeat twice for left and right side
 					
+					-- può essere ulteriormente ottimizzanda eliminando il for, calcolando se il nuovo heading deve essere effettuato a dx o a sx della linea point1-point2:
+					-- la valutazione deve essere effettuata considerando l'orientamento ed il verso della linea rispetto la parallela passante per il centro della threat,
+					-- quindi calcolo della retta p1-p2 e suo coefficente angolare, calcolo della retta parallela passante per il centro della threat,
+					-- valutazione considerando verso della linea e valutando le intersezioni su x=0 e y=0 di entrambe per valutare come considerare l'heading
+					
+					local new_heading = point1_point2_heading + (s * 90)
+					local point2alt = GetOffsetPoint(threat[1], new_heading, offset_lenght)		--get alternate point2 on left/right side of current threat (1/3 out of threat range)					
+					local threat_leg = ThreatOnLeg(point1, point2alt, leg_alt)													--get threat between point1 and alternate point2					
+					log.traceVeryLow("calculated alternate point2 (" .. point2alt.x .. ", " .. point2alt.y .. ") on left/right side (new heading: " .. new_heading ..") of current threat, #threats between point1 and point2alt: " .. #threat_leg)										
 					--ignore threats that point1 or pointend is already in										
 					removeThreatsAtStartEnd(threat_leg, point1, pointEnd)
 					
@@ -464,7 +513,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				end
 			end
 			log.traceVeryLow("End " .. nameFunction)						
-			log.level = log_level
+			--log.level = log_level
 		end
 
 		table.insert(FindPathLegTable, {from, to, to, 0, {}, 0, profile.hCruise})									--insert first instance of FindPathLeg to find a route between start and end point. arguments: start, end, final end (same), initial route distance 0, initial route empty {}, initial instance of the function 0, cruise alt
@@ -670,7 +719,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					if roundedThreat < current_threat then													--if this draft IP has a lower threat level than the IP currently set						
 						initialPoint = IP_table[n].point													--make it the new IP
 						current_threat = roundedThreat														--this is the threat level of the currently set IP					
-						log.traceVeryLow("draft IP has a lower threat level than the IP currently set, updated initialPoint: (" .. initialPoint.x ..  ", initialPoint.z: " .. initialPoint.z .. "), updated current_threat: " .. current_threat)
+						log.traceVeryLow("draft IP has a lower threat level than the IP currently set, updated initialPoint:\n" .. inspect(initialPoint) ..  "\n updated current_threat: " .. current_threat)
 					end
 				end
 			end

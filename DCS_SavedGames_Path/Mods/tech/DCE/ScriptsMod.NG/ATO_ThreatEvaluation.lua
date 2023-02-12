@@ -975,10 +975,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 	if threatentry and threatentry.type then 
 		threatentry.hidden = hide
 		log.trace(nameFunction .. "defined threatentry for this unit: " .. unit.type .. " - " .. unit.name .. "\nthreathentry:\n" .. inspect(threatentry))			
-		-- local result = true
-		--result = evalutateThreatRilevation(threatentry.rilevability, side) -- ATT NON FUNZIONA: LA FUNZIONE RESTITUISCE IL RITORNO CORRETTO (TRUE O False) ma il codice "salta" alla fine di questa funzione ???????
-		--log.trace(nameFunction .. "result evalutation: " .. tostring(result))			
-
+			
 		if evalutateThreatRilevation(threatentry.rilevability, side) then
 			table.insert(groundthreats[side], threatentry)			
 			log.trace(nameFunction .. "current threatentry tab, inserted in groundthreats[" .. side .. "]")			
@@ -990,7 +987,9 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 	log.level = log_level
 end
 
--- function used to comupute level threat of CAP and Intercept task, level = ... * firepower * asset_avalaiability
+-- return asset_avalaiability, factor needed to compute level threat of CAP and Intercept task,
+-- this factor the factor is calculated considering the number of assets available (roster.ready)
+-- ( level threat = capability * firepower * asset_avalaiability )
 local function computeAssetAvalaiability(task_type, unit_roster_ready)  --(unit[n].roster.ready / 3),		--total unit threat is capability * firepower * one third of ready aircraft --rivedere se roster.ready è opportuno: la quantità di aerei disponibili non dovrebbe influenzare la sua letalità se ci sono un numero minimo disponibile
 	local min_asset
 	local asset_avalaiability
@@ -1007,7 +1006,7 @@ local function computeAssetAvalaiability(task_type, unit_roster_ready)  --(unit[
 
 	
 	if unit_roster_ready < 	min_asset then
-		asset_avalaiability = roster.ready/min_asset
+		asset_avalaiability = unit_roster_ready/min_asset
 	
 	else
 		asset_avalaiability = 1
@@ -1046,6 +1045,8 @@ GCI = {
 }
 
 --function to add EWR units to EWR table
+--le navi non sono inserite nella EWR table forse a causa del loro inserimento come SAM (?). 
+--le navi sono comunque inserite nella GCI chain detection
 local function AddEWR(unit, side, freq, call)
 	local call_str = "nil"
 	local freq_str = "nil"
