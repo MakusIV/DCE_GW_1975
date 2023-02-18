@@ -48,7 +48,7 @@ controlla se SA-3 e SA-2 sono inseriti boh non ci sono neanche nel modulo aggior
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-local log_level = "trace" --LOGGING_LEVEL -- "traceVeryLow" --
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
 local function_log_level = log_level --log_level
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
@@ -111,6 +111,7 @@ local callsign_west = {
 
 -- evalutate threat rilevability from recognition capability of a specific side
 local function evalutateThreatRilevation(unit_rilevability, side_)
+	local previous_log_level = log.level
 	log.level ="trace" -- function_log_level
 	local nameFunction = "function evalutateThreatRilevation(unit_rilevability: " .. unit_rilevability .. ", side_: " .. side_ .. "): "    
 	log.debug("Start " .. nameFunction)
@@ -144,12 +145,13 @@ local function evalutateThreatRilevation(unit_rilevability, side_)
 	end	 	
 
 	log.trace("return: " .. tostring(ret))
-	log.level = log_level
+	log.level = previous_log_level
 	return ret
 end
 	
 --function to check if a unit is a threat, assign threat values and add to threats table
-local function AddThreat(unit, side, hide)											--unput is side and unit-table from oob_ground	-- Miguel21 modification M28.b : helicoptere see all SAM (on ajoute Hide)							
+local function AddThreat(unit, side, hide)											--unput is side and unit-table from oob_ground	-- Miguel21 modification M28.b : helicoptere see all SAM (on ajoute Hide)			
+	local previous_log_level = log.level					
 	log.level = function_log_level
 	local nameFunction = "function AddThreat(" .. unit.type .. "-" .. unit.name .. ", " .. side .. ", " .. tostring(hide) .. "): "    
 	log.debug("Start " .. nameFunction)
@@ -984,7 +986,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			log.trace(nameFunction .. "current threatentry tab, NOT inserted in groundthreats[" .. side .. "] table")
 		end
 	end	
-	log.level = log_level
+	log.level = previous_log_level
 end
 
 -- return asset_avalaiability, factor needed to compute level threat of CAP and Intercept task,

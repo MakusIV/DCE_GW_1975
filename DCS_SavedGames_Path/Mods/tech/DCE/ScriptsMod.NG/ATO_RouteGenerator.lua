@@ -39,18 +39,17 @@ local ALT_MIN_FOR_CLUTTER_EFFECT = 100 -- (defalut = 100 m)
 local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default = 0.5)
 local MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5 -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
 local MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300 -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
-local FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE = 1.34 --default = 1.34, factor distance to compute alternate point route right or left side from threat[1].range (dista) * 
-local MIN_SEPARATION_DISTANCE_FROM_THREAT_ZONE = 500 -- min distance from threat.range border
-
--- note: verificare se possibile calcolare FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE in relazione alla distanza del punto o della leg dalla minaccia e dal suo range: calcolare la distanza tra leg (punto della rotta più vicino alla minaccia) 
+local SEPARATION_FROM_THREAT_RANGE = 1000 -- min distance from threat.range border
 -- diff = threat.range - threat_leg_distance, se diff > 0 (leg interno al threat.range -> ragiona sul punto precedente in cui viene calcolato il punto alternativo a 90 gradi e in base a quanto questo punto rispetto si trova interno al range, calcolare il FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE
 
 local MAX_NUM_ISTANCE_PATH_FINDING = 9 -- max number of istances of function findPathLeg(), default = 7
 -- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
 -- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
 
+
 --function to return radar horizon
 local function RadarHorizon(h1, h2)
+	local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "function RadarHorizon(h1, h2): "    
 	log.traceVeryLow("Start " .. nameFunction)						
@@ -63,13 +62,14 @@ local function RadarHorizon(h1, h2)
 	local u2 = 2 * r * math.pi / 360 * alpha2						
 	log.traceVeryLow("u1+u2 = " .. tostring(u1+u2))
 	log.traceVeryLow("End " .. nameFunction)																			--ground distance from target to earth tangent point
-	log.level = log_level
+	log.level = previous_log_level
 	return u1 + u2																										--return total ground distance from radar to target
 end
 
 -- evalutate radar threat detection for an altitude profile, 
 -- if profile alt is in range of threat altitude detection threat will be add in threat_table[profile alt]
 local function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr)
+	local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "function evalRadarDetection(profile_alt, threat, type_profile, threat_table, threatentry, not_ewr: "    
 	log.traceLow("Start " .. nameFunction)						
@@ -101,7 +101,7 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 
 	log.traceVeryLow("for this " .. type_profile .. " profile altitude (" .. profile_alt .. ") added this new threat entry:\n" .. inspect(threatentry))
 	log.traceLow("End " .. nameFunction)	
-	log.level = log_level					
+	log.level = previous_log_level					
 end
 
 
@@ -122,6 +122,7 @@ di riferimento
 
 
 function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter)	--side_: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
+	local previous_log_level = log.level
 	log.level = function_log_level -- "traceVeryLow"
 	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter): "    
 	log.trace("Start " .. nameFunction)						
@@ -207,9 +208,10 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		end
 	end
 		
-	-- function to check if a line between two points runs through a threat. 
+	-- function to check if a line .between two points runs through a threat. 
 	-- Returns a table of AAA or SAM threats with assigned threat level and approachfactor ( 1 -> profile directly up the threat, 0 -> profile very far from threat )
 	local function ThreatOnLeg(point1, point2, leg_alt)
+		local previous_log_level = log.level
 		log.level = function_log_level
 		local nameFunction = "function ThreatOnLeg(point1, point2, leg_alt): "    		
 		log.traceLow("Start " .. nameFunction)						
@@ -312,17 +314,14 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		
 		log.traceVeryLow("return aux table threats (tbl):\n" .. inspect(tbl))
 		log.traceLow("End " .. nameFunction)						
-		log.level = log_level
+		log.level = previous_log_level
 		return tbl
-	end
-
-	--< ===============================================================					
-	--<                Last point for code analisys 		
-	--< ===============================================================	
+	end	
 	
 	--function to define a set of nav points to make a route between two points that evades threats
 	local function FindPath(from, to)
-		log.level = function_log_level
+		local previous_log_level = log.level
+		log.level = function_log_level --"traceVeryLow" 
 		local nameFunction = "function FindPath(from, to): "    		
 		log.traceVeryLow("Start " .. nameFunction)						
 		local FindPathLegTable = {}																									--table to store the the FindPathLeg functions for execution
@@ -331,61 +330,52 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		local no_threat_route = {}																									--to collect route branches that found a no threat route in order to cancel other arms of that branch
 		
 		--find a route between point1 and point2
-		local function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt)		
-			log.level = function_log_level	
+		local function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt)	
+			local previous_log_level = log.level	
+			log.level = function_log_level	--"traceVeryLow" --
 			local nameFunction = "function FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt): "    		
-			log.traceVeryLow("Start " .. nameFunction)									
+			log.traceVeryLow("Start " .. nameFunction .. ", instance: " .. instance .. ", point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", pointend: " .. pointEnd.x .. ", " .. pointEnd.y .. ", distance: " .. distance .. ", leg_alt: " .. leg_alt)									
 			
 			--local function to remove threats that point1(start) or pointend(end) is already in (unavoidable)
 			local function removeThreatsAtStartEnd(threat_leg, point1, pointEnd)
+				log.level = function_log_level	--"traceVeryLow" --
+				local nameFunction = "function removeThreatsAtStartEnd(threat_leg, point1, pointEnd): "    		
+				log.traceVeryLow("Start " .. nameFunction .. ", instance: " .. instance)	
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", #threat_leg: " .. #threat_leg .. ", point1: " .. point1.x .. ", " .. point1.y .. ", pointEnd: " .. pointEnd.x .. ", " .. pointEnd.y)    		
 				
 				for t = #threat_leg, 1, -1 do																				--iterate through threats from back to front
 					local threat_in_range_from_point1 = GetDistance(point1, threat_leg[t]) <= threat_leg[t].range
 					local threat_in_range_from_pointend = GetDistance(pointEnd, threat_leg[t]) <= threat_leg[t].range
-					log.traceVeryLow("threat_in_range_from_point1 = " .. tostring(threat_in_range_from_point1) .. ", threat_in_range_from_pointend = " .. tostring(threat_in_range_from_pointend))
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", threat_in_range_from_point1 = " .. tostring(threat_in_range_from_point1) .. ", threat_in_range_from_pointend = " .. tostring(threat_in_range_from_pointend))
 					
 					if threat_in_range_from_point1 or threat_in_range_from_pointend then	--if threat is in range of point1 or pointEnd it cannot be avoided and must be ignored
 						table.remove(threat_leg, t)																			--remove threat
-						log.traceVeryLow("threat is in range of point1 or pointEnd, it cannot be avoided and must be ignored -> remove from threat_leg table threat t: " .. t)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", threat is in range of point1 or pointEnd, it cannot be avoided and must be ignored -> remove from threat_leg table threat " .. t)
 					end
 				end
+				log.traceVeryLow("End " .. nameFunction .. ", instance: " .. instance)	
 			end
 
 			instance = instance + 1																									--increase instance of the function
+			log.traceVeryLow(nameFunction .. "instance: " .. instance)	
+
 
 			--also try a low variant
 			if instance == 1 and MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack ) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
-				log.traceVeryLow(" cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
+				log.traceVeryLow(nameFunction .. "instance: " .. instance .. ", try a low variant, cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
 				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 1, route, instance - 1, profile.hAttack})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high6
 			end
-			
-			--[[
-			
-			-- upgrading: insert variant with modified leg_alt over threat.max_alt (if possible) or threat.min_alt (if possible)
-			
-			if instance == 1 and leg_alt < threat.max_alt and profile.max_altitude >= threat.max_alt + 500 then
-				verificare dove vengono aggiornate le quote di volo relative ai singoli points della route
-				verificare se questa condizione deve essere inserita qui (il punto può essere già inserito come valido nella route in quanto evade la minaccia (necessario riverificare con tutte le minacce?))
-				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 2, route, instance - 1, threat.max_alt + 500})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
-			end	
-
-			if instance == 1 and leg_alt > threat.min_alt and profile.min_altitude <= threat.min_alt - 100 then
-				verificare dove vengono aggiornate le quote di volo relative ai singoli points della route
-				verificare se questa condizione deve essere inserita qui (il punto può essere già inserito come valido nella route in quanto evade la minaccia (necessario riverificare con tutte le minacce?))
-				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 3, route, instance - 1, threat.min_alt - 100})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
-			end	
-				
-			]]
-			
+						
 			--abort unneeded pathfinding after a valid route has been found
 			if no_threat_route[leg_alt] and instance > no_threat_route[leg_alt] then												--if a no threat route has been found for this altitue, stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)
-				log.traceVeryLow("no threat route has been found for this altitude(" .. leg_alt .."), end function: stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)\nEnd " .. nameFunction)					
+				log.traceVeryLow("no_threat route has been found for this altitude(" .. leg_alt .."), current instance is: " .. instance .. ", end function: stop subsequent route branches(parallel instances of the no threat route are still checked as they might be shorter)\nEnd " .. nameFunction)					
 				return																												--stop this route branch
-			end
-			
+			end			
+
 			local distance_remain = GetDistance(point1, pointEnd)																	--remaining distance to end
-			local threat = ThreatOnLeg(point1, point2, leg_alt)																		--get the threat between point1 and point2
-			log.traceVeryLow("remaining distance to end: " .. distance_remain .. "#threats on leg(point1, point2, leg_alt): " .. #threat)
+			local threat = ThreatOnLeg(point1, point2, leg_alt)				
+																				--get the threat between point1 and point2
+			log.traceVeryLow(nameFunction .. "remaining distance to end: " .. distance_remain .. ", threats on leg(point1, point2, leg_alt): " .. #threat)
 			
 			--save the current route variant directly to end before trying to refine it further
 			local threatsum = 0				--sum of approach factor of threats from current point1 to end
@@ -393,110 +383,202 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 
 			if point2 == pointEnd then																								--if point2 is the pointEnd
 				threat_choice = threat				
-				log.traceVeryLow("point2 == pointEnd -> evalutated threat from point1 to point2 at leg_alt, computed threat table of #" .. #threat_choice)
+				log.traceVeryLow(nameFunction .. "point2 == pointEnd -> evalutated threat from point1 to point2 at leg_alt, computed threat: " .. #threat_choice)
 
 			else
 				threat_choice = ThreatOnLeg(point1, pointEnd, leg_alt)																--get the threat between point1 and pointEnd				
-				log.traceVeryLow("point2 ~= pointEnd - > evalutate threat from point1 to pointEnd at leg_alt, computed threat table of #" .. #threat_choice)
+				log.traceVeryLow(nameFunction .. "point2 ~= pointEnd - > evalutate threat from point1 to pointEnd at leg_alt, computed threat table of #" .. #threat_choice)
 			end
 
 			for t = 1, #threat_choice do	
 				threatsum = threatsum + threat_choice[t].approachfactor																--sum the factors of each threat (1 = on top, 0 = tangential)
 			end
-			log.traceVeryLow("threatsum (summatory of all approachfactor threats) = " .. threatsum)
+			log.traceVeryLow(nameFunction .. "threatsum (summatory of all approachfactor threats) = " .. threatsum)
 
 
 			table.insert(NavRoutes, {navpoints = route, dist = distance + distance_remain, threats = threatsum})					--save route variant directly to end from current route branch
-			log.traceVeryLow("added  #route: (" .. #NavRoutes .. ") in NavRoutes table")
+			log.traceVeryLow(nameFunction .. "added  #route: (" .. #NavRoutes .. ") in NavRoutes table")			
 
 			if threatsum == 0 then																									--there are no threats to end (also no unavoidable threats)
-				log.traceVeryLow("there are no threats to end (also no unavoidable threats), stop function\nEnd " .. nameFunction)
+				log.traceVeryLow(nameFunction .. "there are no threats to end (also no unavoidable threats), stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
-			end
-			
+			end						
+
 			--ignore threats that directly cover point1 or pointEnd
 			removeThreatsAtStartEnd(threat, point1, pointEnd)
 			
 			if instance > MAX_NUM_ISTANCE_PATH_FINDING then																									--if function instance is bigger than 7
-				log.traceVeryLow("function instance is bigger than " .. MAX_NUM_ISTANCE_PATH_FINDING .. " -> stop function\nEnd " .. nameFunction)
+				log.traceVeryLow(nameFunction .. "instance(" .. instance .. ") is bigger than " .. MAX_NUM_ISTANCE_PATH_FINDING .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
 			elseif distance + distance_remain > (direct_distance * MAX_FACTOR_FOR_LENGHT_ROUTE) then														--if total route distance is bigger than 1.5 times the direct distance
-				log.traceVeryLow("total route distance(" .. distance + distance_remain .. ") is bigger than " .. MAX_FACTOR_FOR_LENGHT_ROUTE .. " times the direct distance(" .. direct_distance .. " -> stop function\nEnd " .. nameFunction)
+				log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), total route distance(" .. distance + distance_remain .. ") is bigger than " .. MAX_FACTOR_FOR_LENGHT_ROUTE .. " times the direct distance(" .. direct_distance .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
-			elseif #threat == 0 then																								--if no more threats on remaining route
-				log.traceVeryLow("no more threats(#threat == 0) on remaining route")
+			elseif #threat == 0 then																							--if no more threats on remaining route
+				log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), no more threats(#threat == 0) on remaining route")
 				
-				if point2 == pointEnd then																							--if point2 is the pointEnd
-					no_threat_route[leg_alt] = instance																				--variable that will cancel subsequent route finding at this altitude (parallel branches of the same instance are still being checked)
-					log.traceVeryLow("point2 is the pointEnd, variable that will cancel subsequent route finding at this altitude (parallel branches of the same instance are still being checked). no_threat_route[leg_alt: " .. leg_alt .. "] = ".. instance .. "(instance) -> stop function\nEnd " .. nameFunction)
-					return																											--abort further route finding
+				if point2 == pointEnd then																						--if point2 is the pointEnd
+					no_threat_route[leg_alt] = instance																			--variable that will cancel subsequent route finding at this altitude (parallel branches of the same instance are still being checked)
+					log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), point2 == pointEnd, variable that will cancel subsequent route finding at this altitude (parallel branches of the same instance are still being checked). no_threat_route[leg_alt: " .. leg_alt .. "] = ".. instance .. "(instance) -> stop function\nEnd " .. nameFunction)
+					return																										--abort further route finding
 				
-				else																												--if point2 is not the end
-					distance = distance + GetDistance(point1, point2)																--complete route distance of this variant up to point2
-					table.insert(route, point2)																						--add point2 to route
-					table.insert(FindPathLegTable, {point2, pointEnd, pointEnd, distance, route, instance, leg_alt})				--continue find route from point2 to end
-					log.traceVeryLow("point2 is not the end(pointEnd), add point2 to route, continue find route from point2 to end (added {point2, pointEnd, pointEnd, distance(" .. distance .."), route, instance(".. instance .."), leg_alt(" .. leg_alt ..")}")
+				else																											--if point2 is not the end
+					distance = distance + GetDistance(point1, point2)															--complete route distance of this variant up to point2
+					table.insert(route, point2)																					--add point2 to route
+					table.insert(FindPathLegTable, {point2, pointEnd, pointEnd, distance, route, instance, leg_alt})			--continue find route from point2 to end
+					log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), point2 is not the end(pointEnd), add point2 to route, continue find route from point2 to end (added {point2, pointEnd, pointEnd, distance(" .. distance .."), route, instance(".. instance .."), leg_alt(" .. leg_alt ..")}")
 				end
 			
-			else									--if there is a threat on leg			
-				--log.level = "traceVeryLow"																				
-				--find left/right side alternates around threat
-				local point1_point2_heading = GetHeading(point1, point2)														--get heading from point1 to point2
-				log.traceVeryLow("find left/right side routes alternates around threat, heading from point1 to point2 = " .. point1_point2_heading)
-				
-				local lenght_p1_p2 = GetDistance(point1, point2) 
-				local lenght_p2_threat = GetDistance(threat[1], point2) 				
-				local tan_distance = GetTangentDistance(point1, point2, threat[1]) -- distance of line point1_point2 from center of threat					
-				local lenght_p2_h_chord = math.sqrt(lenght_p2_threat*lenght_p2_threat - tan_distance*tan_distance)
-				local offset_lenght
-				local original_offset_lenght = threat[1].range * FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE -- calculated offset for new alternative point2 (original method)												
-				log.traceVeryLow("point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", FACTOR_FOR_...: " .. FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE)
-				
-				log.traceVeryLow("lenght_p1_p2: " .. lenght_p1_p2 .. ", lenght_p2_threat: " .. lenght_p2_threat .. ", tan_distance: " .. tan_distance .. ", lenght_p2_h_chord: " .. lenght_p2_h_chord)
-				
-				if lenght_p2_h_chord > 0 then
-					local h_chord = threat[1].range - tan_distance -- maximum lenght from line and the border of threat range circle 					
-					offset_lenght = MIN_SEPARATION_DISTANCE_FROM_THREAT_ZONE + threat[1].range + lenght_p1_p2 * h_chord / lenght_p2_h_chord -- calculated offset for new alternative point2 (new method)													
-					log.traceVeryLow("lenght_p1_p2: " .. lenght_p1_p2 .. ", tan_distance: " .. tan_distance .. ", offset_lenght: " .. offset_lenght)				
-					local ratio_offsets_lenght = offset_lenght / original_offset_lenght
+			else --if there is a threat on leg, find left/right side alternates around threat	
+				--log.level = "traceVeryLow" -- ELIMINARE SOLO PER DEBUGGING LOCALE																									
+				-- return true if exist tangents follow of these info:
+				-- tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL and alfaR (degree), and position:
+				-- tp are tangent points from p1 at circle with centre pc and radius r,
+				-- heading are relative at tangents and heading_p1-p2 is heading line p1-p2,
+				-- lenght are distance from p1 and tp,
+				-- alfaL is angle in degree from left tangent and line p1-p2,
+				-- alfaR is angle in degree from left tangent and line p1-p2,
+				-- position is position respect centre of cirlce: left(right)-up(down)
+				-- if p1 is on circonference return tp = inf, heading with offset of 90 degree (left and right), r/2 < lenght < r, alfaR=alfaL=90
+				-- if p1 is within circle return false, other value nil
+				local function GetTangentInfo(p1, p2, pc, r, max_tan_angle, separation_from_threat_range)	
+					local previous_log_level = log.level
+					log.level = function_log_level --   --"traceVeryLow" --
+					local nameFunction = "function GetTangentInfo(p1, p2, pc, r, max_tan_angle): "    
+					log.traceLow("Start " .. nameFunction .. ", instance: " .. instance)		
+					
+					if max_tan_angle and math.abs(max_tan_angle) < 90 then										-- check max angle limit for compute tangent info
+						max_tangent_angle = math.abs(max_tan_angle)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", max_tan_angle (" .. max_tan_angle .. ") < 90 -> max_tangent_angle = " .. max_tangent_angle)		
 
-					if  ( ratio_offsets_lenght > 4 and original_offset_lenght > 7000 ) or ( ratio_offsets_lenght > 3 and original_offset_lenght > 20000 ) or ( ratio_offsets_lenght > 2 and original_offset_lenght > 40000 ) or ( ratio_offsets_lenght > 1.5 and original_offset_lenght > 100000 )  or ratio_offsets_lenght < 0.1  then
-						--log.warn("ANOMALY: point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", FACTOR_FOR_...: " .. FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE)
-						--log.warn("ANOMALY: lenght_p1_p2: " .. lenght_p1_p2 .. ", lenght_p2_threat: " .. lenght_p2_threat .. ", tan_distance: " .. tan_distance .. ", lenght_p2_h_chord: " .. lenght_p2_h_chord)				
-						--log.warn("ANOMALY: lenght_p1_p2: " .. lenght_p1_p2 .. ", tan_distance: " .. tan_distance .. ", offset_lenght: " .. offset_lenght)
-						offset_lenght = original_offset_lenght
-						--log.warn("ANOMALY: the ratio of offset_lenght (" .. ratio_offsets_lenght .. ") computed with new method has factor over limits respect the compute with the original method, offset_lenght is compute with original method: " .. offset_lenght)
+					else
+						max_tangent_angle = 45
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", max_tan_angle (" .. max_tan_angle .. ") >= 90 -> max_tangent_angle = 45")		
 					end
 
-					if tan_distance > threat[1].range then -- the line point1-point2 is within threat range
-						log.warn("CODE ANOMALY: the line point1-point2 is outside threat range, offset_lenght is compute with original method")
-						offset_lenght = original_offset_lenght
+					-- local function
+					local function GetTangentInfoBase(p1, p1_p2_heading, min_distance_from_p1_p2, r, position, separation_from_threat_range) 
+						local previous_log_level = log.level
+						log.level = function_log_level --"traceVeryLow" -- 
+						local nameFunction = "function GetTangentInfoBase(p1_p2_heading, min_distance_from_p1_p2, r, position): "    
+						log.traceLow("Start " .. nameFunction .. ", instance: " .. instance)		
+						local headingL = p1_p2_heading + 90 
+						local headingR = p1_p2_heading - 90 
+						local lenghtL, lenghtR 
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", headingL: " .. headingL .. ", headingR: " .. headingR)
+						
+						if string.sub(position, 1, 2) == "le" then	-- p1 on left of center circle			
+							lenghtL = min_distance_from_p1_p2 + (r/2 - min_distance_from_p1_p2)/2 + separation_from_threat_range
+							lenghtR = min_distance_from_p1_p2 + r/2 + separation_from_threat_range
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1 on left of center circle (position: " .. position .. "), lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR)
+						
+						else --p1 on right of cente.r circle		
+							lenghtR = min_distance_from_p1_p2 + (r - min_distance_from_p1_p2)/2 + separation_from_threat_range
+							lenghtL = min_distance_from_p1_p2 + r/2 + separation_from_threat_range
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1 on right of center circle (position: " .. position .. "), lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR)
+						end
+
+						local alfaL = 90
+						local alfaR = -90
+						local tpL = GetOffsetPoint(p1, headingL, lenghtL)
+						local tpR = GetOffsetPoint(p1, headingR, lenghtR)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", alfaL: " .. alfaL .. ", alfaR: " .. alfaR .. ", tpL: " .. tpL.x .. ", " .. tpL.y .. ", tpR: " .. tpR.x .. ", " .. tpR.y)
+						log.traceLow("End " .. nameFunction .. ", instance: " .. instance)								
+						log.level = previous_log_level
+						return tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL, alfaR
 					end
 
-				else
-					offset_lenght = original_offset_lenght
+					local tolerance = r * 0.01 																	-- distance tolerance, default = 1% of radius
+					local exist_tangents = false
+					local tpR, tpL, headingR, headingL, alfaR, alfaL, lenghtL, lenghtR
+					local p1_pc_distance = GetDistance(p1, pc)														
+					local p1_p2_heading = GetHeading(p1, p2)
+					local min_distance_from_p1_p2 = GetTangentDistance(p1, p2, pc)								-- min distance from line p1-p2 to center of circle
+					local diff = p1_pc_distance - r
+					local position = ""
+					local r_with_separation = r + separation_from_threat_range									-- radius of threat range with add separation		
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1_pc_distance = " .. p1_pc_distance .. ", p1_p2_heading = " .. p1_p2_heading .. ", min_distance_from_p1_p2 = " .. min_distance_from_p1_p2 .. ", p1_pc_distance - radius = " .. p1_pc_distance - r)		
+
+					if p1.x < pc.x then  -- p1 is on left side of center
+						position = "left"
+					
+					else  -- -- p1 is on right side of center
+						position = "right"
+					end
+
+					if p1.y > pc.y then  -- p1 is upper of center
+						position = position .. "-up"
+
+					else  -- p1 is bottom of center
+						position = position .. "-down"
+					end
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", position: " .. position)		
+
+					if  diff < 0 and math.abs(diff) > tolerance then -- p1 within circonference
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1(" .. p1.x .. ", " .. p1.y .. ") within circonference, instance: " .. instance .. ", return false")
+						return false
+
+					elseif  math.abs(diff) <= tolerance then -- p1 on circonference
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1(" .. p1.x .. ", " .. p1.y .. ") on circonference, instance: " .. instance .. ", compute info base and return them")
+						tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL, alfaR = GetTangentInfoBase(p1, p1_p2_heading, min_distance_from_p1_p2, r, position, separation_from_threat_range)
+						
+					else -- p1 out circonferenze
+						-- compute alt point on up side of threat circle
+						local alfa = math.deg( math.asin(r_with_separation / p1_pc_distance) )									-- alfa        angle from line p1-pc and tangent from p1 and circle
+						local gamma = math.deg( math.asin( min_distance_from_p1_p2 / p1_pc_distance ) )						-- gamma       angle from line p1-pc and line p1-p2		
+						local alfaL = alfa - gamma																-- omega       angle from left tangent from p1 and  circle and line p1-p2
+						local alfaR = alfa + gamma																-- phi         angle from right tangent from p1 and circle and line p1-p2
+						local lenght = r_with_separation / math.tan( math.rad(alfa) )												-- distance from p1 to tp 
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1(" .. p1.x .. ", " .. p1.y .. ") out circonference, instance: " .. instance .. ", alfa: " .. alfa .. ", gamma: " .. gamma .. ", alfaL: " .. alfaL .. ", alfaR: " .. alfaR .. ", lenght: " .. lenght)
+
+						if alfaL <= max_tangent_angle then
+							headingL = p1_p2_heading + alfaL
+							lenghtL = lenght																	-- distance from p1 to tpL
+							tpL = GetOffsetPoint(p1, headingL, lenghtL)		 									-- tangent point on left side
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", alfaL <= max_tangent_angle(" .. max_tangent_angle .. "), headingL: " .. headingL .. ", lenghtL: " .. lenghtL .. ", tpL: " .. tpL.x .. ", " .. tpL.y)
+							
+						else
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", alfaL > max_tangent_angle(" .. max_tangent_angle .. ")")
+							tpL, _, headingL, _, lenghtL, _, alfaL, _ = GetTangentInfoBase(p1, p1_p2_heading, min_distance_from_p1_p2, threat[1].range, position, separation_from_threat_range)
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. "headingL: " .. headingL .. ", lenghtL: " .. lenghtL .. ", tpL: " .. tpL.x .. ", " .. tpL.y)
+						end
+
+						if alfaR <= max_tangent_angle then
+							headingR = p1_p2_heading - alfaR
+							lenghtR =  lenght																	-- distance from p1 to tpR
+							tpR = GetOffsetPoint(p1, headingR, lenghtR) 										-- tangent point on right side
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", alfaR <= max_tangent_angle(" .. max_tangent_angle .. "), headingR: " .. headingR .. ", lenghtR: " .. lenghtR .. ", tpR: " .. tpR.x .. ", " .. tpR.y)
+							
+						else
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", alfaR > max_tangent_angle(" .. max_tangent_angle .. ")")
+							_, tpR, _, headingR, _, lenghtR, _, alfaR = GetTangentInfoBase(p1, p1_p2_heading, min_distance_from_p1_p2, threat[1].range, position, separation_from_threat_range)
+							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", headingR: " .. headingR .. ", lenghtR: " .. lenghtR .. ", tpR: " .. tpR.x .. ", " .. tpR.y)
+						end
+					end
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", return info, headingL: " .. headingL .. ", headingR: " .. headingR .. ", lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR .. ", tpR: " .. tpR.x .. ", " .. tpR.y .. ", tpL: " .. tpL.x .. ", " .. tpL.y)
+					log.traceLow("End " .. nameFunction .. ", instance: " .. instance)			
+					log.level = previous_log_level				
+					return "true", tpL, tpR, headingL, headingR, lenghtL, lenghtR, position
 				end
 
-				for s = 1, -1, -2 do --repeat twice for left and right side
-					
-					-- può essere ulteriormente ottimizzanda eliminando il for, calcolando se il nuovo heading deve essere effettuato a dx o a sx della linea point1-point2:
-					-- la valutazione deve essere effettuata considerando l'orientamento ed il verso della linea rispetto la parallela passante per il centro della threat,
-					-- quindi calcolo della retta p1-p2 e suo coefficente angolare, calcolo della retta parallela passante per il centro della threat,
-					-- valutazione considerando verso della linea e valutando le intersezioni su x=0 e y=0 di entrambe per valutare come considerare l'heading
-					
-					local new_heading = point1_point2_heading + (s * 90)
-					local point2alt = GetOffsetPoint(threat[1], new_heading, offset_lenght)		--get alternate point2 on left/right side of current threat (1/3 out of threat range)					
+
+				local function InsertAlternativePoint(point1, point2alt, leg_alt, pointEnd, distance, route_alt, FindPathLegTable, instance)
+					local previous_log_level = log.level
+					log.level = function_log_level --"traceVeryLow" --
+					local nameFunction = "function InsertAlternativePoint(point1, point2alt, leg_alt, pointEnd, route_alt, FindPathLegTable, instance): "    		
+					log.traceVeryLow("Start " .. nameFunction .. ", instance: " .. instance)						
+
 					local threat_leg = ThreatOnLeg(point1, point2alt, leg_alt)													--get threat between point1 and alternate point2					
-					log.traceVeryLow("calculated alternate point2 (" .. point2alt.x .. ", " .. point2alt.y .. ") on left/right side (new heading: " .. new_heading ..") of current threat, #threats between point1 and point2alt: " .. #threat_leg)										
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", calculated alternate point2 (" .. point2alt.x .. ", " .. point2alt.y .. ") on left/right side of current threat, #threats between point1 and point2alt: " .. #threat_leg)										
 					--ignore threats that point1 or pointend is already in										
-					removeThreatsAtStartEnd(threat_leg, point1, pointEnd)
-					
+					removeThreatsAtStartEnd(threat_leg, point1, pointEnd, route_alt, FindPathLegTable, instance, leg_alt)
+										
 					if #threat_leg == 0 then																					--if there is no threat between point 1 and alternate point2
-						log.traceVeryLow("there isn't threat between point 1 and alternate point2(point2alt)")
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", there isn't threat between point 1 and alternate point2(point2alt)")
 						local distance_alt = distance + GetDistance(point1, point2alt)											--complete route distance of this variant up to point2alt
 						local route_alt = {}																					--make a local copy of the route up to now
+
 						for k, v in pairs(route) do
 							route_alt[k] = {
 								x = v.x,
@@ -505,22 +587,99 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 						end
 						table.insert(route_alt, point2alt)																		--add point2alt to this route variant
 						table.insert(FindPathLegTable, {point2alt, pointEnd, pointEnd, distance_alt, route_alt, instance, leg_alt})	--continue route from point2alt
-						log.traceVeryLow("update route distance of this variant up to point2alt, add alternate point(point2alt) to this route variant(route_alt) and continue route from point2alt(insert {point2alt, pointEnd, pointEnd, distance_alt(" .. distance_alt .. "), route_alt, instance(".. instance .."), leg_alt(" .. leg_alt ..")} in FindPathLegTable)")
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", update route distance of this variant up to point2alt, add alternate point(point2alt) to this route variant(route_alt) and continue route from point2alt(insert {point2alt, pointEnd, pointEnd, distance_alt(" .. distance_alt .. "), route_alt, instance(".. instance .."), leg_alt(" .. leg_alt ..")} in FindPathLegTable)")
+
 					else																										--if there is a threat between point1 and point2alt
-						log.traceVeryLow("there is a threat between point 1 and alternate point2(point2alt), find new route to point2alt (insert {point1, point2alt, pointEnd, distance(" .. distance .. "), route, instance(".. instance .."), leg_alt(" .. leg_alt ..")} in FindPathLegTable)")
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", there is a threat between point 1 and alternate point2(point2alt), find new route to point2alt (insert {point1, point2alt, pointEnd, distance(" .. distance .. "), route, instance(".. instance .."), leg_alt(" .. leg_alt ..")} in FindPathLegTable)")
 						table.insert(FindPathLegTable, {point1, point2alt, pointEnd, distance, route, instance, leg_alt})		--find new route to point2alt
-					end
+					end		
+					log.level = previous_log_level			
 				end
+				
+
+				local radius_with_separation = threat[1].range + SEPARATION_FROM_THREAT_RANGE 	-- R           calculated offset for new alternative point2																
+				local response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL, alfaR, position, hl, wl, dl, sl, ll							
+				local tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, alfaL1, alfaR1, hr, wr, dr, sr, lr
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", there is a threat on leg, find left/right side routes alternates around threat")	
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat_center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", SEPARATION_FOR_...: " .. SEPARATION_FROM_THREAT_RANGE)								
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", radius_with_separation: " .. radius_with_separation .. ", p1_threat_distance: " .. GetDistance(point1, threat[1]) .. ", p2_threat_distance: " .. GetDistance(point2, threat[1]) .. ", min_distance_from_threat_p1_p2: " .. GetTangentDistance(point1, point2, threat[1]))					
+				
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p1-p2: ")
+				response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, position = GetTangentInfo(point1, point2, threat[1], threat[1].range, 45, SEPARATION_FROM_THREAT_RANGE)								
+		
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p2-p1: ")
+				response1, tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, position1 = GetTangentInfo(point2, point1, threat[1], threat[1].range, 45, SEPARATION_FROM_THREAT_RANGE)				
+				
+				if response and response1 then
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1 and point2 are within threat circonference ")
+					--QUI IL PROBLEMA UNO O TUTTE E DUE I RISULTATI DI GetTangentInfo POSSONO ESSERE FALSI, SE TUTTI E DUE è CRTITICO IN QUANTO IL CALCOLO DOVREBBE ESLUDERE IL PUNTO INTERNO ELIMINANDOLO SE SOLO IL SECONDO P2 (P2-P1) QUINDI
+					-- P1 E FUORI CERCHIO E' RISOLVIBILE CONSDIERANDO SOLO IL PUNTO ALTERNATIVO CALCOLATO IN RESPONSE (NON RESPONSE1)
+					--RIVEDERE INSERENDO QUI TUTTO IL CODICE DI RESPPONSE1 DISTINGUENDO I CASI IN CUI SI HANNO RISULTATI SOLO A LEFT OèPPURE RIGHT
+				
+					-- LEFT
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", response: " .. tostring(response) .. ", tpL: " .. tpL.x .. ", " .. tpL.y .. ", tpR: " .. tpR.x .. ", " .. tpR.y .. ", headingL: " .. headingL .. ", headingR: " .. headingR .. ", lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR .. ", position: " .. position)												
+					hl = GetDistance( tpL, tpL1 ) / 2
+					wl = math.asin( hl / radius_with_separation ) 
+					lenghtL_extension = hl * math.cos(wl)
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", hl: " .. hl .. ", wl: " .. wl .. ", lenghtL_extension: " .. lenghtL_extension .. ", lenghtL_extension / lenghtL: " .. lenghtL_extension / lenghtL)								
+
+					if lenghtL_extension / lenghtL < 0.2 then
+						point2Lalt = GetOffsetPoint(point1, headingL, lenghtL + lenghtL_extension)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", enghtR_extension / lenghtR < 0.2: compute pointLalt2 with extension, headingL: " .. headingL .. ", lenghtL + lenghtL_extension: " .. lenghtL + lenghtL_extension .. ", point2Lalt: " .. point2Lalt.x .. ", " .. point2Lalt.y)								
+						--dl = GetTangentDistance(tpL, tpL1)
+						--sl = hl * tan(wl)
+						--ll = dl + sl
+
+					else
+						point2Lalt = GetOffsetPoint(point1, headingL, lenghtL)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", lenghtL_extension / lenghtL >= 0.2: compute pointLAlt2 without extension, headingL: " .. headingL .. ", lenghtL: " .. lenghtL .. ", point2Lalt: " .. point2Lalt.x .. ", " .. point2Lalt.y)								
+					end					
+					InsertAlternativePoint(point1, point2Lalt, leg_alt, pointEnd, distance, route_alt, FindPathLegTable, instance)
+
+					-- RIGHT
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", response1: " .. tostring(response1) .. ", tpL1: " .. tpL1.x .. ", " .. tpL1.y .. ", tpR1: " .. tpR1.x .. ", " .. tpR1.y .. ", headingL1: " .. headingL1 .. ", headingR1: " .. headingR1 .. ", lenghtL1: " .. lenghtL1 .. ", lenghtR1: " .. lenghtR1 .. ", position: " .. position1)								
+					hr = GetDistance( tpR, tpR1) / 2
+					wr = math.asin( hr/ radius_with_separation ) 
+					lenghtR_extension = hr * math.cos(wr)					
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", hr: " .. hr .. ", wr: " .. wr .. ", lenghtR_extension: " .. lenghtR_extension .. ", lenghtR_extension / lenghtR: " .. lenghtR_extension / lenghtR)								
+
+					if lenghtR_extension / lenghtR < 0.2 then						
+						point2Ralt = GetOffsetPoint(point1, headingR, lenghtR + lenghtR_extension)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", lenghtR_extension / lenghtR < 0.2: compute pointRlt2 with extension, headingR: " .. headingR .. ", lenghtR + lenghtR_extension: " .. lenghtR + lenghtR_extension .. ", point2Ralt: " .. point2Ralt.x .. ", " .. point2Ralt.y)								
+						--dl = GetTangentDistance(tpL, tpL1)
+						--sl = hl * tan(wl)
+						--ll = dl + sl
+
+					else						
+						point2Ralt = GetOffsetPoint(point1, headingR, lenghtR)
+						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", lenghtR_extension / lenghtR >= 0.2: compute pointRAlt2 without extension, headingR: " .. headingR .. ", lenghtR: " .. lenghtR .. ", point2Ralt: " .. point2Ralt.x .. ", " .. point2Ralt.y)								
+					end					
+					InsertAlternativePoint(point1, point2Ralt, leg_alt, pointEnd, distance, route_alt, FindPathLegTable, instance)
+										
+				elseif response then -- point2 within threat circonferenze, point1 out
+					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. "point1 within threat circonferenze, point2 out")
+					point2Lalt = GetOffsetPoint(point1, headingL, lenghtL)
+					point2Ralt = GetOffsetPoint(point1, headingR, lenghtR)
+					InsertAlternativePoint(point1, point2Ralt, leg_alt, pointEnd, distance, route_alt, FindPathLegTable, instance)
+
+				elseif response1 then -- point1 within threat circonferenze, point2 out
+					log.error(nameFunction .. ", instance: " .. instance .. ", ANOMALY!! point1 within threat circonferenze, point2 out: procees without add points")					
+					return --  abort pathfinding (or stop?)
+				else
+					log.error(nameFunction .. ", instance: " .. instance .. ", point1 and point2 are within circonference, return false")
+					return --  abort pathfinding (or stop?)
+				end				
+				--log.level = log_level -- ELIMINARE SOLO PER DEBUGGING LOCALE																	
 			end
-			log.traceVeryLow("End " .. nameFunction)						
-			--log.level = log_level
+			log.traceVeryLow("End " .. nameFunction .. ", instance: " .. instance)						
+			log.level = previous_log_level
 		end
 
 		table.insert(FindPathLegTable, {from, to, to, 0, {}, 0, profile.hCruise})									--insert first instance of FindPathLeg to find a route between start and end point. arguments: start, end, final end (same), initial route distance 0, initial route empty {}, initial instance of the function 0, cruise alt
-		log.traceVeryLow("insert first instance of FindPathLeg to find a route between start and end point. arguments: start, end, final end (same), initial route distance 0, initial route empty {}, initial instance of the function 0, cruise alt\nIterate FindPathLegTable for execution FindPathLeg(point1, point2, pointEnd, distance, route, instance, leg_alt): this function add new item in FindPathLegTable from last insert") 
+		log.traceVeryLow(nameFunction .. "insert first instance of FindPathLeg to find a route between point1: " ..from.x .. ", " .. from.y .. ", point2: " ..to.x .. ", " .. to.y .. " and endpoint == point2. Initial route distance 0, initial route empty {}, initial instance of the function 0, cruise alt: " .. profile.hCruise) 
 		
 		for num,arg in ipairs(FindPathLegTable) do																	--go through table of FindPathLegt functions and execute them. Each FindPathLegt functions can add more instances of same function for execution at end of table
-			log.traceVeryLow("FindPathLegTable instance: " .. arg[6] .. ", call FindPathLeg(point1, point2, pointEnd, distance(" .. arg[4] .."), route, instance(" .. arg[6] .."), leg_alt(" .. arg[7] .."))")
+			log.traceVeryLow(nameFunction .. "FindPathLegTable instance: " .. arg[6] .. ", call FindPathLeg(point1: " .. arg[1].x .. ", " .. arg[1].y .. " , point2: " .. arg[2].x .. ", " .. arg[2].y .. ", pointEnd: " .. arg[3].x .. ", " .. arg[3].y .. ", distance(" .. arg[4] .."), route, instance(" .. arg[6] .."), leg_alt(" .. arg[7] .."))")
 			FindPathLeg(arg[1], arg[2], arg[3], arg[4], arg[5], arg[6], arg[7])										--Execute function with the stored arguments: define and added item in NavRoutes and FindPathLeg tables
 		end
 				
@@ -531,34 +690,30 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		}
 		
 		if #NavRoutes == 0 then
-			log.traceVeryLow("there aren't routes in NavRoutes table, stop function and return default temp_route\nEnd " .. nameFunction)
+			log.traceVeryLow(nameFunction .. "there aren't routes in NavRoutes table, stop function and return default temp_route\nEnd " .. nameFunction)
 			return temp_route
 
 		else
-			log.traceVeryLow("there are #routes in NavRoutes table: " .. #NavRoutes)
+			log.traceVeryLow(nameFunction .. "there are #routes in NavRoutes table: " .. #NavRoutes)
 			temp_route = NavRoutes[1]																		--make first route the temp route			
 
 			for n = 2, #NavRoutes do																				--Go through all stored routes
 
-				--if n == 1 then
-					--temp_route = NavRoutes[n]																		--make first route the temp route
-					--log.traceVeryLow("temp_route = NavRoutes[1] first temp_route")
-				--else
+				if NavRoutes[n].threats < temp_route.threats or (NavRoutes[n].threats == temp_route.threats and NavRoutes[n].dist < temp_route.dist) then	--if next route has either less threats or the same threats and shorter distance, make this the current temp route
+					log.traceVeryLow(nameFunction .. "NavRoutes[" .. n .. "] next route has either less threats or the same threats and shorter distance, make this the current temp_route. NavRoutes[n].threats:  " .. NavRoutes[n].threats .. ", temp_route.threats: " .. temp_route.threats .. ", NavRoutes[n].dist: " .. NavRoutes[n].dist .. ", temp_route.dist: " ..temp_route.dist)					
+					temp_route = NavRoutes[n]
+				end
 
-					if NavRoutes[n].threats < temp_route.threats or (NavRoutes[n].threats == temp_route.threats and NavRoutes[n].dist < temp_route.dist) then	--if next route has either less threats or the same threats and shorter distance, make this the current temp route
-						log.traceVeryLow("NavRoutes[" .. n .. "] next route has either less threats or the same threats and shorter distance, make this the current temp_route. NavRoutes[n].threats:  " .. NavRoutes[n].threats .. ", temp_route.threats: " .. temp_route.threats .. ", NavRoutes[n].dist: " .. NavRoutes[n].dist .. ", temp_route.dist: " ..temp_route.dist)					
-						temp_route = NavRoutes[n]
-					end
-				--end
 			end
 			log.traceVeryLow("End " .. nameFunction)
 			return temp_route																						--return the selected route
 		end
 		log.traceVeryLow("End " .. nameFunction)
-		log.level = log_level						
+		log.level = previous_log_level						
 	end
 	
 	local function threatEvalutationInRoute(threat, EWRpenality, total_threat_level, point1, point2, type_service, storage_table, computedPoint)
+		local previous_log_level = log.level
 		log.level = function_log_level
 		local break_loop = false
 		
@@ -604,8 +759,13 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			table.insert(storage_table, {point = point1, threat = total_threat_level})			--store current draft IP in IP table
 			log.traceVeryLow("there isn't threat -> store current draft point in " .. type_service .. "table, draft_point = (" .. point1.x .. ", " .. point1.y .. "), stored threat level for this point: " .. total_threat_level)
 		end
+		log.level = previous_log_level
 		return break_loop, total_threat_level, point1, point2 , computedPoint			
 	end
+
+	--< ===============================================================					
+	--<                Last point for code analisys 		
+	--< ===============================================================	
 
 	local break_loop = false
 	----- find a route depending on task -----
@@ -1637,12 +1797,13 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			end
 		end
 	end
-	log.level = log_level
+	log.level = previous_log_level
 	return route
 end
 
 
-function GetEscortRoute(basePoint, orig_route)																					--get the escort route given the escort start point and an existing package route
+function GetEscortRoute(basePoint, orig_route)		
+	local previous_log_level = log.level																			--get the escort route given the escort start point and an existing package route
 	log.level = function_log_level
 	--make a local copy of the route table forwarded as function argument (otherwise the original route gets adjusted
 	local route = deepcopy(orig_route)
@@ -1764,6 +1925,6 @@ function GetEscortRoute(basePoint, orig_route)																					--get the esc
 		route_lenght = route_lenght + GetDistance(route[n], route[n + 1])
 	end
 	route.lenght = route_lenght
-	log.level = log_level
+	log.level = previous_log_level
 	return route
 end

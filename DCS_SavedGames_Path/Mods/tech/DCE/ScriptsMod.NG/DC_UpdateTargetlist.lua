@@ -58,6 +58,7 @@ local function checkBug(name, origine, category) -- check SPACE char anomaly in 
 end 
 
 local function searchMasterCoord(country_group, master) -- search Master in oob_ground and returns his coordinate
+	local previous_log_level = log.level
 	log.level = "trace" -- function_log_level
 	local nameFunction = "function searchMasterCoord(country_group): "    
     log.debug("Start " .. nameFunction)	
@@ -124,7 +125,7 @@ local function searchMasterCoord(country_group, master) -- search Master in oob_
 		log.debug(nameFunction .. "master coord was found in country group: master_x, master_y: " .. master_x .. ", " .. master_y)	
 	end
 	log.debug("End " .. nameFunction .. "return master_x, master_y, master_found(" .. tostring(master_found) .. ")")	
-	log.level = log_level
+	log.level = previous_log_level
 	return master_x, master_y, master_found
 end
 
