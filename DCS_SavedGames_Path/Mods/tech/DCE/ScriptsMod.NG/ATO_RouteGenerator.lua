@@ -42,7 +42,7 @@ local MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300 -- min difference from leg_alt and 
 local SEPARATION_FROM_THREAT_RANGE = 1000 -- min distance from threat.range border
 -- diff = threat.range - threat_leg_distance, se diff > 0 (leg interno al threat.range -> ragiona sul punto precedente in cui viene calcolato il punto alternativo a 90 gradi e in base a quanto questo punto rispetto si trova interno al range, calcolare il FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE
 
-local MAX_NUM_ISTANCE_PATH_FINDING = 9 -- max number of istances of function findPathLeg(), default = 7
+local MAX_NUM_ISTANCE_PATH_FINDING = 7 -- max number of istances of function findPathLeg(), default = 7
 -- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
 -- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
 
