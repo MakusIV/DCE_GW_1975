@@ -59,7 +59,7 @@ end
 
 local function searchMasterCoord(country_group, master) -- search Master in oob_ground and returns his coordinate
 	local previous_log_level = log.level
-	log.level = "trace" -- function_log_level
+	log.level = function_log_level
 	local nameFunction = "function searchMasterCoord(country_group): "    
     log.debug("Start " .. nameFunction)	
 
