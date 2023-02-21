@@ -166,11 +166,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,														--number of SEAD sorties required to offset threat
 			x = unit.x,																--position x-coordinate
 			y = unit.y,																--position y-coordinate
-			range = 1500,															--range of threat
+			range = 2600,															--range of threat
 			night = false,															--night capable
 			elevation = 3,															--sensor elevation above ground
 			min_alt = 0,															--minimal threat altitute
-			max_alt = 1500,															--maximal threat altitude
+			max_alt = 1400,															--maximal threat altitude
 			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,														--rilevability level: from 0 to 1 (max)
 		}
 	
@@ -183,7 +183,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 2000,
+			range = 2500,
 			night = true,
 			elevation = 3.5,
 			min_alt = 0,
@@ -200,11 +200,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 4000,
+			range = 3700,
 			night = true,
 			elevation = 4,
 			min_alt = 0,
-			max_alt = 3500,
+			max_alt = 2900,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -217,11 +217,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3000,
+			range = 7000,
 			night = true,
 			elevation = 3,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 3400,
 			rilevability = SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 		
@@ -235,11 +235,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 4000,
+			range = 5600,
 			night = false,
 			elevation = 3,
-			min_alt = 0,
-			max_alt = 3600,
+			min_alt = 46,
+			max_alt = 2900,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -252,11 +252,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3000,
+			range = 3750,
 			night = true,
 			elevation = 3,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 3400,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -269,11 +269,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3000,
+			range = 3750,
 			night = false,
 			elevation = 3,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 2000,
 			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
@@ -286,11 +286,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3500,
+			range = 4650,
 			night = false,
 			elevation = 3,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 3700,
 			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
@@ -303,11 +303,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 2500,
+			range = 4650,
 			night = false,
 			elevation = 3,
-			min_alt = 0,
-			max_alt = 3600,
+			min_alt = 31,
+			max_alt = 3700,
 			rilevability = SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -320,11 +320,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3500,
+			range = 5200,
 			night = false,
 			elevation = 3.5,
-			min_alt = 0,
-			max_alt = 3600,
+			min_alt = 22,
+			max_alt = 4600,
 			rilevability = MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -337,11 +337,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 8000,
+			range = 7450,
 			night = true,
 			elevation = 3.5,
 			min_alt = 0,
-			max_alt = 6500,
+			max_alt = 4900,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -354,11 +354,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 10000,
+			range = 8500,
 			night = true,
 			elevation = 2.5,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 3000,
 			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
@@ -371,11 +371,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 8500,
+			range = 8550,
 			night = false,
 			elevation = 1.5,
 			min_alt = 0,
-			max_alt = 3600,
+			max_alt = 3000,
 			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
@@ -388,11 +388,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 8500,
+			range = 6300,
 			night = true,
 			elevation = 4,
-			min_alt = 0,
-			max_alt = 8000,
+			min_alt = 10,
+			max_alt = 6000,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -409,7 +409,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			night = true,
 			elevation = 4,
 			min_alt = 0,
-			max_alt = 5000,
+			max_alt = 5500,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 
@@ -426,7 +426,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			night = true,
 			elevation = 4,
 			min_alt = 0,
-			max_alt = 5000,
+			max_alt = 5500,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 
@@ -439,11 +439,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 46000,
+			range = 47500,
 			night = true,
 			elevation = 3,
-			min_alt = 0,
-			max_alt = 22000,
+			min_alt = 135,
+			max_alt = 13750, --launcher
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -456,11 +456,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 92000,
+			range = 160000,
 			night = true,
 			elevation = 6,
-			min_alt = 0,
-			max_alt = 32000,
+			min_alt = 61,
+			max_alt = 24500,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -490,11 +490,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 45000,
+			range = 52000,
 			night = true,
 			elevation = 3,
 			min_alt = 50,
-			max_alt = 20000,
+			max_alt = 25000,
 			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 	
@@ -507,10 +507,10 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 23000,
+			range = 25000,
 			night = true,
 			elevation = 3,
-			min_alt = 50,
+			min_alt = 200,
 			max_alt = 20000,
 			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
@@ -524,11 +524,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 35000,
+			range = 36000,
 			night = true,
 			elevation = 6,
-			min_alt = 0,
-			max_alt = 10000,
+			min_alt = 30,
+			max_alt = 10100,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -541,11 +541,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 15000,
+			range = 14000,
 			night = true,
 			elevation = 5.5,
-			min_alt = 0,
-			max_alt = 7000,
+			min_alt = 15,
+			max_alt = 6400,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -558,11 +558,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 39000,
+			range = 36000,
 			night = true,
 			elevation = 7,
-			min_alt = 0,
-			max_alt = 24000,
+			min_alt = 18,
+			max_alt = 25000,
 			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -575,11 +575,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 35000,
+			range = 36000,
 			night = true,
 			elevation = 7,
 			min_alt = 0,
-			max_alt = 24000,
+			max_alt = 25000,
 			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 
@@ -592,10 +592,10 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 16000,
+			range = 12100,
 			night = true,
 			elevation = 5,
-			min_alt = 0,
+			min_alt = 18,
 			max_alt = 8000,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
@@ -609,15 +609,15 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 90000,
+			range = 74100,
 			night = true,
 			elevation = 27.5,
-			min_alt = 0,
-			max_alt = 29000,
+			min_alt = 15,
+			max_alt = 45000, --29000,
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
-	
+	-- qui
 	elseif unit.type == "RLS_19J6" then
 		threatentry = {
 			type = unit.type,

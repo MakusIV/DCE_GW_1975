@@ -120,7 +120,7 @@ di riferimento
 
 
 
-
+-- call from ATO_Generator profile is unit.loadout.task.tipi
 function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter)	--side_: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
 	local previous_log_level = log.level
 	log.level = function_log_level -- "traceVeryLow"
@@ -406,12 +406,13 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 
 			--ignore threats that directly cover point1 or pointEnd
 			removeThreatsAtStartEnd(threat, point1, pointEnd)
-			
+			local tot_distance = distance + distance_remain
+
 			if instance > MAX_NUM_ISTANCE_PATH_FINDING then																									--if function instance is bigger than 7
 				log.traceVeryLow(nameFunction .. "instance(" .. instance .. ") is bigger than " .. MAX_NUM_ISTANCE_PATH_FINDING .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
-			elseif distance + distance_remain > (direct_distance * MAX_FACTOR_FOR_LENGHT_ROUTE) then														--if total route distance is bigger than 1.5 times the direct distance
+			elseif tot_distance > (direct_distance * MAX_FACTOR_FOR_LENGHT_ROUTE) then														--if total route distance is bigger than 1.5 times the direct distance
 				log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), total route distance(" .. distance + distance_remain .. ") is bigger than " .. MAX_FACTOR_FOR_LENGHT_ROUTE .. " times the direct distance(" .. direct_distance .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
