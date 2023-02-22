@@ -384,6 +384,30 @@ targetlist = {
 			class = "vehicle",
 			name = "106 SA-2 Site C-6",
 		},
+		["Teberda SA-2 Site"] = {
+			task = "Strike",
+			priority = 6,
+			-- picture = {""},
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "Teberda SA-2 Site",
+		},
+		["DM-34 SA-5 Site-1"] = {
+			task = "Strike",
+			priority = 6,
+			-- picture = {""},
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,
+				max = 4,
+			},
+			class = "vehicle",
+			name = "DM-34 SA-5 Site-1",
+		},
 		["Maykop SA-2"] = {
 			task = "Strike",
 			priority = 4,
@@ -873,6 +897,34 @@ targetlist = {
 
 			},
 		},		
+		["Peredovaya SUPPLY PLANT"] = {
+			task = "Strike",
+			priority = 4,
+			--picture = {"Prohladniy_Depot.png"},
+			attributes = {"Structure"},
+			firepower = {
+				min = 3,
+				max = 6,
+			},
+			class = "static",
+			elements = {
+				[1] = {
+					name = "Peredovaya SUPPLY PLANT",
+				},
+				[2] = {
+					name = "Peredovaya SUPPLY PLANT-1",
+				},
+				[3] = {
+					name = "Peredovaya SUPPLY PLANT-2",
+				},
+				[4] = {
+					name = "Peredovaya SUPPLY PLANT-3",
+				},
+				[5] = {
+					name = "Peredovaya SUPPLY PLANT-4",
+				},			
+			},
+		},	
 		["SUPPLY PLANT BAKSAN LP83"] = {
 			task = "Strike",
 			priority = 4,

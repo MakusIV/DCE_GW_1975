@@ -553,6 +553,11 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 8)',
 	},
+	["Reinforce BA 113"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/BA 113", "BA 113", 4)',
+	},
 	["Reinforce 317th Air Division"] = {
 		active = true,
 		condition = 'true',

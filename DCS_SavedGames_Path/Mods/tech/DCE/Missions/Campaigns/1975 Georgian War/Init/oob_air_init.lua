@@ -55,6 +55,7 @@ a MiG-27K (GA 3rd AS): 12 + 36 = 48
 
 Kutaisi
 f/a F-4E (58 TFS): 12 + 36 = 48
+f/a Mirage F1-C: 12 + 24 = 36
 aw E-3A (7 ACCS): 3
 
 Senaki-Kolkhi
@@ -92,13 +93,13 @@ attack/transport: 8+20 Mi-24V(GAH 2rdy)
 ---- RED
 
 Mozdok
-f/a MiG-23MLD (113.IAP): 
+f/a MiG-23MLD (113.IAP): 24 + 36 = 60
 f MiG-25PD (790.IAP): 12 + 36 = 48
 a MiG-27K (117.IAP): 12 + 36 = 48
 a Su-17M4 (115.IAP): 12 + 36 = 48
 
 Beslan
-f/a MiG-21Bis (37.IAP):  12 + 36 = 48
+f/a MiG-21Bis (37.IAP):  24 + 36 = 60
 f/a MiG-23MLD (123.IAP):  12 + 36 = 48
 f MiG-25PD (790.IAP): 12 + 36 = 48
 a MiG-27K (127.IAP): 12 + 36 = 48
@@ -959,6 +960,45 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 7,
 		},		
+
+		[55] = { -- kutaisi
+			name = "BA 113",								--unit name			
+			type = "Mirage-F1C",									--aircraft type
+			country = "France",								--unit country
+			livery = "",									--unit livery
+			base = "Kutaisi",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
+			tasks = {										--unit tasks
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = true,
+				["Intercept"] = true,
+				["Strike"] = true,
+				["SEAD"] = false,
+				["Anti-ship Strike"] = false,
+				["Laser Illumination"] = false,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 2,
+				["CAP"] = 2,
+				["Escort"] = 2,
+				["Fighter Sweep"] = 2,	
+			},
+			number = 12,
+		},
+		[56] = {
+			name = "R/BA 113",								--unit name
+			inactive = true,
+			type = "Mirage-F1C",									--aircraft type
+			country = "France",								--unit country
+			base = "Reserves",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
+			tasks = {},										--unit tasks
+			number = 24,
+		},
 	},
 	["red"] = {	--side 2		
 		-------------------- Mozdok ---------------		
@@ -1035,7 +1075,7 @@ oob_air = {
 				["Escort"] = 2,
 				["Fighter Sweep"] = 1,	
 			},
-			number = 12,
+			number = 24,
 		},
 		[5] = {
 			name = "R./113.IAP",							--unit name
@@ -1074,7 +1114,7 @@ oob_air = {
 				["SEAD"] = 0.3,
 				["Laser Illumination"] = 1,
 			},
-			number = 12,
+			number = 24,
 		},
 		[7] = {
 			name = "R./37.IAP",								--unit name

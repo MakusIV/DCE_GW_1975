@@ -17,6 +17,23 @@ supply_tab = {
 				},
 			},
 		},
+		['Peredovaya SUPPLY PLANT'] = {--        supply plant
+			['integrity'] = 1, --             supply plant integrity    
+			['supply_line_names'] = {--         table of supply lines supplyed by supply plant
+				['Sochi-Adler Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {
+						['Sochi-Adler'] = true,											
+					},
+				},			
+				['Maykop-Khanskaya Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						 	
+						['Maykop-Khanskaya'] =  true,							
+					},
+				},
+			},
+		},
 		['SUPPLY PLANT BAKSAN LP83'] = {--      supply plant
 			['integrity'] = 1,
 			['supply_line_names'] = {

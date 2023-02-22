@@ -2921,6 +2921,658 @@ db_loadouts = {
 		},
 	},	
 
+	["Mirage-F1C"] = {--
+		["Strike"] = {
+			["MirageF1C_GA_8xSAMP400kg_2xR550"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"Structure", "Bridge"},
+				weaponType = "Bombs",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = true,
+				avoid_EWR = true,
+				range = 360000,
+				capability = 4,
+				firepower = 3,
+				vCruise = 215.83333333333,
+				vAttack = 277.5,
+				hCruise = 100, --700,
+				hAttack = 400,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = 
+                    	{
+							[1] = 
+							{
+								["CLSID"] = "{R550_Magic_1}",
+							}, -- end of [1]
+							[3] = 
+							{
+								["CLSID"] = "PTB-1200-F1",
+							}, -- end of [3]
+							[4] = 
+							{
+								["CLSID"] = "{CLB4_SAMP400LD}",
+							}, -- end of [4]
+							[5] = 
+							{
+								["CLSID"] = "PTB-1200-F1",
+							}, -- end of [5]
+							[7] = 
+							{
+								["CLSID"] = "{R550_Magic_1}",
+							}, -- end of [7]
+						}, -- end of ["pylons"]
+						["fuel"] = 3356,
+						["flare"] = 0,
+						["chaff"] = 0,
+						["gun"] = 100,
+				},
+			},
+			["MirageF1C_GA_4xSNEB256_HE_DEFR_1xFuel"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weaponType = "Rockets",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				avoid_EWR = false,
+				range = 360000,
+				capability = 4,
+				firepower = 3,
+				vCruise = 215.83333333333,
+				vAttack = 277.5,
+				hCruise = 5876.8,
+				hAttack = 2572,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = true,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{MATRA_F1_SNEBT256}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{MATRA_F1_SNEBT256}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{MATRA_F1_SNEBT256}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{MATRA_F1_SNEBT256}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weaponType = "Rockets",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 360000,
+				capability = 4,
+				firepower = 1,
+				vCruise = 215.83333333333,
+				vAttack = 277.5,
+				hCruise = 5486.4,
+				hAttack = 4572,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT256}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT256}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT256}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT256}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_GA_4x18xSNEB253_HEAT_1xFuel"] = {
+				minscore = 0.1,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weaponType = "Rockets",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 130000,
+				capability = 4,
+				firepower = 3,
+				vCruise = 215.83333333333,
+				vAttack = 277.5,
+				hCruise = 4876.8,
+				hAttack = 4572,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT253}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT253}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT253}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{MATRA_F4_SNEBT253}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_GA_4xSAMP250kgHD_2xR550_2xFuel-1"] = {
+				minscore = 0.1,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = true,
+				},
+				attributes = {"soft", "Parked Aircraft"},
+				weaponType = "Bombs",
+				expend = "All",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 360000,
+				capability = 4,
+				firepower = 3,
+				vCruise = 215.83333333333,
+				vAttack = 277.5,
+				hCruise = 5486.4,
+				hAttack = 3048,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{SAMP250HD}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{SAMP250HD}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{CLB4_SAMP250LD}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{SAMP250HD}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{SAMP250HD}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+		},
+		["Intercept"] = {
+			["MirageF1C_GI_2xR550_1xR530IR"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+						[4] = 
+						{
+							["CLSID"] = "{R530F_IR}",
+						}, -- end of [4]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+		},
+		["CAP"] = {
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},			
+		},
+		["Escort"] = {
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},	
+		},
+		["Fighter Sweep"] = {
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 270000,
+				capability = 4,
+				firepower = 2,
+				vCruise = 215.83333333333,
+				vAttack = 246.66666666667,
+				hCruise = 6096,
+				hAttack = 6096,
+				standoff = 36000,
+				tStation = 1800,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "PTB-1200-F1",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{R530F_EM}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{R550_Magic_1}",
+						}, -- end of [7]
+					}, -- end of ["pylons"]
+					["fuel"] = 3356,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},	
+		},
+	},	
+
 	["F-4E"] = {--1958 (primo volo) 1960 (entrata in servizio)
 		["Intercept"] = {
 			["GTA AIR/AIR AIM-9*4,AIM-7*4"] = {
