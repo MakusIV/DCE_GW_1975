@@ -3041,7 +3041,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel] = {
+			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel"] = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
