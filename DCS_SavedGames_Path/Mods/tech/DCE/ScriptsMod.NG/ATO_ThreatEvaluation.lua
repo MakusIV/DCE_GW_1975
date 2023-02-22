@@ -191,7 +191,38 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
-		
+	elseif unit.type == "ZSU-23 Closed Emplacement" then -- new verifica nome vale per tutti i ZSU-23 Closed Emplacement, Emplacement e Ural
+		threatentry = {
+			type = unit.type,
+			class = "AAA",
+			level = 1,
+			SEAD_offset = 0,
+			x = unit.x,
+			y = unit.y,
+			range = 2500,  --DCS ENCYCLOPEDIA: 2500
+			night = true,
+			elevation = 3.5,
+			min_alt = 0,
+			max_alt = 2000,  --DCS ENCYCLOPEDIA: 2000
+			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+		}
+
+	elseif unit.type == "ZSU-57" then -- new verifica nome vale per tutti i ZSU-23 Closed Emplacement, Emplacement e Ural
+		threatentry = {
+			type = unit.type,
+			class = "AAA",
+			level = 1,
+			SEAD_offset = 0,
+			x = unit.x,
+			y = unit.y,
+			range = 5000,  -- detection from ME (detection < range) DCS ENCYCLOPEDIA: no 
+			night = true,
+			elevation = 3.5,
+			min_alt = 0,
+			max_alt = 5000,  --DCS ENCYCLOPEDIA: no
+			rilevability =  MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+		}
+			
 	elseif unit.type == "Gepard" then
 		threatentry = {
 			type = unit.type,
@@ -200,7 +231,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3700,
+			range = 3700, --DCS ENCYCLOPEDIA: 3000
 			night = true,
 			elevation = 4,
 			min_alt = 0,
@@ -218,6 +249,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			x = unit.x,
 			y = unit.y,
 			range = 7000,
+			--minrange = 300,
 			night = true,
 			elevation = 3,
 			min_alt = 0,
@@ -235,7 +267,8 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 5600,
+			range = 5600, -- DCS ENCYCLOPEDIA: 4800
+			--minrange = 400,
 			night = false,
 			elevation = 3,
 			min_alt = 46,
@@ -252,7 +285,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3750,
+			range = 3750, --DCS ENCYCLOPEDIA: no info
 			night = true,
 			elevation = 3,
 			min_alt = 0,
@@ -269,11 +302,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3750,
+			range = 3750, --DCS ENCYCLOPEDIA: 4000 (FIM-92A), 4500 FIM-92B/C)
 			night = false,
 			elevation = 3,
 			min_alt = 0,
-			max_alt = 2000,
+			max_alt = 2000,  --DCS ENCYCLOPEDIA: 3500 (FIM-92A), 3800 FIM-92B/C)
 			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
@@ -286,14 +319,31 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 4650,
+			range = 4650,  --DCS ENCYCLOPEDIA: 6000
+			--minrange = 500,
 			night = false,
 			elevation = 3,
-			min_alt = 0,
-			max_alt = 3700,
+			min_alt = 0, --DCS ENCYCLOPEDIA: 10
+			max_alt = 3700, --DCS ENCYCLOPEDIA: 3500
 			rilevability = MAN_SAM_RILEVABILITY,
 		}
 	
+	elseif unit.type == "SA-18 Igla manpad" then -- new
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 3,
+			SEAD_offset = 0,
+			x = unit.x,
+			y = unit.y,
+			range = 5200,  --DCS ENCYCLOPEDIA: 5200
+			--minrange = 500,
+			night = false,
+			elevation = 3,
+			min_alt = 10, --DCS ENCYCLOPEDIA: 10
+			max_alt = 3500, --DCS ENCYCLOPEDIA: 3500
+			rilevability = MAN_SAM_RILEVABILITY,
+		}
 		
 	elseif unit.type == "Strela-1 9P31" then
 		threatentry = {
@@ -303,11 +353,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 4650,
+			range = 4650, --DCS ENCYCLOPEDIA: 4200
+			--minrange = 800,
 			night = false,
 			elevation = 3,
-			min_alt = 31,
-			max_alt = 3700,
+			min_alt = 31, --DCS ENCYCLOPEDIA: 30
+			max_alt = 3700, --DCS ENCYCLOPEDIA: 3500
 			rilevability = SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -320,11 +371,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 5200,
+			range = 5200, --DCS ENCYCLOPEDIA: 5000
+			-- minrange = 200,
 			night = false,
 			elevation = 3.5,
-			min_alt = 22,
-			max_alt = 4600,
+			min_alt = 22, --DCS ENCYCLOPEDIA: 10
+			max_alt = 4600, --DCS ENCYCLOPEDIA: 3500
 			rilevability = MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -337,11 +389,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 7450,
+			range = 7450,  --DCS ENCYCLOPEDIA: 12000
+			--minrange = 1500,
 			night = true,
 			elevation = 3.5,
-			min_alt = 0,
-			max_alt = 4900,
+			min_alt = 0, --DCS ENCYCLOPEDIA: 10
+			max_alt = 4900, --DCS ENCYCLOPEDIA: 6000
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -354,7 +407,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 8500,
+			range = 8500,  --DCS MISSIONE EDITOR: 30000
 			night = true,
 			elevation = 2.5,
 			min_alt = 0,
@@ -371,7 +424,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 8550,
+			range = 8550,--DCS MISSIONE EDITOR: launcher 6800
 			night = false,
 			elevation = 1.5,
 			min_alt = 0,
@@ -388,11 +441,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 6300,
+			range = 6300, --DCS MISSION EDITOR: 6300
+			--minrange = 500,
 			night = true,
 			elevation = 4,
-			min_alt = 10,
-			max_alt = 6000,
+			min_alt = 10,--DCS MISSION EDITOR: launcher 10
+			max_alt = 6000,--DCS MISSION EDITOR: launcher 5500
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -422,7 +476,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 12000,
+			range = 12000,--DCS MISSIONE EDITOR, ENCYCLOPEDIA: non presente
 			night = true,
 			elevation = 4,
 			min_alt = 0,
@@ -431,7 +485,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 
 		
-	elseif unit.type == "Hawk tr" then
+	elseif unit.type == "Hawk tr" then -- nota: non include i ln forse perchè è sempre necessario il tracker
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -439,16 +493,16 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 47500,
+			range = 47500, --DCS ENCYCLOPEDIA:  40000, LAUNCHER DCS ENCYCLOPEDIA:  32000, MISSION EDITOR : 45000
+			--minrange = 2000, --LAUNCHER
 			night = true,
 			elevation = 3,
-			min_alt = 135,
-			max_alt = 13750, --launcher
+			min_alt = 135, -- LAUNCHER DCS ENCYCLOPEDIA:  60,
+			max_alt = 13750, --LAUNCHER DCS ENCYCLOPEDIA = 13700
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
-		}
-	
+		}	
 		
-	elseif unit.type == "Patriot str" then
+	elseif unit.type == "Patriot str" then -- nota: non include i ln forse perchè è sempre necessario il tracker
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -456,11 +510,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 160000,
+			range = 160000,--DCS ENCYCLOPEDIA:  170000, LAUNCHER DCS ENCYCLOPEDIA:  160000, MISSION EDITOR : 100000
+			--minrange = 3000,
 			night = true,
 			elevation = 6,
 			min_alt = 61,
-			max_alt = 24500,
+			max_alt = 24500, -- LAUNCHER --DCS ENCYCLOPEDIA:  24240
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -473,7 +528,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 15000,
+			range = 15000,--DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA: nothing, MISSION EDITOR : 15000 AIM-120B e C
 			night = true,
 			elevation = 4,
 			min_alt = 0,
@@ -482,7 +537,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 
 	
-	elseif unit.type == "SNR_75V" then
+	elseif unit.type == "SNR_75V" then -- SAM SA-2  S-75 "Guideline"
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -490,7 +545,8 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 52000,
+			range = 52000,--DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA:  no, MISSION EDITOR : 43000
+			--minrange = 7000,
 			night = true,
 			elevation = 3,
 			min_alt = 50,
@@ -507,7 +563,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 25000,
+			range = 25000, --DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA:  no, MISSION EDITOR : 18000
 			night = true,
 			elevation = 3,
 			min_alt = 200,
@@ -524,11 +580,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 36000,
+			range = 36000, --DCS ENCYCLOPEDIA:  24000, LAUNCHER DCS ENCYCLOPEDIA:  24000, MISSION EDITOR : 25000
+			--minrange = 4000,
 			night = true,
 			elevation = 6,
-			min_alt = 30,
-			max_alt = 10100,
+			min_alt = 25, -- 
+			max_alt = 10100, --DCS ENCYCLOPEDIA:  14000
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -541,10 +598,10 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 14000,
+			range = 14000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 11000
 			night = true,
 			elevation = 5.5,
-			min_alt = 15,
+			min_alt = 15, --DCS ENCYCLOPEDIA:  100
 			max_alt = 6400,
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
@@ -558,7 +615,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 36000,
+			range = 36000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 35000
 			night = true,
 			elevation = 7,
 			min_alt = 18,
@@ -575,7 +632,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 36000,
+			range = 36000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 35000
 			night = true,
 			elevation = 7,
 			min_alt = 0,
@@ -592,7 +649,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 12100,
+			range = 12100, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 12000
 			night = true,
 			elevation = 5,
 			min_alt = 18,
@@ -601,7 +658,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 	
 			
-	elseif unit.type == "S-300PS 40B6M tr" then
+	elseif unit.type == "S-300PS 40B6M tr" then -- SA-10 S-300 TEL C e D
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -609,16 +666,33 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 74100,
+			range = 74100,  --DCS ENCYCLOPEDIA:  47000 (h >= 2000m), 25000 (h <= 25m) -- MISSION EDITOR: 120000
 			night = true,
 			elevation = 27.5,
-			min_alt = 15,
-			max_alt = 45000, --29000,
+			min_alt = 15, --DCS ENCYCLOPEDIA:  25
+			max_alt = 45000, --DCS ENCYCLOPEDIA:  30000
+			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
+		}
+
+	elseif unit.type == "S-200 LN" then -- new verifica nome
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 10,
+			SEAD_offset = 4,
+			x = unit.x,
+			y = unit.y,
+			range = 254000,  --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 254000
+			--minrange = 7000,
+			night = true,
+			elevation = 27.5,
+			min_alt = 50, --DCS ENCYCLOPEDIA:  no
+			max_alt = 25000, --verificare --DCS ENCYCLOPEDIA:  no
 			rilevability = LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
 	-- qui
-	elseif unit.type == "RLS_19J6" then
+	elseif unit.type == "RLS_19J6" then--boh
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -634,7 +708,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			rilevability =  LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
 
-	elseif unit.type == "RPC_5N62V" then --SA-5
+	elseif unit.type == "RPC_5N62V" then --boh
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -642,7 +716,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 255000,
+			range = 255000,--DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 7000
 			night = true,
 			elevation = 27.5,
 			min_alt = 0,
@@ -659,7 +733,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 50000,
+			range = 50000,--DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 7000
 			night = true,
 			elevation = 20,
 			min_alt = 0,
@@ -710,7 +784,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 2000,
+			range = 2000,  -- MISSION EDITOR: 2000
 			night = true,
 			elevation = 10,
 			min_alt = 0,
@@ -735,6 +809,21 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			rilevability =  MEDIUM_SHIP_RILEVABILITY,
 		}
 	
+	elseif unit.type == "GRISHA" then --new verifica nome
+		threatentry = {
+			type = unit.type,
+			class = "SAM",
+			level = 7,
+			SEAD_offset = 1,
+			x = unit.x,
+			y = unit.y,
+			range = 16000, -- MISSION EDITOR: 16000
+			night = true,
+			elevation = 20,
+			min_alt = 0,
+			max_alt = 5000,
+			rilevability = LARGE_SHIP_RILEVABILITY,
+		}
 		
 	elseif unit.type == "REZKY" then
 		threatentry = {
@@ -744,7 +833,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 15000,
+			range = 15000, -- MISSION EDITOR: 16000
 			night = true,
 			elevation = 20,
 			min_alt = 0,
@@ -753,7 +842,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 	
 		
-	elseif unit.type == "KUZNECOW" then
+	elseif unit.type == "KUZNECOW" then --kuznetsow
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -761,7 +850,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 16000,
+			range = 16000,-- MISSION EDITOR: 12000
 			night = true,
 			elevation = 20,
 			min_alt = 0,
@@ -778,7 +867,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 16000,
+			range = 16000, -- MISSION EDITOR: 12000
 			night = true,
 			elevation = 20,
 			min_alt = 0,
@@ -787,7 +876,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 	
 		
-	elseif unit.type == "MOSCOW" then
+	elseif unit.type == "MOSCOW" then -- Moskva?
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -795,7 +884,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 90000,
+			range = 90000, -- MISSION EDITOR Moskva: 75000
 			night = true,
 			elevation = 25,
 			min_alt = 0,
@@ -812,7 +901,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 145000,
+			range = 145000, -- MISSION EDITOR: 188000
 			night = true,
 			elevation = 30,
 			min_alt = 0,
