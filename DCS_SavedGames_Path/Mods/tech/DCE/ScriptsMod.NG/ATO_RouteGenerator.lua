@@ -77,7 +77,10 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									    --get the maximal range due to radar horizon (profile alt +100 m for safety)
 	log.traceLow("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
 	
-	if maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range					
+	if threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt and maxrange < threat.range_at_low then
+		threatentry.range = maxrange																		--use maximal range due to radar horizon		
+
+	elseif maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range							
 		threatentry.range = maxrange																		--use maximal range due to radar horizon
 		log.traceLow("maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
 	end		
@@ -159,6 +162,9 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				x = threat.x,
 				y = threat.y,
 				range = threat.range,
+				minrange = threat.minrange,
+				range_at_low = threat.range_at_low,
+				max_low_alt = threat.max_low_alt,
 				min_alt = threat.min_alt,-- eliminare se non è possibile inserire le quote per i singoli points
 				max_alt = threat.max_alt,-- eliminare se non è possibile inserire le quote per i singoli points				
 			}
