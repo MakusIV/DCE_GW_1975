@@ -362,7 +362,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			min_alt = 30, --DCS ENCYCLOPEDIA: 30, airgoon: 30
 			max_alt = 3700, --DCE: 3700, DCS ENCYCLOPEDIA: 3500, airgoon: 3500
 			rilevability = SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
-		}5
+		}
 	
 	
 	elseif unit.type == "Strela-10M3" then
@@ -615,7 +615,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 14000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 11000 --airgoon: 1500-10300 (high alt), 1500-8500 (low alt)
 			--minarange = 1500, 
-			 = 11000, -- NEW from airgoon: 11000  
+			range_at_low = 11000, -- NEW from airgoon: 11000  
 			max_low_alt = 500,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 5.5,

@@ -103,7 +103,7 @@ f/a MiG-21Bis (37.IAP):  24 + 36 = 60
 f/a MiG-23MLD (123.IAP):  12 + 36 = 48
 f MiG-25PD (790.IAP): 12 + 36 = 48
 a MiG-27K (127.IAP): 12 + 36 = 48
-a L-39A (115AS.IAP): 12 + 36 = 48
+a L-39C (115AS.IAP): 12 + 36 = 48
 
 
 
@@ -112,7 +112,7 @@ f/a MiG-21Bis (19.IAP):  18 + 36 = 52
 a MiG-27K (107.IAP): 12 + 36 = 48
 aw A-50 (2457 SDRLO): 4
 t Il-76MD (13.OSAP): 4 + 4 = 8
-a L-39A (111AS.IAP): 12 + 36 = 48
+a L-39C (111AS.IAP): 12 + 36 = 48
 
 Mineralnye-Vody
 f MiG-23MLD (133.IAP): 12 + 36 = 48
@@ -1191,7 +1191,7 @@ oob_air = {
 		},		
 		[12] = {
 			name = "1./115AS.IAP",							--unit name
-			type = "L-39A",									--aircraft type
+			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Beslan",								--unit base
@@ -1218,7 +1218,7 @@ oob_air = {
 		[13] = {
 			name = "R./115AS.IAP",
 			inactive = true,								--unit name
-			type = "L-39A",									--aircraft type
+			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
@@ -1320,7 +1320,7 @@ oob_air = {
 		},
 		[20] = {
 			name = "1./111AS.IAP",							--unit name
-			type = "L-39A",									--aircraft type
+			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
 			base = "Nalchik",								--unit base
@@ -1347,7 +1347,7 @@ oob_air = {
 		[21] = {
 			name = "R./111AS.IAP",							--unit name
 			inactive = true,
-			type = "L-39A",									--aircraft type
+			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill

@@ -80,7 +80,7 @@
 -.- general guideline for capablity & firepower assignment
 
 -- Fighter:  F-14A, Mig-21, Mig-23,       
--- Attacker: L-39A, F-4E, F-5E, AJS37, Mig-27, Su-17,          
+-- Attacker: L-39C, F-4E, F-5E, AJS37, Mig-27, Su-17,          
 -- Bomber: Tu-22M, B-52H, Su-24
 
 -- strike fighter capability: 1-3
@@ -127,7 +127,7 @@ capability Mig-21Bis: intercept=7, sweep=6, cap=5, escort=5, strike=5, antiship=
 capability Mig-25MLD (o PD??): intercept=10, sweep=7, cap=8, escort=2
 capability Mig-25RBT: Reconnaissance=5, AWACS=5
 capability Mig-19: intercept=2, sweep=1, cap=2, escort=2, strike=1, antiship=1
-capability L-39A: intercept=2, sweep=1, cap=2, escort=1, strike=4, antiship=1
+capability L-39C: intercept=2, sweep=1, cap=2, escort=1, strike=4, antiship=1
 capability Su-24M: strike=8, antiship=6, sead=8
 capability Su-24MR:Reconnaissance=8
 capability Su-17: strike=7, antiship=3, sead=5
@@ -10830,7 +10830,7 @@ db_loadouts = {
 		},
 	},
 
-	["L-39A"] = {--1968 (primo volo) 1971 (entrata in servizio)
+	["L-39C"] = {--1968 (primo volo) 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["Antiship IPW R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
 				minscore = 0.3,
