@@ -77,8 +77,18 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									    --get the maximal range due to radar horizon (profile alt +100 m for safety)
 	log.traceLow("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
 	
-	if threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt and maxrange < threat.range_at_low then
-		threatentry.range = maxrange																		--use maximal range due to radar horizon		
+	if threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt then	
+		log.level = "traceVeryLow"
+		log.traceLow("threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt, threatentry.range: " .. threatentry.range)
+
+		if maxrange < threat.range_at_low then
+			threatentry.range = maxrange																		--use maximal range due to radar horizon		
+			log.traceLow("maxrange < threat.range_at_low, maximal range due to radar horizon is smaller than threat range, use maximal range due to radar horizon - > threatentry.range: " .. threatentry.range)
+		
+		else
+			threatentry.range = threat.range_at_low																		--use maximal range due to radar horizon		
+			log.traceLow("maxrange >= threat.range_at_low, maximal range due to radar horizon is bigger than threat.range_at_low, use threat.range_at_low - > threatentry.range: " .. threatentry.range)
+		end
 
 	elseif maxrange < threat.range then																			--maximal range due to radar horizon is smaller than threat range							
 		threatentry.range = maxrange																		--use maximal range due to radar horizon
@@ -369,7 +379,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			--also try a low variant
 			if instance == 1 and MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack ) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
 				log.traceVeryLow(nameFunction .. "instance: " .. instance .. ", try a low variant, cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
-				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 1, route, instance - 1, profile.hAttack})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high6
+				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 1, route, instance - 1, profile.hAttack})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
 			end
 						
 			--abort unneeded pathfinding after a valid route has been found

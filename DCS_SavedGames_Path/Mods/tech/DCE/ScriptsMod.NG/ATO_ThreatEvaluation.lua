@@ -131,7 +131,7 @@ local function evalutateThreatRilevation(unit_rilevability, side_)
 		ground_threat_rilevability_ground_capacity = 1
 	end
 
-	local a = 1 -- weig.ht factor for ground_threat_rilevability_air_capacity
+	local a = 1 -- weight factor for air_threat_rilevability_air_capacity
 	local b = 3 -- weight factor for ground_threat_rilevability_ground_capacity
 	local ground_threat_rilevability_capacity = ( ground_threat_rilevability_air_capacity * a + ground_threat_rilevability_ground_capacity * b ) / ( a + b ) -- ground_threat_rilevability_capacity = 0 - 1 (max)
 	local rilev_success = ground_threat_rilevability_capacity / 3.33 + math.random() -- with ground_... = 1 -> always success for unit with rilevability >= 0.7
@@ -158,7 +158,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 	local threatentry = {}	
 		
 
-	if unit.type == "Vulcan" then
+	if unit.type == "Vulcan" then --OK
 		threatentry = {
 			type = unit.type,
 			class = "AAA",
@@ -248,7 +248,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 6000, --airgoon 6000-200, DCE: 7000 verifica ME
+			range = 7000, --airgoon 6000-200, DCE: 7000 verifica ME
 			--minrange = 200,
 			night = true,
 			elevation = 3,
@@ -285,7 +285,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 3750, --DCS ENCYCLOPEDIA: no info, airgoon: 4500-200, verifica ME
+			range = 4500, --DCE: 3750, DCS ENCYCLOPEDIA: no info, airgoon: 4500-200, verifica ME
 			--minrange = 200,
 			night = true,
 			elevation = 3,
@@ -355,14 +355,14 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 4200, --DCE: 4650, DCS ENCYCLOPEDIA: 4200, airgoon 4200-800 -verifica ME
+			range = 4650, --DCE: 4650, DCS ENCYCLOPEDIA: 4200, airgoon 4200-800 -verifica ME
 			--minrange = 800,
 			night = false,
 			elevation = 3,
 			min_alt = 30, --DCS ENCYCLOPEDIA: 30, airgoon: 30
-			max_alt = 3500, --DCE: 3700, DCS ENCYCLOPEDIA: 3500, airgoon: 3500
+			max_alt = 3700, --DCE: 3700, DCS ENCYCLOPEDIA: 3500, airgoon: 3500
 			rilevability = SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
-		}
+		}5
 	
 	
 	elseif unit.type == "Strela-10M3" then
@@ -373,7 +373,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
-			range = 5000, --DCE:5200, --DCS ENCYCLOPEDIA: 5000, airgoon: 5000, verifica ME
+			range = 5200, --DCE:5200, --DCS ENCYCLOPEDIA: 5000, airgoon: 5000, verifica ME
 			-- minrange = 200, --airgoon 800
 			night = false,
 			elevation = 3.5,
@@ -396,7 +396,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			night = true,
 			elevation = 3.5,
 			min_alt = 0, --DCS ENCYCLOPEDIA: 10, airgoon 14.5, 0 (cannons)
-			max_alt = 4900, --DCS ENCYCLOPEDIA: 6000, airgoon: 3500
+			max_alt = 6000,  --DCE: 4900,  DCS ENCYCLOPEDIA: 6000, airgoon: 3500
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}
 	
@@ -409,7 +409,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 1,
 			x = unit.x,
 			y = unit.y,
-			range = 6800,  --DCE: 8500--DCS MISSION EDITOR: 30000 (?? tracker o launcher), airgoon: 6800-400 (launcher) --verifica ME (vedi con il launcher)
+			range = 8500,  --DCE: 8500--DCS MISSION EDITOR: 30000 (?? tracker o launcher), airgoon: 6800-400 (launcher) --verifica ME (vedi con il launcher)
 			--minrange = 500, airgoon: 500
 			night = true,
 			elevation = 2.5,
@@ -498,11 +498,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 45000, --DCS ENCYCLOPEDIA:  40000, LAUNCHER DCS ENCYCLOPEDIA:  32000, MISSION EDITOR : 45000, airgoon: 45000-1500
 			--minrange = 2000, --LAUNCHER, airgoon 1500
-			range_at_low = 22000, -- NEW from airgoon
-			max_low_alt = 500,-- boh NEW NEW from airgoon
+			range_at_low = 40000, -- NEW from airgoon: 22000
+			max_low_alt = 200,-- boh NEW NEW from airgoon
 			night = true,
 			elevation = 3,
-			min_alt = 135, -- LAUNCHER DCS ENCYCLOPEDIA:  60, airgoon 25-18000
+			min_alt = 100, -- DCE: 135, LAUNCHER DCS ENCYCLOPEDIA:  60, airgoon 25-18000
 			max_alt = 18000, --LAUNCHER DCS ENCYCLOPEDIA = 13700, airgoon 18000
 			rilevability = MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
 		}	
@@ -515,10 +515,10 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,
-			range = 120000,--DCS ENCYCLOPEDIA:  170000, LAUNCHER DCS ENCYCLOPEDIA:  160000, MISSION EDITOR : 100000, airgoon: 120000
+			range = 100000,--DCS ENCYCLOPEDIA:  170000, LAUNCHER DCS ENCYCLOPEDIA:  160000, MISSION EDITOR : 100000, airgoon: 120000
 			--minrange = 3000,
-			range_at_low = 30000, -- NEW from airgoon
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 90000, 
+			max_low_alt = 200,-- boh
 			night = true,
 			elevation = 6,
 			min_alt = 25, --airgoon 25
@@ -537,8 +537,8 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 15000,--DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA: nothing, MISSION EDITOR : 15000 AIM-120B e C airgoon  AIM-B: 57000, AIM-C: 61000 --verifica ME
 			--minrange = 700
-			range_at_low = 16000, -- NEW from airgoon  120B: 14000, 120C: 16000
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 13000, -- NEW from airgoon  120B: 14000, 120C: 16000
+			max_low_alt = 200,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 4,
 			min_alt = 1,
@@ -547,7 +547,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 
 	
-	elseif unit.type == "SNR_75V" then -- SAM SA-2  S-75 "Guideline"
+	elseif unit.type == "SNR_75V" then -- SAM SA-2  S-75 "Guideline" OK
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -555,13 +555,13 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			SEAD_offset = 2,
 			x = unit.x,
 			y = unit.y,
-			range = 52000,--DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA:  no, MISSION EDITOR : 43000, airgoon 7000-30000 (high alt), 7000-40000 --verifica ME
+			range = 43000,--DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA:  no, MISSION EDITOR : 43000, airgoon 7000-30000 (high alt), 7000-40000 --verifica ME
 			--minrange = 7000,
-			range_at_low = 16000, -- NEW from airgoon: 30000  
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 38000, -- NEW from airgoon: 30000  
+			max_low_alt = 200,--boh
 			night = true,
 			elevation = 3,
-			min_alt = 50, --DCE: 50, airgoon 100
+			min_alt = 100, --DCE: 50, airgoon 100, test: 100
 			max_alt = 25000, --DCE: 25000, airgoon 20000
 			rilevability = LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY,
 		}
@@ -576,8 +576,8 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			x = unit.x,
 			y = unit.y,
 			range = 25000, --DCS ENCYCLOPEDIA:  no, LAUNCHER DCS ENCYCLOPEDIA:  no, MISSION EDITOR : 18000, airgoon: 3500-18000 (high alt), 3500-11000 (low alt)
-			range_at_low = 11000, -- NEW from airgoon: 11000  
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 22000, -- NEW from airgoon: 11000  
+			max_low_alt = 200,-- boh, NEW NEW from airgoon
 			-- minrange = 3500,
 			night = true,
 			elevation = 3,
@@ -615,7 +615,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 14000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 11000 --airgoon: 1500-10300 (high alt), 1500-8500 (low alt)
 			--minarange = 1500, 
-			range_at_low = 11000, -- NEW from airgoon: 11000  
+			 = 11000, -- NEW from airgoon: 11000  
 			max_low_alt = 500,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 5.5,
@@ -635,12 +635,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 35000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 35000, airgoon: 3300-35000 (high alt),  3300-25500 (high alt) --verifica ME launcher
 			--minarange = 1500, 
-			range_at_low = 25500, -- NEW from airgoon: 11000  
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 32000, -- NEW from airgoon: 11000  
+			max_low_alt = 200,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 7,
 			min_alt = 15,
-			max_alt = 22000, --DCE: 25000, airgoon 15-22000
+			max_alt = 25000, --DCE: 25000, airgoon 15-22000
 			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 	
@@ -655,12 +655,12 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 35000, --DCS ENCYCLOPEDIA:  no -- MISSION EDITOR: 35000, airgoon: 3300-35000 (high alt),  3300-25500 (high alt) --verifica ME launcher
 			--minarange = 1500, 
-			range_at_low = 25500, -- NEW from airgoon: 11000  
-			max_low_alt = 500,-- boh, NEW NEW from airgoon
+			range_at_low = 32000, -- NEW from airgoon: 11000  
+			max_low_alt = 200,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 7,
 			min_alt = 15,
-			max_alt = 22000,
+			max_alt = 25000,
 			rilevability =  LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 
@@ -693,6 +693,8 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			y = unit.y,
 			range = 120000, --DCE: 74100, DCS ENCYCLOPEDIA:  47000 (h >= 2000m), 25000 (h <= 25m) -- MISSION EDITOR: 120000, airgoon: 5000-120000 (high alt),  5000-40000 (high alt) --verifica ME launcher
 			--minrange = 5000,
+			range_at_low = 96000,  
+			max_low_alt = 200,-- boh, NEW NEW from airgoon
 			night = true,
 			elevation = 27.5,
 			min_alt = 25, --DCS ENCYCLOPEDIA:  25-27000
