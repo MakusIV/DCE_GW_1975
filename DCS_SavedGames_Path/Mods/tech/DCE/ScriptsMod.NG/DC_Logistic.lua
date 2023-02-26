@@ -39,7 +39,7 @@ versionDCE["DC_Logistic.lua"] = "OB.1.0.0"
 
     calculus:
     aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance. k:(0,1]
-    airbase.efficiency = airbase.integrity * airbase.supply. airbase.efficiency:[0,1]
+    airbase.efficiency = airbase.integrity * airbase.supply.       airbase.efficiency:[0,1]
     airbase.supply = max( supply_plant.integrity * supply_line.integrity ). airbase.supply:[0,1]
     <asset type>.integrity = <asset type>.alive/100.
 
@@ -376,7 +376,7 @@ if executeTest then
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
 
 else
-  
+  -- load supply_tab
   dofile("Active/supply_tab.lua")
 
 end
@@ -434,9 +434,12 @@ local function InitializeAirbaseTab()
 
     local nameFunction = " function InitializeAirbaseTab(): "    
     log.debug("Start " .. nameFunction)
+    local aircraft_type
+    local group_name
+    local airbase_name
 
     for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
-
+            
         for index_value, oob_value in pairs(index) do
             aircraft_type = oob_value.type
             group_name = oob_value.name
@@ -747,7 +750,7 @@ function UpdateOobAir()
     SaveTabOnDisk( "supply_tab", supply_tab )
   
     log.debug("End " .. nameFunction)
-    return result
+    return result, airbase_tab, supply_tab
 end
 
 -- ============================================================					
@@ -774,10 +777,65 @@ function SaveTabOnDisk( table_name, table )
     log.debug("End " .. nameFunction)    
 end
 
+-- return a string report of logistic status
+function reportLogisticStatus(sup_tab, airb_tab)
+    -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "function reportLogisticStatus(supply_tab): "    
+    log.debug("Start " .. nameFunction)
+    local s = "======= LOGISTIC ASSET REPORT ======\n"
 
+    for sidepw, side_val in pairs( sup_tab ) do
+        s = s .. "\n\n\n side: " .. sidepw .. "\n"
 
+        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+            s = s .. "\n\n    supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
 
+            for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
+                s = s .. "\n      supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                local efficiency
 
+                for resupplier_name, _ in pairs(supply_line_values.airbase_supply) do
+
+                    efficiency, info = getAssetEfficiency(resupplier_name, airb_tab)
+
+                    if efficiency then
+                        s = s .. "          resuppliers: " .. resupplier_name .. " - efficiency: " .. efficiency .. ", units:  " .. info .. "\n"
+                    end
+                end
+            end
+        end
+    end
+    s = s .. "\n\n======= END LOGISTIC ASSET REPORT ======\n"
+    log.debug("End " .. nameFunction)
+	return s
+end
+
+-- return the efficiency of the asset_name
+function getAssetEfficiency(asset_name, airb_tab)
+    
+    local nameFunction = "function getAssetEfficiency(asset_name, airb_tab): "    
+    log.debug("End " .. nameFunction)
+    local efficiency, info
+
+	for side, side_val in pairs( airb_tab ) do
+
+		for base, airbase_values in pairs( side_val ) do
+            log.trace(nameFunction .. "airbase: " .. base)
+
+            if base == asset_name then
+                efficiency = airbase_values.efficiency
+
+                for aircraft_type, group_name in pairs(airbase_values.aircraft_types) do
+                    info = group_name .. " (" .. aircraft_type .. ")" 
+                end
+                log.trace(nameFunction .. "asset_name (" .. base .. ") found in airbase_tab, airbase_values.efficiency: " ..  airbase_values.efficiency)
+                break
+            end			
+		end
+    end
+    log.debug("End " .. nameFunction)
+    return efficiency, info
+end
 
 
 -- Test function

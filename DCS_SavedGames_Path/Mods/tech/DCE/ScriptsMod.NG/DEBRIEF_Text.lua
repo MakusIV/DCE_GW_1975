@@ -937,6 +937,7 @@ do
 	debriefing = debriefing .. s .. "\n"
 end
 
+debriefing =  debriefing .. reportLogisticStatus(supply_tab, airbase_tab) .. "\n"
 
 -- Clien scoreboard ---------------------------------------------------------------------------------- 
 do

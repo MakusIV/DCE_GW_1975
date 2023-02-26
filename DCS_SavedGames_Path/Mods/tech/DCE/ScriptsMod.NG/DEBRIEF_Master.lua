@@ -145,8 +145,12 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 --run logistic evalutation, save power_tab and airbase_tab
 log.debug("run logistic evalutation (load DC_Logistic.lua and execute UpdateOobAir() function)")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
-UpdateOobAir()--update <logistics
+local result_update_logistic
+result_update_logistic, airbase_tab, supply_tab = UpdateOobAir()--update <logistics
 
+if not result_update_logistic then
+	log.warn("DC_logistic function UpdateOobAir() failed!!")
+end
 
 --update campaign time.
 local elapsed_time = math.floor(events[#events].t - events[1].t)								--mission runtime in seconds
