@@ -112,7 +112,7 @@ local callsign_west = {
 -- evalutate threat rilevability from recognition capability of a specific side
 local function evalutateThreatRilevation(unit_rilevability, side_)
 	local previous_log_level = log.level
-	log.level ="trace" -- function_log_level
+	log.level =function_log_level
 	local nameFunction = "function evalutateThreatRilevation(unit_rilevability: " .. unit_rilevability .. ", side_: " .. side_ .. "): "    
 	log.debug("Start " .. nameFunction)
 	local ret = false
@@ -1078,9 +1078,6 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 	
 	end
 	
-	
-    
-	log.level = "traceVeryLow"
 	-- Miguel21 modification M28.b : helicoptere see all SAM
 	if threatentry and threatentry.type then 
 		threatentry.hidden = hide
@@ -1305,6 +1302,42 @@ local function AddEWR(unit, side, freq, call)
 			callsign = call,
 			elevation = 4,
 			min_alt = 0,
+			max_alt = 20000,
+		}
+		table.insert(ewr[side], entry)
+		]]
+		GCI.EWR[side][unit.name] = true
+
+	elseif unit.type == "PERRY" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 100000,
+			frequency = freq,
+			callsign = call,
+			elevation = 20,
+			min_alt = 10,
+			max_alt = 25000,
+		}
+		table.insert(ewr[side], entry)
+		]]
+		GCI.EWR[side][unit.name] = true
+
+	elseif unit.type == "ALBATROS" then										--Participe � la chaine de detection
+		--[[
+			entry = {
+			type = unit.type,
+			class = "EWR",
+			x = unit.x,
+			y = unit.y,
+			range = 35000,
+			frequency = freq,
+			callsign = call,
+			elevation = 20,
+			min_alt = 25,
 			max_alt = 20000,
 		}
 		table.insert(ewr[side], entry)

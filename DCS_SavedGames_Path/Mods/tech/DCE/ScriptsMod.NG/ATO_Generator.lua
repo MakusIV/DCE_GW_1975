@@ -1,5 +1,18 @@
 --To create the Air Tasking Order
 --Initiated by Main_NextMission.lua
+-------------------------------------------------------------------------------------------------------
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["ATO_Generator.lua"] = "OB.1.0.0"
+
+-------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code 
+-- Old_Boy rev. OB.0.0.1: implements code for Logistic 
 ------------------------------------------------------------------------------------------------------- 
 -- Miguel Fichier Revision M38.e
 ------------------------------------------------------------------------------------------------------- 
@@ -23,46 +36,120 @@
 														-- Miguel21 modification M10 : un maximum d'avion sur Porte Aeronef
 -- Miguel21 modification M06 : helicoptere playable
 
-if not versionDCE then versionDCE = {} end
-versionDCE["ATO_Generator.lua"] = "1.15.52"
+--[[
+draft[n] =
+local draft_sorties_entry = {
+								name = unit[n].name,
+								playable = unit[n].player,
+								type = unit[n].type,
+								helicopter = unit[n].helicopter,
+								number = aircraft_assign,
+								flights = flights_requested,
+								country = unit[n].country,
+								livery = unit[n].livery,
+								sidenumber = unit[n].sidenumber,
+								liveryModex = unit[n].liveryModex,
+								base = unit[n].base,
+								airdromeId = db_airbases[unit[n].base].airdromeId,
+								parking_id = unit[n].parking_id,
+								skill = unit[n].skill,
+								task = task,
+								loadout = unit_loadouts[l],
+								target = deepcopy(target),
+								target_name = target_name,
+								route = route,
+								tot_from = tot_from,
+								tot_to = tot_to,
+								support = {
+									["Escort"] = {},
+									["SEAD"] = {},
+									["Escort Jammer"] = {},
+									["Flare Illumination"] = {},
+									["Laser Illumination"] = {},
+									},
+								multipack = multipack,
+								threatsGround = route.threats.ground_total,
+								threatsAir = route.threats.air_total,
+								id = "id"..#draft_sorties[side]+1,
+								rejected = {},
 
--- =====================  Marco implementation ==================================
+]]
+
+
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
--- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
--- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
-log.level = "warn" --LOGGING_LEVEL -- watch: info generate a very big log
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+local function_log_level = "warn" --log_level
+log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_Generator." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.debug("Start")
--- =====================  End Marco implementation ==================================
+
+local MIN_FOG_VISIBILITY = 5000											-- min fog visibility for any task (default: 5000m)
+local MIN_CLOUD_EIGHT_ABOVE_AIRBASE = 333								-- min eight above airbase for execute any task (default: 333m, 1000 ft)
+local UNIT_SERVICEABILITY = 0.8											-- serviceability percentage of unit.roster.ready 
+local MIN_PERCENTAGE_FOR_ESCORT = 0.75									-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
+local MAX_AIRCRAFT_FOR_INTERCEPT = 2									-- max number of aircraft for an intercept mission 
+local MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2 								-- max number of aircraft for an reconnaisance mission 
+local MAX_AIRCRAFT_FOR_STRIKE = 4 										-- max number of aircraft for an strike mission 
+local MAX_AIRCRAFT_FOR_CAP = 4 											-- max number of aircraft for an cap mission 
+local MAX_AIRCRAFT_FOR_ESCORT = 4		 								-- max number of aircraft for an escort mission 
+local MAX_AIRCRAFT_FOR_SWEEP = 4		 								-- max number of aircraft for an sweep mission 
+local MAX_AIRCRAFT_FOR_OTHER = 3		 								-- max number of aircraft for other mission 
+local MIN_AIRCRAFT_FOR_OTHER = 1 										-- min number of aircraft for other mission 
+local MAX_AIRCRAFT_FOR_BOMBER = 1										-- max number of aircraft for bomber 
+local BOMBERS_RECO = {"S-3B",  "F-117A", "B-1B", "B-52H", "Tu-22M3", "Tu-95MS", "Tu-142", "Tu-160", "MiG-25RBT"}
+
+local function isBomberOrRecoType(bomber_type)
+
+	for n = 1, #BOMBERS_RECO do
+		
+		if bomber_type == BOMBERS_RECO[n] then 
+			return true
+		end		
+	end
+	return false
+end
 
 
+
+
+local function round(num)
+	local dec = 2
+  	local mult = 10^(dec or 0)
+  	return math.floor(num * mult + 0.5) / mult
+end
+
+-- utilizzata anche da ATO_PlayerAssign
+function TrackPlayability(player_unit, criterium)																				--function that tracks whether a playability criterium has been met
+	
+	if player_unit == true then																									--unit in question is playable by player
+		playability_criterium[criterium] = true																					--set playability criterium to be met
+	end
+end
+
+-- check oob_air units without task
 for side,unit in pairs(oob_air) do																								--iterate through all sides	
--- db_loadouts = {
-	-- ["AV8BNA"] = {
-		-- ["Anti-ship Strike"] = {
 
 	for n = 1, #unit do			
+		
 		for task,task_bool in pairs(unit[n].tasks) do			
+			
 			if task_bool then			
+				
 				if db_loadouts[unit[n].type] then					
-					if db_loadouts[unit[n].type][task] then						
-					else
-						print(unit[n].type.." "..task.." not found in db_loadouts")
+					
+					if not db_loadouts[unit[n].type][task] then						
+						log.warn(unit[n].type.." "..task.." not found in db_loadouts")
 					end
+
 				else
-					print(unit[n].type.." not found in db_loadouts")
+					log.warn(unit[n].type.." not found in db_loadouts")
 				end
 			end
 		end
 	end
 end
 
-function round(num)
-local dec = 2
-  local mult = 10^(dec or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
 
 --status report counters
 local status_counter_sorties = 0
@@ -72,11 +159,7 @@ local status_counter_ATO = 0
 
 --to track what caused lack of playable sortie for the player
 playability_criterium = {}
-function TrackPlayability(player_unit, criterium)																				--function that tracks whether a playability criterium has been met
-	if player_unit == true then																									--unit in question is playable by player
-		playability_criterium[criterium] = true																					--set playability criterium to be met
-	end
-end
+
 
 --table to hold availability of aircraft
 if camp.aircraft_availability == nil then
@@ -91,6 +174,7 @@ draft_sorties = {
 }
 
 multiPlaneSet = {}
+
 for k=1, Multi.NbGroup do
 	if not multiPlaneSet[Multi.Group[k].PlaneType] then multiPlaneSet[Multi.Group[k].PlaneType] = {} end	
 	-- multiPlaneSet[Multi.Group[k].PlaneType][Multi.Group[k].task] = true
@@ -102,212 +186,294 @@ end
 
 -- _affiche(multiPlaneSet, "ATO_G multiPlaneSet")
 -- _affiche(Multi, "ATO_G Multi")
---creat draft sorties
+--create draft sorties
 for side,unit in pairs(oob_air) do																								--iterate through all sides
 	
-	--determine enemy side
-	local enemy																													--determine enemy side (opposite of unit side)
+	--determine enemy_side side
+	local enemy_side																													--determine enemy_side side (opposite of unit side)
 	if side == "blue" then
-		enemy = "red"
+		enemy_side = "red"
 	else
-		enemy = "blue"
+		enemy_side = "blue"
 	end
 
 	for n = 1, #unit do																											--iterate through all units
+		
 		if unit[n].inactive ~= true then																						--if unit is active
 			TrackPlayability(unit[n].player, "active_unit")																		--track playabilty criterium has been met
+			log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. " is active")
 
+			if unit[n].player then
+				log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. " is playable -> insert in trackPlayability tab")
+			end
+
+			
 			if db_airbases[unit[n].base] and db_airbases[unit[n].base].inactive ~= true and db_airbases[unit[n].base].x and db_airbases[unit[n].base].y then	--base exists and is active and has a position value (carrier that exists)
 				TrackPlayability(unit[n].player, "base")																		--track playabilty criterium has been met
+				log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. " active base exists: " .. unit[n].base)
 				
 				if unit[n].roster.ready > 0 then																				--has ready aircraft
 					TrackPlayability(unit[n].player, "ready_aircraft")															--track playabilty criterium has been met
+					log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. " has ready aircraft: " .. unit[n].roster.ready)
 					
 					if aircraft_availability[unit[n].name] == nil then															--unit has no aircraft availability entry yet
 						aircraft_availability[unit[n].name] = {}																--make an aircraft availability entry for this unit
 					end
 					
 					if aircraft_availability[unit[n].name].unavailable == nil then												--unit has no unavailable table yet
+
 						if unit[n].unavailable then																				--there are preset unavailabilities in oob_air
 							aircraft_availability[unit[n].name].unavailable = unit[n].unavailable								--use this as initial unavailability
+						
 						else
 							aircraft_availability[unit[n].name].unavailable = {}												--create an empty unavailable table
 						end
+						log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. " unit has no unavailable table yet, create new empy table or take the initial defined unavailability tabel: \n" .. inspect(aircraft_availability[unit[n].name].unavailable))
 					end
 					
 					--serviceable aircraft
 					local aircraft_serviceable = 0																				--serviceable aircraft of unit
-					local serviceability = 0.8																					--defaults unit serviceability rating
+					local serviceability = UNIT_SERVICEABILITY																	-- defaults unit serviceability rating (0.8)
+
 					if unit[n].serviceability then																				--if serviceability for unit is defined
 						serviceability = unit[n].serviceability																	--use it instead
 					end
+					log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. ", serviceability: " .. serviceability)
+					
+
 					for s = 1, unit[n].roster.ready do																			--iterate through ready aircraft
-						if math.random(1, 100) <= serviceability * 100 then														--default 80% chance that it is mission ready
+
+						if math.random(1, 100) <= serviceability * 100 then														--default (serviceability)% chance that it is mission ready
 							aircraft_serviceable = aircraft_serviceable + 1														--sum serviceable aircraft
 						end
 					end
+					log.traceLow("unit[" .. n .. "]: " .. unit[n].name .. ", computed aircraft_serviceable: " .. aircraft_serviceable)
+
 					aircraft_availability[unit[n].name].ready = unit[n].roster.ready											--store ready aircraft un availability table
 					aircraft_availability[unit[n].name].serviceable = aircraft_serviceable										--store serviceable aircraft in availability table
+					
 					
 					--unavailable aircraft
 					local current_time = (camp.day - 1) * 86400 + camp.time														--current absolute campaign time
 					local u_entry = 0
+					
+
+					log.traceLow("Removes from aircraft_availability tab, the unavailable units that exceeds the number of roster.ready units or if the current time has exceeded the period of unavailability ")
 					for u = #aircraft_availability[unit[n].name].unavailable, 1, -1 do											--iterate backwards through unavailable aircraft from this unit
 						u_entry = u_entry + 1
-						if u_entry <= unit[n].roster.ready then																	--for each unavailable entry that is within the amounty of ready aircraft of unit
-							if current_time > aircraft_availability[unit[n].name].unavailable[u] then							--check absolute campaign time is past unvailable time for this entry
+						
+						if u_entry <= unit[n].roster.ready then	--(considera solo il numero di unità ready) 					--for each unavailable entry that is within the amounty of ready aircraft of unit
+														
+							if current_time > aircraft_availability[unit[n].name].unavailable[u] then --(elimina le #unit unavalaible superiore alle ready)	--check absolute campaign time is past unvailable time for this entry
+								log.traceLow("u_entry(" .. u_entry .. ") <= unit[n].roster.ready(" .. unit[n].name .. ": " .. unit[n].roster.ready .. "),  and current time has exceeded the period of unavailability for this unit - > remove unit from aircraft_availability table")
 								table.remove(aircraft_availability[unit[n].name].unavailable, u)								--remove this entry
 							end
+						
 						else																									--for each unavailable entry that is beyond the amount of ready aircraft of unit (due to losses in last mission)
+							log.traceLow("u_entry(" .. u_entry .. ") <= unit[n].roster.ready(" .. unit[n].name .. ": " .. unit[n].roster.ready .. "), and unavailable entry is beyond the amount of ready aircraft of unit (due to losses in last mission) - > remove unit from aircraft_availability table")
 							table.remove(aircraft_availability[unit[n].name].unavailable, u)									--remove this entry
 						end
 					end
 
 					local aircraft_available = unit[n].roster.ready - #aircraft_availability[unit[n].name].unavailable			--number of available aircraft
+					log.traceLow("aircraft_available: " .. aircraft_available)
+
 					if aircraft_serviceable < aircraft_available then
 						aircraft_available = aircraft_serviceable
 					end
+
 					aircraft_availability[unit[n].name].available = aircraft_available											--store available aircraft in availability table
 					aircraft_availability[unit[n].name].assigned = 0
 					aircraft_availability[unit[n].name].unassigned = aircraft_available											--store unassigned aircraft in availability table
+					log.traceLow("aircraft_available: " .. aircraft_available)
 
-					
 					if aircraft_available > 0 then																				--unit has available aircraft
-						TrackPlayability(unit[n].player, "available_aircraft")													--track playabilty criterium has been met
+						TrackPlayability(unit[n].player, "available_aircraft")													--track playabilty criterium has been met						
 						
 						for task,task_bool in pairs(unit[n].tasks) do																		--iterate through all tasks of unit		
+
 							if task_bool and task ~= "SEAD" and task ~= "Escort" and task ~= "Escort Jammer" and task ~= "Flare Illumination" and task ~= "Laser Illumination" then		--task is true and is no support task
+								log.traceLow("exist task but no support task(SEAD, Escort, Escort Jammer, Flare Illumination, Laser Illumination), task: " .. task)
 								
 								--get possible loadouts
 								local unit_loadouts = {}																					--table to hold all loadouts for this aircraft type and task
+								
 								if db_loadouts[unit[n].type][task] then																		--db_loadouts table has loadouts for this task
+									log.traceLow("db_loadouts table has loadouts for this task")
+									
 									for loadout_name, ltable in pairs(db_loadouts[unit[n].type][task]) do									--iterate through all loadouts for the aircraft type and task
+										
 										if ltable.country == nil or ltable.country == unit[n].country then									--loadout is country unspecific or applies to unit country
 											ltable.name = loadout_name																		--store loadout name
-											-- table.insert(unit_loadouts, ltable)																--add loadout to local table
+											-- table.insert(unit_loadouts, ltable)															--add loadout to local table
 											unit_loadouts[#unit_loadouts+1] = ltable
+											log.traceLow("loadout is country unspecific or applies to unit country, loadout_name: " .. loadout_name .. ", add loadout to unit_loadouts table")
 										end
 									end
 								end
-								
-								for l = 1, #unit_loadouts do																				--iterate through all available loadouts				
-									
+																
+								for l = 1, #unit_loadouts do																				--iterate through all available loadouts													
 									--get possible Time on Target
 									local tot_from = 0																						--earliest Time on Target for this loadout
 									local tot_to = 0																						--latest Time on target for this loadout
-									if unit_loadouts[l].day and unit_loadouts[l].night then													--loadout is day and night capable
+
+									if unit_loadouts[l].day and unit_loadouts[l].night then													--loadout is day and night capable										
 										tot_from = 0																						--from mission start
 										tot_to = camp.mission_duration																		--to mission end
+										log.traceLow("loadout is day and night capable, total time to(camp.mission_duration): " .. tot_to)
+
 										if task == "Intercept" then																			--for interceptors, tot_to is not limitted by mission duration
 											tot_to = 999999
+											log.traceLow("for interceptors, tot_to is not limitted by mission duration, total time to: " .. tot_to)
 										end
+
 									elseif unit_loadouts[l].day then																		--loadout is day capable
+										
 										if daytime == "night-day" then
 											tot_from = camp.dawn - camp.time																--from dawn
 											tot_to = camp.mission_duration																	--to mission end
+											log.traceLow("daytime == night-day, loadout is only day capable, total time to(camp.mission_duration): " .. tot_to)
+
 											if task == "Intercept" then																		--for interceptors, tot_to is not limitted by mission duration
 												tot_to = camp.dusk - camp.time
+												log.traceLow("daytime == night-day, loadout is only day capable, Intercept task, total time to(camp.mission_duration): " .. tot_to)
 											end
+
 										elseif daytime == "day" then
 											tot_from = 0																					--from missiom start
 											tot_to = camp.mission_duration																	--to mission end
+											log.traceLow("daytime == day, loadout is day capable, total time to(camp.mission_duration): " .. tot_to)
+
 											if task == "Intercept" then																		--for interceptors, tot_to is not limitted by mission duration
 												tot_to = camp.dusk - camp.time
+												log.traceLow("daytime == day, loadout is day capable, Intercept task, total time to(camp.mission_duration): " .. tot_to)
 											end
+
 										elseif daytime == "day-night" then
 											tot_from = 0																					--from mission start
 											tot_to = camp.dusk - camp.time																	--to dusk
+											log.traceLow("daytime == day-night, loadout is only day capable, total time to(camp.mission_duration): " .. tot_to)
 										end
+
 									elseif unit_loadouts[l].night then																		--loadout is night capable
+
 										if daytime == "day-night" then
 											tot_from = camp.dusk - camp.time																--from dusk
 											tot_to = camp.mission_duration																	--to mission end
+											log.traceLow("daytime == day-night, loadout is night capable, total time to(camp.mission_duration): " .. tot_to)
+
 											if task == "Intercept" then																		--for interceptors, tot_to is not limitted by mission duration
 												tot_to = camp.dawn - camp.time
+												log.traceLow("daytime == day-night, loadout is night capable, Intercept task, total time to(camp.mission_duration): " .. tot_to)
 											end
+
 										elseif daytime == "night" then
 											tot_from = 0																					--from mission start
 											tot_to = camp.mission_duration																	--to mission end
+											log.traceLow("daytime == night, loadout is night capable, total time to(camp.mission_duration): " .. tot_to)
+
 											if task == "Intercept" then																		--for interceptors, tot_to is not limitted by mission duration
 												tot_to = camp.dawn - camp.time
+												log.traceLow("daytime == night, loadout is night capable, Intercept task, total time to(camp.mission_duration): " .. tot_to)												
 											end
+
 										elseif daytime == "night-day" then
 											tot_from = 0																					--from mission start
 											tot_to = camp.dawn - camp.time																	--to dawn
+											log.traceLow("daytime == night-day, loadout is night capable, total time to(camp.mission_duration): " .. tot_to)
 										end
-									end
+									end									
 									
 									if tot_to < 0 then
-										tot_to = tot_to + 86400
+										tot_to = tot_to + 86400 -- + 24h (se tot_from < 0 -> nuovo giorno!?)
 									end
+
 									if tot_from < 0 then
-										tot_from = tot_from + 86400
+										tot_from = tot_from + 86400 -- + 24h (se tot_from < 0 -> nuovo giorno!?)
 									end
 									
 									if tot_from ~= 0 or tot_to ~= 0 then																	--loadout has an eligible time on target
-										
+										log.traceLow("tot_from: " .. tot_from ..", tot_to: " .. tot_to)
+
 										if tot_from == 0 then																				--player is only allowed to start at mission start
 											TrackPlayability(unit[n].player, "tot")															--track playabilty criterium has been met
-										end
-										
-										
+										end																				
 										i_timmer01 = 0
-										for target_side_name, target_side in pairs(targetlist) do											--iterate through sides in targetlist				
-											i_timmer01 = i_timmer01 +1
+										log.traceLow("iterate through in targetlist")
+
+										for target_side_name, target_side in pairs(targetlist) do											--iterate through sides in targetlist															
+											i_timmer01 = i_timmer01 + 1
+											
 											if side == target_side_name then --if the target is hostile
-												
+												log.traceLow("target is hostile (side == target_side_name = " .. side .. ")")
 												
 												-- debug code
-												for target_name, target in pairs(target_side) do
-													local attr = "attr: "
-													local xcoord, ycoord
+												if isLogNoUpper(log_level,"debug") then
+												
+													for target_name, target in pairs(target_side) do
+														local attr = "attr: "
+														local xcoord, ycoord
 
-													if target.slaved then
-														attr = attr .. "slaved"	
-													end													
+														if target.slaved then
+															attr = attr .. "slaved"	
+														end													
 
-													if target.x then 
-														xcoord = tostring(target.x )
-													else
-														xcoord = "not x"
-													end
+														if target.x then 
+															xcoord = tostring(target.x )
+														else
+															xcoord = "not x"
+														end
 
-													if target.y then 
-														ycoord = tostring(target.y )
-													else
-														ycoord = "not y"
-													end		
-													
-													if ycoord == "not y" or xcoord == "not x" then											
-														log.info("target: " .. target_name .. ", task: " .. target.task .. ", side: " .. side .. " - coord: ".. xcoord .. ", " .. ycoord)																
-														log.info("attributes: " .. attr)																
+														if target.y then 
+															ycoord = tostring(target.y )
+														else
+															ycoord = "not y"
+														end		
+														
+														if ycoord == "not y" or xcoord == "not x" then											
+															log.debug("target: " .. target_name .. ", task: " .. target.task .. ", side: " .. side .. " - coord: ".. xcoord .. ", " .. ycoord)																
+															log.debug("attributes: " .. attr)																
+														end
 													end
 												end
 												-- end debug code
 
 												for target_name, target in pairs(target_side) do
-													log.info("target: " .. target_name .. ", side: " .. side)													
+													log.traceVeryLow("target: " .. target_name .. ", side: " .. side)													
 													
 													if target.x ~= nil and target.y ~= nil then
-														log.info("target coord: ".. target.x .. ", " .. target.y)													
+														log.traceVeryLow("target coord: ".. target.x .. ", " .. target.y)													
 													end
 
 													if target.inactive ~= true and target.ATO then											--if target is active and should be added to ATO
+														log.traceLow("target is active and signed for added to ATO")
+
 														if target.task == task then															--if target is valid for aircaft-loadout
+															log.traceLow("target is valid for aircaft-loadout, task: " .. task)
+
 															
 															MultiPlayerOveRide = false
+
 															if Multi.Target and Multi.Target[side] == target_name  then
 																MultiPlayerOveRide = true
+																log.traceVeryLow("Multi.Target[side] == target_name (" .. target_name .. ")")
 															end
 															
 															--check target/loadout attributes
+															log.traceVeryLow("check target/loadout attributes")
 															local loadout_eligible = true																					--boolean if loadout matches any target attributes (default true, because target might have no attributes)
 															
 															if target.attributes[1] then																					--target has attributes
 																loadout_eligible = false
+																log.traceVeryLow("one target attibutes exist: " .. target.attributes[1])
+																
 																for target_attribute_number, target_attribute in ipairs(target.attributes) do								--Iterate through target attributes
+																	log.traceVeryLow("target attibutes(" .. target_attribute_number .. "): " .. target_attribute)
+																	
 																	for loadout_attribute_number, loadout_attribute in ipairs(unit_loadouts[l].attributes) do				--Iterate through loadout attributes
+																																				
 																		if target_attribute == loadout_attribute then														--if match is found
+																			log.traceVeryLow("target_attribute(" .. target_attribute .. ") == unit_loadouts[" .. l .. "].loadout_attribute, this loadout is eligible")
 																			loadout_eligible = true																			--set variable true
 																			break																							--break the loadout attributes iteration
 																		end
@@ -316,45 +482,72 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 															end
 															
 															if loadout_eligible then	
-															--continue if loadout is eligible
+																--continue if loadout is eligible
 																if (task == "Intercept" and target.base == unit[n].base) or (task == "Transport" and target.base == unit[n].base) or (task == "Nothing" and target.base == unit[n].base) or (task ~= "Intercept" and task ~= "Transport" and task ~= "Nothing") then	--intercept and transport missions are only assigned to units of a certain base as per targetlist	
-																	TrackPlayability(unit[n].player, "target")																							--track playabilty criterium has been met
-																
+																	TrackPlayability(unit[n].player, "target")																							--track playabilty criterium has been met																	
+																	log.traceVeryLow("task is intercept or transport and target.base == unit[" .. n .. "].base: " .. (target.base or "traget.base == nil and task ~= Intercept and task ~= Transport and task ~= Nothing (intercept and transport missions are only assigned to units of a certain base as per targetlist)"))
+
 																	if target.firepower.min <= aircraft_available * unit_loadouts[l].firepower or MultiPlayerOveRide then				--enough aircraft are available to satisfy minimum firepower requirement of target	
 																		TrackPlayability(unit[n].player, "target_firepower")																			--track playabilty criterium has been met
+																		log.traceVeryLow("target.firepower.min(" .. target.firepower.min .. ") <= aircraft_available(" .. aircraft_available .. ") * unit_loadouts[" .. l .. "].firepower(" .. unit_loadouts[l].firepower .. ") or MultiPlayerOveRide(" .. tostring(MultiPlayerOveRide) .. ") is true")
+
 																	
 																		--check weather
 																		local weather_eligible = true
-																		
+																		log.traceLow("check weather")
+
 																		if mission.weather["clouds"]["density"] > 8 then																				--overcast clouds
+
 																			local cloud_base = mission.weather["clouds"]["base"]
 																			local cloud_top = mission.weather["clouds"]["base"] + mission.weather["clouds"]["thickness"]
+																			log.traceVeryLow("overcast clouds, cloud_base: " .. cloud_base .. ", cloud_top: " .. cloud_top)
 																			
-																			if db_airbases[unit[n].base].elevation + 333 > cloud_base then																--cloud base is less than 1000 ft above airbase elevation
+																			if db_airbases[unit[n].base].elevation + MIN_CLOUD_EIGHT_ABOVE_AIRBASE > cloud_base then																--cloud base is less than 1000 ft above airbase elevation
+																				log.traceVeryLow("cloud base is less than " ..  MIN_CLOUD_EIGHT_ABOVE_AIRBASE .. "m above airbase elevation (" .. db_airbases[unit[n].base].elevation .. ")")
 																			
 																				if unit_loadouts[l].adverseWeather == false then																		--loadout is not adverse weather capable
+																					log.traceVeryLow("loadout isn't adverse weather capable -> loaout isn't weather eligible for this task: " .. task)
 																					weather_eligible = false																							--not eligible for this weather
+
+																				else
+																					log.traceVeryLow("loadout is adverse weather capable -> loaout is weather eligible for this task: " .. task)
 																				end
 																			
-																			else
-																			
+																			else																			
 																				if unit_loadouts[l].hCruise and unit_loadouts[l].hCruise > cloud_base and unit_loadouts[l].hCruise < cloud_top then			--cruise alt is in the clouds
+																					log.traceVeryLow("cruise alt for this loadout is in the clouds (" .. unit_loadouts[l].hCruise .. ") ")
 																			
 																					if unit_loadouts[l].adverseWeather == false then																	--loadout is not adverse weather capable
+																						log.traceVeryLow("loadout isn't adverse weather capable -> loaout isn't weather eligible for this task: " .. task)
 																						weather_eligible = false																						--not eligible for this weather
+
+																					else
+																						log.traceVeryLow("loadout is adverse weather capable -> loaout is weather eligible for this task: " .. task)
 																					end
+															
 																			
 																				elseif unit_loadouts[l].hAttack and unit_loadouts[l].hAttack > cloud_base and unit_loadouts[l].hAttack < cloud_top then		--attack alt is in the clouds
 																					
 																					if unit_loadouts[l].adverseWeather == false then																	--loadout is not adverse weather capable
+																						log.traceVeryLow("loadout isn't adverse weather capable -> loaout isn't weather eligible for this task: " .. task)
 																						weather_eligible = false																						--not eligible for this weather
+
+																					else
+																						log.traceVeryLow("loadout is adverse weather capable -> loaout is weather eligible for this task: " .. task)
 																					end
 																				end
 																				
 																				if task == "Strike" or task == "Anti-ship Strike" or task == "Reconnaissance" then										--extra requirement for A-G tasks
+																					log.traceLow("extra requirement for A-G tasks in weather cpable analisys")		
+
 																					if unit_loadouts[l].hAttack > cloud_base then																		--attack alt is above cloud base
+																						log.traceLow("attack alt(" .. unit_loadouts[l].hAttack .. ") is above cloud base(" .. cloud_base .. ")")
+																						
 																						if unit_loadouts[l].adverseWeather == false then																--loadout is not adverse weather capable
+																							log.traceLow("loadout isn't adverse weather capable -> loaout isn't weather eligible for this task: " .. task)
 																							weather_eligible = false																					--not eligible for this weather
+																						else
+																							log.traceLow("loadout is adverse weather capable -> loaout is weather eligible for this task: " .. task)
 																						end
 																					end
 																				end	
@@ -362,20 +555,27 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																		end
 																		
 																		if mission.weather["enable_fog"] == true then															--fog
+																			log.traceLow("mission.weather[enable_fog] == true")
 																			
 																			if db_airbases[unit[n].base].elevation < mission.weather["fog"]["thickness"] then					--base elevation in fog
+																				log.traceLow("base elevation(" .. db_airbases[unit[n].base].elevation .. ") in fog(tickness: " .. mission.weather["fog"]["thickness"] .. ")")
 																				
-																				if mission.weather["fog"]["visibility"] < 5000 then												--less than 5000m visibility
+																				if mission.weather["fog"]["visibility"] < MIN_FOG_VISIBILITY then												--less than 5000m visibility
+																					log.traceLow("visibiliy (" .. mission.weather["fog"]["visibility"] < MIN_FOG_VISIBILITY .. ") less MIN_FOG_VISIBILIY(".. MIN_FOG_VISIBILITY .. ")")
 																					
 																					if unit_loadouts[l].adverseWeather == false then											--loadout is not adverse weather capable
-																						weather_eligible = false																--not eligible for this weather
-																					end
+																						log.traceLow("loadout isn't adverse weather capable -> loaout isn't weather eligible for this task: " .. task)
+																						weather_eligible = false																					--not eligible for this weather
+																					else
+																						log.traceLow("loadout is adverse weather capable -> loaout is weather eligible for this task: " .. task)
+																					end																
 																				end
 																			end
 																		end
 																		
 																		if weather_eligible then																				--continue of this loadout is eligible for weather
 																			TrackPlayability(unit[n].player, "weather")															--track playabilty criterium has been met
+																			log.traceLow("this loadout is weather elegible for this task: " .. task)
 																			
 																			--get airbase position
 																			local airbasePoint = {																				--get the x-y coordinates of the airbase where the unit is located
@@ -385,14 +585,24 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																				BaseAirStart = db_airbases[unit[n].base].BaseAirStart
 																			}
 																			
+
+																			if airbasePoint.x == nil then
+																				log.warn("ANOMALY airbasePoint.x == nil, was a carrier!?")																			
+																			end
+
+																			if airbasePoint.y == nil then
+																				log.warn("ANOMALY airbasePoint.y == nil, was a carrier!?")																																							
+																			end
+
 																			local multipack = 1
 																			
 																			if target.firepower.packmax and unit_loadouts[l].MaxAttackOffset then								--target has a requirement for multiple packages and loadout is multipack capable (defined maximum attack offset)
 																				multipack = target.firepower.packmax															--create draft sorties for this target for the requested amount of packages
+																				log.traceLow("target has a requirement for multiple packages and loadout is multipack capable (defined maximum attack offset), start to create " .. multipack .. " sorties request for this package")
 																			end
 																			
 																			for r = 1, multipack do																				--repeat draft sortie generation for the requirement amount of packages (may create different routes each time)
-																				
+																				log.traceLow("start to generate #: " .. r .. " sorties for this package")
 																				--determine route variants depending on daytime
 																				local variant
 																			
@@ -432,62 +642,77 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							},
 																							['lenght'] = target.radius * 2,																--interception task radius *2 because below it is compared with range *2
 																						}
+																						log.traceLow("task is Intercept, define initial route property: first route point is airbase: (" .. (airbasePoint.x or "nil") .. ", " .. (airbasePoint.y or "nil") .. "), mission lenght(target.radius * 2): " .. target.radius * 2)
 																					
-																					else		
+																					else --all other tasks than intercept																								
 																						-- QUI BUG target.y nil
-																						log.info("r: " .. r .. ", variant: " .. variant)						
-																						log.info("base: " .. unit[n].base .. "airbasePoint: " .. airbasePoint.x .. ", " .. airbasePoint.x)																--all other tasks than intercept
-																						log.info("target: " .. target_name)
+																						log.traceLow("task: " .. task)
+																						log.traceLow("r: " .. r .. ", variant: " .. variant  .. ", base: " .. unit[n].base .. "airbasePoint: " .. (airbasePoint.x or "nil") .. ", " .. (airbasePoint.y or "nil") .. ", target: " .. target_name)
 
 																						if target.x ~= nil and target.y ~= nil then
 																							log.info("target coord: ".. target.x .. ", " .. target.y)													
 																						end
 
 																						local ToTarget = GetDistance(airbasePoint, target)											--direct distance to target
+																						log.traceLow("direct distance to target: " .. ToTarget)
 																						
 																						
 																						if ToTarget <= unit_loadouts[l].range and (unit_loadouts[l].minrange == nil or ToTarget * 1.5 > unit_loadouts[l].minrange) then	--basic feasibility check of range before performance intensive route calculations are done
+																							log.traceLow("target is in range")
+																							log.traceLow("ToTarget(" .. ToTarget .. ") <= unit_loadouts[l].range(" .. unit_loadouts[l].range .. ") and (unit_loadouts[l].minrange(" .. (unit_loadouts[l].minrange or "nil") .. ") == nil or ToTarget * 1.5 > unit_loadouts[l].minrange))")
+
 																							if variant == 1 or variant == 4 then
-																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy, task, "day", r, multipack, unit[n].helicopter)			--get the best route to this target at day-- Miguel21 modification M06 : helicoptere playable(ajout variable helico pour generer une route )
+																								log.traceLow("daytime is day or day-night, compute route: getRoute(airbasePoint(" .. (airbasePoint.x or "nil") .. ", " .. (airbasePoint.y or "nil") .. "), target(" .. target_name .. "), unit_loadouts[" .. l .. "], enemy_side(" .. enemy_side .. "), task(" .. task .. "), day, r(" .. r .. "), multipack(" .. multipack .. "), unit[n].helicopter(" .. tostring(unit[n].helicopter) .. "))")
+																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy_side, task, "day", r, multipack, unit[n].helicopter)			--get the best route to this target at day-- Miguel21 modification M06 : helicoptere playable(ajout variable helico pour generer une route )
+
 																							elseif variant == 2 or variant == 3 then																
-																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy, task, "night", r, multipack, unit[n].helicopter)		--get the best route to this target at night-- Miguel21 modification M06 : helicoptere playable
+																								log.traceLow("daytime is day or day-night, compute route: getRoute(airbasePoint(" .. (airbasePoint.x or "nil") .. ", " .. (airbasePoint.y or "nil") .. "), target(" .. target_name .. "), unit_loadouts[" .. l .. "], enemy_side(" .. enemy_side .. "), task(" .. task .. "), night, r(" .. r .. "), multipack(" .. multipack .. "), unit[n].helicopter(" .. tostring(unit[n].helicopter) .. "))")
+																								route = GetRoute(airbasePoint, target, unit_loadouts[l], enemy_side, task, "night", r, multipack, unit[n].helicopter)		--get the best route to this target at night-- Miguel21 modification M06 : helicoptere playable
 																							end
 																						end																						
 																					end
 																					
-																					if target.x ~= nil and target.y ~= nil then
-																						log.info("target coord: ".. target.x .. ", " .. target.y)													
-																					end
-																					
+																					if (target.x == nil or target.y == nil) then
+																						log.warn("a target coord() is nil")
+																					end																					
+																					log.traceLow("target coord: ".. (target.x or "nil") .. ", " .. (target.y or "nil"))																																																							
+
 																					if route.lenght and route.lenght <= unit_loadouts[l].range * 2 and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * 2) then		--if sortie route lenght is within range of aircraft-loadout
 																						TrackPlayability(unit[n].player, "target_range")												--track playabilty criterium has been met
 																						
 																						--determine number of aircraft needed for sortie
 																						local aircraft_requested = target.firepower.max / unit_loadouts[l].firepower					--how many aircraft are needed to satisfy the maximum firepower requirement of the target
+																						log.trace("aircraft neededs for this task(" .. task .. "): " .. aircraft_requested .. "target.firepower.max: " .. target.firepower.max .. ", unit_loadouts[" .. l .. "].firepower: " .. unit_loadouts[l].firepower)
+
 																						local flights_requested	
 																						
 																						if task == "CAP" or task == "AWACS" or task == "Refueling" then									--multiple flights are required to continously cover a station for the duration of the mission
 																							flights_requested = math.ceil((tot_to - tot_from) / unit_loadouts[l].tStation) + 1			--how many flights are needed to keep continous coverage of station, plus 1 for on station before mission start
 																							aircraft_requested = aircraft_requested * flights_requested									--total number of requested aircraft is number of aircraft needed to statisfy firepower requirement of station * number of flights needed for continous coverage
+																							log.traceLow("tot_to - tot_from for this task(" .. task .. "): " .. tostring(tot_to - tot_from) .. " and unit_loadouts[l].tStation: " .. unit_loadouts[l].tStation)
+																							log.trace("flights_requested for this task(" .. task .. "): " .. flights_requested)
 																						end
 																						
 																						if task == "AWACS" or task == "Refueling" or task == "Transport" or task == "Nothing" or task == "Reconnaissance" then
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
 																						
-																						elseif unit[n].type == "S-3B" or unit[n].type == "F-117A" or unit[n].type == "B-1B" or unit[n].type == "B-52H" or unit[n].type == "Tu-22M3" or unit[n].type == "Tu-95MS" or unit[n].type == "Tu-142" or unit[n].type == "Tu-160" or unit[n].type == "MiG-25RBT" then
+																						elseif isBomberOrRecoType(unit[n].type) then
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
 																						
 																						else
 																							--aircraft_requested = math.ceil(aircraft_requested / 2) * 2								--round up to an even number
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
 																						end
+																						log.trace("total aircraft_requested for this task(" .. task .. "): " .. aircraft_requested)
 																						local aircraft_assign
 																				
 																						if aircraft_requested > aircraft_available then													--if more aircraft are requested than are available from this unit
 																							aircraft_assign = aircraft_available														--assign all available aircraft
+																							log.trace("aircraft_available (" .. aircraft_available .. ") < aircraft_requested (" .. aircraft_requested .. ")for this task(" .. task .. ")")
 																				
 																						else																							--enough available aircraft to satisfy requested aircraft
 																							aircraft_assign = aircraft_requested														--assign all requested aicraft
+																							log.trace("aircraft_assigned for this task(" .. task .. "): " .. aircraft_assign)
 																						end
 																						
 																						-- miguel21 modification M11.o multiplayer
@@ -502,11 +727,14 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						end
 																				
 																						--self escort
-																						if unit_loadouts[l].self_escort then															--if the loadout is capable of self-escort
+																						if unit_loadouts[l].self_escort then															--if the loadout is capable of self-escort																							
 																							route.threats.air_total = route.threats.air_total / 2										--reduce the fighter threat by half
+																							
+																					
 																							if route.threats.air_total < 0.5 then
 																								route.threats.air_total = 0.5
 																							end
+																							log.traceLow("loadout is capable of self-escort, reduce the fighter threat by half (minimum 0.5): " .. route.threats.air_total)
 																						end
 																						
 																						--build sortie entry
@@ -548,7 +776,9 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																								rejected = {},
 																							}
 																							draft_sorties_entry.target.TitleName =  target_name													-- ATO_G_Debug04 correction targetName
-																							
+																						
+																							--<========================================= QUI PER ANALISI E LOGGING ========================================================================
+
 																							--score the sortie
 																							local route_threat = route.threats.ground_total + route.threats.air_total						--combine route ground and air threat
 																				
@@ -770,15 +1000,16 @@ local wk = 1
 i_timmer02 = 0
 
 --inversion des 2 boucles draft_sortie en premier, oob_air ensuite, pour homogeniser les chances de sortie de tous les escadrons support
+--inversione dei 2 loop draft_exit prima, poi oob_air, per uniformare le possibilità di uscita di tutti gli squadroni di supporto
 for sideS, draftT in pairs(draft_sorties) do		
 	for draft_n, draft in pairs(draft_sorties[sideS]) do													--iterate through all draft sorties beginning with the highest scored
 
-		--determine enemy side
-		local enemy																						--determine enemy side (opposite of unit side)
+		--determine enemy_side side
+		local enemy_side																						--determine enemy_side side (opposite of unit side)
 		if side == "blue" then
-			enemy = "red"
+			enemy_side = "red"
 		else
-			enemy = "blue"
+			enemy_side = "blue"
 		end
 		
 		
@@ -1058,7 +1289,7 @@ for sideS, draftT in pairs(draft_sorties) do
 																	end
 																	draft.route.threats.air_total = route_threat_recalc
 																elseif task == "Escort Jammer" then
-	--ADD RECALCULATED THREAT LEVEL WITH ESCORT JAMMERS
+																--ADD RECALCULATED THREAT LEVEL WITH ESCORT JAMMERS
 																end
 															
 																local route_threat = draft.route.threats.ground_total + draft.route.threats.air_total		--combine adjusted ground and air threat levels (1 equald no threat)
@@ -1259,25 +1490,63 @@ ATO = {
 
 
 --assign draft sorties to ATO and build packages/flights
+log.trace("assign draft sorties to ATO and build packages/flights ----------------------")
 for side, draft in pairs(draft_sorties) do																		--iterate through all sides
-	for n = 1, #draft do																						--iterate through all draft sorties beginning with the highest scored	
+
+	for n = 1, #draft do		
+		log.traceLow("draft[" .. n .. "].name: " .. draft[n].name)
+																						--iterate through all draft sorties beginning with the highest scored	
 		if draft[n].loadout.minscore == nil or draft[n].loadout.minscore <= draft[n].score then					--draft sortie has no minimum score requirement or minimum score requirement is satisified		
 
+			if draft[n].loadout.minscore ~= nil then
+				log.traceLow("draft[n].loadout.minscore(" .. draft[n].loadout.minscore .. ") <= draft[n].score(" .. draft[n].score .. ")")
+			
+			else
+				log.traceLow("draft[n].loadout.minscore == nil")
+			end
+
 			if draft[n].multipack == nil or draft[n].multipack > 0 then												--target does not have a requirment for a specific number of packages, or still needs more packages		
+				
+				if draft[n].multipack ~= nil then
+					log.traceLow("draft[n].multipack > 0>: target does not have a requirment for a specific number of packages, or still needs more packages")
+				
+				else
+					log.traceLow("draft[n].multipack == nil")
+				end
 
 				if draft[n].target.firepower.max > 0 and draft[n].target.firepower.max >= draft[n].target.firepower.min then	--the target of this draft sortie must have a need for firepower above the minimum firepower threshold	
 					local available = aircraft_availability[draft[n].name].unassigned											--shortcut for available aircraft for this draft sortie					
+					log.traceLow("draft[n].target.firepower.max(" .. draft[n].target.firepower.max .. ") > draft[n].target.firepower.min(" .. draft[n].target.firepower.min .. ") > 0, avalaible_aircraft[" .. draft[n].name .. "] = " .. available)
 
 					if available * draft[n].loadout.firepower >= draft[n].target.firepower.min and draft[n].number * draft[n].loadout.firepower >= draft[n].target.firepower.min then	--enough aircraft are available to satisfy minimum firepower requirement for target						
+						log.traceLow("aircraft available(" .. available .. ") * draft[n].loadout.firepower(" .. draft[n].loadout.firepower .. ") >= draft[n].target.firepower.min(" .. draft[n].target.firepower.min .. ")")
+						log.traceLow("draft[n].number(" .. draft[n].number .. ") * draft[n].loadout.firepower(" .. draft[n].loadout.firepower .. ") > >= draft[n].target.firepower.min(" .. draft[n].target.firepower.min .. ")")
 
 						if draft[n].target.firepower.packmin == nil or available * draft[n].loadout.firepower >= (draft[n].target.firepower.packmin - 1) * draft[n].target.firepower.max + draft[n].target.firepower.min then	--if the target has a minimum package number requirement, sufficient aircraft are available from this unit to satisfy it					
+							
+							if draft[n].target.firepower.packmin ~= nil then
+								log.traceLow("available * draft[n].loadout.firepower (= " .. available * draft[n].loadout.firepower .. ")  >= (draft[n].target.firepower.packmin - 1) * draft[n].target.firepower.max + draft[n].target.firepower.min (" .. (draft[n].target.firepower.packmin - 1) * draft[n].target.firepower.max + draft[n].target.firepower.min .. ")")
+							
+							else
+								log.traceLow("draft[n].target.firepower.packmin == nil")
+							end
 
 							if draft[n].flights == nil or draft[n].number <= available then											--for targets with station time (multiple flights), continue only if sufficient aircraft are availabe. Additional lower scored sorties with less airctaft required will come later 
+
+								if draft[n].flights ~= nil then
+									log.traceLow("draft[n].number(" .. draft[n].number .. ") <= available(" .. available .. ")")
+								
+								else
+									log.traceLow("draft[n].flights == nil")
+								end
 
 								--adjust the number of requested aircraft to the number of available aircraft
 								if draft[n].number > available then
 									draft[n].number = available
-								end
+									log.traceLow("update draft[n].number: " .. draft[n].number)
+								end																
+								
+								
 								
 								--check if there are enough supports available if supports are required		
 								local support_available = true							
@@ -1285,50 +1554,69 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 								local need = {}																														--collect the total number of aircraft needed from each unit to complete the package
 								need[draft[n].name] = draft[n].number																								--number of main body aircraft 
 								local avail = {}																													--collect the maximal number of available aircraft from this unit (biggest number of all tasks)
-								avail[draft[n].name] = aircraft_availability[draft[n].name].unassigned								
+								avail[draft[n].name] = aircraft_availability[draft[n].name].unassigned																
 
-								for unitname,_ in pairs(need) do
+								for unitname,_ in pairs(need) do --imho inutile, forse scritto dai francesi
+									
 									if need[unitname] > avail[unitname] then																						--more aircraft are needed from this unit across all package tasks than are available
 										support_available = false																									--not enough support available
-									local TabRejected = {}
+										local TabRejected = {}
 										TabRejected["sujet"]  = "AVION SUPPORT INSUFFISANT()support_available if need[unitname] > avail[unitname]"
 										TabRejected["cause"] = { [1] =  need[unitname], [2] = avail[unitname], }
 										TabRejected["ligne"]  = debug.getinfo(1).currentline														
 										table.insert(draft[n]["rejected"], TabRejected)
+										log.traceLow("need[" .. unitname .. "](" .. need[unitname] .. ") > avail[" .. unitname .. "](" .. avail[unitname] .. ") -> draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 									end
 								end
 								
 								-- ATO_G_adjustment01 escort mandatory or not
 								-- regarde uniquement pour les bombardiers necessitant une escorte
+								-- probabilmente richiede che support = {ESCORT = { valore }} e 3non con un boolean
+								-- non serve se il support è richiesto tramite boolean e comunque hio dubbi sul funzionamento, eliminare??
 								if campMod.StrikeOnlyWithEscorte and not draft[n].loadout.self_escort then
-									if (db_loadouts[draft[n].type]["Anti-ship Strike"] or db_loadouts[draft[n].type]["Strike"])  then	
+									log.traceLow("strike missions request escort (only for loadout with self_escort = false")
+
+									if (db_loadouts[draft[n].type]["Anti-ship Strike"] or db_loadouts[draft[n].type]["Strike"])  then											
 										local break_loop = false
+										log.traceLow("loadouts is compatible for strike missions")
+										
 										for n_squad, squad in pairs(oob_air[side]) do
+										
 											if (squad.tasks["Anti-ship Strike"]  or squad.tasks["Strike"] ) and squad.type == draft[n].type then
+												log.traceLow("the oob_air squad with same type defined in draft (" .. squad.type .. ") have strike task, search for an support request:\n" .. inspect(draft[n].support))
 												local needS = {}																														--collect the total number of aircraft needed from each unit to complete the package
 												needS[draft[n].name] = 0																								--number of main body aircraft 
 												local availS = {}																													--collect the maximal number of available aircraft from this unit (biggest number of all tasks)
 												availS[draft[n].name] = 0
+												
 												for _p,_support in pairs(draft[n].support) do																							--iterate through support in draft sortie	
+													log.traceLow("support request: " .. _p)
+													
 													if 	type(_support) == "table" then	
-														for _a,support in pairs(_support) do											
+														
+														for _a,support in pairs(_support) do
+															log.traceLow("support items request: " .. _a)											
+															
 															if 	type(support) == "table" then																
 																needS[draft[n].name] =  needS[draft[n].name] + support.number																	--add number of support aircraft from same unit
-																availS[draft[n].name] = availS[draft[n].name] + aircraft_availability[support.name].unassigned														
+																availS[draft[n].name] = availS[draft[n].name] + aircraft_availability[support.name].unassigned	
+																log.traceLow("support.number: " .. support.number .. ", update needS[" .. draft[n].name .. "] = " .. needS[draft[n].name] .. ", update availS[" .. draft[n].name .. "] = " .. availS[draft[n].name])													
 															end
 														end
 													end
 												end
 
 												for unitname,_ in pairs(needS) do
-													if needS[unitname] - (needS[unitname] * 0.15) > availS[unitname] then	
+
+													if needS[unitname] * MIN_PERCENTAGE_FOR_ESCORT > availS[unitname] then	-- questo dovrebbe sempre essere vero con escort = true (comporta un needS = 0 in quanto escort non è una tab contentente un valore numerico)
 													--more aircraft are needed from this unit across all package tasks than are available
 														support_available = false																									--not enough support available
-															local TabRejected = {}
-															TabRejected["sujet"]  = "BOMBARDIER NECESSITANT ESCORTE()support_available if needS[unitname] - (needS[unitname] * 0.15) > availS[unitname]"
-															TabRejected["cause"] = { [1] =  needS[unitname] - (needS[unitname] * 0.15), [2] = availS[unitname], }
-															TabRejected["ligne"]  = debug.getinfo(1).currentline														
-															table.insert(draft[n]["rejected"], TabRejected)
+														local TabRejected = {}
+														TabRejected["sujet"]  = "BOMBARDIER NECESSITANT ESCORTE()support_available if needS[unitname] - (needS[unitname] * 0.15) > availS[unitname]"
+														TabRejected["cause"] = { [1] = needS[unitname]* MIN_PERCENTAGE_FOR_ESCORT, [2] = availS[unitname], }
+														TabRejected["ligne"]  = debug.getinfo(1).currentline														
+														table.insert(draft[n]["rejected"], TabRejected)
+														log.traceLow("needS[" .. unitname .. "](" .. needS[unitname] .. ") *  > availS[" .. unitname .. "](" .. availS[unitname] .. ") -> draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 													end
 												end
 											
@@ -1337,34 +1625,44 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 									end	
 								end
 								
-								for _p,_support in pairs(draft[n].support) do																							--iterate through support in draft sortie
-									if  not support_available and	type(_support) == "table" then	
-										for _,support in pairs(_support) do																							--iterate through support in draft sortie
+								-- assegnazione scorte con support = {ESCORT = boolean} ?? NO c'è un errore logico che comunque non comporta conseguenze - prova ad eliminare l'intero ciclo
+								for _p,_support in pairs(draft[n].support) do			
+																													--iterate through support in draft sortie
+									if  not support_available and	type(_support) == "table" then
+										
+										for _,support in pairs(_support) do		
+																																--iterate through support in draft sortie
 											if 	type(support) == "table" then	
+												
 												if support.number > aircraft_availability[support.name].unassigned then															--not enough aircraft available from this unit for this task
 													support_available = false																									--not enough support available
-														local TabRejected = {}
-														TabRejected["sujet"]  = "ILLUMINATION ABSENT()support_available if support.number > aircraft_availability[support.name].unassigned"
-														TabRejected["cause"] = { [1] =  support.number, [2] = aircraft_availability[support.name].unassigned, }
-														TabRejected["ligne"]  = debug.getinfo(1).currentline														
-														table.insert(draft[n]["rejected"], TabRejected)
+													local TabRejected = {}
+													TabRejected["sujet"]  = "ILLUMINATION ABSENT()support_available if support.number > aircraft_availability[support.name].unassigned" --???? come fà ad essere illumination (errore)
+													TabRejected["cause"] = { [1] =  support.number, [2] = aircraft_availability[support.name].unassigned, }
+													TabRejected["ligne"]  = debug.getinfo(1).currentline														
+													table.insert(draft[n]["rejected"], TabRejected)
+													log.traceLow("draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 												end
 											end
 										end
 									end
 								end
 								
-								if  not support_available and draft[n].loadout.support then																									--main body loadout support requirements
+								-- assegnazione scorte con support = {ESCORT = boolean} controlla solo se il draft[n] presenta il support previsto nel loadout !??
+								if not support_available and draft[n].loadout.support then																									--main body loadout support requirements
+									
 									for supporttype, bool in pairs(draft[n].loadout.support) do																		--iterate through support requirements of loadout
+										
 										if (supporttype == "Flare Illumination" or supporttype == "Laser Illumination") and bool then								--Flare Illumination and Laser Illumination is a necessary support type. If it is not present in the draft sortie, no package will be created				
-											if draft[n].support[supporttype] == nil then																			--if draft sortie has no such support type assigned
-												support_available = false																							--necessary support is not available
 											
-													local TabRejected = {}
-													TabRejected["sujet"]  = "ILLUMINATION ABSENT()support_available if draft[n].support[supporttype] == nil"
-													TabRejected["cause"] = { [1] =  draft[n].support[supporttype], [2] = "", }
-													TabRejected["ligne"]  = debug.getinfo(1).currentline														
-													table.insert(draft[n]["rejected"], TabRejected)
+											if draft[n].support[supporttype] == nil then																			--if draft sortie has no such support type assigned
+												support_available = false																							--necessary support is not available											
+												local TabRejected = {}
+												TabRejected["sujet"]  = "ILLUMINATION ABSENT()support_available if draft[n].support[supporttype] == nil"
+												TabRejected["cause"] = { [1] =  draft[n].support[supporttype], [2] = "", }
+												TabRejected["ligne"]  = debug.getinfo(1).currentline														
+												table.insert(draft[n]["rejected"], TabRejected)
+												log.traceLow("draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 											end
 										end
 									end
@@ -1372,9 +1670,13 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 								
 								
 								for _p,_support in pairs(draft[n].support) do																							--iterate through support in draft sortie
+
 									if not support_available and type(_support) == "table" then	
+
 										for _,support in pairs(_support) do																							--iterate through support in draft sortie
+
 											if 	type(support) == "table" then	
+
 												if aircraft_availability[support.name].unassigned <=0 then
 													support_available = false
 													
@@ -1383,6 +1685,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 														TabRejected["cause"] = { [1] = aircraft_availability[support.name].unassigned, [2] = "", }
 														TabRejected["ligne"]  = debug.getinfo(1).currentline														
 														table.insert(draft[n]["rejected"], TabRejected)
+														log.traceLow("draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 												end
 											end
 										end
@@ -1393,17 +1696,19 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 								-- interdit aux possible avion d'escorte de tout donner dans CAP ou Intercept
 								if (draft[n].task == "CAP" or draft[n].task == "Intercept") and ((db_loadouts[draft[n].type]["Escort"] or db_loadouts[draft[n].type]["SEAD"]) and aircraft_availability[draft[n].name].serviceable > 4) then
 									local break_loop = false
+									
 									for n_squad, squad in pairs(oob_air[side]) do
+										
 										if squad.type == draft[n].type and (squad.tasks["Escort"] or squad.tasks["SEAD"]) then
+											
 											if aircraft_availability[draft[n].name].unassigned - draft[n].number <= aircraft_availability[draft[n].name].serviceable/2 then
-												support_available = false
-													
-													local TabRejected = {}
-													TabRejected["sujet"]  = "NE DONNE PAS TOUT en CAP ou Intercept ()support_available if aircraft_availability[draft[n].name].unassigned - draft[n].number <= aircraft_availability[draft[n].name].serviceable/2"
-													TabRejected["cause"] = { [1] = aircraft_availability[draft[n].name].unassigned - draft[n].number, [2]  = aircraft_availability[draft[n].name].serviceable/2, }
-													TabRejected["ligne"]  = debug.getinfo(1).currentline														
-													table.insert(draft[n]["rejected"], TabRejected)	
-													
+												support_available = false												
+												local TabRejected = {}
+												TabRejected["sujet"]  = "NE DONNE PAS TOUT en CAP ou Intercept ()support_available if aircraft_availability[draft[n].name].unassigned - draft[n].number <= aircraft_availability[draft[n].name].serviceable/2"
+												TabRejected["cause"] = { [1] = aircraft_availability[draft[n].name].unassigned - draft[n].number, [2]  = aircraft_availability[draft[n].name].serviceable/2, }
+												TabRejected["ligne"]  = debug.getinfo(1).currentline														
+												table.insert(draft[n]["rejected"], TabRejected)	
+												log.traceLow("draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
 												break_loop = true																		
 												break
 											end
@@ -1433,8 +1738,12 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 									
 									--add flights of 1, 2 or 4 aircraft to package
 									local function AddFlight(assign, role, entry)
+										local previous_log_level = log.level
+										log.level =function_log_level
 										local assigned
+										
 										while assign > 0 do																		--loop as long as there are aircraft to assign
+											
 											if entry.flights then																--for multiple flights with station time (CAP, AWACS, Tanker etc.)
 												local flightsize = math.ceil(draft[n].target.firepower.max / draft[n].loadout.firepower)	--how many aircraft should be in each flight
 												if assign >= flightsize then													--if there are more aircraft left to assign than the size of one flight
@@ -1443,36 +1752,95 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 													assigned = assign															--assign whatever is left
 												end
 												entry.flights = entry.flights - 1												--one less flight to assign
+												log.traceLow("update assigned = " .. assigned .. ", update entry.flights = " .. entry.flights)
+											
 											elseif entry.task == "Transport" or entry.task == "Escort Jammer" or entry.task == "Flare Illumination" or entry.task == "Laser Illumination" then		--for tasks with single aircraft
 												assigned = 1																	--assign one aircraft per flight	
+												log.traceLow("entry.task = Transport or Escort jammer or Flare illumination or Laser Illumination, assigned = " .. assigned)
+											
 											elseif entry.task == "Intercept" then
-												if assign >= 2 then																--if more than 2 aircraft are to be assigned
-													assigned = 2																--assign flight of 2 aircaft
+											
+												if assign >= MAX_AIRCRAFT_FOR_INTERCEPT then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_INTERCEPT										--assign flight of 2 aircaft
+											
 												else
-													assigned = 1																--else assign flight of 1 aicraft
+													assigned = assign 														--else assign flight of 1 aicraft
 												end
-											elseif entry.type == "S-3B" or entry.type == "F-117A" or entry.type == "B-1B" or entry.type == "B-52H" or entry.type == "Tu-22M3" or entry.type == "Tu-95MS" or entry.type == "Tu-142" or entry.type == "Tu-160" or entry.type == "MiG-25RBT" then	--for bombers
-												assigned = 1																	--assigne one aircraft per flight
+												log.traceLow("entry.task = Intercept, assigned = " .. assigned)
+											
+											elseif isBomberOrRecoType(entry.type) then	--for bombers
+
+												if assign >= MAX_AIRCRAFT_FOR_BOMBER then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_BOMBER										--assign flight of 2 aircaft
+											
+												else
+													assigned = assign 														--else assign flight of 1 aicraft
+												end												
+												log.traceLow("entry.type = Bomber, assigned = " .. assigned)
+											
 											elseif entry.task == "Reconnaissance" then											--for recon
-												if assign == 1 then																--if there is one aircraft left to assign
-													assigned = 1																--assigne one aircraft per flight
-												elseif assign >= 4 then															--if more than 4 aircraft are to be assigned
-													assigned = 4																--assign flight of 4 aircaft
-												elseif assign == 3 then															--if more than 3 aircraft are to be assigned
-													assigned = 3																--assign flight of 3 aircaft
+											
+												if assign >= MAX_AIRCRAFT_FOR_RECONNAISSANCE then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_RECONNAISSANCE										--assign flight of 2 aircaft
+											
 												else
-													assigned = 2																--else assign flight of 2 aicraft
+													assigned = assign														--else assign flight of 1 aicraft
 												end
-											else																				--for everything else
+												log.traceLow("entry.task = Reconnaisance, assigned = " .. assigned)
+											
+											elseif entry.task == "Strike" then												--for recon
+											
+												if assign >= MAX_AIRCRAFT_FOR_STRIKE then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_STRIKE										--assign flight of 2 aircaft
+											
+												else
+													assigned = assign			 										--else assign flight of 1 aicraft
+												end
+												log.traceLow("entry.task = Strike, assigned = " .. assigned)
+
+											elseif entry.task == "CAP" then											--for recon
+											
+												if assign >= MAX_AIRCRAFT_FOR_CAP then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_CAP										--assign flight of 2 aircaft
+											
+												else
+													assigned = assign 										--else assign flight of 1 aicraft
+												end
+												log.traceLow("entry.task = CAP, assigned = " .. assigned)
+
+											elseif entry.task == "Escort" then												--for recon
+											
+												if assign >= MAX_AIRCRAFT_FOR_ESCORT then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_ESCORT										--assign flight of 2 aircaft
+											
+												else
+													assigned = assign													--else assign flight of 1 aicraft
+												end
+												log.traceLow("entry.task = Escort, assigned = " .. assigned)
+
+											elseif entry.task == "Fighter Sweep" then										--for recon
+											
+												if assign >= MAX_AIRCRAFT_FOR_SWEEP then 									--if more than 2 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_SWEEP										--assign flight of 2 aircaft
+											
+												else
+													assigned = assign 													--else assign flight of 1 aicraft
+												end
+												log.traceLow("entry.task = Fighter Sweep, assigned = " .. assigned)
+
+											else 																			--for everything else
+											
 												if assigned and assign == 1 then												--if there is one aircraft left to assign and there was already a previous flight assigned, stop assigning (do not add leftover single-ships)
 													break
-												elseif assign >= 4 then															--if more than 4 aircraft are to be assigned
-													assigned = 4																--assign flight of 4 aircaft
+											
+												elseif assign >= MAX_AIRCRAFT_FOR_OTHER then															--if more than 4 aircraft are to be assigned
+													assigned = MAX_AIRCRAFT_FOR_OTHER																--assign flight of 4 aircaft
+											
 												else
 													assigned = assign															--else assign flight size of what is left
 												end
 											end
-
+											----- QUI: definisci min e max x transport, cap, sweep, strike ecc
 											local flight = {																	--build ATO flight entry
 												name = entry.name,
 												playable = entry.playable,
@@ -1540,13 +1908,18 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 											assign = assign - assigned															--continue loop until are aircraft are assigned
 										
 										end
+										log.level = previous_log_level
 									end
 									
 									AddFlight(draft[n].number, "main", draft[n])												--add main body flights to package
+
 									for support_name,_support in pairs(draft[n].support) do										--iterate through all package support
+
 										if type(_support) == "table" then	
+
 											for _plane,support in pairs(_support) do
 												local number  = 0
+											
 												if type(support) == "table" and aircraft_availability[support.name].unassigned >= 2 then
 													
 													if support.number >= aircraft_availability[support.name].unassigned then number = aircraft_availability[support.name].unassigned end
@@ -1604,6 +1977,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 							TabRejected["cause"] = { [1] = available * draft[n].loadout.firepower, [2]  = (draft[n].target.firepower.packmin - 1) * draft[n].target.firepower.max, }
 							TabRejected["ligne"]  = debug.getinfo(1).currentline
 							table.insert(draft[n]["rejected"], TabRejected)
+							log.traceVeryLow("draft[" .. n .. "][rejected]:\n" .. inspect(TabRejected))
 						end
 					else
 						local TabRejected = {}
@@ -1611,6 +1985,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 						TabRejected["cause"] = { [1] = available * draft[n].loadout.firepower, [2]  = draft[n].target.firepower.min, }
 						TabRejected["ligne"]  = debug.getinfo(1).currentline
 						table.insert(draft[n]["rejected"], TabRejected)
+						log.traceVeryLow("draft[" .. n .. "][rejected]:\n" .. inspect(TabRejected))
 					end
 				else
 					local TabRejected = {}
@@ -1618,6 +1993,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 					TabRejected["cause"] = { [1] = draft[n].target.firepower.max, [2]  = draft[n].target.firepower.max, }
 					TabRejected["ligne"]  = debug.getinfo(1).currentline
 					table.insert(draft[n]["rejected"], TabRejected)
+					log.traceVeryLow("draft[" .. n .. "][rejected]:\n" .. inspect(TabRejected))
 				end
 			else
 				local TabRejected = {}
@@ -1632,6 +2008,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 			TabRejected["cause"] = { [1] = draft[n].loadout.minscore, [2]  = draft[n].score, }
 			TabRejected["ligne"]  = debug.getinfo(1).currentline
 			table.insert(draft[n]["rejected"], TabRejected)	
+			log.traceVeryLow("draft[" .. n .. "][rejected]:\n" .. inspect(TabRejected))
 		end
 	end
 end

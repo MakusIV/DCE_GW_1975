@@ -77,8 +77,7 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 	local maxrange = RadarHorizon(threat.elevation, profile_alt + 100)									    --get the maximal range due to radar horizon (profile alt +100 m for safety)
 	log.traceLow("maximal range due to radar horizon (" .. type_profile .. " profile alt +100 m for safety): " .. tostring(maxrange))
 	
-	if threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt then	
-		log.level = "traceVeryLow"
+	if threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt then			
 		log.traceLow("threat.max_low_alt and threat.range_at_low and profile_alt <= threat.max_low_alt, threatentry.range: " .. threatentry.range)
 
 		if maxrange < threat.range_at_low then

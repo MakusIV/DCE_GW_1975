@@ -41,6 +41,9 @@ local round = function(x, increment)
   return (x > 0 and math.floor(x + .5) or math.ceil(x - .5)) * increment
 end
 
+function isLogNoUpper(log_level, log_level_rif)
+  return levels[log_level] <= levels[log_level_rif]
+end
 
 local _tostring = tostring
 

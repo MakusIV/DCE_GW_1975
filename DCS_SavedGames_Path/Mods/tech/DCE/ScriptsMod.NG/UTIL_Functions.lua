@@ -958,3 +958,18 @@ function getSkill(min_skill, max_skill)
 	end
 	return compute_skill
 end
+
+-- return x round at number ()
+function roundAtNumber(x, number)
+	number = number or 1
+	
+	if number > x then
+		return false
+	end
+	x = x / number
+	return (x > 0 and math.floor(x + .5) or math.ceil(x - .5)) * number
+end
+
+
+
+  
