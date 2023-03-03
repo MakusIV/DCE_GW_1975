@@ -15,6 +15,7 @@ local log = { _version = "0.1.0" }
 log.usecolor = true
 log.outfile = logFileDCE
 log.level = "trace"
+log.activate = true
 
 
 local modes = {
@@ -65,7 +66,7 @@ for i, x in ipairs(modes) do
   log[x.name] = function(...)
     
     -- Return early if we're below the log level
-    if i < levels[log.level] then
+    if  not log.activate or i < levels[log.level] then
       return
     end
 

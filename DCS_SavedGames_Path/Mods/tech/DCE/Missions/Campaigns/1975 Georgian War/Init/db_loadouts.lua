@@ -132,6 +132,24 @@ To set missions with routes that evade radars you must first act on the
 attack altitude (hattack) < 100 if the weapons allow use at this altitude, 
 otherwise you must set the travel altitude (hcruise) < 100
 
+
+ridefine firepower:
+bomb: 
+attributes: soft, SAM, parked aircraft
+light bomb (attributes: soft, parked aircraft) : firepower: 1, 1 lb for single target unit
+medium bomb (attributes: SAM, parked aircraft, armor) : firepower: 1, 1 mb for single target unit
+heavy bomb (attributes: structure, bridge) : firepower: 1,  1 hb for single target unit
+cluster bomb (attributes: soft, parked aircraft): firepower: 1, 1 cb for any 3 target unit 
+heavy cluster bomb (attributes: soft, parked aircraft): firepower: 1 hcb for any 3 target unit 
+rockets(attributes: SAM, parked aircraft, armor): firepower: 3, 3 rkt for single target unit
+missile a2g(attributes: SAM, armor): firepower: 1, 1 m for single target unit
+missile a2g(ship, structure, bridge): firepower: 3, 3 m for single target unit
+
+attributes: bridge, structure
+firepower: 1 heavy bomb for target
+
+
+
 ]]
 
 db_loadouts = {
@@ -818,7 +836,7 @@ db_loadouts = {
 				avoid_EWR = true,
 				range = 650000,
 				capability = 5,
-				firepower = 5,
+				firepower = 5, -- 1 bombs for an target (quindi 10)
 				vCruise = 200,
 				vAttack = 111,
 				hCruise = 100, --5486.4,

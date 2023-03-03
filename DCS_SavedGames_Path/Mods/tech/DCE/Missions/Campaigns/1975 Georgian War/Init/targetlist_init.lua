@@ -15,6 +15,9 @@
 
 -- ATT: nella proprietà slaved = nome gruppo (NO nome unità o nome targetlist)
 
+-- la firepower per le missioni A2A (Intercept, sweep, CAP) deve essere calcolata con riferimento al 1 a 1: un aereo per ogni nemico.
+-- intercept 
+-- 
 
 targetlist = {   
 	["blue"] = {
