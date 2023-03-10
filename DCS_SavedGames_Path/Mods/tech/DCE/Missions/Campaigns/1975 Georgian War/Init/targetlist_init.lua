@@ -18,6 +18,33 @@
 -- la firepower per le missioni A2A (Intercept, sweep, CAP) deve essere calcolata con riferimento al 1 a 1: un aereo per ogni nemico.
 -- intercept 
 -- 
+--[[
+
+new firepower definition:
+
+
+["Russian Convoy 1"] = {
+			task = "Anti-ship Strike",
+			priority = 1,
+			attributes = {"ship"},
+			dimesnion = "mix",
+			num_targets_element = 8, -- 8 ship se lo inserisci nella funzione non è necessario definirlo qui
+			num_dedicated_weapon_for_destroy_element = 3, -- 3 ASM ship se lo inserisci nella funzione non è necessario definirlo qui
+			
+			firepower = {				
+				min = evaluate_target_firepower( num_targets_element = 8, num_dedicated_weapon_for_destroy_single_element = 3, "min", attribute = {"ship"}, task = "Anti-ship Strike"), -- 
+				max = evaluate_target_firepower( num_targets_element = 8, num_dedicated_weapon_for_destroy_single_element = 3, "max", attribute = {"ship"}, task = "Anti-ship Strike" ), --
+			},
+			class = "ship",
+.			name = "Russian Convoy 1",
+		},
+
+
+5 ship convoy -> min firepower: 7, max firepower: 10
+standard SAM-2 site: 7 elements -> min firepower: 9, max firepower: 14 
+airport oca strike: 15 elements(structure and aircraft) -> min firepower: 9, max firepower: 14 
+]]
+
 
 targetlist = {   
 	["blue"] = {
@@ -117,9 +144,10 @@ targetlist = {
 			task = "Anti-ship Strike",
 			priority = 1,
 			attributes = {"ship"},
+			dimension ="mix",
 			firepower = {
-				min = 5,
-				max = 8,
+				min = 5, --getTargetFirepower(14, "blue", "mix", "ship", "Anti-ship Strike", true, "med"),    -- 5, -- 
+				max = 8, --getTargetFirepower(14, "blue","mix", "ship", "Anti-ship Strike", false, "med"), -- 8,
 			},
 			class = "ship",
 			name = "Russian Convoy 1",
@@ -129,8 +157,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"ship"},
 			firepower = {
-				min = 5,
-				max = 8,
+				min = 5, --getTargetFirepower(14, "blue", "mix", "ship", "Anti-ship Strike", true, "med"),    -- 5, -- 
+				max = 8, --getTargetFirepower(14, "blue","mix", "ship", "Anti-ship Strike", false, "med"), -- 8,
 			},
 			class = "ship",
 			name = "Russian Convoy 2",
@@ -176,7 +204,7 @@ targetlist = {
 			priority = 1,
 			attributes = {},
 			firepower = {
-				min = 2,
+				min = 2, --estimated aircraft : 5, efficiency: 0.5 ( 2 missile for one shot ): 5 / 0.5 = 10
 				max = 3,
 			},
 			x = -165988,
@@ -212,8 +240,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(8, "blue", "mix", "Parked Aircraft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(8, "blue","mix", "Parked Aircraft", "Strike", false, "med"), --4,
 			},
 			class = "airbase",
 			name = "Beslan",
@@ -223,8 +251,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(8, "blue", "mix", "Parked Aircraft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(8, "blue","mix", "Parked Aircraft", "Strike", false, "med"), --4,
 			},
 			class = "airbase",
 			name = "Mozdok",
@@ -234,8 +262,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(8, "blue", "mix", "Parked Aircraft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(8, "blue","mix", "Parked Aircraft", "Strike", false, "med"), --4,
 			},
 			class = "airbase",
 			name = "Nalchik",
@@ -245,8 +273,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"Parked Aircraft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(8, "blue", "mix", "Parked Aircraft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(8, "blue","mix", "Parked Aircraft", "Strike", false, "med"), --4,
 			},
 			class = "airbase",
 			name = "Mineralnye-Vody",
@@ -257,8 +285,8 @@ targetlist = {
 			-- picture = {""},
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(4, "blue", "mix", "soft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(4, "blue","mix", "soft", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "101 EWR Site",
@@ -268,8 +296,8 @@ targetlist = {
 			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(4, "blue", "mix", "soft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(4, "blue","mix", "soft", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "102 EWR Site",
@@ -279,8 +307,8 @@ targetlist = {
 			priority = 5,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 2, --getTargetFirepower(4, "blue", "mix", "soft", "Strike", true, "med"), --2,
+				max = 4, --getTargetFirepower(4, "blue","mix", "soft", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "103 EWR Site",
@@ -314,8 +342,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 2, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 4, --getTargetFirepower(14, "blue","big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "203 SA-2 Site A-3",
@@ -325,8 +353,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "med", "SAM", "Strike", true, "med"), --3,
+				max = 6, --getTargetFirepower(14, "blue","med", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "204 SA-6 Site B-1",
@@ -336,8 +364,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 6, --getTargetFirepower(14, "blue","big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "206 SA-2 Site B-3",
@@ -347,8 +375,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3,  --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 6, -- getTargetFirepower(14, "blue", "big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "209 SA-2 Site R-3",
@@ -358,8 +386,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "med", "SAM", "Strike", true, "med"), --3,
+				max = 6, --getTargetFirepower(14, "blue","med", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "101 SA-3 Site E-1",
@@ -369,8 +397,8 @@ targetlist = {
 			priority = 6,
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "med", "SAM", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(14, "blue","med", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "104 SA-6 Site E-4",
@@ -381,8 +409,8 @@ targetlist = {
 			-- picture = {""},
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "106 SA-2 Site C-6",
@@ -393,8 +421,8 @@ targetlist = {
 			-- picture = {""},
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "Teberda SA-2 Site",
@@ -405,8 +433,8 @@ targetlist = {
 			-- picture = {""},
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "DM-34 SA-5 Site-1",
@@ -417,8 +445,8 @@ targetlist = {
 			-- picture = {""},
 			attributes = {"SAM"},
 			firepower = {
-				min = 3,
-				max = 4,
+				min = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(14, "blue", "big", "SAM", "Strike", false, "med"), --4,
 			},
 			class = "vehicle",
 			name = "Maykop SA-2",
@@ -428,8 +456,8 @@ targetlist = {
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
-				max = 3,
+				min = 3, --getTargetFirepower(8, "blue", "mix", "SAM", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(8, "blue", "mix", "SAM", "Strike", false, "med"), --3,
 			},
 			class = "vehicle",
 			name = "LENIGORI FARP AA",
@@ -439,8 +467,8 @@ targetlist = {
 			priority = 2,
 			attributes = {"SAM"},
 			firepower = {
-				min = 2,
-				max = 3,
+				min = 3, --getTargetFirepower(8, "blue", "mix", "SAM", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(8, "blue", "mix", "SAM", "Strike", false, "med"), --3,
 			},
 			class = "vehicle",
 			name = "TSKHINVALI FARP AA",
@@ -451,8 +479,8 @@ targetlist = {
 			picture = {"Beslan_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -513,8 +541,8 @@ targetlist = {
 			picture = {"Nalchik_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(7, "blue", "mix", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(7, "blue", "mix", "Structure", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -560,8 +588,8 @@ targetlist = {
 			picture = {"Mozdok_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -622,8 +650,8 @@ targetlist = {
 			picture = {"Maykop-Khanskaya_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(10, "blue", "mix", "Structure", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -684,8 +712,8 @@ targetlist = {
 			picture = {"Mineralnye-Vody_Airbase.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(17, "blue", "mix", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(17, "blue", "mix", "Structure", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -781,8 +809,8 @@ targetlist = {
 			picture = {"Prohladniy_Depot.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(37, "blue", "mix", "soft", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(37, "blue", "mix", "soft", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -906,8 +934,8 @@ targetlist = {
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(5, "blue", "big", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(5, "blue", "big", "Structure", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -934,8 +962,8 @@ targetlist = {
 			--picture = {"Prohladniy_Depot.png"},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(29, "blue", "big", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(29, "blue", "big", "Structure", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -1034,8 +1062,8 @@ targetlist = {
 			--picture = {""},
 			attributes = {"Structure"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(29, "blue", "big", "Structure", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(29, "blue", "big", "Structure", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -1134,8 +1162,8 @@ targetlist = {
 			picture = {"Target - BAKSAN-MINERALNYE SUPPLY LINE.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, -- getTargetFirepower(2, "blue", "big", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(2, "blue", "big", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1156,8 +1184,8 @@ targetlist = {
 			picture = {"Target - Vladikavkaz Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1183,8 +1211,8 @@ targetlist = {
 			--picture = {"Target - Beslan Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(6, "blue", "mix", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(6, "blue", "mix", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1225,8 +1253,8 @@ targetlist = {
 			picture = {"Target - Vladikavkaz Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1252,8 +1280,8 @@ targetlist = {
 			picture = {"Target - Beslan Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {				
 				[1] = {
@@ -1274,8 +1302,8 @@ targetlist = {
 			picture = {"Target - Alagir Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {				
 				[1] = {
@@ -1291,8 +1319,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(6, "blue", "mix", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(6, "blue", "mix", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1333,8 +1361,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(7, "blue", "mix", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(7, "blue", "mix", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1380,8 +1408,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(1, "blue", "big", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(1, "blue", "big", "Bridge", "Strike", false, "med"), --6,,
 			},
 			elements = {
 				[1] = {
@@ -1397,8 +1425,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(8, "blue", "mix", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(8, "blue", "mix", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1449,8 +1477,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {
 				[1] = {
@@ -1476,8 +1504,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(2, "blue", "mix", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(2, "blue", "mix", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {				
 				[1] = {
@@ -1498,8 +1526,8 @@ targetlist = {
 			--picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(3, "blue", "med", "Bridge", "Strike", false, "med"), --6,
 			},
 			elements = {			
 				[1] = {
@@ -1525,8 +1553,8 @@ targetlist = {
 			picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(18, "blue", "mix", "soft", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(18, "blue", "mix", "soft", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -1592,8 +1620,8 @@ targetlist = {
 			--picture = {"FARP_Vladikavkaz.png"},
 			attributes = {"soft"},
 			firepower = {
-				min = 3,
-				max = 6,
+				min = 3, --getTargetFirepower(4, "blue", "mix", "soft", "Strike", true, "med"), --3,
+				max = 3, --getTargetFirepower(4, "blue", "mix", "soft", "Strike", false, "med"), --6,
 			},
 			class = "static",
 			elements = {
@@ -1672,8 +1700,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", true, "med"), -- 2,
+				max = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", false, "med"), -- 4,
 			},
 			class = "vehicle",
 			name = "501 5th Artillery Division/1.Btry",
@@ -1683,8 +1711,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", true, "med"), -- 2,
+				max = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", false, "med"), -- 4,
 			},
 			class = "vehicle",
 			name = "502 5th Artillery Division/2.Btry",
@@ -1694,8 +1722,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", true, "med"), -- 2,
+				max = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", false, "med"), -- 4,
 			},
 			class = "vehicle",
 			name = "503 5th Artillery Division/3.Btry",
@@ -1705,8 +1733,8 @@ targetlist = {
 			priority = 1,
 			attributes = {"soft"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", true, "med"), -- 2,
+				max = 3, --getTargetFirepower(13, "blue", "mix", "soft", "Strike", false, "med"), -- 4,
 			},
 			class = "vehicle",
 			name = "504 5th Artillery Division/4.Btry",
@@ -1717,8 +1745,8 @@ targetlist = {
 			picture = {"Alagir_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1734,8 +1762,8 @@ targetlist = {
 			picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1751,8 +1779,8 @@ targetlist = {
 			picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1768,8 +1796,8 @@ targetlist = {
 			picture = {"Vladikavkaz_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1785,8 +1813,8 @@ targetlist = {
 			picture = {"Kardzhin_Bridges.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1807,8 +1835,8 @@ targetlist = {
 			picture = {"Elhotovo_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1829,8 +1857,8 @@ targetlist = {
 			picture = {"Beslan_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(2, "blue", "med", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1851,8 +1879,8 @@ targetlist = {
 			picture = {"Digora_Rail_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "small", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "small", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1868,8 +1896,8 @@ targetlist = {
 			picture = {"Kardzhin_Bridges.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(2, "blue", "small", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(2, "blue", "small", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1890,8 +1918,8 @@ targetlist = {
 			picture = {"Mayskiy_Rail_Bridge.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(3, "blue", "small", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(3, "blue", "small", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {
@@ -1917,8 +1945,8 @@ targetlist = {
 			picture = {"Kardzhin_Bridges.png"},
 			attributes = {"Bridge"},
 			firepower = {
-				min = 2,
-				max = 4,
+				min = 3, --getTargetFirepower(1, "blue", "small", "Bridge", "Strike", true, "med"), --2,
+				max = 3, --getTargetFirepower(1, "blue", "small", "Bridge", "Strike", false, "med"), --4,
 			},
 			elements = {
 				[1] = {

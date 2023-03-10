@@ -904,6 +904,14 @@ function CopyFile(old_path, new_path)
 	return new_file_sz == old_file_sz
 end
 
+function SaveTabOnPath( path, table_name, table )
+    -- path = "Active/"
+    local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
+    local tgtFile = io.open(path .. table_name .. ".lua", "w")
+    tgtFile:write(tgt_str)																		--save new data
+    tgtFile:close()
+end
+
 -- return random skill within min_skill and max_kill. If min_skill = nil -> min_skill = Random or max_skill = nil -> max_skill = Random
 function getSkill(min_skill, max_skill)
 	local skill = {"Average" , "Good", "High", "Excellent"}

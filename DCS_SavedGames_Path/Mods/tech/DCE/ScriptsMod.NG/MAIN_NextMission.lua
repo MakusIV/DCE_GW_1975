@@ -38,9 +38,10 @@ inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2 j
-log.level = "traceVeryLow" -- LOGGING_LEVEL
+log.level = LOGGING_LEVEL --"traceVeryLow" -- 
 log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
+local active_log = false -- select true to activate log
 log.info("Start")
 
 if activate_testing_enviroment then
@@ -217,13 +218,21 @@ else
 	camp["MissionFilename"] =  camp.title.."_ongoing.miz"	
 end
 
-log.info("require: Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
+log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
+require("Init/db_firepower")
 require("Init/db_loadouts")
 require("Init/db_airbases")
 require("Active/oob_air")
 require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
+
+-- define firepower value for db_loadouts (only first mission)
+if FirstMission then -- per sicurezza (verifica se esiste missione 0)
+	--dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Firepower.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+	--defineLoadoutsFirepower(db_loadouts)
+end
+
 
 -- INSERISCI QUI IL PREPROCESSING: 
 -- Blue_task_table, red_task_table dove la key = task (CAP, INTERCEPT,...) e value = tutte le info relative alle unità con quel task (sottotabella unità).

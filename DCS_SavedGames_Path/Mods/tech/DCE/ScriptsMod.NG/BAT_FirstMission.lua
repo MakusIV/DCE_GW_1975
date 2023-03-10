@@ -29,6 +29,7 @@ math.random(); math.random(); math.random()																----- random seed ---
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 dofile("Init/conf_mod.lua")
 dofile("Init/camp_init.lua")
+dofile("Init/db_firepower.lua")
 dofile("Init/oob_air_init.lua")
 dofile("Init/targetlist_init.lua")
 
@@ -92,9 +93,6 @@ local TabTask = {
 		["Refueling"] = "u",
 }
 
-
---=====================  start marco implementation ==================================
-
 dofile("Init/supply_tab_init.lua") -- load initial supply tab
 local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)				    --make a string
 local tgtFile = nil
@@ -102,7 +100,6 @@ tgtFile = io.open("Active/supply_tab.lua", "w")
 tgtFile:write(tgt_str)																		--save new data
 tgtFile:close()
 
---=====================  end marco implementation ==================================
 
 local showVersion = versionPackageICM
 

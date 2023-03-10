@@ -348,8 +348,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		if target.refpoint then																--target coordinates are referenced by a refpoint
 			log.trace("target has refpoints")
 			
-			if Refpoint then																--global Refpoint is not available when UpdateTargelist is called by DEBRIEF_Master. In this case updating the target coordinates can be ignored as this is not needed for debriefing.
-				
+			if Refpoint then																--global Refpoint is not available when UpdateTargelist is called by DEBRIEF_Master. In this case updating the target coordinates can be ignored as this is not needed for debriefing.				
 				log.trace("global Refpoint is available. Updating coordinate")
 				
 				if type(target.refpoint) == "table" then									--multiple refpoints
@@ -381,7 +380,7 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		end
 
 		--target position slaved to group/unit
-		if target.slaved then	-- target è preso da targetlist --target coordinates are slaved relative to a group/unit			
+		if target.slaved then	--target coordinates are slaved relative to a group/unit			
 			log.trace("target_name: " .. target_name .. ", target side: " .. targetside)	
 			log.debug("target coordinates are slaved relative to a group/unit")
 			local master = target.slaved[1]
@@ -627,13 +626,13 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 			if target.alive <= campMod.KillTargetValue and target.alive > 0 then					--if target alive is lower than 0 (due to rounding errors)
 				
 				if Debug.AfficheSol then  
-					print("DC_UT target.name target.alive < 20 "..target_name.." "..tostring(target.alive)) 
-					log.debug("DC_UT target.name target.alive < 20 "..target_name.." "..tostring(target.alive))
+					print("DC_UT target.name target.alive < " .. campMod.KillTargetValue .. " "..target_name.." "..tostring(target.alive)) 					
 				end
-				log.trace("target.alive < 20 (" .. target.alive .. ") killTarget")
+				log.trace("target name: " .. target_name .. ", target.alive(" .. target.alive .. ") <  " .. campMod.KillTargetValue .. " killTarget")
 				KillTarget(target_name, target.name)															--set target alive 0
 				target.alive = 0
 				
+
 				if target.elements then 						
 					log.trace("target.elements exist, iterate for all elements")
 					
@@ -682,7 +681,10 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 		end
 	end
 end
--- ============================================================					
--- Last point for coding logger functionality by Old_Boy ------		
--- ============================================================		
+
+-- define the firepower for targetlist	
+if camp.mission == 1 then -- per sicurezza (verifica se esiste missione 0)
+	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Firepower.lua") 
+	defineTargetListFirepower(targetlist)
+end
 

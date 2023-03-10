@@ -73,6 +73,61 @@ local draft_sorties_entry = {
 								id = "id"..#draft_sorties[side]+1,
 								rejected = {},
 
+playability_criterium = {} --to track what caused lack of playable sortie for the player
+aircraft_availability = {} --table to hold availability of aircraft (from camp.aircraft_availability)
+draft_sorties = {} --table to store draft sorties (all valid unit/task/loadout/target combinations)
+multiPlaneSet = {}
+
+
+check oob_air units without task and report warn log
+create draft_sortie for all avalaible aircaft,
+create avalaible tab for sorties, conditions: 
+	- active unit,
+	- exist an active airbase (unit.base),
+	- exist ready unit (roster.read  > 0),
+	- unit avalaiability (unit.unavalaible = false)
+	- % unit serviceability (unit.serviceability or UNIT_SERVICEABILITY)
+removes from aircraft_availability tab, the unavailable units that exceeds the number of roster.ready units or if the current time has exceeded the period of unavailability 
+check loadout for specific task of avalaible aircraft
+check loadout day time compatibility
+search in targetlist an active target task compatible
+verify loadout elegibility: if exist target attributes (soft, hard ecc.) check if target.attributes match loadout.attributes
+assign aircraft conditions: 
+	- airbase
+	- target.firepower.min <= aircraft_available * unit_loadouts.firepower(Intercept or Transport task)  or MPOverride
+	- loadout weather compatibility
+	- target range < loadout.range (strike task or similar)
+compute route (ATO_RouteGenerator.getRoute)
+check route.lenght <= loadout.range.multiplier and multiplier * loadout.minrange <= route.lenght
+requested aircraft = unit.firepower.max / target.firepower 
+evalutate flight requested: (tot_to - tot_from)/loadout.tStation (only for CAP, AWACS, Refueling)
+assigned aircraft = requested aircraft otherwise avalaible aircraft
+evalutate score sortie: 
+	- score = loadouts.capability * target.priority CAP and Intercept task
+	- score = loadouts.capability * target.priority/route_threar other task
+reduce score sorties (only CAP, AWACS and Refueling):
+	- reduce_score = ( flights_requested - aircraft_assign ) * loadout.firepower / target.firepower.max for CAP task
+	- reduce_score = flights_requested - aircraft_assign for AWACS, Refueling task
+update score sorties: score = score - reduce_score * 0.01
+update score sorties: score = score = score * unit.tasksCoef[task]	
+if MultiplayerOverride -> score = score * 5000
+if multiplaneset -> score = score * 10 and score >= 150
+create additional draft sorties with support flight assigned, conditions:
+	- draft.route.threat.airtotal > MIN_TOTAL_AIR_THREAT for escort
+	- draft.route.threat.SEAD_offset > 0  for SEAD
+	- draft.route.threat.SEAD_offset > 0 and draft.route.threat.airtotal > MIN_TOTAL_AIR_THREAT for jammer escort
+	- always true for other task (laser Illumination, flare Illumination)
+	- loadout day time compatibility
+	- loadout.vcruise >= draft.loadout.vcruise (primary flight)
+	- loadout weather compatibility
+	
+
+
+
+
+
+
+
 ]]
 
 
@@ -441,6 +496,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 					
 
 					if active_log then log.traceLow("Removes from aircraft_availability tab, the unavailable units that exceeds the number of roster.ready units or if the current time has exceeded the period of unavailability ") end
+					
 					for u = #aircraft_availability[unit[n].name].unavailable, 1, -1 do											--iterate backwards through unavailable aircraft from this unit
 						u_entry = u_entry + 1
 						
@@ -627,9 +683,9 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 												for target_name, target in pairs(target_side) do
 													if active_log then log.traceVeryLow("target: " .. target_name .. ", side: " .. side) end
 													
-													if target.x ~= nil and target.y ~= nil then
-														if active_log then log.traceVeryLow("target coord: ".. target.x .. ", " .. target.y) end
-													end
+													
+													if active_log then log.traceVeryLow("target coord: ".. (target.x or "nil") .. ", " .. (target.y or "nil") ) end
+													
 
 													if target.inactive ~= true and target.ATO then											--if target is active and should be added to ATO
 														if active_log then log.traceLow("target is active and signed for added to ATO") end
@@ -995,7 +1051,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							
 																							--ATO_G_adjustment02
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then
-																								draft_sorties_entry.score = draft_sorties_entry.score * unit[n].tasksCoef[task]		--aumena lo score di un fattore paria al taskcoeff (ha senso)																				 
+																								draft_sorties_entry.score = draft_sorties_entry.score * unit[n].tasksCoef[task]		--aumenta lo score di un fattore paria al taskcoeff (ha senso)																				 
 																								if active_log then log.traceLow("for this task(" .. task .. ") unit(" .. unit[n].name .. " - " .. unit[n].type .. " have taskcoeff: " .. unit[n].tasksCoef[task] .. ", update draft_sorties_entry.score = " .. draft_sorties_entry.score) end
 																							end
 																							
@@ -1381,7 +1437,7 @@ for sideS, draftT in pairs(draft_sorties) do
 												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has a SEAD offset requirement of: " .. draft.route.threats.SEAD_offset .. ", and has has an air threat(> " .. MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.SEAD_offset .. ", set support_requirement = true") end
 											end
 
-										elseif task == "Flare Illumination" or task == "Laser Illumination"then
+										elseif task == "Flare Illumination" or task == "Laser Illuminat.ion"then
 											support_requirement = true
 											if active_log then log.traceLow("draft sortie (task: " .. task .. "), set support_requirement = true") end
 										end

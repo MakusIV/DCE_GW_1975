@@ -53,6 +53,7 @@ local function_log_level = log_level --log_level
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
+local active_log = false -- select true to activate log
 log.info("Start")
 
 local MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3

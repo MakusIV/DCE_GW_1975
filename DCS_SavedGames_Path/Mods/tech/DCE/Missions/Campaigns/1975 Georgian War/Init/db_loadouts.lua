@@ -135,20 +135,33 @@ otherwise you must set the travel altitude (hcruise) < 100
 
 ridefine firepower:
 bomb: 
-attributes: soft, SAM, parked aircraft
+attributes: soft, SAM, Parked Aircraft
 light bomb (attributes: soft, parked aircraft) : firepower: 1, 1 lb for single target unit
 medium bomb (attributes: SAM, parked aircraft, armor) : firepower: 1, 1 mb for single target unit
 heavy bomb (attributes: structure, bridge) : firepower: 1,  1 hb for single target unit
 cluster bomb (attributes: soft, parked aircraft): firepower: 1, 1 cb for any 3 target unit 
 heavy cluster bomb (attributes: soft, parked aircraft): firepower: 1 hcb for any 3 target unit 
-rockets(attributes: SAM, parked aircraft, armor): firepower: 3, 3 rkt for single target unit
+rockets(attributes: parked aircraft, soft): firepower: 2, 2 rkt for single target unit
+heavy rockets(attributes: SAM, armor): firepower: 1, 1 rkt for single target unit
 missile a2g(attributes: SAM, armor): firepower: 1, 1 m for single target unit
 missile a2g(ship, structure, bridge): firepower: 3, 3 m for single target unit
+missile antiship (ship): firepower 1, 1 m for single ship target
+missile antiradar (SAM, EWR): firepower 1, 1 m for single SAM or EWR target
 
-attributes: bridge, structure
-firepower: 1 heavy bomb for target
+taskWeaponInfo = {
 
+	[1] = {
+		["name"] = "Mk-84",
+		["quantity"] = 2,
+	}
+		
+	[2] = {
+		["name"] = "Mk 20 cluster",
+		["quantity"] = 3,
+	}
+}
 
+implementato in S-3B
 
 ]]
 
@@ -223,6 +236,11 @@ db_loadouts = {
 		["Intercept"] = {
 			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
 				attributes = {},
+				weapons = {-- task dedicated weapons
+					["AIM-54A-MK60"] = 4,
+					["AIM-7M"] = 2, --cambia in F se possibile
+					["AIM-9M"] = 2,
+				},
 				weaponType = nil,
 				expend = nil,
 				day = true,
@@ -230,7 +248,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 9,
-				firepower = 8,
+				firepower = 8, -- = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) + evaluate_weapon_firepower(weapon = "AIM-9M", quantity = 2)
 				vCruise = nil,
 				vAttack = nil,
 				hCruise = nil,
@@ -308,6 +326,11 @@ db_loadouts = {
 		["CAP"] = {
 			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
 				attributes = {},
+				weapons = {-- task dedicated weapons
+					["AIM-54A-MK60"] = 4,
+					["AIM-7M"] = 2,
+					["AIM-9M"] = 2,
+				},
 				weaponType = nil,
 				expend = nil,
 				day = true,
@@ -315,7 +338,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 8,
-				firepower = 8,
+				firepower = 8,  -- = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) -- solo BVR(?)
 				vCruise = 213.83333333333,
 				vAttack = 213.83333333333,
 				hCruise = 25000,
@@ -393,6 +416,11 @@ db_loadouts = {
 		["Escort"] = {
 			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
 				attributes = {},
+				weapons = {
+					["AIM-54A-MK60"] = 4,
+					["AIM-7M"] = 2,
+					["AIM-9M"] = 2,
+				},
 				weaponType = nil,
 				expend = nil,
 				day = true,
@@ -400,7 +428,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 8,
-				firepower = 8,
+				firepower = 8, --  = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) + evaluate_weapon_firepower(weapon = "AIM-9M", quantity = 2)
 				vCruise = 200,
 				standoff = 80300,
 				tStation = 7200,
@@ -474,6 +502,11 @@ db_loadouts = {
 		["Fighter Sweep"] = {
 			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
 				attributes = {},
+				weapons = {
+					["AIM-54A-MK60"] = 4,
+					["AIM-7M"] = 2,
+					["AIM-9M"] = 2,
+				},
 				weaponType = nil,
 				expend = nil,
 				day = true,
@@ -481,7 +514,7 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 9,
-				firepower = 8,
+				firepower = 8, --  = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) solo BVR
 				vCruise = 255.83333333333,
 				vAttack = 315.83333333333,
 				hCruise = 9753.6,
@@ -828,6 +861,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 10,					
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -1745,6 +1781,60 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
+			["ASM SEAD ECM MavTV  U25pod KBpod RB-75T*2 FUEL"] = {
+				minscore = 0.1,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 7,
+				firepower = 6,
+				vCruise = 250,
+				vAttack = 250,
+				hCruise = 1000,
+				hAttack = 1000,
+				standoff = 6000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] =
+					{
+						[2] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{U22}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
 		},
 		["SEAD"] = {		
 			["ASM SEAD ECM MavTV  U25pod KBpod RB-75T*2 FUEL"] = {
@@ -2050,12 +2140,18 @@ db_loadouts = {
 				attributes = {"ship"},
 				weaponType = "ASM",
 				expend = "Auto",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "AGM-84A",
+						["quantity"] = 2,
+					},							
+				},
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 500000,
 				capability = 8,
-				firepower = 7,
+				firepower = 7, --getWeaponFirepower("blue", "Anti-ship Strike", "ship", {  [1] = { ["name"] = "AGM-84A",	["quantity"] = 2, }, }	), -- 7,
 				vCruise = 200,
 				vAttack = 200,
 				hCruise = 5000,
@@ -2082,55 +2178,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-		},
-		["SEAD"] = {
-			["SEAD AGM-65D-K*2"] = {
-				minscore = 0.0,
-				attributes = {},
-				weaponType = "ASM",
-				expend = "Auto",
-				day = true,
-				night = false,
-				adverseWeather = false,
-				range = 500000,
-				capability = 6,
-				firepower = 6,
-				vCruise = 200,
-				vAttack = 200,
-				hCruise = 3000,
-				hAttack = 3000,
-				standoff = 6000,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 4,
-				stores = {
-					["pylons"] =
-					{
-						[1] = 
-						{
-							["CLSID"] = "{69DC8AE7-8F77-427B-B8AA-B19D3F478B66}",
-						}, -- end of [1]
-						[3] = 
-						{
-							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
-						}, -- end of [4]
-						[6] = 
-						{
-							["CLSID"] = "{444BA8AE-82A7-4345-842E-76154EFCCA46}",
-						}, -- end of [6]
-					}, -- --end of ["pylons"]
-					["fuel"] = 7000,
-					["flare"] = 30,
-					["chaff"] = 30,
-					["gun"] = 100,
-				},
-			},
-		},
+		},		
 		["Strike"] = {
 			["GA MK-84*2, MK-82*4"] = {
 				minscore = 0.0,
@@ -2138,15 +2186,25 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "Bridge", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "Mk-84",
+						["quantity"] = 2,
+					},							
+					[2] = {
+						["name"] = "Mk-82",
+						["quantity"] = 4,
+					},							
+				},
 				day = true,
 				night = false,
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
-				firepower = 8,
+				firepower = 8, --getWeaponFirepower("blue", "Anti-ship Strike", "ship", {  [1] = { ["name"] = "Mk-84",	["quantity"] = 2, }, [2] = { ["name"] = "Mk-82",	["quantity"] = 4, },}	), --8,
 				vCruise = 200,
 				vAttack = 115,
 				hCruise = 12000,
@@ -2199,6 +2257,12 @@ db_loadouts = {
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "Mk-82",
+						["quantity"] = 10,
+					},												
+				},
 				day = true,
 				night = false,
 				adverseWeather = false,
@@ -2257,6 +2321,12 @@ db_loadouts = {
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "Mk-20",
+						["quantity"] = 4,
+					},												
+				},
 				day = true,
 				night = false,
 				adverseWeather = false,
@@ -2307,6 +2377,16 @@ db_loadouts = {
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "Mk-20",
+						["quantity"] = 2,
+					},	
+					[2] = {
+						["name"] = "Zuni-Mk71",
+						["quantity"] = 9,
+					},												
+				},
 				day = true,
 				night = false,
 				adverseWeather = false,
@@ -2348,6 +2428,124 @@ db_loadouts = {
 						[6] = 
 						{
 							["CLSID"] = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
+					["fuel"] = 7000,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
+			["SEAD AGM-65D-K*2"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "AGM-65D",
+						["quantity"] = 2,
+					},							
+					[2] = {
+						["name"] = "AGM-65K", -- controlla su ME s monta in totale 4 AGM-65
+						["quantity"] = 2,
+					},							
+				},
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 500000,
+				capability = 6,
+				firepower = 6,
+				vCruise = 200,
+				vAttack = 200,
+				hCruise = 3000,
+				hAttack = 3000,
+				standoff = 6000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] =
+					{
+						[1] = 
+						{
+							["CLSID"] = "{69DC8AE7-8F77-427B-B8AA-B19D3F478B66}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [4]
+						[6] = 
+						{
+							["CLSID"] = "{444BA8AE-82A7-4345-842E-76154EFCCA46}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
+					["fuel"] = 7000,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
+		},
+		["SEAD"] = {
+			["SEAD AGM-65D-K*2"] = {
+				minscore = 0.0,
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				taskWeaponInfo = {
+					[1] = {
+						["name"] = "AGM-65D",
+						["quantity"] = 2,
+					},							
+					[2] = {
+						["name"] = "AGM-65K", -- controlla su ME s monta in totale 4 AGM-65
+						["quantity"] = 2,
+					},							
+				},
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 500000,
+				capability = 6,
+				firepower = 6,
+				vCruise = 200,
+				vAttack = 200,
+				hCruise = 3000,
+				hAttack = 3000,
+				standoff = 6000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] =
+					{
+						[1] = 
+						{
+							["CLSID"] = "{69DC8AE7-8F77-427B-B8AA-B19D3F478B66}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [4]
+						[6] = 
+						{
+							["CLSID"] = "{444BA8AE-82A7-4345-842E-76154EFCCA46}",
 						}, -- end of [6]
 					}, -- --end of ["pylons"]
 					["fuel"] = 7000,
@@ -3331,56 +3529,7 @@ db_loadouts = {
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
-			},
-			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
-				attributes = {},
-				weaponType = nil,
-				expend = nil,
-				day = true,
-				night = true,
-				adverseWeather = false,
-				range = 270000,
-				capability = 4,
-				firepower = 2,
-				vCruise = 215.83333333333,
-				vAttack = 246.66666666667,
-				hCruise = 6096,
-				hAttack = 6096,
-				standoff = 36000,
-				tStation = 1800,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = 
-					{
-						[1] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [1]
-						[3] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "PTB-1200-F1",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [5]
-						[7] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
-					["fuel"] = 3356,
-					["flare"] = 0,
-					["chaff"] = 0,
-					["gun"] = 100,
-				},
-			},			
+			},					
 		},
 		["Escort"] = {
 			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
@@ -3431,56 +3580,7 @@ db_loadouts = {
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
-			},
-			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
-				attributes = {},
-				weaponType = nil,
-				expend = nil,
-				day = true,
-				night = true,
-				adverseWeather = false,
-				range = 270000,
-				capability = 4,
-				firepower = 2,
-				vCruise = 215.83333333333,
-				vAttack = 246.66666666667,
-				hCruise = 6096,
-				hAttack = 6096,
-				standoff = 36000,
-				tStation = 1800,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = 
-					{
-						[1] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [1]
-						[3] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "PTB-1200-F1",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [5]
-						[7] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
-					["fuel"] = 3356,
-					["flare"] = 0,
-					["chaff"] = 0,
-					["gun"] = 100,
-				},
-			},	
+			},			
 		},
 		["Fighter Sweep"] = {
 			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
@@ -3531,56 +3631,7 @@ db_loadouts = {
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
-			},
-			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
-				attributes = {},
-				weaponType = nil,
-				expend = nil,
-				day = true,
-				night = true,
-				adverseWeather = false,
-				range = 270000,
-				capability = 4,
-				firepower = 2,
-				vCruise = 215.83333333333,
-				vAttack = 246.66666666667,
-				hCruise = 6096,
-				hAttack = 6096,
-				standoff = 36000,
-				tStation = 1800,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = 
-					{
-						[1] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [1]
-						[3] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "PTB-1200-F1",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{R530F_EM}",
-						}, -- end of [5]
-						[7] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
-					["fuel"] = 3356,
-					["flare"] = 0,
-					["chaff"] = 0,
-					["gun"] = 100,
-				},
-			},	
+			},			
 		},
 	},	
 
@@ -4702,6 +4753,204 @@ db_loadouts = {
 						{
 							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
 						}, -- --end of [9]
+					}, -- --end of ["pylons"]
+					["fuel"] = "4864",
+					["flare"] = 30,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["Day, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = true,
+				range = 360000,
+				capability = 10,
+				firepower = 5,
+				vCruise = 270,
+				vAttack = 270,
+				hCruise = 6096,
+				hAttack = 4096,
+				standoff = 13000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] =
+					{
+						[1] =
+						{
+							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
+						}, -- --end of [1]
+						[2] =
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
+						}, -- --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [4]
+						[6] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [6]
+						[7] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [7]
+						[8] =
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- --end of [8]
+						[9] =
+						{
+							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
+					["fuel"] = "4864",
+					["flare"] = 30,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["Night, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = false,
+				night = true,
+				adverseWeather = true,
+				range = 360000,
+				capability = 10,
+				firepower = 6,
+				vCruise = 270,
+				vAttack = 270,
+				hCruise = 6096,
+				hAttack = 4096,
+				standoff = 13000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] =
+					{
+						[1] =
+						{
+							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
+						}, -- --end of [1]
+						[2] =
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
+						}, -- --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [4]
+						[6] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [6]
+						[7] =
+						{
+							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
+						}, -- --end of [7]
+						[8] =
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- --end of [8]
+						[9] =
+						{
+							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
+						}, -- --end of [9]
+					}, -- --end of ["pylons"]
+					["fuel"] = "4864",
+					["flare"] = 30,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["ASM SEAD AGM45*4 AIM-7E EMC Fuel"] = {
+				minscore = 0.0,
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 360000,
+				capability = 10,
+				firepower = 12,
+				vCruise = 270,
+				vAttack = 270,
+				hCruise = 6096,
+				hAttack = 4096,
+				standoff = 13000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] =
+					{
+						[1] = 
+						{
+							["CLSID"] = "{AGM_45A}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{AIM-7E}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{8B9E3FD0-F034-4A07-B6CE-C269884CC71B}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{AIM-7E}",
+						}, -- end of [6]
+						[8] = 
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- end of [8]
+						[9] = 
+						{
+							["CLSID"] = "{AGM_45A}",
+						}, -- end of [9]
 					}, -- --end of ["pylons"]
 					["fuel"] = "4864",
 					["flare"] = 30,
@@ -6379,6 +6628,59 @@ db_loadouts = {
 						},
 					},
 					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},	
+			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				minscore = 0.0,
+				weaponType = "ASM",
+				expend = "Auto",				
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 900000,
+				capability = 8,
+				firepower = 8,
+				vCruise = 330,
+				vAttack = 450,
+				hCruise = 7000,
+				hAttack = 4000,
+				standoff = 60000,--60-120km kh-58
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[1] = {
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+							["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
+							["num"] = 2,
+						},
+						[5] = {
+							["CLSID"] = "{0519A264-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 5,
+						},
+						[7] = {
+							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
+							["num"] = 7,
+						},
+						[8] = {
+							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["num"] = 8,
+						},
+						}, ----end of ["pylons"]
+	 				["fuel"] = "11700",
 					["flare"] = 96,
 					["chaff"] = 96,
 					["gun"] = 100,
@@ -8397,6 +8699,73 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
+			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
+				minscore = 0.0,				
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "All",
+				attackType = "Dive",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 700000,
+				capability = 5,
+				firepower = 12,
+				vCruise = 200,
+				vAttack = 280,
+				hCruise = 6500,
+				hAttack = 3000,
+				standoff = 30000,-- Kh-25MP range 40km
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [8]
+					}, ----end of ["pylons"]
+					["fuel"] = "3770",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+
 		},
 		["SEAD"] = {
 			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
@@ -8461,7 +8830,6 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-
 		},
 	},
 
@@ -9141,6 +9509,60 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
+			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
+				minscore = 0.0,				
+				support = {
+					["Escort"] = true,
+					["SEAD"] = false,
+				},
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "All",
+				attackType = "Dive",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 5,
+				firepower = 6,
+				vCruise = 300,
+				vAttack = 400,
+				hCruise = 7500,
+				hAttack = 4000,
+				standoff = 30000, -- Kh-25MP-MPU 40 km
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [3]
+						[5] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
+						}, -- end of [8]
+					}, ----end of ["pylons"]
+					["fuel"] = "4500",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
 		},
 		["SEAD"] = {
 			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
@@ -9193,7 +9615,6 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-
 		},
 	},
 
@@ -10365,7 +10786,7 @@ db_loadouts = {
 			},
 		},
 		["Fighter Sweep"] = {
-			["Fighter Sweep TF-Old-LR-AIM-9M*2,AIM7MH*4,FT*3"] = {
+			["Fighter Sweep IPW K-13A*2, PTB-760*2"] = {
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -10409,14 +10830,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 				["AddPropAircraft"] =
-																				{
-																						["MissileToneVolume"] = 5,
-																						["NAV_Initial_Hdg"] = 0,
-																						["ADF_Selected_Frequency"] = 1,
-																						["ADF_NEAR_Frequency"] = 303,
-																						["ADF_FAR_Frequency"] = 625,
-																						["MountSIRENA"] = true,
-																				}, --end of ["AddPropAircraft"]
+					{
+							["MissileToneVolume"] = 5,
+							["NAV_Initial_Hdg"] = 0,
+							["ADF_Selected_Frequency"] = 1,
+							["ADF_NEAR_Frequency"] = 303,
+							["ADF_FAR_Frequency"] = 625,
+							["MountSIRENA"] = true,
+					}, --end of ["AddPropAircraft"]
 				},
 		},
 		["Anti-ship Strike"] = {
@@ -10471,12 +10892,12 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 				["AddPropAircraft"] = {
-																						["MissileToneVolume"] = 5,
-																						["NAV_Initial_Hdg"] = 0,
-																						["ADF_Selected_Frequency"] = 1,
-																						["ADF_NEAR_Frequency"] = 303,
-																						["ADF_FAR_Frequency"] = 625,
-																						["MountSIRENA"] = true,
+					["MissileToneVolume"] = 5,
+					["NAV_Initial_Hdg"] = 0,
+					["ADF_Selected_Frequency"] = 1,
+					["ADF_NEAR_Frequency"] = 303,
+					["ADF_FAR_Frequency"] = 625,
+					["MountSIRENA"] = true,
 				}, --end of ["AddPropAircraft"]
 			},
 			["Antiship IPW - Strike SR - K-13A*2, ORO-57K*4"] = {
