@@ -229,8 +229,10 @@ require("Init/radios_freq_compatible")												-- miguel21 modification M34 c
 
 -- define firepower value for db_loadouts (only first mission)
 if FirstMission then -- per sicurezza (verifica se esiste missione 0)
-	--dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Firepower.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
-	--defineLoadoutsFirepower(db_loadouts)
+	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Firepower.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+	CopyFile("Init/db_loadouts.lua", "Init/db_loadouts_original.lua")	
+	defineLoadoutsFirepower()
+	SaveTabOnPath( "Init/", "db_loadouts", db_loadouts ) -- save new updated db_loadouts     
 end
 
 

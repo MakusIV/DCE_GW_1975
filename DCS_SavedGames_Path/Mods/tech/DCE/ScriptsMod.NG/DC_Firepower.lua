@@ -31,27 +31,205 @@ log.debug("Start")
 
 local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01 -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = 9999999999
+local FIREPOWER_ROUNDEND_COMPUTATION = 0.01
+local FIREPOWER_ROUNDEND_ASSIGNEMENT = 0.1
+-- LOCAL FUNCTION
 
--- load computed_target_efficiency table, if not exist create one new
-function loadComputedTargetEfficiency()
+-- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
+local function searchWeapon(weapon, side)
+    local previous_log_level = log.level
+	log.level = function_log_level
+	local nameFunction = "searchWeapon(weapon: ( " .. weapon .. "), side(" .. (side or "nil") .. ") ): "
+    log.traceLow(nameFunction .. "Start")
 
-    if camp.mission > 1 and io.open("Active/computed_target_efficiency.lua", "r") then
-        require("Active/computed_target_efficiency") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
+    if side then -- side is defined
 
-    else -- initialize new computed_target_efficiency if not exist 
-        computed_target_efficiency = {} 
-        SaveTabOnPath( "Active/", "computed_target_efficiency", computed_target_efficiency )         
+        for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate in weapon_db for side
+            
+            if weapon == weapon_name then   --found weapon, return weapon data
+                log.traceVeryLow(nameFunction .. "found weapon: " .. weapon .. ", return weapon data")
+                log.level = previous_log_level
+                return weapon_data
+            end
+        end
+
+    else -- side isn't defined
+
+        for side, side_data in pairs(weapon_db) do -- iterate from side
+
+            for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate in weapon_db for side
+            
+                if weapon == weapon_name then   --found weapon, return weapon data
+                    log.traceVeryLow(nameFunction .. "found weapon: " .. weapon .. ", return weapon data")
+                    log.level = previous_log_level
+                    return weapon_data
+                end
+            end
+        end
     end
+    log.traceLow(nameFunction .. "End")
+    log.level = previous_log_level
+    return nil -- not weapon was found, return nil
 end
 
+-- return firepower value for weapon parameter (weapon_table) of a weapon
+local function getWeaponFirepower(side, task, attribute, weapon_table)
+    local previous_log_level = log.level
+	log.level = function_log_level
+	local nameFunction = "getWeaponFirepower(side: (" .. (side or "nil") .. "), task(" .. task .. "), attribute(" .. attribute .. "), weapon_table ): "    
+    log.traceLow(nameFunction .. "Start")
+    local weapon_name
+    local weapon_qty
+    local weapon_data
+    local weapon_data_db
+    local firepower = 0
+    local check
 
+    for weapon_name, weapon_qty in pairs(weapon_table) do                
+        log.traceVeryLow(nameFunction .. "weapon_name: " .. weapon_name .. ", weapon_qty: " .. weapon_qty)
+        weapon_data_db = searchWeapon(weapon_name, side)
+
+        if weapon_data_db then
+           log.traceVeryLow(nameFunction .. "found weapon_data_db for weapon: " .. weapon_name) 
+            --check task
+            check = false
+            
+            for task_num, task_name in pairs(weapon_data_db.task) do
+                
+                if task_name == task then
+                    check = true
+                    break
+                end
+            end
+
+            if check then 
+                --check efficiency.attribute
+                check = false
+                
+                for attribute_name, attribute_item in pairs(weapon_data_db.efficiency) do
+
+                    if attribute_name == attribute then
+                        check = true
+                        break
+                    end
+                end
+            
+                if check then
+                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy *  weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDEND_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
+                    log.traceVeryLow(nameFunction .. "update unit firepower for weapon " .. weapon_name .. ": firepower: " .. firepower .. ", accuracy: " .. weapon_data_db.efficiency[attribute].mix.accuracy .. ", destroy_capacity: " .. weapon_data_db.efficiency[attribute].mix.destroy_capacity .. ", weapon_qty: " .. weapon_qty) 
+                end
+            end
+        end
+    end
+    log.traceLow(nameFunction .. "End")
+    log.level = previous_log_level
+    return firepower
+end
 
 -- return true if year is within validity period of wapon usage (start_service <= year <= end_service)
 local function isWeaponUsable(weapon_name, year)
     return ( weapon_db[weapon_name].start_service and weapon_db[weapon_name].start_service <= year or false ) and ( weapon_db[weapon_name].end_service and weapon_db[weapon_name].start_service >= year or false )
 end
 
+-- return firepower of A2A missile
+local function evalutateFirepowerA2AMissile(missile_data)
+    local previous_log_level = log.level
+	log.level = function_log_level
+	local nameFunction = "evalutateFirepowerA2AMissile(missile_data): "
+    log.traceLow(nameFunction .. "Start")
 
+    local firepower
+    local range_factor = 0.3
+    local semiactive_range_factor = 0.2
+    local active_range_factor = 0.2
+    local max_height_factor = 0.3
+    local max_speed_factor = 0.2
+    local tnt_factor = 0.3 
+    local seeker_factor    
+    
+    if missile_data.seeker == "radar" then
+    
+        if missile_data.range then
+            range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.radar_range
+
+            if range_factor > 1 then
+                range_factor = 1
+            end
+        end
+            
+        if missile_data.active_range then
+            active_range_factor = 1 + missile_data.active_range / REFERENCE_EFFICIENCY_MISSILE_A2A.active_range
+    
+            if active_range_factor > 1 then
+                active_range_factor = 1
+            end
+        end
+
+        if missile_data.semiactive_range then        
+            semiactive_range_factor = missile_data.semiactive_range / REFERENCE_EFFICIENCY_MISSILE_A2A.semiactive_range
+
+            if semiactive_range_factor > 1 then
+                semiactive_range_factor = 1
+            end        
+        end
+
+        if missile_data.max_height then
+            max_height_factor = missile_data.max_height / REFERENCE_EFFICIENCY_MISSILE_A2A.max_height_radar_missile
+    
+            if max_height_factor > 1 then
+                max_height_factor = 1
+            end
+        end
+    
+        if missile_data.max_speed then
+            max_speed_factor = missile_data.max_speed / REFERENCE_EFFICIENCY_MISSILE_A2A.max_speed_radar_missile
+    
+            if max_speed_factor > 1 then
+                max_speed_factor = 1
+            end
+        end
+        seeker_factor = max_speed_factor * max_height_factor * semiactive_range_factor * active_range_factor * range_factor
+
+    elseif missile_data.seeker == "infrared" then
+        
+        range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.infrared_range
+       
+        if range_factor > 1 then
+            range_factor = 1
+        end
+
+        if missile_data.max_height then
+            max_height_factor = missile_data.max_height / REFERENCE_EFFICIENCY_MISSILE_A2A.max_height_infrared_missile
+    
+            if max_height_factor > 1 then
+                max_height_factor = 1
+            end
+        end
+    
+        if missile_data.max_speed then
+            max_speed_factor = missile_data.max_speed / REFERENCE_EFFICIENCY_MISSILE_A2A.max_speed_infrared_missile
+    
+            if max_speed_factor > 1 then
+                max_speed_factor = 1
+            end
+        end
+        seeker_factor = max_speed_factor * max_height_factor * range_factor
+    end
+
+    if missile_data.tnt then
+        tnt_factor = missile_data.tnt / REFERENCE_EFFICIENCY_MISSILE_A2A.tnt
+
+        if tnt_factor > 1 then
+            tnt_factor = 1
+        end
+    end
+    
+    firepower = roundAtNumber(missile_data.reliability * missile_data.manouvrability * seeker_factor * tnt_factor, FIREPOWER_ROUNDEND_COMPUTATION)
+    log.traceVeryLow(nameFunction .. "seeker_factor: " .. seeker_factor .. ", tnt_factor: " .. tnt_factor)
+    log.traceVeryLow(nameFunction .. "missile_data.reliability: " .. missile_data.reliability .. ", missile_data.manouvrability: " .. missile_data.manouvrability .. ", firepower: " .. firepower)
+    log.level = previous_log_level
+    return firepower
+end
 
 -- return true if task_name is a A2A task (CAP, ..)
 local function isA2ATask(task_name)    
@@ -71,8 +249,6 @@ local function isNotFightTask(task_name)
     return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS"
 end
 
-
-
 -- return a key (string) for table computed_target_efficiency
 local function getKeyComputedEfficiency(num_targets_element, side, dimension_element, attribute, task, firepower_min, choice_value)
     return tostring(num_targets_element) .. side .. tostring(dimension_element) .. attribute .. task .. tostring(firepower_min) .. choice_value
@@ -83,7 +259,6 @@ local function insertEfficiency(key, efficiency)
     computed_target_efficiency[key] = efficiency
 end
  
-
 -- return name. median efficiency and median efficiency_variability of weapons defined in weapon_db for attribute and task parameters, return nil if no weapon found
 -- efficiency = accuracy * destroy_capacity (1 max, 0.01 min)
 -- accuracy: hit success percentage, 1 max, 0.1 min, 
@@ -140,8 +315,8 @@ local function medEfficiencyWeapon(side, target_attribute, target_dimension, tas
     end
 
     if break_loop then
-        draft_weapon_efficiency = draft_weapon_efficiency / i
-        draft_weapon_variability = draft_weapon_variability / i
+        draft_weapon_efficiency = roundAtNumber( draft_weapon_efficiency / i, FIREPOWER_ROUNDEND_COMPUTATION)
+        draft_weapon_variability = roundAtNumber( draft_weapon_variability / i, FIREPOWER_ROUNDEND_COMPUTATION)
     else
         draft_weapon_efficiency = nil
         draft_weapon_variability = nil
@@ -188,7 +363,7 @@ local function maxEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = dimension_data.accuracy * dimension_data.destroy_capacity                                 
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDEND_COMPUTATION)
                                     
                                     if choice_weapon_efficiency < draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -251,7 +426,7 @@ local function minEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = dimension_data.accuracy * dimension_data.destroy_capacity                                 
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDEND_COMPUTATION)
                                     
                                     if choice_weapon_efficiency > draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -323,8 +498,8 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
     end
     
     if best_weapon_efficiency then
-        calculated_firepower_min = math.ceil( num_targets_element / best_weapon_efficiency )
-        calculated_firepower_max = math.ceil( calculated_firepower_min * ( 1 + best_weapon_variability ) )     
+        calculated_firepower_min = roundAtNumber( num_targets_element / best_weapon_efficiency, FIREPOWER_ROUNDEND_COMPUTATION )
+        calculated_firepower_max = roundAtNumber( calculated_firepower_min * ( 1 + best_weapon_variability ), FIREPOWER_ROUNDEND_COMPUTATION )     
     end
 
     log.traceVeryLow(nameFunction .. "computed firepower min, max: " .. (calculated_firepower_min or "nil") .. ", " .. (calculated_firepower_max or "nil"))
@@ -333,9 +508,8 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
     return calculated_firepower_min, calculated_firepower_max
 end
 
-
 -- return firepower (min or max) value 
-function getTargetFirepower( num_targets_element, side, dimension_element, attribute, task, choice_firepower_min, choice_value )  
+local function getTargetFirepower( num_targets_element, side, dimension_element, attribute, task, choice_firepower_min, choice_value )  
     local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "getTargetFirepower( num_targets_element(" .. num_targets_element .. "), side: " .. side .. ", dimension_element(" .. dimension_element .. "), attribute(" .. attribute .. "), task(" .. task .. "), choice_firepower_min: " .. tostring(choice_firepower_min) .. ", choice_value: " .. choice_value .. "): "
@@ -382,12 +556,28 @@ function getTargetFirepower( num_targets_element, side, dimension_element, attri
     end
 end
 
+
+-- GLOBAL FUNCTION
+
+-- load computed_target_efficiency table, if not exist create one new
+function loadComputedTargetEfficiency()
+
+    if camp.mission > 1 and io.open("Active/computed_target_efficiency.lua", "r") then
+        require("Active/computed_target_efficiency") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
+
+    else -- initialize new computed_target_efficiency if not exist 
+        computed_target_efficiency = {} 
+        SaveTabOnPath( "Active/", "computed_target_efficiency", computed_target_efficiency )         
+    end
+end
+
 -- call from DC_UpdateTargetList, initialize firepower value for target in targetlist
 function defineTargetListFirepower(targetlist)
     local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "defineTargetListFirepower(targetlist): "
     log.traceLow(nameFunction .. "Start")
+    local alive
  
     loadComputedTargetEfficiency()
 
@@ -412,7 +602,14 @@ function defineTargetListFirepower(targetlist)
                 class = target.class or "scenery"-- ship, vehicle, ecc.
 
                 if target.elements then
-                    num_elements = #target.elements -- num of element of target
+                    
+                    if target.alive then
+                        alive = target.alive / 100
+                    else
+                        alive = 1
+                    end
+
+                    num_elements = #target.elements * alive -- num of element of target
                 
                 elseif target.unit and target.unit.number then
                     num_elements = target.unit.number
@@ -442,6 +639,7 @@ function defineTargetListFirepower(targetlist)
                 firepower_max = getTargetFirepower(num_elements, side_name, dimension, attribute, task, false, "med")                
             end
             log.traceVeryLow(nameFunction .. "target_name: " .. target_name .. ", firepower_min: " .. (firepower_min or "nil") .. ", firepower_max: " .. (firepower_max or "nil"))
+
             target.firepower.min = firepower_min or 99999
             target.firepower.max = firepower_max or 99999            
         end
@@ -453,126 +651,14 @@ function defineTargetListFirepower(targetlist)
     return
 end
 
--- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
-local function searchWeapon(weapon, side)
-    local previous_log_level = log.level
-	log.level = function_log_level
-	local nameFunction = "searchWeapon(weapon: " .. weapon .. "), side(" .. side .. "): "
-    log.traceLow(nameFunction .. "Start")
-
-    if side then -- side is defined
-
-        for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate in weapon_db for side
-            
-            if weapon == weapon_name then   --found weapon, return weapon data
-                log.level = previous_log_level
-                return weapon_data
-            end
-        end
-
-    else -- side isn't defined
-
-        for side, side_data in pairs(weapon_db) do -- iterate from side
-
-            for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate in weapon_db for side
-            
-                if weapon == weapon_name then   --found weapon, return weapon data
-                    log.level = previous_log_level
-                    return weapon_data
-                end
-            end
-        end
-    end
-    log.traceLow(nameFunction .. "End")
-    log.level = previous_log_level
-    return nil -- not weapon was found, return nil
-end
-
-
--- return firepower value for weapon parameter (weapon_table) of a weapon
-function getWeaponFirepower(side, task, attribute, weapon_table)
-    local previous_log_level = log.level
-	log.level = function_log_level
-	local nameFunction = "getWeaponFirepower(side: " .. side .. "), task(" .. task .. "), attribute(" .. attribute .. ", weapon_table) ): "    
-    log.traceLow(nameFunction .. "Start")
-    local weapon_name
-    local weapon_qty
-    local weapon_data
-    local weapon_data_db
-    local firepower = 0
-
-    for num_weapon, weapon_data in pairs(weapon_table) do        
-        weapon_name = weapon_data.name
-        weapon_qty = weapon_data.quantity
-        log.traceVeryLow("num_wepon: " .. num_weapon .. ", weapon_name: " .. weapon_name .. ", weapon_qty: " .. weapon_qty)
-        weapon_data_db = searchWeapon(weapon_name, side)
-        
-        if weapon_data_db then
-            firepower = firepower + weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy *  weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 + weapon_data_db.perc_efficiency_variability) -- untis firepower is calculated considering dimension target = mix and increased of perc_efficiency_variability
-            log.traceVeryLow(nameFunction .. "update unit firepower for weapon " .. weapon_name .. ": firepower: " .. firepower .. ", accuracy: " .. weapon_data_db.efficiency[attribute].mix.accuracy .. ", destroy_capacity: " .. weapon_data_db.efficiency[attribute].mix.destroy_capacity .. ", weapon_qty: " .. weapon_qty) 
-        end
-    end
-    log.traceLow(nameFunction .. "End")
-    log.level = previous_log_level
-    return firepower
-end
-
--- return firepower of A2A missile
-local function evalutateFirepowerA2AMissile(missile_data)
-
-    local firepower
-    local range_factor = 0.1 --range equivalent 10 km            
-    local semiactive_range_factor = 1 --
-    local active_range_factor = 1 --
-    local max_height_factor = 1 -- 
-    local max_speed_factor = 0.5 -- speed equivalent 1900 km/h
-    local tnt_factor = 0.3 -- tnt equivalent 10 kg
-    
-    
-    if missile_data.range then
-        range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.range
-    end
-    
-    if missile_data.semiactive_range then
-        semiactive_range_factor = 1 + missile_data.semiactive_range / REFERENCE_EFFICIENCY_MISSILE_A2A.semiactive_range
-    end
-
-    if missile_data.active_range then
-        active_range_factor = 1 + missile_data.active_range / REFERENCE_EFFICIENCY_MISSILE_A2A.active_range
-    end
-
-    if missile_data.max_height then
-        max_height_factor = 1 + missile_data.max_height / REFERENCE_EFFICIENCY_MISSILE_A2A.max_height
-    end
-
-    if missile_data.max_speed then
-        max_speed_factor = missile_data.max_speed / REFERENCE_EFFICIENCY_MISSILE_A2A.max_speed
-    end
-
-    if missile_data.tnt then
-        tnt_factor = missile_data.tnt / REFERENCE_EFFICIENCY_MISSILE_A2A.tnt
-    end
-
-    firepower = missile_data.reliability * range_factor * semiactive_range_factor * active_range_factor * max_height_factor * max_speed_factor * tnt_factor
-
-end
-
-
- -- NOTA: DECOMMENTA 232 E 233 IN MAIN_NEXT_MISSION PER 
-
-
-
--- call from ???, initialize firepower value for loadouts
+-- call from MAIN_NextMission, initialize firepower value for loadouts
 -- verifica se  e come viene effettuato il salvataggio
-function defineLoadoutsFirepower(db_loadouts)
+function defineLoadoutsFirepower()
     local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "defineLoadoutsFirepower(db_loadouts): "
     log.traceLow(nameFunction .. "Start")
- 
-
-    local task, weapons, weapon_data, firepower
-    local break_loop = false
+    local task, weapons, weapon_data, firepower, i    
 
     for aircraft_name, aircraft in pairs(db_loadouts) do -- interate aircraft
     
@@ -581,85 +667,57 @@ function defineLoadoutsFirepower(db_loadouts)
             for loadout_name, loadout in pairs(task) do -- iterate loadout                
                 weapons = loadout.weapons
 
-                if weapons then 
+                if weapons then --aircraft has weapons
                     
-                    if isA2ATask(task_name) then
+                    if isA2ATask(task_name) or task_name == "Reconnaissance" then --air to air task or armed reconnaisance task
+                        firepower = 0
 
-                        for weapon_name, weapon_qty in pairs(weapons) do                       
-                            weapon_data = searchWeapon(weapon_name, nil)
+                        for weapon_name, weapon_qty in pairs(weapons) do                       --iterate wapons airccraft
+                            weapon_data = searchWeapon(weapon_name, nil)                        -- search weapon in db_weapons
 
-                            if not weapon_data then                            
-                                log.warn(nameFunction .. "no weapon: " .. weapon_name .. ", in weapon_db. End")
-                                log.level = previous_log_level
-                                return 
-                            end
-
-                            if weapon_data.start_service and ( weapon_data.start_service > camp.date.year ) then
+                            if weapon_data and weapon_data.type and weapon_data.type == "AAM" and weapon_data.start_service and ( weapon_data.start_service <= camp.date.year ) then -- weapons is compliants update firepower
+                                firepower = firepower + weapon_qty * evalutateFirepowerA2AMissile(weapon_data) --update firepower with firpowers weapon
+                                log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", weapon: " .. weapon_name .. ", quantity: " .. weapon_qty .. ", firepower: " .. firepower)
+                                
+                            elseif weapon_data and weapon_data.start_service and ( weapon_data.start_service > camp.date.year ) then -- weapon not in service during the campaign period
                                 log.traceLow(nameFunction .. "campaign year(" .. camp.date.year .. ") is over of weapon start service(" .. weapon_data.start_service .. "), End")            
                                 log.warn(nameFunction .. "weapon(" .. weapon_name .. ") start service: " .. weapon_data.start_service .. " not compliant with campaign year: " .. camp.date.year)
-                                log.level = previous_log_level
-                                return
-                            end 
-
-                            if weapon_data.type and weapon_data.type == "AAM" then
-                                firepower = evalutateFirepowerA2AMissile(weapon_data)
-                                log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task .. ", weapon: " .. weapon_name .. ", quantity: " .. weapon_qty .. ", firepower: " .. firepower)
-                                log.level = previous_log_level
-                                return firepower
-                            
+                                                            
                             else
-                                log.warn(nameFunction .. "unknow weapon_data.type:" .. (weapon_data.type or "nil") .. ", return")
-                                log.level = previous_log_level
-                                return nil
+                                log.warn(nameFunction .. "weapon:" .. weapon_name .. ", not found in db_weapon. Return")                                
                             end
-
-                        end
+                        end                        
                     
-                    elseif isA2GTask(task_name) then
+                    elseif isA2GTask(task_name) then --air to ground task
+                        i = 0
+                        firepower = 0
 
+                        for attribute_num, attribute_name in pairs(loadout.attributes) do -- iterate attributes loadout
+                            firepower = firepower + getWeaponFirepower(nil, task_name, attribute_name, weapons) -- update firepower with weapon firepower
+                            i = i + 1
+                            log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", attribute_name: " .. attribute_name .. ", firepower: " .. firepower .. ", i: " .. i)            
+                        end 
+                        firepower = roundAtNumber(firepower / i, FIREPOWER_ROUNDEND_ASSIGNEMENT ) -- firpower is median value of firepowers weapon                       
 
                     elseif isNotFightTask(task_name) then
-
+                        log.warn(nameFunction .. "check db_loadouts.lua, found a Not Fight Task: " .. task_name .. " with weapons:\n" .. inspect(weapons))
 
                     else
-                        log.warn(nameFunction .. "unknow task: " .. task_name)
+                        log.warn(nameFunction .. "unknow task: " .. task_name .. ", check db_loadouts.lua")
                     end
-                end
-            end
-            
-            
-            
 
-            if target.elements then
-                num_elements = #target.elements -- num of element of target
-            elseif class == "ship" then
-                num_elements = 9
-            elseif class == "vehicle" then
-                num_elements = 13
-            elseif class == "airbase" then
-                num_elements = 9
-            elseif class == "static" then
-                num_elements = 8
-            else
-                num_elements = 8
-                log.warn(nameFunction .. "elements and class not defined -> nume_element = 8")
-            end
-            dimension = target.dimension or "mix" -- mix, med, big, small
-
-
-            log.traceVeryLow(nameFunction .. "target_name: " .. target_name .. ", task: " .. task .. ", num_elements" .. num_elements .. ", attribute: " .. attribute .. ", class: " .. class .. ", dimension: " ..dimension)
-
-            firepower_min = getTargetFirepower(num_elements, side_name, dimension, attribute, task, true, "med")
-            firepower_max = getTargetFirepower(num_elements, side_name, dimension, attribute, task, false, "med")
-            log.traceVeryLow(nameFunction .. "target_name: " .. target_name .. ", firepower_min: " .. (firepower_min or "nil") .. ", firepower_max: " .. (firepower_max or "nil"))
-
-            target.firepower.min = firepower_min or 99999.9999
-            target.firepower.max = firepower_max or 99999.9999
-            log.traceVeryLow(nameFunction .. "target_name: " .. target_name .. ", target.firepower_min: " .. (target.firepower.min or "nil") .. ", target.firepower_max: " .. (target.firepower.min or "nil"))
+                    if firepower then
+                        loadout.firepower = firepower -- update firepower in db_loadouts.lua
+                        log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", firepower: " .. firepower .. " assigned in db_loadouts")
+                    
+                    else
+                        log.traceVeryLow(nameFunction .. "firepower wasn't computed for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", fi6repower  assigned in db_loadouts")
+                    end
+                end                
+            end            
         end
-    end    
-    SaveTabOnPath( "Active/", "computed_target_efficiency", computed_target_efficiency )         
-    log.traceVeryLow(nameFunction .. "computed_target_efficiency:\n" .. inspect(computed_target_efficiency))
+    end  
+     
     log.traceLow(nameFunction .. "End")
     log.level = previous_log_level
     return

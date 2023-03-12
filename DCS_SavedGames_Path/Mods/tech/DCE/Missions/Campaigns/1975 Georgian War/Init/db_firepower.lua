@@ -17,12 +17,12 @@ versionDCE["db_firepower.lua"] = "OB.1.0.0"
 
 
 -- nato
--- a2a: missile AIM-54A-MK60, AIM-7, AIM-7M, AIM-7E, AIM-9, AIM-9M, AIM-9P, RB-05A, RB-74, RB-74J, RB-24J, R550, R530IR, R530EM, 
--- bomb: GBU-12, GBU-16, GBU-10, Mk-82, Mk-82SE, Mk-83, Mk-84, Mk-20 (cluster), M/71, RB-75T, CBU-52B (cluster), CBU-52 (cluster), SAMP400kg, SNEB256_HE_DEFR, SNEB253_HEAT, SAMP250kgHD, 
+-- a2a: missile /AIM-54A-MK60/, /AIM-7/, /AIM-7M/, /AIM-7E/, /AIM-9/, /AIM-9M/, /AIM-9P/, /RB-05A viggen/, /RB-74 (AIM-9L) viggen/, /RB-24(aka AIM-9B) - viggen/, /RB-24J(aka AIM-9P3) - viggen/, /R550 mirage/, /R530IR mirage/, /R530EM(super 530!?) mirage/, 
+-- bomb: GBU-12, GBU-16, GBU-10, /Mk-82/, /Mk-82SE(air)/, /Mk-83/, /Mk-84/, /Mk-20 (cluster)/, M/71, RB-75T, CBU-52B (cluster), CBU-52 (cluster), SAMP400kg, SNEB256_HE_DEFR, SNEB253_HEAT, SAMP250kgHD, 
 -- rockets: Zuni-Mk71, Hydra-70, 
--- a2g missile: MavTV, AGM-86C, AGM-65D, AGM-65K, BGM-71D, AGM-114 (dal 1982)
--- a2r missile: AGM-45, 
--- a2s missile: RB 15F (dal 1985), AGM-84A,
+-- a2g missile: MavTV, AGM-86C, /AGM-65D/, /AGM-65K/, BGM-71D, AGM-114 (dal 1982)
+-- a2r missile: /AGM-45/ 
+-- a2s missile: RB 15F (dal 1985), /AGM-84A/,
 
 --russia
 -- a2a missile: K-13A, R-60M, R-3R, R-3S, R-24T, R-24R, R-40R, R-40T, R-27T(dopo), R-27R(dopo)
@@ -33,12 +33,15 @@ versionDCE["db_firepower.lua"] = "OB.1.0.0"
 -- a2s missile: Kh-22N, Kh-59M (1980), 
 
 REFERENCE_EFFICIENCY_MISSILE_A2A = {
-                ["range"] = 80,                                     -- km, range (aircraft must track target)                  
-                ["semiactive_range"] = 50,                          -- km, semiactive range (aircraft can or not track target)                  
-                ["active_range"] = 10,                              -- km, active range  (missile has active autonomous tracking target)                
-                ["max_height"] = 18,                                -- km max height
-                ["max_speed"] = 2,                                  -- mach
-                ["tnt"] = 30,                                       -- kg
+                ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
+                ["infrared_range"] = 18,                           -- km, range (aircraft must track target)                  
+                ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
+                ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
+                ["max_height_radar_missile"] = 20,                  -- km max height
+                ["max_height_infrared_missile"] = 20,               -- km max height
+                ["max_speed_radar_missile"] = 4,                    -- mach
+                ["max_speed_infrared_missile"] = 3,
+                ["tnt"] = 10,                                       -- kg                
             }
 
 
@@ -66,6 +69,7 @@ weapon_db = {
 
         ["AIM-54A-MK47"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1974,
             ["end_service"] = 2004,
@@ -77,10 +81,12 @@ weapon_db = {
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8,                             -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.6,
         },
 
         ["AIM-54A-MK60"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1975,
             ["end_service"] = 2004,
@@ -92,10 +98,12 @@ weapon_db = {
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8 ,                             -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.6,
         },
 
         ["AIM-54C"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1986,
             ["end_service"] = 2004,
@@ -107,10 +115,12 @@ weapon_db = {
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8 ,                             -- km max height
             ["max_speed"] = 3,                                  -- mach                             
+            ["manouvrability"] = 0.73,
         },
 
         ["AIM-7E"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -122,10 +132,12 @@ weapon_db = {
             ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 18,                                -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.6,
         },
 
         ["AIM-7F"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1975,
             ["end_service"] = nil,
@@ -137,11 +149,12 @@ weapon_db = {
             ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 18,                                -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.6,
         },
-
 
         ["AIM-7M"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1982,
             ["end_service"] = nil,
@@ -153,10 +166,12 @@ weapon_db = {
             ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 18,                                -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.65,
         },
 
         ["AIM-7MH"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1985,
             ["end_service"] = nil,
@@ -168,11 +183,13 @@ weapon_db = {
             ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 18,                                -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.66,
         },
 
         ["AIM-7P"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
-            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1987,
             ["end_service"] = nil,
             ["cost"] = 1,-- k$  
@@ -183,6 +200,219 @@ weapon_db = {
             ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 18,                                -- km max height
             ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["AIM-9B"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1956,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 4.5, --kg
+            ["reliability"] = 0.5,                              -- reliability (0-1)
+            ["range"] = 4.6,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 1.7,                                  -- mach                            
+            ["manouvrability"] = 0.5,
+        },
+
+        ["AIM-9P"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 4.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2,                                  -- mach                            
+            ["manouvrability"] = 0.5,
+        },
+        
+        ["AIM-9P5"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 4.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2,                                  -- mach                            
+            ["manouvrability"] = 0.6,
+        },
+
+        ["AIM-9L"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975, --1977
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 9.4, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2.5,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["AIM-9M"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1982,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 9.4, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2.5,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["AIM-9X"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 2003,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 9.4, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 37,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 25,                                -- km max height
+            ["max_speed"] = 2.9,                                  -- mach                            
+            ["manouvrability"] = 0.9,
+        },
+
+        ["R-550"] = {  -- R-550 Magic Mirage                                -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 12.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 10,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2.8,                                  -- mach                            
+            ["manouvrability"] = 0.6,
+        },
+
+        ["R-530IR"] = { -- R-530 Magic Mirage                                  -- weapon name
+            ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 27, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18,                                     -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = nil,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 3,                                  -- mach                            
+            ["manouvrability"] = 0.6,
+        },
+
+        ["R-530EM"] = { -- R-530 Magic Mirage                                  -- weapon name
+            ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975, --1980,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 30, --kg
+            ["reliability"] = 0.7,                              -- reliability (0-1)
+            ["range"] = 40,                                     -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = nil,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = nil,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height"] = 20,                                -- km max height
+            ["max_speed"] = 4,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["RB-24"] = {-- aka AIM-9B   Viggen                               -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1956,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 4.5, --kg
+            ["reliability"] = 0.5,                              -- reliability (0-1)
+            ["range"] = 4.6,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 1.7,                                  -- mach                            
+            ["manouvrability"] = 0.5,
+        },
+
+        ["RB-24J"] = {-- aka AIM-9P3   Viggen                               -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975,
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 4.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2,                                  -- mach                            
+            ["manouvrability"] = 0.6,
+        },
+
+        ["RB-74"] = {-- aka AIM-9L                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975, --1977
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 9.4, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 18.5,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 18,                                -- km max height
+            ["max_speed"] = 2.5,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+
+        ["AGM-45"] = {                                             -- weapon name
+            ["type"] = "ASM",                                       -- weapon type
+            ["task"] = {"SAM"},                        -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1966,
+            ["end_service"] = 1992,
+            ["cost"] = 32,-- k$  
+            ["tnt"] = 66, --kg
+            ["perc_efficiency_variability"] = 0.2,                  -- efficiecy variability(0-1): firepower_max = firepower_max * ( 1 + perc_efficiency_variability )
+            ["efficiency"] = {                                      -- efficiency attribute table
+                
+                ["SAM"] = {                                        -- attribute                    
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },        
+            },                              
         },
 
         ["AGM-84A"] = {                                             -- weapon name
@@ -213,6 +443,114 @@ weapon_db = {
                         ["destroy_capacity"] = 0.85,
                     },
                 },        
+            },                              
+        },
+
+        ["RB-05A"] = { -- ROBOT 05 RB-05A  Viggen infrared
+            ["type"] = "ASM",       
+            ["task"] = {"Anti-ship Strike", "Strike", "SEAD"},
+            ["start_service"] = 1972,
+            ["end_service"] = 2005,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 160, --kg
+            ["range"] = 9, --Km
+            ["perc_efficiency_variability"] = 0.2, -- efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 
+                        ["destroy_capacity"] = 0.6,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.68, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },   
+                
+                ["soft"] = { -- mobile target(artillery group)
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.75,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.65,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                },
+
+                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                },   
+
+                ["Parked Aircraft"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.8, -- element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 1,
+                    },
+                }, 
             },                              
         },
 
@@ -564,7 +902,55 @@ weapon_db = {
                         ["accuracy"] = 0.3, 
                         ["destroy_capacity"] = 0.8,
                     },
-                },        
+                },
+                
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },                
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },    
             },                              
         },
 
@@ -634,6 +1020,54 @@ weapon_db = {
                         ["destroy_capacity"] = 0.4,
                     },
                 },        
+
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.93, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.83, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.93, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },                
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.75,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.75,
+                    },
+                },    
             },                              
         },
 
@@ -662,8 +1096,7 @@ weapon_db = {
                         ["destroy_capacity"] = 0.21,
                     },
                 },                
-            
-                
+                            
                 ["ship"] = { -- mobile target
                     ["big"] = {
                         ["accuracy"] = 0.7,   -- 
@@ -682,6 +1115,54 @@ weapon_db = {
                         ["destroy_capacity"] = 0.2,
                     },
                 },        
+
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.65,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.65,
+                    },
+                },                
             },                              
         },
 
@@ -710,8 +1191,7 @@ weapon_db = {
                         ["destroy_capacity"] = 0.15,
                     },
                 },                
-            
-                
+                            
                 ["ship"] = { -- mobile target
                     ["big"] = {
                         ["accuracy"] = 0.7,   -- 
@@ -729,7 +1209,55 @@ weapon_db = {
                         ["accuracy"] = 0.5, 
                         ["destroy_capacity"] = 0.3,
                     },
-                },        
+                },
+                
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.65,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.65,
+                    },
+                },    
             },                              
         },
 
@@ -802,7 +1330,7 @@ weapon_db = {
             },                  
         },
     
-        ["GBU-16"] = {
+        ["GBU-16"] = {  -- like Mk-83
             ["type"] = "Guided Bombs",
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1970,
@@ -929,83 +1457,83 @@ weapon_db = {
                 
                 ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
                     ["big"] = {
-                        ["accuracy"] = 0.7,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["accuracy"] = 0.95,   -- 1 max, 0.1 min ( hit success percentage )
                         ["destroy_capacity"] = 2, -- element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
                     },
                     ["med"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.9, 
                         ["destroy_capacity"] = 5,
                     },
                     ["small"] = {
-                        ["accuracy"] = 0.5, 
+                        ["accuracy"] = 0.8, 
                         ["destroy_capacity"] = 7,
                     },
                     ["mix"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.86, 
                         ["destroy_capacity"] = 6,
                     },
                 },                
             
                 ["Parked Aircraft"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
                     ["big"] = {
-                        ["accuracy"] = 0.7,   
+                        ["accuracy"] = 0.95,   
                         ["destroy_capacity"] = 4,
                     },
                     ["med"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.9, 
                         ["destroy_capacity"] = 6,
                     },
                     ["small"] = {
-                        ["accuracy"] = 0.5, 
+                        ["accuracy"] = 0.8, 
                         ["destroy_capacity"] = 8,
                     },
                     ["mix"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.9, 
                         ["destroy_capacity"] = 7,
                     },
                 },        
 
                 ["soft"] = { -- mobile target(artillery group)
                     ["big"] = {
-                        ["accuracy"] = 0.7,   -- 
+                        ["accuracy"] = 0.95,   -- 
                         ["destroy_capacity"] = 3,
                     },
                     ["med"] = {
-                        ["accuracy"] = 0.6,  
+                        ["accuracy"] = 0.9,  
                         ["destroy_capacity"] = 5,
                     },
                     ["small"] = {
-                        ["accuracy"] = 0.5,   
+                        ["accuracy"] = 0.85,   
                         ["destroy_capacity"] = 7,
                     },
                     ["mix"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.9, 
                         ["destroy_capacity"] = 6,
                     },
                 },
 
                 ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
                     ["big"] = {
-                        ["accuracy"] = 0.7,   -- 
+                        ["accuracy"] = 0.9,   -- 
                         ["destroy_capacity"] = 3,
                     },
                     ["med"] = {
-                        ["accuracy"] = 0.6,  
+                        ["accuracy"] = 0.8,  
                         ["destroy_capacity"] = 5,
                     },
                     ["small"] = {
-                        ["accuracy"] = 0.5,   
+                        ["accuracy"] = 0.7,   
                         ["destroy_capacity"] = 7,
                     },
                     ["mix"] = {
-                        ["accuracy"] = 0.6, 
+                        ["accuracy"] = 0.8, 
                         ["destroy_capacity"] = 6,
                     },
                 },    
             },                  
         },
 
-        ["CBU-52"] = {  --aka CBU-100
+        ["CBU-52"] = {  --aka CBU-100 ???
             ["type"] = "Cluster Bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
