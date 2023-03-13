@@ -141,6 +141,7 @@ local local_debug = true -- local debug
 local active_log = false
 log.debug("Start")
 
+local FACTOR_FOR_REDUCE_SCORE = 0.01 									-- factor for reduce_score in CAP (score = score - redice_score * factor)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5  -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
 local MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5						-- min total air threat level to authorize support escort flight (default = 0.5)
@@ -1046,8 +1047,8 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																								reduce_score = flights_requested - aircraft_assign												--increase factor by one for each flight that is missing
 																								if active_log then log.traceLow("task is AWACS or Refueling, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ")") end
 																							end
-																							draft_sorties_entry.score = draft_sorties_entry.score - reduce_score * 0.01							--reduce score slighthly for station missions with less aircraft than required to cover station
-																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * 0.01") end
+																							draft_sorties_entry.score = draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE 							--reduce score slighthly for station missions with less aircraft than required to cover station
+																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. FACTOR_FOR_REDUCE_SCORE .. ")") end
 																							
 																							--ATO_G_adjustment02
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then

@@ -980,7 +980,7 @@ function roundAtNumber(x, number)
 	number = number or 1
 	
 	if number > x then
-		return false
+		return x -- original false
 	end
 	x = x / number
 	return (x > 0 and math.floor(x + .5) or math.ceil(x - .5)) * number

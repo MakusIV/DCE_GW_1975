@@ -1200,9 +1200,12 @@ db_loadouts = {
 
 	["AJS37"] = {-- 1971 (entrata in servizio)
 		["Intercept"] = {
-			["Intercept RB-05A*2 RB-74*2 FUEL"] = {
+			["Intercept RB-05A*2 RB-74*2 FUEL"] = { -- verificare
 				minscore = 0.0,				
 				attributes = {},
+				weapons = { -- task dedicated weapons
+					["RB-05A"] = 2,										
+				},
 				weaponType = nil,
 				expend = nil,
 				day = true,
@@ -1375,6 +1378,9 @@ db_loadouts = {
 						["SEAD"] = false,
 					},
 				attributes = {"ship"},
+				weapons = { -- task dedicated weapons
+					["RB-04E"] = 1,										
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -1382,7 +1388,7 @@ db_loadouts = {
 				adverseWeather = true,
 				avoid_EWR = false,
 				range = 500000,
-				capability = 7,
+				capability = 8,
 				firepower = 7,
 				vCruise = 250,
 				vAttack = 215,
@@ -1422,20 +1428,23 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Antiship Mav-TV RB-75T*4 FUEL"] = {
+			["Antiship RB-75T*4 FUEL"] = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
 				attributes = {"ship"},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 4,										
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 7,
+				capability = 6,
 				firepower = 6,
 				vCruise = 250,
 				vAttack = 215,
@@ -1483,7 +1492,10 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons
+					["M/71"] = 8,										
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -1539,13 +1551,16 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT"] = {
+			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT"] = { -- , U25 ECM Pod
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons
+					["M/71"] = 8,										
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -1601,13 +1616,16 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS Hard - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = {
+			["CAS Hard - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = { --RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "SAM", "armor"},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 2,										
+				},
 				weaponType = "ASM",
 				expend = "All",
 				day = true,
@@ -1663,13 +1681,16 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS Cluster- BK90 (MJ1)*2 - ECM*2 - RB-24J*2 - XT"] = {
+			--[["CAS Cluster- BK90 (MJ1)*2 - ECM*2 - RB-24J*2 - XT"] = { -- 1990
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["BK-90MJ1"] = 2,										
+				},
 				weaponType = "ASM",
 				expend = "All",
 				day = true,
@@ -1724,14 +1745,17 @@ db_loadouts = {
 				["chaff"] = 105,
 				["gun"] = 100,
 				},
-			},
-			["ASM hard RB-75(AGM-65A-B)*4 TV Guided Rb-24 Fuel"] = {
+			},]]
+			["ASM hard RB-75T*4 TV Guided Rb-24 Fuel"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "SAM", "armor"},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 4,										
+				},
 				weaponType = "ASM",
 				expend = "All",
 				day = true,
@@ -1787,13 +1811,16 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["ASM SEAD ECM MavTV  U25pod KBpod RB-75T*2 FUEL"] = {
+			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
 				attributes = {"SAM"},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 2,										
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -1843,9 +1870,12 @@ db_loadouts = {
 			},
 		},
 		["SEAD"] = {		
-			["ASM SEAD ECM MavTV  U25pod KBpod RB-75T*2 FUEL"] = {
+			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL"] = {
 				minscore = 0.1,
 				attributes = {},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 2,										
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -1905,6 +1935,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons
+					["Mk-84"] = 18,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -1946,6 +1979,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["Mk-20"] = 20, -- verificare															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -1981,7 +2017,7 @@ db_loadouts = {
 				},
 			},
 			--[[
-			["Strike TF  AGM-86C*20"] = {
+			["Strike TF  AGM-86C*20"] = { --1986
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -2144,6 +2180,9 @@ db_loadouts = {
 						["SEAD"] = false,
 					},
 				attributes = {"ship"},
+				weapons = { -- task dedicated weapons						
+					["AGM-84A"] = 2,										
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				taskWeaponInfo = {
@@ -2265,6 +2304,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons						
+					["Mk-82"] = 10,										
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				taskWeaponInfo = {
@@ -2329,6 +2371,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-20"] = 4,										
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				taskWeaponInfo = {
@@ -2385,6 +2430,10 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Zuni-Mk71"] = 9,										
+					["Mk-10"] = 2,										
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				taskWeaponInfo = {
@@ -2453,18 +2502,12 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"SAM"},
-				weaponType = "ASM",
-				expend = "Auto",
-				taskWeaponInfo = {
-					[1] = {
-						["name"] = "AGM-65D",
-						["quantity"] = 2,
-					},							
-					[2] = {
-						["name"] = "AGM-65K", -- controlla su ME s monta in totale 4 AGM-65
-						["quantity"] = 2,
-					},							
+				weapons = { -- task dedicated weapons
+					["AGM-65D"] = 2,										
+					["AGM-65K"] = 2,										
 				},
+				weaponType = "ASM",
+				expend = "Auto",				
 				day = true,
 				night = false,
 				adverseWeather = false,
@@ -2513,15 +2556,9 @@ db_loadouts = {
 				attributes = {"SAM"},
 				weaponType = "ASM",
 				expend = "Auto",
-				taskWeaponInfo = {
-					[1] = {
-						["name"] = "AGM-65D",
-						["quantity"] = 2,
-					},							
-					[2] = {
-						["name"] = "AGM-65K", -- controlla su ME s monta in totale 4 AGM-65
-						["quantity"] = 2,
-					},							
+				weapons = { -- task dedicated weapons
+					["AGM-65D"] = 2,										
+					["AGM-65K"] = 2,										
 				},
 				day = true,
 				night = false,
@@ -2576,6 +2613,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 4, -- Mk-82 == Mk-82SE == Mk-82AIR															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2639,6 +2679,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["CBU-52B"] = 4,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2702,6 +2745,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-84"] = 4,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2765,6 +2811,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 5,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2812,6 +2861,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"Structure", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["Mk-83"] = 2,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2867,6 +2919,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons
+					["Mk-84"] = 1,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -2914,6 +2969,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["CBU-52B"] = 4,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -3149,6 +3207,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons
+					["SAMP-400LD"] = 2, -- 														
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -3204,6 +3265,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["SNEB-256"] = 4, -- 														
+				},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
@@ -3260,13 +3324,16 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel"] = {
+			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel"] = { --uguale a sopra?
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["SNEB-256"] = 4, -- 														
+				},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
@@ -3329,6 +3396,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["SNEB-253"] = 4, -- 														
+				},
 				weaponType = "Rockets",
 				expend = "All",
 				day = true,
@@ -3391,6 +3461,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["SAMP-250HD"] = 2, -- 														
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -3451,12 +3524,16 @@ db_loadouts = {
 			["MirageF1C_GI_2xR550_1xR530IR"] = {
 				attributes = {},
 				weaponType = nil,
+				weapons = { -- task dedicated weapons
+					["R-550"] = 2, -- 														
+					["R-530IR"] = 1, -- 
+				},
 				expend = nil,
 				day = true,
 				night = true,
-				adverseWeather = false,
+				adverseWeather = true,
 				range = 270000,
-				capability = 4,
+				capability = 7,
 				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 246.66666666667,
@@ -3494,12 +3571,16 @@ db_loadouts = {
 			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
 				attributes = {},
 				weaponType = nil,
+				weapons = { -- task dedicated weapons
+					["R-550"] = 2, -- 														
+					["R-530EM"] = 1, -- 
+				},
 				expend = nil,
 				day = true,
 				night = true,
-				adverseWeather = false,
+				adverseWeather = true,
 				range = 270000,
-				capability = 4,
+				capability = 5,
 				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 246.66666666667,
@@ -3545,12 +3626,16 @@ db_loadouts = {
 			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
 				attributes = {},
 				weaponType = nil,
+				weapons = { -- task dedicated weapons
+					["R-550"] = 2, -- 														
+					["R-530EM"] = 2, -- 
+				},
 				expend = nil,
 				day = true,
 				night = true,
-				adverseWeather = false,
+				adverseWeather = true,
 				range = 270000,
-				capability = 4,
+				capability = 5,
 				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 246.66666666667,
@@ -3596,12 +3681,16 @@ db_loadouts = {
 			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
 				attributes = {},
 				weaponType = nil,
+				weapons = { -- task dedicated weapons
+					["R-550"] = 2, -- 														
+					["R-530EM"] = 2, -- 
+				},
 				expend = nil,
 				day = true,
 				night = true,
-				adverseWeather = false,
+				adverseWeather = true,
 				range = 270000,
-				capability = 4,
+				capability = 5,
 				firepower = 2,
 				vCruise = 215.83333333333,
 				vAttack = 246.66666666667,
@@ -4271,11 +4360,12 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "SAM"},
-					weaponType = "ASM",
-					expend = "Auto",
-					day = true,
-					night = false,
-					adverseWeather = true,
+				weapons = { -- task dedicated weapons										
+					["AGM-65K"] = 4,										
+				},
+				weaponType = "ASM",
+				expend = "Auto",				
+				adverseWeather = true,
 				range = 500000,
 				capability = 6,
 				firepower = 12,
@@ -4334,16 +4424,17 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"SAM", "soft", "Parked Aircraft"},
-					weaponType = "Bombs",
-					expend = "All",
-					day = true,
-					night = false,
-					adverseWeather = false,
-				range = 500000,
-				capability = 6,
-				firepower = 2,
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 6,															
+				},
+				weaponType = "Bombs",
+				expend = "All",
 				day = true,
 				night = false,
+				adverseWeather = false,
+				range = 500000,
+				capability = 6,
+				firepower = 2,				
 				vCruise = 215.83333333333,
 				vAttack = 277.5,
 				hCruise = 3486.4,
@@ -4397,6 +4488,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
+				weapons = { -- task dedicated weapons
+					["Mk-20"] = 6,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -4458,6 +4552,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 6,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -4524,6 +4621,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons
+					["Mk-82"] = 12,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -4590,6 +4690,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"hard", "Structure", "Bridge"},
+				weapons = { -- task dedicated weapons
+					["Mk-84"] = 2,															
+				},
 				weaponType = "Bombs",
 				expend = "All",
 				day = true,
@@ -4645,6 +4748,9 @@ db_loadouts = {
 					["Laser Illumination"] = true,				
 				},
 				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons
+					["GBU-10"] = 2,															
+				},
 				weaponType = "Guided bombs",
 				expend = "All",
 				day = true,
@@ -4711,6 +4817,9 @@ db_loadouts = {
 					["SEAD"] = true,
 				},
 				attributes = {"Structure", "SAM", "soft"},
+				weapons = { -- task dedicated weapons
+					["AGM-65D"] = 4,														
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -4777,6 +4886,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"SAM"},
+				weapons = { -- task dedicated weapons
+					["AGM-45"] = 2,															
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -4835,73 +4947,7 @@ db_loadouts = {
 					["chaff"] = 60,
 					["gun"] = 100,
 				},
-			},
-			["Night, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
-				minscore = 0.0,
-				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
-				},
-				attributes = {"SAM"},
-				weaponType = "ASM",
-				expend = "Auto",
-				day = false,
-				night = true,
-				adverseWeather = true,
-				range = 360000,
-				capability = 10,
-				firepower = 6,
-				vCruise = 270,
-				vAttack = 270,
-				hCruise = 6096,
-				hAttack = 4096,
-				standoff = 13000,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 10,
-				stores = {
-					["pylons"] =
-					{
-						[1] =
-						{
-							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- --end of [1]
-						[2] =
-						{
-							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- --end of [2]
-						[3] =
-						{
-							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- --end of [3]
-						[4] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [4]
-						[6] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [6]
-						[7] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [7]
-						[8] =
-						{
-							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- --end of [8]
-						[9] =
-						{
-							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- --end of [9]
-					}, -- --end of ["pylons"]
-					["fuel"] = "4864",
-					["flare"] = 30,
-					["chaff"] = 60,
-					["gun"] = 100,
-				},
-			},
+			},			
 			["ASM SEAD AGM45*4 AIM-7E EMC Fuel"] = {
 				minscore = 0.0,
 				support = {
@@ -4909,6 +4955,9 @@ db_loadouts = {
 					["SEAD"] = false,
 				},
 				attributes = {"SAM"},
+				weapons = { -- task dedicated weapons
+					["AGM-45"] = 4,															
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -4970,13 +5019,16 @@ db_loadouts = {
 			},
 		},
 		["SEAD"] = {
-			["Day, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+			["AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = { -- verifica sono gli stessi si differenziano solo per day, night puoi lasciarne solo l'ultimo con  day e night true
 				minscore = 0.0,
 				attributes = {},
+				weapons = { -- task dedicated weapons
+					["AGM-45"] = 2,															
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
-				night = false,
+				night = true,
 				adverseWeather = true,
 				range = 360000,
 				capability = 10,
@@ -5031,72 +5083,13 @@ db_loadouts = {
 					["chaff"] = 60,
 					["gun"] = 100,
 				},
-			},
-			["Night, AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = {
-				minscore = 0.0,
-				attributes = {},
-				weaponType = "ASM",
-				expend = "Auto",
-				day = false,
-				night = true,
-				adverseWeather = true,
-				range = 360000,
-				capability = 10,
-				firepower = 6,
-				vCruise = 270,
-				vAttack = 270,
-				hCruise = 6096,
-				hAttack = 4096,
-				standoff = 13000,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 10,
-				stores = {
-					["pylons"] =
-					{
-						[1] =
-						{
-							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- --end of [1]
-						[2] =
-						{
-							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- --end of [2]
-						[3] =
-						{
-							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
-						}, -- --end of [3]
-						[4] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [4]
-						[6] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [6]
-						[7] =
-						{
-							["CLSID"] = "{8D399DDA-FF81-4F14-904D-099B34FE7918}",
-						}, -- --end of [7]
-						[8] =
-						{
-							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
-						}, -- --end of [8]
-						[9] =
-						{
-							["CLSID"] = "{7B4B122D-C12C-4DB4-834E-4D8BB4D863A8}",
-						}, -- --end of [9]
-					}, -- --end of ["pylons"]
-					["fuel"] = "4864",
-					["flare"] = 30,
-					["chaff"] = 60,
-					["gun"] = 100,
-				},
-			},
-			["ASM SEAD AGM45*4 AIM-7E EMC Fuel"] = {
+			},			
+			["ASM SEAD AGM-45*4 AIM-7E EMC Fuel"] = {
 				minscore = 0.3,
 				attributes = {},
+				weapons = { -- task dedicated weapons
+					["AGM-45"] = 4,															
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -5226,13 +5219,16 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {
-			["Rockets Hydra-70*14 Minigun"] = {
+			["Rockets Hydra-70MK5*14 Minigun"] = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft"},
+				attributes = {"soft", "SAM", "armor", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 14,	-- 2xM158 see pylons									
+				},
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
@@ -5280,20 +5276,23 @@ db_loadouts = {
 
 	["AH-1W"] = {--1967 (primo volo) 1973 (entrata in servizio)
 		["Strike"] = {
-			["Rockets Hard Hydra-70*28"] = {
+			["Rockets Hard Hydra-70MK5*28"] = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft"},
+				attributes = {"soft", "armor", "SAM"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 28,	-- 4xM260(7 rockets/launcher) see pylons									
+				},
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
 				night = false,
 				adverseWeather = false,
 				range = 80000,
-				capability = 15,
+				capability = 10,
 				firepower = 5,
 				vCruise = 55,
 				vAttack = 55,
@@ -5335,14 +5334,17 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "SAM"},
-				weaponType = "Rockets",
+				attributes = {"soft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons										
+					["BGM-71D"] = 8,	-- 4xM260(7 rockets/launcher) see pylons									
+				},
+				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
 				night = false,
 				adverseWeather = false,
 				range = 80000,
-				capability = 6,
+				capability = 10,
 				firepower = 5,
 				vCruise = 55,
 				vAttack = 55,

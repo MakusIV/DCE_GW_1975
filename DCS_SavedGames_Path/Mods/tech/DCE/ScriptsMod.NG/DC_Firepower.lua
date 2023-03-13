@@ -139,12 +139,12 @@ local function evalutateFirepowerA2AMissile(missile_data)
     log.traceLow(nameFunction .. "Start")
 
     local firepower
-    local range_factor = 0.3
-    local semiactive_range_factor = 0.2
-    local active_range_factor = 0.2
-    local max_height_factor = 0.3
-    local max_speed_factor = 0.2
-    local tnt_factor = 0.3 
+    local range_factor = 0.8
+    local semiactive_range_factor = 0.8
+    local active_range_factor = 0.8
+    local max_height_factor = 0.8
+    local max_speed_factor = 0.8
+    local tnt_factor = 0.8 
     local seeker_factor    
     
     if missile_data.seeker == "radar" then
@@ -190,7 +190,7 @@ local function evalutateFirepowerA2AMissile(missile_data)
         end
         seeker_factor = max_speed_factor * max_height_factor * semiactive_range_factor * active_range_factor * range_factor
 
-    elseif missile_data.seeker == "infrared" then
+    elseif missile_data.seeker == "infrared" or missile_data.seeker == "electro-optical" then
         
         range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.infrared_range
        
