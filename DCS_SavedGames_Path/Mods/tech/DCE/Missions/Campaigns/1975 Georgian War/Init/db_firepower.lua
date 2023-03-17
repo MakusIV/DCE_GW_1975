@@ -2207,9 +2207,9 @@ weapon_db = {
                 
                 ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
                                    
-                    ["small"] = {
+                    ["mix"] = {
                         ["accuracy"] = 0.8, 
-                        ["destroy_capacity"] = 0.52,
+                        ["destroy_capacity"] = 0.3,
                     },                   
                 },                            
                 
@@ -2235,7 +2235,7 @@ weapon_db = {
                 ["soft"] = { -- mobile target(artillery group)
                     ["big"] = {
                         ["accuracy"] = 0.8,   -- 
-                        ["destroy_capacity"] = 1,
+                        ["destroy_capacity"] = 0.9,
                     },
                     ["med"] = {
                         ["accuracy"] = 0.8,  
@@ -2254,19 +2254,19 @@ weapon_db = {
                 ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
                     ["big"] = {
                         ["accuracy"] = 0.8,   -- 
-                        ["destroy_capacity"] = 0.8,
+                        ["destroy_capacity"] = 0.2,
                     },
                     ["med"] = {
                         ["accuracy"] = 0.8,  
-                        ["destroy_capacity"] = 0.9,
+                        ["destroy_capacity"] = 0.4,
                     },
                     ["small"] = {
                         ["accuracy"] = 0.7,   
-                        ["destroy_capacity"] = 1,
+                        ["destroy_capacity"] = 0.5,
                     },
                     ["mix"] = {
                         ["accuracy"] = 0.8, 
-                        ["destroy_capacity"] = 1,
+                        ["destroy_capacity"] = 0.45,
                     },
                 },   
 
@@ -3243,7 +3243,7 @@ weapon_db = {
             },                              
         },
 
-        ["UPK-23"] = { -- autocannon 23 mm soft target, light armored, launcher UB-32UM/16UM (qty: 32/16), ORO-57K
+        ["UPK-23"] = { -- autocannon 23 mm soft target, light armored, 
             ["type"] = "Rockets",    -- change, implements new type?   
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1972, 
@@ -3325,7 +3325,7 @@ weapon_db = {
             },                              
         },
 
-        ["S-5 M"] = { -- Rockets 57 mm soft target, launcher UB-32UM/16UM (qty: 32/16), ORO-57K
+        ["S-5 M"] = { -- Rockets 57 mm soft target, launcher UB-32UM/16UM (qty: 32/16), ORO-57K(8)
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1960,
@@ -3733,14 +3733,14 @@ weapon_db = {
             },                              
         }, 
 
-        ["S-25 OFM"] = { -- Rockets 340 mm hard target (antitank), OFM,   Launcher O-25 (qty: 1)
+        ["S-25L"] = { -- Rockets 340 mm hard target (antitank), OFM,   Launcher O-25 (qty: 1)
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1975,
             ["end_service"] = nil,
             ["cost"] = nil,-- k$  
             ["tnt"] = 20,
-            ["range"] = 3, -- Km
+            ["range"] = 7, -- Km
             ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
             ["efficiency"] = {  
                 
@@ -3771,30 +3771,11 @@ weapon_db = {
                 ["soft"] = { -- mobile target(artillery group)
                     ["big"] = {
                         ["accuracy"] = 0.7,   -- 
-                        ["destroy_capacity"] = 0.95,
-                    },
-                    ["med"] = {
-                        ["accuracy"] = 0.6,  
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.5,   
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.6, 
-                        ["destroy_capacity"] = 1,
-                    },
-                },
-
-                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
-                    ["big"] = {
-                        ["accuracy"] = 0.7,   -- 
                         ["destroy_capacity"] = 0.8,
                     },
                     ["med"] = {
                         ["accuracy"] = 0.6,  
-                        ["destroy_capacity"] = 0.95,
+                        ["destroy_capacity"] = 0.9,
                     },
                     ["small"] = {
                         ["accuracy"] = 0.5,   
@@ -3803,6 +3784,25 @@ weapon_db = {
                     ["mix"] = {
                         ["accuracy"] = 0.6, 
                         ["destroy_capacity"] = 0.9,
+                    },
+                },
+
+                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.6,  
+                        ["destroy_capacity"] = 0.6,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 0.7,
                     },
                 },   
 

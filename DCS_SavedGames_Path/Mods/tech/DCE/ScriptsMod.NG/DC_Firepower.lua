@@ -94,28 +94,30 @@ local function getWeaponFirepower(side, task, attribute, weapon_table)
             --check task
             check = false
             
+            --verify if exist weapon with the required task
             for task_num, task_name in pairs(weapon_data_db.task) do
                 
                 if task_name == task then
-                    check = true
+                    check = true --exist weapon with the required task
                     break
                 end
             end
 
-            if check then 
-                --check efficiency.attribute
+            if check then
+               
                 check = false
-                
+                 
+                --verify if exist weapon with required attribute
                 for attribute_name, attribute_item in pairs(weapon_data_db.efficiency) do
 
-                    if attribute_name == attribute then
-                        check = true
+                    if attribute_name == attribute then 
+                        check = true --exist weapon with the required attribute
                         break
                     end
                 end
             
-                if check then
-                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy *  weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDEND_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
+                if check then   -- calculates the average fire based on the data of each weapon that has the same task and the same attribute
+                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy * weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDEND_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
                     log.traceVeryLow(nameFunction .. "update unit firepower for weapon " .. weapon_name .. ": firepower: " .. firepower .. ", accuracy: " .. weapon_data_db.efficiency[attribute].mix.accuracy .. ", destroy_capacity: " .. weapon_data_db.efficiency[attribute].mix.destroy_capacity .. ", weapon_qty: " .. weapon_qty) 
                 end
             end
@@ -274,8 +276,9 @@ local function medEfficiencyWeapon(side, target_attribute, target_dimension, tas
     local i = 0
     local break_loop = false
 
-    for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate weapons
 
+    -- calculates the average fire based on the data of each weapon that has the same task and the same attribute
+    for weapon_name, weapon_data in pairs(weapon_db[side]) do -- iterate weapons
         
         if weapon_data.start_service and ( weapon_data.start_service > camp.date.year ) then
             log.traceLow(nameFunction .. "campaign year(" .. camp.date.year .. ") is over of weapon start service(" .. weapon_data.start_service .. "), End")            
@@ -560,7 +563,7 @@ end
 -- GLOBAL FUNCTION
 
 -- load computed_target_efficiency table, if not exist create one new
-function loadComputedTargetEfficiency()
+local function loadComputedTargetEfficiency()
 
     if camp.mission > 1 and io.open("Active/computed_target_efficiency.lua", "r") then
         require("Active/computed_target_efficiency") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
@@ -652,7 +655,6 @@ function defineTargetListFirepower(targetlist)
 end
 
 -- call from MAIN_NextMission, initialize firepower value for loadouts
--- verifica se  e come viene effettuato il salvataggio
 function defineLoadoutsFirepower()
     local previous_log_level = log.level
 	log.level = function_log_level
