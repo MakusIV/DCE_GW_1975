@@ -860,7 +860,7 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-82"] = 10,					
 				},
@@ -1042,7 +1042,7 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-20"] = 2,										
 				},
@@ -1981,7 +1981,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "SAM", "Parked Aircraft"},
+				attributes = {"soft", "SAM", "armor", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons
 					["Mk-20"] = 20, -- verificare															
 				},
@@ -2234,7 +2234,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "Bridge", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-84"] = 2,										
 					["Mk-82"] = 4,										
@@ -2306,7 +2306,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons						
 					["Mk-82"] = 10,										
 				},
@@ -2373,7 +2373,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-20"] = 4,										
 				},
@@ -2432,7 +2432,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Zuni-Mk71"] = 9,										
 					["Mk-20"] = 2,										
@@ -2498,13 +2498,13 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["SEAD AGM-65D-K*2"] = {
+			["CAS AGM-65D-K*2"] = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"SAM"},
+				attributes = {"SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["AGM-65D"] = 2,										
 					["AGM-65K"] = 2,										
@@ -4374,7 +4374,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "SAM"},
+				attributes = {"armor", "SAM"},
 				weapons = { -- task dedicated weapons										
 					["AGM-65K"] = 4,										
 				},
@@ -4502,7 +4502,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-20"] = 6,															
 				},
@@ -4831,7 +4831,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "SAM", "soft"},
+				attributes = {"Structure", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["AGM-65D"] = 4,														
 				},
@@ -5297,7 +5297,7 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "armor", "SAM"},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons										
 					["Hydra-70MK5"] = 28,	-- 4xM260(7 rockets/launcher) see pylons									
 				},
@@ -5349,7 +5349,7 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "SAM", "armor"},
+				attributes = {"soft", "SAM", "armor", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons										
 					["BGM-71D"] = 8,	-- 4xM260(7 rockets/launcher) see pylons									
 				},
@@ -6000,7 +6000,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons						
 					["FAB-100M"] = 30,														
 				},
@@ -6168,7 +6168,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Structure", "SAM", "armor"},
+				attributes = {"Structure", "SAM", "armor"},
 				weapons = { -- task dedicated weapons										
 					["FAB-250M54"] = 8,										
 				},
@@ -6236,7 +6236,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Structure", "SAM", "armor"},
+				attributes = {"Structure", "SAM", "armor"},
 				weapons = { -- task dedicated weapons														
 					["FAB-250M54"] = 4,										
 				},
@@ -6296,7 +6296,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Structure", "SAM", "armor"},
+				attributes = {"Structure", "SAM", "soft"},
 				weapons = { -- task dedicated weapons						
 					["FAB-500M62"] = 2,										
 					["S-13"] = 20, --rockets soft target										
@@ -6417,7 +6417,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"hard", "Structure", "SAM"},
+				attributes = {"SAM", "armor"},
 				weaponType = "Rockets",
 				weapons = { -- task dedicated weapons
 					["S-25L"] = 2,										
@@ -6473,7 +6473,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"hard", "Structure", "SAM"},
+				attributes = {"armor", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				weapons = { -- task dedicated weapons
@@ -6595,73 +6595,7 @@ db_loadouts = {
 					["chaff"] = 96,
 					["gun"] = 100,
 				},
-			},
-			["BGL, R-60M*4, Fuel"] = { -- verify loadouts in miz
-				minscore = 0.3,
-				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
-					["Laser Illumination"] = true,
-				},
-				attributes = {"Structure", "Bridge", "hard"},
-				weaponType = "Guided bombs",
-				expend = "All",				
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 900000,
-				capability = 8,
-				firepower = 6,
-				vCruise = 250,
-				vAttack = 300,
-				hCruise = 7096,
-				hAttack = 4096,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = {
-						[8] = {
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-							["num"] = 8,
-						},
-						[1] = {
-							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-							["num"] = 1,
-						},
-						[5] = {
-							["CLSID"] = "{0519A264-0AB6-11d6-9193-00A0249B6F00}",
-							["num"] = 5,
-						},
-						[4] = {
-							["CLSID"] = "{39821727-F6E2-45B3-B1F0-490CC8921D1E}",
-							["num"] = 4,
-						},
-						[3] = {
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-							["num"] = 3,
-						},
-						[6] = {
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-							["num"] = 6,
-						},
-						[7] = {
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-							["num"] = 7,
-						},
-						[2] = {
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-							["num"] = 2,
-						},
-					},
-					["fuel"] = "11700",
-					["flare"] = 96,
-					["chaff"] = 96,
-					["gun"] = 100,
-				},
-			},	
+			},			
 			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
 				support = {
 					["Escort"] = true,
@@ -9032,7 +8966,7 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {			
-			["GA Kh-25MPR*2 R-60M*2 Fuel"] = {
+			["GA Kh-25MR*2 R-60M*2 Fuel"] = {
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -9089,7 +9023,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["GA Kh-25MPL*2 R-60M*2 Fuel"] = {
+			["GA Kh-25ML*2 R-60M*2 Fuel"] = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -9333,61 +9267,7 @@ db_loadouts = {
 					["chaff"] = 60,
 					["gun"] = 100,
 				},
-			},					
-			["BAI Bombs Structure"] = { --??  verify miz
-				minscore = 0.0,
-				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
-					},
-				attributes = {"hard", "Structure", "Bridge"},
-				weaponType = "Bombs",
-				expend = "All",
-				attackType = "Dive",
-				day = true,
-				night = false,
-				adverseWeather = false,
-				range = 500000,
-				capability = 7,
-				firepower = 4,
-				vCruise = 250,
-				vAttack = 350,
-				hCruise = 7500,
-				hAttack = 4000,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = {
-						[2] = 
-						{
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [3]
-						[5] = 
-						{
-							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, -- end of [5]
-						[7] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [7]
-						[8] = 
-						{
-							["CLSID"] = "{BA565F89-2373-4A84-9502-A0E017D3A44A}",
-						}, -- end of [8]
-					}, -- end of ["pylons"]
-					["fuel"] = "4500",
-					["flare"] = 60,
-					["chaff"] = 60,
-					["gun"] = 100,
-				},
-			},
+			},								
 			["CAS Heavy Cluster KMGU-96r*2 R-60M*2 Fuel"] = {
 				minscore = 0.1,
 				support = {
@@ -10226,65 +10106,8 @@ db_loadouts = {
 				},
 			},
 		},
-		["Strike"] = {
-			["Strike FAB500*4, FT"] = {
-				minscore = 0.3,
-				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
-					},
-				attributes = {"Structure", "Bridge", "hard"},
-				weapons = { -- task dedicated weapons				
-					["FAB-500M62"] = 4, -- verify miz					
-				},
-				weaponType = "Bombs",
-				expend = "All",
-				attackType = "Dive",
-				day = true,
-				night = false,
-				adverseWeather = false,
-				range = 300000,
-				capability = 3,
-				firepower = 6,
-				vCruise = 250,
-				vAttack = 350,
-				hCruise = 6000,
-				hAttack = 4000,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 2,
-				stores = {
-					["pylons"] = {
-						[4] = {
-							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-							["num"] = 4,
-						},
-						[2] = {
-							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 2,
-						},
-						[6] = {
-							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 6,
-						},
-						[5] = {
-							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 5,
-						},
-						[3] = {
-							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 3,
-						},
-					},
-					["fuel"] = "3800",
-					["flare"] = 60,
-					["chaff"] = 60,
-					["gun"] = 100,
-				},
-			},
-			["Strike FAB500*2, R-60*4, FT"] = {
+		["Strike"] = {			
+			["Strike FAB500*2, R-60*2, FT"] = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
