@@ -235,9 +235,9 @@ local function evalutateFirepowerA2AMissile(missile_data)
     end
     
     -- normalize firepower from 0.1 to 1.1
-    firepower = 2^(firepower) - 0.9
+    firepower = 2^(firepower) - 0.1
     firepower = roundAtNumber(firepower, FIREPOWER_ROUNDEND_COMPUTATION)
-    
+
     log.traceVeryLow(nameFunction .. "seeker_factor: " .. seeker_factor .. ", tnt_factor: " .. tnt_factor)
     log.traceVeryLow(nameFunction .. "missile_data.reliability: " .. missile_data.reliability .. ", missile_data.manouvrability: " .. missile_data.manouvrability .. ", firepower: " .. firepower)
     log.level = previous_log_level

@@ -28,6 +28,23 @@ camp = {
 	debug = false,					--debug mode
 	-- hotstart = false,       		--player flights starts with engines running     ---- change it  in init/conf_mod.lua
     -- intercept_hotstart = true,    --player flights with intercept task starts with engines running  ---- change it  in init/conf_mod.lua
+	SCORE_TASK_FACTOR = { -- deve essere resa globale e inserita in camp status
+		["CAP"] = 1,
+		["AWACS"] = 1,
+		["Intercept"] = 1,
+		["Escort"] = 1,
+		["Fighter Sweep"] = 1,
+		["Anti-ship Strike"] = 1,
+		["Strike"] = 1,
+		["Reconnaissance"] = 1,
+		["Refueling"] = 1,
+		["Transport"] = 1,
+		["SEAD"] = 1,
+	}
+
+	
+	
 	-- ANY MODIFICATIONS IN THIS FILE NEED TO RESTART ALL THE CAMPAIGN USING FIRSTMISSION.BAT FILE
+
 
 }

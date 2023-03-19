@@ -3588,7 +3588,7 @@ db_loadouts = {
 				weaponType = nil,
 				weapons = { -- task dedicated weapons
 					["R-550"] = 2, -- 														
-					["R-530EM"] = 1, -- 
+					["R-530EM"] = 2, -- 
 				},
 				expend = nil,
 				day = true,
@@ -5343,6 +5343,216 @@ db_loadouts = {
                 ["gun"] = 100,
 				},
 			},
+			["BGM-71*8 HYDRA-70*38 40perc Fuel"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 38,	-- 4xM260(7 rockets/launcher) see pylons									
+					["BGM-71"] = 8,
+				},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 10,
+				firepower = 5,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+				["pylons"] =  {
+					[1] = 
+					{
+						["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+					}, -- end of [1]
+					[2] = 
+					{
+						["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+					}, -- end of [2]
+					[3] = 
+					{
+						["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+					}, -- end of [3]
+					[4] = 
+					{
+						["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+					}, -- end of [4]
+				}, -- end of ["pylons"]
+                ["fuel"] = 1163,
+                ["flare"] = 30,
+                ["chaff"] = 30,
+                ["gun"] = 100,
+				},
+			},
+			["BGM-71*8 HYDRA-70*14 fuel 70perc"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 14,	-- 4xM260(7 rockets/launcher) see pylons									
+					["BGM-71"] = 8,
+				},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 10,
+				firepower = 5,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "M260_HYDRA",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "M260_HYDRA",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{3EA17AB0-A805-4D9E-8732-4CE00CB00F17}",
+						}, -- end of [4]
+					}, -- end of ["pylons"]
+					["fuel"] = 1163,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
+			["HYDRA-70*76 fuel 44 perc"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 76,	-- 4xM260(7 rockets/launcher) see pylons									
+				},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 10,
+				firepower = 5,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] =  {
+						[1] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [4]
+					}, -- end of ["pylons"]
+					["fuel"] = 1163,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
+			["HYDRA-70*38 fuel 82perc"] = {
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
+				weapons = { -- task dedicated weapons										
+					["Hydra-70MK5"] = 38,	-- 4xM260(7 rockets/launcher) see pylons									
+				},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 10,
+				firepower = 5,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] =  {
+						[1] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [4]
+					}, -- end of ["pylons"]
+					["fuel"] = 1163,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
 			["ASM BGM-71D * 8"] = {
 				minscore = 0.0,
 				support = {
@@ -5394,7 +5604,10 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "SAM"},
+				attributes = {"soft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons										
+					["AGM-114"] = 8,	-- 4xM260(7 rockets/launcher) see pylons									
+				},
 				weaponType = "ASM",
 				expend = "Auto",
 				day = true,
@@ -5429,10 +5642,122 @@ db_loadouts = {
                 ["gun"] = 100,
 				},
 			},
+			["AGM-114*8 HYDRA-70*14 fuel 72perc"] = {--1982 (delete!?)
+				minscore = 0.3,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons										
+					["AGM-114"] = 8,	-- 4xM260(7 rockets/launcher) see pylons					
+					["HYDRA-70"] = 14,					
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 40000,
+				capability = 6,
+				firepower = 8,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+				["pylons"] = {
+					[1] = 
+					{
+						["CLSID"] = "{88D18A5E-99C8-4B04-B40B-1C02F2018B6E}",
+					}, -- end of [1]
+					[2] = 
+					{
+						["CLSID"] = "M260_HYDRA",
+					}, -- end of [2]
+					[3] = 
+					{
+						["CLSID"] = "M260_HYDRA",
+					}, -- end of [3]
+					[4] = 
+					{
+						["CLSID"] = "{88D18A5E-99C8-4B04-B40B-1C02F2018B6E}",
+					}, -- end of [4]
+				}, -- end of ["pylons"]
+                ["fuel"] = 1250,
+                ["flare"] = 30,
+                ["chaff"] = 30,
+                ["gun"] = 100,
+				},
+			},
+			["AGM-114*8 HYDRA-70*38 fuel 45 perc"] = {--1982 (delete!?)
+				minscore = 0.3,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"soft", "SAM", "armor"},
+				weapons = { -- task dedicated weapons										
+					["AGM-114"] = 8,	-- 4xM260(7 rockets/launcher) see pylons					
+					["HYDRA-70"] = 38,					
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 40000,
+				capability = 6,
+				firepower = 8,
+				vCruise = 55,
+				vAttack = 55,
+				hCruise = 50,
+				hAttack = 50,
+				standoff = 4000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+				["pylons"] =  {
+					["pylons"] = 
+					{
+						[1] = 
+						{
+							["CLSID"] = "{88D18A5E-99C8-4B04-B40B-1C02F2018B6E}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{88D18A5E-99C8-4B04-B40B-1C02F2018B6E}",
+						}, -- end of [4]
+					}, -- end of ["pylons"]
+					["fuel"] = 563,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				}, -- end of ["payload"]
+                ["fuel"] = 1250,
+                ["flare"] = 30,
+                ["chaff"] = 30,
+                ["gun"] = 100,
+				},
+			},
 			]]
 		},
 	},
-
 
 
 
@@ -6695,9 +7020,12 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = { --verify loadout miz
-			["CAS Rockets"] = {
+			["Rockets S-8KOM*80"] = {
 				minscore = 0.0,
 				attributes = {"soft"},
+				weapons = { -- task dedicated weapons											
+					["S-8 KOM"] = 80, --rockets soft target										
+				},
 				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
@@ -6719,11 +7047,11 @@ db_loadouts = {
 					["pylons"] = {
 						[5] = 
 						{
-							["CLSID"] = "GUV_YakB_GSHP",
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
 						}, -- end of [5]
 						[2] = 
 						{
-							["CLSID"] = "GUV_YakB_GSHP",
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
 						}, -- end of [2]
 						[4] = 
 						{
@@ -6733,66 +7061,102 @@ db_loadouts = {
 						{
 							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
 						}, -- end of [3]
-					}, ----end of ["pylons"]
+					}, -- end of ["pylons"]
 					["fuel"] = "1929",
 					["flare"] = 128,
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
 			},
-			["CAS Bombs"] = {
-				minscore = 0.1,
+			["S-8KOM*20-Gsh-23L Autocannon*2"] = {
+				minscore = 0.0,
 				attributes = {"soft"},
-				weaponType = "Bombs",
+				weapons = { -- task dedicated weapons											
+					["S-8 KOM"] = 20, --rockets soft target		
+					["Gsh-23L"] = 2, --rockets soft target									
+				},
+				weaponType = "Rockets",
 				expend = "Auto",
 				day = true,
 				night = false,
 				adverseWeather = false,
 				range = 80000,
 				capability = 15,
-				firepower = 9,
+				firepower = 7,
 				vCruise = 100,
 				vAttack = 100,
-				hCruise = 1000,
-				hAttack = 1500,
+				hCruise = 100,
+				hAttack = 100,
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
 				sortie_rate = 6,
 				stores = {
-					["pylons"] = {
-						[1] = 
-						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
-						}, -- end of [1]
-						[2] = 
-						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
-						}, -- end of [4]
+					["pylons"] =  {
 						[5] = 
 						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
 						}, -- end of [5]
-						[6] = 
+						[2] = 
 						{
-							["CLSID"] = "{FB3CE165-BF07-4979-887C-92B87F13276B}",
-						}, -- end of [6]
-					}, ----end of ["pylons"]
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
+						}, -- end of [2]
+						[4] = 
+						{
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
+						}, -- end of [4]
+						[3] = 
+						{
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
+						}, -- end of [3]
+					}, -- end of ["pylons"]
 					["fuel"] = "1929",
 					["flare"] = 128,
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
 			},
+			["Gsh-23L Autocannon*2"] = {
+				minscore = 0.0,
+				attributes = {"soft"},
+				weapons = { -- task dedicated weapons											
+					["Gsh-23L"] = 2, --rockets soft target									
+				},
+				weaponType = "Rockets",
+				expend = "Auto",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 15,
+				firepower = 7,
+				vCruise = 100,
+				vAttack = 100,
+				hCruise = 100,
+				hAttack = 100,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] =  {
+						[5] = 
+						{
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
+						}, -- end of [5]
+						[2] = 
+						{
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
+						}, -- end of [2]
+					}, -- end of ["pylons"]
+					["fuel"] = "1929",
+					["flare"] = 128,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},			
 		},
 	},
 
@@ -6928,7 +7292,7 @@ db_loadouts = {
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
-			},
+			},			
 			["CAS Rockets Soft S-5KO*128"] = {
 				minscore = 0.1,
 				attributes = {"soft"},
@@ -7016,7 +7380,7 @@ db_loadouts = {
 					["chaff"] = 0,
 					["gun"] = 100,
 				},
-			},
+			},			
 			["CAS Cannon Soft UPK-23*4 9M114*4"] = {
 				minscore = 0.1,
 				attributes = {"soft"},
@@ -10107,7 +10471,7 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {			
-			["Strike FAB500*2, R-60*2, FT"] = {
+			["GA FAB-500*2 R-60M*2 FUEL 800*1"] = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -10137,27 +10501,198 @@ db_loadouts = {
 				sortie_rate = 2,
 				stores = {
 					["pylons"] = {
-						[4] = {
+						[2] = 
+						{
+							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [3]
+						[4] = 
+						{
 							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-							["num"] = 4,
-						},
-						[2] = {
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [5]
+						[6] = 
+						{
 							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 2,
-						},
-						[6] = {
-							["CLSID"] = "{37DCC01E-9E02-432F-B61D-10C166CA2798}",
-							["num"] = 6,
-						},
-						[5] = {
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-							["num"] = 5,
-						},
-						[3] = {
-							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-							["num"] = 3,
-						},
+						}, -- end of [6]
+					}, -- end of ["pylons"]
+					["fuel"] = "3800",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["GA FAB-250*2 R-60M*2 FUEL 800*1"] = {
+				minscore = 0.1,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = true,
 					},
+				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons				
+					["FAB-250M54"] = 2,
+				},
+				weaponType = "Bombs",
+				expend = "All",
+				attackType = "Dive",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 300000,
+				capability = 3,
+				firepower = 3,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 6000,
+				hAttack = 4000,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}",
+						}, -- end of [6]
+					}, -- end of ["pylons"]
+					["fuel"] = "3800",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["GA S-8KOM*40 R-60M*2 FUEL 800*1b"] = {
+				minscore = 0.1,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = true,
+					},
+				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons				
+					["S-8 KOM"] = 40,
+				},
+				weaponType = "Bombs",
+				expend = "All",
+				attackType = "Dive",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 300000,
+				capability = 3,
+				firepower = 3,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 6000,
+				hAttack = 4000,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{F72F47E5-C83A-4B85-96ED-D3E46671EE9A}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{F72F47E5-C83A-4B85-96ED-D3E46671EE9A}",
+						}, -- end of [6]
+					}, -- end of ["pylons"]
+					["fuel"] = "3800",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["GA S-5KO*64 R-60M*2 FUEL 800*1b"] = {
+				minscore = 0.1,
+				support = {
+						["Escort"] = true,
+						["SEAD"] = true,
+					},
+				attributes = {"Structure", "Bridge"},
+				weapons = { -- task dedicated weapons				
+					["S-5 KO"] = 64,
+				},
+				weaponType = "Bombs",
+				expend = "All",
+				attackType = "Dive",
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 300000,
+				capability = 3,
+				firepower = 3,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 6000,
+				hAttack = 4000,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{637334E4-AB5A-47C0-83A6-51B7F1DF3CD5}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{APU-60-1_R_60M}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{637334E4-AB5A-47C0-83A6-51B7F1DF3CD5}",
+						}, -- end of [6]
+					}, -- end of ["pylons"]
 					["fuel"] = "3800",
 					["flare"] = 60,
 					["chaff"] = 60,
@@ -12153,6 +12688,163 @@ db_loadouts = {
 	        ["gun"] = 100,
 				},
 			},
+		},
+	},
+
+	["Mi-24P"] = {--1980 (primo volo) (entrata in servizio)
+		["Transport"] = {
+			["Default"] = {
+				attributes = {},
+				weaponType = nil,
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 200000,
+				capability = 10,
+				firepower = 1,
+				vCruise = 100,
+				vAttack = 100,
+				hCruise = 100,
+				hAttack = 100,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 2,
+				stores = {
+					["pylons"] = {
+						[1] = {
+						["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
+							["num"] = 2,
+						},
+						[5] = {
+							["CLSID"] = "{05544F1A-C39C-466b-BC37-5BD1D52E57BB}",
+							["num"] = 5,
+						},
+						[6] = {
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+							["num"] = 6,
+						},
+					}, ----end of ["pylons"]
+					["fuel"] = "1704",
+					["flare"] = 192,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+		},
+		["Strike"] = {			
+			["CAS Rockets Hard S-13*10 9M114*4"] = {
+				minscore = 0.0,
+				attributes = {"soft", "Structure"},
+				weaponType = "Rockets",
+				expend = "All",
+				weapons = { -- task dedicated weapons											
+					["S-13"] = 10, --rockets soft target
+					["9M114"] = 4, --rockets soft target										
+				},
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 6,
+				firepower = 5,
+				vCruise = 100,
+				vAttack = 100,
+				hCruise = 100,
+				hAttack = 100,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
+						}, -- end of [2]
+						[5] = 
+						{
+							["CLSID"] = "{FC56DF80-9B09-44C5-8976-DCFAFF219062}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [6]
+					}, -- end of ["pylons"]
+					["fuel"] = "1414",
+					["flare"] = 192,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},			
+			["CAS Rockets S-8KOM*20 9M114*4"] = {
+				minscore = 0.0,
+				attributes = {"soft"},
+				weaponType = "Rockets",
+				expend = "All",
+				weapons = { -- task dedicated weapons											
+					["S-8 KOM"] = 20, --rockets soft target		
+					["9M114"] = 4, --rockets soft target										
+				},
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 80000,
+				capability = 6,
+				firepower = 4,
+				vCruise = 100,
+				vAttack = 100,
+				hCruise = 100,
+				hAttack = 100,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{B919B0F4-7C25-455E-9A02-CEA51DB895E3}",
+						}, -- end of [6]
+					}, -- end of ["pylons"]
+					["fuel"] = "1704",
+					["flare"] = 192,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},			
 		},
 	},
 	]]

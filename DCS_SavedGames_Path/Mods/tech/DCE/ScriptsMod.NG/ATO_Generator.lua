@@ -1029,28 +1029,34 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							local route_threat = route.threats.ground_total + route.threats.air_total							--combine route ground and air threat
 																							if active_log then log.traceLow("route_threat total: " .. route_threat .. ", (air: " .. route.threats.air_total .." + ground: " .. route.threats.ground_total .. ")") end
 																				
+																							 -- Compute score for CAP or Intercept
 																							if task == "CAP" or task == "Intercept" then
-																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority						--route threat does not matter for CAP and intercept
+																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority					--route threat does not matter for CAP and intercept
 																								if active_log then log.traceLow(" task is CAP or Intercept, compute score without threat: draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ")") end
-																				
-																							else
+																							
+																							-- Compute score for Fighter Sweep, Strike, Anti-ship Strike, Transport, Refueling, Reco
+																							else 
 																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / route_threat		--calculate the score to measure the importance of the sortie
 																								if active_log then log.traceLow(" task(" .. task .."), draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ") / route_threat(" .. route_threat .. ")") end
 																							end
 																							local reduce_score = 0																				--factor to reduce score for station missions with less aircraft than required to cover station
 																							
+																							 -- Compute reduction score for CAP
 																							if task == "CAP" then																				--station tasks with flights of 2
 																								reduce_score = flights_requested - aircraft_assign / math.ceil(target.firepower.max / unit_loadouts[l].firepower) --increase factor by one for each flight that is missing
 																								if active_log then log.traceLow("task is CAP, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ") / math.ceil(target.firepower.max)(" .. math.ceil(target.firepower.max) .. " / unit_loadouts[l].firepower(" .. unit_loadouts[l].firepower .. "))" ) end
 																							
+																							-- Compute reduction score for AWACS or Refueling
 																							elseif task == "AWACS" or task == "Refueling"  then													--station tasks with flights of 1
 																								reduce_score = flights_requested - aircraft_assign												--increase factor by one for each flight that is missing
 																								if active_log then log.traceLow("task is AWACS or Refueling, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ")") end
 																							end
-																							draft_sorties_entry.score = draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE 							--reduce score slighthly for station missions with less aircraft than required to cover station
+
+																							-- Update score with reduction score and  SCORE_TASK_FACTOR
+																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE )  * camp.SCORE_TASK_FACTOR[task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
 																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. FACTOR_FOR_REDUCE_SCORE .. ")") end
 																							
-																							--ATO_G_adjustment02
+																							--ATO_G_adjustment02 -- Update score with unit.taskCoeff 
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then
 																								draft_sorties_entry.score = draft_sorties_entry.score * unit[n].tasksCoef[task]		--aumenta lo score di un fattore paria al taskcoeff (ha senso)																				 
 																								if active_log then log.traceLow("for this task(" .. task .. ") unit(" .. unit[n].name .. " - " .. unit[n].type .. " have taskcoeff: " .. unit[n].tasksCoef[task] .. ", update draft_sorties_entry.score = " .. draft_sorties_entry.score) end
