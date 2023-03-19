@@ -142,8 +142,8 @@ local function evalutateFirepowerA2AMissile(missile_data)
 
     local firepower
     local range_factor = 0.8
-    local semiactive_range_factor = 0.8
-    local active_range_factor = 0.8
+    local semiactive_range_factor = 1
+    local active_range_factor = 1
     local max_height_factor = 0.8
     local max_speed_factor = 0.8
     local tnt_factor = 0.8 
@@ -154,26 +154,26 @@ local function evalutateFirepowerA2AMissile(missile_data)
         if missile_data.range then
             range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.radar_range
 
-            if range_factor > 1 then
+            --[[if range_factor > 1 then
                 range_factor = 1
-            end
+            end]]
         end
             
         if missile_data.active_range then
             active_range_factor = 1 + missile_data.active_range / REFERENCE_EFFICIENCY_MISSILE_A2A.active_range
     
-            if active_range_factor > 1 then
+            --[[if active_range_factor > 1 then
                 active_range_factor = 1
-            end
+            end]]
         end
 
-        if missile_data.semiactive_range then        
+        --[[if missile_data.semiactive_range then        
             semiactive_range_factor = missile_data.semiactive_range / REFERENCE_EFFICIENCY_MISSILE_A2A.semiactive_range
 
             if semiactive_range_factor > 1 then
                 semiactive_range_factor = 1
-            end        
-        end
+            end       
+        end]]
 
         if missile_data.max_height then
             max_height_factor = missile_data.max_height / REFERENCE_EFFICIENCY_MISSILE_A2A.max_height_radar_missile
@@ -186,9 +186,9 @@ local function evalutateFirepowerA2AMissile(missile_data)
         if missile_data.max_speed then
             max_speed_factor = missile_data.max_speed / REFERENCE_EFFICIENCY_MISSILE_A2A.max_speed_radar_missile
     
-            if max_speed_factor > 1 then
+            --[[if max_speed_factor > 1 then
                 max_speed_factor = 1
-            end
+            end]]
         end
         seeker_factor = max_speed_factor * max_height_factor * semiactive_range_factor * active_range_factor * range_factor
 
@@ -196,24 +196,24 @@ local function evalutateFirepowerA2AMissile(missile_data)
         
         range_factor = missile_data.range / REFERENCE_EFFICIENCY_MISSILE_A2A.infrared_range
        
-        if range_factor > 1 then
+        --[[if range_factor > 1 then
             range_factor = 1
-        end
+        end]]
 
         if missile_data.max_height then
             max_height_factor = missile_data.max_height / REFERENCE_EFFICIENCY_MISSILE_A2A.max_height_infrared_missile
     
-            if max_height_factor > 1 then
+            --[[if max_height_factor > 1 then
                 max_height_factor = 1
-            end
+            end]]
         end
     
         if missile_data.max_speed then
             max_speed_factor = missile_data.max_speed / REFERENCE_EFFICIENCY_MISSILE_A2A.max_speed_infrared_missile
     
-            if max_speed_factor > 1 then
+            --[[if max_speed_factor > 1 then
                 max_speed_factor = 1
-            end
+            end]]
         end
         seeker_factor = max_speed_factor * max_height_factor * range_factor
     end
@@ -221,12 +221,23 @@ local function evalutateFirepowerA2AMissile(missile_data)
     if missile_data.tnt then
         tnt_factor = missile_data.tnt / REFERENCE_EFFICIENCY_MISSILE_A2A.tnt
 
-        if tnt_factor > 1 then
+        --[[if tnt_factor > 1 then
             tnt_factor = 1
-        end
+        end]]
     end
     
-    firepower = roundAtNumber(missile_data.reliability * missile_data.manouvrability * seeker_factor * tnt_factor, FIREPOWER_ROUNDEND_COMPUTATION)
+    -- compression firepower from 0.1 to 1
+    -- ready * (  2^( efficiency * percentage_efficiency_influence ) - 1 ) ) -- min: 0 max = actual roster.ready
+    firepower = missile_data.reliability * missile_data.manouvrability * seeker_factor * tnt_factor
+
+    if firepower > 1 then
+        firepower = 1
+    end
+    
+    -- normalize firepower from 0.1 to 1.1
+    firepower = 2^(firepower) - 0.9
+    firepower = roundAtNumber(firepower, FIREPOWER_ROUNDEND_COMPUTATION)
+    
     log.traceVeryLow(nameFunction .. "seeker_factor: " .. seeker_factor .. ", tnt_factor: " .. tnt_factor)
     log.traceVeryLow(nameFunction .. "missile_data.reliability: " .. missile_data.reliability .. ", missile_data.manouvrability: " .. missile_data.manouvrability .. ", firepower: " .. firepower)
     log.level = previous_log_level

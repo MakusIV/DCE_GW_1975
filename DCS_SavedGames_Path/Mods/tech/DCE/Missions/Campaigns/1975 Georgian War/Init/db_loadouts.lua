@@ -3588,7 +3588,7 @@ db_loadouts = {
 				weaponType = nil,
 				weapons = { -- task dedicated weapons
 					["R-550"] = 2, -- 														
-					["R-530EM"] = 1, -- 
+					["R-530EM"] = 2, -- 
 				},
 				expend = nil,
 				day = true,
@@ -5758,7 +5758,6 @@ db_loadouts = {
 			]]
 		},
 	},
-
 
 
 
@@ -12692,7 +12691,7 @@ db_loadouts = {
 		},
 	},
 
-	["Mi-24P"] = {--1980 (primo volo) 1972 (entrata in servizio)
+	["Mi-24P"] = {--1980 (primo volo) (entrata in servizio)
 		["Transport"] = {
 			["Default"] = {
 				attributes = {},
