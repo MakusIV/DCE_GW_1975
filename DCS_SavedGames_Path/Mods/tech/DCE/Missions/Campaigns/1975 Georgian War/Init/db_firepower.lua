@@ -3325,6 +3325,88 @@ weapon_db = {
             },                              
         },
 
+        ["Gsh-23L"] = { -- autocannon 23 mm soft target, light armored, 
+            ["type"] = "Rockets",    -- change, implements new type?   
+            ["task"] = {"Strike"},
+            ["start_service"] = 1972, 
+            ["end_service"] = nil,
+            ["cost"] = nil,-- k$  
+            ["tnt"] = nil, --kg not applicable
+            ["range"] = 2, -- Km
+            ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {                          
+                            
+                ["ship"] = { -- mobile target
+                                        
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.15,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 0.1,
+                    },
+                },    
+                                
+                ["soft"] = { -- mobile target(artillery group)
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 0.1,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.6,  
+                        ["destroy_capacity"] = 0.2,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 0.35     ,
+                    },
+                },               
+
+                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 0.05,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.6,  
+                        ["destroy_capacity"] = 0.1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 0.2,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 0.15,
+                    },
+                }, 
+
+                ["Parked Aircraft"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 0.2,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.6,  
+                        ["destroy_capacit"] = 0.3,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.55, 
+                        ["destroy_capacity"] = 0.35,
+                    },
+                },
+            },                              
+        },
+
         ["S-5 M"] = { -- Rockets 57 mm soft target, launcher UB-32UM/16UM (qty: 32/16), ORO-57K(8)
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
