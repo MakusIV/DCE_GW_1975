@@ -11,6 +11,7 @@ end
 versionDCE["ATO_ThreatEvaluation.lua"] = "OB.1.0.0"
 
 -------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements some customizing property (threat rilevability)
 -- Old_Boy rev. OB.1.0.0: implements logging code + new groundthreats and ewr items (from Reglage_f "war over tchad" campaign)
 -- miguel21 modification M34.k change freq EWR + custom FrequenceRadio (k: utilise les indicatifs WEST pour EWR)
 -- Miguel21 modification M28.b : helicoptere see all SAM
@@ -56,17 +57,17 @@ local local_debug = true -- local debug
 local active_log = false -- select true to activate log
 log.info("Start")
 
-local MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3
-local MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3
-local GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1
-local GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY = 1
-local GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1
-local GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY = 1
+local MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3									-- minimum asset unless specified otherwise
+local MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3										-- minimum asset unless specified otherwise
+local GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1							-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
+local GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY = 1						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
+local GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1							-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
+local GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY = 1						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
 
-local MAN_SAM_RILEVABILITY = 0.2
-local SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.4
-local SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.5
-local MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.6
+local MAN_SAM_RILEVABILITY = 0.2												-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
+local SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.4								-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
+local SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.5							-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
+local MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.6								-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
 local MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.7
 local LARGE_SAM_VEHICLE_RILEVABILITY = 0.8
 local SMALL_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.6

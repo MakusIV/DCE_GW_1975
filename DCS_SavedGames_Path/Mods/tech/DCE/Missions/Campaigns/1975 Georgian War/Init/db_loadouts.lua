@@ -1,5 +1,13 @@
 --Loadouts database
+
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code (property)
 -------------------------------------------------------------------------------------------------------
+
+
+
+
 ------PB0_CEF -------------------Loadout OB----------------------------------
 --[[ Loadout Entry Example ----------------------------------------------------------------------------
 
@@ -5359,7 +5367,7 @@ db_loadouts = {
 				day = true,
 				night = false,
 				adverseWeather = false,
-				range = 80000,
+				range = 32000,
 				capability = 10,
 				firepower = 5,
 				vCruise = 55,
@@ -5412,7 +5420,7 @@ db_loadouts = {
 				day = true,
 				night = false,
 				adverseWeather = false,
-				range = 80000,
+				range = 56000,
 				capability = 10,
 				firepower = 5,
 				vCruise = 55,
@@ -5464,7 +5472,7 @@ db_loadouts = {
 				day = true,
 				night = false,
 				adverseWeather = false,
-				range = 80000,
+				range = 33000,
 				capability = 10,
 				firepower = 5,
 				vCruise = 55,
@@ -5516,7 +5524,7 @@ db_loadouts = {
 				day = true,
 				night = false,
 				adverseWeather = false,
-				range = 80000,
+				range = 64000,
 				capability = 10,
 				firepower = 5,
 				vCruise = 55,

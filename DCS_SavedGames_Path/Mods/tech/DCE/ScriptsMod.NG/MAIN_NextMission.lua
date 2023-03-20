@@ -11,7 +11,9 @@ end
 versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
 
 ---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code
 -- Old_Boy rev. OB.1.0.0: implements logging code
+-- Old_Boy rev. OB.0.0.1: implements logistic code
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M40 Pedro
 -- miguel21 modification M38.d Check and Help CampaignMaker
@@ -32,12 +34,10 @@ versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
 --if not versionDCE then versionDCE = {} end
 --versionDCE["MAIN_NextMission.lua"] = "1.15.38"
 
---by Old_Boy
+
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
 inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
--- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
--- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2 j
 log.level = LOGGING_LEVEL --"traceVeryLow" -- 
 log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
@@ -219,7 +219,6 @@ else
 end
 
 log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
-require("Init/db_firepower")
 require("Init/db_loadouts")
 require("Init/db_airbases")
 require("Active/oob_air")

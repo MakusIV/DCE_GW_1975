@@ -3150,7 +3150,7 @@ camp = {
 			['serviceable'] = 12,
 		},
 	},
-	['mission'] = 6,
+	['mission'] = 1,
 	['path'] = 'C:/Users/marco/Saved Games/DCS.openbeta_server/',
 	['startup'] = 900,
 	['SC_CarrierIntoWind'] = 'man',
@@ -3299,6 +3299,20 @@ camp = {
 	['MultiPlayer'] = {
 		['pack_n'] = {
 		},
+	},
+	['SCORE_TASK_FACTOR'] = { -- deve essere resa globale e inserita in camp status
+		["CAP"] = 1,
+		["AWACS"] = 1,
+		["Intercept"] = 1,
+		["Escort"] = 1,
+		["Fighter Sweep"] = 1,
+		["Anti-ship Strike"] = 1,
+		["Strike"] = 1,
+		["Reconnaissance"] = 1,
+		["Refueling"] = 1,
+		["Transport"] = 1,
+		["SEAD"] = 1,
+		["Laser Illumination"] = 1,
 	},
 	['versionPackageICM'] = 'NG',
 }

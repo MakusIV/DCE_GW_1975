@@ -9,10 +9,10 @@ end
 
                -- VERSION --
 
-versionDCE["DC_Firepower.lua"] = "OB.1.0.0"
+versionDCE["DC_Firepower.lua"] = "OB.1.0.1"
 
 -------------------------------------------------------------------------------------------------------
--- Old_Boy rev. OB.1.0.0: first coding 
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code
 ------------------------------------------------------------------------------------------------------- 
 
 --NOTE: nella prima missione deve aggiornare Active/targelist (considerando il numero di elementi) e Init/db_loadouts
@@ -27,12 +27,12 @@ log.outfile = LOG_DIR .. "LOG_DC_Firepower.lua." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 local active_log = false
 log.debug("Start")
-
+require("Init/db_firepower")
 
 local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01 -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = 9999999999
-local FIREPOWER_ROUNDEND_COMPUTATION = 0.01
-local FIREPOWER_ROUNDEND_ASSIGNEMENT = 0.1
+local FIREPOWER_ROUNDED_COMPUTATION = 0.01
+local FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1
 -- LOCAL FUNCTION
 
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
@@ -117,7 +117,7 @@ local function getWeaponFirepower(side, task, attribute, weapon_table)
                 end
             
                 if check then   -- calculates the average fire based on the data of each weapon that has the same task and the same attribute
-                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy * weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDEND_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
+                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy * weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDED_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
                     log.traceVeryLow(nameFunction .. "update unit firepower for weapon " .. weapon_name .. ": firepower: " .. firepower .. ", accuracy: " .. weapon_data_db.efficiency[attribute].mix.accuracy .. ", destroy_capacity: " .. weapon_data_db.efficiency[attribute].mix.destroy_capacity .. ", weapon_qty: " .. weapon_qty) 
                 end
             end
@@ -236,7 +236,7 @@ local function evalutateFirepowerA2AMissile(missile_data)
     
     -- normalize firepower from 0.1 to 1.1
     firepower = 2^(firepower) - 0.1
-    firepower = roundAtNumber(firepower, FIREPOWER_ROUNDEND_COMPUTATION)
+    firepower = roundAtNumber(firepower, FIREPOWER_ROUNDED_COMPUTATION)
 
     log.traceVeryLow(nameFunction .. "seeker_factor: " .. seeker_factor .. ", tnt_factor: " .. tnt_factor)
     log.traceVeryLow(nameFunction .. "missile_data.reliability: " .. missile_data.reliability .. ", missile_data.manouvrability: " .. missile_data.manouvrability .. ", firepower: " .. firepower)
@@ -329,8 +329,8 @@ local function medEfficiencyWeapon(side, target_attribute, target_dimension, tas
     end
 
     if break_loop then
-        draft_weapon_efficiency = roundAtNumber( draft_weapon_efficiency / i, FIREPOWER_ROUNDEND_COMPUTATION)
-        draft_weapon_variability = roundAtNumber( draft_weapon_variability / i, FIREPOWER_ROUNDEND_COMPUTATION)
+        draft_weapon_efficiency = roundAtNumber( draft_weapon_efficiency / i, FIREPOWER_ROUNDED_COMPUTATION)
+        draft_weapon_variability = roundAtNumber( draft_weapon_variability / i, FIREPOWER_ROUNDED_COMPUTATION)
     else
         draft_weapon_efficiency = nil
         draft_weapon_variability = nil
@@ -377,7 +377,7 @@ local function maxEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDEND_COMPUTATION)
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDED_COMPUTATION)
                                     
                                     if choice_weapon_efficiency < draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -440,7 +440,7 @@ local function minEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDEND_COMPUTATION)
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDED_COMPUTATION)
                                     
                                     if choice_weapon_efficiency > draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -512,8 +512,8 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
     end
     
     if best_weapon_efficiency then
-        calculated_firepower_min = roundAtNumber( num_targets_element / best_weapon_efficiency, FIREPOWER_ROUNDEND_COMPUTATION )
-        calculated_firepower_max = roundAtNumber( calculated_firepower_min * ( 1 + best_weapon_variability ), FIREPOWER_ROUNDEND_COMPUTATION )     
+        calculated_firepower_min = roundAtNumber( num_targets_element / best_weapon_efficiency, FIREPOWER_ROUNDED_COMPUTATION )
+        calculated_firepower_max = roundAtNumber( calculated_firepower_min * ( 1 + best_weapon_variability ), FIREPOWER_ROUNDED_COMPUTATION )     
     end
 
     log.traceVeryLow(nameFunction .. "computed firepower min, max: " .. (calculated_firepower_min or "nil") .. ", " .. (calculated_firepower_max or "nil"))
@@ -570,9 +570,6 @@ local function getTargetFirepower( num_targets_element, side, dimension_element,
     end
 end
 
-
--- GLOBAL FUNCTION
-
 -- load computed_target_efficiency table, if not exist create one new
 local function loadComputedTargetEfficiency()
 
@@ -584,6 +581,9 @@ local function loadComputedTargetEfficiency()
         SaveTabOnPath( "Active/", "computed_target_efficiency", computed_target_efficiency )         
     end
 end
+
+
+-- GLOBAL FUNCTION
 
 -- call from DC_UpdateTargetList, initialize firepower value for target in targetlist
 function defineTargetListFirepower(targetlist)
@@ -710,7 +710,7 @@ function defineLoadoutsFirepower()
                             i = i + 1
                             log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", attribute_name: " .. attribute_name .. ", firepower: " .. firepower .. ", i: " .. i)            
                         end 
-                        firepower = roundAtNumber(firepower / i, FIREPOWER_ROUNDEND_ASSIGNEMENT ) -- firpower is median value of firepowers weapon                       
+                        firepower = roundAtNumber(firepower / i, FIREPOWER_ROUNDED_ASSIGNEMENT ) -- firpower is median value of firepowers weapon                       
 
                     elseif isNotFightTask(task_name) then
                         log.warn(nameFunction .. "check db_loadouts.lua, found a Not Fight Task: " .. task_name .. " with weapons:\n" .. inspect(weapons))

@@ -1,6 +1,6 @@
---To generate a flight route from base to target, evading as much threats as possible
---Returns route points, route lenght and route threat level (unavoided threats)
---Initiated by Main_NextMission.lua
+-- To generate a flight route from base to target, evading as much threats as possible
+-- Returns route points, route lenght and route threat level (unavoided threats)
+-- Initiated by Main_NextMission.lua
 -- Usecase with two public functions: getRoute() and getEscortRoute()
 -------------------------------------------------------------------------------------------------------
 
@@ -10,10 +10,11 @@ end
 
                -- VERSION --
 
-versionDCE["ATO_RouteGenerator.lua"] = "OB.1.0.0"
+versionDCE["ATO_RouteGenerator.lua"] = "OB.1.0.1"
 
 -------------------------------------------------------------------------------------------------------
--- Old_Boy rev. OB.1.0.0: implements logging code + 
+-- Old_Boy rev. OB.1.0.1: implements new algorithm for FindPath()
+-- Old_Boy rev. OB.1.0.0: implements logging code
 -- ATO_RG_Debug03 supprime trop de waypoint lors de l'escorte
 -- ATO_RG_Debug02 quand les EWR sont d�truit: on active les CAP, si les CAP on besoin d'EWR c'est nul
 -- ATO_RG_Debug01 targetPoint ligne 473 Reconnaissance

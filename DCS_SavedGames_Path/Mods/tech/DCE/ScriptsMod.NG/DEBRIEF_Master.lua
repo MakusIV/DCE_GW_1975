@@ -11,6 +11,7 @@ end
 versionDCE["DEBRIEF_Master.lua"] = "OB.1.0.0"
 
 ---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code
 -- Old_Boy rev. OB.1.0.0: implements logging code
 -- Old_Boy rev. OB.0.0.0: implements supply line sistems (logistics)
 -- adjustment A01.b : robust form
@@ -77,46 +78,43 @@ dofile("Init/conf_mod.lua")
 
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
 
---By Old_Boy
+local logExport 											-- mission events log -- 
+local scenExport											-- destroyed scenery objects
+local campExport											-- camp_status
+
 if not activate_testing_enviroment then
 	-- questi file sono temporanei generati allo stop del server (vedi script caricati nel Missione Generator)
-	local logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
-	local scenExport = loadfile("scen_destroyed.lua")()												-- destroyed scenery objects
-	local campExport = loadfile("camp_status.lua")()												-- camp_status
+	logExport = loadfile("MissionEventsLog.lua")() 											-- mission events log -- 
+	scenExport = loadfile("scen_destroyed.lua")()											-- destroyed scenery objects
+	campExport = loadfile("camp_status.lua")()												-- camp_status
 
 else		
 	-- test temporary file
-	local logExport = loadfile("MissionEventsLog.2t.lua")() 										-- mission events log -- 
-	local scenExport = loadfile("scen_destroyed.2t.lua")()											-- destroyed scenery objects
-	local campExport = loadfile("camp_status.2t.lua")()												-- camp_status
+	logExport = loadfile("MissionEventsLog.2t.lua")() 										-- mission events log -- 
+	scenExport = loadfile("scen_destroyed.2t.lua")()										-- destroyed scenery objects
+	campExport = loadfile("camp_status.2t.lua")()											-- camp_status
 end
 
 
 versionPackageICM = camp.versionPackageICM -- camp is defined in camp_status
 
-if not versionPackageICM or versionPackageICM == nil then											-- Miguel21 modification M35.d version ScriptsMod
-	versionPackageICM = os.getenv('versionPackageICM')												-- Miguel21 modification M35.c version ScriptsMod
+if not versionPackageICM or versionPackageICM == nil then									-- Miguel21 modification M35.d version ScriptsMod
+	versionPackageICM = os.getenv('versionPackageICM')										-- Miguel21 modification M35.c version ScriptsMod
 end
 
---By Old_Boy
 inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 -- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
--- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
--- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_Master."  .. camp.mission .. ".log"
 local local_debug = true -- local debug
 log.info("Start")
-log.debug(versionPackageICM)--By Old_Boy
+log.debug(versionPackageICM) 
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
 
 if not activate_testing_enviroment then
 	log.warn("activate testing enviroment")	
 end
--- if	camp.mission == 1 then																		--if this was a first campaign mission
-	-- dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_ResetCampaign.lua")					--reset the campaign status files
--- end
 
 --load status file to be updated
 log.debug("load: Active/oob_ground, Init/db_airbases, Active/oob_air, Active/targetlist, Active/clientstats")
@@ -141,7 +139,6 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DEBRIEF_StatsEvaluation.lua"
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")												--Mod11.j
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 
---By Old_Boy
 --run logistic evalutation, save power_tab and airbase_tab
 log.debug("run logistic evalutation (load DC_Logistic.lua and execute UpdateOobAir() function)")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")
@@ -198,7 +195,7 @@ if  TestPath ~= nil then
 	io.close(TestPath)
 	dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua")
 	showVersion = showVersion.." ("..version_ScriptsMod.ScriptsMod..")"
-	log.trace("file: " .. verScriptsModPath .. "open. Script Version: " .. showVersion)--By Old_Boy
+	log.trace("file: " .. verScriptsModPath .. "open. Script Version: " .. showVersion)
 end
 
 if versionPackageICM then
@@ -212,7 +209,7 @@ end
 --===================================================================================
 -- Ecran N�0 Choix next campaign mission
 --ask for input to save results and continue with campaign or disregard the last mission
-log.debug("Ask for input about confirm client results")--By Old_Boy
+log.debug("Ask for input about confirm client results")
 print("\nAccept mission results and continue with campaign? y(es)/n(o):\n")					--ask for user confirmation
 local input
 local playable_type = {}
@@ -238,14 +235,14 @@ print("\n\n")
 if input == "y" or input == "yes" then
 
 	--save new data (remaining files are updated in MAIN_NextMission.lua)
-	log.debug("Save updated clientstats in Active/clientstats.lua file")--By Old_Boy
+	log.debug("Save updated clientstats in Active/clientstats.lua file")
 	local client_str = "clientstats = " .. TableSerialization(clientstats, 0)					--make a string
 	local clientFile = io.open("Active/clientstats.lua", "w")									--open clientstats file
 	clientFile:write(client_str)																--save new data
 	clientFile:close()		
 
 	-- UPDATE OOB_SCEN 
-	log.debug("update oob_scen file with new destroyed scenery objects")--By Old_Boy
+	log.debug("update oob_scen file with new destroyed scenery objects")
 	
 	if local_debug then
 		log.debug("copy before updating (ante) Active/oob_scen in Debug for mission: "..camp.mission)
@@ -574,13 +571,13 @@ if input == "y" or input == "yes" then
 		print("Generating Next Mission.\n")
 
 		MissionInstance = MissionInstance + 1													--count the number of times the mission is generated
-		log.debug("load: MAIN_NextMission.lua")--By Old_Boy
+		log.debug("load: MAIN_NextMission.lua")
 		dofile("../../../ScriptsMod."..versionPackageICM.."/MAIN_NextMission.lua")				--generate next mission
 
 		if v_EndCampaign then 	
 																								-- debug01.b EndMission
 			if AcceptMission() then
-				log.debug("End Campaign")--By Old_Boy
+				log.debug("End Campaign")
 				print("\nEND OF THE CAMPAIGN, SEE THE BRIEFING IN THE MISSION..\n")				-- end of camapaign
 				break
 			end
@@ -662,7 +659,7 @@ if input == "y" or input == "yes" then
 end
 
 
---By Old_Boy
+
 if local_debug then -- Copy file for Debug
 	log.debug("copy MissionEventsLog.lua, scen_destroyed.lua, camp_status.lua in Debug for mission: "..camp.mission)
 	CopyFile("MissionEventsLog.lua", "Debug/MissionEventsLog." .. camp.mission .. ".lua" )
@@ -675,6 +672,6 @@ os.remove("MissionEventsLog.lua")	--DISABLE FOR DEBUG
 os.remove("scen_destroyed.lua")		--DISABLE FOR DEBUG
 os.remove("camp_status.lua")		--DISABLE FOR DEBUG
 
-log.debug("End")--By Old_Boy
+log.debug("End")
 
 os.exit()

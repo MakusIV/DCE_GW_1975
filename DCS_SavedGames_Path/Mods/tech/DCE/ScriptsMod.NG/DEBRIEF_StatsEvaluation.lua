@@ -12,18 +12,16 @@ versionDCE["DEBRIEF_StatsEvalutation.lua"] = "OB.1.0.0"
 
 ---------------------------------------------------------------------------------------------------------
 -- Old_Boy rev. OB.1.0.0: implements logging code and (very) little optimization
--- Old_Boy rev. OB0: implements supply line sistems (logistics)
+-- Old_Boy rev. OB.0.0.1: implements supply line sistems (logistics)
 -- Miguel21 modification M19.f : Repair SAM
+---------------------------------------------------------------------------------------------------------
 
--- =====================  Marco implementation ==================================
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
--- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
--- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 log.level = LOGGING_LEVEL
-log.outfile = LOG_DIR .. "LOG_DEBRIEF_StatEvalutation." .. camp.mission .. ".log" -- "prova Log.LOG_DEVRIEF_Master"
+log.outfile = LOG_DIR .. "LOG_DEBRIEF_StatEvalutation." .. camp.mission .. ".log" 
 local local_debug = true -- local debug   
 log.info("Start")
--- =====================  End Marco implementation ==================================
+
 
 -- ================== Local Function ================================================
 

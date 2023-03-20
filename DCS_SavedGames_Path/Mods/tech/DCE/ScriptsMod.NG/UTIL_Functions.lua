@@ -1,14 +1,19 @@
 --Various functions
-------------------------------------------------------------------------------------------------------- 
-------------------------------------------------------------------------------------------------------- 
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1 (CopyFile(), getSkill(), roundAtNumber(), SaveTabOnPath(), SaveTabWithNameOnPath())
 -- Miguel Fichier Revision M47.c
---
--- Marco: insert function: CopyFile(old_path, new_path) 
 ------------------------------------------------------------------------------------------------------- 
 
 
-if not versionDCE then versionDCE = {} end
-versionDCE["UTIL_Functions.lua"] = "1.6.21"
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["UTIL_Functions.lua"] = "OB.1.0.1"
+
 
 -- debugC Angle et Bearing des statics sur PA
 

@@ -11,6 +11,7 @@ end
 versionDCE["ATO_Generator.lua"] = "OB.1.0.0"
 
 -------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code
 -- Old_Boy rev. OB.1.0.0: implements logging code 
 -- Old_Boy rev. OB.0.0.1: implements code for Logistic 
 ------------------------------------------------------------------------------------------------------- 

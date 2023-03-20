@@ -1,5 +1,9 @@
 --Initial status of the campaign (static file, not updated)
 --Copied to camp_status.lua and for use in running campaign
+
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code (property)
 -------------------------------------------------------------------------------------------------------
 
 camp = {
@@ -20,8 +24,8 @@ camp = {
 	startup = 900,					--time in seconds allocated for player start-up
 	units = "metric",				--unit output in briefing (imperial or metric)
 	weather = {						--campaign weather
-		pHigh = 60,				    --probability of high pressure weather system
-		pLow = 40,					--probability of low pressure weather system
+		pHigh = 50,				    --probability of high pressure weather system
+		pLow = 50,					--probability of low pressure weather system
 		refTemp = 20,				--average day max temperature
 	},
 	variation = 4,					--variation in degrees from true north to magneitic north
@@ -40,6 +44,7 @@ camp = {
 		["Refueling"] = 1,
 		["Transport"] = 1,
 		["SEAD"] = 1,
+		["Laser Illumination"] = 1,
 	}
 
 	
