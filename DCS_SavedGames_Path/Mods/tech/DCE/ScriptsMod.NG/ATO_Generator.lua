@@ -16,7 +16,7 @@ versionDCE["ATO_Generator.lua"] = "OB.1.0.0"
 -- Old_Boy rev. OB.0.0.1: implements code for Logistic 
 ------------------------------------------------------------------------------------------------------- 
 -- Miguel Fichier Revision M38.e
-------------------------------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------------------------------ 
 
 -- ATO_G_adjustment03.b support équitable entre escadron
 -- ATO_G_adjustment02 TASK Coef
@@ -133,16 +133,29 @@ create additional draft sorties with support flight assigned, conditions:
 
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+local log_level = "traceVeryLow" -- LOGGING_LEVEL -- "traceVeryLow" --
 local function_log_level = "warn" --log_level
-log.activate = false
+log.activate = true
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_Generator." .. camp.mission .. ".log" 
-local local_debug = true -- local debug   
+local local_debug = false -- local debug   
 local active_log = false
 log.debug("Start")
 
-local SCORE_INFLUENCE_ROUTE_THREAT = 1									-- factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
+require("Init/db_aircraft")
+
+local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 												-- (max 1 -- min 0) weight factor for aircraft cost in score calculus
+
+	["Fighter"] = 0.2, -- percentage
+	["Attacker"] = 0.2, -- 
+	["Bomber"] = 0.1, -- 
+	["Transporter"] = 0.1, -- 
+	["Reco"] = 0.1, -- 
+	["Refueler"] = 0.1, -- 
+	["AWACS"] = 0.1, -- 
+	["Helicopter"] = 0.1, -- 
+}
+local SCORE_INFLUENCE_ROUTE_THREAT = 1									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
 local FACTOR_FOR_REDUCE_SCORE = 0.01 									-- factor for reduce_score in CAP (score = score - redice_score * factor)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5  -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
@@ -879,44 +892,69 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 
 																							--score the sortie
 																							local route_threat = route.threats.ground_total + route.threats.air_total							--combine route ground and air threat
-																							if active_log then log.traceLow("route_threat total: " .. route_threat .. ", (air: " .. route.threats.air_total .." + ground: " .. route.threats.ground_total .. ")") end
+																							if true then log.traceLow("route_threat total: " .. route_threat .. ", (air: " .. route.threats.air_total .." + ground: " .. route.threats.ground_total .. ")") end
 																				
 																							 -- Compute score for CAP or Intercept
 																							if task == "CAP" or task == "Intercept" then
 																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority					--route threat does not matter for CAP and intercept
-																								if active_log then log.traceLow(" task is CAP or Intercept, compute score without threat: draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ")") end
+																								if true then log.traceLow(" task is CAP or Intercept, compute score without threat: draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ")") end
 																							
 																							-- Compute score for Fighter Sweep, Strike, Anti-ship Strike, Transport, Refueling, Reco
 																							else 
 																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )		--calculate the score to measure the importance of the sortie
-																								if active_log then log.traceLow(" task(" .. task .."), draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ") / route_threat(" .. route_threat .. ")") end
+																								if true then log.traceLow(" task(" .. task .."), draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. unit_loadouts[l].capability .. ") / route_threat(" .. route_threat .. ")") end
 																							end
 																							local reduce_score = 0																				--factor to reduce score for station missions with less aircraft than required to cover station
 																							
 																							 -- Compute reduction score for CAP
 																							if task == "CAP" then																				--station tasks with flights of 2
 																								reduce_score = flights_requested - aircraft_assign / math.ceil(target.firepower.max / unit_loadouts[l].firepower) --increase factor by one for each flight that is missing
-																								if active_log then log.traceLow("task is CAP, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ") / math.ceil(target.firepower.max)(" .. math.ceil(target.firepower.max) .. " / unit_loadouts[l].firepower(" .. unit_loadouts[l].firepower .. "))" ) end
+																								if true then log.traceLow("task is CAP, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ") / math.ceil(target.firepower.max)(" .. math.ceil(target.firepower.max) .. " / unit_loadouts[l].firepower(" .. unit_loadouts[l].firepower .. "))" ) end																								
 																							
 																							-- Compute reduction score for AWACS or Refueling
 																							elseif task == "AWACS" or task == "Refueling"  then													--station tasks with flights of 1
 																								reduce_score = flights_requested - aircraft_assign												--increase factor by one for each flight that is missing
-																								if active_log then log.traceLow("task is AWACS or Refueling, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ")") end
-																							end
+																								if true then log.traceLow("task is AWACS or Refueling, compute reduce score(" .. reduce_score .. ") =  flights_requested(" .. flights_requested .. ") - aircraft_assign(" .. aircraft_assign .. ")") end
+																							
+																							end 
 
-																							-- Update score with reduction score and  SCORE_TASK_FACTOR
+
+
+
+
+
+ -- < ======= QUI ======================================================================================================================================================--< ======= QUI ======================================================================================================================================================
+
+
+
+
+
+																							-- update reduction for aircraft cost
+																							local unit_role = getRole(draft_sorties_entry.type, task, side) -- return the primary role: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
+																							if true then log.traceLow("draft_sorties_entry.type: " .. draft_sorties_entry.type .. ", task: " .. task .. ", side: " .. side .. ", unit_role: " .. unit_role ) end
+																							local cost_factor = db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or 0
+																																														
+																							if true then log.traceLow("EVALUTATE FACTOR COST: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
+																							if true then log.traceLow("task: " .. task .. ", cost_factor: " .. cost_factor) end
+
+																							-- Update score with factor_cost
+																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE ) * ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
+																							if true then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end																				
+																							
+																							-- Update score with SCORE_TASK_FACTOR
 																							if task == "Strike" then
-																								draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE )  * camp.SCORE_TASK_FACTOR[task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station	
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station																									
 																							
 																							else
-																								draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE )  * camp.SCORE_TASK_FACTOR[task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
 																							end																						
-																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. FACTOR_FOR_REDUCE_SCORE .. ")") end
+																							if true then log.traceLow("side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
+																							if true then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. FACTOR_FOR_REDUCE_SCORE .. ")") end
 																							
 																							--ATO_G_adjustment02 -- Update score with unit.taskCoeff 
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then
 																								draft_sorties_entry.score = draft_sorties_entry.score * unit[n].tasksCoef[task]		--aumenta lo score di un fattore pari al taskcoeff (ha senso)																				 
-																								if active_log then log.traceLow("for this task(" .. task .. ") unit(" .. unit[n].name .. " - " .. unit[n].type .. " have taskcoeff: " .. unit[n].tasksCoef[task] .. ", update draft_sorties_entry.score = " .. draft_sorties_entry.score) end
+																								if true then log.traceLow("for this task(" .. task .. ") unit(" .. unit[n].name .. " - " .. unit[n].type .. " have taskcoeff: " .. unit[n].tasksCoef[task] .. ", update draft_sorties_entry.score = " .. draft_sorties_entry.score) end
 																							end
 																							
 																							-- miguel21 modification M11.q multiplayer
@@ -1776,7 +1814,7 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 								local avail = {}																													--collect the maximal number of available aircraft from this unit (biggest number of all tasks)
 								avail[draft[n].name] = aircraft_availability[draft[n].name].unassigned																
 
-								for unitname,_ in pairs(need) do --imho inutile, forse scritto dai francesi
+								for unitname,_ in pairs(need) do 
 									
 									if need[unitname] > avail[unitname] then																						--more aircraft are needed from this unit across all package tasks than are available
 										support_available = false																									--not enough support available

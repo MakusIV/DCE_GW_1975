@@ -105,9 +105,12 @@ end
 inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 -- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+log.activate = false-- select true to activate log
 log.level = LOGGING_LEVEL
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_Master."  .. camp.mission .. ".log"
-local local_debug = true -- local debug
+log.activate = false-- select true to activate log
+local local_debug = false -- local debug
+local active_log = false -- select true to activate log
 log.info("Start")
 log.debug(versionPackageICM) 
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")

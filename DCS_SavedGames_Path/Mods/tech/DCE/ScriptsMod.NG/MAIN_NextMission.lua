@@ -38,9 +38,10 @@ versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
 local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
 inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+log.activate = false-- select true to activate log
 log.level = LOGGING_LEVEL --"traceVeryLow" -- 
 log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
-local local_debug = true -- local debug   
+local local_debug = false -- local debug   
 local active_log = false -- select true to activate log
 log.info("Start")
 

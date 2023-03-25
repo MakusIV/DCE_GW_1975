@@ -208,7 +208,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-		},
+		},		
 	},
 
 	["E-2C"] = {  --- 1973 (in servizio)
@@ -237,7 +237,7 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-		},
+		},	
 	},
 
 	["F-14A-135-GR"] = { --1970 (primo volo) 1974 (entrata in servizio),
@@ -6095,7 +6095,7 @@ db_loadouts = {
 						}, --end of [7]
 						[8] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [8]
 	        		}, ----end of ["pylons"]
 					["fuel"] = "11700",
@@ -6265,7 +6265,7 @@ db_loadouts = {
 							["num"] = 7,
 						},
 						[8] = {
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 							["num"] = 8,
 						},
 						}, ----end of ["pylons"]
@@ -6299,7 +6299,7 @@ db_loadouts = {
 				stores = {
 					["pylons"] = {
 						[8] = {
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 							["num"] = 8,
 						},
 						[1] = {
@@ -6486,7 +6486,7 @@ db_loadouts = {
 						}, -- end of [7]
 						[8] = 
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, -- end of [8]
 					},
 					["fuel"] = "11700",
@@ -6614,7 +6614,7 @@ db_loadouts = {
 						}, -- end of [7]
 						[8] = 
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, -- end of [8]
 					},
 					["fuel"] = "11700",
@@ -6975,7 +6975,7 @@ db_loadouts = {
 							["num"] = 7,
 						},
 						[8] = {
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 							["num"] = 8,
 						},
 						}, ----end of ["pylons"]
@@ -9108,7 +9108,7 @@ db_loadouts = {
 						}, -- end of [2]
 						[3] = 
 						{
-							["CLSID"] = "{292960BB-6518-41AC-BADA-210D65D5073C}",
+							["CLSID"] = "292960BB-6518-41AC-BADA-210D65D5073C}",
 						}, -- end of [3]
 						[4] = 
 						{
@@ -9120,7 +9120,7 @@ db_loadouts = {
 						}, -- end of [5]
 						[6] = 
 						{
-							["CLSID"] = "{292960BB-6518-41AC-BADA-210D65D5073C}",
+							["CLSID"] = "292960BB-6518-41AC-BADA-210D65D5073C}",
 						}, -- end of [6]
 						[7] = 
 						{
@@ -9370,7 +9370,7 @@ db_loadouts = {
 					["pylons"] = {
 						[2] = 
 						{
-							["CLSID"] = "{292960BB-6518-41AC-BADA-210D65D5073C}",
+							["CLSID"] = "292960BB-6518-41AC-BADA-210D65D5073C}",
 						}, -- end of [2]
 						[3] = 
 						{
@@ -9386,7 +9386,7 @@ db_loadouts = {
 						}, -- end of [7]
 						[8] = 
 						{
-							["CLSID"] = "{292960BB-6518-41AC-BADA-210D65D5073C}",
+							["CLSID"] = "292960BB-6518-41AC-BADA-210D65D5073C}",
 						}, -- end of [8]
 					}, -- end of ["pylons"]
 					["fuel"] = "4500",
@@ -10089,7 +10089,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10142,7 +10142,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10196,7 +10196,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10249,7 +10249,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10303,7 +10303,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10356,7 +10356,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10410,7 +10410,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{
@@ -10464,7 +10464,7 @@ db_loadouts = {
 						}, --end of [4]
 						[5] =
 						{
-							["CLSID"] = "{275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
 						}, --end of [5]
 						[6] =
 						{

@@ -51,9 +51,10 @@ local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
 -- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
 local log_level = LOGGING_LEVEL -- "traceVeryLow" --
 local function_log_level = log_level --log_level
+log.activate = false-- select true to activate log
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_ThreatEvalutation." .. camp.mission .. ".log" 
-local local_debug = true -- local debug   
+local local_debug = false -- local debug   
 local active_log = false -- select true to activate log
 log.info("Start")
 

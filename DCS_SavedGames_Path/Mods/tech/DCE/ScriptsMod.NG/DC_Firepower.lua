@@ -18,13 +18,13 @@ versionDCE["DC_Firepower.lua"] = "OB.1.0.1"
 --NOTE: nella prima missione deve aggiornare Active/targelist (considerando il numero di elementi) e Init/db_loadouts
 -- verificare l'effettiva esigenza nelle missioni successive di aggiornarli
 
-local log = dofile("../../../ScriptsMod."..versionPackageICM.."//UTIL_Log.lua")
-local log_level = "traceVeryLow" --LOGGING_LEVEL -- 
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+local log_level = LOGGING_LEVEL -- 
 local function_log_level = log_level --"warn" 
-log.activate = true
+log.activate = false
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_DC_Firepower.lua." .. camp.mission .. ".log" 
-local local_debug = true -- local debug   
+local local_debug = false -- local debug   
 local active_log = false
 log.debug("Start")
 require("Init/db_firepower")
@@ -33,6 +33,7 @@ local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01 -- minimum value for weapon efficie
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = 9999999999
 local FIREPOWER_ROUNDED_COMPUTATION = 0.01
 local FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1
+local MISSILE_A2A_FIREPOWER_AMPLIFIER = 1 -- min 1  for balancing number aircraft assigned in ATO_Generator
 -- LOCAL FUNCTION
 
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
@@ -228,14 +229,14 @@ local function evalutateFirepowerA2AMissile(missile_data)
     
     -- compression firepower from 0.1 to 1
     -- ready * (  2^( efficiency * percentage_efficiency_influence ) - 1 ) ) -- min: 0 max = actual roster.ready
-    firepower = missile_data.reliability * missile_data.manouvrability * seeker_factor * tnt_factor
+    firepower = missile_data.reliability * missile_data.manouvrability * seeker_factor * tnt_factor * MISSILE_A2A_FIREPOWER_AMPLIFIER
 
     if firepower > 1 then
         firepower = 1
     end
     
     -- normalize firepower from 0.1 to 1.1
-    firepower = 2^(firepower) - 0.1
+    firepower = 2^(firepower) - 0.1 
     firepower = roundAtNumber(firepower, FIREPOWER_ROUNDED_COMPUTATION)
 
     log.traceVeryLow(nameFunction .. "seeker_factor: " .. seeker_factor .. ", tnt_factor: " .. tnt_factor)
@@ -611,6 +612,22 @@ function defineTargetListFirepower(targetlist)
                 firepower_min = 1
                 firepower_max = 1
             
+            elseif task == "CAP" then
+                firepower_min = 2
+                firepower_max = 4
+
+            elseif task == "Intercept" then
+                firepower_min = 2
+                firepower_max = 5
+            
+            elseif task == "Fighter Sweep" then
+                firepower_min = 3
+                firepower_max = 5
+
+            elseif task == "Escort" then
+                firepower_min = 2
+                firepower_max = 4
+            
             else            
                 attribute = target.attributes[1] or "nil" -- soft, armor ecc (deve? essere sempre un solo attributo)            
                 class = target.class or "scenery"-- ship, vehicle, ecc.
@@ -677,7 +694,8 @@ function defineLoadoutsFirepower()
     
         for task_name, task in pairs(aircraft) do -- iterate task: Intercept, CAP, antiship_strike, strike, ...            
 
-            for loadout_name, loadout in pairs(task) do -- iterate loadout                
+            for loadout_name, loadout in pairs(task) do -- iterate loadout       
+                         
                 weapons = loadout.weapons
 
                 if weapons then --aircraft has weapons
