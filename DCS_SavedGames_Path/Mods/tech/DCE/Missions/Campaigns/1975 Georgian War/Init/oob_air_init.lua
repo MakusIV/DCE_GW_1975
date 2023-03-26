@@ -264,12 +264,12 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 7,
 		},
-		[7] = {
+		[7] = { -- TRANSFERT AT Tbilissi-Lochini
 			name = "69 BS",									--unit name
 			type = "B-52H",									--aircraft type
 			country = "USA",								--unit country
 			livery = "usaf standard",						--unit livery
-			base = "Batumi",								--unit base
+			base = "Kobuleti",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
 			tasks = {										--unit tasks
 				["Strike"] = true,

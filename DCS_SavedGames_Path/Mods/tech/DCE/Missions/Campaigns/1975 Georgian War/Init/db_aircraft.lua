@@ -16,7 +16,7 @@ versionDCE["db_aircraft.lua"] = "OB.1.0.1"
 ---------------------------------------------------------------------------------------------------------
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-local log_level = "traceVeryLow" -- LOGGING_LEVEL -- 
+local log_level = LOGGING_LEVEL -- "traceVeryLow"
 local function_log_level = log_level --"warn" 
 log.activate = true
 log.level = log_level 
@@ -184,19 +184,19 @@ db_aircraft = {
 
 		["F-5E-3"] = {--1959 (primo volo) 1972 (entrata in servizio)
 			["role"] = {"Fighter", "Attacker", "Reco"},
-			["cost"] = 2100, --cost aircraft in K$
+			["cost"] = 10000, --balanced for gameplay, doc cost: 2100 cost aircraft in K$
 			["factor"] = {},
 		},	
 		-- < --- REVISIONE hattack, hcruise, vattack, vcruise, standoff, sortie_rate 
 		["Mirage-F1C"] = {--
 			["role"] = {"Fighter", "Attacker", "Reco"},
-			["cost"] = 15000, --cost aircraft in K$ (mirage 2000 23 M$)
+			["cost"] = 25000, --balanced for gameplay, doc cost: 15000, --cost aircraft in K$ (mirage 2000 23 M$)
 			["factor"] = {},
 		},	
 
 		["F-4E"] = {--1958 (primo volo) 1960 (entrata in servizio)
 			["role"] = {"Fighter", "Attacker", "Reco"},
-			["cost"] = 2400, --cost aircraft in K$
+			["cost"] = 15000, -- balanced for gameplay, doc cost: 2400, --cost aircraft in K$
 			["factor"] = {},
 		},
 
@@ -208,7 +208,7 @@ db_aircraft = {
 
 		["UH-1H"] = {--? (primo volo) 1956 (entrata in servizio)
 			["role"] = {"Helicopter"},
-			["cost"] = 895, --cost aircraft in K$
+			["cost"] = 2000, --balanced for gameplay, doc cost: 895, --cost aircraft in K$
 			["factor"] = {},
 		},
 
@@ -220,25 +220,25 @@ db_aircraft = {
 
 		["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 6600, --cost aircraft in K$  (1980)
+			["cost"] = 13000, --balanced for gameplay, doc cost: 6600, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
 
 		["MiG-21Bis"] = {--1955 (primo volo) 1959 (entrata in servizio) inserire Kh-66, S-24 e/o S-21
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 3000, --cost aircraft in K$  (1974)
+			["cost"] = 10000, -- balanced for gameplay, doc cost: 3000, --cost aircraft in K$  (1974)
 			["factor"] = {},
 		},
 
 		["MiG-19P"] = {--1953 (primo volo) 1955 (entrata in servizio)
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 1000, --cost aircraft in K$  (1980)
+			["cost"] = 2000, -- balanced for gameplay, doc cost: 1000, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
 
 		["An-26B"] = {--1969 (primo volo) 1973 (entrata in servizio)
 			["role"] = {"Transporter"},
-			["cost"] = 4000, --cost aircraft in K$
+			["cost"] = 14000, -- balanced for gameplay, doc cost: 4000, --cost aircraft in K$
 			["factor"] = {},
 		},
 	},
@@ -285,31 +285,31 @@ db_aircraft = {
 
 		["An-26B"] = {--1969 (primo volo) 1973 (entrata in servizio)
 			["role"] = {"Transporter"},
-			["cost"] = 4000, --cost aircraft in K$
+			["cost"] = 14000, -- balanced for gameplay, doc cost: 4000 --cost aircraft in K$
 			["factor"] = {},
 		},
 
 		["MiG-21Bis"] = {--1955 (primo volo) 1959 (entrata in servizio) inserire Kh-66, S-24 e/o S-21
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 3000, --cost aircraft in K$  (1974)
+			["cost"] = 10000, -- balanced for gameplay, doc cost: 3000, --cost aircraft in K$  (1974)
 			["factor"] = {},
 		},
 
 		["Su-17M4"] = {--1967 (primo volo) 1972 (entrata in servizio)
 			["role"] = {"Attacker", "Reco"},		
-			["cost"] = 5000, --cost aircraft in K$  ??
+			["cost"] = 10000, --balanced for gameplay, doc cost: 5000, --cost aircraft in K$  ??
 			["factor"] = {},
 		},
 
 		["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 6600, --cost aircraft in K$  (1980)
+			["cost"] = 13000, --balanced for gameplay, doc cost: 6600, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
 
 		["MiG-23MLD"] = {--1967 (primo volo) 1970 (entrata in servizio)
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 5000, --cost aircraft in K$  (1980)
+			["cost"] = 13000, --balanced for gameplay, doc cost: 5000, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
 
@@ -327,7 +327,7 @@ db_aircraft = {
 
 		["MiG-19P"] = {--1953 (primo volo) 1955 (entrata in servizio)
 			["role"] = {"Fighter", "Attacker", "Reco"},		
-			["cost"] = 1000, --cost aircraft in K$  (1980)
+			["cost"] = 2000, -- balanced for gameplay, doc cost: 1000, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
 
@@ -438,7 +438,7 @@ log.info("MIN_COST_AIRCRAFT:\n" .. inspect(MIN_COST_AIRCRAFT) .. "\n\n")
 log.info("MAX_COST_AIRCRAFT:\n" .. inspect(MAX_COST_AIRCRAFT) .. "\n\n")
 
 -- define FACTOR_FOR_REDUCE_SCORE_COST_AIRCRAFT table
-local base_log = 2.718281828459 -- base for log  (1.6), 
+local base_log = 1.7 -- base for log  (1.6), 
 for side_name, side_data in pairs(db_aircraft) do
 
 	for aircraft_type, aircraft_data in pairs(side_data) do
@@ -448,23 +448,24 @@ for side_name, side_data in pairs(db_aircraft) do
 			local max = MAX_COST_AIRCRAFT[side_name][role]
 
 			if (not min) or (not max) or (not  ROLE[role]) then
-				log.warn("aircraft: " .. aircraft_type .. ", role: " .. role .. ". ATTENTION: no cost info for thi role, check ROLE, MIN_COST_AIRCRAFT and MAX_COST_AIRCRAFT tables")	
+				log.warn("aircraft: " .. aircraft_type .. ", role: " .. role .. ". ATTENTION: no cost info for this role, check ROLE, MIN_COST_AIRCRAFT and MAX_COST_AIRCRAFT tables")	
 
 			else	
-				local y_, factor
+				local y_, log_, factor
 				if min == max then -- for this role there is only one plane or several planes with the same cost
 					factor = 1	
 				
 				else				
 					y_ = roundAtNumber( 1 + (aircraft_data.cost - min) * ( base_log - 1 ) / (max - min), 0.0001 )
-					factor = roundAtNumber( 1 - math.log(y_, base_log), 0.001 )
+					log_ = math.log(y_) / math.log(base_log)					
+					factor = roundAtNumber( 1 - log_, 0.001 )
 
 					if factor < 0.001 then
 						factor = 0
 					end					
 				end
-				--log.traceVeryLow("aircraft: " .. aircraft_type .. ", role: " .. role .. ", min: " .. (min or "nil") .. ", max: " ..(max or "nil") ..", ROLE[" .. role .. "]: " .. tostring(ROLE[role]) .. ", aircraft_data.cost: " .. aircraft_data.cost .. ", y_: " .. (y_ or "nil") .. ", log_: " .. (log_ or "nil") ..", factor: " .. factor)
-				table.insert(aircraft_data.factor,1, { [tostring(role)] = factor } )
+				log.traceVeryLow("aircraft: " .. aircraft_type .. ", role: " .. role .. ", min: " .. (min or "nil") .. ", max: " ..(max or "nil") ..", ROLE[" .. role .. "]: " .. tostring(ROLE[role]) .. ", aircraft_data.cost: " .. aircraft_data.cost .. ", y_: " .. (y_ or "nil") .. ", log_: " .. (log_ or "nil") ..", factor: " .. factor)				
+				aircraft_data.factor[role] = factor 
 			end
 		end			
 	end	
@@ -487,15 +488,13 @@ function getRole(aircraft_type, aircraft_task, side)
 
 	elseif aircraft_task == "Strike" or aircraft_task == "Anti-ship Strike" then
 		local roles = db_aircraft[side][aircraft_type].role
-		local found_attacker = false
-		local found_bomber = false
-
+		
 		for num_role, name_role in pairs(roles) do
 			
 			if "Fighter" == name_role or "Attacker" == name_role then
 				role = "Attacker"
 			
-			elseif "Bomber" == name_role or "helicopter" == name_role then
+			elseif "Bomber" == name_role or "Helicopter" == name_role then
 				role = name_role	
 			end
 		end
