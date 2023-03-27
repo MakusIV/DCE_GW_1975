@@ -29,13 +29,15 @@ local active_log = false
 log.debug("Start")
 require("Init/db_firepower")
 
-local ACTIVATE_STANDOFF_SETUP = true            -- assign loadouts.standoff with weapon.range only for ASM
-local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = 0.7 -- standoff = percentage * range weapon
-local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01 -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
-local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = 9999999999
+local MAX_ALTITUDE_ATTACK_ROCKETS = 1500                -- (m) max altitude attack for rockets loadout (hAltitude)
+local MAX_ALTITUDE_ATTACK_ASM = 3000                    -- (m) max altitude attack for ASM loadout (hAltitude)
+local ACTIVATE_STANDOFF_SETUP = true                    -- assign loadouts.standoff with weapon.range only for ASM
+local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = 0.6         -- standoff = percentage * range weapon
+local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01            -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
+local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = math.huge
 local FIREPOWER_ROUNDED_COMPUTATION = 0.01
 local FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1
-local MISSILE_A2A_FIREPOWER_AMPLIFIER = 1 -- min 1  for balancing number aircraft assigned in ATO_Generator
+local MISSILE_A2A_FIREPOWER_AMPLIFIER = 1               -- min 1  for balancing number aircraft assigned in ATO_Generator
 -- LOCAL FUNCTION
 
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
@@ -91,24 +93,34 @@ local function assignStandoffAndCost(loadout)
                 local range = math.floor( 1000 * weapon_data.range * PERCENTAGE_RANGE_FOR_STANDOFF_SETUP )
                 local hAttack
 
-                if weapon_data.hAttack then
-                    hAttack = weapon_data.hAttack
-                    
-                else
-                    hAttack = math.floor( range / 1.414 )                
-                end
+                if not loadout.hAttack or loadout.hAttack > 100 then
 
-                if not loadout.standoff or loadout.standoff > range then
-                    loadout.standoff = range
+                    if weapon_data.hAttack then
+                        hAttack = weapon_data.hAttack
 
-                    if loadout.hAttack and loadout.hAttack > 100 and loadout.hAttack < hAttack then 
+                    else
+                        hAttack = math.floor( range / 1.414 )                
+
+                        if weapon_data.type == "Rockets" and hAttack > MAX_ALTITUDE_ATTACK_ROCKETS then
+                            hAttack = MAX_ALTITUDE_ATTACK_ROCKETS
+                        
+                        elseif weapon_data.type == "ASM" and hAttack > MAX_ALTITUDE_ATTACK_ASM then
+                            hAttack = MAX_ALTITUDE_ATTACK_ASM
+                        end
+                    end
+
+                    if not loadout.hAttack or hAttack > loadout.hAttack then
                         loadout.hAttack = hAttack
                     end
                 end
+                local standoff = math.floor(math.sqrt(range*range - loadout.hAttack * loadout.hAttack))
+
+                if not loadout.standoff or loadout.standoff > standoff then
+                    loadout.standoff = standoff
+                end                
             end
         end
-    end
-    
+    end    
     loadout.cost = cost
 end
 
