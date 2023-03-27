@@ -4687,6 +4687,36 @@ weapon_db = {
             },                              
         },
         
+        ["R-13M"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1974, 
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 5.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 15,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 20,                                -- km max height
+            ["max_speed"] = 2.7,                                  -- mach                            
+            ["manouvrability"] = 0.8,
+        },
+
+        ["R-13M1"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1975, -- 1976 
+            ["end_service"] = nil,
+            ["cost"] = 1,-- k$  
+            ["tnt"] = 5.5, --kg
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 17,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 20,                                -- km max height
+            ["max_speed"] = 2.4,                                  -- mach                            
+            ["manouvrability"] = 0.8,
+        },
+
         ["R-60"] = {                                              -- weapon name
             ["type"] = "AAM",                                       -- weapon type            
             ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)

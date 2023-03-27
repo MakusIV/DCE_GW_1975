@@ -29,6 +29,8 @@ local active_log = false
 log.debug("Start")
 require("Init/db_firepower")
 
+local ACTIVATE_STANDOFF_SETUP = true            -- assign loadouts.standoff with weapon.range only for ASM
+local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = 0.7 -- standoff = percentage * range weapon
 local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01 -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = 9999999999
 local FIREPOWER_ROUNDED_COMPUTATION = 0.01
@@ -71,6 +73,43 @@ local function searchWeapon(weapon, side)
     log.traceLow(nameFunction .. "End")
     log.level = previous_log_level
     return nil -- not weapon was found, return nil
+end
+
+-- compute loadouts.standoff and loadouts.hattack with weapon.range for ASM
+local function assignStandoffAndCost(loadout)
+    local cost = 0
+    local weapons = loadout.weapons
+    
+    for weapon_name, weapon_qty in pairs(weapons) do                       --iterate wapons airccraft
+        local weapon_data = searchWeapon(weapon_name, nil)   
+        
+        if weapon_data then-- search weapon in db_weapons        
+            local cost_weapon = weapon_data.cost or 0
+            cost = cost + cost_weapon * weapon_qty
+
+            if ACTIVATE_STANDOFF_SETUP and weapon_data and weapon_data.type and ( weapon_data.type == "ASM" or  weapon_data.type == "Rockets") then 
+                local range = math.floor( 1000 * weapon_data.range * PERCENTAGE_RANGE_FOR_STANDOFF_SETUP )
+                local hAttack
+
+                if weapon_data.hAttack then
+                    hAttack = weapon_data.hAttack
+                    
+                else
+                    hAttack = math.floor( range / 1.414 )                
+                end
+
+                if not loadout.standoff or loadout.standoff > range then
+                    loadout.standoff = range
+
+                    if loadout.hAttack and loadout.hAttack > 100 and loadout.hAttack < hAttack then 
+                        loadout.hAttack = hAttack
+                    end
+                end
+            end
+        end
+    end
+    
+    loadout.cost = cost
 end
 
 -- return firepower value for weapon parameter (weapon_table) of a weapon
@@ -584,6 +623,7 @@ local function loadComputedTargetEfficiency()
 end
 
 
+
 -- GLOBAL FUNCTION
 
 -- call from DC_UpdateTargetList, initialize firepower value for target in targetlist
@@ -686,7 +726,7 @@ end
 function defineLoadoutsFirepower()
     local previous_log_level = log.level
 	log.level = function_log_level
-	local nameFunction = "defineLoadoutsFirepower(db_loadouts): "
+	local nameFunction = "defineLoadoutsFirepower(): "
     log.traceLow(nameFunction .. "Start")
     local task, weapons, weapon_data, firepower, i    
 
@@ -699,6 +739,8 @@ function defineLoadoutsFirepower()
                 weapons = loadout.weapons
 
                 if weapons then --aircraft has weapons
+
+                    assignStandoffAndCost(loadout) 
                     
                     if isA2ATask(task_name) or task_name == "Reconnaissance" then --air to air task or armed reconnaisance task
                         firepower = 0
@@ -722,7 +764,7 @@ function defineLoadoutsFirepower()
                     elseif isA2GTask(task_name) then --air to ground task
                         i = 0
                         firepower = 0
-
+                        
                         for attribute_num, attribute_name in pairs(loadout.attributes) do -- iterate attributes loadout
                             firepower = firepower + getWeaponFirepower(nil, task_name, attribute_name, weapons) -- update firepower with weapon firepower
                             i = i + 1
@@ -737,8 +779,8 @@ function defineLoadoutsFirepower()
                         log.warn(nameFunction .. "unknow task: " .. task_name .. ", check db_loadouts.lua")
                     end
 
-                    if firepower then
-                        loadout.firepower = firepower -- update firepower in db_loadouts.lua
+                    if firepower then                        
+                        loadout.firepower = firepower -- update firepower in db_loadouts.lua                        
                         log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", firepower: " .. firepower .. " assigned in db_loadouts")
                     
                     else

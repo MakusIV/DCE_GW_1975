@@ -784,7 +784,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																					end
 																					
 																					if (target.x == nil or target.y == nil) then
-																						log.warn("a target coord() is nil")
+																						log.warn("target: " .. target_name .. " has nil coord")
 																					end																					
 																					if active_log then log.traceLow("target coord: ".. (target.x or "nil") .. ", " .. (target.y or "nil")) end
 
