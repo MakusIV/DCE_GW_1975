@@ -1658,12 +1658,12 @@ db_loadouts = {
 				avoid_EWR = false,
 				range = 500000,
 				capability = 8,
-				firepower = 6,
+				firepower = nil, -- DC_Firepower calculation
 				vCruise = 250,
 				vAttack = 250,
 				hCruise = 2000,
-				hAttack = 2000,
-				standoff = 6000,
+				hAttack = nil, -- DC_Firepower calculation
+				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
@@ -1790,12 +1790,12 @@ db_loadouts = {
 				avoid_EWR = false,
 				range = 500000,
 				capability = 8,
-				firepower = 12,
+				firepower = nil, -- DC_Firepower calculation
 				vCruise = 250,
 				vAttack = 250,
 				hCruise = 1000,
-				hAttack = 1000,
-				standoff = 6000,
+				hAttack = nil, -- DC_Firepower calculation
+				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
@@ -1858,8 +1858,8 @@ db_loadouts = {
 				vCruise = 250,
 				vAttack = 250,
 				hCruise = 1000,
-				hAttack = 1000,
-				standoff = 6000,
+				hAttack = nil, -- DC_Firepower calculation -- 6000
+				standoff = nil, -- DC_Firepower calculation -- 1000
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
@@ -1909,12 +1909,12 @@ db_loadouts = {
 				adverseWeather = true,
 				range = 500000,
 				capability = 7,
-				firepower = 6,
+				firepower = nil, -- DC_Firepower calculation --6,
 				vCruise = 250,
 				vAttack = 250,
 				hCruise = 1000,
-				hAttack = 1000,
-				standoff = 6000,
+				hAttack = nil, -- DC_Firepower calculation -- 6000
+				standoff = nil, -- DC_Firepower calculation -- 1000
 				tStation = nil,
 				LDSD = false,
 				self_escort = false,
@@ -6876,64 +6876,7 @@ db_loadouts = {
 					["chaff"] = 96,
 					["gun"] = 100,
 				},
-			},			
-			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
-				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
-				},
-				attributes = {"SAM"},
-				weapons = { -- task dedicated weapons						
-					["Kh-58"] = 2,	
-					["R-60"] = 4,																																													
-				},
-				minscore = 0.0,
-				weaponType = "ASM",
-				expend = "Auto",				
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 900000,
-				capability = 8,
-				firepower = 8,
-				vCruise = 330,
-				vAttack = 450,
-				hCruise = 7000,
-				hAttack = 4000,
-				standoff = 60000,--60-120km kh-58
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 4,
-				stores = {
-					["pylons"] = {
-						[1] = {
-							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
-							["num"] = 1,
-						},
-						[2] = {
-							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
-							["num"] = 2,
-						},
-						[5] = {
-							["CLSID"] = "{0519A264-0AB6-11d6-9193-00A0249B6F00}",
-							["num"] = 5,
-						},
-						[7] = {
-							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
-							["num"] = 7,
-						},
-						[8] = {
-							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
-							["num"] = 8,
-						},
-						}, ----end of ["pylons"]
-	 				["fuel"] = "11700",
-					["flare"] = 96,
-					["chaff"] = 96,
-					["gun"] = 100,
-				},
-			},				
+			},										
 		},
 	},
 
@@ -9108,78 +9051,7 @@ db_loadouts = {
 					["chaff"] = 60,
 					["gun"] = 100,
 				},
-			},
-			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
-				minscore = 0.0,				
-				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
-				},
-				attributes = {"SAM"},
-				weapons = { -- task dedicated weapons				
-					["Kh-25MPU"] = 4, --??
-					["R-60M"] = 2,											
-				},
-				weaponType = "ASM",
-				expend = "All",
-				attackType = "Dive",
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 700000,
-				capability = 5,
-				firepower = 12,
-				vCruise = 200,
-				vAttack = 280,
-				hCruise = 6500,
-				hAttack = 3000,
-				standoff = 30000,-- Kh-25MP range 40km
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 10,
-				stores = {
-					["pylons"] = {
-						[1] = 
-						{
-							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
-						}, -- end of [1]
-						[2] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, -- end of [5]
-						[6] = 
-						{
-							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
-						}, -- end of [6]
-						[7] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [7]
-						[8] = 
-						{
-							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
-						}, -- end of [8]
-					}, ----end of ["pylons"]
-					["fuel"] = "3770",
-					["flare"] = 96,
-					["chaff"] = 96,
-					["gun"] = 100,
-				},
-			},
-
+			},			
 		},
 		["SEAD"] = {
 			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
@@ -9915,65 +9787,7 @@ db_loadouts = {
 					["chaff"] = 60,
 					["gun"] = 100,
 				},
-			},
-			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
-				minscore = 0.0,				
-				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
-				},
-				attributes = {"SAM"},
-				weaponType = "ASM",
-				expend = "All",
-				weapons = { -- task dedicated weapons				
-					["Kh-25MPU"] = 2, 	
-					["R-60M"] = 2,									
-				},
-				attackType = "Dive",
-				day = true,
-				night = true,
-				adverseWeather = true,
-				range = 500000,
-				capability = 5,
-				firepower = 6,
-				vCruise = 300,
-				vAttack = 400,
-				hCruise = 7500,
-				hAttack = 4000,
-				standoff = 30000, -- Kh-25MP-MPU 40 km
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 10,
-				stores = {
-					["pylons"] = {
-						[2] = 
-						{
-							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [3]
-						[5] = 
-						{
-							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
-						}, -- end of [5]
-						[7] = 
-						{
-							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
-						}, -- end of [7]
-						[8] = 
-						{
-							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
-						}, -- end of [8]
-					}, ----end of ["pylons"]
-					["fuel"] = "4500",
-					["flare"] = 60,
-					["chaff"] = 60,
-					["gun"] = 100,
-				},
-			},
+			},			
 		},
 		["SEAD"] = {
 			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {

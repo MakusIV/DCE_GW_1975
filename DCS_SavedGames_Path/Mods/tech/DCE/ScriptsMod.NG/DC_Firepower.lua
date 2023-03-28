@@ -19,9 +19,9 @@ versionDCE["DC_Firepower.lua"] = "OB.1.0.1"
 -- verificare l'effettiva esigenza nelle missioni successive di aggiornarli
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-local log_level = LOGGING_LEVEL -- 
+local log_level = "info" --LOGGING_LEVEL -- 
 local function_log_level = log_level --"warn" 
-log.activate = false
+log.activate = true
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_DC_Firepower.lua." .. camp.mission .. ".log" 
 local local_debug = false -- local debug   
@@ -32,7 +32,10 @@ require("Init/db_firepower")
 local MAX_ALTITUDE_ATTACK_ROCKETS = 1500                -- (m) max altitude attack for rockets loadout (hAltitude)
 local MAX_ALTITUDE_ATTACK_ASM = 3000                    -- (m) max altitude attack for ASM loadout (hAltitude)
 local ACTIVATE_STANDOFF_SETUP = true                    -- assign loadouts.standoff with weapon.range only for ASM
-local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = 0.6         -- standoff = percentage * range weapon
+local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = {
+    ["ASM"] = 0.7,          -- standoff = percentage * range weapon
+    ["Rockets"] = 0.6,          -- standoff = percentage * range weapon
+}
 local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01            -- minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = math.huge
 local FIREPOWER_ROUNDED_COMPUTATION = 0.01
@@ -88,36 +91,54 @@ local function assignStandoffAndCost(loadout)
         if weapon_data then-- search weapon in db_weapons        
             local cost_weapon = weapon_data.cost or 0
             cost = cost + cost_weapon * weapon_qty
+            
+            -- loadout altitude attack (hAttack) and standoff evalutation
+            if ACTIVATE_STANDOFF_SETUP and weapon_data and weapon_data.range and weapon_data.type and ( weapon_data.type == "ASM" or  weapon_data.type == "Rockets") then 
+                local range = math.floor( 1000 * weapon_data.range * PERCENTAGE_RANGE_FOR_STANDOFF_SETUP[weapon_data.type] )                
+                if weapon_data.type == "Rockets" then log.info("-- weapon: " .. weapon_name .. ", range: " .. range) end
 
-            if ACTIVATE_STANDOFF_SETUP and weapon_data and weapon_data.type and ( weapon_data.type == "ASM" or  weapon_data.type == "Rockets") then 
-                local range = math.floor( 1000 * weapon_data.range * PERCENTAGE_RANGE_FOR_STANDOFF_SETUP )
-                local hAttack
+                if weapon_data.hAttack then -- weapons defined hAttack has priority
+                    loadout.hAttack = weapon_data.hAttack
 
-                if not loadout.hAttack or loadout.hAttack > 100 then
+                elseif not loadout.hAttack then -- hAttack loadout not define                                        
+                    loadout.hAttack = math.floor( range / 1.414 ) -- calculate hAttack               
 
-                    if weapon_data.hAttack then
-                        hAttack = weapon_data.hAttack
+                    if weapon_data.type == "Rockets" and loadout.hAttack > MAX_ALTITUDE_ATTACK_ROCKETS then --applied altitude limits
+                        loadout.hAttack = MAX_ALTITUDE_ATTACK_ROCKETS
+                    
+                    elseif weapon_data.type == "ASM" and loadout.hAttack > MAX_ALTITUDE_ATTACK_ASM then --applied altitude limits
+                        loadout.hAttack = MAX_ALTITUDE_ATTACK_ASM
+                    end                                                
+                end                
+                
+                if loadout.hAttack > range then
 
-                    else
-                        hAttack = math.floor( range / 1.414 )                
+                    local max_effective_range = math.floor( weapon_data.range * 900 ) --  max_effective_range is 90% (1000 + 0.9) of weapon.range (without PERCENTAGE_RANGE_FOR_STANDOFF_SETUP reduction)
+                    local max_hAttack = math.floor(  max_effective_range / 1.414 )  -- max hAttack is square of triangle with diagonal = max_effective_range
 
-                        if weapon_data.type == "Rockets" and hAttack > MAX_ALTITUDE_ATTACK_ROCKETS then
-                            hAttack = MAX_ALTITUDE_ATTACK_ROCKETS
-                        
-                        elseif weapon_data.type == "ASM" and hAttack > MAX_ALTITUDE_ATTACK_ASM then
-                            hAttack = MAX_ALTITUDE_ATTACK_ASM
-                        end
-                    end
+                    if loadout.hAttack > max_hAttack then -- loadout.hAttack is too big
+                        loadout.hAttack = max_hAttack
+                        range = max_effective_range
 
-                    if not loadout.hAttack or hAttack > loadout.hAttack then
-                        loadout.hAttack = hAttack
+                    else                    
+                        range = math.floor( loadout.hAttack * 1.414 )-- new range is diagonal of triangle with hAttack square
                     end
                 end
-                local standoff = math.floor(math.sqrt(range*range - loadout.hAttack * loadout.hAttack))
+                local standoff = math.floor(math.sqrt(range*range - loadout.hAttack * loadout.hAttack)) --calculate standoff
 
-                if not loadout.standoff or loadout.standoff > standoff then
-                    loadout.standoff = standoff
+                if weapon_data.type == "Rockets" then log.info("-- weapon: " .. weapon_name .. ", hAttack: " .. loadout.hAttack .. ", computed standoff: " .. standoff) end
+
+                if weapon_data.standoff and weapon_data.standoff < standoff then -- defined weapon standoff has priority if lesser of calculate standoff
+                    standoff = weapon_data.standoff                
+                
+                elseif weapon_data.standoff and weapon_data.standoff > standoff then
+                    log.warn("Attention: weapon.standoff is bigger of calculated standoff -> standoff is weapon outrange")
+                end
+
+                if not loadout.standoff or loadout.standoff > standoff then -- loadout standoff not defined or bigger of calculated or weapon defined standoff
+                    loadout.standoff = standoff -- update loadout.standoff to choice lesser standoff from any weapons loadout
                 end                
+                if weapon_data.type == "Rockets" then log.info("-- weapon: " .. weapon_name .. ", hAttack: " .. loadout.hAttack .. ", assigned standoff: " .. loadout.standoff) end
             end
         end
     end    
@@ -305,7 +326,7 @@ end
 -- return true if task_name is a A2G task (Strike, ..)
 local function isA2GTask(task_name)    
 
-    return task_name == "Strike" or task_name == "Anti-ship Strike"
+    return task_name == "Strike" or task_name == "Anti-ship Strike" or task_name == "SEAD"
 end
 
 -- return true if task_name isn't air fight task (refuelling, Transport and AWACS)
