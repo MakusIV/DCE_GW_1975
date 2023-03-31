@@ -78,10 +78,171 @@ local factor_angle_of_descent = {                       -- factor for compute hA
     },
 }
 
+local reference_missile_a2a = {
+
+    ["Radar"] = {
+        
+        ["max"] = {
+            ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
+            ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height_radar_missile"] = 20,                  -- km, max height
+            ["max_height_infrared_missile"] = 20,               -- km, max height
+            ["max_speed_radar_missile"] = 4,                    -- mach, max speed
+            ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
+            ["tnt"] = 10,                                       -- kg                
+        },
+
+        ["min"] = {
+            ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
+            ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height_radar_missile"] = 20,                  -- km, max height
+            ["max_height_infrared_missile"] = 20,               -- km, max height
+            ["max_speed_radar_missile"] = 4,                    -- mach, max speed
+            ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
+            ["tnt"] = 10,                                       -- kg                
+        },
+    },
+
+    ["Infrared"] = {
+        
+        ["max"] = {
+            ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
+            ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height_radar_missile"] = 20,                  -- km, max height
+            ["max_height_infrared_missile"] = 20,               -- km, max height
+            ["max_speed_radar_missile"] = 4,                    -- mach, max speed
+            ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
+            ["tnt"] = 10,                                       -- kg                
+        },
+        
+        ["min"] = {
+            ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
+            ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
+            ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
+            ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height_radar_missile"] = 20,                  -- km, max height
+            ["max_height_infrared_missile"] = 20,               -- km, max height
+            ["max_speed_radar_missile"] = 4,                    -- mach, max speed
+            ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
+            ["tnt"] = 10,                                       -- kg       
+        },
+    }
+}
+
+
+
+
+
+
+
+
+
+
+-- PREPROCESSING
+
+for side_name, side in pairs(weapon_db) do
+
+    for missile_name, missile in pairs(side) do
+    
+        if missile.type == "AAM" then
+
+            if missile.seeker == "radar" then
+            
+                if missile.radar_range > reference_missile_a2a[missile.seeker]["max"].radar_range then
+                    reference_missile_a2a[missile.seeker]["max"].radar_range = missile.radar_range
+                end     
+                
+                if missile.radar_range < reference_missile_a2a[missile.seeker]["min"].radar_range then
+                    reference_missile_a2a[missile.seeker]["min"].radar_range = missile.radar_range
+                end   
+
+                if missile.semiactive_range > reference_missile_a2a[missile.seeker]["max"].semiactive_range then
+                    reference_missile_a2a[missile.seeker]["max"].semiactive_range = missile.semiactive_range
+                end
+
+                if missile.semiactive_range < reference_missile_a2a[missile.seeker]["min"].semiactive_range then
+                    reference_missile_a2a[missile.seeker]["min"].semiactive_range = missile.semiactive_range
+                end
+
+                if missile.active_range > reference_missile_a2a[missile.seeker]["max"].active_range then
+                    reference_missile_a2a[missile.seeker]["max"].radar_range = missile.radar_range
+                end
+
+                if missile.active_range < reference_missile_a2a[missile.seeker]["min"].active_range then
+                    reference_missile_a2a[missile.seeker]["min"].radar_range = missile.radar_range
+                end
+
+                if missile.max_height_radar_missile > reference_missile_a2a[missile.seeker]["max"].max_height_radar_missile then
+                    reference_missile_a2a[missile.seeker]["max"].max_height_radar_missile = missile.max_height_radar_missile
+                end
+
+                if missile.max_height_radar_missile < reference_missile_a2a[missile.seeker]["min"].max_height_radar_missile then
+                    reference_missile_a2a[missile.seeker]["min"].max_height_radar_missile = missile.max_height_radar_missile
+                end
+
+                if missile.max_speed_radar_missile > reference_missile_a2a[missile.seeker]["max"].max_speed_radar_missile then
+                    reference_missile_a2a[missile.seeker]["max"].max_speed_radar_missile = missile.max_speed_radar_missile
+                end
+
+                if missile.max_speed_radar_missile > reference_missile_a2a[missile.seeker]["min"].max_speed_radar_missile then
+                    reference_missile_a2a[missile.seeker]["min"].max_speed_radar_missile = missile.max_speed_radar_missile
+                end
+            
+            elseif missile.seeker == "infrared" then
+
+                if missile.infrared_range > reference_missile_a2a[missile.seeker]["max"].infrared_range then
+                    reference_missile_a2a[missile.seeker]["max"].infrared_range = missile.infrared_range
+                end
+
+                if missile.infrared_range < reference_missile_a2a[missile.seeker]["min"].infrared_range then
+                    reference_missile_a2a[missile.seeker]["min"].infrared_range = missile.infrared_range
+                end
+
+                if missile.max_height_infrared_missile > reference_missile_a2a[missile.seeker]["max"].max_height_infrared_missile then
+                    reference_missile_a2a[missile.seeker]["max"].max_height_infrared_missile = missile.max_height_infrared_missile
+                end
+
+                if missile.max_height_infrared_missile < reference_missile_a2a[missile.seeker]["min"].max_height_infrared_missile then
+                    reference_missile_a2a[missile.seeker]["min"].max_height_infrared_missile = missile.max_height_infrared_missile
+                end
+
+                if missile.max_speed_infrared_missile > reference_missile_a2a[missile.seeker]["max"].max_speed_infrared_missile then
+                    reference_missile_a2a[missile.seeker]["max"].max_speed_infrared_missile = missile.max_speed_infrared_missile
+                end
+
+                if missile.max_speed_infrared_missile < reference_missile_a2a[missile.seeker]["min"].max_speed_infrared_missile then
+                    reference_missile_a2a[missile.seeker]["min"].max_speed_infrared_missile = missile.max_speed_infrared_missile
+                end
+
+                if missile.infrared_range > reference_missile_a2a[missile.seeker]["max"].infrared_range then
+                    reference_missile_a2a[missile.seeker]["max"].infrared_range = missile.infrared_range
+                end                                                    
+
+                if missile.infrared_range < reference_missile_a2a[missile.seeker]["min"].infrared_range then
+                    reference_missile_a2a[missile.seeker]["min"].infrared_range = missile.infrared_range
+                end                                                    
+
+                if missile.tnt > reference_missile_a2a[missile.seeker]["max"].tnt then
+                    reference_missile_a2a[missile.seeker]["max"].tnt = missile.tnt
+                end
+
+                if missile.tnt < reference_missile_a2a[missile.seeker]["min"].tnt then
+                    reference_missile_a2a[missile.seeker]["min"].tnt = missile.tnt
+                end
+            end
+        end
+    end
+end
 
 
 -- LOCAL FUNCTION
-
+    
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
 local function searchWeapon(weapon, side)
     local previous_log_level = log.level
@@ -284,6 +445,15 @@ local function evalutateFirepowerA2AMissile(missile_data)
     local max_speed_factor = 0.8
     local tnt_factor = 0.8 
     local seeker_factor    
+
+    -- un missile base ha il 30% di rate di abbattimento, l'active range incide un max del dal 10% al 20% in base al rapporto del range, il range (semiactive) incide dal 10% al 30%,
+    -- la quota incide del da 0 a 10%, la velocità da 20-40%, il tnt factor dal 30-50%
+    --[[
+
+        0.1 + (missile_data.active_range / REFERENCE_EFFICIENCY_MISSILE_A2A.active_range) * 0.2
+        0
+
+    ]]
     
     if missile_data.seeker == "radar" then
     

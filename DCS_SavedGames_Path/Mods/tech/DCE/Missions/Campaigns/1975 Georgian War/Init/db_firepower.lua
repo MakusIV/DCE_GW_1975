@@ -35,13 +35,13 @@ versionDCE["db_firepower.lua"] = "OB.1.0.0"
 
 REFERENCE_EFFICIENCY_MISSILE_A2A = {
                 ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
-                ["infrared_range"] = 18,                           -- km, range (aircraft must track target)                  
+                ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
                 ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
                 ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
-                ["max_height_radar_missile"] = 20,                  -- km max height
-                ["max_height_infrared_missile"] = 20,               -- km max height
-                ["max_speed_radar_missile"] = 4,                    -- mach
-                ["max_speed_infrared_missile"] = 3,
+                ["max_height_radar_missile"] = 20,                  -- km, max height
+                ["max_height_infrared_missile"] = 20,               -- km, max height
+                ["max_speed_radar_missile"] = 4,                    -- mach, max speed
+                ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
                 ["tnt"] = 10,                                       -- kg                
             }
 
@@ -52,10 +52,10 @@ weapon_db = {
     
     ["blue"] = {
 
-        ["AIM-54A-MK47"] = {                                             -- weapon name
-            ["type"] = "AAM",                                       -- weapon type
-            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
-            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+        ["AIM-54A-MK47"] = {                                    -- weapon name
+            ["type"] = "AAM",                                   -- weapon type
+            ["seeker"] = "radar",                               -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1974,
             ["end_service"] = 2004,
             ["cost"] = 400,-- k$  
@@ -64,15 +64,15 @@ weapon_db = {
             ["range"] = 160,                                    -- km, range ()                  
             ["semiactive_range"] = 130,                         -- km, semiactive range (aircraft must track target)                  
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
-            ["max_height"] = 24.8,                             -- km max height
+            ["max_height"] = 24.8,                              -- km max height
             ["max_speed"] = 3,                                  -- mach                            
             ["manouvrability"] = 0.6,
         },
 
-        ["AIM-54A-MK60"] = {                                             -- weapon name
-            ["type"] = "AAM",                                       -- weapon type
-            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
-            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+        ["AIM-54A-MK60"] = {                                    -- weapon name
+            ["type"] = "AAM",                                   -- weapon type
+            ["seeker"] = "radar",                               -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
             ["start_service"] = 1975,
             ["end_service"] = 2004,
             ["cost"] = 400,-- k$  
