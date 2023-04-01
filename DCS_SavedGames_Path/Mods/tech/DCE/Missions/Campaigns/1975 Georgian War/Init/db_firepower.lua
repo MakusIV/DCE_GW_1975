@@ -33,20 +33,6 @@ versionDCE["db_firepower.lua"] = "OB.1.0.0"
 -- a2r missile: Kh-25MPU,
 -- a2s missile: Kh-22N, Kh-59M (1980), 
 
-REFERENCE_EFFICIENCY_MISSILE_A2A = {
-                ["radar_range"] = 170,                              -- km, range (aircraft must track target)                  
-                ["infrared_range"] = 18,                            -- km, range (aircraft must track target)                  
-                ["semiactive_range"] = 100,                         -- km, semiactive range (aircraft can or not track target)                  
-                ["active_range"] = 50,                              -- km, active range  (missile has active autonomous tracking target)                
-                ["max_height_radar_missile"] = 20,                  -- km, max height
-                ["max_height_infrared_missile"] = 20,               -- km, max height
-                ["max_speed_radar_missile"] = 4,                    -- mach, max speed
-                ["max_speed_infrared_missile"] = 3,                 -- mach, max speed
-                ["tnt"] = 10,                                       -- kg                
-            }
-
-
-
 -- store weapon info
 weapon_db = {	
     
@@ -60,13 +46,13 @@ weapon_db = {
             ["end_service"] = 2004,
             ["cost"] = 400,-- k$  
             ["tnt"] = 61, --kg
-            ["reliability"] = 0.8,                              -- reliability (0-1)
+            ["reliability"] = 0.8,                              -- reliability (min 0 - max 1)
             ["range"] = 160,                                    -- km, range ()                  
             ["semiactive_range"] = 130,                         -- km, semiactive range (aircraft must track target)                  
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8,                              -- km max height
             ["max_speed"] = 3,                                  -- mach                            
-            ["manouvrability"] = 0.6,
+            ["manouvrability"] = 0.6,                           -- manouvrability (min 0 - max 1)
         },
 
         ["AIM-54A-MK60"] = {                                    -- weapon name
