@@ -144,6 +144,18 @@ log.debug("Start")
 
 require("Init/db_aircraft")
 
+local WEIGHT_SCORE_FOR_LOADOUT_COST = {
+
+	["Strike"] = 0.3,
+	["Anti-ship Strike"] = 0.1,
+	["SEAD"] = 0.1,
+	["Intercept"] = 0.2,
+	["CAP"] = 0.4,
+	["Escort"] = 0.3,
+	["Fighter Sweep"] = 0.2,
+	["Reconnaissance"] = 0.1,
+}
+
 local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 												-- (max 1 -- min 0) weight factor for aircraft cost in score calculus
 
 	["Fighter"] = 0.3, -- percentage
@@ -926,8 +938,8 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							if active_log then log.traceLow("EVALUTATE FACTOR COST: task: " .. task .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
 																							if active_log then log.traceLow("cost ( db_aircraft[" .. side .. "][" .. draft_sorties_entry.type .. "].factor[" .. unit_role .. "] ): " .. (db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or "nil" ) .. ", cost: " .. cost_factor) end
 
-																							-- Update score with factor_cost
-																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE ) * ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
+																							-- Update score with factor_cost (controlla ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor ) se < 1)
+																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE ) * ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor ) * ( 1 - ( WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )
 																							if active_log then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end																				
 																							
 																							-- Update score with SCORE_TASK_FACTOR

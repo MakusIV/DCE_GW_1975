@@ -1898,7 +1898,7 @@ db_loadouts = {
 		["SEAD"] = {		
 			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL"] = {
 				minscore = 0.1,
-				attributes = {},
+				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
 					["RB-75T"] = 2,										
 				},
@@ -4985,7 +4985,7 @@ db_loadouts = {
 		["SEAD"] = {
 			["AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = { -- verifica sono gli stessi si differenziano solo per day, night puoi lasciarne solo l'ultimo con  day e night true
 				minscore = 0.0,
-				attributes = {},
+				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
 					["AGM-45"] = 2,	
 					["AIM-7M"] = 3,														
@@ -5051,7 +5051,7 @@ db_loadouts = {
 			},			
 			["ASM SEAD AGM-45*4 AIM-7E EMC Fuel"] = {
 				minscore = 0.3,
-				attributes = {},
+				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
 					["AGM-45"] = 4,		
 					["AIM-7E"] = 2,													
@@ -6167,7 +6167,7 @@ db_loadouts = {
 		},
 		["SEAD"] = {
 			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
-				attributes = {},
+				attributes = {"SAM"},
 				minscore = 0.0,
 				weaponType = "ASM",
 				weapons = { -- task dedicated weapons						
@@ -7108,51 +7108,7 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {
-			["CAS Rockets"] = {
-				minscore = 0.0,
-				attributes = {"soft"},
-				weaponType = "Rockets",
-				expend = "Auto",
-				day = true,
-				night = false,
-				adverseWeather = false,
-				range = 80000,
-				capability = 13,
-				firepower = 4,
-				vCruise = 100,
-				vAttack = 100,
-				hCruise = 100,
-				hAttack = 50,
-				standoff = nil,
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 4,
-				stores = {
-					["pylons"] = {
-						[2] = 
-						{
-							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{6A4B9E69-64FE-439a-9163-3A87FB6A4D81}",
-						}, -- end of [5]
-					}, ----end of ["pylons"]
-					["fuel"] = "1704",
-					["flare"] = 192,
-					["chaff"] = 0,
-					["gun"] = 100,
-				},
-			},
+			
 			["CAS Rockets S-13*10"] = {
 				minscore = 0.0,
 				attributes = {"soft", "Structure"},
@@ -9056,7 +9012,7 @@ db_loadouts = {
 		["SEAD"] = {
 			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
 				minscore = 0.0,				
-				attributes = {},
+				attributes = {"SAM"},
 				weaponType = "ASM",
 				expend = "All",
 				weapons = { -- task dedicated weapons				
@@ -9792,7 +9748,7 @@ db_loadouts = {
 		["SEAD"] = {
 			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
 				minscore = 0.0,				
-				attributes = {},
+				attributes = {"SAM"},
 				weaponType = "ASM",
 				expend = "All",
 				weapons = { -- task dedicated weapons				
@@ -12688,3 +12644,4 @@ db_loadouts = {
 	]]
 
 }
+

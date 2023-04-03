@@ -28,6 +28,7 @@ local local_debug = false -- local debug
 local active_log = false
 log.debug("Start")
 require("Init/db_firepower")
+require("Init/db_loadouts")
 
 local ANGLE_OF_DESCENT_IN_GROUND_ATTACK = {             -- degree
     ["ASM"] = { 
@@ -210,10 +211,64 @@ for side_name, side in pairs(weapon_db) do
         end
     end
 end
-log.info("reference_missile_a2a:\n" .. inspect(reference_missile_a2a))
+log.info("\nreference_missile_a2a:\n" .. inspect(reference_missile_a2a).."\n")
+
+local loadouts_cost  = {
+
+	["Strike"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["Anti-ship Strike"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["SEAD"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["Intercept"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["CAP"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["Escort"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["Fighter Sweep"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+	["Reconnaissance"] = {
+		["min"] = math.huge,
+		["max"] = 0,
+	},
+}
 
 
 -- LOCAL FUNCTION
+
+-- return true if task_name is a A2A task (CAP, ..)
+local function isA2ATask(task_name)    
+
+    return task_name == "Intercept" or task_name == "CAP" or task_name == "Fighter Sweep" or task_name == "Escort"
+end
+
+-- return true if task_name is a A2G task (Strike, ..)
+local function isA2GTask(task_name)    
+
+    return task_name == "Strike" or task_name == "Anti-ship Strike" or task_name == "SEAD"
+end
+
+-- return true if task_name isn't air fight task (refuelling, Transport and AWACS)
+local function isNotFightTask(task_name)
+
+    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS" or task_name == "Laser Illumination" or task_name == "Flare Illumination"
+end
     
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
 local function searchWeapon(weapon, side)
@@ -250,24 +305,6 @@ local function searchWeapon(weapon, side)
     log.traceLow(nameFunction .. "End")
     log.level = previous_log_level
     return nil -- not weapon was found, return nil
-end
-
--- return true if task_name is a A2A task (CAP, ..)
-local function isA2ATask(task_name)    
-
-    return task_name == "Intercept" or task_name == "CAP" or task_name == "Fighter Sweep" or task_name == "Escort"
-end
-
--- return true if task_name is a A2G task (Strike, ..)
-local function isA2GTask(task_name)    
-
-    return task_name == "Strike" or task_name == "Anti-ship Strike" or task_name == "SEAD"
-end
-
--- return true if task_name isn't air fight task (refuelling, Transport and AWACS)
-local function isNotFightTask(task_name)
-
-    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS"
 end
 
 -- compute loadouts.standoff and loadouts.hattack with weapon.range for ASM
@@ -763,6 +800,47 @@ local function loadComputedTargetEfficiency()
     end
 end
 
+-- upgrade loadouts_cost table
+local function updateLoadoutsCostTable()
+    for aircraft_type, loadouts in pairs(db_loadouts) do
+
+        for task_name, task in pairs(loadouts) do
+
+            if not isNotFightTask(task_name) then
+            
+                for loadout_name, loadout in pairs(task) do
+
+                    if not loadout.cost then
+                        log.warn("aircraft_type: " .. aircraft_type .. ", task_name: " .. task_name .. ", loadout_name: " .. loadout_name)
+                    end
+                                
+                    if loadouts_cost[task_name].max < loadout.cost then
+                        loadouts_cost[task_name].max = loadout.cost
+
+                    elseif loadouts_cost[task_name].min > loadout.cost then
+                        loadouts_cost[task_name].min = loadout.cost
+                    end               
+                end
+            end
+        end
+    end
+end
+
+local function insertFactorCostIndb_loadouts()-- insert factor_cost in db_loadouts
+    for aircraft_type, loadouts in pairs(db_loadouts) do
+
+        for task_name, task in pairs(loadouts) do
+
+            if not isNotFightTask(task_name) then
+            
+                for loadout_name, loadout in pairs(task) do
+                
+                    loadout.cost_factor = roundAtNumber( 1 - (loadout.cost - loadouts_cost[task_name].min ) / (loadouts_cost[task_name].max - loadouts_cost[task_name].min), FIREPOWER_ROUNDED_COMPUTATION)			
+                end
+            end
+        end
+    end
+end
 
 
 -- GLOBAL FUNCTION
@@ -864,7 +942,7 @@ function defineTargetListFirepower(targetlist)
 end
 
 -- call from MAIN_NextMission, initialize firepower value for loadouts
-function defineLoadoutsFirepower()
+function defineLoadoutsFirepowerAndCost()
     local previous_log_level = log.level
 	log.level = function_log_level
 	local nameFunction = "defineLoadoutsFirepower(): "
@@ -931,7 +1009,10 @@ function defineLoadoutsFirepower()
             end            
         end
     end  
-     
+    log.info("\ndb_loadouts:\n" .. inspect(db_loadouts).."\n")
+    updateLoadoutsCostTable() -- update loadouts_cost table
+    log.info("\nloadouts_cost:\n" .. inspect(loadouts_cost).."\n")
+    insertFactorCostIndb_loadouts()-- insert factor_cost in db_loadouts
     log.traceLow(nameFunction .. "End")
     log.level = previous_log_level
     return

@@ -26,7 +26,7 @@ log.debug("Start")
 
 local ROLE = { 												-- (max 1 -- min 0) weight factor for score calculus with increment percentage aircraft cost
 
-	["Fighter"] = true, -- percentage
+	["Fighter"] = true, -- 
 	["Attacker"] = true, -- 
 	["Bomber"] = true, -- 
 	["Transporter"] = true, -- 
@@ -34,35 +34,6 @@ local ROLE = { 												-- (max 1 -- min 0) weight factor for score calculus 
 	["Refueler"] = true, -- 
 	["AWACS"] = true, -- 
 	["Helicopter"] = true, -- 
-}
-
--- score = score * ( 1 -  ROLE[role] * ( 2 ^ ( db_aircrafts[type].cost / MAX_COST_AIRCRAFT[role] )  ) )
-
-local ORIGINAL_COST_AIRCRAFT = { ---max cost
-
-	["blue"] = {
-
-		["Fighter"] = 38000, -- K$
-		["Attacker"] = 30000, -- K$
-		["Bomber"] = 54000, -- K$
-		["Transporter"] = 40000, -- K$
-		["Reco"] = 30000, -- K$
-		["Refueler"] = 40000, -- K$
-		["AWACS"] = 270000, -- K$
-		["Helicopter"] = 0, -- 
-	},
-
-	["red"] = {
-
-		["Fighter"] = 40000, -- K$
-		["Attacker"] = 25000, -- K$
-		["Bomber"] = 160000, -- K$
-		["Transporter"] = 54000, -- K$
-		["Reco"] = 40000, -- K$
-		["Refueler"] = 40000, -- K$
-		["AWACS"] = 330000, -- K$
-		["Helicopter"] = 0, -- 
-	},
 }
 
 local MAX_COST_AIRCRAFT = { ---max cost
