@@ -35,6 +35,9 @@ local local_debug = true -- local debug
 log.info("Start")
 
 -- module parameters
+local TIME_FOR_INGRESS_CALCULATION = 60 -- (s) default 60s, time for compute ingress distance distance = speed(vattack) * time + standoff
+local MINIMUM_STANDOFF_DISTANCE = 7000 -- (m) default 7000m, minimum standoff value for calculation (not not applicable when the value is defined in db_loadouts: always with new firepower code)
+local TIME_FOR_STANDOFF_CALCULATION = 30 -- (s) default 30s, time for compute standoff distance distance = speed(vattack) * time + hattack
 local PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000 -- min altitude for generic CAP detection (no need EWR support)(defautl=3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
 local ALT_MIN_FOR_CLUTTER_EFFECT = 100 -- (defalut = 100 m)
 local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default = 0.5)
@@ -579,7 +582,6 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					return "true", tpL, tpR, headingL, headingR, lenghtL, lenghtR, position
 				end
 
-
 				local function InsertAlternativePoint(point1, point2alt, leg_alt, pointEnd, distance, route_alt, FindPathLegTable, instance)
 					local previous_log_level = log.level
 					log.level = function_log_level --"traceVeryLow" --
@@ -613,7 +615,6 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					log.level = previous_log_level			
 				end
 				
-
 				local radius_with_separation = threat[1].range + SEPARATION_FROM_THREAT_RANGE 	-- R           calculated offset for new alternative point2																
 				local response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL, alfaR, position, hl, wl, dl, sl, ll							
 				local tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, alfaL1, alfaR1, hr, wr, dr, sr, lr
@@ -630,8 +631,8 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				if response and response1 then
 					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1 and point2 are within threat circonference ")
 					--QUI IL PROBLEMA UNO O TUTTE E DUE I RISULTATI DI GetTangentInfo POSSONO ESSERE FALSI, SE TUTTI E DUE è CRTITICO IN QUANTO IL CALCOLO DOVREBBE ESLUDERE IL PUNTO INTERNO ELIMINANDOLO SE SOLO IL SECONDO P2 (P2-P1) QUINDI
-					-- P1 E FUORI CERCHIO E' RISOLVIBILE CONSDIERANDO SOLO IL PUNTO ALTERNATIVO CALCOLATO IN RESPONSE (NON RESPONSE1)
-					--RIVEDERE INSERENDO QUI TUTTO IL CODICE DI RESPPONSE1 DISTINGUENDO I CASI IN CUI SI HANNO RISULTATI SOLO A LEFT OèPPURE RIGHT
+					-- P1 E FUORI CERCHIO E' RISOLVIBILE CONSIDERANDO SOLO IL PUNTO ALTERNATIVO CALCOLATO IN RESPONSE (NON RESPONSE1)
+					--RIVEDERE INSERENDO QUI TUTTO IL CODICE DI RESPONSE1 DISTINGUENDO I CASI IN CUI SI HANNO RISULTATI SOLO A LEFT OèPPURE RIGHT
 				
 					-- LEFT
 					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", response: " .. tostring(response) .. ", tpL: " .. tpL.x .. ", " .. tpL.y .. ", tpR: " .. tpR.x .. ", " .. tpR.y .. ", headingL: " .. headingL .. ", headingR: " .. headingR .. ", lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR .. ", position: " .. position)												
@@ -746,7 +747,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			
 			else
 
-				if type_service == "strike ingress" or type_service == "strike egress" then
+				if type_service == "ingress" or type_service == "egress" then
 					local closest_approach = GetTangentDistance(point1, point2, threat[t])	--closest approach distance to threat
 					local closest_approach_factor = 1 - closest_approach / threat[t].range		--factor how close threat is approached (1 = on top, 0 not at all)
 					local lenght_in_threat = GetTangentLenght(point1, point2, threat[t], threat[t].range)	--distance that is traveled within threat range
@@ -808,10 +809,10 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			log.traceVeryLow("standoff defined in loadout profile")
 		
 		else																								--if no standoff defined in loadout profile
-			standoff = profile.hAttack + profile.vAttack * 30												--standoff distance is attack alt plus 30 seconds at attack speed
+			standoff = profile.hAttack + profile.vAttack * TIME_FOR_STANDOFF_CALCULATION 												--standoff distance is attack alt plus 30 seconds at attack speed
 			
-			if standoff < 7000 then																			--standoff should be at least 7000m
-				standoff = 7000
+			if standoff < MINIMUM_STANDOFF_DISTANCE then																			--standoff should be at least 7000m
+				standoff = MINIMUM_STANDOFF_DISTANCE
 			end
 			log.traceVeryLow("standoff isn't define in loadout profile")
 		end
@@ -824,7 +825,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				IP_distance = standoff + profile.ingress
 				log.traceVeryLow("ingress distance is defined in loadout")
 			else
-				IP_distance = standoff + profile.vAttack * 60												--distance target-IP is standoff range from profile + 60 seconds run in at attack speed
+				IP_distance = standoff + profile.vAttack * TIME_FOR_INGRESS_CALCULATION												--distance target-IP is standoff range from profile + 60 seconds run in at attack speed
 				log.traceVeryLow("ingress distance isn't defined in loadout")
 			end
 			log.traceVeryLow("ingress distance (IP_distance) = " .. IP_distance) 
@@ -867,7 +868,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 							local draft_attackPoint = targetPoint
 							log.traceVeryLow("IP heading is within min and max offsets, draft_IP = (" .. draft_IP.x .. ", " .. draft_IP.y .. "), draft_attackPoint = targetPoint (" .. draft_attackPoint.x .. ", " .. draft_attackPoint.y .. ")")
 							
-							if standoff > 15000 then															--if standoff range is more than 15'000m, assume target will not be overflown.
+							if standoff > 15000 then															--if standoff range is more than 15'000m, assume target will not be overflown. (forse ha paura che è l'aereo è molto veloce (vattack) oppire vola molto in alto (standoff =  hattack +  vattack * 30) e quindi la distanza di inizio attacco è presa con un certo anticipo rispetto al target. Il calcolo dell'angolo di discesa dovrebbe essere calcolato da qusto codice nell'ordine di 30 gradi, se voli troppo alto o troppo veloce c'è il rischio di sorvolare il target )
 								draft_attackPoint = GetOffsetPoint(targetPoint, IP_heading, standoff)			--draft attack point
 								log.traceVeryLow("standoff range(" .. standoff .. ") is more than 15'000m, draft_attackPoint = targetPoint (" .. draft_attackPoint.x .. ", " .. draft_attackPoint.y .. ")")
 							end
@@ -904,7 +905,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			if initialPoint.x then
 				log.traceVeryLow("best IP found is(" .. initialPoint.x ..  ")")	
 			else
-				log.traceVeryLow("IP not found!. #IP_table: " .. #IP_table)	
+				log.traceVeryLow("IP is not yet set. #IP_table: " .. #IP_table)	
 			end
 			
 		end
@@ -918,11 +919,13 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		do
 			local egress_point_start																		--point from where egress is initiated (target or attack point depending on standoff profile)
 			local egress_table = {}
-			local egress_distance = standoff + profile.vAttack * 90											--egress point is standoff range from target plus 90 seconds run out at attack speed
+			local egress_distance																			--egress point is standoff range from target plus 90 seconds run out at attack speed
 
 			if profile.egress then																			--egress distance is defined in loadout
 				egress_distance = standoff + profile.egress
 				log.traceVeryLow("egress_distance is defined in loadout")	
+			else
+				egress_distance = standoff + profile.vAttack * 90											--egress point is standoff range from target plus 90 seconds run out at attack speed
 			end
 			log.traceVeryLow("calculated egress_distance: " .. egress_distance)
 			local egress_heading
