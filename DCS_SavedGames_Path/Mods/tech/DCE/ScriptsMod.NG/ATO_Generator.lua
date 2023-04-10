@@ -1460,8 +1460,8 @@ for sideS, draftT in pairs(draft_sorties) do
 																else
 															
 																	local escort_offset_level = unit_loadouts[l].capability * unit_loadouts[l].firepower	--threat level that each fighter escort can offset
-																	-- testare: local escort_offset_level = unit_loadouts[l].firepower	--threat level that each fighter escort can offset
-																	escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)
+																	local escort_offset_level = unit_loadouts[l].firepower	--threat level that each fighter escort can offset
+																	-- escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)
 																	
 																	if escort_num > draft.number * 3 then											--when more escorts 3 times escorts than escorted aircraft
 																		escort_num = draft.number * 3												--limit escort number to 3 times escorted aircraft
