@@ -199,7 +199,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			type = unit.type,
 			class = "AAA",
 			level = 1,
-			SEAD_offset = 0,
+			SEAD_offset = 0, -- radar sam >0, ir sam = 0; num of sam asset used for evalutate num of sead unit (max 4 (patriot, s-300 min 1 (tunguska 1))  
 			x = unit.x,
 			y = unit.y,
 			range = 2500,  --DCS ENCYCLOPEDIA: 2500, stesso di airgoon

@@ -167,6 +167,8 @@ local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 												-- (max 1 -- min 0) weight 
 	["AWACS"] = 0.1, -- 
 	["Helicopter"] = 0.2, -- 
 }
+local MINIMUM_VALUE_OF_AIR_THREAT = 0.5									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
+local FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
 local SCORE_INFLUENCE_ROUTE_THREAT = 1									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
 local FACTOR_FOR_REDUCE_SCORE = 0.01 									-- factor for reduce_score in CAP (score = score - redice_score * factor)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
@@ -852,11 +854,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																				
 																						--self escort
 																						if unit_loadouts[l].self_escort then															--if the loadout is capable of self-escort																							
-																							route.threats.air_total = route.threats.air_total / 2										--reduce the fighter threat by half
+																							route.threats.air_total = route.threats.air_total * FACTOR_FOR_REDUCTION_AIR_THREAT										--reduce the fighter threat by half
 																							
 																					
-																							if route.threats.air_total < 0.5 then
-																								route.threats.air_total = 0.5
+																							if route.threats.air_total < MINIMUM_VALUE_OF_AIR_THREAT then
+																								route.threats.air_total = MINIMUM_VALUE_OF_AIR_THREAT
 																							end
 																							if active_log then log.traceLow("loadout is capable of self-escort, reduce the fighter threat by half (minimum 0.5): " .. route.threats.air_total) end
 																						end
@@ -938,9 +940,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							if active_log then log.traceLow("EVALUTATE FACTOR COST: task: " .. task .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
 																							if active_log then log.traceLow("cost ( db_aircraft[" .. side .. "][" .. draft_sorties_entry.type .. "].factor[" .. unit_role .. "] ): " .. (db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or "nil" ) .. ", cost: " .. cost_factor) end
 
-																							-- Update score with factor_cost (controlla ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor ) se < 1)
-																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE ) * ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor ) * ( 1 - ( WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )
-																							if active_log then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end																				
+																							-- Update score with factor_cost
+																							local aircraft_cost_factor = ( 1 + WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
+																							local loadout_cost_factor = ( 1 - ( WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )																							
+																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * FACTOR_FOR_REDUCE_SCORE ) * aircraft_cost_factor * loadout_cost_factor
+																							if active_log then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", aircraft_cost_factor: " .. aircraft_cost_factor .. ", loadout_cost_factor: " .. loadout_cost_factor .. ", score: " .. draft_sorties_entry.score) end																				
 																							
 																							-- Update score with SCORE_TASK_FACTOR
 																							if task == "Strike" then
@@ -1338,7 +1342,7 @@ for sideS, draftT in pairs(draft_sorties) do
 												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has a SEAD offset requirement of: " .. draft.route.threats.SEAD_offset .. ", and has has an air threat(> " .. MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.SEAD_offset .. ", set support_requirement = true") end
 											end
 
-										elseif task == "Flare Illumination" or task == "Laser Illuminat.ion"then
+										elseif task == "Flare Illumination" or task == "Laser Illumination"then
 											support_requirement = true
 											if active_log then log.traceLow("draft sortie (task: " .. task .. "), set support_requirement = true") end
 										end
@@ -1433,20 +1437,36 @@ for sideS, draftT in pairs(draft_sorties) do
 																escort_max = 0
 															end														
 															
+															
+															
+															
+															
+															
+															-- QUI MARCO
+
+
+
+
+
+
 															if task == "SEAD" then
-																escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].capability		--capability determines amount of offset per aircraft
-																escort_num = math.ceil(escort_num / 2) * 2										--round up requested escorts to even number
+																--escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].capability		--capability determines amount of offset per aircraft
+																escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].firepower			--firepower determines amount of offset per aircraft
+																escort_num = math.ceil(escort_num / 2) * 2										    --round up requested escorts to even number
+
 															elseif task == "Escort" then
 																if draft.support[task]["escort_max"] ~= 999 then
 																	escort_num = draft.support[task]["escort_max"] - draft.support[task]["NbTotalSupport"]	-- Miguel21 modification M11.x : Multiplayer	(x: EscorteTot-max)
 																else
 															
 																	local escort_offset_level = unit_loadouts[l].capability * unit_loadouts[l].firepower	--threat level that each fighter escort can offset
+																	-- testare: local escort_offset_level = unit_loadouts[l].firepower	--threat level that each fighter escort can offset
 																	escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)
 																	
 																	if escort_num > draft.number * 3 then											--when more escorts 3 times escorts than escorted aircraft
 																		escort_num = draft.number * 3												--limit escort number to 3 times escorted aircraft
 																	end
+																	
 																	if escort_num > campMod.Setting_Generation.limit_escort then
 																		escort_num = campMod.Setting_Generation.limit_escort
 																	end

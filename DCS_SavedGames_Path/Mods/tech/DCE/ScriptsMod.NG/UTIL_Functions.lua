@@ -991,6 +991,13 @@ function roundAtNumber(x, number)
 	return (x > 0 and math.floor(x + .5) or math.ceil(x - .5)) * number
 end
 
-
-
+-- activate log
+function activateLog(condition, log_var, log_level)
+	
+	if condition then
+		active_log = true
+		log_var.level = log_level
+		log_var.activate = true
+	end
+end
   

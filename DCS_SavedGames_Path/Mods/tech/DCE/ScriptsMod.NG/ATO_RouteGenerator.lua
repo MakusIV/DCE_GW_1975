@@ -140,9 +140,12 @@ di riferimento
 function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter)	--side_: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
 	local previous_log_level = log.level
 	log.level = function_log_level -- "traceVeryLow"
+
+	activateLog(not profile.hAttack or not profile.hCruise, log, "traceVeryLow")	
+
 	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter): "    
 	log.trace("Start " .. nameFunction)						
-	log.trace("GetRoute parameters:" .. tostring(basePoint) .. ",\n " .. tostring(targetPoint) .. ",\n " .. profile.name .. ",\n " .. side_ .. ",\n " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
+	log.trace("GetRoute parameters:" .. inspect(basePoint) .. "\n" .. inspect(targetPoint) .. "\n " .. profile.name .. ", " .. side_ .. ", " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
 	local route = {}																									--table to store the route to be built
 	local route_axis = GetHeading(targetPoint, basePoint)
 	log.trace("targetPoint: " .. tostring(targetPoint) .. ", basePoint: " .. tostring(basePoint) .. ", route_axis(heading): " .. route_axis)																--axis base-target
@@ -171,7 +174,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 		if (time == "day" or threat.night == true) and threat.hidden == HiddenCheck then																	--during day or threat is night capable to be counted as threat			
 			local threatentry = {
 				class = threat.class,
-				SEAD_offset = threat.SEAD_offset,
+				SEAD_offset = threat.SEAD_offset, -- > 0 only radar sam
 				x = threat.x,
 				y = threat.y,
 				range = threat.range,
@@ -868,7 +871,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 							local draft_attackPoint = targetPoint
 							log.traceVeryLow("IP heading is within min and max offsets, draft_IP = (" .. draft_IP.x .. ", " .. draft_IP.y .. "), draft_attackPoint = targetPoint (" .. draft_attackPoint.x .. ", " .. draft_attackPoint.y .. ")")
 							
-							if standoff > 15000 then															--if standoff range is more than 15'000m, assume target will not be overflown. (forse ha paura che è l'aereo è molto veloce (vattack) oppire vola molto in alto (standoff =  hattack +  vattack * 30) e quindi la distanza di inizio attacco è presa con un certo anticipo rispetto al target. Il calcolo dell'angolo di discesa dovrebbe essere calcolato da qusto codice nell'ordine di 30 gradi, se voli troppo alto o troppo veloce c'è il rischio di sorvolare il target )
+							if standoff > 15000 then															--if standoff range is more than 15'000m, assume target will not be overflown. (forse teme che l'aereo è molto veloce (vattack) oppire vola molto in alto (standoff =  hattack +  vattack * 30) e quindi la distanza di inizio attacco è presa con un certo anticipo rispetto al target. L'angolo di discesa dovrebbe essere calcolato da questo codice nell'ordine di 30 gradi, se voli troppo alto o troppo veloce c'è il rischio di sorvolare il target )
 								draft_attackPoint = GetOffsetPoint(targetPoint, IP_heading, standoff)			--draft attack point
 								log.traceVeryLow("standoff range(" .. standoff .. ") is more than 15'000m, draft_attackPoint = targetPoint (" .. draft_attackPoint.x .. ", " .. draft_attackPoint.y .. ")")
 							end
@@ -888,7 +891,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 						
 			if initialPoint.x == nil then																	--if IP is not yet set, find the best from IP table
 				log.traceVeryLow("best IP is not yet set, find the best from IP table")
-				local current_threat = 1000000
+				local current_threat = math.huge
 
 				for n = 1, #IP_table do																		--iterate through all draft IPs to find to one with the lowest threat level
 					local roundedThreat = math.floor(IP_table[n].threat * 10000000000) / 10000000000		--round threat value to remove rounding errors
