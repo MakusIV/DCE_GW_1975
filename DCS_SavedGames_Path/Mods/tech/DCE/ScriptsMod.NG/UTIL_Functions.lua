@@ -992,12 +992,19 @@ function roundAtNumber(x, number)
 end
 
 -- activate log
-function activateLog(condition, log_var, log_level)
+function activateLog(activate, condition, log_var, log_level)
 	
-	if condition then
-		active_log = true
+	if activate and condition then		
 		log_var.level = log_level
 		log_var.activate = true
+		log_var.info("activateLog")
+		return true
+	
+	elseif not activate then		
+		log_var.level = log_level
+		log_var.activate = false
+		log_var.info("de-activateLog")
+		return false
 	end
 end
   

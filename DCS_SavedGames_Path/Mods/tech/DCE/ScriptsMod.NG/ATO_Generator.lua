@@ -167,6 +167,7 @@ local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 												-- (max 1 -- min 0) weight 
 	["AWACS"] = 0.1, -- 
 	["Helicopter"] = 0.2, -- 
 }
+local ESCORT_NUMBER_MULTIPLIER = 3										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
 local MINIMUM_VALUE_OF_AIR_THREAT = 0.5									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
 local FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
 local SCORE_INFLUENCE_ROUTE_THREAT = 1									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
@@ -1228,7 +1229,7 @@ for sideS, draftT in pairs(draft_sorties) do
 
 			for n = 1, #unit do																				--iterate through all units
 
-				if side == sideS and unit[n].inactive ~= true and db_airbases[unit[n].base] and db_airbases[unit[n].base].inactive ~= true and aircraft_availability[unit[n].name] and aircraft_availability[unit[n].name].available > 0  and db_airbases[unit[n].base].x and db_airbases[unit[n].base].y then	--if unit is active, its base is active and has available aircraft -- ATO_G_debug01 Fin de campagne
+				if side == sideS and unit[n].inactive ~= true and db_airbases[unit[n].base] and db_airbases[unit[n].base].inactive ~= true and aircraft_availability[unit[n].name] and aircraft_availability[unit[n].name].available > 0  and db_airbases[unit[n].base].x and db_airbases[unit[n].base].y then	--if unit is active, its base is active and has available aircraft -- ATO_G_debug01 Fin de campagne					
 					
 					if active_log then log.traceLow("side: " .. side .. "draft_sortie_n: " .. draft_n .. ", sortie.score: " .. draft.score .. ", unit: " .. unit[n].name .. " - " .. unit[n].type .. ", airbase: " .. unit[n].base ..", is active, its base is active and has available aircraft") end					
 					
@@ -1236,8 +1237,10 @@ for sideS, draftT in pairs(draft_sorties) do
 						local temp_draft_sorties = {}														--temporary table to hold additional draft sorties with escorts assigned
 						
 						if (task == "SEAD" or task == "Escort" or task == "Escort Jammer" or task == "Flare Illumination" or task == "Laser Illumination") and task_bool then	--task is a support task and is true
-
-							if active_log then log.traceLow("side: " .. side .. "draft_sortie_n: " .. draft_n .. ", unit: " .. unit[n].name .. " - " .. unit[n].type .. "task is a support task: " .. task) end
+							-- active_log = activateLog(true, true, log, "traceVeryLow")
+							
+							if active_log then log.traceLow("side: " .. side .. "draft_sortie_n: " .. draft_n .. ", sortie.score: " .. draft.score .. ", unit: " .. unit[n].name .. " - " .. unit[n].type .. ", airbase: " .. unit[n].base ..", is active, its base is active and has available aircraft") end					
+							
 							--get possible loadouts
 							local unit_loadouts = {}														--table to hold all loadouts for this aircraft type and task
 							
@@ -1248,60 +1251,21 @@ for sideS, draftT in pairs(draft_sorties) do
 							end
 							
 							for l = 1, #unit_loadouts do													--iterate through all available loadouts				
-
 								tot_from, toto_to = defineToTtiming(true, unit_loadouts[l])
-								-- print("ATO_G__ "..tostring(l))
-								--get possible Time on Target
-								--[[
-								local tot_from = 0															--earliest Time on Target for this loadout
-								local tot_to = 0															--latest Time on target for this loadout
 								
-								if unit_loadouts[l].day and unit_loadouts[l].night then						--loadout is day and night capable
-									tot_from = 0															--from mission start
-									tot_to = camp.mission_duration											--to mission end
-									if active_log then log.traceLow("loadout is day and night capable, total time to(camp.mission_duration): " .. tot_to) end
-								
-								elseif unit_loadouts[l].day then											--loadout is day capable
-								
-									if daytime == "night-day" then
-										tot_from = camp.dawn - camp.time									--from dawn
-										tot_to = camp.mission_duration										--to mission end
-								
-									elseif daytime == "day" then
-										tot_from = 0														--from missiom start
-										tot_to = camp.mission_duration										--to mission end
-								
-									elseif daytime == "day-night" then
-										tot_from = 0														--from mission start
-										tot_to = camp.dusk - camp.time										--to dusk
-									end
-								
-								elseif unit_loadouts[l].night then											--loadout is night capable
-								
-									if daytime == "day-night" then
-										tot_from = camp.dusk - camp.time									--from dusk
-										tot_to = camp.mission_duration										--to mission end
-								
-									elseif daytime == "night" then
-										tot_from = 0														--from mission start
-										tot_to = camp.mission_duration										--to mission end
-								
-									elseif daytime == "night-day" then
-										tot_from = 0														--from mission start
-										tot_to = camp.dawn - camp.time										--to dawn
-									end
-								end
-								--end function]]
-
 								if tot_from ~= 0 or tot_to ~= 0 then										--loadout has an eligible time on target
 									
 									if active_log then log.traceLow("loadout has an eligible time on target, tot_from: " .. tot_from .. ", tot_to: " .. tot_to) end
 									
 									local _NbTotalSupport = 0
 										
-									if not draft.support[task]["NbTotalSupport"] then draft.support[task]["NbTotalSupport"] = 0 end
+									if not draft.support[task]["NbTotalSupport"] then 
+										draft.support[task]["NbTotalSupport"] = 0 
+									end
 									-- if not draft.support[task]["escort_max"] then draft.support[task]["escort_max"] = campMod.Setting_Generation.limit_escort end
-									if not draft.support[task]["escort_max"] then draft.support[task]["escort_max"] = 999 end
+									if not draft.support[task]["escort_max"] then 
+										draft.support[task]["escort_max"] = 999 
+									end
 									local MP_Game = false
 
 									if multiPlaneSet then
@@ -1317,9 +1281,10 @@ for sideS, draftT in pairs(draft_sorties) do
 									-- print("ATO_G draft_sortiesName "..draft.name.." "..draft.type)
 									i_timmer02 = i_timmer02 + 1
 									
-									if draft.loadout.support and draft.loadout.support[task] and ( (tonumber(draft.support[task]["NbTotalSupport"]) < tonumber(draft.support[task]["escort_max"])) or MP_Game ) then
-										if active_log then log.traceLow("loadout requires support for this task (" .. task .. ") and  eligible time on target, tot_from: draft.support[task][escort_max](" .. draft.support[task]["escort_max"] .. ") > draft.support[task][NbTotalSupport]" .. draft.support[task]["NbTotalSupport"] .. ", or this is an multiplayer: " .. tostring(MP_Game)) end
-										
+									--qui puoi togliere draft.loadout.support and draft.loadout.support[task] in quanto presenti negli if sopra
+									if draft.loadout.support and draft.loadout.support[task] and ( (tonumber(draft.support[task]["NbTotalSupport"]) < tonumber(draft.support[task]["escort_max"])) or MP_Game ) then																												
+
+										if active_log then log.traceLow("loadout requires support for this task (" .. task .. ") and  eligible time on target, tot_from: draft.support[task][escort_max](" .. draft.support[task]["escort_max"] .. ") > draft.support[task][NbTotalSupport]" .. draft.support[task]["NbTotalSupport"] .. ", or this is an multiplayer: " .. tostring(MP_Game)) end																				
 										local support_requirement = false
 
 										if task == "SEAD" then
@@ -1353,6 +1318,7 @@ for sideS, draftT in pairs(draft_sorties) do
 											if (unit_loadouts[l].day and draft.loadout.day) or (unit_loadouts[l].night and draft.loadout.night) then	--support can join package at either day or night
 												TrackPlayability(unit[n].player, "tot")															--track playabilty criterium has been met
 												if active_log then log.traceLow("draft sortie (task: " .. task .. "), support can join package at either day or night") end
+												if active_log then log.traceLow("unit_loadouts[l]:\n" .. inspect(unit_loadouts[l]) .. "\n\ndraft.loadout:\n" .. inspect(draft.loadout)) end
 											
 												if unit_loadouts[l].vCruise >= draft.loadout.vCruise then										--support has a cruise speed equal or higher than main body
 													TrackPlayability(unit[n].player, "target")													--track playabilty criterium has been met
@@ -1360,46 +1326,8 @@ for sideS, draftT in pairs(draft_sorties) do
 													-- io.write("ATO_G passeBB ")
 													--check weather
 													if active_log then log.traceLow("check weather") end
-													local weather_eligible = checkWeather(mission, unit[n], unit_loadouts[l], draft.loadout, task, true)
-													
-													--[[if mission.weather["clouds"]["density"] > 8 then											--overcast clouds
-														local cloud_base = mission.weather["clouds"]["base"]
-														local cloud_top = mission.weather["clouds"]["base"] + mission.weather["clouds"]["thickness"]
-														
-														if db_airbases[unit[n].base].elevation + 333 > cloud_base then							--cloud base is less than 1000 ft above airbase elevation
-														
-															if unit_loadouts[l].adverseWeather == false then									--loadout is not adverse weather capable
-																weather_eligible = false														--not eligible for this weather
-															end
-														
-														else
-														
-															if draft.loadout.hCruise > cloud_base and draft.loadout.hCruise < cloud_top then	--cruise alt is in the clouds
-														
-																if unit_loadouts[l].adverseWeather == false then								--loadout is not adverse weather capable
-																	weather_eligible = false													--not eligible for this weather
-																end
-														
-															elseif draft.loadout.hAttack > cloud_base and draft.loadout.hAttack < cloud_top then	--attack alt is in the clouds
-														
-																if unit_loadouts[l].adverseWeather == false then								--loadout is not adverse weather capable
-																	weather_eligible = false													--not eligible for this weather
-																end
-															end
-														end
-													end
-													
-													if mission.weather["enable_fog"] == true then												--fog
-														if db_airbases[unit[n].base].elevation < mission.weather["fog"]["thickness"] then		--base elevation in fog
-															if mission.weather["fog"]["visibility"] < 5000 then									--less than 5000m visibility
-																if unit_loadouts[l].adverseWeather == false then								--loadout is not adverse weather capable
-																	weather_eligible = false													--not eligible for this weather
-																end
-															end
-														end
-													end
-													]]
-													
+													local weather_eligible = checkWeather(mission, unit[n], unit_loadouts[l], draft.loadout, task, true)																								
+								
 													if weather_eligible then																	--continue of this loadout is eligible for weather
 														TrackPlayability(unit[n].player, "weather")												--track playabilty criterium has been met								
 														if active_log then log.traceLow("support flight loadout is weather elegible for this task: " .. task) end
@@ -1411,11 +1339,11 @@ for sideS, draftT in pairs(draft_sorties) do
 														}	
 														
 														if airbasePoint.x == nil then
-															log.warn("ANOMALY airbasePoint.x == nil, was a carrier!?")																			
+															log.warn("support task: ANOMALY airbasePoint.x == nil, was a carrier!?")																			
 														end
 
 														if airbasePoint.y == nil then
-															log.warn("ANOMALY airbasePoint.y == nil, was a carrier!?")																																							
+															log.warn("support task: ANOMALY airbasePoint.y == nil, was a carrier!?")																																							
 														end
 														
 
@@ -1435,47 +1363,42 @@ for sideS, draftT in pairs(draft_sorties) do
 																escort_max = draft.support[task]["escort_max"]
 															else
 																escort_max = 0
-															end														
+															end																																																										
 															
-															
-															
-															
-															
-															
-															-- QUI MARCO
-
-
-
-
-
+															if active_log then log.traceLow("support task: route.lenght( " .. route.lenght .. " ) < range ( " .. unit_loadouts[l].range .. " ) * multiplier ( " .. MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " ): " .. unit_loadouts[l].range * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. ", or unit_loadouts[l].minrange( " .. (unit_loadouts[l].minrange or "nil") .. " ) == nil or route.lenght > unit_loadouts[l].minrange * multiplier ( " .. MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " )") end
 
 															if task == "SEAD" then
 																--escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].capability		--capability determines amount of offset per aircraft
 																escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].firepower			--firepower determines amount of offset per aircraft
-																escort_num = math.ceil(escort_num / 2) * 2										    --round up requested escorts to even number
+																--escort_num = math.ceil(escort_num / 2) * 2										    --round up requested escorts to even number
+																escort_num = math.ceil(escort_num) + 1
+																if active_log then log.traceLow("support task: SEAD, draft.route.threats.SEAD_offset: " .. draft.route.threats.SEAD_offset .. ", unit_loadouts[l].firepower: " .. unit_loadouts[l].firepower .. ", escort_num: " .. escort_num) end																
 
 															elseif task == "Escort" then
+
 																if draft.support[task]["escort_max"] ~= 999 then
 																	escort_num = draft.support[task]["escort_max"] - draft.support[task]["NbTotalSupport"]	-- Miguel21 modification M11.x : Multiplayer	(x: EscorteTot-max)
+																	if active_log then log.traceLow("support task: ESCORT, escort_num = draft.support[task][escort_max](" .. draft.support[task]['escort_max'] .. ") - draft.support[task][NbTotalSupport]( " .. draft.support[task]["NbTotalSupport"] .. " ): " .. escort_num ) end																
 																else
 															
-																	local escort_offset_level = unit_loadouts[l].capability * unit_loadouts[l].firepower	--threat level that each fighter escort can offset
-																	local escort_offset_level = unit_loadouts[l].firepower	--threat level that each fighter escort can offset
-																	-- escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)
+																	local escort_offset_level = unit_loadouts[l].capability * unit_loadouts[l].firepower	--threat level that each fighter escort can offset																	
+																	escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)																	
+																	if active_log then log.traceLow("support task: ESCORT, escort_num = (draft.route.threats.air_total(" .. draft.route.threats.air_total .. ")  - 0.5) / escort_offset_level(firepower)( " .. escort_offset_level .. " ): " .. escort_num ) end																
 																	
-																	if escort_num > draft.number * 3 then											--when more escorts 3 times escorts than escorted aircraft
-																		escort_num = draft.number * 3												--limit escort number to 3 times escorted aircraft
+																	if escort_num > draft.number * ESCORT_NUMBER_MULTIPLIER then											--when more escorts ESCORT_NUMBER_MULTIPLIER(3) times escorts than escorted aircraft
+																		escort_num = draft.number * ESCORT_NUMBER_MULTIPLIER												--limit escort number to ESCORT_NUMBER_MULTIPLIER(3) times escorted aircraft
 																	end
 																	
 																	if escort_num > campMod.Setting_Generation.limit_escort then
 																		escort_num = campMod.Setting_Generation.limit_escort
 																	end
-
-																	escort_num = math.ceil(escort_num / 2) * 2										--round up requested escorts to even number
+																	escort_num = math.ceil(escort_num)
+																	-- escort_num = math.ceil(escort_num / 2) * 2										--round up requested escorts to even number
 																	
 																	if escort_num > escort_max then
 																		escort_max = escort_num
 																	end	
+																	if active_log then log.traceLow("support task: ESCORT, escort_num limited (<=) to draft.number( " .. draft.number .. " ) * ESCORT_NUMBER_MULTIPLIER( " .. ESCORT_NUMBER_MULTIPLIER .. " ): " .. draft.number * ESCORT_NUMBER_MULTIPLIER .. ", and escort_num limited to campMod.Setting_Generation.limit_escort( " .. campMod.Setting_Generation.limit_escort .. " ) - escort_num: " .. escort_num ) end																
 																end
 															elseif task == "Escort Jammer" then
 																escort_num = 1																	--escort jamming by single aircraft
@@ -1487,7 +1410,9 @@ for sideS, draftT in pairs(draft_sorties) do
 															
 															if escort_num > aircraft_availability[unit[n].name].available then					--if more escorts are requested than available
 																escort_num = aircraft_availability[unit[n].name].available						--reduce requested escorts to number of available escorts
-																escort_num = math.floor(escort_num / 2) * 2										--round down to even number
+																-- escort_num = math.floor(escort_num / 2) * 2										--round down to even number
+																escort_num = math.floor(escort_num)
+																if active_log then log.traceLow("support task: ESCORT, escort_num > aircraft_availability[unit[n].name].available( " .. aircraft_availability[unit[n].name].available .. " --> escort_num = aircraft_availability[unit[n].name].available " .. escort_num ) end																
 															end
 															
 															if MP_Game	then
@@ -1509,6 +1434,7 @@ for sideS, draftT in pairs(draft_sorties) do
 																if not draft.support[task] then
 																	draft.support[task] = {}
 																end
+
 																if not draft.support[task][unit[n].type] then
 																	draft.support[task][unit[n].type] = {}
 																end		
@@ -1653,6 +1579,7 @@ for sideS, draftT in pairs(draft_sorties) do
 										-- print("ATO_G  Refused02 ||:if draft.loadout.support and draft.loadout.support[task] and "..debug.getinfo(1).currentline)
 										-- print("    draft.type"..tostring(draft.type).."[task]?: "..tostring(task).." NbTotalSupport: "..tonumber(draft.support[task]["NbTotalSupport"]).." < "..tonumber(draft.support[task]["escort_max"]).." or "..tostring(MP_Game))
 									end
+									-- active_log = activateLog(false, true, log, log_level)	
 									if i_timmer02 >= 1000  then io.write(".") i_timmer02 = 0 end
 									wk = wk +1
 								end	

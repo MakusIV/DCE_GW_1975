@@ -140,9 +140,7 @@ di riferimento
 function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter)	--side_: "blue" or "red"; time: "day" or "night" -- Miguel21 modification M06 : helicoptere playable (ajout variable helico)
 	local previous_log_level = log.level
 	log.level = function_log_level -- "traceVeryLow"
-
-	activateLog(not profile.hAttack or not profile.hCruise, log, "traceVeryLow")	
-
+	-- activateLog(true, not profile.hAttack or not profile.hCruise, log, "traceVeryLow")	-- per torvare quale loadout ha problemi con hattack o hcruise
 	local nameFunction = "function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn, multipackmax, helicopter): "    
 	log.trace("Start " .. nameFunction)						
 	log.trace("GetRoute parameters:" .. inspect(basePoint) .. "\n" .. inspect(targetPoint) .. "\n " .. profile.name .. ", " .. side_ .. ", " .. task .. ",\n " .. time .. ",\n " .. tostring(multipackn) .. ",\n " .. multipackmax .. ",\n " .. tostring(helicopter) .. ")")
