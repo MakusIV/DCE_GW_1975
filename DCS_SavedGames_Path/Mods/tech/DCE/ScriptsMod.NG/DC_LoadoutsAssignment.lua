@@ -9,7 +9,7 @@ end
 
                -- VERSION --
 
-versionDCE["DC_Firepower.lua"] = "OB.1.0.1"
+versionDCE["DC_LoadoutsAssignment.lua"] = "OB.1.0.1"
 
 -------------------------------------------------------------------------------------------------------
 -- Old_Boy rev. OB.1.0.1: implements compute firepower code
@@ -19,17 +19,22 @@ versionDCE["DC_Firepower.lua"] = "OB.1.0.1"
 -- verificare l'effettiva esigenza nelle missioni successive di aggiornarli
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-local log_level = "info" --LOGGING_LEVEL -- 
+local log_level = "warn" --LOGGING_LEVEL -- 
 local function_log_level = log_level --"warn" 
-log.activate = true
+log.activate = false
 log.level = log_level 
-log.outfile = LOG_DIR .. "LOG_DC_Firepower.lua." .. camp.mission .. ".log" 
+log.outfile = LOG_DIR .. "LOG_DC_LoadoutsAssignment.lua." .. camp.mission .. ".log" 
 local local_debug = false -- local debug   
 local active_log = false
 log.debug("Start")
 require("Init/db_firepower")
 require("Init/db_loadouts")
 
+
+-- devi assegnare i parametri in runtime: definisci funzioni per assegnazione
+-- realizzate le funzioni modifica MAIN_NextMission.lua righe 233-252
+
+-- Firepower and Cost Paramenter
 local ANGLE_OF_DESCENT_IN_GROUND_ATTACK = {             -- degree
     ["ASM"] = { 
         ["min"] = 10,                                       
@@ -66,7 +71,817 @@ local WEIGHT_MISSILE_A2A_MANOUVRABILITY = 0.2
 local WEIGHT_MISSILE_A2A_ATTRIBUTE = 1 - WEIGHT_MISSILE_A2A_RELIABILITY - WEIGHT_MISSILE_A2A_MANOUVRABILITY
 
 
+-- vCruise and hCruise parameter
+
+local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) FOR AIRCRAFT ROLES
+	
+	["blue"] = {
+
+		["bomber"] = {
+
+			["high"] = {
+
+				["min_vCruise_TAS"] = 350 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 9000, -- m slm
+				["max_hCruise"] = 12000, -- m slm
+			},
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 2000, -- m slm
+				["max_hCruise"] = 8999, -- m slm
+			},
+
+			["low"] = {
+
+				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 100, -- m slm
+				["max_hCruise"] = 1999, -- m slm
+			},
+
+			["supersonic"] = {
+
+				["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 200, -- m slm
+				["max_hCruise"] = 12000, -- m slm
+			},
+		},
+
+		["attacker"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 350 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 1000, -- m slm
+				["max_hCruise"] = 7000, -- m slm
+			},			
+
+			["low"] = {
+
+				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 100, -- m slm
+				["max_hCruise"] = 999, -- m slm
+			},			
+		},
+
+		["transporter"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 4500, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},
+
+		["refueler"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 7000, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},		
+            
+            ["low"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 2000, -- m slm
+				["max_hCruise"] = 6999, -- m slm
+			},	
+		},
+
+		["AWACS"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 9000, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},
+
+		["recon"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 4500, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},		
+	},
+
+    ["red"] = {
+
+		["bomber"] = {
+
+			["high"] = {
+
+				["min_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 470 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 9000, -- m slm
+				["max_hCruise"] = 12000, -- m slm
+			},
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 380 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 520 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 2000, -- m slm
+				["max_hCruise"] = 8999, -- m slm
+			},
+
+			["low"] = {
+
+				["min_vCruise_TAS"] = 420 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 560 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 100, -- m slm
+				["max_hCruise"] = 1999, -- m slm
+			},
+
+			["supersonic"] = {
+
+				["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 200, -- m slm
+				["max_hCruise"] = 12000, -- m slm
+			},
+		},
+
+		["attacker"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 530 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 1000, -- m slm
+				["max_hCruise"] = 7000, -- m slm
+			},			
+
+			["low"] = {
+
+				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 100, -- m slm
+				["max_hCruise"] = 999, -- m slm
+			},			
+		},
+
+		["transporter"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 4500, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},
+
+		["refueler"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 7000, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},		
+            
+            ["low"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 2000, -- m slm
+				["max_hCruise"] = 6999, -- m slm
+			},	
+		},
+
+		["AWACS"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 9000, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},
+
+		["recon"] = {
+
+			["normal"] = {
+
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_hCruise"] = 4500, -- m slm
+				["max_hCruise"] = 10000, -- m slm
+			},						
+		},		
+	},
+}
+local ESCORT_ALTITUDE_OVERRIDE = { -- SETTING OVERRIDE ALTITUDE FOR ESCORT JOBS
+	
+	["escort_bomber"]  = {
+		["min"] = 300, -- ( m ) min override altitude from bomber
+		["max"] = 1000, -- ( m ) max override altitude from bomber
+	},
+
+	["escort_attacker"]  = {
+		["min"] = 200, -- ( m ) min override altitude from attacker
+		["max"] = 800, -- ( m ) max override altitude from attacker
+	},
+
+	["escort_sead_bomber"]  = {
+		["min"] = 500, -- ( m ) min override altitude from bomber with SEAD task
+		["max"] = 1200, -- ( m ) max override altitude from bomber with SEAD task
+	},
+
+	["escort_sead_attacker"]  = {
+		["min"] = 300, -- ( m ) min override altitude from attacker with SEAD task
+		["max"] = 800, -- ( m ) max override altitude from attacker with SEAD task
+	},
+}
+local ESCORT_TIME_FOR_DISTANCE_OVERRIDE = { -- SETTING OVERRIDE DISTANCE_TIME FOR ESCORT JOBS
+	
+	["escort_bomber"]  = 1500, -- (s) time needed for escort override after join (default: 1500s == 25')
+	["escort_attacker"]  = 600, -- (s) time needed for escort override after join (default: 600s == 10')
+	["escort_sead_bomber"]  = 1200, -- (s) time needed for escort override after join (default: 1200s == 20')
+	["escort_sead_attacker"]  = 900, -- (s) time needed for escort override after join (default: 1200s == 15')
+}
+local ESCORT_DISTANCE_OVERRIDE = {  -- SETTING OVERRIDE DISTANCE TIME FOR ESCORT JOBS
+	
+	["escort_bomber"]  = {
+		["min"] = 10000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+		["max"] = 20000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+	},
+
+	["escort_attacker"]  = {
+		["min"] = 7000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+		["max"] = 12000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+	},
+
+	["escort_sead_bomber"]  = {
+		["min"] = 20000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+		["max"] = 30000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+	},
+
+	["escort_sead_attacker"]  = {
+		["min"] = 15000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+		["max"] = 25000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+	},
+}
+
 -- PREPROCESSING
+
+local altitude_increments_for_escort = { 
+	["escort_bomber"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_bomber.min, ESCORT_ALTITUDE_OVERRIDE.escort_bomber.max), -- (m/s) increment speed for escort
+	["escort_attacker"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, ESCORT_ALTITUDE_OVERRIDE.escort_attacker.max), -- (m/s) increment speed for escort
+	["escort_sead_bomber"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.min, ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.max), -- (m/s) increment speed for escort
+	["escort_sead_attacker"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, ESCORT_ALTITUDE_OVERRIDE.escort_sead_attacker.max), -- (m/s) increment speed for escort
+}
+local cruise_param_calculated = {
+	
+	["blue"] = {
+
+		["bomber"] = {
+
+			["high"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.bomber.high.min_hCruise, CRUISE_PARAM.blue.bomber.high.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.bomber.high.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.high.max_vCruise_TAS),								
+			},
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.bomber.normal.min_hCruise, CRUISE_PARAM.blue.bomber.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.bomber.normal.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.normal.max_vCruise_TAS),
+			},
+
+			["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.bomber.low.min_hCruise, CRUISE_PARAM.blue.bomber.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.bomber.low.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.low.max_vCruise_TAS),			
+			},
+
+			["supersonic"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.bomber.supersonic.min_hCruise, CRUISE_PARAM.blue.bomber.supersonic.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.bomber.supersonic.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.supersonic.max_vCruise_TAS),				
+			},
+		},
+
+		["attacker"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.attacker.normal.min_hCruise, CRUISE_PARAM.blue.attacker.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.attacker.normal.min_vCruise_TAS, CRUISE_PARAM.blue.attacker.normal.max_vCruise_TAS),
+			},			
+
+			["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.attacker.low.min_hCruise, CRUISE_PARAM.blue.attacker.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.attacker.low.min_vCruise_TAS, CRUISE_PARAM.blue.attacker.low.max_vCruise_TAS),
+			},			
+		},
+
+		["transporter"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.transporter.normal.min_hCruise, CRUISE_PARAM.blue.transporter.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.transporter.normal.min_vCruise_TAS, CRUISE_PARAM.blue.transporter.normal.max_vCruise_TAS),
+			},						
+		},
+
+		["refueler"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.refueler.normal.min_hCruise, CRUISE_PARAM.blue.refueler.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.refueler.normal.min_vCruise_TAS, CRUISE_PARAM.blue.refueler.normal.max_vCruise_TAS),
+			},	
+            
+            ["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.refueler.low.min_hCruise, CRUISE_PARAM.blue.refueler.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.refueler.low.min_vCruise_TAS, CRUISE_PARAM.blue.refueler.low.max_vCruise_TAS),
+			},	
+		},
+
+		["AWACS"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.AWACS.normal.min_hCruise, CRUISE_PARAM.blue.AWACS.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.AWACS.normal.min_vCruise_TAS, CRUISE_PARAM.blue.AWACS.normal.max_vCruise_TAS),
+			},						
+		},
+
+		["recon"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.blue.recon.normal.min_hCruise, CRUISE_PARAM.blue.recon.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.blue.recon.normal.min_vCruise_TAS, CRUISE_PARAM.blue.recon.normal.max_vCruise_TAS),	
+			},						
+		},		
+	},
+
+    ["red"] = {
+
+		["bomber"] = {
+
+			["high"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.bomber.high.min_hCruise, CRUISE_PARAM.red.bomber.high.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.bomber.high.min_vCruise_TAS, CRUISE_PARAM.red.bomber.high.max_vCruise_TAS),								
+			},
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.bomber.normal.min_hCruise, CRUISE_PARAM.red.bomber.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.bomber.normal.min_vCruise_TAS, CRUISE_PARAM.red.bomber.normal.max_vCruise_TAS),
+			},
+
+			["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.bomber.low.min_hCruise, CRUISE_PARAM.red.bomber.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.bomber.low.min_vCruise_TAS, CRUISE_PARAM.red.bomber.low.max_vCruise_TAS),			
+			},
+
+			["supersonic"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.bomber.supersonic.min_hCruise, CRUISE_PARAM.red.bomber.supersonic.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.bomber.supersonic.min_vCruise_TAS, CRUISE_PARAM.red.bomber.supersonic.max_vCruise_TAS),				
+			},
+		},
+
+		["attacker"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.attacker.normal.min_hCruise, CRUISE_PARAM.red.attacker.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.attacker.normal.min_vCruise_TAS, CRUISE_PARAM.red.attacker.normal.max_vCruise_TAS),
+			},			
+
+			["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.attacker.low.min_hCruise, CRUISE_PARAM.red.attacker.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.attacker.low.min_vCruise_TAS, CRUISE_PARAM.red.attacker.low.max_vCruise_TAS),
+			},			
+		},
+
+		["transporter"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.transporter.normal.min_hCruise, CRUISE_PARAM.red.transporter.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.transporter.normal.min_vCruise_TAS, CRUISE_PARAM.red.transporter.normal.max_vCruise_TAS),
+			},						
+		},
+
+		["refueler"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.refueler.normal.min_hCruise, CRUISE_PARAM.red.refueler.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.refueler.normal.min_vCruise_TAS, CRUISE_PARAM.red.refueler.normal.max_vCruise_TAS),
+			},						
+
+            ["low"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.refueler.low.min_hCruise, CRUISE_PARAM.red.refueler.low.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.refueler.low.min_vCruise_TAS, CRUISE_PARAM.red.refueler.low.max_vCruise_TAS),
+			},						
+		},
+
+		["AWACS"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.AWACS.normal.min_hCruise, CRUISE_PARAM.red.AWACS.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.AWACS.normal.min_vCruise_TAS, CRUISE_PARAM.red.AWACS.normal.max_vCruise_TAS),
+			},						
+		},
+
+		["recon"] = {
+
+			["normal"] = {
+
+				["hCruise"] = math.random(CRUISE_PARAM.red.recon.normal.min_hCruise, CRUISE_PARAM.red.recon.normal.max_hCruise),
+				["vCruise"] = math.random(CRUISE_PARAM.red.recon.normal.min_vCruise_TAS, CRUISE_PARAM.red.recon.normal.max_vCruise_TAS),	
+			},						
+		},		
+	},    
+}
+local escort_cruise_altitude = {
+
+	["blue"] = {
+
+		["escort_bomber"] = {
+
+			["high"] = cruise_param_calculated.blue.bomber.high.hCruise - altitude_increments_for_escort.escort_bomber,			
+			["normal"] = cruise_param_calculated.blue.bomber.normal.hCruise + altitude_increments_for_escort.escort_bomber,
+			["low"] = cruise_param_calculated.blue.bomber.low.hCruise + altitude_increments_for_escort.escort_bomber,		
+			["supersonic"] = cruise_param_calculated.blue.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_bomber,			
+		},
+
+		["escort_attacker"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.hCruise + altitude_increments_for_escort.escort_attacker,			
+			["low"] = cruise_param_calculated.blue.attacker.low.hCruise + altitude_increments_for_escort.escort_attacker,			
+		},
+
+		["escort_sead_attacker"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.blue.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_sead_bomber"] = {
+			
+			["high"] = cruise_param_calculated.blue.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.blue.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.blue.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.blue.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_jammer_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.blue.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_jammer_bomber"] = { -- same sead
+			
+			["high"] = cruise_param_calculated.blue.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.blue.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.blue.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.blue.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_laser_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.blue.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_laser_illumination_bomber"] = { -- same sead
+			
+			["high"] = cruise_param_calculated.blue.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.blue.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.blue.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.blue.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_flare_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.blue.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+	},
+
+    ["red"] = {
+
+		["escort_bomber"] = {
+
+			["high"] = cruise_param_calculated.red.bomber.high.hCruise - altitude_increments_for_escort.escort_bomber,			
+			["normal"] = cruise_param_calculated.red.bomber.normal.hCruise + altitude_increments_for_escort.escort_bomber,
+			["low"] = cruise_param_calculated.red.bomber.low.hCruise + altitude_increments_for_escort.escort_bomber,		
+			["supersonic"] = cruise_param_calculated.red.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_bomber,			
+		},
+
+		["escort_attacker"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.hCruise + altitude_increments_for_escort.escort_attacker,			
+			["low"] = cruise_param_calculated.red.attacker.low.hCruise + altitude_increments_for_escort.escort_attacker,			
+		},
+
+		["escort_sead_attacker"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.red.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_sead_bomber"] = {
+			
+			["high"] = cruise_param_calculated.red.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.red.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.red.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.red.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_jammer_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.red.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_jammer_bomber"] = { -- same sead
+			
+			["high"] = cruise_param_calculated.red.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.red.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.red.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.red.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_laser_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.red.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+
+		["escort_laser_illumination_bomber"] = { -- same sead
+			
+			["high"] = cruise_param_calculated.red.bomber.high.hCruise - altitude_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_param_calculated.red.bomber.normal.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_param_calculated.red.bomber.low.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_param_calculated.red.bomber.supersonic.hCruise + altitude_increments_for_escort.escort_sead_bomber,
+		},
+
+        ["escort_flare_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_param_calculated.red.attacker.low.hCruise + altitude_increments_for_escort.escort_sead_attacker,
+		},
+	},
+
+}
+local cruise_speed_at_altitude = {
+
+	["blue"] = {
+
+		["bomber"] = {
+
+			["high"] = cruise_param_calculated.blue.bomber.high.vCruise * 1.02 ^ ( cruise_param_calculated.blue.bomber.high.hCruise / 300 ),
+			["normal"] = cruise_param_calculated.blue.bomber.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.bomber.normal.hCruise / 300 ),
+			["low"] = cruise_param_calculated.blue.bomber.low.vCruise * 1.02 ^ ( cruise_param_calculated.blue.bomber.low.hCruise / 300 ),
+			["supersonic"] = cruise_param_calculated.blue.bomber.supersonic.vCruise * 1.02 ^ ( cruise_param_calculated.blue.bomber.supersonic.hCruise / 300 ),
+		},
+
+		["attacker"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.normal.hCruise / 300 ),			
+			["low"] = cruise_param_calculated.blue.attacker.low.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.low.hCruise / 300 ),
+		},
+
+		["transporter"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.normal.hCruise / 300 ),									
+		},
+
+		["refueler"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.normal.hCruise / 300 ),									
+            ["low"] = cruise_param_calculated.blue.attacker.low.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.low.hCruise / 300 ),									
+		},
+
+		["AWACS"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.normal.hCruise / 300 ),									
+		},
+
+		["recon"] = {
+			
+			["normal"] = cruise_param_calculated.blue.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.blue.attacker.normal.hCruise / 300 ),									
+		},
+	},
+
+    ["red"] = {
+
+		["bomber"] = {
+
+			["high"] = cruise_param_calculated.red.bomber.high.vCruise * 1.02 ^ ( cruise_param_calculated.red.bomber.high.hCruise / 300 ),
+			["normal"] = cruise_param_calculated.red.bomber.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.bomber.normal.hCruise / 300 ),
+			["low"] = cruise_param_calculated.red.bomber.low.vCruise * 1.02 ^ ( cruise_param_calculated.red.bomber.low.hCruise / 300 ),
+			["supersonic"] = cruise_param_calculated.red.bomber.supersonic.vCruise * 1.02 ^ ( cruise_param_calculated.red.bomber.supersonic.hCruise / 300 ),
+		},
+
+		["attacker"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.normal.hCruise / 300 ),			
+			["low"] = cruise_param_calculated.red.attacker.low.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.low.hCruise / 300 ),
+		},
+
+		["transporter"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.normal.hCruise / 300 ),									
+		},
+
+		["refueler"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.normal.hCruise / 300 ),									
+            ["low"] = cruise_param_calculated.red.attacker.low.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.low.hCruise / 300 ),									
+		},
+
+		["AWACS"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.normal.hCruise / 300 ),									
+		},
+
+		["recon"] = {
+			
+			["normal"] = cruise_param_calculated.red.attacker.normal.vCruise * 1.02 ^ ( cruise_param_calculated.red.attacker.normal.hCruise / 300 ),									
+		},
+	},
+
+}
+local speed_increments_for_escort = { 
+	["escort_bomber"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_bomber.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber, ESCORT_DISTANCE_OVERRIDE.escort_bomber.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber) , -- (m/s) increment speed for escort
+	["escort_attacker"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker, ESCORT_DISTANCE_OVERRIDE.escort_attacker.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker) , -- (m/s) increment speed for escort
+	["escort_sead_bomber"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber, ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber) , -- (m/s) increment speed for escort
+	["escort_sead_attacker"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker, ESCORT_DISTANCE_OVERRIDE.escort_sead_attacker.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker) , -- (m/s) increment speed for escort
+}
+local escort_cruise_speed_at_altitude = {
+
+	["blue"] = {
+
+		["escort_bomber"] = {
+
+			["high"] = cruise_speed_at_altitude.blue.bomber.high + speed_increments_for_escort.escort_bomber,
+			["normal"] = cruise_speed_at_altitude.blue.bomber.normal + speed_increments_for_escort.escort_bomber,
+			["low"] = cruise_speed_at_altitude.blue.bomber.low + speed_increments_for_escort.escort_bomber,
+			["supersonic"] = cruise_speed_at_altitude.blue.bomber.supersonic + speed_increments_for_escort.escort_bomber,
+		},
+
+		["escort_attacker"] = {
+			
+			["normal"] = cruise_speed_at_altitude.blue.attacker.normal + speed_increments_for_escort.escort_attacker,
+			["low"] = cruise_speed_at_altitude.blue.attacker.low + speed_increments_for_escort.escort_attacker,
+		},
+
+		["escort_sead_bomber"] = {
+			
+			["high"] = cruise_speed_at_altitude.blue.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.blue.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.blue.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.blue.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_sead_attacker"] = {
+			
+			["normal"] = cruise_speed_at_altitude.blue.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.blue.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_jammer_bomber"] = { -- same sead
+			
+			["high"] = cruise_speed_at_altitude.blue.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.blue.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.blue.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.blue.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_jammer_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.blue.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.blue.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_laser_illumination_bomber"] = { -- same sead
+			
+			["high"] = cruise_speed_at_altitude.blue.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.blue.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.blue.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.blue.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_laser_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.blue.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.blue.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_flare_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.blue.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.blue.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+	},
+
+    ["red"] = {
+
+		["escort_bomber"] = {
+
+			["high"] = cruise_speed_at_altitude.red.bomber.high + speed_increments_for_escort.escort_bomber,
+			["normal"] = cruise_speed_at_altitude.red.bomber.normal + speed_increments_for_escort.escort_bomber,
+			["low"] = cruise_speed_at_altitude.red.bomber.low + speed_increments_for_escort.escort_bomber,
+			["supersonic"] = cruise_speed_at_altitude.red.bomber.supersonic + speed_increments_for_escort.escort_bomber,
+		},
+
+		["escort_attacker"] = {
+			
+			["normal"] = cruise_speed_at_altitude.red.attacker.normal + speed_increments_for_escort.escort_attacker,
+			["low"] = cruise_speed_at_altitude.red.attacker.low + speed_increments_for_escort.escort_attacker,
+		},
+
+		["escort_sead_bomber"] = {
+			
+			["high"] = cruise_speed_at_altitude.red.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.red.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.red.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.red.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_sead_attacker"] = {
+			
+			["normal"] = cruise_speed_at_altitude.red.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.red.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_jammer_bomber"] = { -- same sead
+			
+			["high"] = cruise_speed_at_altitude.red.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.red.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.red.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.red.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_jammer_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.red.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.red.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_laser_illumination_bomber"] = { -- same sead
+			
+			["high"] = cruise_speed_at_altitude.red.bomber.high + speed_increments_for_escort.escort_sead_bomber,
+			["normal"] = cruise_speed_at_altitude.red.bomber.normal + speed_increments_for_escort.escort_sead_bomber,
+			["low"] = cruise_speed_at_altitude.red.bomber.low + speed_increments_for_escort.escort_sead_bomber,
+			["supersonic"] = cruise_speed_at_altitude.red.bomber.supersonic + speed_increments_for_escort.escort_sead_bomber,
+		},
+
+		["escort_laser_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.red.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.red.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+        ["escort_flare_illumination_attacker"] = { -- same sead
+			
+			["normal"] = cruise_speed_at_altitude.red.attacker.normal + speed_increments_for_escort.escort_sead_attacker,
+			["low"] = cruise_speed_at_altitude.red.attacker.low + speed_increments_for_escort.escort_sead_attacker,
+		},
+
+	},
+
+}
 local weight_missile_a2a = {
 
     ["radar"] = {                
@@ -95,7 +910,6 @@ local weight_missile_a2a = {
         ["tnt"] = 0.3,
     },
 }
-
 local factor_angle_of_descent = {                       -- factor for compute hAttack 
     ["ASM"] = { 
         ["min"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].min * math.pi / 180),    
@@ -246,7 +1060,7 @@ local loadouts_cost  = {
 	["Reconnaissance"] = {
 		["min"] = math.huge,
 		["max"] = 0,
-	},
+	},   
 }
 
 
@@ -267,7 +1081,7 @@ end
 -- return true if task_name isn't air fight task (refuelling, Transport and AWACS)
 local function isNotFightTask(task_name)
 
-    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS" or task_name == "Laser Illumination" or task_name == "Flare Illumination"
+    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS" or task_name == "Laser Illumination" or task_name == "Flare Illumination" or task_name == "Escort Jammer"
 end
     
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
@@ -1016,4 +1830,41 @@ function defineLoadoutsFirepowerAndCost()
     log.traceLow(nameFunction .. "End")
     log.level = previous_log_level
     return
+end
+
+-- call from MAIN_NextMission, update cruise parameters value (vCruise, hCruise) for loadouts
+function defineLoadoutsCruiseParameters()       
+    --activateLog(true, true, log, "traceVeryLow")
+    -- assign cruise parameter: vCruise and hCruise
+    for type_name, type in pairs(db_loadouts) do
+        
+        for task_name, task in pairs(type) do
+
+            for loadout_name, loadout in pairs(task) do
+                log.traceLow("aircraft type: " .. type_name .. ", loadout_name: " .. loadout_name ..  ", task: " .. task_name)
+
+                if loadout.coalition and loadout.role and loadout.role_altitude then
+                    log.traceLow("loadout cruise parameter: loadout.coalition: " .. (loadout.coalition or "nil") .. ", loadout.role: " .. (loadout.role or "nil") ..  ", loadout.role_altitude: " .. (loadout.role_altitude or "nil"))                
+                    log.traceLow("loadout.vCruise: " .. (loadout.vCruise or "nil").. ", loadout.hCruise: " .. (loadout.hCruise or "nil") ..  ", loadout.hAttack: " .. (loadout.hAttack or "nil"))
+
+                    if task_name == "Escort" or task_name == "SEAD" or task_name == "Laser Illumination" or task_name == "Flare Illumination" or task_name == "Escort Jammer" then
+                        loadout.vCruise = escort_cruise_speed_at_altitude[loadout.coalition][loadout.role][loadout.role_altitude]
+                        loadout.hCruise = escort_cruise_altitude[loadout.coalition][loadout.role][loadout.role_altitude]                    
+                    
+                    elseif task_name == "AWACS" or task_name == "Strike" or task_name == "Anti-ship Strike" or task_name == "Reconnaissance" or task_name == "Transport" or task_name == "Refueling" then
+                        loadout.vCruise = cruise_speed_at_altitude[loadout.coalition][loadout.role][loadout.role_altitude]                
+                        loadout.hCruise = cruise_param_calculated[loadout.coalition][loadout.role][loadout.role_altitude].hCruise
+
+                        if loadout.role == "bomber" and loadout.weaponType == "Bombs" then
+                            loadout.hAttack = loadout.hCruise
+                        end
+                    end
+                    log.traceLow("loadout.vCruise: " .. (loadout.vCruise or "nil") .. ", loadout.hCruise: " .. (loadout.hCruise or "nil") ..  ", loadout.hAttack: " .. (loadout.hAttack or "nil"))
+                else
+                    log.warn("loadout cruise parameter not defined loadout.coalition: " .. (loadout.coalition or "nil") .. ", loadout.role: " .. (loadout.role or "nil") ..  ", loadout.role_altitude: " .. (loadout.role_altitude or "nil"))
+                end
+            end
+        end
+    end
+--activateLog(false, true, log, log_level)
 end

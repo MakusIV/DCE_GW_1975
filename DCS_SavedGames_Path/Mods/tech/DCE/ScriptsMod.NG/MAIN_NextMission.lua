@@ -219,6 +219,8 @@ else
 	camp["MissionFilename"] =  camp.title.."_ongoing.miz"	
 end
 
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_LoadoutsAssignment.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+
 log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
 require("Init/db_loadouts")
 require("Init/db_airbases")
@@ -227,13 +229,30 @@ require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 
+
 -- define firepower value for db_loadouts (only first mission)
 if FirstMission then -- per sicurezza (verifica se esiste missione 0)
-	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Firepower.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+	
 	CopyFile("Init/db_loadouts.lua", "Init/db_loadouts_original.lua")	
 	defineLoadoutsFirepowerAndCost()
+	defineLoadoutsCruiseParameters()
 	SaveTabOnPath( "Init/", "db_loadouts", db_loadouts ) -- save new updated db_loadouts     
+else
+	defineLoadoutsCruiseParameters()
 end
+
+--UPGRADE
+--[[  
+	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_LoadoutsAssignment.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+	
+	if FirstMission then -- per sicurezza (verifica se esiste missione 0)		
+		CopyFile("Init/db_loadouts.lua", "Init/db_loadouts_original.lua")	
+		defineLoadoutsFirepowerCostAndCruiseParam()
+		SaveTabOnPath( "Init/", "db_loadouts", db_loadouts ) -- save new updated db_loadouts     
+	else
+		defineLoadoutsFirepowerAndCost()
+	end
+]]
 
 
 -- INSERISCI QUI IL PREPROCESSING: 

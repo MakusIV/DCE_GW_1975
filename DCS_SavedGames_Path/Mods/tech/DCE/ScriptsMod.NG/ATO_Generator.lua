@@ -133,8 +133,8 @@ create additional draft sorties with support flight assigned, conditions:
 
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-local log_level = "traceVeryLow" -- LOGGING_LEVEL -- "traceVeryLow" --
-local function_log_level = "warn" --log_level
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+local function_log_level = log_level
 log.activate = true
 log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_ATO_Generator." .. camp.mission .. ".log" 
@@ -1313,6 +1313,7 @@ for sideS, draftT in pairs(draft_sorties) do
 										end
 											
 										if support_requirement or MP_Game then																	--go ahead with this support task
+											
 											if active_log then log.traceLow("draft sortie (task: " .. task .. "), support requires or multiplayer game") end
 
 											if (unit_loadouts[l].day and draft.loadout.day) or (unit_loadouts[l].night and draft.loadout.night) then	--support can join package at either day or night
@@ -1325,6 +1326,7 @@ for sideS, draftT in pairs(draft_sorties) do
 													if active_log then log.traceLow("draft sortie (task: " .. task .. "), support has a cruise speed equal or higher than main body") end
 													-- io.write("ATO_G passeBB ")
 													--check weather
+											
 													if active_log then log.traceLow("check weather") end
 													local weather_eligible = checkWeather(mission, unit[n], unit_loadouts[l], draft.loadout, task, true)																								
 								

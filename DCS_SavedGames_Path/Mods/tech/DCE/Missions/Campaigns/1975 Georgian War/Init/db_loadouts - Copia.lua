@@ -173,19 +173,14 @@ implementato in S-3B
 
 ]]
 
---speed for escorted flight
-local RED_BOMBER_VCRUISE = math.random(120, 180)
-local RED_ATTACKER_VCRUISE = math.random(150, 195)
-local RED_ESCORT_FIGHTER_VCRUISE = math.random(205, 220)
-local RED_ESCORT_SEAD_VCRUISE = math.random(200, 210)
 
-local BLUE_BOMBER_VCRUISE = math.random(120, 180)
-local BLUE_ATTACKER_VCRUISE = math.random(150, 195)
-local BLUE_ESCORT_FIGHTER_VCRUISE = math.random(205, 220)
-local BLUE_ESCORT_SEAD_VCRUISE = math.random(200, 210)
+
 
 -- nota: bomber veloci trovano una scorta veloce iterando nelle unit quindi non devi necessariemente vincolare tutte le v dei fighter, alcuni possono essere fissate più alte in modo da essere utilizzati solo con quei standoff range > 15000m, optimal egrees should be in direction of home base, egress starts from attack point, egress_distance: 
 -- [escort_high_speed_loadout] = ....
+
+ --> escort_num = aircraft_availability[unit[n].name].available 
+
 
 db_loadouts = {
 
@@ -194,6 +189,9 @@ db_loadouts = {
 	["E-3A"] = { -- 1975 (primo volo), 1977 (entrata in servizio)
 		["AWACS"] = {
 			["Default"] = {
+				role = "AWACS",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {"Sentry"},
 				weaponType = nil,
 				expend = nil,
@@ -228,6 +226,9 @@ db_loadouts = {
 	["E-2C"] = {  --- 1973 (in servizio)
 		["AWACS"] = {
 			["Default"] = {
+				role = "AWACS",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -237,7 +238,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 1,
-				vCruise = 152.778,
+				vCruise = 138.889,
 				vAttack = 138.889,
 				hCruise = 7315.2,
 				hAttack = 7315.2,
@@ -436,7 +437,10 @@ db_loadouts = {
 			},
 		},
 		["Escort"] = {
-			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2"] = {
+			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2 role: ESCORT BOMBER @ NORMAL ALT"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weapons = {
 					["AIM-54A-MK60"] = 4,
@@ -451,7 +455,96 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = 1, --8, --  = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) + evaluate_weapon_firepower(weapon = "AIM-9M", quantity = 2)
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 200,
+				hCruise = 7000,
+				standoff = 80300,
+				tStation = 7200,
+				LDSD = true,
+				self_escort = true,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = {
+						[10] = {
+							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
+							["num"] = 10,
+						},
+						[9] = {
+							["CLSID"] = "{SHOULDER AIM-7M}",
+							["num"] = 9,
+						},
+						[8] = {
+							["CLSID"] = "{F14-300gal}",
+							["num"] = 8,
+						},
+						[7] = {
+							["CLSID"] = "{AIM_54A_Mk60}",
+							["num"] = 7,
+						},
+						[6] = {
+							["CLSID"] = "{AIM_54A_Mk60}",
+							["num"] = 6,
+						},
+						[5] = {
+							["CLSID"] = "{AIM_54A_Mk60}",
+							["num"] = 5,
+						},
+						[4] = {
+							["CLSID"] = "{AIM_54A_Mk60}",
+							["num"] = 4,
+						},
+						[3] = {
+							["CLSID"] = "{F14-300gal}",
+							["num"] = 3,
+						},
+						[2] = {
+							["CLSID"] = "{SHOULDER AIM-7M}",
+							["num"] = 2,
+						},
+						[1] = {
+							["CLSID"] = "{LAU-138 wtip - AIM-9M}",
+							["num"] = 1,
+						},
+					}, ----end of ["pylons"]
+					["fuel"] = "7348",
+					["flare"] = 60,
+					["chaff"] = 140,
+					["gun"] = 100,
+				},
+				AddPropAircraft = {
+					["LGB100"] = 6,
+					["M61BURST"] = 0,
+					["IlsChannel"] = 11,				----preset ILS channel
+					["LGB1"] = 8,
+					["KY28Key"] = 1,
+					["TacanBand"] = 0,
+					["ALE39Loadout"] = 3,
+					["UseLAU138"] = true,
+					["LGB10"] = 8,
+					["INSAlignmentStored"] = true,		----fast alignment, remember to modify also the value: "startup_time_player" in this file
+					["TacanChannel"] = 37,				----preset TACAN channel
+					["LGB1000"] = 1,
+				},
+			},
+			["TF-Old-AIM-54A-MK60*4, AIM-7M*2, AIM-9M*2, XT*2 role: ESCORT ATTACKER @ NORMAL ALT"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
+				attributes = {},
+				weapons = {
+					["AIM-54A-MK60"] = 4,
+					["AIM-7M"] = 2,
+					["AIM-9M"] = 2,
+				},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 8,
+				firepower = 1, --8, --  = evaluate_weapon_firepower(weapon = "AIM-54A-MK60", quantity = 4) + evaluate_weapon_firepower(weapon = "AIM-7M", quantity = 2) + evaluate_weapon_firepower(weapon = "AIM-9M", quantity = 2)
+				vCruise = 200,
+				hCruise = 7000,
 				standoff = 80300,
 				tStation = 7200,
 				LDSD = true,
@@ -876,7 +969,10 @@ db_loadouts = {
 					["LGB1000"] = 1,
 				},
 			},]]		
-			["Strike AIM-9*2 AIM-7*2 FUEL*2 Mk 82*10"] = {
+			["Strike AIM-9*2 AIM-7*2 FUEL*2 Mk 82*10 role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.2,
 				support = {
 					["Escort"] = false,
@@ -897,10 +993,10 @@ db_loadouts = {
 				range = 650000,
 				capability = 5,
 				firepower = 1, 
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 140,
-				hCruise = 100, --5486.4,
-				hAttack = 700, --4572,
+				hCruise = 100,
+				hAttack = 700,
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
@@ -969,7 +1065,10 @@ db_loadouts = {
 						["LGB1000"] = 1,
 				},
 			},
-			["Strike AIM-9*2 AIM-7*2 AIM-54A*2 FUEL*2 Mk 84*2"] = {
+			["Strike AIM-9*2 AIM-7*2 AIM-54A*2 FUEL*2 Mk 84*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = false,
@@ -990,10 +1089,10 @@ db_loadouts = {
 				range = 650000,
 				capability = 5,
 				firepower = 5,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 140,
-				hCruise = 100, --5486.4,
-				hAttack = 700, --4572,
+				hCruise = 5000,
+				hAttack = 700,
 				standoff = nil,
 				tStation = nil,
 				LDSD = true,
@@ -1062,7 +1161,10 @@ db_loadouts = {
 						["LGB1000"] = 1,
 					},
 			},
-			["Strike AIM-9*2 AIM-7*2 Fuel*2 Mk 20 *4"] = {
+			["Strike AIM-9*2 AIM-7*2 Fuel*2 Mk 20 *4 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.3,
 				support = {
 					["Escort"] = false,
@@ -1083,9 +1185,9 @@ db_loadouts = {
 				range = 650000,
 				capability = 5,
 				firepower = 8,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 140,
-				hCruise = 100, --5486.4,
+				hCruise = 5000,
 				hAttack = 700,
 				standoff = nil,
 				tStation = nil,
@@ -1161,6 +1263,9 @@ db_loadouts = {
 	["KC-135"] = { --1957 (entrata in servizio)
 		["Refueling"] = {
 			["Default"] = {
+				role = "refueler",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {"KC135"},
 				weaponType = nil,
 				expend = nil,
@@ -1170,10 +1275,10 @@ db_loadouts = {
 				range = 500000,
 				capability = 1,
 				firepower = 1,
-				vCruise = 217,
+				vCruise = 140,
 				vAttack = 217,
-				hCruise = 18000,
-				hAttack = 18000,
+				hCruise = 7000,
+				hAttack = 7000,
 				standoff = nil,
 				tStation = 21600,
 				LDSD = false,
@@ -1195,6 +1300,9 @@ db_loadouts = {
 	["KC135MPRS"] = { --1957 (entrata in servizio)
 		["Refueling"] = {
 			["Default"] = {
+				role = "refueler",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {"KC135"},
 				weaponType = nil,
 				expend = nil,
@@ -1204,10 +1312,10 @@ db_loadouts = {
 				range = 500000,
 				capability = 1,
 				firepower = 1,
-				vCruise = 217,
+				vCruise = 200,
 				vAttack = 217,
-				hCruise = 18000,
-				hAttack = 18000,
+				hCruise = 7000,
+				hAttack = 7000,
 				standoff = nil,
 				tStation = 21600,
 				LDSD = false,
@@ -1346,7 +1454,10 @@ db_loadouts = {
 				},
 			},
 			]]
-			["Antiship RB-04R*2 RB-74*2, FUEL"] = {
+			["Antiship RB-04R*2 RB-74*2, FUEL role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 						["Escort"] = false,
@@ -1366,9 +1477,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = 8,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 240,
 				vAttack = 216,
-				hCruise = 100, --3500,
+				hCruise = 200,
 				hAttack = nil,
 				standoff = nil, -- rb04 32km
 				tStation = nil,
@@ -1404,68 +1515,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Antiship ECM Escort KB pod RB-04R*1RB-74*2, FUEL"] = {
+			
+			["Antiship RB-75T*4 FUEL role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 						["Escort"] = false,
-						["SEAD"] = false,
-					},
-				attributes = {"ship"},
-				weapons = { -- task dedicated weapons
-					["RB-04E"] = 1,		
-					["RB-74"] = 2,								
-				},
-				weaponType = "ASM",
-				expend = "Auto",
-				day = true,
-				night = true,
-				adverseWeather = true,
-				avoid_EWR = false,
-				range = 500000,
-				capability = 8,
-				firepower = 7,
-				vCruise = BLUE_ATTACKER_VCRUISE,
-				vAttack = 215,
-				hCruise = 17000, --3500,
-				hAttack = nil,
-				standoff = nil, --rb04 range: 32000 
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 3,
-				stores = {
-					["pylons"] = {
-						[2] = 
-						{
-							["CLSID"] = "{Rb04}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{Robot74}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "{VIGGEN_X-TANK}",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{Robot74}",
-						}, -- end of [5]
-						[6] = 
-						{
-							["CLSID"] = "{KB}",
-						}, -- end of [6]
-					}, ----end of ["pylons"]
-					["fuel"] = 4476,
-					["flare"] = 72,
-					["chaff"] = 210,
-					["gun"] = 100,
-				},
-			},
-			["Antiship RB-75T*4 FUEL"] = {
-				minscore = 0.0,
-				support = {
-						["Escort"] = true,
 						["SEAD"] = false,
 					},
 				attributes = {"ship"},
@@ -1481,9 +1538,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 6,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 230,
 				vAttack = 215,
-				hCruise = 100,
+				hCruise = 300,
 				hAttack = nil,
 				standoff = nil,
 				tStation = nil,
@@ -1521,7 +1578,10 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {
-			["CAS - Bomb M/71*8 - ECM*2 - RB-24J*2 - FT"] = {
+			["CAS - Bomb M/71*8 - ECM*2 - RB-24J*2 - FT role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
@@ -1541,10 +1601,10 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = 2,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 140,
-				hCruise = 5000,
-				hAttack = 1000,
+				hCruise = 2000,
+				hAttack = 1500,
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
@@ -1587,7 +1647,10 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT"] = { -- , U25 ECM Pod
+			["CAS - Bomb M/71 chute*8 - ECM*2 - RB-24J*2 - FT role: ATTACKER @ NORMAL ALT"] = { -- , U25 ECM Pod
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
@@ -1607,9 +1670,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = 2,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 230, 
 				vAttack = 140,
-				hCruise = 100, --500,
+				hCruise = 4000,
 				hAttack = 400,
 				standoff = nil,
 				tStation = nil,
@@ -1653,7 +1716,10 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},
-			["CAS Hard - RB-75T*2 - ECM*2 - RB-24J*2 - FT"] = { --RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
+			["CAS Hard - RB-75T*2 - ECM*2 - RB-24J*2 - FT role: ATTACKER @ NORMAL ALT"] = { --RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -1673,9 +1739,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = nil, -- DC_Firepower calculation
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200, 
 				vAttack = 250,
-				hCruise = 2000,
+				hCruise = 5000,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -1785,7 +1851,10 @@ db_loadouts = {
 				["gun"] = 100,
 				},
 			},]]
-			["ASM hard RB-75T*4 TV Guided Rb-24 Fuel"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide
+			["ASM hard RB-75T*4 TV Guided Rb-24 Fuel role: ATTACKER @ NORMAL ALT"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -1805,9 +1874,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = nil, -- DC_Firepower calculation
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 240,
 				vAttack = 250,
-				hCruise = 1000,
+				hCruise = 6000,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -1851,11 +1920,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["ASM ECM U25pod KBpod RB-75T*2 FUEL"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
+			["ASM ECM U25pod KBpod RB-75T*2 FUEL role: ATTACKER @ NORMAL ALT"] = {--RB_75T == AGM-65D Maverick Electro-Optical guide, U25 ECM Pod
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
@@ -1869,9 +1941,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 250,
 				vAttack = 250,
-				hCruise = 1000,
+				hCruise = 6000,
 				hAttack = nil, -- DC_Firepower calculation -- 6000
 				standoff = nil, -- DC_Firepower calculation -- 1000
 				tStation = nil,
@@ -1910,7 +1982,10 @@ db_loadouts = {
 			},
 		},
 		["SEAD"] = {		
-			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL"] = {
+			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL role: SEAD ESCORT FOR BOMBER @ NORMAL ALT"] = {
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
@@ -1924,9 +1999,65 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = nil, -- DC_Firepower calculation --6,
-				vCruise = BLUE_ESCORT_SEAD_VCRUISE,
+				vCruise = 250,
 				vAttack = 250,
-				hCruise = 1000,
+				hCruise = 7000,
+				hAttack = nil, -- DC_Firepower calculation -- 6000
+				standoff = nil, -- DC_Firepower calculation -- 1000
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] =
+					{
+						[2] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{RB75T}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{U22}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+			["ASM SEAD ECM U25pod KBpod RB-75T*2 FUEL role: SEAD ESCORT FOR ATTACKER @ NORMAL ALT"] = {
+				role = "escort_sead_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
+				minscore = 0.1,
+				attributes = {"SAM"},
+				weapons = { -- task dedicated weapons
+					["RB-75T"] = 2,										
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 7,
+				firepower = nil, -- DC_Firepower calculation --6,
+				vCruise = 250,
+				vAttack = 250,
+				hCruise = 7000,
 				hAttack = nil, -- DC_Firepower calculation -- 6000
 				standoff = nil, -- DC_Firepower calculation -- 1000
 				tStation = nil,
@@ -1964,11 +2095,138 @@ db_loadouts = {
 				},
 			},
 		},
+		["Escort Jammer"] = {
+			["Antiship ECM Escort KB pod RB-04R*1RB-74*2, FUEL role: ATTACKER @ LOW ALT"] = {
+				role = "escort_jammer_bomber",
+				role_altitude = "low",
+				coalition = "blue",
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"ship"},
+				weapons = { -- task dedicated weapons
+					["RB-04E"] = 1,		
+					["RB-74"] = 2,								
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				avoid_EWR = false,
+				range = 500000,
+				capability = 8,
+				firepower = 7,
+				vCruise = 215,
+				vAttack = 215,
+				hCruise = 400,
+				hAttack = nil,
+				standoff = nil, --rb04 range: 32000 
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{Rb04}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+			["ECM Escort KB pod RB-04R*1RB-74*2, FUEL role: ATTACKER @ NORMAL ALT"] = {
+				role = "escort_jammer_attacker",
+				role_altitude = "low",
+				coalition = "blue",
+				minscore = 0.0,
+				support = {
+						["Escort"] = false,
+						["SEAD"] = false,
+					},
+				attributes = {"ship"},
+				weapons = { -- task dedicated weapons
+					["RB-04E"] = 1,		
+					["RB-74"] = 2,								
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				avoid_EWR = false,
+				range = 500000,
+				capability = 8,
+				firepower = 7,
+				vCruise = 215,
+				vAttack = 215,
+				hCruise = 200,
+				hAttack = nil,
+				standoff = nil, --rb04 range: 32000 
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{Rb04}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{VIGGEN_X-TANK}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{Robot74}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{KB}",
+						}, -- end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = 4476,
+					["flare"] = 72,
+					["chaff"] = 210,
+					["gun"] = 100,
+				},
+			},
+		},
 	},
 
 	["B-52H"] = { --1952 (primo volo) 1955 (entrata in servizio)
 		["Strike"] = {
-			["Strike Mk-84*18"] = {
+			["Strike Mk-84*18 role: BOMBER @ HIGH ALT"] = {
+				role = "bomber",
+				role_altitude = "high",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -1986,10 +2244,10 @@ db_loadouts = {
 				range = 1000000,
 				capability = 10,
 				firepower = 30,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 140,
 				vAttack = 130,
-				hCruise = 12000,
-				hAttack = 12000,
+				hCruise = 8000,
+				hAttack = 8000,
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
@@ -2012,7 +2270,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Strike Mk-20 Cluster Bombs "] = {
+			["Strike Mk-20 Cluster Bombs role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -2030,10 +2291,10 @@ db_loadouts = {
 				range = 1000000,
 				capability = 10,
 				firepower = 30,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 12000,
-				hAttack = 12000,
+				hCruise = 8000,
+				hAttack = 8000,
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
@@ -2163,7 +2424,10 @@ db_loadouts = {
 
 	["S-3B Tanker"] = { --1972 (primo volo) 1974 (entrata in servizio)
 		["Refueling"] = {
-			["Low Track"] = {
+			["Low Track"] = {	
+				role = "refueler",
+				role_altitude = "normal",
+				coalition = "blue",			
 				attributes = {"low"},
 				day = true,
 				night = true,
@@ -2173,8 +2437,8 @@ db_loadouts = {
 				firepower = 1,
 				vCruise = 150,
 				vAttack = 150,
-				hCruise = 10000,
-				hAttack = 10000,
+				hCruise = 7000,
+				hAttack = 7000,
 				tStation = 10800,
 				sortie_rate = 3,
 				stores = {
@@ -2186,6 +2450,9 @@ db_loadouts = {
 				},
 			},
 			["Medium Track"] = {
+				role = "refueler",
+				role_altitude = "normal",
+				coalition = "blue",			
 				attributes = {"medium"},
 				day = true,
 				night = true,
@@ -2195,8 +2462,8 @@ db_loadouts = {
 				firepower = 1,
 				vCruise = 200,
 				vAttack = 150,
-				hCruise = 16000,
-				hAttack = 16000,
+				hCruise = 10000,
+				hAttack = 10000,
 				tStation = 10800,
 				sortie_rate = 3,
 				stores = {
@@ -2213,7 +2480,11 @@ db_loadouts = {
 	["S-3B"] = { --1972 (primo volo) 1974 (entrata in servizio)
 
 		["Anti-ship Strike"] = {
-			["ANTISHIP AGM-84A*2"] = {--
+
+			["ANTISHIP AGM-84A*2  role: BOMBER @ NORMAL ALT"] = {--
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -2237,9 +2508,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 8,
 				firepower = 7, --getWeaponFirepower("blue", "Anti-ship Strike", "ship", {  [1] = { ["name"] = "AGM-84A",	["quantity"] = 2, }, }	), -- 7,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 4000,
 				vAttack = 200,
-				hCruise = 5000,
+				hCruise = 200,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -2264,39 +2535,34 @@ db_loadouts = {
 				},
 			},
 		},		
+
 		["Strike"] = {
-			["GA MK-84*2, MK-82*4"] = {
+
+			["GA MK-84*2, MK-82*4 role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
-				attributes = {"Structure", "Bridge", "SAM", "armor"},
+				attributes = {"Structure", "Bridge"},
 				weapons = { -- task dedicated weapons
 					["Mk-84"] = 2,										
 					["Mk-82"] = 4,										
 				},
 				weaponType = "Bombs",
-				expend = "All",
-				taskWeaponInfo = {
-					[1] = {
-						["name"] = "Mk-84",
-						["quantity"] = 2,
-					},							
-					[2] = {
-						["name"] = "Mk-82",
-						["quantity"] = 4,
-					},							
-				},
+				expend = "All",				
 				day = true,
 				night = false,
 				adverseWeather = false,
 				range = 500000,
 				capability = 7,
 				firepower = 8, --getWeaponFirepower("blue", "Anti-ship Strike", "ship", {  [1] = { ["name"] = "Mk-84",	["quantity"] = 2, }, [2] = { ["name"] = "Mk-82",	["quantity"] = 4, },}	), --8,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 10000,
+				hCruise = 2000,
 				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
@@ -2337,7 +2603,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["GA MK-82*10"] = {
+			["GA MK-82*10 role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -2355,9 +2624,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 7000,
+				hCruise = 2000,
 				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
@@ -2398,11 +2667,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Cluster MK-20*4"] = {
+			["CAS Cluster MK-20*4 role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -2416,9 +2688,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 8,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 7000,
+				hCruise = 4000,
 				hAttack = 700,
 				standoff = nil,
 				tStation = nil,
@@ -2451,13 +2723,16 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS Rockets Cluster Zuni-Mk71*9 MK-20*2"] = {
+			["CAS Rockets Cluster Zuni-Mk71*9 MK-20*2 role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
+				attributes = {"soft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Zuni-Mk71"] = 9,										
 					["Mk-20"] = 2,										
@@ -2480,9 +2755,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 5000,
+				hCruise = 1000,
 				hAttack = 1000,
 				standoff = nil,
 				tStation = nil,
@@ -2523,7 +2798,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["CAS AGM-65D-K*2"] = {
+			["CAS AGM-65D-K*2 role: BOMBER @ NORMAL ALT"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -2542,9 +2820,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 6,
-				vCruise = BLUE_BOMBER_VCRUISE,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 3000,
+				hCruise = 4000,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -2578,8 +2856,13 @@ db_loadouts = {
 				},
 			},
 		},
+
 		["SEAD"] = {
-			["SEAD AGM-65D-K*2"] = {
+
+			["SEAD AGM-65D-K*2 role: SEAD ESCORT FOR BOMBER @ NORMAL ALT"] = {
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				attributes = {"SAM"},
 				weaponType = "ASM",
@@ -2594,9 +2877,63 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 6,
-				vCruise = BLUE_ESCORT_SEAD_VCRUISE,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 6000,
+				hCruise = 7000,
+				hAttack = nil, -- DC_Firepower calculation
+				standoff = nil, -- DC_Firepower calculation
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] =
+					{
+						[1] = 
+						{
+							["CLSID"] = "{69DC8AE7-8F77-427B-B8AA-B19D3F478B66}",
+						}, -- end of [1]
+						[3] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}",
+						}, -- end of [4]
+						[6] = 
+						{
+							["CLSID"] = "{444BA8AE-82A7-4345-842E-76154EFCCA46}",
+						}, -- end of [6]
+					}, -- --end of ["pylons"]
+					["fuel"] = 7000,
+					["flare"] = 30,
+					["chaff"] = 30,
+					["gun"] = 100,
+				},
+			},
+
+			["SEAD AGM-65D-K*2 SEAD ESCORT FOR ATTACKER @ NORMAL ALT"] = {
+				role = "escort_sead_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
+				minscore = 0.0,
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "Auto",
+				weapons = { -- task dedicated weapons
+					["AGM-65D"] = 2,										
+					["AGM-65K"] = 2,										
+				},
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 500000,
+				capability = 6,
+				firepower = 6,
+				vCruise = 200,
+				vAttack = 200,
+				hCruise = 7000,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -2634,7 +2971,10 @@ db_loadouts = {
 
 	["F-5E-3"] = {--1959 (primo volo) 1972 (entrata in servizio)
 		["Strike"] = {
-			["GTA CAS1/STRIKE Mk-82SE*4,AIM-9P*2,Fuel 275"] = {
+			["GTA CAS1/STRIKE Mk-82SE*4,AIM-9P*2,Fuel 2750 role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
@@ -2654,9 +2994,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 1,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 200, --700,
+				hCruise = 100,
 				hAttack = 100,
 				standoff = nil,
 				tStation = nil,
@@ -2701,10 +3041,13 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["GTA CAS2/STRIKE CBU-52B*4,AIM-9P*2,Fuel 275"] = {
+			["GTA CAS2/STRIKE CBU-52B*4,AIM-9P*2,Fuel 2750 role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
@@ -2721,9 +3064,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 8,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 3000,
+				hCruise = 500,
 				hAttack = 500,
 				standoff = nil,
 				tStation = nil,
@@ -2768,7 +3111,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MR, Mk-82*4, AIM-9P*2, Fuel_275*1"] = {
+			["MR, Mk-82*4, AIM-9P*2, Fuel_275*1 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -2787,9 +3133,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 1,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 5500,
+				hCruise = 1500,
 				hAttack = 1500,
 				standoff = nil,
 				tStation = nil,
@@ -2835,7 +3181,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["SR, Mk-82*5, AIM-9P*2"] = {
+			["SR, Mk-82*5, AIM-9P*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -2854,9 +3203,9 @@ db_loadouts = {
 				range = 330000,
 				capability = 4,
 				firepower = 1,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 4800,
+				hCruise = 1500,
 				hAttack = 1500,
 				standoff = nil,
 				tStation = nil,
@@ -2886,7 +3235,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["OCA, Mk-83*2, AIM-9P*2"] = {
+			["OCA, Mk-83*2, AIM-9P*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -2905,9 +3257,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 3,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 5500,
+				hCruise = 1500,
 				hAttack = 1500,
 				standoff = nil,
 				tStation = nil,
@@ -2945,7 +3297,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Mk-84*1, AIM-9P*2"] = {
+			["Mk-84*1, AIM-9P*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -2964,9 +3319,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 3,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 5486.4,
+				hCruise = 1500,
 				hAttack = 1500,
 				standoff = nil,
 				tStation = nil,
@@ -2996,10 +3351,13 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MR, CBU-52*4, AIM-9P*2, Fuel_275*1"] = {
+			["MR, CBU-52*4, AIM-9P*2, Fuel_275*1 role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.2,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
@@ -3015,9 +3373,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 8,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
-				hCruise = 5500,
+				hCruise = 100,
 				hAttack = 500,
 				standoff = nil,
 				tStation = nil,
@@ -3150,7 +3508,10 @@ db_loadouts = {
 			}
 		},
 		["Escort"] = {
-			["AIM-9P*2, Fuel_275*1"] = {
+			["AIM-9P*2, Fuel_275*1 role: ESCORT ATTACKER @ NORMAL ALTITUDE"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weapons = { -- task dedicated weapons
 					["AIM-9P"] = 2,										
@@ -3163,10 +3524,10 @@ db_loadouts = {
 				range = 360000,
 				capability = 2,
 				firepower = 1,
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 200,
 				vAttack = 250,
-				hCruise = 17000,
-				hAttack = 17000,
+				hCruise = 7000,
+				hAttack = 7000,
 				standoff = 28000,
 				tStation = nil,
 				LDSD = false,
@@ -3246,11 +3607,16 @@ db_loadouts = {
 	},	
     -- < --- REVISIONE hattack, hcruise, vattack, vcruise, standoff, sortie_rate 
 	["Mirage-F1C"] = {--
+
 		["Strike"] = {
-			["MirageF1C_GA_8xSAMP400kg_2xR550"] = {
+
+			["MirageF1C_GA_8xSAMP400kg_2xR550 role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"Structure", "Bridge"},
@@ -3267,9 +3633,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 3,
-				vCruise = 216,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 100, --700,
+				hCruise = 400,
 				hAttack = 400,
 				standoff = nil,
 				tStation = nil,
@@ -3306,15 +3672,18 @@ db_loadouts = {
 						["gun"] = 100,
 				},
 			},
-			["MirageF1C_GA_4xSNEB256_HE_DEFR_1xFuel"] = {
+			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel role: LOW @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
+					["Escort"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weapons = { -- task dedicated weapons
-					["SNEB-256"] = 4, -- 
+					["SNEB-256"] = 72, -- 
 					["R-550"] = 2, 														
 				},
 				weaponType = "Rockets",
@@ -3326,9 +3695,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 3,
-				vCruise = 215,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 5876,
+				hCruise = 300,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil, 
@@ -3373,81 +3742,19 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MirageF1C_GA_4x18xSNEB256_HE_DEFR_1xFuel"] = { --uguale a sopra?
-				minscore = 0.0,
-				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
-				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
-				weapons = { -- task dedicated weapons
-					["SNEB-256"] = 4, -- 
-					["R-550"] = 2, 														
-				},
-				weaponType = "Rockets",
-				expend = "All",
-				day = true,
-				night = false,
-				adverseWeather = false,
-				range = 360000,
-				capability = 4,
-				firepower = 1,
-				vCruise = 216,
-				vAttack = 200,
-				hCruise = 5486,
-				hAttack = nil, -- DC_Firepower calculation
-				standoff = nil, -- DC_Firepower calculation
-				tStation = nil,
-				LDSD = false,
-				self_escort = false,
-				sortie_rate = 6,
-				stores = {
-					["pylons"] = 
-					{
-						[1] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [1]
-						[2] = 
-						{
-							["CLSID"] = "{MATRA_F4_SNEBT256}",
-						}, -- end of [2]
-						[3] = 
-						{
-							["CLSID"] = "{MATRA_F4_SNEBT256}",
-						}, -- end of [3]
-						[4] = 
-						{
-							["CLSID"] = "PTB-1200-F1",
-						}, -- end of [4]
-						[5] = 
-						{
-							["CLSID"] = "{MATRA_F4_SNEBT256}",
-						}, -- end of [5]
-						[6] = 
-						{
-							["CLSID"] = "{MATRA_F4_SNEBT256}",
-						}, -- end of [6]
-						[7] = 
-						{
-							["CLSID"] = "{R550_Magic_1}",
-						}, -- end of [7]
-					}, -- end of ["pylons"]
-					["fuel"] = 3356,
-					["flare"] = 0,
-					["chaff"] = 0,
-					["gun"] = 100,
-				},
-			},
-			["MirageF1C_GA_4x18xSNEB253_HEAT_1xFuel"] = {
+			
+			["MirageF1C_GA_4x18xSNEB253_HEAT_1xFuel role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weapons = { -- task dedicated weapons
-					["SNEB-253"] = 4, -- 
+					["SNEB-253"] = 72, -- 
 					["R-550"] = 2, 														
 				},
 				weaponType = "Rockets",
@@ -3458,9 +3765,9 @@ db_loadouts = {
 				range = 130000,
 				capability = 4,
 				firepower = 3,
-				vCruise = 216,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 4876,
+				hCruise = 300,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -3505,7 +3812,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["MirageF1C_GA_4xSAMP250kgHD_2xR550_2xFuel-1"] = {
+			["MirageF1C_GA_4xSAMP250kgHD_2xR550_2xFuel-1 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -3524,9 +3834,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 4,
 				firepower = 3,
-				vCruise = 216,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 5486.4,
+				hCruise = 100,
 				hAttack = 700, 
 				standoff = nil,
 				tStation = nil,
@@ -3675,7 +3985,10 @@ db_loadouts = {
 			},					
 		},
 		["Escort"] = {
-			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel"] = {
+			["MirageF1C_CAP_2xR550_2xR530EM_1xFuel ESCORT BOMBER @ NORMAL ALTITUDE"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weaponType = nil,
 				weapons = { -- task dedicated weapons
@@ -3689,9 +4002,9 @@ db_loadouts = {
 				range = 270000,
 				capability = 5,
 				firepower = 2,
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 250,
 				vAttack = 246.66666666667,
-				hCruise = 6096,
+				hCruise = 7000,
 				hAttack = 6096,
 				standoff = 36000,
 				tStation = 1800,
@@ -3960,6 +4273,9 @@ db_loadouts = {
 		},
 		["Escort"] = {
 			["GTA AIR/AIR AIM-9*4,AIM-7*4"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weapons = { -- task dedicated weapons
 					["AIM-9B"] = 4, -- 														
@@ -3973,9 +4289,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 5,
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 260,
 				-- vAttack = 265.83333333333,
-				-- hCruise = 9753.6,
+				hCruise = 9000,
 				-- hAttack = 9753.6,
 				standoff = 46300,
 				tStation = nil,
@@ -4016,6 +4332,9 @@ db_loadouts = {
 				},
 			},
 			["Day, AIM-9P*4, AIM-7M*4, Fuel*2"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weapons = { -- task dedicated weapons
 					["AIM-9B"] = 4, -- 														
@@ -4029,9 +4348,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 5,
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 250,
 				vAttack = 270,
-				hCruise = 6096,
+				hCruise =  6000,
 				hAttack = 6096,
 				standoff = 28000,
 				tStation = nil,
@@ -4081,6 +4400,9 @@ db_loadouts = {
 				},
 			},
 			["Night, AIM-9P*4, AIM-7M*4, Fuel*2"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weapons = { -- task dedicated weapons
 					["AIM-9B"] = 4, -- 														
@@ -4094,9 +4416,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 5,
-				vCruise = BLUE_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 260,
 				vAttack = 270,
-				hCruise = 6096,
+				hCruise = 7000,
 				hAttack = 6096,
 				standoff = 28000,
 				tStation = nil,
@@ -4449,7 +4771,10 @@ db_loadouts = {
 			},
 		},
 		["Strike"] = {
-			["GTA CAS1 AGM-65K*4,AIM-7*2,Fuel*2,ECM"] = {
+			["GTA CAS1 AGM-65K*4,AIM-7*2,Fuel*2,ECM role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.2,
 				support = {
 					["Escort"] = true,
@@ -4468,9 +4793,9 @@ db_loadouts = {
 				firepower = 12,
 				day = true,
 				night = false,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 277,
-				hCruise = 3486,
+				hCruise = 6000,
 				hAttack = nil, -- DC_Firepower calculation --2572,
 				standoff = nil, -- DC_Firepower calculation --6000,
 				tStation = nil,
@@ -4514,7 +4839,10 @@ db_loadouts = {
 							["gun"] = 100,
 						},
 			},
-			["GTA strike Mk-82*6,AIM-7*2,Fuel*2,ECM"] = {
+			["GTA strike Mk-82*6,AIM-7*2,Fuel*2,ECM role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -4533,9 +4861,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 2,				
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 3486,
+				hCruise = 2000,
 				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
@@ -4579,11 +4907,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["GTA CAS2 Mk20*6,AIM-7*2,Fuel*2,ECM"] = {
+			["GTA CAS2 Mk20*6,AIM-7*2,Fuel*2,ECM role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -4598,9 +4929,9 @@ db_loadouts = {
 				range = 500000,
 				capability = 6,
 				firepower = 12,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 3486,
+				hCruise = 700,
 				hAttack = 700,
 				standoff = nil,
 				tStation = nil,
@@ -4644,11 +4975,14 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Mk-82*6, AIM-7M*3, ECM*1, Fuel*2"] = {
+			["Mk-82*6, AIM-7M*3, ECM*1, Fuel*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
-					["Escort"] = true,
-					["SEAD"] = false,
+					["Escort"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons
@@ -4663,10 +4997,10 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 2,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 5486,
-				hAttack = 1500,
+				hCruise = 2000,
+				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
 				LDSD = false,
@@ -4714,7 +5048,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Mk-82*12, AIM-7M*3, ECM*1, Fuel*2"] = {
+			["Mk-82*12, AIM-7M*3, ECM*1, Fuel*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -4733,9 +5070,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 3,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 5486,
+				hCruise = 2000,
 				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
@@ -4784,7 +5121,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["Mk-84*2 AIM-7*2 ECM"] = {
+			["Mk-84*2 AIM-7*2 ECM role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -4803,9 +5143,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 6,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 5486,
+				hCruise = 2000,
 				hAttack = 2000,
 				standoff = nil,
 				tStation = nil,
@@ -4842,7 +5182,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["GBU-10*2, AIM-7M*3, ECM*1, Fuel*2"] = {
+			["GBU-10*2, AIM-7M*3, ECM*1, Fuel*2 role: ATTACKER @ NORMAL ALT"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4862,9 +5205,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 5,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 130,
-				hCruise = 6096,
+				hCruise = 4500,
 				hAttack = 4572,
 				standoff = nil,
 				tStation = nil,
@@ -4913,7 +5256,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},			
-			["ASN AGM-65D*4 AIM-7E ECM Fuel"] = {
+			["ASN AGM-65D*4 AIM-7E ECM Fuel role: ATTACKER @ LOW ALT"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "blue",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -4932,9 +5278,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 6,
 				firepower = 12,
-				vCruise = BLUE_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 200,
-				hCruise = 4876,
+				hCruise = 100,
 				hAttack = nil, -- DC_Firepower calculation
 				standoff = nil, -- DC_Firepower calculation
 				tStation = nil,
@@ -4985,7 +5331,10 @@ db_loadouts = {
 			},			
 		},
 		["SEAD"] = {
-			["AGM-45*2, AIM-7M*3, ECM*1, Fuel*2"] = { -- verifica sono gli stessi si differenziano solo per day, night puoi lasciarne solo l'ultimo con  day e night true
+			["AGM-45*2, AIM-7M*3, ECM*1, Fuel*2 role: SEAD ESCORT FOR BOMBER @ NORMAL ALT"] = { -- verifica sono gli stessi si differenziano solo per day, night puoi lasciarne solo l'ultimo con  day e night true
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.0,
 				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
@@ -5000,9 +5349,9 @@ db_loadouts = {
 				range = 360000,
 				capability = 10,
 				firepower = 5,
-				vCruise = BLUE_ESCORT_SEAD_VCRUISE,
+				vCruise = 250,
 				vAttack = 270,
-				hCruise = 6096,
+				hCruise = 7000,
 				hAttack = nil, -- DC_Firepower calculation2, 4096,
 				standoff = nil, -- DC_Firepower calculation, 13000,
 				tStation = nil,
@@ -5051,7 +5400,10 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},			
-			["ASM SEAD AGM-45*4 AIM-7E EMC Fuel"] = {
+			["ASM SEAD AGM-45*4 AIM-7E EMC Fuel SEAD ESCORT FOR ATTACKER @ NORMAL ALT"] = {
+				role = "escort_sead_attacker",
+				role_altitude = "normal",
+				coalition = "blue",
 				minscore = 0.3,
 				attributes = {"SAM"},
 				weapons = { -- task dedicated weapons
@@ -5066,9 +5418,78 @@ db_loadouts = {
 				range = 360000,
 				capability = 10,
 				firepower = 12,
-				vCruise = BLUE_ESCORT_SEAD_VCRUISE,
+				vCruise = 250,
 				vAttack = 270,
-				hCruise = 6096,
+				hCruise = 7000,
+				hAttack = nil, -- DC_Firepower calculation, 4096,
+				standoff = nil, -- DC_Firepower calculation, 13000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] =
+					{
+						[1] = 
+						{
+							["CLSID"] = "{AGM_45A}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{6D21ECEA-F85B-4E8D-9D51-31DC9B8AA4EF}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{AIM-7E}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{8B9E3FD0-F034-4A07-B6CE-C269884CC71B}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{AIM-7E}",
+						}, -- end of [6]
+						[8] = 
+						{
+							["CLSID"] = "{3E6B632D-65EB-44D2-9501-1C2D04515405}",
+						}, -- end of [8]
+						[9] = 
+						{
+							["CLSID"] = "{AGM_45A}",
+						}, -- end of [9]
+					}, -- --end of ["pylons"]
+					["fuel"] = "4864",
+					["flare"] = 30,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["ASM SEAD AGM-45*4 AIM-7E EMC Fuel role: SEAD ESCORT FOR ATTACKER @ LOW ALT"] = {
+				role = "escort_sead_attacker",
+				role_altitude = "low",
+				coalition = "blue",
+				minscore = 0.3,
+				attributes = {"SAM"},
+				weapons = { -- task dedicated weapons
+					["AGM-45"] = 4,		
+					["AIM-7E"] = 2,													
+				},
+				weaponType = "ASM",
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 360000,
+				capability = 10,
+				firepower = 12,
+				vCruise = 250,
+				vAttack = 270,
+				hCruise = 7000,
 				hAttack = nil, -- DC_Firepower calculation, 4096,
 				standoff = nil, -- DC_Firepower calculation, 13000,
 				tStation = nil,
@@ -5123,6 +5544,9 @@ db_loadouts = {
 	["C-130"] = {--1954 (primo volo) 1957 (entrata in servizio)
 		["Transport"] = {
 			["Default"] = {
+				role = "transporter",
+				role_altitude = "normal",
+				coalition = "blue",
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -5719,6 +6143,9 @@ db_loadouts = {
 	["Tu-22M3"] = { --1969 (primo volo) 1972 (entrata in servizio) ok
 		["Strike"] = {
 			["BAI FAB-500*33 FAB -250*36"] = {
+				role = "bomber",
+				role_altitude = "high",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -5779,6 +6206,9 @@ db_loadouts = {
 		},
 		["Anti-ship Strike"] = {
 			["Antiship  Kh-22N*3"] = { --1962
+				role = "bomber",
+				role_altitude = "supersonic",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -5831,6 +6261,9 @@ db_loadouts = {
 				},
 			},
 			["Antiship  Kh-22N*1"] = { --1962
+				role = "bomber",
+				role_altitude = "supersonic",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -5880,6 +6313,9 @@ db_loadouts = {
 	["Su-24MR"] = {--1967 (primo volo) 1974 (entrata in servizio)
 		["Reconnaissance"] = {
 			["Reco TANGAZH,ETHER,R-60M*2,Fuel*2"] = {
+				role = "recon",
+				role_altitude = "normal",
+				coalition = "red",
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -5994,6 +6430,7 @@ db_loadouts = {
 	},
 
 	["Su-24M"] = {--1967 (primo volo) 1974 (entrata in servizio)
+		
 		["Anti-ship Strike"] = {
 			--[[
 			["Antiship, R-60M*4, Kh-59M*2, Fuel"] = { -- kh 59 1980
@@ -6051,9 +6488,12 @@ db_loadouts = {
 			},
 			]]
 			["Antiship S24/240mm.235kg.he.frag*6"] = {
+				role = "bomber",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				weapons = { -- task dedicated weapons
@@ -6111,10 +6551,13 @@ db_loadouts = {
 				},
 			},
 			["Antiship  S25/340mm.480kg.pntr*2 Fuel*3"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.5,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"ship"},
 				weaponType = "Rockets",
@@ -6167,8 +6610,13 @@ db_loadouts = {
 				},
 			},
 		},
+
 		["SEAD"] = {
-			["SEAD  Kh58*2 R60*4 L-081"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
+
+			["SEAD  Kh58*2 R60*4 L-081 escort sead bomber normal altitude"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {"SAM"},
 				minscore = 0.0,
 				weaponType = "ASM",
@@ -6183,7 +6631,7 @@ db_loadouts = {
 				range = 900000,
 				capability = 8,
 				firepower = 8,
-				vCruise = RED_ESCORT_SEAD_VCRUISE,
+				vCruise = 250,
 				vAttack = 250,
 				hCruise = 7000,
 				hAttack = nil, -- DC_Firepower calculation
@@ -6220,10 +6668,72 @@ db_loadouts = {
 					["chaff"] = 96,
 					["gun"] = 100,
 				},
-			},			
+			},	
+			
+			["SEAD  Kh58*2 R60*4 L-081 escort sead bomber high altitude"] = { --kh 58  1982 NO (inserted because red power against blue sam seems too weak)
+				role = "escort_sead_bomber",
+				role_altitude = "high",
+				coalition = "red",
+				attributes = {"SAM"},
+				minscore = 0.0,
+				weaponType = "ASM",
+				weapons = { -- task dedicated weapons						
+					["Kh-58"] = 2,	
+					["R-60"] = 4,																		
+				},
+				expend = "Auto",				
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 900000,
+				capability = 8,
+				firepower = 8,
+				vCruise = 250,
+				vAttack = 250,
+				hCruise = 7000,
+				hAttack = nil, -- DC_Firepower calculation
+				standoff = nil,-- DC_Firepower calculation --60-120km kh-58
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[1] = {
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+							["num"] = 1,
+						},
+						[2] = {
+							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
+							["num"] = 2,
+						},
+						[5] = {
+							["CLSID"] = "{0519A264-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 5,
+						},
+						[7] = {
+							["CLSID"] = "{FE382A68-8620-4AC0-BDF5-709BFE3977D7}",
+							["num"] = 7,
+						},
+						[8] = {
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["num"] = 8,
+						},
+						}, ----end of ["pylons"]
+	 				["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},	
 		},
+
 		["Laser Illumination"] = {
-			["Laser Illumination, R-60M*4, Fuel"] = {
+
+			["Laser Illumination, R-60M*4, Fuel escort_laser_illumination_bomber"] = {
+				role = "escort_laser_illumination_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons										
 					["R-60M"] = 4,																		
@@ -6236,7 +6746,62 @@ db_loadouts = {
 				range = 900000,
 				capability = 3,
 				firepower = 1,
-				vCruise = RED_ESCORT_SEAD_VCRUISE,
+				vCruise = 230,
+				vAttack = 300,
+				hCruise = 7096,
+				hAttack = 7096,
+				standoff = nil,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 3,
+				stores = {
+					["pylons"] = {
+						[8] = {
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+							["num"] = 8,
+						},
+						[1] = {
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+							["num"] = 1,
+						},
+						[5] = {
+							["CLSID"] = "{0519A264-0AB6-11d6-9193-00A0249B6F00}",
+							["num"] = 5,
+						},
+						[7] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 7,
+						},
+						[2] = {
+							["CLSID"] = "{7D7EC917-05F6-49D4-8045-61FC587DD019}",
+							["num"] = 2,
+						},
+					},
+					["fuel"] = "11700",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+
+			["Laser Illumination, R-60M*4, Fuel escort_laser_illumination_attacker"] = {
+				role = "escort_laser_illumination_attacker",
+				role_altitude = "normal",
+				coalition = "red",
+				attributes = {},
+				weapons = { -- task dedicated weapons										
+					["R-60M"] = 4,																		
+				},
+				weaponType = nil,
+				expend = "Auto",
+				day = true,
+				night = true,
+				adverseWeather = false,
+				range = 900000,
+				capability = 3,
+				firepower = 1,
+				vCruise = 230,
 				vAttack = 300,
 				hCruise = 7096,
 				hAttack = 7096,
@@ -6275,8 +6840,13 @@ db_loadouts = {
 				},
 			},
 		},
+
 		["Strike"] = {
+
 			["CAS Fab100*30"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
@@ -6332,7 +6902,11 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
+
 			["CAS Rockets S-8/80mm*6(20*6=120 rocket)"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -6393,6 +6967,9 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab1500*2 R-60*4"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -6445,6 +7022,9 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab250*8"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
@@ -6513,6 +7093,9 @@ db_loadouts = {
 				},
 			},
 			["BAI Fab250*4 R-60M*4"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -6574,6 +7157,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Fab-500*2 B-13*4 (4*5=20 S-13 rockets)"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -6635,9 +7221,12 @@ db_loadouts = {
 				},
 			},
 			["CAS S24/240mm.235kg.he.frag*6"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Structure", "SAM"},
@@ -6695,7 +7284,10 @@ db_loadouts = {
 				},
 			},
 			["CAS S25/340mm.480kg.pntr*2 Fuel*3"] = {
-				minscore = 0.5,
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
+				minscore = 0.3,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -6751,10 +7343,13 @@ db_loadouts = {
 				},
 			},
 			["CAS S25/340mm.480kg.pntr*6"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
+					["Escort"] = false,
+					["SEAD"] = false,
 				},
 				attributes = {"armor", "SAM"},
 				weaponType = "Rockets",
@@ -6811,6 +7406,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Fab-250*4 UB-32*4 S-5KO rockets"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.5,
 				support = {
 					["Escort"] = true,
@@ -7300,8 +7898,12 @@ db_loadouts = {
 	},
 
 	["A-50"] = { -- 1978 (primo volo) 1984 (entrata in servizio) SI in quanto in DCS non esiste un'altro AWACS per l'USSR
+
 		["AWACS"] = {
 			["Default"] = {
+				role = "AWACS",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -7332,8 +7934,13 @@ db_loadouts = {
 	},
 
 	["An-26B"] = {--1969 (primo volo) 1973 (entrata in servizio)
+
 		["Transport"] = {
+
 			["Default"] = {
+				role = "transporter",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -7366,11 +7973,16 @@ db_loadouts = {
 	},
 
 	["MiG-21Bis"] = {--1955 (primo volo) 1959 (entrata in servizio) inserire Kh-66, S-24 e/o S-21
+
 		["Anti-ship Strike"] = {
+
 			["Antiship IPW R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = true,
 					["Laser Illumination"] = false,
 				},
@@ -7389,7 +8001,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 2,
 				firepower = 2,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 230,
 				vAttack = 250,
 				hCruise = 5486.4,
 				hAttack = nil,
@@ -7428,6 +8040,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Antiship Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -7449,7 +8064,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 2,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 5000,
 				hAttack = 1000,
@@ -7488,6 +8103,9 @@ db_loadouts = {
 				},
 			},
 			["ASM -Kh66*2 Fuel - R-13M1"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -7507,7 +8125,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 3,
 				firepower = 4,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 250,
 				vAttack = 250,
 				hCruise = 6500,
 				hAttack = nil,
@@ -7659,7 +8277,65 @@ db_loadouts = {
 			},
 		},
 		["Escort"] = {
-			["IPW R-3R*2, R-3S*2, FT800L"] = {
+			["IPW R-3R*2, R-3S*2, FT800L escort attacker"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "red",
+				attributes = {},
+				weapons = { -- task dedicated weapons
+					["R-3R"] = 2, -- 														
+					["R-3S"] = 2, -- 														
+				},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 700000,
+				capability = 5,
+				firepower = 5,
+				vCruise = RED_ESCORT_FIGHTER_VCRUISE,
+				vAttack = 350,
+				hCruise = 7500,
+				hAttack = 5500,
+				standoff = 10000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 4,
+				stores = {
+					["pylons"] = {
+						[5] = {
+							["CLSID"] = "{R-3R}",
+							["num"] = 5,
+						},
+						[1] = {
+							["CLSID"] = "{R-3R}",
+							["num"] = 1,
+						},
+						[4] = {
+							["CLSID"] = "{R-3S}",
+							["num"] = 4,
+						},
+						[2] = {
+							["CLSID"] = "{R-3S}",
+							["num"] = 2,
+						},
+						[3] = {
+							["CLSID"] = "{PTB_800_MIG21}",
+							["num"] = 3,
+						},
+					}, ----end of ["pylons"]
+					["fuel"] = 2280,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["IPW R-3R*2, R-3S*2, FT800L escort bomber"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons
 					["R-3R"] = 2, -- 														
@@ -7768,6 +8444,9 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-250*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -7788,7 +8467,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 1,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 139,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 4000,
@@ -7827,6 +8506,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-100*8"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -7847,7 +8529,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 5,
 				firepower = 2,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 4000,
@@ -7886,6 +8568,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -7906,7 +8591,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 4000,
@@ -7945,9 +8630,12 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, UB16UM*2 (S-5M)"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft"},
@@ -7965,7 +8653,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 5500,
 				hAttack = nil,
@@ -8004,9 +8692,12 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft", "Structure"},
@@ -8024,7 +8715,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 5500,
 				hAttack = nil,
@@ -8063,6 +8754,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Cluster Bombs Soft BL-755*2 RBK-250*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -8081,7 +8775,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 4,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 130,
 				hCruise = 6500,
 				hAttack = 1000,
@@ -8124,10 +8818,13 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-5M*32 S-24*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
+						["Escort"] = false,
+						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
@@ -8186,6 +8883,9 @@ db_loadouts = {
 				},
 			},
 			["BAI ASM -Kh66*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -8205,7 +8905,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 250,
 				hCruise = 6500,
 				hAttack = nil,
@@ -8253,6 +8953,9 @@ db_loadouts = {
 	["Su-17M4"] = {--1967 (primo volo) 1972 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["IPW - AntishipStrike - FAB 500 M62*4"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -8271,7 +8974,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 3,
 				firepower = 9,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 140,
 				hCruise = 5500,
 				hAttack = 4000,
@@ -8308,6 +9011,9 @@ db_loadouts = {
 		},
 		["Strike"] = {			
 			["IPW - Strike - FAB 500 M62*4"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -8326,7 +9032,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -8361,6 +9067,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-250*16 R-60M*2"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -8380,7 +9089,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 8,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -8431,6 +9140,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-500*6 R-60M*2"] = {
+				role = "bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -8450,7 +9162,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 9,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -8501,6 +9213,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - RBK-500 PTAB-10-5*4"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -8519,7 +9234,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 8,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 140,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -8554,10 +9269,13 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - S-13*25"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = flase,
+						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
@@ -8572,7 +9290,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 140,
 				vAttack = 150,
 				hCruise = 7000,
 				hAttack = nil,
@@ -8607,9 +9325,12 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - S-24B*4"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
 				attributes = {"soft", "Structure", "SAM"},
@@ -8625,7 +9346,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -8660,10 +9381,13 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets S-25*4 R-60M*2 Fuel*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
+						["Escort"] = false,
+						["SEAD"] = false,
 					},
 				attributes = {"hard", "Structure"},
 				weaponType = "Rockets",
@@ -8679,7 +9403,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 4,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -8730,6 +9454,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets UB-32*4 (S-5 M) R-60M*2 Fuel*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -8749,7 +9476,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 12,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -8800,9 +9527,12 @@ db_loadouts = {
 				},
 			},
 			["CAS Rockets B-8*4 R-60M*2 Fuel*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
@@ -8819,7 +9549,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 8,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -8870,6 +9600,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Bombs FAB-100*24 R-60M*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -8889,7 +9622,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -8940,6 +9673,9 @@ db_loadouts = {
 				},
 			},
 			["CAS ASM Kh-25ML-MPR*4 R-60M*2 Fuel*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -8960,7 +9696,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 7,
 				firepower = 12,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 250,
 				hCruise = 7500,
 				hAttack = nil,
@@ -9012,7 +9748,10 @@ db_loadouts = {
 			},			
 		},
 		["SEAD"] = {
-			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2"] = {
+			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2 escort bomber normal altitude"] = {
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,				
 				attributes = {"SAM"},
 				weaponType = "ASM",
@@ -9028,7 +9767,77 @@ db_loadouts = {
 				range = 700000,
 				capability = 5,
 				firepower = 12,
-				vCruise = RED_ESCORT_SEAD_VCRUISE,
+				vCruise = 220,
+				vAttack = 250,
+				hCruise = 6500,
+				hAttack = nil,
+				standoff = nil,-- Kh-25MP range 40km
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] = {
+						[1] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [1]
+						[2] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [3]
+						[4] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [4]
+						[5] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [5]
+						[6] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [6]
+						[7] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{E86C5AA5-6D49-4F00-AD2E-79A62D6DDE26}",
+						}, -- end of [8]
+					}, ----end of ["pylons"]
+					["fuel"] = "3770",
+					["flare"] = 96,
+					["chaff"] = 96,
+					["gun"] = 100,
+				},
+			},
+
+			["ASM SEAD Kh-25MPU*4 R-60M*2 Fuel*2 escort bomber normal altitude"] = {
+				role = "escort_sead_bomber",
+				role_altitude = "high",
+				coalition = "red",
+				minscore = 0.0,				
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "All",
+				weapons = { -- task dedicated weapons				
+					["Kh-25MPU"] = 4, --??		
+					["R-60M"] = 2,									
+				},
+				attackType = "Dive",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 700000,
+				capability = 5,
+				firepower = 12,
+				vCruise = 220,
 				vAttack = 250,
 				hCruise = 6500,
 				hAttack = nil,
@@ -9084,6 +9893,9 @@ db_loadouts = {
 	["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
 		["Anti-ship Strike"] = {
 			["GA Kh-25MPL*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -9103,7 +9915,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 3,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 350,
 				hCruise = 9500,
 				hAttack = nil,
@@ -9144,6 +9956,9 @@ db_loadouts = {
 		},
 		["Strike"] = {			
 			["GA Kh-25MR*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -9163,7 +9978,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 250,
 				hCruise = 5500,
 				hAttack = nil,
@@ -9202,6 +10017,9 @@ db_loadouts = {
 				},
 			},
 			["GA Kh-25ML*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -9221,7 +10039,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 200,
 				vAttack = 250,
 				hCruise = 5500,
 				hAttack = nil,
@@ -9260,6 +10078,9 @@ db_loadouts = {
 				},
 			},
 			["BAI Laser KAB-500LG*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
@@ -9280,7 +10101,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 4,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 6000,
@@ -9319,6 +10140,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Heavy Cluster RBK-500-255*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -9338,7 +10162,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 2000,
@@ -9385,6 +10209,9 @@ db_loadouts = {
 				},
 			},
 			["CAS Light Cluster RBK-500-250*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
@@ -9404,7 +10231,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 2000,
@@ -9451,6 +10278,9 @@ db_loadouts = {
 				},
 			},								
 			["CAS Heavy Cluster KMGU-96r*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -9470,7 +10300,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 2000,
@@ -9509,6 +10339,9 @@ db_loadouts = {
 				},
 			},	
 			["BAI Fab-250*6 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -9528,7 +10361,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -9575,6 +10408,9 @@ db_loadouts = {
 				},
 			},	
 			["BAI Fab-500*2 Fab-250*2 R-60M*2 Fuel"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -9595,7 +10431,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 6,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 7500,
 				hAttack = 3000,
@@ -9642,6 +10478,9 @@ db_loadouts = {
 				},
 			},
 			["Rockets CAS B-8*4/80mm heat/ap(20*4=80 rockests"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -9660,7 +10499,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -9694,6 +10533,9 @@ db_loadouts = {
 				},
 			},
 			["Rockets CAS UB-32*4/57mm(32*4=128 rockets)"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -9712,7 +10554,7 @@ db_loadouts = {
 				range = 500000,
 				capability = 7,
 				firepower = 5,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 7500,
 				hAttack = nil,
@@ -9748,7 +10590,10 @@ db_loadouts = {
 			},			
 		},
 		["SEAD"] = {
-			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel"] = {
+			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel escort bomber normal altitude"] = {
+				role = "escort_sead_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,				
 				attributes = {"SAM"},
 				weaponType = "ASM",
@@ -9764,7 +10609,65 @@ db_loadouts = {
 				range = 500000,
 				capability = 5,
 				firepower = 6,
-				vCruise = RED_ESCORT_SEAD_VCRUISE,
+				vCruise = 220,
+				vAttack = 250,
+				hCruise = 7500,
+				hAttack = nil,
+				standoff = nil, -- Kh-25MP-MPU 40 km
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 10,
+				stores = {
+					["pylons"] = {
+						[2] = 
+						{
+							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
+						}, -- end of [2]
+						[3] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [3]
+						[5] = 
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, -- end of [5]
+						[7] = 
+						{
+							["CLSID"] = "{682A481F-0CB5-4693-A382-D00DD4A156D7}",
+						}, -- end of [7]
+						[8] = 
+						{
+							["CLSID"] = "{752AF1D2-EBCC-4bd7-A1E7-2357F5601C70}",
+						}, -- end of [8]
+					}, ----end of ["pylons"]
+					["fuel"] = "4500",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+
+			["Mig-27K SEAD Kh-25MPU*2 R-60M*2 Fuel escort attacker normal altitude"] = {
+				role = "escort_sead_attacker",
+				role_altitude = "normal",
+				coalition = "red",
+				minscore = 0.0,				
+				attributes = {"SAM"},
+				weaponType = "ASM",
+				expend = "All",
+				weapons = { -- task dedicated weapons				
+					["Kh-25MPU"] = 2,
+					["R-60M"] = 2,	
+				},
+				attackType = "Dive",
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 500000,
+				capability = 5,
+				firepower = 6,
+				vCruise = 220,
 				vAttack = 250,
 				hCruise = 7500,
 				hAttack = nil,
@@ -10022,6 +10925,9 @@ db_loadouts = {
 		},
 		["Escort"] = {
 			["R-24R*2, R-60M*4, Fuel"] = {
+				role = "escort_bomber",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-24R"] = 2,					
@@ -10035,7 +10941,7 @@ db_loadouts = {
 				range = 200000,
 				capability = 7,
 				firepower = 3,
-				vCruise = RED_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 200,
 				vAttack = 350,
 				hCruise = 7000,
 				hAttack = 8000,
@@ -10073,7 +10979,11 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-			["R-24R*1, R-24T*1, R-60M*4, Fuel"] = {
+
+			["R-24R*1, R-24T*1, R-60M*4, Fuel escort attacker at normal altitude"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-24R"] = 1,
@@ -10088,7 +10998,63 @@ db_loadouts = {
 				range = 200000,
 				capability = 7,
 				firepower = 3,
-				vCruise = RED_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 250,
+				vAttack = 350,
+				hCruise = 7000,
+				hAttack = 8000,
+				standoff = 20000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[2] =
+						{
+							["CLSID"] = "{6980735A-44CC-4BB9-A1B5-591532F1DC69}",
+						}, --end of [2]
+						[3] =
+						{
+							["CLSID"] = "{B0DBC591-0F52-4F7D-AD7B-51E67725FB81}",
+						}, --end of [3]
+						[4] =
+						{
+							["CLSID"] = "{A5BAEAB7-6FAF-4236-AF72-0FD900F493F9}",
+						}, --end of [4]
+						[5] =
+						{
+							["CLSID"] = "275A2855-4A79-4B2D-B082-91EA2ADF4691}",
+						}, --end of [5]
+						[6] =
+						{
+							["CLSID"] = "{CCF898C9-5BC7-49A4-9D1E-C3ED3D5166A1}",
+						}, --end of [6]
+					}, ----end of ["pylons"]
+					["fuel"] = "3800",
+					["flare"] = 60,
+					["chaff"] = 60,
+					["gun"] = 100,
+				},
+			},
+			["R-24R*1, R-24T*1, R-60M*4, Fuel escort attacker at low altitude"] = {
+				role = "escort_attacker",
+				role_altitude = "low",
+				coalition = "red",
+				attributes = {},
+				weapons = { -- task dedicated weapons				
+					["R-24R"] = 1,
+					["R-24T"] = 1,
+					["R-60M"] = 4,
+				},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = true,
+				adverseWeather = true,
+				range = 200000,
+				capability = 7,
+				firepower = 3,
+				vCruise = 250,
 				vAttack = 350,
 				hCruise = 7000,
 				hAttack = 8000,
@@ -10237,6 +11203,9 @@ db_loadouts = {
 		},
 		["Strike"] = {			
 			["GA FAB-500*2 R-60M*2 FUEL 800*1"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -10256,7 +11225,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 3,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 6000,
 				hAttack = 4000,
@@ -10295,6 +11264,9 @@ db_loadouts = {
 				},
 			},
 			["GA FAB-250*2 R-60M*2 FUEL 800*1"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -10314,7 +11286,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 3,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 6000,
 				hAttack = 4000,
@@ -10353,6 +11325,9 @@ db_loadouts = {
 				},
 			},
 			["GA S-8KOM*40 R-60M*2 FUEL 800*1b"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -10372,7 +11347,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 3,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 160,
 				vAttack = 160,
 				hCruise = 6000,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -10411,6 +11386,9 @@ db_loadouts = {
 				},
 			},
 			["GA S-5KO*64 R-60M*2 FUEL 800*1b"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -10430,7 +11408,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 3,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 6000,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -10765,6 +11743,9 @@ db_loadouts = {
 		},
 		["Escort"] = {
 			["R-40R*4"] = {
+				role = "escort_bomber",
+				role_altitude = "high",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-40R"] = 4,				
@@ -10812,6 +11793,9 @@ db_loadouts = {
 				},
 			},
 			["R-40R*2, R-40T*2"] = {
+				role = "escort_bomber",
+				role_altitude = "supersonic",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-40R"] = 2,
@@ -10863,8 +11847,13 @@ db_loadouts = {
 	},
 
 	["MiG-25RBT"] = {--1964 (primo volo) 1970 (entrata in servizio)
+		
 		["Reconnaissance"] = {
+
 			["R-40R*4"] = {
+				role = "recon",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = {
 					["R-40R"] = 4,
@@ -10914,6 +11903,9 @@ db_loadouts = {
 		},
 		["AWACS"] = {
 			["Default"] = {
+				role = "AWACS",
+				role_altitude = "normal",
+				coalition = "red",
 				support = {
 					["Escort"] = false,
 					["SEAD"] = false,
@@ -11120,6 +12112,9 @@ db_loadouts = {
 		},
 		["Escort"] = {
 			[" Escort IPW K-13A*2, PTB-760*2"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-3S"] = 2,
@@ -11132,7 +12127,7 @@ db_loadouts = {
 				range = 450000,
 				capability = 2,
 				firepower = 1,
-				vCruise = RED_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 200,
 				vAttack = 346.66666666667,
 				hCruise = 7096,
 				hAttack = 7096,
@@ -11234,7 +12229,11 @@ db_loadouts = {
 				},
 		},
 		["Anti-ship Strike"] = {
+
 			["IPW - Strike - K-13A*2, FAB-250*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -11298,9 +12297,12 @@ db_loadouts = {
 				}, --end of ["AddPropAircraft"]
 			},
 			["Antiship IPW - Strike SR - K-13A*2, ORO-57K*4"] = {
+					role = "attacker",
+					role_altitude = "low",
+					coalition = "red",
 					minscore = 0.3,
 					support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 						["Laser Illumination"] = false,
 					},
@@ -11371,6 +12373,9 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["IPW - Strike - K-13A*2, FAB-250*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
@@ -11390,7 +12395,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 1,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5486.4,
 				hAttack = 2000,
@@ -11433,9 +12438,12 @@ db_loadouts = {
 				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike SR - K-13A*2, ORO-57K*4"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
+					["Escort"] = false,
 					["SEAD"] = false,
 				},
 				attributes = {"soft", "Parked Aircraft"},
@@ -11452,7 +12460,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 1,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5486.4,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -11503,7 +12511,10 @@ db_loadouts = {
 				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike - K-13A*2, PTB-760*2, FAB-250*2"] = {
-				minscore = 0.3,
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -11522,7 +12533,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 1,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5486.4,
 				hAttack = 1000,
@@ -11573,7 +12584,10 @@ db_loadouts = {
 				}, --end of ["AddPropAircraft"]
 			},
 			["IPW - Strike - K-13A*2, PTB-760*2, ORO-57K*2"] = {
-				minscore = 0.3,
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = true,
@@ -11592,7 +12606,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 1,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 5486.4,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -11648,6 +12662,9 @@ db_loadouts = {
 	["Il-76MD"] = {--1971 (primo volo) 1974 (entrata in servizio)
 		["Transport"] = {
 			["Default"] = {
+				role = "transporter",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weaponType = nil,
 				expend = nil,
@@ -11682,7 +12699,10 @@ db_loadouts = {
 	["L-39C"] = {--1968 (primo volo) 1971 (entrata in servizio)
 		["Anti-ship Strike"] = {
 			["Antiship IPW R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
-				minscore = 0.3,
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
+				minscore = 0.2,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -11703,7 +12723,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 2,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 5486.4,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -11742,7 +12762,10 @@ db_loadouts = {
 				},
 			},
 			["IPW - Antiship Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
-				minscore = 0.3,
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
+				minscore = 0.1,
 				support = {
 					["Escort"] = true,
 					["SEAD"] = false,
@@ -11763,7 +12786,7 @@ db_loadouts = {
 				range = 650000,
 				capability = 1,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5000,
 				hAttack = 2000,
@@ -11911,7 +12934,10 @@ db_loadouts = {
 			},
 		},
 		["Escort"] = {
-			["IPW R-3R*2, R-3S*2, FT800L"] = {
+			["IPW R-3R*2, R-3S*2, FT800L escort attacker at normal altitude"] = {
+				role = "escort_attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				attributes = {},
 				weapons = { -- task dedicated weapons				
 					["R-3R"] = 2,
@@ -11925,7 +12951,62 @@ db_loadouts = {
 				range = 700000,
 				capability = 1,
 				firepower = 1,
-				vCruise = RED_ESCORT_FIGHTER_VCRUISE,
+				vCruise = 200,
+				vAttack = 350,
+				hCruise = 7500,
+				hAttack = 5500,
+				standoff = 10000,
+				tStation = nil,
+				LDSD = false,
+				self_escort = false,
+				sortie_rate = 6,
+				stores = {
+					["pylons"] = {
+						[5] = {
+							["CLSID"] = "{R-3R}",
+							["num"] = 5,
+						},
+						[1] = {
+							["CLSID"] = "{R-3R}",
+							["num"] = 1,
+						},
+						[4] = {
+							["CLSID"] = "{R-3S}",
+							["num"] = 4,
+						},
+						[2] = {
+							["CLSID"] = "{R-3S}",
+							["num"] = 2,
+						},
+						[3] = {
+							["CLSID"] = "{PTB_800_MIG21}",
+							["num"] = 3,
+						},
+					}, ----end of ["pylons"]
+					["fuel"] = 2280,
+					["flare"] = 0,
+					["chaff"] = 0,
+					["gun"] = 100,
+				},
+			},
+			["IPW R-3R*2, R-3S*2, FT800L escort attacker at low altitude"] = {
+				role = "escort_attacker",
+				role_altitude = "low",
+				coalition = "red",
+				attributes = {},
+				weapons = { -- task dedicated weapons				
+					["R-3R"] = 2,
+					["R-3S"] = 2,
+				},
+				weaponType = nil,
+				expend = nil,
+				day = true,
+				night = false,
+				adverseWeather = false,
+				range = 700000,
+				capability = 1,
+				firepower = 1,
+				vCruise = 200,
 				vAttack = 350,
 				hCruise = 7500,
 				hAttack = 5500,
@@ -12020,6 +13101,9 @@ db_loadouts = {
 		},
 		["Strike"] = {
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-250*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -12040,7 +13124,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 4,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 3000,
@@ -12079,6 +13163,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-100*8"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -12099,7 +13186,7 @@ db_loadouts = {
 				range = 300000,
 				capability = 4,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 3000,
@@ -12138,6 +13225,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, FAB-500*2"] = {
+				role = "attacker",
+				role_altitude = "normal",
+				coalition = "red",
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
@@ -12158,7 +13248,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 4,
 				firepower = 3,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 130,
 				vAttack = 130,
 				hCruise = 5500,
 				hAttack = 3000,
@@ -12197,6 +13287,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, UB16UM*2"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -12217,7 +13310,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 4,
 				firepower = 2,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 1500,
 				hAttack = nil, -- DC_Firepower Calculation
@@ -12256,6 +13349,9 @@ db_loadouts = {
 				},
 			},
 			["IPW - Strike - R-3R*1, R-3S*1, FT800L, S-24B*2"] = {
+				role = "attacker",
+				role_altitude = "low",
+				coalition = "red",
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
@@ -12276,7 +13372,7 @@ db_loadouts = {
 				range = 700000,
 				capability = 4,
 				firepower = 2,
-				vCruise = RED_ATTACKER_VCRUISE,
+				vCruise = 150,
 				vAttack = 150,
 				hCruise = 1500,
 				hAttack = nil, -- DC_Firepower Calculation
