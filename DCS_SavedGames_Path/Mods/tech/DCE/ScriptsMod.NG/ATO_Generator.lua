@@ -8,9 +8,10 @@ end
 
                -- VERSION --
 
-versionDCE["ATO_Generator.lua"] = "OB.1.0.0"
+versionDCE["ATO_Generator.lua"] = "OB.1.0.2"
 
 -------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.2: implements compute cruise parameters code
 -- Old_Boy rev. OB.1.0.1: implements compute firepower code
 -- Old_Boy rev. OB.1.0.0: implements logging code 
 -- Old_Boy rev. OB.0.0.1: implements code for Logistic 
@@ -144,7 +145,9 @@ log.debug("Start")
 
 require("Init/db_aircraft")
 
-local WEIGHT_SCORE_FOR_LOADOUT_COST = {
+-- SETTING 
+
+local WEIGHT_SCORE_FOR_LOADOUT_COST = {									-- weight for weapon cost in mission score calculus (0 .. 1)
 
 	["Strike"] = 0.3,
 	["Anti-ship Strike"] = 0.1,
@@ -155,23 +158,22 @@ local WEIGHT_SCORE_FOR_LOADOUT_COST = {
 	["Fighter Sweep"] = 0.2,
 	["Reconnaissance"] = 0.1,
 }
+local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 								-- weight for aircraft cost in mission score calculus (0 .. 1) 
 
-local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 												-- (max 1 -- min 0) weight factor for aircraft cost in score calculus
-
-	["Fighter"] = 0.3, -- percentage
-	["Attacker"] = 0.5, -- 
-	["Bomber"] = 0.2, -- 
-	["Transporter"] = 0.1, -- 
-	["Reco"] = 0.2, -- 
-	["Refueler"] = 0.1, -- 
-	["AWACS"] = 0.1, -- 
-	["Helicopter"] = 0.2, -- 
+	["Fighter"] = 0.3, 
+	["Attacker"] = 0.5,  
+	["Bomber"] = 0.2,  
+	["Transporter"] = 0.1, 
+	["Reco"] = 0.2, 
+	["Refueler"] = 0.1,  
+	["AWACS"] = 0.1, 
+	["Helicopter"] = 0.2, 
 }
 local ESCORT_NUMBER_MULTIPLIER = 3										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
 local MINIMUM_VALUE_OF_AIR_THREAT = 0.5									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
 local FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
 local SCORE_INFLUENCE_ROUTE_THREAT = 1									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
-local FACTOR_FOR_REDUCE_SCORE = 0.01 									-- factor for reduce_score in CAP (score = score - redice_score * factor)
+local FACTOR_FOR_REDUCE_SCORE = 0.01 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
 local MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5  -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
 local MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5						-- min total air threat level to authorize support escort flight (default = 0.5)

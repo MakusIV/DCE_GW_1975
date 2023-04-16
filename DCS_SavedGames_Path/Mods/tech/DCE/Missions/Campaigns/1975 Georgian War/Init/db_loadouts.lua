@@ -2,6 +2,7 @@
 
 
 ---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.2: implements compute loadouts cruise parameters code (property)
 -- Old_Boy rev. OB.1.0.1: implements compute firepower code (property)
 -------------------------------------------------------------------------------------------------------
 
@@ -81,105 +82,12 @@
 	},
 },
 
-]]-----------------------------------------------------------------------------------------------------
-
---[[ 
-	
-
--.- general guideline for capablity & firepower assignment
-
--- Fighter:  F-14A, Mig-21, Mig-23,       
--- Attacker: L-39C, F-4E, F-5E, AJS37, Mig-27, Su-17,          
--- Bomber: Tu-22M, B-52H, Su-24
-
--- strike fighter capability: 1-3
--- strike fighter firepower: 1*weapon firepower
-
--- strike attacker capability: 5-7
--- strike attacker firepower: 1.7*weapon firepower
-
--- strike bomber capability: >9
--- strike bomber firepower: 2.5*weapon firepower
-
-
--- weapon firepower (fighter-attack-bomber)
--- m/71, mk-82, fab-100, fab-250 unit: 4 weapon = 1fp 
--- fab-250 unit: 2 weapon = 1fp 
--- m/75, mk-83, fab 500, KAB 500, GBU-10 unit: 2 weapon = 3fp
--- mk-84 unit: 1 weapon = 3fp
--- mk-20(CBU), BK90 (CBU): 1 weapon = 2fp
--- fab-1500 unit: 1 weapon = 7fp
--- rockets unit: 6 rockets = 1fp
--- rockets heavy unit: 1 rockets = 1fp
--- ASM unit: 1 weapon = 3 fp 
-
-
-
--- specific capablity & firepower assignment
-
-general capability/firepower aircraft 10 max 1 min
-capability F-14A: intercept=9, sweep=9, cap=8, escort=8, strike=5
-capability AJS37: intercept=1, sweep=1, cap=1, escort=1, strike=8, antiship=8, sead=7
-capability F-5E: intercept=2, sweep=1, cap=2, escort=2, strike=4, antiship=1
-capability F-4E: intercept=7, sweep=6, cap=6, escort=6, strike=6, antiship=1, sead=10
-capability S-3B: strike=7, antiship=8, sead=6
-
-capability Mig-21Bis: intercept=7, sweep=6, cap=5, escort=5, strike=5, antiship=1
-capability Mig-25MLD (o PD??): intercept=10, sweep=7, cap=8, escort=2
-capability Mig-25RBT: Reconnaissance=5, AWACS=5
-capability Mig-19: intercept=2, sweep=1, cap=2, escort=2, strike=1, antiship=1
-capability L-39C: intercept=2, sweep=1, cap=2, escort=1, strike=4, antiship=1
-capability Su-24M: strike=8, antiship=6, sead=8
-capability Su-24MR:Reconnaissance=8
-capability Su-17: strike=7, antiship=3, sead=5
-capability Mig-27K: strike=7, antiship=3, sead=5
-capability Mig-23: intercept=7, sweep=7, cap=7, escort=7, strike=3
-
-note:
-To set missions with routes that evade radars you must first act on the 
-attack altitude (hattack) < 100 if the weapons allow use at this altitude, 
-otherwise you must set the travel altitude (hcruise) < 100
-
-
-ridefine firepower:
-bomb: 
-attributes: soft, SAM, Parked Aircraft
-light bomb (attributes: soft, parked aircraft) : firepower: 1, 1 lb for single target unit
-medium bomb (attributes: SAM, parked aircraft, armor) : firepower: 1, 1 mb for single target unit
-heavy bomb (attributes: structure, bridge) : firepower: 1,  1 hb for single target unit
-cluster bomb (attributes: soft, parked aircraft): firepower: 1, 1 cb for any 3 target unit 
-heavy cluster bomb (attributes: soft, parked aircraft): firepower: 1 hcb for any 3 target unit 
-rockets(attributes: parked aircraft, soft): firepower: 2, 2 rkt for single target unit
-heavy rockets(attributes: SAM, armor): firepower: 1, 1 rkt for single target unit
-missile a2g(attributes: SAM, armor): firepower: 1, 1 m for single target unit
-missile a2g(ship, structure, bridge): firepower: 3, 3 m for single target unit
-missile antiship (ship): firepower 1, 1 m for single ship target
-missile antiradar (SAM, EWR): firepower 1, 1 m for single SAM or EWR target
-
-taskWeaponInfo = {
-
-	[1] = {
-		["name"] = "Mk-84",
-		["quantity"] = 2,
-	}
-		
-	[2] = {
-		["name"] = "Mk 20 cluster",
-		["quantity"] = 3,
-	}
-}
-
-implementato in S-3B
-
-]]
-
-
-
-
 -- nota: bomber veloci trovano una scorta veloce iterando nelle unit quindi non devi necessariemente vincolare tutte le v dei fighter, alcuni possono essere fissate più alte in modo da essere utilizzati solo con quei standoff range > 15000m, optimal egrees should be in direction of home base, egress starts from attack point, egress_distance: 
 -- [escort_high_speed_loadout] = ....
+--> escort_num = aircraft_availability[unit[n].name].available 
 
- --> escort_num = aircraft_availability[unit[n].name].available 
+
+]]-----------------------------------------------------------------------------------------------------
 
 
 db_loadouts = {
