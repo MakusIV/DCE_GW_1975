@@ -1474,37 +1474,53 @@ for sideS, draftT in pairs(draft_sorties) do
 
 																--recalculate threat level for sortie adjusted by number of escort
 																local route_threat_recalc = 0.5														--recalculated route threat with escort in place (0.5 == no threat)
+
 																if task == "SEAD" then
-																	local escort_offset = escort_num * unit_loadouts[l].capability					--number of available SEAD to offset threats
+																	-- local escort_offset = escort_num * unit_loadouts[l].capability					--number of available SEAD to offset threats
+																	local escort_offset = escort_num * unit_loadouts[l].firepower					-- number of available SEAD to offset threats
+																	if active_log then log.traceLow("recalculate threat level for sortie adjusted by number of escort (task: SEAD) - number of available SEAD to offset threats: " .. escort_offset .. ", route_threat_recalc: " .. route_threat_recalc ) end																
+																	
+
 																	for k,v in pairs(draft.route.threats.ground) do									--iterate through route ground threats
+																		
 																		if v.offset > 0 then														--if threat can be offset by SEAD
+
 																			if escort_offset >= v.offset then										--some SEAD aircraft remain to offset the threat
 																				escort_offset = escort_offset - v.offset							--use these SEAD aircraft to offset and ignore the therat
+																			
 																			else																	--no SEAD aircraft remain unassignedd
 																				route_threat_recalc = route_threat_recalc + v.level					--sum route ground threat levels
 																			end
+																		
 																		else																		--threat cannot be offset by SEAD
 																			route_threat_recalc = route_threat_recalc + v.level						--sum route ground threat levels
 																		end
 																	end
 																	draft.route.threats.ground_total = route_threat_recalc			--recalculated total route grund threat
+																	if active_log then log.traceLow("recalculate threat level for sortie adjusted by number of escort (task: SEAD)- update number of available SEAD to offset threats: " .. escort_offset .. ", update route_threat_recalc: " .. route_threat_recalc ) end																
+																
 																elseif task == "Escort" then
 																	local escort_offset_level = unit_loadouts[l].capability * unit_loadouts[l].firepower		--threat level that each fighter escort can offset
-																	route_threat_recalc = draft.route.threats.air_total - escort_offset_level * escort_num			--recalculated total route air threat
+																	route_threat_recalc = draft.route.threats.air_total - escort_offset_level * escort_num			--recalculated total route air threat																	
+																	
 																	if route_threat_recalc < 0.5 then
 																		route_threat_recalc = 0.5
 																	end
 																	draft.route.threats.air_total = route_threat_recalc
+																	if active_log then log.traceLow("recalculate threat level for sortie adjusted by number of escort (task: Escort)- threat level that each fighter escort can offset: " .. escort_offset_level .. ", route_threat_recalc: " .. route_threat_recalc ) end																
+																
 																elseif task == "Escort Jammer" then
 																--ADD RECALCULATED THREAT LEVEL WITH ESCORT JAMMERS
 																end
 															
 																local route_threat = draft.route.threats.ground_total + draft.route.threats.air_total		--combine adjusted ground and air threat levels (1 equald no threat)
-																draft.score = draft.loadout.capability * draft.target.priority / route_threat		--calculate the score to measure the importance of the sortie		
+																draft.score = draft.loadout.capability * draft.target.priority / route_threat		--calculate the score to measure the importance of the sortie	
+																if active_log then log.traceLow("calculate total route threat level (air: " .. draft.route.threats.ground_total .. " + ground: " .. draft.route.threats.air_total .. ") for this sortie: " .. route_threat .. ", calculated sortie score = loadout.capability: " .. draft.loadout.capability .. " * targte.priority: " .. draft.target.priority .. " / route threat =  " .. draft.score ) end																	
 
 																--ATO_G_adjustment02
 																if unit[n].tasksCoef and unit[n].tasksCoef[task] then
 																	draft.score = draft.score * unit[n].tasksCoef[task]															
+																	if active_log then log.traceLow("update sortie score = score * unit[n].tasksCoef[task]: " .. unit[n].tasksCoef[task] .. "  =  " .. draft.score ) end																	
 																end
 																
 																-- miguel21 modification M11.r multiplayer
