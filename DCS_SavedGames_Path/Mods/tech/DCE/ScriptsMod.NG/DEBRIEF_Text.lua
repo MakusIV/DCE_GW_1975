@@ -12,6 +12,7 @@ end
 versionDCE["DEBRIEF_Text.lua"] = "OB.1.0.0"
 
 ---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: added Base Efficiency and Reserves Efficiency in stats
 -- Old_Boy rev. OB.1.0.0: added friendly_kills in stats
 ---------------------------------------------------------------------------------------------------------
 
