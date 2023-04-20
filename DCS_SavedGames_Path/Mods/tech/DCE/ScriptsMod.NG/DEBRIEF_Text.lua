@@ -15,6 +15,28 @@ versionDCE["DEBRIEF_Text.lua"] = "OB.1.0.0"
 -- Old_Boy rev. OB.1.0.0: added friendly_kills in stats
 ---------------------------------------------------------------------------------------------------------
 
+local function getEfficiency(base, side)
+	
+	if airbase_tab[side][base] then		
+		local efficiency = airbase_tab[side][base].efficiency * 100
+		
+		if efficiency then
+			local efficiencyStr = tostring(efficiency)	
+			local histogram = ""
+			local maxNumLeght = 3
+			local SpaceSep = 2
+			local space = string.sub("                              ", 1, maxNumLeght + SpaceSep - string.len(efficiencyStr))
+
+			if efficiency < 1 then
+				histogram = string.sub("##########", 1, math.ceil(10 * (1 - efficiency)))
+			end		
+			return efficiencyStr .. space .. histogram
+		end
+	end
+	return "-"
+end
+
+
 debriefing = ""																						--Global debriefing text string. Will be used in DEBRIEF_Master.lua to write debriefing txt file with notepad
 
 -- header ---------------------------------------------------------------------------------- 
@@ -716,6 +738,14 @@ do
 				header = "Ready",
 				values = {},
 			},
+			[10] = {
+				header = "Base Efficiency(%)",
+				values = {},
+			},
+			[11] = {
+				header = "Reserves Efficiency(%)",
+				values = {},
+			},
 		}
 	
 		--add list values
@@ -723,7 +753,11 @@ do
 			if unit.inactive ~= true then																								--unit is active
 				table.insert(entries[side_name][1].values, unit.name)																	--unit name
 				table.insert(entries[side_name][2].values, ReplaceTypeName(unit.type))													--unit type
-				table.insert(entries[side_name][3].values, unit.base)																	--unit base
+				table.insert(entries[side_name][3].values, unit.base)
+				table.insert(entries[side_name][10].values, getEfficiency(unit.base, side_name))
+				table.insert(entries[side_name][11].values, getEfficiency("Reserves-R/" .. unit.name, side_name))
+				
+				--unit base
 				if unit.score_last.kills_air > 0 then
 					table.insert(entries[side_name][4].values, unit.score.kills_air .. " (+" .. unit.score_last.kills_air .. ")")		--unit air kills plus score from this mission
 				else

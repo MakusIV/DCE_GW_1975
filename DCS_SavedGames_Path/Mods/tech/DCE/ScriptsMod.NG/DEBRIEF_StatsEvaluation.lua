@@ -17,11 +17,14 @@ versionDCE["DEBRIEF_StatsEvalutation.lua"] = "OB.1.0.0"
 ---------------------------------------------------------------------------------------------------------
 
 local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
-log.level = LOGGING_LEVEL
+local log_level = LOGGING_LEVEL -- "traceVeryLow" --
+local function_log_level = log_level
+log.activate = false
+log.level = log_level 
 log.outfile = LOG_DIR .. "LOG_DEBRIEF_StatEvalutation." .. camp.mission .. ".log" 
-local local_debug = true -- local debug   
-log.info("Start")
-
+local local_debug = false -- local debug   
+local active_log = false
+log.debug("Start")
 
 -- ================== Local Function ================================================
 
@@ -236,6 +239,10 @@ end
 log.info("End track stats for player package =======================================================")														
 
 
+
+activateLog(true, true, log, "traceVeryLow")  --     ##############################################      DEBUG      ##############################################################
+
+
 --prepare client stats
 log.info("Start prepare client stats =======================================================")														
 
@@ -247,6 +254,7 @@ for e = 1, #events do																					--iterate through all events
 		log.debug("client_control[" .. events[e].initiator .. "] = " .. events[e].initiatorPilotName)
 	end
 end
+log.traceVeryLow("\n\nevents table:\n" .. inspect(events) .. "\n\n")
 log.info("End prepare client stats =======================================================")														
 
 --evaluate log events
@@ -274,7 +282,7 @@ for e = 1, #events do
 		end	
 		
 		
-	elseif events[e].type == "crash" then
+	elseif events[e].type == "crash" then		
 		log.debug("event["..e.."] == crash. Iterated oob_air for search initiator air unit in oob_air for storing stats")																
 		--oob loss update for crashed aircraft
 		local crash_side																				--local variable to store the side of the crashed aircraft
@@ -327,11 +335,11 @@ for e = 1, #events do
 						log.debug("found initiator: " .. events[e].initiator .. " in oob_air: " .. killer_unit.name)
 						
 						if crash_side ~= killer_side_name then --make sure that hitting unit and crashed aircraft are not on same side (friendly fire is not awarded as kill)
-							log.debug("iniziator (hitting killer) unit have different side of the crashed air unit - crash_side: " .. crash_side .. " ~= killer_side_name: " .. killer_side_name)							
+							log.debug("iniziator (hitting killer) unit have different side of the crashed air unit - crash_side: " .. (crash_side or "nil") .. " ~= killer_side_name: " .. (killer_side_name or "nil"))							
 							killer_unit.score.kills_air = killer_unit.score.kills_air + 1				--award air kill to air unit
 							killer_unit.score_last.kills_air = killer_unit.score_last.kills_air + 1		--increase kill counter for this mission of air unit						
 							log.debug("store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.kills_air and killer_unit.score_last.kills_air (" .. killer_unit.score.kills_air .. ", " .. killer_unit.score_last.kills_air .. ") - decrease killer_unit.roster.ready and killer_unit.score_last.ready (" .. killer_unit.roster.ready .. ", " ..  killer_unit.score_last.ready .. ")")
-							AddPackstats(hit_table[events[e].initiator], "kill_air")					--check if kill was in player package							
+							AddPackstats(hit_table[events[e].initiator], "kill_air")					--check if kill was in player package														
 							
 							--client stats for kills
 							if client_hit_table[events[e].initiator] then								--if crashed aircraft was hit by a client
@@ -360,7 +368,14 @@ for e = 1, #events do
 		end		
 		hit_table[events[e].initiator] = nil															--once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged.
 		log.debug("once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged - hit_table[" .. events[e].initiator .. "] = nil")
-			
+
+
+
+		
+		activateLog(false, true, log, log_level) --     ##############################################      DEBUG      ##############################################################	
+
+
+
 	elseif events[e].type == "eject" then
 		--client stats for ejections
 		if client_control[events[e].initiator] then														--if ejected pilot is a client

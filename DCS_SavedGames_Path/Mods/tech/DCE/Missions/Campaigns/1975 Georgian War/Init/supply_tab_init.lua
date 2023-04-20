@@ -81,8 +81,11 @@ supply_tab = {
 				['Mineralnye-Vody Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {					
-						['Reserves-3./19.IAP'] = true,
-						['Reserves-3./31.IAP'] = true,							
+						['Reserves-R/41.IAP'] = true,			
+						['Reserves-R/133.IAP'] = true,			
+						['Reserves-R/135.IAP'] = true,	
+						['Reserves-R/29.OSAP'] = true,		
+															
 					},
 				},			
 			},
@@ -93,20 +96,24 @@ supply_tab = {
 				['Beslan Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Reserves-3./19.IAP'] = true,
-						['Reserves-2./17.IAP'] = true,
+						['Reserves-R/37.IAP'] = true,
+						['Reserves-R/127.IAP'] = true,
+						['Reserves-R/123.IAP'] = true,
+						['Reserves-R/115AS.IAP'] = true,
 					},
 				},
 				['BESLAN-NOGIR FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
 						["NOGIR FARP MN76"] = true,
+						['Reserves-R/1st GHR'] = true,
 					},
 				},
 				['BESLAN-LENIGORI FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
 						["LENIGORI FARP MM56"] = true,
+						['Reserves-R/13th GHR'] = true,
 					},
 				},		
 				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
@@ -122,15 +129,18 @@ supply_tab = {
 			['supply_line_names'] = {
 				['Nalchik Airbase'] = {
 					['integrity'] = 1,
-					['airbase_supply'] = {					
-						['Reserves-2./14.IAP'] = true,	
-						['Reserves-R./41.IAP'] = true,					
+					['airbase_supply'] = {	
+						['Reserves-R/19.IAP'] = true,				
+						['Reserves-R/107.IAP'] = true,				
+						['Reserves-R/111AS.IAP'] = true,	
+						['Reserves-R/13.OSAP'] = true,	
 					},
 				},	
 				['NALCHIK-TSKHINVALI FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
 						["TSKHINVALI FARP MM17"] = true,
+						['Reserves-R/2nd GHR'] = true,	
 					},
 				},				
 			},
@@ -141,8 +151,42 @@ supply_tab = {
 				['Mozdok Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
-						['Reserves-R./81.IAP'] = true,
-						['Reserves-R./61.IAP'] = true,
+						['Reserves-R/117.IAP'] = true,
+						['Reserves-R/113.IAP'] = true,						
+					},
+				},				
+			},
+		},		
+		['Krasnodar-Center Airbase'] = {
+			['integrity'] = 1,
+			['supply_line_names'] = {
+				['Krasnodar-Center Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {													
+						['Reserves-R/159.IAP'] = true,	
+						['Reserves-R/25.OSAP'] = true,		
+															
+					},
+				},	
+				['Maykop-Khanskaya Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {						
+						['Reserves-R/81.IAP'] = true,
+						['Reserves-R/61.IAP'] = true,
+						['Reserves-R/27.OSAP'] = true,								
+						['Reserves-R/115.IAP'] = true,
+					},
+				},
+				['Anapa-Vityazevo Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {												
+						['Reserves-R/23.OSAP'] = true,														
+					},
+				},	
+				['Sochi-Adler Airbase'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {												
+						['Reserves-R/23.OSAP'] = true,														
 					},
 				},				
 			},
@@ -155,7 +199,7 @@ supply_tab = {
 				['Bridge Supply Line Marneuli - Tbilisi'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {	
-						['GORI FARP MM25'] = true,										
+						['GORI FARP MM25'] = true,																	
 					},
 				},
 				['Rail Bridge Dapnari-KM76'] = {
@@ -249,10 +293,11 @@ supply_tab = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
 						['CVN-71 Theodore Roosevelt'] = true,
-						['Kutaisi'] = true,												
-						['Reserves-R/VFA-106'] = true,						
-						['Reserves-R/335 TFS'] = true,
-						['Reserves-R/13 TFS'] = true,							
+						['Kutaisi'] = true,																					
+						['Reserves-R/VF-101'] = true,			
+						['Reserves-R/VAW-125'] = true,			
+						['Reserves-R/VS-27'] = true,								
+						['Reserves-R/VS-21'] = true,															
 					},
 				},
 			},
@@ -264,9 +309,10 @@ supply_tab = {
 					['integrity'] = 1,
 					['airbase_supply'] = {	
 						['CVN-74 John C. Stennis'] = true,					
-						['Batumi'] = true,	
-						['Reserves-R/VF-101'] = true,			
-						['Reserves-VMA 331'] = true,						
+						['Batumi'] = true,									
+						['Reserves-R/VF-118/GA'] = true,																					
+						['Reserves-R/VS-22'] = true,																						
+						['Reserves-R/VMFA-159'] = true,						
 						['Reserves-R/58 TFS'] = true,						
 					},
 				},
@@ -278,35 +324,35 @@ supply_tab = {
 				['Kutaisi Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Kutaisi'] = true,
-						['Reserves-F21'] = true,						
-						['Reserves-R/171 ARW'] = true,
-						['Reserves-R/58 TFS'] = true,						
+						['Kutaisi'] = true,												
+						['Reserves-R/F7'] = true,												
 					},
 				},			
 			},
 		},
-		['Kobuleti Airbase'] = { -- watch! Kobuleti not exists in oob_air_init. Delete it or insert an air groub with base = Kobuleti
+		['Kobuleti Airbase'] = { 
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['Kobuleti Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {
-						['Kobuleti'] = true,											
+						['Kobuleti'] = true,	
+						--['69 BS'] = true,
+						['Reserves-R/69 BS'] = true,										
 					},
 				},
 			},
-		},
+		},		
 		['Batumi Airbase'] = {
 			['integrity'] = 1,
 			['supply_line_names'] = {
 				['Batumi Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {	
-						['Batumi'] = true,						
-						['Reserves-F21'] = true,
-						['Reserves-R/171 ARW'] = true,	
-						['Reserves-EC 2/12'] = true,											
+						['Batumi'] = true,																		
+						['Reserves-R/VMFA-151'] = true,						
+						['Reserves-R/VMFA-157'] = true,		
+						['Reserves-R/315th Air Division'] = true,																	
 					},
 				},
 			},
@@ -317,9 +363,10 @@ supply_tab = {
 				['Senaki-Kolkhi Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {		
-						['Senaki-Kolkhi'] = true,				
-						['Reserves-R/801 ARS'] = true,
-						['Reserves-R/58 TFS'] = true,						
+						['Senaki-Kolkhi'] = true,										
+						['Reserves-R/GA 7rd AS'] = true,							
+						['Reserves-R/GA 5rd TS'] = true,
+						['Reserves-R/801 ARS'] = true,											
 					},
 				},				
 			},
@@ -330,15 +377,23 @@ supply_tab = {
 				['Tbilissi-Lochini'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {		
-						['Tbilissi'] = true,
-						['Reserves-R/174 ARW'] = true,
-						['Reserves-R/335 TFS'] = true,
-						['Reserves-R/13 TFS'] = true,							
-						['Reserves-R/171 ARW'] = true,
-						['Reserves-R/58 TFS'] = true,						
+						['Tbilissi'] = true,						
+						['Reserves-R/F9'] = true,
+						['Reserves-R/174 ARW'] = true,		
+						['Reserves-R/GAH 2rd'] = true, --for Ambrolauri FARP														
 					},
 				},
-			},
+				['Vaziani'] = {
+					['integrity'] = 1,
+					['airbase_supply'] = {		
+						['Vaziani'] = true,					
+						['Reserves-R/GA 3rd AS'] = true,
+						['Reserves-R/GA 4rd AS'] = true,
+						['Reserves-R/6th Cavalry'] = true,	 --for Gori FARP
+						['Reserves-R/17th Cavalry'] = true,	 --for KHASHURI FARP
+					},
+				},
+			},			
 		},
 		['Sukhumi Airbase'] = {
 			['integrity'] = 1,
@@ -346,7 +401,7 @@ supply_tab = {
 				['Sukhumi Airbase'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {	
-						['Sukhumi'] = true,						
+						['Sukhumi'] = true,																			
 						['Reserves-R/171 ARW'] = true,					
 					},
 				},				

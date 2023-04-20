@@ -651,7 +651,7 @@ local function UpdateAirbaseIntegrity( airb_tab )
                     log.trace(nameFunction .. "==============================\nairbase_tab airbase == targetlist airbase\n==============================")
                     log.trace(nameFunction .. "airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name)
                     log.trace(nameFunction .. "actual airbase_tab integrity: " .. airbase_values.integrity .. ", new value: " .. target_value.alive / 100)
-                    airbase_values.integrity = target_value.alive / 100
+                    airbase_values.integrity = roundAtNumber(target_value.alive / 100 , 0.01)
                     break
                 end
             end
@@ -671,7 +671,7 @@ local function UpdateAirbaseEfficiency( airb_tab )
 	for side, side_val in pairs( airb_tab ) do
 
 		for base, airbase_values in pairs( side_val ) do
-			airbase_values.efficiency = airbase_values.integrity * airbase_values.supply
+			airbase_values.efficiency = roundAtNumber(airbase_values.integrity * airbase_values.supply, 0.01)
 			log.trace(nameFunction .. "airbase: " .. base)
 			log.trace(nameFunction .. "airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.supply: " ..  airbase_values.supply .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency)
 		end
@@ -785,13 +785,46 @@ function reportLogisticStatus(sup_tab, airb_tab)
     local s = "======= LOGISTIC ASSET REPORT ======\n"
 
     for sidepw, side_val in pairs( sup_tab ) do
-        s = s .. "\n\n\n side: " .. sidepw .. "\n"
+        s = s .. "\n\n\nside: " .. sidepw .. " ------------------------------------------------------------------------------------------\n"
 
         for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
-            s = s .. "\n\n    supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
+            s = s .. "\n\n supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
 
             for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
-                s = s .. "\n      supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                s = s .. "\n - supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                local efficiency
+
+                for resupplier_name, _ in pairs(supply_line_values.airbase_supply) do
+
+                    efficiency, info = getAssetEfficiency(resupplier_name, airb_tab)
+
+                    if efficiency then
+                        s = s .. "          resuppliers: " .. resupplier_name .. " - efficiency: " .. efficiency .. ", units:  " .. info .. "\n"
+                    end
+                end
+            end
+        end
+    end
+    s = s .. "\n\n======= END LOGISTIC ASSET REPORT ======\n"
+    log.debug("End " .. nameFunction)
+	return s
+end
+
+-- return a string report of logistic status
+function reportLogisticStatus2(sup_tab, airb_tab)
+    -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "function reportLogisticStatus(supply_tab): "    
+    log.debug("Start " .. nameFunction)
+    local s = "======= LOGISTIC ASSET REPORT ======\n"
+
+    for sidepw, side_val in pairs( sup_tab ) do
+        s = s .. "\n\n\nside: " .. sidepw .. " ------------------------------------------------------------------------------------------\n"
+
+        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+            s = s .. "\n\n supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
+
+            for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
+                s = s .. "\n - supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
                 local efficiency
 
                 for resupplier_name, _ in pairs(supply_line_values.airbase_supply) do

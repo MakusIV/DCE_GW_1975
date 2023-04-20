@@ -264,7 +264,7 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 7,
 		},
-		[7] = { -- TRANSFERT AT Tbilissi-Lochini
+		[7] = { -- KOBULETI --------------------------------------------------------------------
 			name = "69 BS",									--unit name
 			type = "B-52H",									--aircraft type
 			country = "USA",								--unit country
@@ -285,7 +285,7 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
 			tasks = {},										--unit tasks
 			number = 15,
-		},
+		},-- END KOBULETI --------------------------------------------------------------------
 		[9] = {
 			name = "171 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
@@ -533,7 +533,7 @@ oob_air = {
 			number = 12,
 		},				
 		[25] = {
-			name = "F23",									--unit name
+			name = "R/F9",									--unit name
 			inactive = true,
 			type = "AJS37",									--aircraft type
 			country = "Sweden",								--unit country
@@ -630,7 +630,7 @@ oob_air = {
 			number = 12,
 		},				
 		[31] = {
-			name = "F21",									--unit name
+			name = "R/F7",									--unit name
 			inactive = true,
 			type = "AJS37",									--aircraft type
 			country = "Sweden",								--unit country
@@ -704,7 +704,7 @@ oob_air = {
 			number = 5,
 		},
 		[36] = {
-			name = "174 ARW",								--unit name
+			name = "VS-27",								--unit name
 			type = "S-3B Tanker",							--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
@@ -717,7 +717,7 @@ oob_air = {
 			number = 5,
 		},
 		[37] = {
-			name = "R/174 ARW",								--unit name
+			name = "R/VS-27",								--unit name
 			inactive = true,
 			type = "S-3B Tanker",							--aircraft type
 			country = "USA",								--unit country
@@ -1024,7 +1024,7 @@ oob_air = {
 			number = 12,
 		},
 		[2] = {
-			name = "1./117.IAP",							--unit name
+			name = "117.IAP",							--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1044,7 +1044,7 @@ oob_air = {
 			number = 12,
 		},
 		[3] = {
-			name = "R./117.IAP",							--unit name
+			name = "R/117.IAP",							--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
@@ -1054,7 +1054,7 @@ oob_air = {
 			number = 36,
 		},
 		[4] = {
-			name = "1./113.IAP",							--unit name
+			name = "113.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1078,7 +1078,7 @@ oob_air = {
 			number = 24,
 		},
 		[5] = {
-			name = "R./113.IAP",							--unit name
+			name = "R/113.IAP",							--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1089,7 +1089,7 @@ oob_air = {
 		},				
 		-------------------- Beslan ---------------
 		[6] = {
-			name = "1./37.IAP",								--unit name
+			name = "37.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1117,7 +1117,7 @@ oob_air = {
 			number = 24,
 		},
 		[7] = {
-			name = "R./37.IAP",								--unit name
+			name = "R/37.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
 			base = "Reserves",
@@ -1126,7 +1126,7 @@ oob_air = {
 			number = 36,
 		},
 		[8] = {
-			name = "1./127.IAP",							--unit name
+			name = "127.IAP",							--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1146,7 +1146,7 @@ oob_air = {
 			number = 12,
 		},
 		[9] = {
-			name = "R./127.IAP",							--unit name
+			name = "R/127.IAP",							--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
@@ -1156,7 +1156,7 @@ oob_air = {
 			number = 36,
 		},
 		[10] = {
-			name = "1./123.IAP",							--unit name
+			name = "123.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1180,7 +1180,7 @@ oob_air = {
 			number = 12,
 		},
 		[11] = {
-			name = "R./123.IAP",							--unit name
+			name = "R/123.IAP",							--unit name
 			inactive = true,	
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1190,7 +1190,7 @@ oob_air = {
 			number = 36,	
 		},		
 		[12] = {
-			name = "1./115AS.IAP",							--unit name
+			name = "115AS.IAP",							--unit name
 			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1216,7 +1216,7 @@ oob_air = {
 			number = 12,
 		},
 		[13] = {
-			name = "R./115AS.IAP",
+			name = "R/115AS.IAP",
 			inactive = true,								--unit name
 			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
@@ -1239,7 +1239,7 @@ oob_air = {
 		},
 		---------------------- Nalchik ---------------
 		[15] = {
-			name = "1./19.IAP",								--unit name
+			name = "19.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1267,7 +1267,7 @@ oob_air = {
 			number = 18,
 		},
 		[16] = {
-			name = "R./19.IAP",								--unit name
+			name = "R/19.IAP",								--unit name
 			inactive = true,
 			type = "MiG-21Bis",								--aircraft type
 			base = "Reserves",
@@ -1289,7 +1289,7 @@ oob_air = {
 			number = 4,
 		},
 		[18] = {
-			name = "1./107.IAP",							--unit name
+			name = "107.IAP",							--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1309,7 +1309,7 @@ oob_air = {
 			number = 12,
 		},
 		[19] = {
-			name = "R./107.IAP",							--unit name
+			name = "R/107.IAP",							--unit name
 			inactive = true,
 			type = "MiG-27K",								--aircraft type
 			country = "Russia",								--unit country
@@ -1319,7 +1319,7 @@ oob_air = {
 			number = 36,
 		},
 		[20] = {
-			name = "1./111AS.IAP",							--unit name
+			name = "111AS.IAP",							--unit name
 			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1345,7 +1345,7 @@ oob_air = {
 			number = 12,
 		},
 		[21] = {
-			name = "R./111AS.IAP",							--unit name
+			name = "R/111AS.IAP",							--unit name
 			inactive = true,
 			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
@@ -1367,7 +1367,7 @@ oob_air = {
 			number = 4,
 		},
 		[23] = {
-			name = "R./13.OSAP",							--unit name
+			name = "R/13.OSAP",							--unit name
 			inactive = true,
 			type = "Il-76MD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1399,7 +1399,7 @@ oob_air = {
 			number = 12,
 		},
 		[25] = {
-			name = "1./41.IAP",								--unit name
+			name = "41.IAP",								--unit name
 			type = "Su-24M",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1420,7 +1420,7 @@ oob_air = {
 			number = 12,
 		},
 		[26] = {
-			name = "R./41.IAP",								--unit name
+			name = "R/41.IAP",								--unit name
 			inactive = true,
 			type = "Su-24M",								--aircraft type
 			base = "Reserves",
@@ -1429,7 +1429,7 @@ oob_air = {
 			number = 36,
 		},		
 		[27] = {
-			name = "1./133.IAP",							--unit name
+			name = "133.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1452,7 +1452,7 @@ oob_air = {
 			number = 12,
 		},
 		[28] = {
-			name = "R./133.IAP",							--unit name
+			name = "R/133.IAP",							--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1462,7 +1462,7 @@ oob_air = {
 			number = 36,
 		},
 		[29] = {
-			name = "1./135.IAP",							--unit name
+			name = "135.IAP",							--unit name
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1482,7 +1482,7 @@ oob_air = {
 			number = 12,
 		},
 		[30] = {
-			name = "R./135.IAP",							--unit name
+			name = "R/135.IAP",							--unit name
 			inactive = true,
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
@@ -1492,7 +1492,7 @@ oob_air = {
 			number = 36,
 		},
 		[31] = {
-			name = "1./29.OSAP",							--unit name
+			name = "29.OSAP",							--unit name
 			type = "An-26B",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1504,7 +1504,7 @@ oob_air = {
 			number = 2,
 		},
 		[32] = {
-			name = "R./29.OSAP",							--unit name
+			name = "R/29.OSAP",							--unit name
 			inactive = true,
 			type = "An-26B",								--aircraft type
 			base = "Reserves",
@@ -1527,7 +1527,7 @@ oob_air = {
 		},		
 		--------------------- Maykop-Khanskaya --------------
 		[34] = {
-			name = "1./153.IAP",							--unit name
+			name = "153.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1550,7 +1550,7 @@ oob_air = {
 			number = 18,
 		},
 		[35] = {
-			name = "R./153.IAP",							--unit name
+			name = "R/153.IAP",							--unit name
 			inactive = true,
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
@@ -1560,7 +1560,7 @@ oob_air = {
 			number = 36,
 		},
 		[36] = {
-			name = "1./61.IAP",								--unit name
+			name = "61.IAP",								--unit name
 			type = "Tu-22M3",								--aircraft type
 			country = "Russia",								--unit country
 			livery = {""},									--unit livery
@@ -1578,7 +1578,7 @@ oob_air = {
 			number = 8,
 		},
 		[37] = {
-			name = "R./61.IAP",								--unit name
+			name = "R/61.IAP",								--unit name
 			inactive = true,
 			type = "Tu-22M3",								--aircraft type
 			base = "Reserves",
@@ -1587,7 +1587,7 @@ oob_air = {
 			number = 8,
 		},
 		[38] = {
-			name = "1./81.IAP",								--unit name
+			name = "81.IAP",								--unit name
 			type = "Su-24M",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1608,7 +1608,7 @@ oob_air = {
 			number = 12,
 		},
 		[39] = {
-			name = "R./81.IAP",								--unit name
+			name = "R/81.IAP",								--unit name
 			inactive = true,
 			type = "Su-24M",								--aircraft type
 			base = "Reserves",
@@ -1639,7 +1639,7 @@ oob_air = {
 			number = 4,
 		},
 		[42] = {
-			name = "1./115.IAP",							--unit name
+			name = "115.IAP",							--unit name
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1659,7 +1659,7 @@ oob_air = {
 			number = 12,
 		},
 		[43] = {
-			name = "R./115.IAP",							--unit name
+			name = "R/115.IAP",							--unit name
 			inactive = true,
 			type = "Su-17M4",								--aircraft type
 			country = "Russia",								--unit country
@@ -1728,7 +1728,7 @@ oob_air = {
 			number = 4,
 		},
 		[49] = {
-			name = "O/159.IAP",								--unit name
+			name = "159.IAP",								--unit name
 			type = "MiG-23MLD",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1882,7 +1882,7 @@ oob_air = {
 		------------ post 1975	
 		--[[	
 		[40] = {
-			name = "1./17.IAP",								--unit name
+			name = "17.IAP",								--unit name
 			type = "Su-25T",								--aircraft type
 			country = "Russia",								--unit country
 			livery = "",						--unit livery
@@ -1913,7 +1913,7 @@ oob_air = {
 			number = 24,
 		},
 		[42] = {
-			name = "1./31.IAP",								--unit name
+			name = "31.IAP",								--unit name
 			type = "Su-27",								--aircraft type
 			country = "Russia",						--unit country
 			livery = "",			--unit livery
