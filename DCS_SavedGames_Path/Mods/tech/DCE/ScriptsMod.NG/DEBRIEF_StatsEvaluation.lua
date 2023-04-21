@@ -238,11 +238,6 @@ for role_name, role in pairs(camp.player.pack) do	--iterate through roles in pla
 end
 log.info("End track stats for player package =======================================================")														
 
-
-
-activateLog(true, true, log, "traceVeryLow")  --     ##############################################      DEBUG      ##############################################################
-
-
 --prepare client stats
 log.info("Start prepare client stats =======================================================")														
 
@@ -368,13 +363,6 @@ for e = 1, #events do
 		end		
 		hit_table[events[e].initiator] = nil															--once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged.
 		log.debug("once kills for the dead aircraft are awarded, remove it from the hit_table. The aircraft remaining in the hit_table after completed log evaluation are only damaged - hit_table[" .. events[e].initiator .. "] = nil")
-
-
-
-		
-		activateLog(false, true, log, log_level) --     ##############################################      DEBUG      ##############################################################	
-
-
 
 	elseif events[e].type == "eject" then
 		--client stats for ejections
