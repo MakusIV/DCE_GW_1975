@@ -782,30 +782,30 @@ function reportLogisticStatus(sup_tab, airb_tab)
     -- note: supply Line are defined in supply_tab and also in targetlist like targets
     local nameFunction = "function reportLogisticStatus(supply_tab): "    
     log.debug("Start " .. nameFunction)
-    local s = "======= LOGISTIC ASSET REPORT ======\n"
+    local s = "======================================== LOGISTIC ASSET REPORT ============================================\n"
 
     for sidepw, side_val in pairs( sup_tab ) do
-        s = s .. "\n\n\nside: " .. sidepw .. " ------------------------------------------------------------------------------------------\n"
+        s = s .. "\n\n\n***************************************** side: " .. sidepw .. " **************************************************\n"
 
         for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
-            s = s .. "\n\n supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
+            s = s .. "\n- supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
 
             for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
-                s = s .. "\n - supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                s = s .. "  -- supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
                 local efficiency
 
-                for resupplier_name, _ in pairs(supply_line_values.airbase_supply) do
+                for stocked_name, _ in pairs(supply_line_values.airbase_supply) do
 
-                    efficiency, info = getAssetEfficiency(resupplier_name, airb_tab)
+                    efficiency, _ = getAssetEfficiency(stocked_name, airb_tab)
 
                     if efficiency then
-                        s = s .. "          resuppliers: " .. resupplier_name .. " - efficiency: " .. efficiency .. ", units:  " .. info .. "\n"
+                        s = s .. "     --- stocked: " .. stocked_name .. " - efficiency: " .. efficiency .. "\n"
                     end
                 end
             end
         end
     end
-    s = s .. "\n\n======= END LOGISTIC ASSET REPORT ======\n"
+    s = s .. "\n\n====================================== END LOGISTIC ASSET REPORT ==========================================\n"
     log.debug("End " .. nameFunction)
 	return s
 end

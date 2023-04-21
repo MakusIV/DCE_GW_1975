@@ -126,6 +126,7 @@ require("Init/db_airbases")																			--load db_airbases
 require("Active/oob_air")																			--load air oob
 require("Active/targetlist")																		--load targetlist
 require("Active/clientstats")																		--load clientstats
+require("Init/db_aircraft")																			--load clientstats
 
 if local_debug then
 	log.warn("activate local debug")

@@ -212,6 +212,12 @@ db_aircraft = {
 			["cost"] = 14000, -- balanced for gameplay, doc cost: 4000, --cost aircraft in K$
 			["factor"] = {},
 		},
+		
+		["Mi-24V"] = {--1969 (primo volo) 1972 (entrata in servizio)
+			["role"] = {"Helicopter"},
+			["cost"] = 12500, --cost aircraft in K$
+			["factor"] = {},
+		},
 	},
 
 

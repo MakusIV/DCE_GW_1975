@@ -169,6 +169,7 @@ local WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 								-- weight for aircraft cost in 
 	["AWACS"] = 0.1, 
 	["Helicopter"] = 0.2, 
 }
+local MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2									-- minimum aircraft for strike and anti-ship strike task (default 2 or 3 -needed to survive the anti-aircraft defenses)
 local ESCORT_NUMBER_MULTIPLIER = 3										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
 local MINIMUM_VALUE_OF_AIR_THREAT = 0.5									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
 local FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
@@ -533,7 +534,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 					for u = #aircraft_availability[unit[n].name].unavailable, 1, -1 do											--iterate backwards through unavailable aircraft from this unit
 						u_entry = u_entry + 1
 						
-						if u_entry <= unit[n].roster.ready then	--(considera solo il numero di unità ready) 					--for each unavailable entry that is within the amounty of ready aircraft of unit
+						if u_entry <= unit[n].roster.ready then	 																--for each unavailable entry that is within the amounty of ready aircraft of unit
 														
 							if current_time > aircraft_availability[unit[n].name].unavailable[u] then --(elimina le #unit unavalaible superiore alle ready)	--check absolute campaign time is past unvailable time for this entry
 								if active_log then log.traceLow("u_entry(" .. u_entry .. ") <= unit[n].roster.ready(" .. unit[n].name .. ": " .. unit[n].roster.ready .. "),  and current time has exceeded the period of unavailability for this unit - > remove unit from aircraft_availability table") end
@@ -830,6 +831,10 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						else
 																							--aircraft_requested = math.ceil(aircraft_requested / 2) * 2								--round up to an even number
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
+
+																							if aircraft_requested == 1 then
+																								aircraft_requested = MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+																							end
 																						end
 																						if active_log then log.trace("total aircraft_requested for this task(" .. task .. "): " .. aircraft_requested) end
 																						local aircraft_assign

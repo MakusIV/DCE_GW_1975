@@ -9,7 +9,7 @@ end
 
                -- VERSION --
 
-versionDCE["DEBRIEF_Text.lua"] = "OB.1.0.0"
+versionDCE["DEBRIEF_Text.lua"] = "OB.1.0.1"
 
 ---------------------------------------------------------------------------------------------------------
 -- Old_Boy rev. OB.1.0.1: added Base Efficiency and Reserves Efficiency in stats
@@ -696,10 +696,23 @@ end
 
 -- Order of Battle Air ---------------------------------------------------------------------------------- 
 do
-	local s = "Order of Battle:\n----------------\n\n"												--make lists of the air order of battle for all sides
+	local s = "Order of Battle (AIR):\n----------------------\n\n"									--make lists of the air order of battle for all sides
 	
 	local entries = {}
+	local air_loss_data = {}
+
 	for side_name,side in pairs(oob_air) do															--iterate through sides in oob_air
+
+		air_loss_data[side_name] = {
+			["total"] = {
+				["aircraft_qty"] = 0,
+				["aircraft_cost"] = 0,
+			},
+			["last_mission"] = {
+				["aircraft_qty"] = 0,
+				["aircraft_cost"] = 0,
+			},
+		}
 	
 		--define list entries
 		entries[side_name] = {
@@ -755,8 +768,23 @@ do
 				table.insert(entries[side_name][1].values, unit.name)																	--unit name
 				table.insert(entries[side_name][2].values, ReplaceTypeName(unit.type))													--unit type
 				table.insert(entries[side_name][3].values, unit.base)
-				table.insert(entries[side_name][10].values, getEfficiency(unit.base, side_name))
-				table.insert(entries[side_name][11].values, getEfficiency("Reserves-R/" .. unit.name, side_name))
+				table.insert(entries[side_name][10].values, getEfficiency(unit.base, side_name))										-- base efficiency
+				table.insert(entries[side_name][11].values, getEfficiency("Reserves-R/" .. unit.name, side_name))						-- reserves efficiency
+
+				-- Loss evaluation ---
+				if db_aircraft[side_name][unit.type] then																							
+					air_loss_data[side_name].total.aircraft_qty = air_loss_data[side_name].total.aircraft_qty + unit.roster.lost																		-- update total aircraft losses
+					air_loss_data[side_name].total.aircraft_cost = air_loss_data[side_name].total.aircraft_cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost								-- update total cost aircraft losses
+
+					if unit.score_last.lost > 0 then
+						air_loss_data[side_name].last_mission.aircraft_qty = air_loss_data[side_name].last_mission.aircraft_qty + unit.score_last.lost													-- update mission aircraft losses
+						air_loss_data[side_name].last_mission.aircraft_cost = air_loss_data[side_name].last_mission.aircraft_cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost		-- update mission cost aircraft losses
+					end
+				else
+					--log.warn(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss is not included in the calculation of losses")
+					print(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss is not included in the calculation of losses")
+				end
+
 				
 				--unit base
 				if unit.score_last.kills_air > 0 then
@@ -850,13 +878,66 @@ do
 		s = s .. "\n\n"																				--make a new line after each side
 	end
 	
-	debriefing = debriefing .. s .. "\n"
+	s = s ..  "------------------------------ AIR LOSS EVALUATION --------------------------------------------------------------------------\n"
+
+	local statistic_losses = {
+		
+		["mission"] = {
+			["delta_loss"] = 0,
+			["delta_loss_cost"] = 0,
+			["delta_loss_perc"] = 0,
+			["delta_loss_cost_perc"] = 0,
+			["winner"] = "tie",
+		 },
+		["total"] = { 
+			["delta_loss"] = 0,
+			["delta_loss_cost"] = 0,
+			["delta_loss_perc"] = 0,
+			["delta_loss_cost_perc"] = 0,
+			["winner"] = "tie",
+		},		
+	}
+
+	statistic_losses.mission.delta_loss_cost = air_loss_data.blue.last_mission.aircraft_cost - air_loss_data.red.last_mission.aircraft_cost
+	statistic_losses.mission.delta_loss = air_loss_data.blue.last_mission.aircraft_qty - air_loss_data.red.last_mission.aircraft_qty
+
+	if statistic_losses.mission.delta_loss_cost > 0 then
+		statistic_losses.mission.winner = "red"
+		statistic_losses.mission.delta_loss_cost_perc = math.ceil( statistic_losses.mission.delta_loss_cost * 100 / air_loss_data.red.last_mission.aircraft_cost )
+		statistic_losses.mission.delta_loss_perc = math.ceil( statistic_losses.mission.delta_loss * 100 / air_loss_data.red.last_mission.aircraft_qty )
+		
+	elseif statistic_losses.mission.delta_loss_cost < 0 then
+		statistic_losses.mission.winner = "blue"
+		statistic_losses.mission.delta_loss_cost_perc = math.ceil( -statistic_losses.mission.delta_loss_cost * 100 / air_loss_data.blue.last_mission.aircraft_cost )
+		statistic_losses.mission.delta_loss_perc = math.ceil( -statistic_losses.mission.delta_loss * 100 / air_loss_data.blue.last_mission.aircraft_qty )
+	end
+
+	statistic_losses.total.delta_loss_cost = air_loss_data.blue.total.aircraft_cost - air_loss_data.red.total.aircraft_cost
+	statistic_losses.total.delta_loss = air_loss_data.blue.total.aircraft_qty - air_loss_data.red.total.aircraft_qty
+
+	if statistic_losses.total.delta_loss_cost > 0 then
+		statistic_losses.total.winner = "red"
+		statistic_losses.total.delta_loss_cost_perc = math.ceil( statistic_losses.total.delta_loss_cost * 100 / air_loss_data.red.total.aircraft_cost )
+		statistic_losses.total.delta_loss_perc = math.ceil( statistic_losses.total.delta_loss * 100 / air_loss_data.red.total.aircraft_qty )
+		
+	elseif statistic_losses.total.delta_loss_cost < 0 then
+		statistic_losses.total.winner = "blue"
+		statistic_losses.total.delta_loss_cost_perc = math.ceil( -statistic_losses.total.delta_loss_cost * 100 / air_loss_data.blue.total.aircraft_cost )
+		statistic_losses.total.delta_loss_perc = math.ceil( -statistic_losses.total.delta_loss * 100 / air_loss_data.blue.total.aircraft_qty )
+	end
+
+	s = s .. " - blue loss:\n   - last mission: aircraft lost: " ..  air_loss_data["blue"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["blue"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.aircraft_qty .. ", cost: " .. air_loss_data["blue"].total.aircraft_cost .. "\n\n"
+	s = s .. " - red loss:\n   - last mission: aircraft lost: " ..  air_loss_data["red"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["red"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.aircraft_qty .. ", cost: " .. air_loss_data["red"].total.aircraft_cost .. "\n\n"
+	s = s .. " - loss statistic:\n   - last mission: air winner: " ..  statistic_losses.mission.winner .. "\n   - blue-red delta loss: " .. statistic_losses.mission.delta_loss .. "( " .. statistic_losses.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.mission.delta_loss_cost .. "( " .. statistic_losses.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. "   - status campaign: air winner: " ..  statistic_losses.total.winner .. "\n   - blue-red delta loss: " .. statistic_losses.total.delta_loss .. "( " .. statistic_losses.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.total.delta_loss_cost .. "( " .. statistic_losses.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
+
+	debriefing = debriefing .. s .. "\n\n"
 end
-	
+
 	
 -- Order of Battle Ground ---------------------------------------------------------------------------------- 
 do
-	local s = ""
+	local s = "Order of Battle (GROUND):\n-------------------------\n\n"
 	
 	for side_name,side in pairs(targetlist) do														--iterate through sides in targetlist
 		if side_name == "blue" then																	--owner of the target is the opposite of targetlist side

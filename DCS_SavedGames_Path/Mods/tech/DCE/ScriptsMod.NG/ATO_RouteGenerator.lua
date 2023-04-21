@@ -38,7 +38,7 @@ log.info("Start")
 local TIME_FOR_INGRESS_CALCULATION = 60 -- (s) default 60s, time for compute ingress distance distance = speed(vattack) * time + standoff
 local MINIMUM_STANDOFF_DISTANCE = 7000 -- (m) default 7000m, minimum standoff value for calculation (not not applicable when the value is defined in db_loadouts: always with new firepower code)
 local TIME_FOR_STANDOFF_CALCULATION = 30 -- (s) default 30s, time for compute standoff distance distance = speed(vattack) * time + hattack
-local PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000 -- min altitude for generic CAP detection (no need EWR support)(defautl=3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
+local PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000 -- min altitude for generic CAP detection (no need EWR support)(default = 3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
 local ALT_MIN_FOR_CLUTTER_EFFECT = 100 -- (defalut = 100 m)
 local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default = 0.5)
 local MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5 -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
