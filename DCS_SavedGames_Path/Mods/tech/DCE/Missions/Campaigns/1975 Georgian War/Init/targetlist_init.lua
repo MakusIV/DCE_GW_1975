@@ -451,6 +451,30 @@ targetlist = {
 			class = "vehicle",
 			name = "Maykop SA-2",
 		},
+		["NOVOROSSIYSK SA-2 Site DK-04"] = {
+			task = "Strike",
+			priority = 4,
+			-- picture = {""},
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,  --3,
+				max = 6, -- --4,
+			},
+			class = "vehicle",
+			name = "Maykop SA-2",
+		},
+		["NKRYMSK SA-5 Site DK-17"] = {
+			task = "Strike",
+			priority = 4,
+			-- picture = {""},
+			attributes = {"SAM"},
+			firepower = {
+				min = 3,  --3,
+				max = 6, -- --4,
+			},
+			class = "vehicle",
+			name = "Maykop SA-2",
+		},
 		["LENIGORI FARP AA"] = {
 			task = "Strike",
 			priority = 2,
@@ -1551,7 +1575,7 @@ targetlist = {
 			task = "Strike",
 			priority = 6,
 			picture = {"FARP_Vladikavkaz.png"},
-			attributes = {"soft"},
+			attributes = {"SAM"},
 			firepower = {
 				min = 3, --3,
 				max = 3, -- --6,
@@ -2260,7 +2284,7 @@ targetlist = {
 			task = "Strike",
 			priority = 6,
 			--picture = {"FARP_Vladikavkaz.png"},
-			attributes = {"soft"},
+			attributes = {"SAM"},
 			firepower = {
 				min = 3,
 				max = 6,

@@ -2,6 +2,7 @@
 
 
 ---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.2: implements compute loadouts cruise parameters code (property)
 -- Old_Boy rev. OB.1.0.1: implements compute firepower code (property)
 -------------------------------------------------------------------------------------------------------
 
@@ -81,105 +82,12 @@
 	},
 },
 
-]]-----------------------------------------------------------------------------------------------------
-
---[[ 
-	
-
--.- general guideline for capablity & firepower assignment
-
--- Fighter:  F-14A, Mig-21, Mig-23,       
--- Attacker: L-39C, F-4E, F-5E, AJS37, Mig-27, Su-17,          
--- Bomber: Tu-22M, B-52H, Su-24
-
--- strike fighter capability: 1-3
--- strike fighter firepower: 1*weapon firepower
-
--- strike attacker capability: 5-7
--- strike attacker firepower: 1.7*weapon firepower
-
--- strike bomber capability: >9
--- strike bomber firepower: 2.5*weapon firepower
-
-
--- weapon firepower (fighter-attack-bomber)
--- m/71, mk-82, fab-100, fab-250 unit: 4 weapon = 1fp 
--- fab-250 unit: 2 weapon = 1fp 
--- m/75, mk-83, fab 500, KAB 500, GBU-10 unit: 2 weapon = 3fp
--- mk-84 unit: 1 weapon = 3fp
--- mk-20(CBU), BK90 (CBU): 1 weapon = 2fp
--- fab-1500 unit: 1 weapon = 7fp
--- rockets unit: 6 rockets = 1fp
--- rockets heavy unit: 1 rockets = 1fp
--- ASM unit: 1 weapon = 3 fp 
-
-
-
--- specific capablity & firepower assignment
-
-general capability/firepower aircraft 10 max 1 min
-capability F-14A: intercept=9, sweep=9, cap=8, escort=8, strike=5
-capability AJS37: intercept=1, sweep=1, cap=1, escort=1, strike=8, antiship=8, sead=7
-capability F-5E: intercept=2, sweep=1, cap=2, escort=2, strike=4, antiship=1
-capability F-4E: intercept=7, sweep=6, cap=6, escort=6, strike=6, antiship=1, sead=10
-capability S-3B: strike=7, antiship=8, sead=6
-
-capability Mig-21Bis: intercept=7, sweep=6, cap=5, escort=5, strike=5, antiship=1
-capability Mig-25MLD (o PD??): intercept=10, sweep=7, cap=8, escort=2
-capability Mig-25RBT: Reconnaissance=5, AWACS=5
-capability Mig-19: intercept=2, sweep=1, cap=2, escort=2, strike=1, antiship=1
-capability L-39C: intercept=2, sweep=1, cap=2, escort=1, strike=4, antiship=1
-capability Su-24M: strike=8, antiship=6, sead=8
-capability Su-24MR:Reconnaissance=8
-capability Su-17: strike=7, antiship=3, sead=5
-capability Mig-27K: strike=7, antiship=3, sead=5
-capability Mig-23: intercept=7, sweep=7, cap=7, escort=7, strike=3
-
-note:
-To set missions with routes that evade radars you must first act on the 
-attack altitude (hattack) < 100 if the weapons allow use at this altitude, 
-otherwise you must set the travel altitude (hcruise) < 100
-
-
-ridefine firepower:
-bomb: 
-attributes: soft, SAM, Parked Aircraft
-light bomb (attributes: soft, parked aircraft) : firepower: 1, 1 lb for single target unit
-medium bomb (attributes: SAM, parked aircraft, armor) : firepower: 1, 1 mb for single target unit
-heavy bomb (attributes: structure, bridge) : firepower: 1,  1 hb for single target unit
-cluster bomb (attributes: soft, parked aircraft): firepower: 1, 1 cb for any 3 target unit 
-heavy cluster bomb (attributes: soft, parked aircraft): firepower: 1 hcb for any 3 target unit 
-rockets(attributes: parked aircraft, soft): firepower: 2, 2 rkt for single target unit
-heavy rockets(attributes: SAM, armor): firepower: 1, 1 rkt for single target unit
-missile a2g(attributes: SAM, armor): firepower: 1, 1 m for single target unit
-missile a2g(ship, structure, bridge): firepower: 3, 3 m for single target unit
-missile antiship (ship): firepower 1, 1 m for single ship target
-missile antiradar (SAM, EWR): firepower 1, 1 m for single SAM or EWR target
-
-taskWeaponInfo = {
-
-	[1] = {
-		["name"] = "Mk-84",
-		["quantity"] = 2,
-	}
-		
-	[2] = {
-		["name"] = "Mk 20 cluster",
-		["quantity"] = 3,
-	}
-}
-
-implementato in S-3B
-
-]]
-
-
-
-
 -- nota: bomber veloci trovano una scorta veloce iterando nelle unit quindi non devi necessariemente vincolare tutte le v dei fighter, alcuni possono essere fissate più alte in modo da essere utilizzati solo con quei standoff range > 15000m, optimal egrees should be in direction of home base, egress starts from attack point, egress_distance: 
 -- [escort_high_speed_loadout] = ....
+--> escort_num = aircraft_availability[unit[n].name].available 
 
- --> escort_num = aircraft_availability[unit[n].name].available 
+
+]]-----------------------------------------------------------------------------------------------------
 
 
 db_loadouts = {
@@ -1585,7 +1493,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -1654,7 +1562,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -1723,7 +1631,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"Structure", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -1858,7 +1766,7 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"Structure", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -2232,7 +2140,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "Bridge"},
+				attributes = {"Structure", "Bridge", "hard"},
 				weapons = { -- task dedicated weapons
 					["Mk-84"] = 18,															
 				},
@@ -2279,7 +2187,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "SAM", "armor", "Parked Aircraft"},
+				attributes = {"SAM", "armor"},
 				weapons = { -- task dedicated weapons
 					["Mk-20"] = 20, -- verificare															
 				},
@@ -2730,7 +2638,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -2805,7 +2713,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"SAM", "armor"},
 				weapons = { -- task dedicated weapons
@@ -2875,7 +2783,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 500000,
-				capability = 6,
+				capability = 4,
 				firepower = 6,
 				vCruise = 200,
 				vAttack = 200,
@@ -2929,7 +2837,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 500000,
-				capability = 6,
+				capability = 4,
 				firepower = 6,
 				vCruise = 200,
 				vAttack = 200,
@@ -2980,7 +2888,7 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weapons = { -- task dedicated weapons
 					["Mk-82"] = 4, -- Mk-82 == Mk-82SE == Mk-82AIR	
 					["AIM-9P"] = 2,																
@@ -3048,7 +2956,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = false,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weapons = { -- task dedicated weapons
@@ -3118,7 +3026,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weapons = { -- task dedicated weapons
@@ -3190,7 +3098,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weapons = { -- task dedicated weapons
 					["Mk-82"] = 5,			
 					["AIM-9P"] = 2,														
@@ -3358,7 +3266,7 @@ db_loadouts = {
 				minscore = 0.2,
 				support = {
 					["Escort"] = false,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons
@@ -3821,7 +3729,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weapons = { -- task dedicated weapons
 					["SAMP-250HD"] = 2, -- 
 					["R-550"] = 2, 														
@@ -4778,7 +4686,7 @@ db_loadouts = {
 				minscore = 0.2,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"armor", "SAM"},
 				weapons = { -- task dedicated weapons										
@@ -4846,7 +4754,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"SAM", "soft", "Parked Aircraft"},
 				weapons = { -- task dedicated weapons
@@ -5128,7 +5036,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"hard", "Structure", "Bridge"},
 				weapons = { -- task dedicated weapons
@@ -5189,7 +5097,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,	
+					["SEAD"] = false,	
 					["Laser Illumination"] = true,				
 				},
 				attributes = {"Structure", "Bridge"},
@@ -6151,7 +6059,7 @@ db_loadouts = {
 					["Escort"] = true,
 					["SEAD"] = true,
 				},
-				attributes = {"Structure", "Bridge", "hard"},
+				attributes = {"Structure", "Bridge", "hard", "SAM", "armor"},
 				weapons = { -- task dedicated weapons						
 					["FAB-500M62"] = 33,										
 					["FAB-250M54"] = 36,										
@@ -6629,7 +6537,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 900000,
-				capability = 8,
+				capability = 13,
 				firepower = 8,
 				vCruise = 250,
 				vAttack = 250,
@@ -6686,7 +6594,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 900000,
-				capability = 8,
+				capability = 13,
 				firepower = 8,
 				vCruise = 250,
 				vAttack = 250,
@@ -6902,7 +6810,6 @@ db_loadouts = {
 					["gun"] = 100,
 				},
 			},
-
 			["CAS Rockets S-8/80mm*6(20*6=120 rocket)"] = {
 				role = "attacker",
 				role_altitude = "normal",
@@ -6973,7 +6880,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
 				attributes = {"Structure", "Bridge"},
 				weapons = { -- task dedicated weapons						
@@ -7163,9 +7070,9 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
-				attributes = {"Structure", "SAM"},
+				attributes = {"Structure", "hard", "armor"},
 				weapons = { -- task dedicated weapons						
 					["FAB-500M62"] = 2,										
 					["S-13"] = 20, --rockets soft target										
@@ -7229,7 +7136,7 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Structure", "SAM"},
+				attributes = {"soft", "Structure"},
 				weaponType = "Rockets",
 				expend = "All",
 				weapons = { -- task dedicated weapons
@@ -7349,7 +7256,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 					["Escort"] = false,
-					["SEAD"] = false,
+					["SEAD"] = true,
 				},
 				attributes = {"armor", "SAM"},
 				weaponType = "Rockets",
@@ -8512,7 +8419,7 @@ db_loadouts = {
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
@@ -8574,7 +8481,7 @@ db_loadouts = {
 				minscore = 0.2,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"Bridge", "hard", "Structure"},
 				weaponType = "Bombs",
@@ -8638,7 +8545,7 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -8700,7 +8607,7 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "Structure"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -8762,7 +8669,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "armor", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				expend = "All",
 				weapons = { -- task dedicated weapons
@@ -8824,9 +8731,9 @@ db_loadouts = {
 				minscore = 0.2,
 				support = {
 						["Escort"] = false,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -8889,9 +8796,9 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
-				attributes = {"soft","Structure", "SAM"},
+				attributes = {"soft","Structure", "Bridge"},
 				weaponType = "ASM",
 				expend = "All",
 				attackType = "Dive",
@@ -9073,7 +8980,7 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
 				attributes = {"soft", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
@@ -9146,7 +9053,7 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"Structure", "Bridge", "hard"},
 				weaponType = "Bombs",
@@ -9277,7 +9184,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -9333,7 +9240,7 @@ db_loadouts = {
 						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Structure", "SAM"},
+				attributes = {"soft", "Structure"},
 				weaponType = "Rockets",
 				expend = "All",
 				attackType = "Dive",
@@ -9386,7 +9293,7 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = false,
+						["Escort"] = true,
 						["SEAD"] = false,
 					},
 				attributes = {"hard", "Structure"},
@@ -9460,7 +9367,7 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
 				attributes = {"soft", "SAM", "Parked Aircraft"},
 				weaponType = "Rockets",
@@ -9532,10 +9439,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.0,
 				support = {
-						["Escort"] = false,
+						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weapons = { -- task dedicated weapons
 					["S-8 OFP2"] = 80, --??		
 					["R-60M"] = 2,									
@@ -9608,7 +9515,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "armor"},
 				weaponType = "Bombs",
 				expend = "All",
 				attackType = "Dive",
@@ -9679,9 +9586,9 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
-				attributes = {"Structure", "Bridge", "SAM"},
+				attributes = {"Structure", "Bridge"},
 				weaponType = "ASM",
 				expend = "All",
 				attackType = "Dive",
@@ -9765,7 +9672,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 700000,
-				capability = 5,
+				capability = 13,
 				firepower = 12,
 				vCruise = 220,
 				vAttack = 250,
@@ -9835,7 +9742,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 700000,
-				capability = 5,
+				capability = 13,
 				firepower = 12,
 				vCruise = 220,
 				vAttack = 250,
@@ -10084,7 +9991,7 @@ db_loadouts = {
 				minscore = 0.3,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 						["Laser Illumination"] = true,
 					},
 				attributes = {"hard", "Structure", "Bridge"},
@@ -10146,9 +10053,9 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "armor", "Parked Aircraft", "SAM"},
 				weaponType = "Bombs",
 				weapons = { -- task dedicated weapons				
 					["RBK-500PTAB"] = 2, --??		
@@ -10217,7 +10124,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weaponType = "Bombs",
 				expend = "All",
 				weapons = { -- task dedicated weapons				
@@ -10284,9 +10191,9 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weaponType = "Bombs",
 				expend = "All",
 				weapons = { -- task dedicated weapons				
@@ -10345,9 +10252,9 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
-				attributes = {"soft", "SAM", "Parked Aircraft"},
+				attributes = {"soft", "armor", "SAM", "Parked Aircraft"},
 				weaponType = "Bombs",
 				expend = "All",
 				weapons = { -- task dedicated weapons				
@@ -10414,7 +10321,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"hard", "Structure", "Bridge"},
 				weaponType = "Bombs",
@@ -10484,9 +10391,9 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = false,
+						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "armor", "Parked Aircraft", "SAM"},
 				weaponType = "Rockets",
 				expend = "All",
 				weapons = { -- task dedicated weapons
@@ -10541,7 +10448,7 @@ db_loadouts = {
 						["Escort"] = true,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft"},
 				weaponType = "Rockets",
 				expend = "All",
 				weapons = { -- task dedicated weapons
@@ -10607,7 +10514,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 5,
+				capability = 15,
 				firepower = 6,
 				vCruise = 220,
 				vAttack = 250,
@@ -10665,7 +10572,7 @@ db_loadouts = {
 				night = true,
 				adverseWeather = true,
 				range = 500000,
-				capability = 5,
+				capability = 15,
 				firepower = 6,
 				vCruise = 220,
 				vAttack = 250,
@@ -11209,7 +11116,7 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"Structure", "Bridge"},
 				weapons = { -- task dedicated weapons				
@@ -11269,10 +11176,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = true,
 					},
-				attributes = {"Structure", "Bridge"},
+				attributes = {"Structure", "SAM", "armor", "Parked Aircraft", "soft"},
 				weapons = { -- task dedicated weapons				
 					["FAB-250M54"] = 2,
 					["R-60M"] = 2,	
@@ -11330,8 +11237,8 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
+						["Escort"] = false,
+						["SEAD"] = false,
 					},
 				attributes = {"Structure", "Bridge"},
 				weapons = { -- task dedicated weapons				
@@ -11391,8 +11298,8 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
-						["SEAD"] = true,
+						["Escort"] = false,
+						["SEAD"] = false,
 					},
 				attributes = {"Structure", "Bridge"},
 				weapons = { -- task dedicated weapons				
@@ -12378,10 +12285,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.3,
 				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
+					["Escort"] = false,
+					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "Structure"},
+				attributes = {"soft", "armor", "Structure"},
 				weapons = { -- task dedicated weapons				
 					["FAB-250M54"] = 2,
 					["R-3S"] = 2,
@@ -12393,7 +12300,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 650000,
-				capability = 1,
+				capability = 2,
 				firepower = 1,
 				vCruise = 130,
 				vAttack = 130,
@@ -12446,7 +12353,7 @@ db_loadouts = {
 					["Escort"] = false,
 					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft"},
 				weaponType = "Rockets",
 				weapons = { -- task dedicated weapons				
 					["S-5 M"] = 32,
@@ -12458,7 +12365,7 @@ db_loadouts = {
 				night = false,
 				adverseWeather = false,
 				range = 650000,
-				capability = 1,
+				capability = 3,
 				firepower = 1,
 				vCruise = 130,
 				vAttack = 130,
@@ -12517,9 +12424,9 @@ db_loadouts = {
 				minscore = 0.1,
 				support = {
 					["Escort"] = true,
-					["SEAD"] = true,
+					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft", "armor", "Structure"},
+				attributes = {"soft", "armor", "Structure"},
 				weapons = { -- task dedicated weapons				
 					["FAB-250M54"] = 2,
 					["R-3S"] = 2,
@@ -12589,10 +12496,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-					["Escort"] = true,
-					["SEAD"] = true,
+					["Escort"] = false,
+					["SEAD"] = false,
 				},
-				attributes = {"soft", "Parked Aircraft"},
+				attributes = {"soft"},
 				weaponType = "Rockets",
 				weapons = { -- task dedicated weapons				
 					["S-5 M"] = 32,
@@ -13106,10 +13013,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.0,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weaponType = "Bombs",
 				weapons = { -- task dedicated weapons				
 					["FAB-250M54"] = 2,					
@@ -13168,10 +13075,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.0,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = true,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "Parked Aircraft", "SAM", "armor"},
 				weaponType = "Bombs",
 				weapons = { -- task dedicated weapons				
 					["FAB-100"] = 8,
@@ -13231,7 +13138,7 @@ db_loadouts = {
 				minscore = 0.0,
 				support = {
 						["Escort"] = true,
-						["SEAD"] = true,
+						["SEAD"] = false,
 					},
 				attributes = {"Structure", "Bridge", "hard"},
 				weaponType = "Bombs",
@@ -13292,10 +13199,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Parked Aircraft", "SAM"},
+				attributes = {"soft", "armor"},
 				weapons = { -- task dedicated weapons				
 					["S-5 M"] = 32,
 					["R-3R"] = 1,
@@ -13354,10 +13261,10 @@ db_loadouts = {
 				coalition = "red",
 				minscore = 0.1,
 				support = {
-						["Escort"] = true,
+						["Escort"] = false,
 						["SEAD"] = false,
 					},
-				attributes = {"soft", "Structure", "SAM"},
+				attributes = {"soft", "Structure", "armor"},
 				weaponType = "Rockets",
 				weapons = { -- task dedicated weapons				
 					["S-24"] = 2,
