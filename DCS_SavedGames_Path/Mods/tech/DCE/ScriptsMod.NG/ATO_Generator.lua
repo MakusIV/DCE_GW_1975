@@ -1377,10 +1377,16 @@ for sideS, draftT in pairs(draft_sorties) do
 															if active_log then log.traceLow("support task: route.lenght( " .. route.lenght .. " ) < range ( " .. unit_loadouts[l].range .. " ) * multiplier ( " .. MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " ): " .. unit_loadouts[l].range * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. ", or unit_loadouts[l].minrange( " .. (unit_loadouts[l].minrange or "nil") .. " ) == nil or route.lenght > unit_loadouts[l].minrange * multiplier ( " .. MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " )") end
 
 															if task == "SEAD" then
-																--escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].capability		--capability determines amount of offset per aircraft
-																escort_num = draft.route.threats.SEAD_offset / unit_loadouts[l].firepower			--firepower determines amount of offset per aircraft
-																--escort_num = math.ceil(escort_num / 2) * 2										    --round up requested escorts to even number
-																escort_num = math.ceil(escort_num) + 1
+																--escort_num = math.ceil( draft.route.threats.SEAD_offset / unit_loadouts[l].capability )		--capability determines amount of offset per aircraft
+																-- considere l'offset come il numero di unità SAM attive (radar) da distruggere per interdire il SAM. (la capability la utilizzo per la scelta del migliore aereo mediante lo score)
+																-- draft.route.threats.SEAD_offset dovrebbe essere la somma di tutti gli offset dei SAM sulla route (VERIFICARE in RouteGenerator)
+																escort_num = math.ceil( draft.route.threats.SEAD_offset / unit_loadouts[l].firepower )			--firepower determines amount of offset per aircraft
+																--escort_num = math.ceil(escort_num / 2) * 2										    --round up requested escorts to even number																
+
+																if escort_num > 0 and escort_num == 1 then
+																	escort_num = 2
+																end
+
 																if active_log then log.traceLow("support task: SEAD, draft.route.threats.SEAD_offset: " .. draft.route.threats.SEAD_offset .. ", unit_loadouts[l].firepower: " .. unit_loadouts[l].firepower .. ", escort_num: " .. escort_num) end																
 
 															elseif task == "Escort" then
@@ -1400,28 +1406,34 @@ for sideS, draftT in pairs(draft_sorties) do
 																	
 																	if escort_num > campMod.Setting_Generation.limit_escort then
 																		escort_num = campMod.Setting_Generation.limit_escort
+																	else
+																		escort_num = math.ceil(escort_num)
+																		-- escort_num = math.ceil(escort_num / 2) * 2										--round up requested escorts to even number
 																	end
-																	escort_num = math.ceil(escort_num)
-																	-- escort_num = math.ceil(escort_num / 2) * 2										--round up requested escorts to even number
 																	
 																	if escort_num > escort_max then
 																		escort_max = escort_num
 																	end	
 																	if active_log then log.traceLow("support task: ESCORT, escort_num limited (<=) to draft.number( " .. draft.number .. " ) * ESCORT_NUMBER_MULTIPLIER( " .. ESCORT_NUMBER_MULTIPLIER .. " ): " .. draft.number * ESCORT_NUMBER_MULTIPLIER .. ", and escort_num limited to campMod.Setting_Generation.limit_escort( " .. campMod.Setting_Generation.limit_escort .. " ) - escort_num: " .. escort_num ) end																
 																end
+															
 															elseif task == "Escort Jammer" then
 																escort_num = 1																	--escort jamming by single aircraft
+															
 															elseif task == "Flare Illumination" then
 																escort_num = 1																	--flare illumination by single aircraft
+															
 															elseif task == "Laser Illumination" then
 																escort_num = 1																	--laser illumination by single aircraft
 															end
 															
 															if escort_num > aircraft_availability[unit[n].name].available then					--if more escorts are requested than available
-																escort_num = aircraft_availability[unit[n].name].available						--reduce requested escorts to number of available escorts
-																-- escort_num = math.floor(escort_num / 2) * 2										--round down to even number
-																escort_num = math.floor(escort_num)
+																escort_num = aircraft_availability[unit[n].name].available						--reduce requested escorts to number of available escorts																
 																if active_log then log.traceLow("support task: ESCORT, escort_num > aircraft_availability[unit[n].name].available( " .. aircraft_availability[unit[n].name].available .. " --> escort_num = aircraft_availability[unit[n].name].available " .. escort_num ) end																
+															
+															else
+																-- escort_num = math.floor(escort_num / 2) * 2										--round down to even number
+																escort_num = math.ceil(escort_num)
 															end
 															
 															if MP_Game	then
@@ -1480,7 +1492,7 @@ for sideS, draftT in pairs(draft_sorties) do
 																--recalculate threat level for sortie adjusted by number of escort
 																local route_threat_recalc = 0.5														--recalculated route threat with escort in place (0.5 == no threat)
 
-																if task == "SEAD" then
+																if task == "SEAD" then -- serve per il calcolo dello score e non per la definizione delle unità di scorta
 																	-- local escort_offset = escort_num * unit_loadouts[l].capability					--number of available SEAD to offset threats
 																	local escort_offset = escort_num * unit_loadouts[l].firepower					-- number of available SEAD to offset threats
 																	if active_log then log.traceLow("recalculate threat level for sortie adjusted by number of escort (task: SEAD) - number of available SEAD to offset threats: " .. escort_offset .. ", route_threat_recalc: " .. route_threat_recalc ) end																

@@ -58,9 +58,9 @@ mission_ini = {
 	max_skill_red_helicopter = "Excellent",	-- Average, Good, High, Excellent
 
 	PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
-	PruneAggressiveness = 1.9,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
-	PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
-	ForcedPruneSam = true,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
+	PruneAggressiveness = 1,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
+	PruneStatic = false,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
+	ForcedPruneSam = false,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
 
 	AIemergencyLaunch = true,					-- (default : false), Tanks and Bombs emergency In Task Strike: autorise ou non aux AI � larguer leur emport sous la menace pendant un strike
 
@@ -256,7 +256,7 @@ campMod = {
 	Setting_Generation= {
 		["limit_escort"] = 8,												-- (default : 99)(recommended : 8), limit escort number to
 	},
-	StrikeOnlyWithEscorte = true, 											-- (default : true) strikes are possible with only one escort
+	StrikeOnlyWithEscorte = false, 											-- (default : true) strikes are possible with only one escort
 }
 
 
@@ -266,7 +266,7 @@ campMod = {
 
 skillWish = {
 	["red"] = 50,				-- 1 � 100, valeur ULTRA conseill� :50
-	["blue"] = 62,				-- 1 � 100 : valuer ULTRA conseill� : 62
+	["blue"] = 50,				-- 1 � 100 : valuer ULTRA conseill� : 62
 }
 
 skillTab = {
