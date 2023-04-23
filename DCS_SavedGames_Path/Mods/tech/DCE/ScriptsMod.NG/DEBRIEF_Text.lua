@@ -878,7 +878,7 @@ do
 		s = s .. "\n\n"																				--make a new line after each side
 	end
 	
-	s = s ..  "------------------------------ AIR LOSS EVALUATION --------------------------------------------------------------------------\n"
+	s = s ..  "AIR LOSS EVALUATION\n-------------------\n"
 
 	local statistic_losses = {
 		

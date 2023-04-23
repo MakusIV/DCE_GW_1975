@@ -119,7 +119,7 @@ supply_tab = {
 				['BESLAN-TSKHINVALI FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
-						["TSKHINVALI FARP MM17"] = true,
+						["TSKHINVALI FARP MM27"] = true,
 					},
 				},						
 			},
@@ -139,7 +139,7 @@ supply_tab = {
 				['NALCHIK-TSKHINVALI FARP SUPPLY LINE'] = {
 					['integrity'] = 1,
 					['airbase_supply'] = {						
-						["TSKHINVALI FARP MM17"] = true,
+						["TSKHINVALI FARP MM27"] = true,
 						['Reserves-R/2nd GHR'] = true,	
 					},
 				},				
