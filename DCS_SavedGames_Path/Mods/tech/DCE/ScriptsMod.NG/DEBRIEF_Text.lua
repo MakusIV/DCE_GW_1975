@@ -28,8 +28,8 @@ local function getEfficiency(base, side)
 			local SpaceSep = 2
 			local space = string.sub("                              ", 1, maxNumLeght + SpaceSep - string.len(efficiencyStr))
 
-			if efficiency < 1 then
-				histogram = string.sub("##########", 1, math.ceil(10 * (1 - efficiency)))
+			if efficiency < 100 then
+				histogram = string.sub("##########", 1, math.ceil(10 * (100 - efficiency)))
 			end		
 			return efficiencyStr .. space .. histogram
 		end
@@ -878,7 +878,7 @@ do
 		s = s .. "\n\n"																				--make a new line after each side
 	end
 	
-	s = s ..  "AIR LOSS EVALUATION\n-------------------\n"
+	s = s ..  "AIR LOSSES EVALUATION\n-------------------\n"
 
 	local statistic_losses = {
 		
@@ -954,10 +954,10 @@ do
 	end
 
 
-	s = s .. " - Blue Loss:\n   - last mission: aircraft lost: " ..  air_loss_data["blue"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["blue"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.aircraft_qty .. ", cost: " .. air_loss_data["blue"].total.aircraft_cost .. "\n\n"
-	s = s .. " - Red Loss:\n   - last mission: aircraft lost: " ..  air_loss_data["red"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["red"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.aircraft_qty .. ", cost: " .. air_loss_data["red"].total.aircraft_cost .. "\n\n"
-	s = s .. " - Loss Statistic:\n   - last mission: air winner: " ..  statistic_losses.mission.winner .. "\n   - blue-red delta loss: " .. statistic_losses.mission.delta_loss .. " ( " .. statistic_losses.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.mission.delta_loss_cost .. " ( " .. statistic_losses.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
-	s = s .. "   - status campaign: Air Winner: " ..  statistic_losses.total.winner .. "\n   - blue-red delta loss: " .. statistic_losses.total.delta_loss .. " ( " .. statistic_losses.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.total.delta_loss_cost .. " ( " .. statistic_losses.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. " - Blue Losses:\n   - last mission: aircraft lost: " ..  air_loss_data["blue"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["blue"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.aircraft_qty .. ", cost: " .. air_loss_data["blue"].total.aircraft_cost .. "\n\n"
+	s = s .. " - Red Losses:\n   - last mission: aircraft lost: " ..  air_loss_data["red"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["red"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.aircraft_qty .. ", cost: " .. air_loss_data["red"].total.aircraft_cost .. "\n\n"
+	s = s .. " - Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.mission.delta_loss .. " ( " .. statistic_losses.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.mission.delta_loss_cost .. " ( " .. statistic_losses.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. "   - status campaign: Air Winner: " ..  statistic_losses.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.total.delta_loss .. " ( " .. statistic_losses.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.total.delta_loss_cost .. " ( " .. statistic_losses.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
 
 	debriefing = debriefing .. s .. "\n\n"
 end
