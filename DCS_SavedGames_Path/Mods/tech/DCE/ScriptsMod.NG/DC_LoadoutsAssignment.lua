@@ -65,10 +65,66 @@ local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01            -- don't touch! - minimu
 local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = math.huge       -- don't touch! - maximum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min (default = 0.01)
 local FIREPOWER_ROUNDED_COMPUTATION = 0.01              -- don't touch!
 local FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1               -- don't touch!
+local FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX = 1.1   -- factor for computed firepower max target: firepower_max = firepower_min * weapon_variability * FACTOR
 local WEIGHT_MISSILE_A2A_RELIABILITY = 0.3              -- look WEIGHT_MISSILE_A2A_ATTRIBUTE calculus (down)
 local WEIGHT_MISSILE_A2A_MANOUVRABILITY = 0.2           -- look WEIGHT_MISSILE_A2A_ATTRIBUTE calculus (down)
 local WEIGHT_MISSILE_A2A_ATTRIBUTE = 1 - WEIGHT_MISSILE_A2A_RELIABILITY - WEIGHT_MISSILE_A2A_MANOUVRABILITY -- weight for missile attibute for calculate missile firepower
+local FIREPOWER_FOR_AA_TARGETS = {        
+        
+    ["blue"] = {
 
+        ["CAP"] = {
+
+            ["min"] = 2,        -- minimum number of enemy aircraft expected
+            ["max"] = 5,        -- maximum number of enemy aircraft expected
+        },
+
+        ["Intercept"] = {
+
+            ["min"] = 3,
+            ["max"] = 6,
+        },
+
+        ["Fighter Sweep"] = {
+
+            ["min"] = 4,
+            ["max"] = 7,
+        },
+
+        ["Escort"] = {
+
+            ["min"] = 3,
+            ["max"] = 5,
+        },
+    },
+
+    ["red"] = {
+
+        ["CAP"] = {
+
+            ["min"] = 2,
+            ["max"] = 5,
+        },
+
+        ["Intercept"] = {
+
+            ["min"] = 3,
+            ["max"] = 6,
+        },
+
+        ["Fighter Sweep"] = {
+
+            ["min"] = 4,
+            ["max"] = 7,
+        },
+
+        ["Escort"] = {
+
+            ["min"] = 3,
+            ["max"] = 5,
+        },
+    },
+}
 
 -- SETTING FOR CALCULATE CRUISE PARAMETER: vCruise and hCruise
 
@@ -89,7 +145,7 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 			["normal"] = {
 
 				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 2000, -- m slm
 				["max_hCruise"] = 8999, -- m slm
 			},
@@ -115,16 +171,16 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 350 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 1000, -- m slm
 				["max_hCruise"] = 7000, -- m slm
 			},			
 
 			["low"] = {
 
-				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 100, -- m slm
 				["max_hCruise"] = 999, -- m slm
 			},			
@@ -145,16 +201,16 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 7000, -- m slm
 				["max_hCruise"] = 10000, -- m slm
 			},		
             
             ["low"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 320 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 2000, -- m slm
 				["max_hCruise"] = 6999, -- m slm
 			},	
@@ -175,8 +231,8 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 700 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 4500, -- m slm
 				["max_hCruise"] = 10000, -- m slm
 			},						
@@ -189,7 +245,7 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["high"] = {
 
-				["min_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 380 / 3.6, -- Km/h @ slm
 				["max_vCruise_TAS"] = 470 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 9000, -- m slm
 				["max_hCruise"] = 12000, -- m slm
@@ -197,16 +253,16 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 380 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 520 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 2000, -- m slm
 				["max_hCruise"] = 8999, -- m slm
 			},
 
 			["low"] = {
 
-				["min_vCruise_TAS"] = 420 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 560 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 100, -- m slm
 				["max_hCruise"] = 1999, -- m slm
 			},
@@ -224,8 +280,8 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 530 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 1000, -- m slm
 				["max_hCruise"] = 7000, -- m slm
 			},			
@@ -254,16 +310,16 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 7000, -- m slm
 				["max_hCruise"] = 10000, -- m slm
 			},		
             
             ["low"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 2000, -- m slm
 				["max_hCruise"] = 6999, -- m slm
 			},	
@@ -284,8 +340,8 @@ local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) 
 
 			["normal"] = {
 
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
 				["min_hCruise"] = 4500, -- m slm
 				["max_hCruise"] = 10000, -- m slm
 			},						
@@ -1543,8 +1599,8 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
     end
     
     if best_weapon_efficiency then
-        calculated_firepower_min = roundAtNumber( num_targets_element / best_weapon_efficiency, FIREPOWER_ROUNDED_COMPUTATION )
-        calculated_firepower_max = roundAtNumber( calculated_firepower_min * ( 1 + best_weapon_variability ), FIREPOWER_ROUNDED_COMPUTATION )     
+        calculated_firepower_min = math.ceil( num_targets_element / best_weapon_efficiency )
+        calculated_firepower_max = math.floor( calculated_firepower_min * ( 1 + best_weapon_variability ) * FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX )     
     end
 
     log.traceVeryLow(nameFunction .. "computed firepower min, max: " .. (calculated_firepower_min or "nil") .. ", " .. (calculated_firepower_max or "nil"))
@@ -1672,7 +1728,7 @@ function defineTargetListFirepower(targetlist)
         log.error(nameFunction .. "computed_target_efficiency wasn't initializated!")
     end
 
-    local task, num_elements, attribute, class, dimension, firepower_min, firepower_max
+    local task, num_elements, attribute, class, dimension, firepower_min, firepower_max   
 
     for side_name, side in pairs(targetlist) do
     
@@ -1684,22 +1740,10 @@ function defineTargetListFirepower(targetlist)
                 firepower_min = 1
                 firepower_max = 1
             
-            elseif task == "CAP" then
-                firepower_min = 2
-                firepower_max = 4
+            elseif task == "CAP" or  task == "Intercept" or task == "Fighter Sweep" or task == "Escort" then
+                firepower_min = FIREPOWER_FOR_AA_TARGETS[side_name][task].min -- minimum number of enemy aircraft expected
+                firepower_max = FIREPOWER_FOR_AA_TARGETS[side_name][task].max -- maximum number of enemy aircraft expected            
 
-            elseif task == "Intercept" then
-                firepower_min = 2
-                firepower_max = 5
-            
-            elseif task == "Fighter Sweep" then
-                firepower_min = 3
-                firepower_max = 5
-
-            elseif task == "Escort" then
-                firepower_min = 2
-                firepower_max = 4
-            
             else            
                 attribute = target.attributes[1] or "nil" -- soft, armor ecc (deve? essere sempre un solo attributo)            
                 class = target.class or "scenery"-- ship, vehicle, ecc.

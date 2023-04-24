@@ -684,8 +684,8 @@ for side_name, side in pairs(targetlist) do													--Iterate through all si
 end
 
 -- define the firepower for targetlist	
-if camp.mission == 1 then -- per sicurezza (verifica se esiste missione 0)
+--if camp.mission == 1 then -- per sicurezza (verifica se esiste missione 0)
 	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_LoadoutsAssignment.lua") 
 	defineTargetListFirepower(targetlist)	
-end
+--end
 

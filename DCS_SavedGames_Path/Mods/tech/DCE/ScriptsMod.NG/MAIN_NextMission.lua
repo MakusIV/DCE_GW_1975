@@ -241,19 +241,6 @@ else
 	defineLoadoutsCruiseParameters()
 end
 
---UPGRADE
---[[  
-	dofile("../../../ScriptsMod."..versionPackageICM.."/DC_LoadoutsAssignment.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
-	
-	if FirstMission then -- per sicurezza (verifica se esiste missione 0)		
-		CopyFile("Init/db_loadouts.lua", "Init/db_loadouts_original.lua")	
-		defineLoadoutsFirepowerCostAndCruiseParam()
-		SaveTabOnPath( "Init/", "db_loadouts", db_loadouts ) -- save new updated db_loadouts     
-	else
-		defineLoadoutsFirepowerAndCost()
-	end
-]]
-
 
 -- INSERISCI QUI IL PREPROCESSING: 
 -- Blue_task_table, red_task_table dove la key = task (CAP, INTERCEPT,...) e value = tutte le info relative alle unità con quel task (sottotabella unità).
