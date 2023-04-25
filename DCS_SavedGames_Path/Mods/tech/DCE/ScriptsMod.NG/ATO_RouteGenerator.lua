@@ -34,22 +34,21 @@ log.outfile = LOG_DIR .. "LOG_ATO_RouteGenerator." .. camp.mission .. ".log"
 local local_debug = true -- local debug   
 log.info("Start")
 
--- module parameters
-local TIME_FOR_INGRESS_CALCULATION = 60 -- (s) default 60s, time for compute ingress distance distance = speed(vattack) * time + standoff
-local MINIMUM_STANDOFF_DISTANCE = 7000 -- (m) default 7000m, minimum standoff value for calculation (not not applicable when the value is defined in db_loadouts: always with new firepower code)
-local TIME_FOR_STANDOFF_CALCULATION = 30 -- (s) default 30s, time for compute standoff distance distance = speed(vattack) * time + hattack
-local PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000 -- min altitude for generic CAP detection (no need EWR support)(default = 3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
-local ALT_MIN_FOR_CLUTTER_EFFECT = 100 -- (defalut = 100 m)
-local PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5 -- (1 max, 0 total. default = 0.5)
-local MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5 -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
-local MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300 -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
-local SEPARATION_FROM_THREAT_RANGE = 1000 -- min distance from threat.range border
--- diff = threat.range - threat_leg_distance, se diff > 0 (leg interno al threat.range -> ragiona sul punto precedente in cui viene calcolato il punto alternativo a 90 gradi e in base a quanto questo punto rispetto si trova interno al range, calcolare il FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE
-
-local MAX_NUM_ISTANCE_PATH_FINDING = 7 -- max number of istances of function findPathLeg(), default = 7
--- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
--- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
-
+-- module parameters8
+local ATO_RG_CONFIG = {
+	TIME_FOR_INGRESS_CALCULATION = 60, -- (s) default 60s, time for compute ingress distance distance = speed(vattack) * time + standoff
+	MINIMUM_STANDOFF_DISTANCE = 7000, -- (m) default 7000m, minimum standoff value for calculation (not not applicable when the value is defined in db_loadouts: always with new firepower code)
+	TIME_FOR_STANDOFF_CALCULATION = 30, -- (s) default 30s, time for compute standoff distance distance = speed(vattack) * time + hattack
+	PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000, -- min altitude for generic CAP detection (no need EWR support)(default = 3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
+	ALT_MIN_FOR_CLUTTER_EFFECT = 100, -- (defalut = 100 m)
+	PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5, -- (1 max, 0 total. default = 0.5)
+	MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5, -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
+	MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300, -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
+	SEPARATION_FROM_THREAT_RANGE = 1000, -- min distance from threat.range border
+	MAX_NUM_ISTANCE_PATH_FINDING = 7, -- max number of istances of function findPathLeg(), default = 7
+	-- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
+	-- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
+}
 
 --function to return radar horizon
 local function RadarHorizon(h1, h2)
@@ -100,8 +99,8 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 
 	if not_ewr then
 		
-		if profile_alt <= ALT_MIN_FOR_CLUTTER_EFFECT then																				--if alt is lower than 100m
-			threatentry.level = threat.level * (1 - PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER)																--only 50% of threat level is applied as low level clutter bonus
+		if profile_alt <= ATO_RG_CONFIG.ALT_MIN_FOR_CLUTTER_EFFECT then																				--if alt is lower than 100m
+			threatentry.level = threat.level * (1 - ATO_RG_CONFIG.PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER)																--only 50% of threat level is applied as low level clutter bonus
 			log.traceLow("type_profile: " .. type_profile .. " alt(" .. profile_alt .. "), threat isn't ewr and lower than 100m, only 50% of threat level is applied as low level clutter bonus, threatentry.level = " .. threatentry.level)		
 		
 		else
@@ -270,7 +269,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 						if fighterthreats[side_][t].class == "CAP" then														--if the fighter is CAP
 							log.traceVeryLow("fighterthreats[" .. side_ .. "][" .. t .. "] is a CAP")
 							
-							if leg_alt >= PROFILE_MIN_ALT_FOR_CAP_DETECTION then											--if route leg is at high altitude 
+							if leg_alt >= ATO_RG_CONFIG.PROFILE_MIN_ALT_FOR_CAP_DETECTION then											--if route leg is at high altitude 
 								ewr_required = false																		--CAP does not need ewr to be a threat
 								log.traceVeryLow("route leg (" .. leg_alt .. ") is at high altitude (> PROFILE_MIN_ALT_FOR_CAP_DETECTION(default 3000m)) -> CAP does not need ewr to be a threat")
 
@@ -381,8 +380,8 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 
 
 			--also try a low variant
-			if instance == 1 and MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack ) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
-				log.traceVeryLow(nameFunction .. "instance: " .. instance .. ", try a low variant, cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
+			if instance == 1 and ATO_RG_CONFIG.MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE < ( leg_alt - profile.hAttack ) then																		--in first instance also make a low level route if attack alt is lower than cruise alt
+				log.traceVeryLow(nameFunction .. "instance: " .. instance .. ", try a low variant, cruise alt (" .. leg_alt .. ") - attack alt(" .. profile.hAttack .. ") > MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE (" .. ATO_RG_CONFIG.MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE .. "), in first instance added in FindPathLegTable a low level route")
 				table.insert(FindPathLegTable, {point1, point2, pointEnd, distance + 1, route, instance - 1, profile.hAttack})		--try leg again low (do not increase instance), increase distance slighly to introduce a bias against going low compared to the identical route high
 			end
 						
@@ -428,12 +427,12 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			removeThreatsAtStartEnd(threat, point1, pointEnd)
 			local tot_distance = distance + distance_remain
 
-			if instance > MAX_NUM_ISTANCE_PATH_FINDING then																									--if function instance is bigger than 7
-				log.traceVeryLow(nameFunction .. "instance(" .. instance .. ") is bigger than " .. MAX_NUM_ISTANCE_PATH_FINDING .. " -> stop function\nEnd " .. nameFunction)
+			if instance > ATO_RG_CONFIG.MAX_NUM_ISTANCE_PATH_FINDING then																									--if function instance is bigger than 7
+				log.traceVeryLow(nameFunction .. "instance(" .. instance .. ") is bigger than " .. ATO_RG_CONFIG.MAX_NUM_ISTANCE_PATH_FINDING .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
-			elseif tot_distance > (direct_distance * MAX_FACTOR_FOR_LENGHT_ROUTE) then														--if total route distance is bigger than 1.5 times the direct distance
-				log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), total route distance(" .. distance + distance_remain .. ") is bigger than " .. MAX_FACTOR_FOR_LENGHT_ROUTE .. " times the direct distance(" .. direct_distance .. " -> stop function\nEnd " .. nameFunction)
+			elseif tot_distance > (direct_distance * ATO_RG_CONFIG.MAX_FACTOR_FOR_LENGHT_ROUTE) then														--if total route distance is bigger than 1.5 times the direct distance
+				log.traceVeryLow(nameFunction .. "instance(" .. instance .. "), total route distance(" .. distance + distance_remain .. ") is bigger than " .. ATO_RG_CONFIG.MAX_FACTOR_FOR_LENGHT_ROUTE .. " times the direct distance(" .. direct_distance .. " -> stop function\nEnd " .. nameFunction)
 				return																												--abort this route branch
 			
 			elseif #threat == 0 then																							--if no more threats on remaining route
@@ -616,18 +615,18 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 					log.level = previous_log_level			
 				end
 				
-				local radius_with_separation = threat[1].range + SEPARATION_FROM_THREAT_RANGE 	-- R           calculated offset for new alternative point2																
+				local radius_with_separation = threat[1].range + ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE 	-- R           calculated offset for new alternative point2																
 				local response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, alfaL, alfaR, position, hl, wl, dl, sl, ll							
 				local tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, alfaL1, alfaR1, hr, wr, dr, sr, lr
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", there is a threat on leg, find left/right side routes alternates around threat")	
-				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat_center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", SEPARATION_FOR_...: " .. SEPARATION_FROM_THREAT_RANGE)								
+				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1: " .. point1.x .. ", " .. point1.y .. ", point2: " .. point2.x .. ", " .. point2.y .. ", threat_center: " .. threat[1].x  .. ", " .. threat[1].y .. ", threat[1].range: " .. threat[1].range .. ", SEPARATION_FOR_...: " .. ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)								
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", radius_with_separation: " .. radius_with_separation .. ", p1_threat_distance: " .. GetDistance(point1, threat[1]) .. ", p2_threat_distance: " .. GetDistance(point2, threat[1]) .. ", min_distance_from_threat_p1_p2: " .. GetTangentDistance(point1, point2, threat[1]))					
 				
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p1-p2: ")
-				response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, position = GetTangentInfo(point1, point2, threat[1], threat[1].range, 45, SEPARATION_FROM_THREAT_RANGE)								
+				response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, position = GetTangentInfo(point1, point2, threat[1], threat[1].range, 45, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)								
 		
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p2-p1: ")
-				response1, tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, position1 = GetTangentInfo(point2, point1, threat[1], threat[1].range, 45, SEPARATION_FROM_THREAT_RANGE)				
+				response1, tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, position1 = GetTangentInfo(point2, point1, threat[1], threat[1].range, 45, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)				
 				
 				if response and response1 then
 					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1 and point2 are within threat circonference ")
@@ -810,10 +809,10 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 			log.traceVeryLow("standoff defined in loadout profile")
 		
 		else																								--if no standoff defined in loadout profile
-			standoff = profile.hAttack + profile.vAttack * TIME_FOR_STANDOFF_CALCULATION 												--standoff distance is attack alt plus 30 seconds at attack speed
+			standoff = profile.hAttack + profile.vAttack * ATO_RG_CONFIG.TIME_FOR_STANDOFF_CALCULATION 												--standoff distance is attack alt plus 30 seconds at attack speed
 			
-			if standoff < MINIMUM_STANDOFF_DISTANCE then																			--standoff should be at least 7000m
-				standoff = MINIMUM_STANDOFF_DISTANCE
+			if standoff < ATO_RG_CONFIG.MINIMUM_STANDOFF_DISTANCE then																			--standoff should be at least 7000m
+				standoff = ATO_RG_CONFIG.MINIMUM_STANDOFF_DISTANCE
 			end
 			log.traceVeryLow("standoff isn't define in loadout profile")
 		end
@@ -826,7 +825,7 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				IP_distance = standoff + profile.ingress
 				log.traceVeryLow("ingress distance is defined in loadout")
 			else
-				IP_distance = standoff + profile.vAttack * TIME_FOR_INGRESS_CALCULATION												--distance target-IP is standoff range from profile + 60 seconds run in at attack speed
+				IP_distance = standoff + profile.vAttack * ATO_RG_CONFIG.TIME_FOR_INGRESS_CALCULATION												--distance target-IP is standoff range from profile + 60 seconds run in at attack speed
 				log.traceVeryLow("ingress distance isn't defined in loadout")
 			end
 			log.traceVeryLow("ingress distance (IP_distance) = " .. IP_distance) 
