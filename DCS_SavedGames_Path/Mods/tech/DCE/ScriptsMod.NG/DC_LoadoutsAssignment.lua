@@ -31,382 +31,390 @@ log.debug("Start")
 require("Init/db_firepower")
 require("Init/db_loadouts")
 
+local DC_LA_CONFIG = {
 
--- SETTING FOR CALCULATE FIREPOWER AND COST 
+    ANGLE_OF_DESCENT_IN_GROUND_ATTACK = {             -- degree
+        ["ASM"] = { 
+            ["min"] = 10,                                       
+            ["med"] = 25, 
+            ["max"] = 35,                                       
+        },
+        ["Rockets"] = { 
+            ["min"] = 20,                                       
+            ["med"] = 30,                                       
+            ["max"] = 40,                                       
+        },                                   
+    },
 
-local ANGLE_OF_DESCENT_IN_GROUND_ATTACK = {             -- degree
-    ["ASM"] = { 
-        ["min"] = 10,                                       
-        ["med"] = 25, 
-        ["max"] = 35,                                       
+    PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = {           -- standoff = percentage * range weapon
+        ["ASM"] = 0.7,                                      
+        ["Rockets"] = 0.6,                                  
     },
-    ["Rockets"] = { 
-        ["min"] = 20,                                       
-        ["med"] = 30,                                       
-        ["max"] = 40,                                       
-    },                                   
-}
-local PERCENTAGE_RANGE_FOR_STANDOFF_SETUP = {           -- standoff = percentage * range weapon
-    ["ASM"] = 0.7,                                      
-    ["Rockets"] = 0.6,                                  
-}
-local ALTITUDE_ATTACK = {                               -- (m) min,max altitude attack for rockets/ASM loadout (hAltitude)
-    ["ASM"] = { 
-        ["min"] = 200,                                             
-        ["max"] = 6000,                                       
+    
+    ALTITUDE_ATTACK = {                               -- (m) min,max altitude attack for rockets/ASM loadout (hAltitude)
+        ["ASM"] = { 
+            ["min"] = 200,                                             
+            ["max"] = 6000,                                       
+        },
+        ["Rockets"] = {
+            ["min"] = 50,                                             
+            ["max"] = 1000,                                       
+        },
     },
-    ["Rockets"] = {
-        ["min"] = 50,                                             
-        ["max"] = 1000,                                       
+
+    ACTIVATE_STANDOFF_SETUP = true,                    -- assign loadouts.standoff with weapon.range only for ASM (default = true)
+    MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01,            -- don't touch! - minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min (default = 0.01)
+    MAX_EFFICIENCY_WEAPON_ATTRIBUTE = math.huge,       -- don't touch! - maximum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min (default = 0.01)
+    FIREPOWER_ROUNDED_COMPUTATION = 0.01,              -- don't touch!
+    FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1,               -- don't touch!
+    FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX = 1.1,   -- factor for computed firepower max target: firepower_max = firepower_min * weapon_variability * FACTOR
+    WEIGHT_MISSILE_A2A_RELIABILITY = 0.3,              -- look weight_missile_a2a_attribute calculus (down)
+    WEIGHT_MISSILE_A2A_MANOUVRABILITY = 0.2,           -- look weight_missile_a2a_attribute calculus (down)
+    
+    FIREPOWER_FOR_AA_TARGETS = {        
+            
+        ["blue"] = {
+
+            ["CAP"] = {
+
+                ["min"] = 2,        -- minimum number of enemy aircraft expected
+                ["max"] = 5,        -- maximum number of enemy aircraft expected
+            },
+
+            ["Intercept"] = {
+
+                ["min"] = 3,
+                ["max"] = 6,
+            },
+
+            ["Fighter Sweep"] = {
+
+                ["min"] = 4,
+                ["max"] = 7,
+            },
+
+            ["Escort"] = {
+
+                ["min"] = 3,
+                ["max"] = 5,
+            },
+        },
+
+        ["red"] = {
+
+            ["CAP"] = {
+
+                ["min"] = 2,
+                ["max"] = 5,
+            },
+
+            ["Intercept"] = {
+
+                ["min"] = 3,
+                ["max"] = 6,
+            },
+
+            ["Fighter Sweep"] = {
+
+                ["min"] = 4,
+                ["max"] = 7,
+            },
+
+            ["Escort"] = {
+
+                ["min"] = 3,
+                ["max"] = 5,
+            },
+        },
     },
-}
-local ACTIVATE_STANDOFF_SETUP = true                    -- assign loadouts.standoff with weapon.range only for ASM (default = true)
-local MIN_EFFICIENCY_WEAPON_ATTRIBUTE = 0.01            -- don't touch! - minimum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min (default = 0.01)
-local MAX_EFFICIENCY_WEAPON_ATTRIBUTE = math.huge       -- don't touch! - maximum value for weapon efficiency,  efficiency = accuracy * destroy_capacity (1 max, 0.01 min),  accuracy: hit success percentage, 1 max, 0.1 min, destroy_capacity: destroy single element capacity,  1 max ( element destroyed with single hit),  0.1 min (default = 0.01)
-local FIREPOWER_ROUNDED_COMPUTATION = 0.01              -- don't touch!
-local FIREPOWER_ROUNDED_ASSIGNEMENT = 0.1               -- don't touch!
-local FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX = 1.1   -- factor for computed firepower max target: firepower_max = firepower_min * weapon_variability * FACTOR
-local WEIGHT_MISSILE_A2A_RELIABILITY = 0.3              -- look WEIGHT_MISSILE_A2A_ATTRIBUTE calculus (down)
-local WEIGHT_MISSILE_A2A_MANOUVRABILITY = 0.2           -- look WEIGHT_MISSILE_A2A_ATTRIBUTE calculus (down)
-local WEIGHT_MISSILE_A2A_ATTRIBUTE = 1 - WEIGHT_MISSILE_A2A_RELIABILITY - WEIGHT_MISSILE_A2A_MANOUVRABILITY -- weight for missile attibute for calculate missile firepower
-local FIREPOWER_FOR_AA_TARGETS = {        
+
+    -- SETTING FOR CALCULATE CRUISE PARAMETER: vCruise and hCruise
+
+    CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) FOR AIRCRAFT ROLES
         
-    ["blue"] = {
+        ["blue"] = {
 
-        ["CAP"] = {
+            ["bomber"] = {
 
-            ["min"] = 2,        -- minimum number of enemy aircraft expected
-            ["max"] = 5,        -- maximum number of enemy aircraft expected
+                ["high"] = {
+
+                    ["min_vCruise_TAS"] = 350 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 9000, -- m slm
+                    ["max_hCruise"] = 12000, -- m slm
+                },
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 2000, -- m slm
+                    ["max_hCruise"] = 8999, -- m slm
+                },
+
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 100, -- m slm
+                    ["max_hCruise"] = 1999, -- m slm
+                },
+
+                ["supersonic"] = {
+
+                    ["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 200, -- m slm
+                    ["max_hCruise"] = 12000, -- m slm
+                },
+            },
+
+            ["attacker"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 1000, -- m slm
+                    ["max_hCruise"] = 7000, -- m slm
+                },			
+
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 100, -- m slm
+                    ["max_hCruise"] = 999, -- m slm
+                },			
+            },
+
+            ["transporter"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 4500, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },
+
+            ["refueler"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 7000, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },		
+                
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 320 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 2000, -- m slm
+                    ["max_hCruise"] = 6999, -- m slm
+                },	
+            },
+
+            ["AWACS"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 9000, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },
+
+            ["recon"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 700 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 4500, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },		
         },
 
-        ["Intercept"] = {
+        ["red"] = {
 
-            ["min"] = 3,
-            ["max"] = 6,
+            ["bomber"] = {
+
+                ["high"] = {
+
+                    ["min_vCruise_TAS"] = 380 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 470 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 9000, -- m slm
+                    ["max_hCruise"] = 12000, -- m slm
+                },
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 2000, -- m slm
+                    ["max_hCruise"] = 8999, -- m slm
+                },
+
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 100, -- m slm
+                    ["max_hCruise"] = 1999, -- m slm
+                },
+
+                ["supersonic"] = {
+
+                    ["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 200, -- m slm
+                    ["max_hCruise"] = 12000, -- m slm
+                },
+            },
+
+            ["attacker"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 1000, -- m slm
+                    ["max_hCruise"] = 7000, -- m slm
+                },			
+
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 100, -- m slm
+                    ["max_hCruise"] = 999, -- m slm
+                },			
+            },
+
+            ["transporter"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 4500, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },
+
+            ["refueler"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 7000, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },		
+                
+                ["low"] = {
+
+                    ["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 2000, -- m slm
+                    ["max_hCruise"] = 6999, -- m slm
+                },	
+            },
+
+            ["AWACS"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 9000, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },
+
+            ["recon"] = {
+
+                ["normal"] = {
+
+                    ["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
+                    ["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
+                    ["min_hCruise"] = 4500, -- m slm
+                    ["max_hCruise"] = 10000, -- m slm
+                },						
+            },		
+        },
+    },
+    ESCORT_ALTITUDE_OVERRIDE = { -- SETTING OVERRIDE ALTITUDE FOR ESCORT JOBS
+        
+        ["escort_bomber"]  = {
+            ["min"] = 300, -- ( m ) min override altitude from bomber
+            ["max"] = 1000, -- ( m ) max override altitude from bomber
         },
 
-        ["Fighter Sweep"] = {
-
-            ["min"] = 4,
-            ["max"] = 7,
+        ["escort_attacker"]  = {
+            ["min"] = 200, -- ( m ) min override altitude from attacker
+            ["max"] = 800, -- ( m ) max override altitude from attacker
         },
 
-        ["Escort"] = {
+        ["escort_sead_bomber"]  = {
+            ["min"] = 500, -- ( m ) min override altitude from bomber with SEAD task
+            ["max"] = 1200, -- ( m ) max override altitude from bomber with SEAD task
+        },
 
-            ["min"] = 3,
-            ["max"] = 5,
+        ["escort_sead_attacker"]  = {
+            ["min"] = 300, -- ( m ) min override altitude from attacker with SEAD task
+            ["max"] = 800, -- ( m ) max override altitude from attacker with SEAD task
+        },
+    },
+    ESCORT_TIME_FOR_DISTANCE_OVERRIDE = { -- SETTING OVERRIDE DISTANCE_TIME FOR ESCORT JOBS
+        
+        ["escort_bomber"]  = 1500, -- (s) time needed for escort override after join (default: 1500s == 25')
+        ["escort_attacker"]  = 600, -- (s) time needed for escort override after join (default: 600s == 10')
+        ["escort_sead_bomber"]  = 1200, -- (s) time needed for escort override after join (default: 1200s == 20')
+        ["escort_sead_attacker"]  = 900, -- (s) time needed for escort override after join (default: 1200s == 15')
+    },
+    ESCORT_DISTANCE_OVERRIDE = {  -- SETTING OVERRIDE DISTANCE TIME FOR ESCORT JOBS
+        
+        ["escort_bomber"]  = {
+            ["min"] = 10000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+            ["max"] = 20000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+        },
+
+        ["escort_attacker"]  = {
+            ["min"] = 7000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+            ["max"] = 12000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+        },
+
+        ["escort_sead_bomber"]  = {
+            ["min"] = 20000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+            ["max"] = 30000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+        },
+
+        ["escort_sead_attacker"]  = {
+            ["min"] = 15000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
+            ["max"] = 25000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
         },
     },
 
-    ["red"] = {
-
-        ["CAP"] = {
-
-            ["min"] = 2,
-            ["max"] = 5,
-        },
-
-        ["Intercept"] = {
-
-            ["min"] = 3,
-            ["max"] = 6,
-        },
-
-        ["Fighter Sweep"] = {
-
-            ["min"] = 4,
-            ["max"] = 7,
-        },
-
-        ["Escort"] = {
-
-            ["min"] = 3,
-            ["max"] = 5,
-        },
-    },
 }
 
--- SETTING FOR CALCULATE CRUISE PARAMETER: vCruise and hCruise
 
-local CRUISE_PARAM = {  -- SETTING ALTITUDE (hCruise) AND SPEED (vCruise - tas) FOR AIRCRAFT ROLES
-	
-	["blue"] = {
-
-		["bomber"] = {
-
-			["high"] = {
-
-				["min_vCruise_TAS"] = 350 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 9000, -- m slm
-				["max_hCruise"] = 12000, -- m slm
-			},
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 2000, -- m slm
-				["max_hCruise"] = 8999, -- m slm
-			},
-
-			["low"] = {
-
-				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 100, -- m slm
-				["max_hCruise"] = 1999, -- m slm
-			},
-
-			["supersonic"] = {
-
-				["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 200, -- m slm
-				["max_hCruise"] = 12000, -- m slm
-			},
-		},
-
-		["attacker"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 1000, -- m slm
-				["max_hCruise"] = 7000, -- m slm
-			},			
-
-			["low"] = {
-
-				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 100, -- m slm
-				["max_hCruise"] = 999, -- m slm
-			},			
-		},
-
-		["transporter"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 4500, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},
-
-		["refueler"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 7000, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},		
-            
-            ["low"] = {
-
-				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 320 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 2000, -- m slm
-				["max_hCruise"] = 6999, -- m slm
-			},	
-		},
-
-		["AWACS"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 9000, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},
-
-		["recon"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 700 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 4500, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},		
-	},
-
-    ["red"] = {
-
-		["bomber"] = {
-
-			["high"] = {
-
-				["min_vCruise_TAS"] = 380 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 470 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 9000, -- m slm
-				["max_hCruise"] = 12000, -- m slm
-			},
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 2000, -- m slm
-				["max_hCruise"] = 8999, -- m slm
-			},
-
-			["low"] = {
-
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 100, -- m slm
-				["max_hCruise"] = 1999, -- m slm
-			},
-
-			["supersonic"] = {
-
-				["min_vCruise_TAS"] = 1500 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 2000 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 200, -- m slm
-				["max_hCruise"] = 12000, -- m slm
-			},
-		},
-
-		["attacker"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 900 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 1000, -- m slm
-				["max_hCruise"] = 7000, -- m slm
-			},			
-
-			["low"] = {
-
-				["min_vCruise_TAS"] = 400 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 550 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 100, -- m slm
-				["max_hCruise"] = 999, -- m slm
-			},			
-		},
-
-		["transporter"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 4500, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},
-
-		["refueler"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 7000, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},		
-            
-            ["low"] = {
-
-				["min_vCruise_TAS"] = 290 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 330 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 2000, -- m slm
-				["max_hCruise"] = 6999, -- m slm
-			},	
-		},
-
-		["AWACS"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 370 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 500 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 9000, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},
-
-		["recon"] = {
-
-			["normal"] = {
-
-				["min_vCruise_TAS"] = 450 / 3.6, -- Km/h @ slm
-				["max_vCruise_TAS"] = 600 / 3.6, -- Km/h @ slm
-				["min_hCruise"] = 4500, -- m slm
-				["max_hCruise"] = 10000, -- m slm
-			},						
-		},		
-	},
-}
-local ESCORT_ALTITUDE_OVERRIDE = { -- SETTING OVERRIDE ALTITUDE FOR ESCORT JOBS
-	
-	["escort_bomber"]  = {
-		["min"] = 300, -- ( m ) min override altitude from bomber
-		["max"] = 1000, -- ( m ) max override altitude from bomber
-	},
-
-	["escort_attacker"]  = {
-		["min"] = 200, -- ( m ) min override altitude from attacker
-		["max"] = 800, -- ( m ) max override altitude from attacker
-	},
-
-	["escort_sead_bomber"]  = {
-		["min"] = 500, -- ( m ) min override altitude from bomber with SEAD task
-		["max"] = 1200, -- ( m ) max override altitude from bomber with SEAD task
-	},
-
-	["escort_sead_attacker"]  = {
-		["min"] = 300, -- ( m ) min override altitude from attacker with SEAD task
-		["max"] = 800, -- ( m ) max override altitude from attacker with SEAD task
-	},
-}
-local ESCORT_TIME_FOR_DISTANCE_OVERRIDE = { -- SETTING OVERRIDE DISTANCE_TIME FOR ESCORT JOBS
-	
-	["escort_bomber"]  = 1500, -- (s) time needed for escort override after join (default: 1500s == 25')
-	["escort_attacker"]  = 600, -- (s) time needed for escort override after join (default: 600s == 10')
-	["escort_sead_bomber"]  = 1200, -- (s) time needed for escort override after join (default: 1200s == 20')
-	["escort_sead_attacker"]  = 900, -- (s) time needed for escort override after join (default: 1200s == 15')
-}
-local ESCORT_DISTANCE_OVERRIDE = {  -- SETTING OVERRIDE DISTANCE TIME FOR ESCORT JOBS
-	
-	["escort_bomber"]  = {
-		["min"] = 10000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-		["max"] = 20000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-	},
-
-	["escort_attacker"]  = {
-		["min"] = 7000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-		["max"] = 12000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-	},
-
-	["escort_sead_bomber"]  = {
-		["min"] = 20000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-		["max"] = 30000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-	},
-
-	["escort_sead_attacker"]  = {
-		["min"] = 15000, -- ( m ) min override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-		["max"] = 25000, -- ( m ) max override distance from join after the past ESCORT_TIME_FOR_DISTANCE_OVERRIDE
-	},
-}
 
 -- PREPROCESSING
 
+local weight_missile_a2a_attribute = 1 - DC_LA_CONFIG.WEIGHT_MISSILE_A2A_RELIABILITY - DC_LA_CONFIG.WEIGHT_MISSILE_A2A_MANOUVRABILITY -- weight for missile attibute for calculate missile firepower
+
 local altitude_increments_for_escort = { 
-	["escort_bomber"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_bomber.min, ESCORT_ALTITUDE_OVERRIDE.escort_bomber.max), -- (m/s) increment speed for escort
-	["escort_attacker"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, ESCORT_ALTITUDE_OVERRIDE.escort_attacker.max), -- (m/s) increment speed for escort
-	["escort_sead_bomber"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.min, ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.max), -- (m/s) increment speed for escort
-	["escort_sead_attacker"] = math.random(ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, ESCORT_ALTITUDE_OVERRIDE.escort_sead_attacker.max), -- (m/s) increment speed for escort
+	["escort_bomber"] = math.random(DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_bomber.min, DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_bomber.max), -- (m/s) increment speed for escort
+	["escort_attacker"] = math.random(DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_attacker.max), -- (m/s) increment speed for escort
+	["escort_sead_bomber"] = math.random(DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.min, DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_sead_bomber.max), -- (m/s) increment speed for escort
+	["escort_sead_attacker"] = math.random(DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_attacker.min, DC_LA_CONFIG.ESCORT_ALTITUDE_OVERRIDE.escort_sead_attacker.max), -- (m/s) increment speed for escort
 }
 local cruise_param_calculated = {
 	
@@ -416,26 +424,26 @@ local cruise_param_calculated = {
 
 			["high"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.high.min_hCruise, CRUISE_PARAM.blue.bomber.high.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.high.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.high.max_vCruise_TAS)),								
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.high.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.high.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.high.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.high.max_vCruise_TAS)),								
 			},
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.normal.min_hCruise, CRUISE_PARAM.blue.bomber.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.normal.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.normal.max_vCruise_TAS)),
 			},
 
 			["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.low.min_hCruise, CRUISE_PARAM.blue.bomber.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.low.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.low.max_vCruise_TAS)),			
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.low.max_vCruise_TAS)),			
 			},
 
 			["supersonic"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.supersonic.min_hCruise, CRUISE_PARAM.blue.bomber.supersonic.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.bomber.supersonic.min_vCruise_TAS, CRUISE_PARAM.blue.bomber.supersonic.max_vCruise_TAS)),				
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.supersonic.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.supersonic.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.supersonic.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.bomber.supersonic.max_vCruise_TAS)),				
 			},
 		},
 
@@ -443,14 +451,14 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.attacker.normal.min_hCruise, CRUISE_PARAM.blue.attacker.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.attacker.normal.min_vCruise_TAS, CRUISE_PARAM.blue.attacker.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.normal.max_vCruise_TAS)),
 			},			
 
 			["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.attacker.low.min_hCruise, CRUISE_PARAM.blue.attacker.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.attacker.low.min_vCruise_TAS, CRUISE_PARAM.blue.attacker.low.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.attacker.low.max_vCruise_TAS)),
 			},			
 		},
 
@@ -458,8 +466,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.transporter.normal.min_hCruise, CRUISE_PARAM.blue.transporter.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.transporter.normal.min_vCruise_TAS, CRUISE_PARAM.blue.transporter.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.transporter.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.transporter.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.transporter.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.transporter.normal.max_vCruise_TAS)),
 			},						
 		},
 
@@ -467,14 +475,14 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.refueler.normal.min_hCruise, CRUISE_PARAM.blue.refueler.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.refueler.normal.min_vCruise_TAS, CRUISE_PARAM.blue.refueler.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.normal.max_vCruise_TAS)),
 			},	
             
             ["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.refueler.low.min_hCruise, CRUISE_PARAM.blue.refueler.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.refueler.low.min_vCruise_TAS, CRUISE_PARAM.blue.refueler.low.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.refueler.low.max_vCruise_TAS)),
 			},	
 		},
 
@@ -482,8 +490,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.AWACS.normal.min_hCruise, CRUISE_PARAM.blue.AWACS.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.AWACS.normal.min_vCruise_TAS, CRUISE_PARAM.blue.AWACS.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.AWACS.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.AWACS.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.AWACS.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.AWACS.normal.max_vCruise_TAS)),
 			},						
 		},
 
@@ -491,8 +499,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.recon.normal.min_hCruise, CRUISE_PARAM.blue.recon.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.blue.recon.normal.min_vCruise_TAS, CRUISE_PARAM.blue.recon.normal.max_vCruise_TAS)),	
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.recon.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.blue.recon.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.blue.recon.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.blue.recon.normal.max_vCruise_TAS)),	
 			},						
 		},		
 	},
@@ -503,26 +511,26 @@ local cruise_param_calculated = {
 
 			["high"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.high.min_hCruise, CRUISE_PARAM.red.bomber.high.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.high.min_vCruise_TAS, CRUISE_PARAM.red.bomber.high.max_vCruise_TAS)),								
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.high.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.high.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.high.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.high.max_vCruise_TAS)),								
 			},
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.normal.min_hCruise, CRUISE_PARAM.red.bomber.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.normal.min_vCruise_TAS, CRUISE_PARAM.red.bomber.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.normal.max_vCruise_TAS)),
 			},
 
 			["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.low.min_hCruise, CRUISE_PARAM.red.bomber.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.low.min_vCruise_TAS, CRUISE_PARAM.red.bomber.low.max_vCruise_TAS)),			
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.low.max_vCruise_TAS)),			
 			},
 
 			["supersonic"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.supersonic.min_hCruise, CRUISE_PARAM.red.bomber.supersonic.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.bomber.supersonic.min_vCruise_TAS, CRUISE_PARAM.red.bomber.supersonic.max_vCruise_TAS)),				
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.supersonic.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.supersonic.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.bomber.supersonic.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.bomber.supersonic.max_vCruise_TAS)),				
 			},
 		},
 
@@ -530,14 +538,14 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.attacker.normal.min_hCruise, CRUISE_PARAM.red.attacker.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.attacker.normal.min_vCruise_TAS, CRUISE_PARAM.red.attacker.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.attacker.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.attacker.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.attacker.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.attacker.normal.max_vCruise_TAS)),
 			},			
 
 			["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.attacker.low.min_hCruise, CRUISE_PARAM.red.attacker.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.attacker.low.min_vCruise_TAS, CRUISE_PARAM.red.attacker.low.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.attacker.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.attacker.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.attacker.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.attacker.low.max_vCruise_TAS)),
 			},			
 		},
 
@@ -545,8 +553,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.transporter.normal.min_hCruise, CRUISE_PARAM.red.transporter.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.transporter.normal.min_vCruise_TAS, CRUISE_PARAM.red.transporter.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.transporter.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.transporter.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.transporter.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.transporter.normal.max_vCruise_TAS)),
 			},						
 		},
 
@@ -554,14 +562,14 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.refueler.normal.min_hCruise, CRUISE_PARAM.red.refueler.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.refueler.normal.min_vCruise_TAS, CRUISE_PARAM.red.refueler.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.refueler.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.refueler.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.refueler.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.refueler.normal.max_vCruise_TAS)),
 			},						
 
             ["low"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.refueler.low.min_hCruise, CRUISE_PARAM.red.refueler.low.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.refueler.low.min_vCruise_TAS, CRUISE_PARAM.red.refueler.low.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.refueler.low.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.refueler.low.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.refueler.low.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.refueler.low.max_vCruise_TAS)),
 			},						
 		},
 
@@ -569,8 +577,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.AWACS.normal.min_hCruise, CRUISE_PARAM.red.AWACS.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.AWACS.normal.min_vCruise_TAS, CRUISE_PARAM.red.AWACS.normal.max_vCruise_TAS)),
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.AWACS.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.AWACS.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.AWACS.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.AWACS.normal.max_vCruise_TAS)),
 			},						
 		},
 
@@ -578,8 +586,8 @@ local cruise_param_calculated = {
 
 			["normal"] = {
 
-				["hCruise"] = math.ceil(math.random(CRUISE_PARAM.red.recon.normal.min_hCruise, CRUISE_PARAM.red.recon.normal.max_hCruise)),
-				["vCruise"] = math.ceil(math.random(CRUISE_PARAM.red.recon.normal.min_vCruise_TAS, CRUISE_PARAM.red.recon.normal.max_vCruise_TAS)),	
+				["hCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.recon.normal.min_hCruise, DC_LA_CONFIG.CRUISE_PARAM.red.recon.normal.max_hCruise)),
+				["vCruise"] = math.ceil(math.random(DC_LA_CONFIG.CRUISE_PARAM.red.recon.normal.min_vCruise_TAS, DC_LA_CONFIG.CRUISE_PARAM.red.recon.normal.max_vCruise_TAS)),	
 			},						
 		},		
 	},    
@@ -797,10 +805,10 @@ local cruise_speed_at_altitude = {
 
 }
 local speed_increments_for_escort = { 
-	["escort_bomber"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_bomber.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber, ESCORT_DISTANCE_OVERRIDE.escort_bomber.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber) , -- (m/s) increment speed for escort
-	["escort_attacker"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker, ESCORT_DISTANCE_OVERRIDE.escort_attacker.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker) , -- (m/s) increment speed for escort
-	["escort_sead_bomber"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber, ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber) , -- (m/s) increment speed for escort
-	["escort_sead_attacker"] = math.random(ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker, ESCORT_DISTANCE_OVERRIDE.escort_sead_attacker.max / ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker) , -- (m/s) increment speed for escort
+	["escort_bomber"] = math.random(DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_bomber.min / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber, DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_bomber.max / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_bomber) , -- (m/s) increment speed for escort
+	["escort_attacker"] = math.random(DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker, DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_attacker.max / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_attacker) , -- (m/s) increment speed for escort
+	["escort_sead_bomber"] = math.random(DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.min / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber, DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_sead_bomber.max / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_bomber) , -- (m/s) increment speed for escort
+	["escort_sead_attacker"] = math.random(DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_attacker.min / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker, DC_LA_CONFIG.ESCORT_DISTANCE_OVERRIDE.escort_sead_attacker.max / DC_LA_CONFIG.ESCORT_TIME_FOR_DISTANCE_OVERRIDE.escort_sead_attacker) , -- (m/s) increment speed for escort
 }
 local escort_cruise_speed_at_altitude = {
 
@@ -967,14 +975,14 @@ local weight_missile_a2a = {
 }
 local factor_angle_of_descent = {                       -- factor for compute hAttack 
     ["ASM"] = { 
-        ["min"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].min * math.pi / 180),    
-        ["med"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].med * math.pi / 180),    
-        ["max"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].max * math.pi / 180),    
+        ["min"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].min * math.pi / 180),    
+        ["med"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].med * math.pi / 180),    
+        ["max"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["ASM"].max * math.pi / 180),    
     },
     ["Rockets"] = { 
-        ["min"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].min * math.pi / 180),    
-        ["med"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].med * math.pi / 180),    
-        ["max"] = math.sin(ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].max * math.pi / 180),    
+        ["min"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].min * math.pi / 180),    
+        ["med"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].med * math.pi / 180),    
+        ["max"] = math.sin(DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK["Rockets"].max * math.pi / 180),    
     },
 }
 
@@ -1197,8 +1205,8 @@ local function assignStandoffAndCost(loadout)
             end
             
             -- loadout altitude attack (hAttack) and standoff evalutation
-            if ACTIVATE_STANDOFF_SETUP and compatible_task and weapon_data and weapon_data.range and weapon_data.type and ( weapon_data.type == "ASM" or  weapon_data.type == "Rockets") then 
-                local range = math.floor( 1000 * weapon_data.range * PERCENTAGE_RANGE_FOR_STANDOFF_SETUP[weapon_data.type] )                
+            if DC_LA_CONFIG.ACTIVATE_STANDOFF_SETUP and compatible_task and weapon_data and weapon_data.range and weapon_data.type and ( weapon_data.type == "ASM" or  weapon_data.type == "Rockets") then 
+                local range = math.floor( 1000 * weapon_data.range * DC_LA_CONFIG.PERCENTAGE_RANGE_FOR_STANDOFF_SETUP[weapon_data.type] )                
                 local alfa, alfa_limit
                 
                 if weapon_data.hAttack then -- weapons defined hAttack has priority
@@ -1208,19 +1216,19 @@ local function assignStandoffAndCost(loadout)
                     loadout.hAttack = math.floor( range *  factor_angle_of_descent[weapon_data.type].med ) -- calculation of hAttack in order to have an angle of descent of desired degrees      
                 end                                                    
 
-                if loadout.hAttack > ALTITUDE_ATTACK[weapon_data.type].max then -- altitude is bigger of maximum limits
-                    loadout.hAttack = ALTITUDE_ATTACK[weapon_data.type].max -- assigned maximum altitude allowed
-                    alfa = ALTITUDE_ATTACK[weapon_data.type].max / range -- descent angle with maximum altitude allowed  
-                    alfa_limit = ANGLE_OF_DESCENT_IN_GROUND_ATTACK[weapon_data.type].min * math.pi / 180 -- minimum angle allowed in rads                   
+                if loadout.hAttack > DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].max then -- altitude is bigger of maximum limits
+                    loadout.hAttack = DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].max -- assigned maximum altitude allowed
+                    alfa = DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].max / range -- descent angle with maximum altitude allowed  
+                    alfa_limit = DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK[weapon_data.type].min * math.pi / 180 -- minimum angle allowed in rads                   
 
                     if alfa < alfa_limit then  -- new descent angle is lower of minimum descent angle allowed
                         loadout.hAttack = math.floor( range * math.sin(alfa_limit) )-- update hAttack with minimum descent angle allowed
                     end
 
-                elseif loadout.hAttack < ALTITUDE_ATTACK[weapon_data.type].min then -- altitude is lower of minimum limits
-                    loadout.hAttack = ALTITUDE_ATTACK[weapon_data.type].min -- assigned minimum altitude allowed
-                    alfa = ALTITUDE_ATTACK[weapon_data.type].min / range -- descent angle with manimum altitude allowed      
-                    alfa_limit = ANGLE_OF_DESCENT_IN_GROUND_ATTACK[weapon_data.type].max * math.pi / 180 -- maximum angle allowed in rads              
+                elseif loadout.hAttack < DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].min then -- altitude is lower of minimum limits
+                    loadout.hAttack = DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].min -- assigned minimum altitude allowed
+                    alfa = DC_LA_CONFIG.ALTITUDE_ATTACK[weapon_data.type].min / range -- descent angle with manimum altitude allowed      
+                    alfa_limit = DC_LA_CONFIG.ANGLE_OF_DESCENT_IN_GROUND_ATTACK[weapon_data.type].max * math.pi / 180 -- maximum angle allowed in rads              
 
                     if alfa > alfa_limit then  -- new descent angle is lower of minimum descent angle allowed
                         loadout.hAttack = math.floor( range * math.sin(alfa_limit) )-- update hAttack with maximum descent angle allowed
@@ -1292,7 +1300,7 @@ local function getWeaponFirepower(side, task, attribute, weapon_table)
                 end
             
                 if check then   -- calculates the average fire based on the data of each weapon that has the same task and the same attribute
-                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy * weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), FIREPOWER_ROUNDED_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
+                    firepower = firepower + roundAtNumber(weapon_qty * weapon_data_db.efficiency[attribute].mix.accuracy * weapon_data_db.efficiency[attribute].mix.destroy_capacity * ( 1 - weapon_data_db.perc_efficiency_variability), DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION) -- untis firepower is calculated considering dimension target = mix and decreased of perc_efficiency_variability (aircraft needed bigger loadoutas to compensate efficiency variability)            
                     log.traceVeryLow(nameFunction .. "update unit firepower for weapon " .. weapon_name .. ": firepower: " .. firepower .. ", accuracy: " .. weapon_data_db.efficiency[attribute].mix.accuracy .. ", destroy_capacity: " .. weapon_data_db.efficiency[attribute].mix.destroy_capacity .. ", weapon_qty: " .. weapon_qty) 
                 end
             end
@@ -1333,8 +1341,8 @@ local function evalutateFirepowerA2AMissile(missile_data)
         end
     end
 
-    local firepower = missile_data.reliability * WEIGHT_MISSILE_A2A_RELIABILITY +  missile_data.manouvrability * WEIGHT_MISSILE_A2A_MANOUVRABILITY  + WEIGHT_MISSILE_A2A_ATTRIBUTE * (range_factor + speed_factor + height_factor + tnt_factor)
-    firepower = roundAtNumber(firepower, FIREPOWER_ROUNDED_COMPUTATION)
+    local firepower = missile_data.reliability * DC_LA_CONFIG.WEIGHT_MISSILE_A2A_RELIABILITY +  missile_data.manouvrability * DC_LA_CONFIG.WEIGHT_MISSILE_A2A_MANOUVRABILITY  + weight_missile_a2a_attribute * (range_factor + speed_factor + height_factor + tnt_factor)
+    firepower = roundAtNumber(firepower, DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)
 
     if firepower > 1 then
         firepower = 1
@@ -1416,8 +1424,8 @@ local function medEfficiencyWeapon(side, target_attribute, target_dimension, tas
     end
 
     if break_loop then
-        draft_weapon_efficiency = roundAtNumber( draft_weapon_efficiency / i, FIREPOWER_ROUNDED_COMPUTATION)
-        draft_weapon_variability = roundAtNumber( draft_weapon_variability / i, FIREPOWER_ROUNDED_COMPUTATION)
+        draft_weapon_efficiency = roundAtNumber( draft_weapon_efficiency / i, DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)
+        draft_weapon_variability = roundAtNumber( draft_weapon_variability / i, DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)
     else
         draft_weapon_efficiency = nil
         draft_weapon_variability = nil
@@ -1464,7 +1472,7 @@ local function maxEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDED_COMPUTATION)
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)
                                     
                                     if choice_weapon_efficiency < draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -1501,7 +1509,7 @@ local function minEfficiencyWeapon(side, target_attribute, target_dimension, tas
 	local nameFunction = "maxEfficiencyWeapon(target_attribute: " .. target_attribute .. ", target_dimension: " .. target_dimension .. ", task: " .. task .."): "
     log.traceLow(nameFunction .. "Start")
 
-    local choice_weapon_efficiency = MAX_EFFICIENCY_WEAPON_ATTRIBUTE
+    local choice_weapon_efficiency = DC_LA_CONFIG.MAX_EFFICIENCY_WEAPON_ATTRIBUTE
     local draft_weapon_efficiency
     local choice_weapon_variability = 0
     local choice_weapon_name = ""
@@ -1527,7 +1535,7 @@ local function minEfficiencyWeapon(side, target_attribute, target_dimension, tas
                             for dimension_name, dimension_data in pairs(attribute_data) do -- iterate for search dimension data for target dimension
 
                                 if dimension_name == target_dimension then -- found efficiency data for target dimension
-                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, FIREPOWER_ROUNDED_COMPUTATION)
+                                    draft_weapon_efficiency = roundAtNumber(dimension_data.accuracy * dimension_data.destroy_capacity, DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)
                                     
                                     if choice_weapon_efficiency > draft_weapon_efficiency then                           
                                         log.traceVeryLow(nameFunction .. "found weapon: " .. weapon_name .. " with bigger efficienty: " .. draft_weapon_efficiency .. "(accuracy value: " .. dimension_data.accuracy .. ", destroy_capacity value: " .. dimension_data.destroy_capacity .. "), perc_efficiency_variability: " .. weapon_data.perc_efficiency_variability .. ", previous best efficiency value: " .. choice_weapon_efficiency)         
@@ -1577,18 +1585,18 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
 
     if best_weapon_efficiency then
 
-        if best_weapon_efficiency < MIN_EFFICIENCY_WEAPON_ATTRIBUTE then
+        if best_weapon_efficiency < DC_LA_CONFIG.MIN_EFFICIENCY_WEAPON_ATTRIBUTE then
 
             if best_weapon_efficiency < 0 then -- not found a weapon for this target
                 log.warn(nameFunction .. "not found weapon for task: " .. task .. ", attribute: " .. attribute .. ", compute firepower with best_efficiency = 0.5")
                 best_weapon_efficiency = 0.5
             
             else
-                log.warn(nameFunction .. "found weapon for task: " .. task .. ", attribute: " .. attribute .. ", with best_efficiency < MIN_EFFICIENCY_WEAPON_ATTRIBUTE(" .. MIN_EFFICIENCY_WEAPON_ATTRIBUTE .. "), compute firepower with best_efficiency = " .. MIN_EFFICIENCY_WEAPON_ATTRIBUTE)
-                best_weapon_efficiency = MIN_EFFICIENCY_WEAPON_ATTRIBUTE
+                log.warn(nameFunction .. "found weapon for task: " .. task .. ", attribute: " .. attribute .. ", with best_efficiency < DC_LA_CONFIG.MIN_EFFICIENCY_WEAPON_ATTRIBUTE(" .. DC_LA_CONFIG.MIN_EFFICIENCY_WEAPON_ATTRIBUTE .. "), compute firepower with best_efficiency = " .. DC_LA_CONFIG.MIN_EFFICIENCY_WEAPON_ATTRIBUTE)
+                best_weapon_efficiency = DC_LA_CONFIG.MIN_EFFICIENCY_WEAPON_ATTRIBUTE
             end
         
-        elseif best_weapon_efficiency >= MAX_EFFICIENCY_WEAPON_ATTRIBUTE then -- not found a weapon for this target
+        elseif best_weapon_efficiency >= DC_LA_CONFIG.MAX_EFFICIENCY_WEAPON_ATTRIBUTE then -- not found a weapon for this target
             log.warn(nameFunction .. "not found weapon for task: " .. task .. ", attribute: " .. attribute)
             best_weapon_efficiency = nil
         end
@@ -1600,7 +1608,7 @@ local function evaluate_target_firepower( num_targets_element, side, dimension_e
     
     if best_weapon_efficiency then
         calculated_firepower_min = math.ceil( num_targets_element / best_weapon_efficiency )
-        calculated_firepower_max = math.floor( calculated_firepower_min * ( 1 + best_weapon_variability ) * FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX )     
+        calculated_firepower_max = math.floor( calculated_firepower_min * ( 1 + best_weapon_variability ) * DC_LA_CONFIG.FACTOR_FOR_CALCULATED_TARGET_FIREPOWER_MAX )     
     end
 
     log.traceVeryLow(nameFunction .. "computed firepower min, max: " .. (calculated_firepower_min or "nil") .. ", " .. (calculated_firepower_max or "nil"))
@@ -1704,7 +1712,7 @@ local function insertFactorCostIndb_loadouts()-- insert factor_cost in db_loadou
             
                 for loadout_name, loadout in pairs(task) do
                 
-                    loadout.cost_factor = roundAtNumber( 1 - (loadout.cost - loadouts_cost[task_name].min ) / (loadouts_cost[task_name].max - loadouts_cost[task_name].min), FIREPOWER_ROUNDED_COMPUTATION)			
+                    loadout.cost_factor = roundAtNumber( 1 - (loadout.cost - loadouts_cost[task_name].min ) / (loadouts_cost[task_name].max - loadouts_cost[task_name].min), DC_LA_CONFIG.FIREPOWER_ROUNDED_COMPUTATION)			
                 end
             end
         end
@@ -1741,8 +1749,8 @@ function defineTargetListFirepower(targetlist)
                 firepower_max = 1
             
             elseif task == "CAP" or  task == "Intercept" or task == "Fighter Sweep" or task == "Escort" then
-                firepower_min = FIREPOWER_FOR_AA_TARGETS[side_name][task].min -- minimum number of enemy aircraft expected
-                firepower_max = FIREPOWER_FOR_AA_TARGETS[side_name][task].max -- maximum number of enemy aircraft expected            
+                firepower_min = DC_LA_CONFIG.FIREPOWER_FOR_AA_TARGETS[side_name][task].min -- minimum number of enemy aircraft expected
+                firepower_max = DC_LA_CONFIG.FIREPOWER_FOR_AA_TARGETS[side_name][task].max -- maximum number of enemy aircraft expected            
 
             else            
                 attribute = target.attributes[1] or "nil" -- soft, armor ecc (deve? essere sempre un solo attributo)            
@@ -1846,7 +1854,7 @@ function defineLoadoutsFirepowerAndCost()
                             i = i + 1
                             log.traceVeryLow(nameFunction .. "computed firepower for aircraft: " .. aircraft_name .. ", task: " .. task_name .. ", attribute_name: " .. attribute_name .. ", firepower: " .. firepower .. ", i: " .. i)            
                         end 
-                        firepower = roundAtNumber(firepower / i, FIREPOWER_ROUNDED_ASSIGNEMENT ) -- firpower is median value of firepowers weapon                       
+                        firepower = roundAtNumber(firepower / i, DC_LA_CONFIG.FIREPOWER_ROUNDED_ASSIGNEMENT ) -- firpower is median value of firepowers weapon                       
 
                     elseif isNotFightTask(task_name) then
                         log.warn(nameFunction .. "check db_loadouts.lua, found a Not Fight Task: " .. task_name .. " with weapons:\n" .. inspect(weapons))
