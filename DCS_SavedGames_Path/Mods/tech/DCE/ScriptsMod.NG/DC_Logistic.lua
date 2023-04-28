@@ -383,6 +383,11 @@ end
 
 
 
+local DC_L_CONFIG = {
+
+    PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_AIRBASES = 100, -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
+    PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_RESERVES = 100, -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
+}
 
 --============ LOCAL FUNCTION =================================
 
@@ -684,9 +689,7 @@ end
 function UpdateOobAir()
 
     local nameFunction = "function UpdateOobAir(): "    
-    log.debug("Start " .. nameFunction)
-    local percentage_efficiency_influence_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
-	local percentage_efficiency_influence_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
+    log.debug("Start " .. nameFunction)    
 	airbase_tab = nil
     airbase_tab = InitializeAirbaseTab()
 
@@ -719,10 +722,10 @@ function UpdateOobAir()
                     local percentage_efficiency_influence = nil
 
 					if string.sub(oob_value.base, 1, 8) ~= "Reserves" then
-                        percentage_efficiency_influence = percentage_efficiency_influence_for_airbases/100
+                        percentage_efficiency_influence = DC_L_CONFIG.PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_AIRBASES/100
 
                     else
-                        percentage_efficiency_influence = percentage_efficiency_influence_for_reserves/100
+                        percentage_efficiency_influence = DC_L_CONFIG.PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_RESERVES/100
                     end
 
                     log.trace(nameFunction .. "old airbase oob_value.number: " .. oob_value.number)

@@ -29,7 +29,7 @@ local function getEfficiency(base, side)
 			local space = string.sub("                              ", 1, maxNumLeght + SpaceSep - string.len(efficiencyStr))
 
 			if efficiency < 100 then
-				histogram = string.sub("##########", 1, math.ceil(10 * (100 - efficiency)))
+				histogram = string.sub( "##########", 1, math.ceil((100 - efficiency)/10) )
 			end		
 			return efficiencyStr .. space .. histogram
 		end
