@@ -431,55 +431,107 @@ camp = {
 		},
 
 		["ATO_Generator"] = {
+                            
+                MIN_CLOUD_DENSITY = 0.8,											-- min clouds density for evalutation weather mission condition (defalut = 0.8)
+                MIN_FOG_VISIBILITY = 5000,											-- min fog visibility for any task (default: 5000m)
+                MIN_CLOUD_EIGHT_ABOVE_AIRBASE = 333,								-- min eight above airbase for execute any task (default: 333m, 1000 ft)
+                BOMBERS_RECO = {"S-3B",  "F-117A", "B-1B", "B-52H", "Tu-22M3", "Tu-95MS", "Tu-142", "Tu-160", "MiG-25RBT"},
 
-			WEIGHT_SCORE_FOR_LOADOUT_COST = {									-- weight for weapon cost in mission score calculus (0 .. 1)
-		
-			["Strike"] = 0.3,
-			["Anti-ship Strike"] = 0.1,
-			["SEAD"] = 0.1,
-			["Intercept"] = 0.2,
-			["CAP"] = 0.4,
-			["Escort"] = 0.3,
-			["Fighter Sweep"] = 0.2,
-			["Reconnaissance"] = 0.1,
-			},
-		
-			WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 								-- weight for aircraft cost in mission score calculus (0 .. 1) 
-		
-				["Fighter"] = 0.3, 
-				["Attacker"] = 0.5,  
-				["Bomber"] = 0.2,  
-				["Transporter"] = 0.1, 
-				["Reco"] = 0.2, 
-				["Refueler"] = 0.1,  
-				["AWACS"] = 0.1, 
-				["Helicopter"] = 0.2, 
-			},
-		
-			MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2,									-- minimum aircraft for strike and anti-ship strike task (default 2 or 3 -needed to survive the anti-aircraft defenses)
-			ESCORT_NUMBER_MULTIPLIER = 3,										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
-			MINIMUM_VALUE_OF_AIR_THREAT = 0.5,									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
-			FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5,								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
-			SCORE_INFLUENCE_ROUTE_THREAT = 1,									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
-			FACTOR_FOR_REDUCE_SCORE = 0.01, 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
-			MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2,	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
-			MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,  -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
-			MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5,						-- min total air threat level to authorize support escort flight (default = 0.5)
-			MIN_CLOUD_DENSITY = 0.8,											-- min clouds density for evalutation weather mission condition (defalut = 0.8)
-			MIN_FOG_VISIBILITY = 5000,											-- min fog visibility for any task (default: 5000m)
-			MIN_CLOUD_EIGHT_ABOVE_AIRBASE = 333,								-- min eight above airbase for execute any task (default: 333m, 1000 ft)
-			UNIT_SERVICEABILITY = 0.8,											-- serviceability percentage of unit.roster.ready 
-			MIN_PERCENTAGE_FOR_ESCORT = 0.75,									-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
-			MAX_AIRCRAFT_FOR_INTERCEPT = 2,									-- max number of aircraft for an intercept mission 
-			MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2, 								-- max number of aircraft for an reconnaisance mission 
-			MAX_AIRCRAFT_FOR_STRIKE = 4, 										-- max number of aircraft for an strike mission 
-			MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
-			MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
-			MAX_AIRCRAFT_FOR_SWEEP = 4,		 								-- max number of aircraft for an sweep mission 
-			MAX_AIRCRAFT_FOR_OTHER = 3,		 								-- max number of aircraft for other mission 
-			--MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
-			MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber 
-			BOMBERS_RECO = {"S-3B",  "F-117A", "B-1B", "B-52H", "Tu-22M3", "Tu-95MS", "Tu-142", "Tu-160", "MiG-25RBT"},
+            ["blue"] = {
+
+                WEIGHT_SCORE_FOR_LOADOUT_COST = {									-- weight for weapon cost in mission score calculus (0 .. 1)
+            
+                    ["Strike"] = 0.3,
+                    ["Anti-ship Strike"] = 0.1,
+                    ["SEAD"] = 0.1,
+                    ["Intercept"] = 0.2,
+                    ["CAP"] = 0.4,
+                    ["Escort"] = 0.3,
+                    ["Fighter Sweep"] = 0.2,
+                    ["Reconnaissance"] = 0.1,
+                },
+            
+                WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 								-- weight for aircraft cost in mission score calculus (0 .. 1) 
+            
+                    ["Fighter"] = 0.3, 
+                    ["Attacker"] = 0.5,  
+                    ["Bomber"] = 0.2,  
+                    ["Transporter"] = 0.1, 
+                    ["Reco"] = 0.2, 
+                    ["Refueler"] = 0.1,  
+                    ["AWACS"] = 0.1, 
+                    ["Helicopter"] = 0.2, 
+                },
+            
+                MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2,							-- minimum aircraft for strike and anti-ship strike task (default 2 or 3 -needed to survive the anti-aircraft defenses)
+                ESCORT_NUMBER_MULTIPLIER = 3,										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
+                MINIMUM_VALUE_OF_AIR_THREAT = 0.5,									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
+                FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5,								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
+                SCORE_INFLUENCE_ROUTE_THREAT = 1,									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
+                FACTOR_FOR_REDUCE_SCORE = 0.01, 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
+                MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2,	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
+                MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,   -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
+                MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5,						-- min total air threat level to authorize support escort flight (default = 0.5)                
+                UNIT_SERVICEABILITY = 0.8,											-- serviceability percentage of unit.roster.ready 
+                MIN_PERCENTAGE_FOR_ESCORT = 0.75,	    							-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
+                MAX_AIRCRAFT_FOR_INTERCEPT = 2,			    						-- max number of aircraft for an intercept mission 
+                MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2, 								-- max number of aircraft for an reconnaisance mission 
+                MAX_AIRCRAFT_FOR_STRIKE = 4, 										-- max number of aircraft for an strike mission 
+                MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
+                MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
+                MAX_AIRCRAFT_FOR_SWEEP = 4,		 			    					-- max number of aircraft for an sweep mission 
+                MAX_AIRCRAFT_FOR_OTHER = 3,		 				    				-- max number of aircraft for other mission 
+                --MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
+                MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber                 
+            },
+             
+            ["red"] = {
+
+                WEIGHT_SCORE_FOR_LOADOUT_COST = {									-- weight for weapon cost in mission score calculus (0 .. 1)
+            
+                    ["Strike"] = 0.3,
+                    ["Anti-ship Strike"] = 0.1,
+                    ["SEAD"] = 0.1,
+                    ["Intercept"] = 0.2,
+                    ["CAP"] = 0.4,
+                    ["Escort"] = 0.3,
+                    ["Fighter Sweep"] = 0.2,
+                    ["Reconnaissance"] = 0.1,
+                },
+            
+                WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 								-- weight for aircraft cost in mission score calculus (0 .. 1) 
+            
+                    ["Fighter"] = 0.3, 
+                    ["Attacker"] = 0.5,  
+                    ["Bomber"] = 0.2,  
+                    ["Transporter"] = 0.1, 
+                    ["Reco"] = 0.2, 
+                    ["Refueler"] = 0.1,  
+                    ["AWACS"] = 0.1, 
+                    ["Helicopter"] = 0.2, 
+                },
+            
+                MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2,							-- minimum aircraft for strike and anti-ship strike task (default 2 or 3 -needed to survive the anti-aircraft defenses)
+                ESCORT_NUMBER_MULTIPLIER = 3,										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
+                MINIMUM_VALUE_OF_AIR_THREAT = 0.5,									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
+                FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5,								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
+                SCORE_INFLUENCE_ROUTE_THREAT = 1,									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
+                FACTOR_FOR_REDUCE_SCORE = 0.01, 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
+                MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5,						-- min total air threat level to authorize support escort flight (default = 0.5)
+                MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2,	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
+                MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,   -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)                                
+                UNIT_SERVICEABILITY = 0.8,											-- serviceability percentage of unit.roster.ready 
+                MIN_PERCENTAGE_FOR_ESCORT = 0.75,									-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
+                MAX_AIRCRAFT_FOR_INTERCEPT = 2,			    						-- max number of aircraft for an intercept mission 
+                MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2, 								-- max number of aircraft for an reconnaisance mission 
+                MAX_AIRCRAFT_FOR_STRIKE = 4, 										-- max number of aircraft for an strike mission 
+                MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
+                MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
+                MAX_AIRCRAFT_FOR_SWEEP = 4,		 								    -- max number of aircraft for an sweep mission 
+                MAX_AIRCRAFT_FOR_OTHER = 3,		 								    -- max number of aircraft for other mission 
+                --MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
+                MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber                 
+            },
 		},
 
     },

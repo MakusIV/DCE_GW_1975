@@ -511,7 +511,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 					
 					--serviceable aircraft
 					local aircraft_serviceable = 0																				--serviceable aircraft of unit
-					local serviceability = camp.module_config.ATO_Generator.UNIT_SERVICEABILITY																	-- defaults unit serviceability rating (0.8)
+					local serviceability = camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY																	-- defaults unit serviceability rating (0.8)
 
 					if unit[n].serviceability then																				--if serviceability for unit is defined
 						serviceability = unit[n].serviceability																	--use it instead
@@ -793,9 +793,9 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						if active_log then log.traceLow("direct distance to target: " .. ToTarget) end
 																						
 																						
-																						if ToTarget <= unit_loadouts[l].range and (unit_loadouts[l].minrange == nil or ToTarget * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) then	--basic feasibility check of range before performance intensive route calculations are done
+																						if ToTarget <= unit_loadouts[l].range and (unit_loadouts[l].minrange == nil or ToTarget * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) then	--basic feasibility check of range before performance intensive route calculations are done
 																							if active_log then log.traceLow("target is in range") end
-																							if active_log then log.traceLow("ToTarget(" .. ToTarget .. ") <= unit_loadouts[l].range(" .. unit_loadouts[l].range .. ") and (unit_loadouts[l].minrange(" .. (unit_loadouts[l].minrange or "nil") .. ") == nil or ToTarget * (" .. camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE .. ") > unit_loadouts[l].minrange))") end
+																							if active_log then log.traceLow("ToTarget(" .. ToTarget .. ") <= unit_loadouts[l].range(" .. unit_loadouts[l].range .. ") and (unit_loadouts[l].minrange(" .. (unit_loadouts[l].minrange or "nil") .. ") == nil or ToTarget * (" .. camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE .. ") > unit_loadouts[l].minrange))") end
 
 																							if variant == 1 or variant == 4 then
 																								if active_log then log.traceLow("daytime is day or day-night, compute route: getRoute(airbasePoint(" .. (airbasePoint.x or "nil") .. ", " .. (airbasePoint.y or "nil") .. "), target(" .. target_name .. "), unit_loadouts[" .. l .. "], enemy_side(" .. enemy_side .. "), task(" .. task .. "), day, r(" .. r .. "), multipack(" .. multipack .. "), unit[n].helicopter(" .. tostring(unit[n].helicopter) .. "))") end
@@ -813,7 +813,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																					end																					
 																					if active_log then log.traceLow("target coord: ".. (target.x or "nil") .. ", " .. (target.y or "nil")) end
 
-																					if route.lenght and route.lenght <= unit_loadouts[l].range * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) then		--if sortie route lenght is within range of aircraft-loadout
+																					if route.lenght and route.lenght <= unit_loadouts[l].range * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) then		--if sortie route lenght is within range of aircraft-loadout
 																						TrackPlayability(unit[n].player, "target_range")												--track playabilty criterium has been met
 																						
 																						--determine number of aircraft needed for sortie
@@ -840,7 +840,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							aircraft_requested = math.ceil(aircraft_requested)											--round up
 
 																							if aircraft_requested == 1 then
-																								aircraft_requested = camp.module_config.ATO_Generator.MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+																								aircraft_requested = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
 																							end
 																						end
 																						if active_log then log.trace("total aircraft_requested for this task(" .. task .. "): " .. aircraft_requested) end
@@ -869,11 +869,11 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																				
 																						--self escort
 																						if unit_loadouts[l].self_escort then															--if the loadout is capable of self-escort																							
-																							route.threats.air_total = route.threats.air_total * camp.module_config.ATO_Generator.FACTOR_FOR_REDUCTION_AIR_THREAT										--reduce the fighter threat by half
+																							route.threats.air_total = route.threats.air_total * camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCTION_AIR_THREAT										--reduce the fighter threat by half
 																							
 																					
-																							if route.threats.air_total < camp.module_config.ATO_Generator.MINIMUM_VALUE_OF_AIR_THREAT then
-																								route.threats.air_total = camp.module_config.ATO_Generator.MINIMUM_VALUE_OF_AIR_THREAT
+																							if route.threats.air_total < camp.module_config.ATO_Generator[side].MINIMUM_VALUE_OF_AIR_THREAT then
+																								route.threats.air_total = camp.module_config.ATO_Generator[side].MINIMUM_VALUE_OF_AIR_THREAT
 																							end
 																							if active_log then log.traceLow("loadout is capable of self-escort, reduce the fighter threat by half (minimum 0.5): " .. route.threats.air_total) end
 																						end
@@ -930,7 +930,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							
 																							-- Compute score for Fighter Sweep, Strike, Anti-ship Strike, Transport, Refueling, Reco
 																							else 
-																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * camp.module_config.ATO_Generator.SCORE_INFLUENCE_ROUTE_THREAT )		--calculate the score to measure the importance of the sortie
+																								draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * camp.module_config.ATO_Generator[side].SCORE_INFLUENCE_ROUTE_THREAT )		--calculate the score to measure the importance of the sortie
 																								if active_log then log.traceLow(" task(" .. task .."), draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = unit_loadouts[" .. l .. "].capability(" .. unit_loadouts[l].capability .. ") * target.priority(" .. target.priority .. ") / route_threat(" .. route_threat .. ")") end
 																							end
 																							local reduce_score = 0																				--factor to reduce score for station missions with less aircraft than required to cover station
@@ -956,9 +956,9 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							if active_log then log.traceLow("cost ( db_aircraft[" .. side .. "][" .. draft_sorties_entry.type .. "].factor[" .. unit_role .. "] ): " .. (db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or "nil" ) .. ", cost: " .. cost_factor) end
 
 																							-- Update score with factor_cost
-																							local aircraft_cost_factor = ( 1 + camp.module_config.ATO_Generator.WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
-																							local loadout_cost_factor = ( 1 - ( camp.module_config.ATO_Generator.WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )																							
-																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * camp.module_config.ATO_Generator.FACTOR_FOR_REDUCE_SCORE ) * aircraft_cost_factor * loadout_cost_factor
+																							local aircraft_cost_factor = ( 1 + camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
+																							local loadout_cost_factor = ( 1 - ( camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )																							
+																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE ) * aircraft_cost_factor * loadout_cost_factor
 																							if active_log then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", aircraft_cost_factor: " .. aircraft_cost_factor .. ", loadout_cost_factor: " .. loadout_cost_factor .. ", score: " .. draft_sorties_entry.score) end																				
 																							
 																							-- Update score with SCORE_TASK_FACTOR
@@ -969,7 +969,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
 																							end																						
 																							if active_log then log.traceLow("side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
-																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. camp.module_config.ATO_Generator.FACTOR_FOR_REDUCE_SCORE .. ")") end
+																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE .. ")") end
 																							
 																							--ATO_G_adjustment02 -- Update score with unit.taskCoeff 
 																							if unit[n].tasksCoef and unit[n].tasksCoef[task] then
@@ -1309,16 +1309,16 @@ for sideS, draftT in pairs(draft_sorties) do
 
 										elseif task == "Escort" then
 											
-											if draft.route.threats.air_total > camp.module_config.ATO_Generator.MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT then												--draft sortie has an air threat
+											if draft.route.threats.air_total > camp.module_config.ATO_Generator[side].MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT then												--draft sortie has an air threat
 												support_requirement = true
-												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has has an air threat(> " .. camp.module_config.ATO_Generator.MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.air_total .. ", set support_requirement = true") end
+												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has has an air threat(> " .. camp.module_config.ATO_Generator[side].MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.air_total .. ", set support_requirement = true") end
 											end
 										
 										elseif task == "Escort Jammer" then
 
-											if draft.route.threats.SEAD_offset > 0 or draft.route.threats.air_total > camp.module_config.ATO_Generator.MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT then		--draft sortie has either a SEAD offest requirement or an air threat
+											if draft.route.threats.SEAD_offset > 0 or draft.route.threats.air_total > MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT then		--draft sortie has either a SEAD offest requirement or an air threat
 												support_requirement = true
-												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has a SEAD offset requirement of: " .. draft.route.threats.SEAD_offset .. ", and has has an air threat(> " .. camp.module_config.ATO_Generator.MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.SEAD_offset .. ", set support_requirement = true") end
+												if active_log then log.traceLow("draft sortie (task: " .. task .. "), has a SEAD offset requirement of: " .. draft.route.threats.SEAD_offset .. ", and has has an air threat(> " .. camp.module_config.ATO_Generator[side].MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT .. " ) of: " .. draft.route.threats.SEAD_offset .. ", set support_requirement = true") end
 											end
 
 										elseif task == "Flare Illumination" or task == "Laser Illumination"then
@@ -1368,7 +1368,7 @@ for sideS, draftT in pairs(draft_sorties) do
 
 														--<========================================= QUI PER ANALISI E LOGGING ========================================================================
 
-														if route.lenght <= unit_loadouts[l].range * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) then		--escort route lenght is within range capability of loadout
+														if route.lenght <= unit_loadouts[l].range * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT and (unit_loadouts[l].minrange == nil or route.lenght > unit_loadouts[l].minrange * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) then		--escort route lenght is within range capability of loadout
 															TrackPlayability(unit[n].player, "target_range")									--track playabilty criterium has been met
 															
 															--determine number of escorts
@@ -1381,7 +1381,7 @@ for sideS, draftT in pairs(draft_sorties) do
 																escort_max = 0
 															end																																																										
 															
-															if active_log then log.traceLow("support task: route.lenght( " .. route.lenght .. " ) < range ( " .. unit_loadouts[l].range .. " ) * multiplier ( " .. camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " ): " .. unit_loadouts[l].range * camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. ", or unit_loadouts[l].minrange( " .. (unit_loadouts[l].minrange or "nil") .. " ) == nil or route.lenght > unit_loadouts[l].minrange * multiplier ( " .. camp.module_config.ATO_Generator.MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " )") end
+															if active_log then log.traceLow("support task: route.lenght( " .. route.lenght .. " ) < range ( " .. unit_loadouts[l].range .. " ) * multiplier ( " .. camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " ): " .. unit_loadouts[l].range * camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. ", or unit_loadouts[l].minrange( " .. (unit_loadouts[l].minrange or "nil") .. " ) == nil or route.lenght > unit_loadouts[l].minrange * multiplier ( " .. camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT .. " )") end
 
 															if task == "SEAD" then
 																--escort_num = math.ceil( draft.route.threats.SEAD_offset / unit_loadouts[l].capability )		--capability determines amount of offset per aircraft
@@ -1407,8 +1407,8 @@ for sideS, draftT in pairs(draft_sorties) do
 																	escort_num = (draft.route.threats.air_total - 0.5) / escort_offset_level		--number of escorts needed to offset total air threat (-0.5 because that is no air threat)																	
 																	if active_log then log.traceLow("support task: ESCORT, escort_num = (draft.route.threats.air_total(" .. draft.route.threats.air_total .. ")  - 0.5) / escort_offset_level(firepower)( " .. escort_offset_level .. " ): " .. escort_num ) end																
 																	
-																	if escort_num > draft.number * camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER then											--when more escorts camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER(3) times escorts than escorted aircraft
-																		escort_num = draft.number * camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER												--limit escort number to camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER(3) times escorted aircraft
+																	if escort_num > draft.number * camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER then											--when more escorts camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER(3) times escorts than escorted aircraft
+																		escort_num = draft.number * camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER												--limit escort number to camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER(3) times escorted aircraft
 																	end
 																	
 																	if escort_num > campMod.Setting_Generation.limit_escort then
@@ -1421,7 +1421,7 @@ for sideS, draftT in pairs(draft_sorties) do
 																	if escort_num > escort_max then
 																		escort_max = escort_num
 																	end	
-																	if active_log then log.traceLow("support task: ESCORT, escort_num limited (<=) to draft.number( " .. draft.number .. " ) * camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER( " .. camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER .. " ): " .. draft.number * camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER .. ", and escort_num limited to campMod.Setting_Generation.limit_escort( " .. campMod.Setting_Generation.limit_escort .. " ) - escort_num: " .. escort_num ) end																
+																	if active_log then log.traceLow("support task: ESCORT, escort_num limited (<=) to draft.number( " .. draft.number .. " ) * camp.module_config.ATO_Generator.ESCORT_NUMBER_MULTIPLIER( " .. camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER .. " ): " .. draft.number * camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER .. ", and escort_num limited to campMod.Setting_Generation.limit_escort( " .. campMod.Setting_Generation.limit_escort .. " ) - escort_num: " .. escort_num ) end																
 																end
 															
 															elseif task == "Escort Jammer" then
@@ -1856,12 +1856,12 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 
 												for unitname,_ in pairs(needS) do
 
-													if needS[unitname] * camp.module_config.ATO_Generator.MIN_PERCENTAGE_FOR_ESCORT > availS[unitname] then	-- questo dovrebbe sempre essere vero con escort = true (comporta un needS = 0 in quanto escort non è una tab contentente un valore numerico)
+													if needS[unitname] * camp.module_config.ATO_Generator[side].MIN_PERCENTAGE_FOR_ESCORT > availS[unitname] then	-- questo dovrebbe sempre essere vero con escort = true (comporta un needS = 0 in quanto escort non è una tab contentente un valore numerico)
 													--more aircraft are needed from this unit across all package tasks than are available
 														support_available = false																									--not enough support available
 														local TabRejected = {}
 														TabRejected["sujet"]  = "BOMBARDIER NECESSITANT ESCORTE()support_available if needS[unitname] - (needS[unitname] * 0.15) > availS[unitname]"
-														TabRejected["cause"] = { [1] = needS[unitname]* camp.module_config.ATO_Generator.MIN_PERCENTAGE_FOR_ESCORT, [2] = availS[unitname], }
+														TabRejected["cause"] = { [1] = needS[unitname]* camp.module_config.ATO_Generator[side].MIN_PERCENTAGE_FOR_ESCORT, [2] = availS[unitname], }
 														TabRejected["ligne"]  = debug.getinfo(1).currentline														
 														table.insert(draft[n]["rejected"], TabRejected)
 														log.traceLow("needS[" .. unitname .. "](" .. needS[unitname] .. ") *  > availS[" .. unitname .. "](" .. availS[unitname] .. ") -> draft[" .. n .. "][rejected];\n" .. inspect(TabRejected))
@@ -2008,8 +2008,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 											
 											elseif entry.task == "Intercept" then
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_INTERCEPT then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_INTERCEPT										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign 														--else assign flight of 1 aicraft
@@ -2018,8 +2018,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 											
 											elseif isBomberOrRecoType(entry.type) then	--for bombers
 
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_BOMBER then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_BOMBER										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign 														--else assign flight of 1 aicraft
@@ -2028,8 +2028,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 											
 											elseif entry.task == "Reconnaissance" then											--for recon
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_RECONNAISSANCE then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_RECONNAISSANCE										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign														--else assign flight of 1 aicraft
@@ -2038,8 +2038,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 											
 											elseif entry.task == "Strike" then												--for recon
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_STRIKE then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_STRIKE										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign			 										--else assign flight of 1 aicraft
@@ -2048,8 +2048,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 
 											elseif entry.task == "CAP" then											--for recon
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_CAP then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_CAP										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign 										--else assign flight of 1 aicraft
@@ -2058,8 +2058,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 
 											elseif entry.task == "Escort" then												--for recon
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_ESCORT then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_ESCORT										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign													--else assign flight of 1 aicraft
@@ -2068,8 +2068,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 
 											elseif entry.task == "Fighter Sweep" then										--for recon
 											
-												if assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_SWEEP then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_SWEEP										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP then 									--if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP										--assign flight of 2 aircaft
 											
 												else
 													assigned = assign 													--else assign flight of 1 aicraft
@@ -2081,8 +2081,8 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 												if assigned and assign == 1 then												--if there is one aircraft left to assign and there was already a previous flight assigned, stop assigning (do not add leftover single-ships)
 													break
 											
-												elseif assign >= camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_OTHER then															--if more than 4 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator.MAX_AIRCRAFT_FOR_OTHER																--assign flight of 4 aircaft
+												elseif assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER then															--if more than 4 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER																--assign flight of 4 aircaft
 											
 												else
 													assigned = assign															--else assign flight size of what is left
