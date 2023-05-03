@@ -163,21 +163,11 @@ end
 ]]
 -- change loadouts weight score (usa l'istruzione, non ha senso realizzare una funzione)
 
+--num resource
 camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST[task] = val
 camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST[role] = val
 camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = val
 camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = val
-camp.module_config.ATO_Generator[side].MINIMUM_VALUE_OF_AIR_THREAT = val
-camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCTION_AIR_THREAT = val
-camp.module_config.ATO_Generator[side].SCORE_INFLUENCE_ROUTE_THREAT = val
-camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE = val
-camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = val
-camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = val
-camp.module_config.ATO_Generator[side].MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = val
-camp.module_config.ATO_Generator[side].MIN_CLOUD_DENSITY = val
-camp.module_config.ATO_Generator[side].MIN_FOG_VISIBILITY = val
-camp.module_config.ATO_Generator[side].MIN_CLOUD_EIGHT_ABOVE_AIRBASE = val
-camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 camp.module_config.ATO_Generator[side].MIN_PERCENTAGE_FOR_ESCORT = val
 camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = val
 camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = val
@@ -189,12 +179,60 @@ camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = val
 camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = val
 
 
+-- reduce score weight: 
+-- reduce_score = flights_requested - aircraft_assign / math.ceil(target.firepower.max / unit_loadouts[l].firepower) 
+-- CAPS: increase factor by one for each flight that is missing  and target firepower == loadout firpower
+-- AWACS and Refueling:  increase factor by one for each flight that is missing 
+-- Other: reduce_score = 0
+camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE = val
+
+camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = val
+camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = val
+
+
+-- route threat
+camp.module_config.ATO_Generator[side].MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = val
+camp.module_config.ATO_Generator[side].MINIMUM_VALUE_OF_AIR_THREAT = val
+camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCTION_AIR_THREAT = val
+camp.module_config.ATO_Generator[side].SCORE_INFLUENCE_ROUTE_THREAT = val
+
+
+--meteo
+camp.module_config.ATO_Generator[side].MIN_CLOUD_DENSITY = val
+camp.module_config.ATO_Generator[side].MIN_FOG_VISIBILITY = val
+camp.module_config.ATO_Generator[side].MIN_CLOUD_EIGHT_ABOVE_AIRBASE = val
+
+-- efficiency manutention
+camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
+
+
+
+local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
+
 -- implement function to modify target priority for change objective tactics: 	
+-- devono essere inseriti anche gli altri fattori condizionanti presenti negli altri moduli
 
-	-- devono essere inseriti anche gli altri fattori condizionanti presenti negli altri moduli
-local function changeNumberAircraftForTactics(side, perc, tactic)
 
-	if tactic == "all" then		
+-- load module_config_init table, if not exist create one new
+local function loadModuleConfigDefault()
+
+    if camp.mission > 1 and io.open("Active/module_config_init.lua", "r") then
+        require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
+
+    else -- initialize new computed_target_efficiency if not exist 
+        module_config_init = camp.module_config 
+        SaveTabOnPath( "Active/", "module_config_init", module_config_init )         
+    end
+end
+
+
+
+
+
+-- change aircraft number in relation to the oprations (all, ground, ground attack, groud interdiction, air superiority, air defensive, air offensive)	
+local function changeNumberAircraftForTactics(side, perc, operations)
+
+	if operations == "all" then		
 		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
@@ -203,117 +241,267 @@ local function changeNumberAircraftForTactics(side, perc, tactic)
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER * ( 1 + perc )
 	
-	elseif tactic == "ground" then		
+	elseif operations == "ground" then		
 		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )
 
-	elseif tactic == "ground attack" then		
+	elseif operations == "ground attack" then		
 		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )		
 		
-	elseif tactic == "ground interdiction" then		
+	elseif operations == "ground interdiction" then		
 		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
-		
-	elseif tactic == "air" then		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )		
+
+	elseif operations == "air superiority" then		
 		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )		
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )		
+		
+	elseif operations == "air defensive" then		
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )		
 
-	elseif tactic == "normal" then
-		--copy init table
+	elseif operations == "air offensive" then		
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )				
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )		
 	
-	elseif tactic == "initial" then
-		-- take value in camp_init
+	elseif operations == "default" then
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = module_config_init.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP		
+		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER
+
+	elseif operations == "default ground" then		
+		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE
+
+	elseif operations == "default air" then
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = module_config_init.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP		
+		
+
+
 	else
-		log.warn("unknow tactic: " .. tactic)
+		log.warn("unknow operations: " .. operations)
 	end
 end
 
+-- change cost weight in reation to the opration (air, ground, all)
+local function airCostChange(side, operations, perc)
 
-local function airCostChange(side, tactic, perc)
+	-- factor cost (loadouts or aircraft) decrease as the cost increases -> perc change WEIGHT of factor cost -> increment oof perc cause bigger influence of low cost policy
 
-	local perc_air, perc_ground
-	local economy = -0.5 --        -50% 			
-	local expensive = 0.5 --       +50% 			
-	local high_expensive = 1 --    +100% 			
-	local high_economy = -0.8 --   -80% 		
+	local perc_air, perc_ground	
 	
-	if tactic == "all" then
+	if operations == "all" then
 		perc_air = perc
 		perc_ground = perc
 	
-	elseif tactic == "ground" then
+	elseif operations == "ground" then
 		perc_air = 1
 		perc_ground = perc
 
-	elseif tactic == "air" then
+	elseif operations == "air" then
 		perc_air = perc
 		perc_ground = 1
 
+	elseif operations == "default" then
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST
+	
+	elseif operations == "default aircraft" then
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST		
+		
+	elseif operations == "default loadouts" then	
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST
+	
+	elseif operations == "default air" then				
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"]
+		-- loadouts				
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"]
+
+	elseif operations == "default ground" then				
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"]
+		-- loadouts
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"]
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"] = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"]
+	
 	else
-		log.warn("unknow tactic: " .. tactic)
+		log.warn("unknow operations: " .. operations)
+		operations = "unknow operations"
+	end	
+	
+	if string.sub(operations,1,7) ~= "default" and operations == "unknow operations" then
+		-- aircraft
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] * ( 1 + perc_ground ) -- increment(perc > 0 ) or decrement (perc < 0) cost weight cost for reduce score of expensive aircraft
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"] * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"] * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] * ( 1 + perc_air ) -- increment(perc > 0 ) or decrement (perc < 0) cost weight cost for reduce score of expensive aircraft
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"] * ( 1 + perc_air )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"] * ( 1 + perc_air )			
+		-- loadouts
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"]  * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"]  * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"]  * ( 1 + perc_ground )		
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"]  * ( 1 + perc_ground )					
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"]  * ( 1 + perc_air )					
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"]  * ( 1 + perc_air )					
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"]  * ( 1 + perc_air )					
+		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"]  * ( 1 + perc_air )					
 	end
-
-	
-	
-	-- aircraft
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] * ( 1 + perc_ground ) -- increment(perc > 0 ) or decrement (perc < 0) cost weight cost for reduce score of expensive aircraft
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Reco"] * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Helicopter"] * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] * ( 1 + perc_air ) -- increment(perc > 0 ) or decrement (perc < 0) cost weight cost for reduce score of expensive aircraft
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Transporter"] * ( 1 + perc_air )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Refueler"] * ( 1 + perc_air )			
-	-- loadouts
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Strike"]  * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Anti-ship Strike"]  * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["SEAD"]  * ( 1 + perc_ground )		
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Reconnaissance"]  * ( 1 + perc_ground )					
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["CAP"]  * ( 1 + perc_air )					
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Fighter Sweep"]  * ( 1 + perc_air )					
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Intercept"]  * ( 1 + perc_air )					
-	camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST["Escort"]  * ( 1 + perc_air )					
-
 end
 
+-- local costs_policy = { "reduction", "high reduction", "increment", "high_increment", "ground_reduction", "ground_increment", "air_reduction", "air_increment" }
+
+-- change cost weight of aircraft and loadout in relation to the cost policy { "reduction", "high reduction", "increment", "high_increment", "ground_reduction", "ground_increment", "air_reduction", "air_increment" }
+-- factor cost (loadouts or aircraft) decrease as the cost increases -> perc change WEIGHT of factor cost -> increment oof perc cause bigger influence of low cost policy
 local function airCostPolicy(side, cost_policy)
 	
-	if cost_policy == "reduction" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission, decrement/increment same values proportionaly other unit
-		airCostChange(side, "all", -0.5)
+	if cost_policy == "reduction" then -- increments use of low cost aircraft/loadouts
+		airCostChange(side, "all", 2)
 
-	elseif cost_policy == "high reduction" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission, decrement/increment same values proportionaly other unit
-		airCostChange(side, "all", -0.8)
+	elseif cost_policy == "high reduction" then -- increments use of low cost aircraft/loadouts
+		airCostChange(side, "all", 4)
 
-	elseif cost_policy == "increment" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission,  same for other unit
+	elseif cost_policy == "increment" then -- increments use of costly aircraft/loadouts
 		airCostChange(side, "all", 0.5)
 
-	elseif cost_policy == "high increment" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission, decrement/increment same values proportionaly other unit
-		airCostChange(side, "all", 1)
+	elseif cost_policy == "high increment" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "all", 0.1)
 
-	elseif cost_policy == "ground reduction" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission, decrement/increment same values proportionaly other unit	
-		airCostChange(side, "ground", -0.5)
+	elseif cost_policy == "ground reduction" then -- increments use of low cost aircraft/loadouts
+		airCostChange(side, "ground", 2)
 	
-	elseif cost_policy == "ground increment" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission,  same for other unit		
+	elseif cost_policy == "ground increment" then -- increments use of costly aircraft/loadouts
 		airCostChange(side, "ground", 0.5)
 		
-	elseif cost_policy == "air reduction" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission, decrement/increment same values proportionaly other unit
-		airCostChange(side, "air", -0.5)
+	elseif cost_policy == "air reduction" then -- increments use of low cost aircraft/loadouts
+		airCostChange(side, "air", 2)
 	
-	elseif cost_policy == "air increment" then -- increments/decrements cost weight for modify weight cost for reduce/increase score mission,  same for other unit
-		airCostChange(side, "all", 0.5)
+	elseif cost_policy == "air increment" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "air", 0.5)
+
+	elseif cost_policy == "default air" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "default air", nil)
+	
+	elseif cost_policy == "default ground" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "default ground", nil)
+
+	elseif cost_policy == "default aircraft" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "default aircraft", nil)
+
+	elseif cost_policy == "default loadouts" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "default loadouts", nil)
 	
 	else
 		log.warn("unknow cost policy: " .. cost_policy)
+	end
+
+end
+
+-- change weight task and/or task attribute for score mission
+local function changeWeightScore(side, value, operation)
+
+	if operation == "ground" then
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.Structure = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.armor = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.soft = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.hard = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike["Parked Aircraft"] = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.SAM = value
+		
+	elseif operation == "ground attack" then		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.armor = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.soft = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.hard = value				
+
+	elseif operation == "ground interdiction" then
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.Structure = value		
+		-- camp.module_config.SCORE_TASK_FACTOR[side].Strike["Parked Aircraft"] = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike.SAM = value	
+
+	elseif operation == "anti-ship" then		
+		camp.module_config.SCORE_TASK_FACTOR[side]["Anti-ship Strike"] = value				
+
+	elseif operation == "air superiority" then
+		camp.module_config.SCORE_TASK_FACTOR[side].CAP = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Escort = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Intercept = value
+		camp.module_config.SCORE_TASK_FACTOR[side]["Fighter Sweep"] = value
+
+	elseif operation == "air defensive" then
+		camp.module_config.SCORE_TASK_FACTOR[side].CAP = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Escort = value
+		camp.module_config.SCORE_TASK_FACTOR[side].Intercept = value
+		-- camp.module_config.SCORE_TASK_FACTOR[side]["Fighter Sweep"] = value
+
+	elseif operation == "air offensive" then
+		camp.module_config.SCORE_TASK_FACTOR[side].CAP = value		
+		camp.module_config.SCORE_TASK_FACTOR[side].Escort = value
+		-- camp.module_config.SCORE_TASK_FACTOR[side].Intercept = value
+		camp.module_config.SCORE_TASK_FACTOR[side]["Fighter Sweep"] = value
+
+	elseif operation == "default ground" then
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side].Strike		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]
+
+	elseif operation == "default air" then
+		camp.module_config.SCORE_TASK_FACTOR[side].CAP = module_config_init.SCORE_TASK_FACTOR[side].CAP		
+		camp.module_config.SCORE_TASK_FACTOR[side].Escort = module_config_init.SCORE_TASK_FACTOR[side].Escort
+		camp.module_config.SCORE_TASK_FACTOR[side].Intercept = module_config_init.SCORE_TASK_FACTOR[side].Intercept
+		camp.module_config.SCORE_TASK_FACTOR[side]["Fighter Sweep"] = module_config_init.SCORE_TASK_FACTOR[side]["Fighter Sweep"]
+
+	elseif operation == "default anti-ship" then		
+		camp.module_config.SCORE_TASK_FACTOR[side]["Anti-ship Strike"] = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]		
+
+	elseif operation == "default" then
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side].Strike		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]
+		camp.module_config.SCORE_TASK_FACTOR[side].CAP = module_config_init.SCORE_TASK_FACTOR[side].CAP		
+		camp.module_config.SCORE_TASK_FACTOR[side].Escort = module_config_init.SCORE_TASK_FACTOR[side].Escort
+		camp.module_config.SCORE_TASK_FACTOR[side].Intercept = module_config_init.SCORE_TASK_FACTOR[side].Intercept
+		camp.module_config.SCORE_TASK_FACTOR[side]["Fighter Sweep"] = module_config_init.SCORE_TASK_FACTOR[side]["Fighter Sweep"]
+		camp.module_config.SCORE_TASK_FACTOR[side]["Anti-ship Strike"] = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]		
+
+	else
+		log.warn("unknow operation: " .. operation)
 	end
 
 end
@@ -323,41 +511,93 @@ end
 -- tactics = air superiority: Fighter Sweep, CAP, Escort, Intercept
 -- tactics = defensive: CAP, Escort, Intercept, Reconnaissance
 -- tactics = normal: default
-local function changeNumberAircraft(side, perc, tactic)
-
-
-	if tactic == "moderate offensive" then	
-		changeNumberAircraftForTactics(side, 0.7, "ground attack")			
-		changeNumberAircraftForTactics(side, 0.5, "air")			
+local tactics = {
 	
-	elseif tactic == "offensive" then			
-		changeNumberAircraftForTactics(side, 1, "all")					
+	["moderate increment offensive resource"] = true,						-- moderate increments resource for offensive task
+	["increment offensive resource"] = true,								-- increments resource and expensive asset for offensive task
+	["increment offensive action"] = true,									-- increments actions for offensive task
+	["increment offensive strategic action, resource"] = true, 				-- increments action, resource and expensive asset for strategic task	
+	["expensive increment offensive action, resource and use of expensive asset"] = true,				-- increments resource, task and high cost asset for offensive task
+	["air superiority"] = true,												-- increment action and resource for air superiority ( task and action )
+	["defensive"] = true,													-- increment action and resource for air defensive ( task and action )
+	["restore default resource"] = true,									-- restore resource config parameters at default value (camp_init)
+	["restore global default condition"] = true,							-- restore resource, action and cost config parameters at default value (camp_init)
+	["restore air default condition"] = true,								-- restore air resource, action and cost config parameters at default value (camp_init)
+}
+
+local function operation(side, perc, tactic)
+
+	if tactic == "moderate increment offensive resource" then				-- moderate increments resource for offensive task
+		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
 		
-	elseif tactic == "expensive offensive" then			
-		changeNumberAircraftForTactics(side, 1, "all")	
+	elseif tactic == "increment offensive resource" then					-- increments resource and expensive asset for offensive task
+		changeNumberAircraftForTactics(side, 1, "ground")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")
+		airCostPolicy(side, "increment")									-- increments use of expensive asset (aircraft/loadouts)
+
+	elseif tactic == "increment offensive action" then						-- increments actions for offensive task
+		changeWeightScore(side, 3, "ground")								-- increments actions of ground missions					
+		changeWeightScore(side, 1.5, "air offensive")						-- increments actions of air offensive missions					
+		airCostPolicy(side, "increment")												 
+
+	elseif tactic == "increment offensive strategic action and resource" then 			-- increments action, resource and expensive asset for strategic task			
+		changeNumberAircraftForTactics(side, 1, "ground interdiction")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")	
+		changeWeightScore(side, 3, "ground interdiction")					
+		airCostPolicy(side, "increment")									-- increments expensive asset of ground interdiction missions (Bridge, Structure)
+		
+	elseif tactic == "expensive increment offensive action, resource and use of expensive asset" then				-- increments resource, task and use of expensive asset for offensive task
+		changeNumberAircraftForTactics(side, 1, "ground")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
+		changeWeightScore(side, 5, "ground")								-- increments choice of ground missions			
 		airCostPolicy(side, "high increment")
 		
-	elseif tactic == "air superiority" then		
-		changeNumberAircraftForTactics(side, 0.7, "air")
-		changeNumberAircraftForTactics(side, 0.5, "ground interdiction")			
-		
-	elseif tactic == "defensive" then		
-		changeNumberAircraftForTactics(side, 1, "air")
-		changeNumberAircraftForTactics(side, -0.5, "ground")			
+	elseif tactic == "air superiority" then									-- increment action and resource for air superiority ( task and action )
+		changeNumberAircraftForTactics(side, 0.7, "air superiority")
+		changeNumberAircraftForTactics(side, 0.5, "ground interdiction")	
+		changeWeightScore(side, 3, "air superiority")						-- increments choice of air superiority missions			
+				
+	elseif tactic == "defensive" then										-- increment action and resource for air defensive  ( task and action )
+		changeNumberAircraftForTactics(side, 1, "air defensive")
+		changeNumberAircraftForTactics(side, -0.5, "ground attack")			
+		changeWeightScore(side, 4, "air defensive")							-- increments choice of air defensive missions			
+		changeWeightScore(side, 0.3, "ground")								-- decrements choice of ground missions			
 
-	elseif tactic == "normal" then
-		--copy init table
-	
-	elseif tactic == "initial" then
-		-- take value in camp_init
+	elseif tactic == "restore default resource" then						-- restore resource config parameters at default value (camp_init)
+		changeNumberAircraftForTactics(side, nil, "default")
+		
+	elseif tactic == "restore global default condition" then				-- restore resource, action and cost config parameters at default value (camp_init)
+		changeNumberAircraftForTactics(side, nil, "default")
+		changeWeightScore(side, nil, "default")	
+		airCostPolicy(side, "default")	
+
+	elseif tactic == "restore ground default condition" then
+		changeNumberAircraftForTactics(side, nil, "default ground")
+		changeWeightScore(side, 4, "default ground")	
+		airCostPolicy(side, "default ground")	
+
+	elseif tactic == "restore air default condition" then
+		changeNumberAircraftForTactics(side, nil, "default air")
+		changeWeightScore(side, 4, "default air")	
+		airCostPolicy(side, "default air")	
+
 	else
 		log.warn("unknow tactic: " .. tactic)
 	end
 end
 
--- percentage change of max limit of aircraft for A2A task, reduce proportionaly max limits for other aircraft
-local function changeMaxAircraftForAir(side, perc)
+
 -- GLOBAL FUNCTION 
+function commander()
+
+	-- acquisition status campaign
+	-- evalutate status
+	-- execution directive:
+		-- operation(side, perc, tactic)
+
+end
+
 
 --[[
 

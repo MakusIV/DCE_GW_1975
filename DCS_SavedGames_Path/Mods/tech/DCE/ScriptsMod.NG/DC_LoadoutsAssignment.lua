@@ -1678,7 +1678,7 @@ local function loadComputedTargetEfficiency()
         require("Active/computed_target_efficiency") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 
     else -- initialize new computed_target_efficiency if not exist 
-        computed_target_efficiency = {} 
+        computed_target_efficiency = {} -- table contains target efficiency values: hash table with hash = target and value = firepower med for that target
         SaveTabOnPath( "Active/", "computed_target_efficiency", computed_target_efficiency )         
     end
 end

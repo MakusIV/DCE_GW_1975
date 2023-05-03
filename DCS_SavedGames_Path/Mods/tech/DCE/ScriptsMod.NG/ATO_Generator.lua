@@ -950,23 +950,23 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							-- update reduction for aircraft cost
 																							local unit_role = getRole(draft_sorties_entry.type, task, side) -- return the primary role: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
 																							if active_log then log.traceLow("draft_sorties_entry.type: " .. draft_sorties_entry.type .. ", task: " .. task .. ", side: " .. side .. ", unit_role: " .. ( unit_role or "nil") ) end
-																							local cost_factor = db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or 0
+																							local cost_factor = db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or 0 -- bigger cost -> lesser factor
 																																														
 																							if active_log then log.traceLow("EVALUTATE FACTOR COST: task: " .. task .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
 																							if active_log then log.traceLow("cost ( db_aircraft[" .. side .. "][" .. draft_sorties_entry.type .. "].factor[" .. unit_role .. "] ): " .. (db_aircraft[side][draft_sorties_entry.type].factor[unit_role] or "nil" ) .. ", cost: " .. cost_factor) end
 
 																							-- Update score with factor_cost
-																							local aircraft_cost_factor = ( 1 + camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor )
-																							local loadout_cost_factor = ( 1 - ( camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )																							
+																							local aircraft_cost_factor = ( 1 + camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST[unit_role] * cost_factor ) -- bigger aircraft cost -> lesser factor cost --> lesser aircraft_cost_factor
+																							local loadout_cost_factor = ( 1 + ( camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST[task] or 0 ) * ( unit_loadouts[l].cost_factor or 0 ) )	-- bigger loadouts cost -> lesser loadout factor	--> lesser loadout_cost_factor 																					
 																							draft_sorties_entry.score = ( draft_sorties_entry.score - reduce_score * camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE ) * aircraft_cost_factor * loadout_cost_factor
 																							if active_log then log.traceLow("Update score with factor_cost: side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", aircraft_cost_factor: " .. aircraft_cost_factor .. ", loadout_cost_factor: " .. loadout_cost_factor .. ", score: " .. draft_sorties_entry.score) end																				
 																							
 																							-- Update score with SCORE_TASK_FACTOR
 																							if task == "Strike" then
-																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station																									
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[side][task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station																									
 																							
 																							else
-																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[side][task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
 																							end																						
 																							if active_log then log.traceLow("side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
 																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE .. ")") end
