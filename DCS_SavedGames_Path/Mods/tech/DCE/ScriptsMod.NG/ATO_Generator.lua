@@ -2012,27 +2012,27 @@ for side, draft in pairs(draft_sorties) do																		--iterate through al
 													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT										--assign flight of 2 aircaft
 											
 												else
-													assigned = assign 														--else assign flight of 1 aicraft
+													assigned = assign 																-- else assign flight of 1 aicraft
 												end
 												log.traceLow("entry.task = Intercept, assigned = " .. assigned)
 											
-											elseif isBomberOrRecoType(entry.type) then	--for bombers
+											elseif isBomberOrRecoType(entry.type) then												-- for bombers
 
-												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER then 	-- if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER		-- assign flight of 2 aircaft
 											
 												else
-													assigned = assign 														--else assign flight of 1 aicraft
+													assigned = assign 																-- else assign flight of 1 aicraft
 												end												
 												log.traceLow("entry.type = Bomber, assigned = " .. assigned)
 											
-											elseif entry.task == "Reconnaissance" then											--for recon
+											elseif entry.task == "Reconnaissance" then												-- for recon
 											
-												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE then 									--if more than 2 aircraft are to be assigned
-													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE										--assign flight of 2 aircaft
+												if assign >= camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE then 	-- if more than 2 aircraft are to be assigned
+													assigned = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE		-- assign flight of 2 aircaft
 											
 												else
-													assigned = assign														--else assign flight of 1 aicraft
+													assigned = assign																-- else assign flight of 1 aicraft
 												end
 												log.traceLow("entry.task = Reconnaisance, assigned = " .. assigned)
 											

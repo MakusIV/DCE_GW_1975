@@ -480,7 +480,7 @@ camp = {
                 MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
                 MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
                 MAX_AIRCRAFT_FOR_SWEEP = 4,		 			    					-- max number of aircraft for an sweep mission 
-                MAX_AIRCRAFT_FOR_OTHER = 3,		 				    				-- max number of aircraft for other mission 
+                MAX_AIRCRAFT_FOR_OTHER = 1,		 				    				-- max number of aircraft for other mission 
                 --MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
                 MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber                 
             },
@@ -528,7 +528,7 @@ camp = {
                 MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
                 MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
                 MAX_AIRCRAFT_FOR_SWEEP = 4,		 								    -- max number of aircraft for an sweep mission 
-                MAX_AIRCRAFT_FOR_OTHER = 3,		 								    -- max number of aircraft for other mission 
+                MAX_AIRCRAFT_FOR_OTHER = 1,		 								    -- max number of aircraft for other mission 
                 --MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
                 MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber                 
             },

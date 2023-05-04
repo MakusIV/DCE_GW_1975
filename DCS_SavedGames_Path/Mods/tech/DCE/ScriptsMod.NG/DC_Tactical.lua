@@ -587,6 +587,101 @@ local function operation(side, perc, tactic)
 	end
 end
 
+-- change priority target (targetlist) of the perc(%) value for specific task
+local function changePriorityTask(side, task, attribute, class, perc)
+
+	if task == "all" then
+					
+		for target_name, target in pairs(targetlist[side]) do
+			
+			target.priority = target.priority * ( 1 + perc )
+		end
+		
+	elseif task == "Intercept" then
+
+		for target_name, target in pairs(targetlist[side]) do
+
+			if target.task == task then
+				target.priority = target.priority * ( 1 + perc )
+			end
+		end
+
+	elseif task == "Fighter Sweep" then
+
+	elseif task == "CAP" then
+
+	elseif task == "Escort" then
+
+	elseif task == "Anti-ship Strike" then
+
+	elseif task == "SEAD" then
+
+	elseif task == "Refueling" then
+
+	elseif task == "AWACS" then
+
+	elseif task == "Strike" and not attribute then
+
+	elseif task == "Strike" and attribute and attribute == "Parked Aircraft" then -- OCA Strike
+
+	elseif task == "Strike" and attribute and  attribute == "Structure" and string.find(target_name, "Airbase") then -- Airbase Strike
+
+	elseif task == "Strike" and attribute and attribute == "SAM" then -- Air Defence Strike (att not SEAD che è un support task)
+
+	elseif task == "Strike" and attribute and ( attribute == "Bridge" ) or ( attribute == "Structure" and class and class == "static") then -- Interdiction Strike (no airbase)
+	
+	elseif task == "Strike" and attribute and ( attribute == "soft" or attribute == "armor" ) and class and class == "vehicle" then -- ground attack
+		
+	else
+		log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
+	end
+
+end
+
+-- reset priority target (targetlist) of the perc(%) value for specific task
+local function resetPriorityTask(side, task, attribute, class)
+
+	if task == "all" then		
+			
+		for target_name, target in pairs(targetlist[side]) do
+			
+			target.priority = target_priority_init[side][target_name]				
+		end
+	
+	elseif task == "Intercept" then
+
+	elseif task == "Fighter Sweep" then
+
+	elseif task == "CAP" then
+
+	elseif task == "Escort" then
+
+	elseif task == "Anti-ship Strike" then
+
+	elseif task == "SEAD" then
+
+	elseif task == "Refueling" then
+
+	elseif task == "AWACS" then
+
+	elseif task == "Strike" and not attribute then
+
+	elseif task == "Strike" and attribute and attribute == "Parked Aircraft" then -- OCA Strike
+
+	elseif task == "Strike" and attribute and  attribute == "Structure" and string.find(target_name, "Airbase") then -- Airbase Strike
+
+	elseif task == "Strike" and attribute and attribute == "SAM" then -- Air Defence Strike (att not SEAD che è un support task)
+
+	elseif task == "Strike" and attribute and ( attribute == "Bridge" ) or ( attribute == "Structure" and class and class == "static") then -- Interdiction Strike (no airbase)
+	
+	elseif task == "Strike" and attribute and ( attribute == "soft" or attribute == "armor" ) and class and class == "vehicle" then -- ground attack
+		
+	else
+		log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
+	end
+
+end
+
 
 -- GLOBAL FUNCTION 
 function commander()
