@@ -395,6 +395,8 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DC_CheckTriggers.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateOOBGround.lua")
 
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Tactical.lua")
+
 dofile("../../../ScriptsMod."..versionPackageICM.."/ATO_ThreatEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/ATO_RouteGenerator.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/ATO_Generator.lua")

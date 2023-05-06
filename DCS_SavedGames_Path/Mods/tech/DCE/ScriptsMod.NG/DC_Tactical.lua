@@ -24,6 +24,7 @@ log.level = log_level
 log.outfile = LOG_DIR .. "LOG_DC_Tactical.lua." .. camp.mission .. ".log" 
 local local_debug = false -- local debug   
 local active_log = false
+local local_test = true
 log.debug("Start")
 
 log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
@@ -162,7 +163,7 @@ end
 ["Helicopter"] = 0.2, 
 ]]
 -- change loadouts weight score (usa l'istruzione, non ha senso realizzare una funzione)
-
+--[[
 --num resource
 camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST[task] = val
 camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST[role] = val
@@ -184,6 +185,8 @@ camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = val
 -- CAPS: increase factor by one for each flight that is missing  and target firepower == loadout firpower
 -- AWACS and Refueling:  increase factor by one for each flight that is missing 
 -- Other: reduce_score = 0
+
+
 camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE = val
 
 camp.module_config.ATO_Generator[side].MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = val
@@ -205,9 +208,10 @@ camp.module_config.ATO_Generator[side].MIN_CLOUD_EIGHT_ABOVE_AIRBASE = val
 -- efficiency manutention
 camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 
+]]
 
-
-local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
+--local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
+local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
 
 -- implement function to modify target priority for change objective tactics: 	
 -- devono essere inseriti anche gli altri fattori condizionanti presenti negli altri moduli
@@ -216,18 +220,14 @@ local module_config_init -- default module_config: module config parameters stor
 -- load module_config_init table, if not exist create one new
 local function loadModuleConfigDefault()
 
-    if camp.mission > 1 and io.open("Active/module_config_init.lua", "r") then
+    if ( camp.mission > 1 or ( local_test and camp.mission == 1 ) ) and io.open("Active/module_config_init.lua", "r") then
         require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 
-    else -- initialize new computed_target_efficiency if not exist 
-        module_config_init = camp.module_config 
-        SaveTabOnPath( "Active/", "module_config_init", module_config_init )         
+    else -- initialize new computed_target_efficiency if not exist 		
+		module_config_init = camp.module_config 
+		SaveTabOnPath( "Active/", "module_config_init", module_config_init )         
     end
 end
-
-
-
-
 
 -- change aircraft number in relation to the oprations (all, ground, ground attack, groud interdiction, air superiority, air defensive, air offensive)	
 local function changeNumberAircraftForTactics(side, perc, operations)
@@ -278,17 +278,17 @@ local function changeNumberAircraftForTactics(side, perc, operations)
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )		
 	
-	elseif operations == "default" then
+	elseif operations == "default" then				
 		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = module_config_init.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP 
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER		
 
 	elseif operations == "default ground" then		
 		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
@@ -525,7 +525,7 @@ local tactics = {
 	["restore air default condition"] = true,								-- restore air resource, action and cost config parameters at default value (camp_init)
 }
 
-local function operation(side, perc, tactic)
+local function airDirective(side, perc, tactic)
 
 	if tactic == "moderate increment offensive resource" then				-- moderate increments resource for offensive task
 		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
@@ -590,98 +590,54 @@ end
 -- change priority target (targetlist) of the perc(%) value for specific task
 local function changePriorityTask(side, task, attribute, class, perc)
 
-	if task == "all" then
-					
-		for target_name, target in pairs(targetlist[side]) do
-			
+	for target_name, target in pairs(targetlist[side]) do
+
+		if task == "all" or target.task == task and ( not attribute or target.attribute == attribute ) and ( not class and class == target.class ) then			
 			target.priority = target.priority * ( 1 + perc )
+			
+		else
+			log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
 		end
-		
-	elseif task == "Intercept" then
-
-		for target_name, target in pairs(targetlist[side]) do
-
-			if target.task == task then
-				target.priority = target.priority * ( 1 + perc )
-			end
-		end
-
-	elseif task == "Fighter Sweep" then
-
-	elseif task == "CAP" then
-
-	elseif task == "Escort" then
-
-	elseif task == "Anti-ship Strike" then
-
-	elseif task == "SEAD" then
-
-	elseif task == "Refueling" then
-
-	elseif task == "AWACS" then
-
-	elseif task == "Strike" and not attribute then
-
-	elseif task == "Strike" and attribute and attribute == "Parked Aircraft" then -- OCA Strike
-
-	elseif task == "Strike" and attribute and  attribute == "Structure" and string.find(target_name, "Airbase") then -- Airbase Strike
-
-	elseif task == "Strike" and attribute and attribute == "SAM" then -- Air Defence Strike (att not SEAD che è un support task)
-
-	elseif task == "Strike" and attribute and ( attribute == "Bridge" ) or ( attribute == "Structure" and class and class == "static") then -- Interdiction Strike (no airbase)
-	
-	elseif task == "Strike" and attribute and ( attribute == "soft" or attribute == "armor" ) and class and class == "vehicle" then -- ground attack
-		
-	else
-		log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
 	end
-
 end
 
 -- reset priority target (targetlist) of the perc(%) value for specific task
 local function resetPriorityTask(side, task, attribute, class)
 
-	if task == "all" then		
+	for target_name, target in pairs(targetlist[side]) do
+
+		if task == "all" or target.task == task and ( not attribute or target.attribute == attribute ) and ( not class and class == target.class ) then			
+			target.priority = target_priority_default[side][target_name]
 			
-		for target_name, target in pairs(targetlist[side]) do
-			
-			target.priority = target_priority_init[side][target_name]				
+		else
+			log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
 		end
-	
-	elseif task == "Intercept" then
-
-	elseif task == "Fighter Sweep" then
-
-	elseif task == "CAP" then
-
-	elseif task == "Escort" then
-
-	elseif task == "Anti-ship Strike" then
-
-	elseif task == "SEAD" then
-
-	elseif task == "Refueling" then
-
-	elseif task == "AWACS" then
-
-	elseif task == "Strike" and not attribute then
-
-	elseif task == "Strike" and attribute and attribute == "Parked Aircraft" then -- OCA Strike
-
-	elseif task == "Strike" and attribute and  attribute == "Structure" and string.find(target_name, "Airbase") then -- Airbase Strike
-
-	elseif task == "Strike" and attribute and attribute == "SAM" then -- Air Defence Strike (att not SEAD che è un support task)
-
-	elseif task == "Strike" and attribute and ( attribute == "Bridge" ) or ( attribute == "Structure" and class and class == "static") then -- Interdiction Strike (no airbase)
-	
-	elseif task == "Strike" and attribute and ( attribute == "soft" or attribute == "armor" ) and class and class == "vehicle" then -- ground attack
-		
-	else
-		log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
 	end
-
 end
 
+-- define, save and load priority_default table. priority_default table contains initial target priority value specified in targetlist_init
+local function loadPriorityDefault()
+
+	if camp.mission > 1 and io.open("Active/target_priority_default.lua", "r") then
+        require("Active/target_priority_default") -- load stored target_priority_default.lua if not first mission campaign and exist table
+
+    else -- initialize new target_priority_default if not exist 
+        target_priority_default = {} -- table contains target efficiency values: hash table with hash = target and value = firepower med for that target
+
+		for side_name, side in pairs(targetlist) do
+			target_priority_default[side_name] = {}
+				
+			for target_name, target in pairs(targetlist[side_name]) do
+				target_priority_default[side_name][target_name] = target.priority
+			end
+		end
+        SaveTabOnPath( "Active/", "target_priority_default", target_priority_default )         
+    end
+end
+
+local function printPriorityTable(text)		
+	print( text .. "\n\n" .. inspect( target_priority_default ) )	
+end
 
 -- GLOBAL FUNCTION 
 function commander()
@@ -693,6 +649,30 @@ function commander()
 
 end
 
+-- PREPROCESSING
+loadModuleConfigDefault()
+loadPriorityDefault()
+
+
+
+-- TESTING
+if local_test then
+	local testChangeNumberAircraftForTacticsFlg = true
+	
+	
+	
+	printPriorityTable("default value")
+
+
+	if testChangeNumberAircraftForTacticsFlg then --side, perc, operations
+		
+		changeNumberAircraftForTactics("blue", 30, "all")
+		print("camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
+		--printPriorityTable("changeNumberAircraftForTactics('blue', 30, 'all')")
+		changeNumberAircraftForTactics("blue", nil, "default")
+		print("camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)		
+	end
+end
 
 --[[
 
