@@ -36,6 +36,55 @@ camp = {
 
 	module_config = {
 
+        SCORE_TASK_FACTOR = {
+
+            ["blue"] = {
+                ["CAP"] = 1,
+                ["AWACS"] = 1,
+                ["Intercept"] = 1,
+                ["Escort"] = 1,
+                ["Fighter Sweep"] = 1,
+                ["Anti-ship Strike"] = 1,
+                ["Strike"] = {
+                    ["armor"] = 1,
+                    ["soft"] = 1,
+                    ["SAM"] = 1,
+                    ["Structure"] = 1,
+                    ["Bridge"] = 1,
+                    ["Parked Aircraft"] = 1,
+                    ["hard"] = 1,
+                },
+                ["Reconnaissance"] = 1,
+                ["Refueling"] = 1,
+                ["Transport"] = 1,
+                ["SEAD"] = 1,
+                ["Laser Illumination"] = 1,
+            },
+    
+            ["red"] = {
+                ["CAP"] = 1,
+                ["AWACS"] = 1,
+                ["Intercept"] = 1,
+                ["Escort"] = 1,
+                ["Fighter Sweep"] = 1,
+                ["Anti-ship Strike"] = 1,
+                ["Strike"] = {
+                    ["armor"] = 1,
+                    ["soft"] = 1,
+                    ["SAM"] = 1,
+                    ["Structure"] = 1,
+                    ["Bridge"] = 1,
+                    ["Parked Aircraft"] = 1,
+                    ["hard"] = 1,
+                },
+                ["Reconnaissance"] = 1,
+                ["Refueling"] = 1,
+                ["Transport"] = 1,
+                ["SEAD"] = 1,
+                ["Laser Illumination"] = 1,
+            },
+        },
+
         ["DC_LoadoutsAssignment"] = {
 
             ["ANGLE_OF_DESCENT_IN_GROUND_ATTACK"] = {             -- degree
@@ -533,57 +582,9 @@ camp = {
                 MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber                 
             },
 		},
-
     },
 
-	SCORE_TASK_FACTOR = {
-
-        ["blue"] = {
-            ["CAP"] = 1,
-            ["AWACS"] = 1,
-            ["Intercept"] = 1,
-            ["Escort"] = 1,
-            ["Fighter Sweep"] = 1,
-            ["Anti-ship Strike"] = 1,
-            ["Strike"] = {
-                ["armor"] = 1,
-                ["soft"] = 1,
-                ["SAM"] = 1,
-                ["Structure"] = 1,
-                ["Bridge"] = 1,
-                ["Parked Aircraft"] = 1,
-                ["hard"] = 1,
-            },
-            ["Reconnaissance"] = 1,
-            ["Refueling"] = 1,
-            ["Transport"] = 1,
-            ["SEAD"] = 1,
-            ["Laser Illumination"] = 1,
-        },
-
-        ["red"] = {
-            ["CAP"] = 1,
-            ["AWACS"] = 1,
-            ["Intercept"] = 1,
-            ["Escort"] = 1,
-            ["Fighter Sweep"] = 1,
-            ["Anti-ship Strike"] = 1,
-            ["Strike"] = {
-                ["armor"] = 1,
-                ["soft"] = 1,
-                ["SAM"] = 1,
-                ["Structure"] = 1,
-                ["Bridge"] = 1,
-                ["Parked Aircraft"] = 1,
-                ["hard"] = 1,
-            },
-            ["Reconnaissance"] = 1,
-            ["Refueling"] = 1,
-            ["Transport"] = 1,
-            ["SEAD"] = 1,
-            ["Laser Illumination"] = 1,
-        },
-	},
+	
 
 	
 	

@@ -963,10 +963,10 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																							
 																							-- Update score with SCORE_TASK_FACTOR
 																							if task == "Strike" then
-																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[side][task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station																									
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.module_config.SCORE_TASK_FACTOR[side][task][target.attributes[1]] 	--reduce score slighthly for station missions with less aircraft than required to cover station																									
 																							
 																							else
-																								draft_sorties_entry.score = draft_sorties_entry.score * camp.SCORE_TASK_FACTOR[side][task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
+																								draft_sorties_entry.score = draft_sorties_entry.score * camp.module_config.SCORE_TASK_FACTOR[side][task] 							--reduce score slighthly for station missions with less aircraft than required to cover station
 																							end																						
 																							if active_log then log.traceLow("side: " .. side .. ", aircraft: " .. draft_sorties_entry.type .. ", unit_role: " .. unit_role .. ", score: " .. draft_sorties_entry.score) end
 																							if active_log then log.traceLow("update draft_sorties_entry.score(" .. draft_sorties_entry.score .. ") = draft_sorties_entry.score - reduce_score(" .. reduce_score .. ") * " .. camp.module_config.ATO_Generator[side].FACTOR_FOR_REDUCE_SCORE .. ")") end

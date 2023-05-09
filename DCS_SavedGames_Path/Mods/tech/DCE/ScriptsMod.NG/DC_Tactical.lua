@@ -220,12 +220,15 @@ local target_priority_default -- priority_default table contains initial target 
 -- load module_config_init table, if not exist create one new
 local function loadModuleConfigDefault()
 
-    if ( camp.mission > 1 or ( local_test and camp.mission == 1 ) ) and io.open("Active/module_config_init.lua", "r") then
+    --if ( camp.mission > 1 or ( local_test and camp.mission == 1 ) ) and io.open("Active/module_config_init.lua", "r") then
+	if camp.mission > 1 and io.open("Active/module_config_init.lua", "r") then
         require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 
-    else -- initialize new computed_target_efficiency if not exist 		
+    else -- initialize new computed_target_efficiency if not exist 	
+		os.remove("Active/module_config_init.lua")	
 		module_config_init = camp.module_config 
-		SaveTabOnPath( "Active/", "module_config_init", module_config_init )         
+		SaveTabOnPath( "Active/", "module_config_init", module_config_init )       
+		require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table  
     end
 end
 
@@ -365,7 +368,7 @@ local function airCostChange(side, operations, perc)
 		operations = "unknow operations"
 	end	
 	
-	if string.sub(operations,1,7) ~= "default" and operations == "unknow operations" then
+	if string.sub(operations,1,7) ~= "default" and operations ~= "unknow operations" then
 		-- aircraft
 		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] * ( 1 + perc_ground ) -- increment(perc > 0 ) or decrement (perc < 0) cost weight cost for reduce score of expensive aircraft
 		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] = camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Bomber"] * ( 1 + perc_ground )		
@@ -415,6 +418,9 @@ local function airCostPolicy(side, cost_policy)
 	
 	elseif cost_policy == "air increment" then -- increments use of costly aircraft/loadouts
 		airCostChange(side, "air", 0.5)
+
+	elseif cost_policy == "default" then -- increments use of costly aircraft/loadouts
+		airCostChange(side, "default", nil)
 
 	elseif cost_policy == "default air" then -- increments use of costly aircraft/loadouts
 		airCostChange(side, "default air", nil)
@@ -491,9 +497,9 @@ local function changeWeightScore(side, value, operation)
 	elseif operation == "default anti-ship" then		
 		camp.module_config.SCORE_TASK_FACTOR[side]["Anti-ship Strike"] = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]		
 
-	elseif operation == "default" then
-		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side].Strike		
-		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]
+	elseif operation == "default" then		
+		camp.module_config.SCORE_TASK_FACTOR[side].Strike = module_config_init.SCORE_TASK_FACTOR[side].Strike				
+		camp.module_config.SCORE_TASK_FACTOR[side]["Anti-ship Strike"] = module_config_init.SCORE_TASK_FACTOR[side]["Anti-ship Strike"]
 		camp.module_config.SCORE_TASK_FACTOR[side].CAP = module_config_init.SCORE_TASK_FACTOR[side].CAP		
 		camp.module_config.SCORE_TASK_FACTOR[side].Escort = module_config_init.SCORE_TASK_FACTOR[side].Escort
 		camp.module_config.SCORE_TASK_FACTOR[side].Intercept = module_config_init.SCORE_TASK_FACTOR[side].Intercept
@@ -506,95 +512,14 @@ local function changeWeightScore(side, value, operation)
 
 end
 
--- percentage change of max-min number, score factore ecc. of aircraft to modify number unit requested for tactics choice. Modify proportionaly same properties for other aircraft
--- tactics = offensive ground: Strike, Anti-ship Strike,
--- tactics = air superiority: Fighter Sweep, CAP, Escort, Intercept
--- tactics = defensive: CAP, Escort, Intercept, Reconnaissance
--- tactics = normal: default
-local tactics = {
-	
-	["moderate increment offensive resource"] = true,						-- moderate increments resource for offensive task
-	["increment offensive resource"] = true,								-- increments resource and expensive asset for offensive task
-	["increment offensive action"] = true,									-- increments actions for offensive task
-	["increment offensive strategic action, resource"] = true, 				-- increments action, resource and expensive asset for strategic task	
-	["expensive increment offensive action, resource and use of expensive asset"] = true,				-- increments resource, task and high cost asset for offensive task
-	["air superiority"] = true,												-- increment action and resource for air superiority ( task and action )
-	["defensive"] = true,													-- increment action and resource for air defensive ( task and action )
-	["restore default resource"] = true,									-- restore resource config parameters at default value (camp_init)
-	["restore global default condition"] = true,							-- restore resource, action and cost config parameters at default value (camp_init)
-	["restore air default condition"] = true,								-- restore air resource, action and cost config parameters at default value (camp_init)
-}
-
-local function airDirective(side, perc, tactic)
-
-	if tactic == "moderate increment offensive resource" then				-- moderate increments resource for offensive task
-		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
-		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
-		
-	elseif tactic == "increment offensive resource" then					-- increments resource and expensive asset for offensive task
-		changeNumberAircraftForTactics(side, 1, "ground")					
-		changeNumberAircraftForTactics(side, 0.5, "air offensive")
-		airCostPolicy(side, "increment")									-- increments use of expensive asset (aircraft/loadouts)
-
-	elseif tactic == "increment offensive action" then						-- increments actions for offensive task
-		changeWeightScore(side, 3, "ground")								-- increments actions of ground missions					
-		changeWeightScore(side, 1.5, "air offensive")						-- increments actions of air offensive missions					
-		airCostPolicy(side, "increment")												 
-
-	elseif tactic == "increment offensive strategic action and resource" then 			-- increments action, resource and expensive asset for strategic task			
-		changeNumberAircraftForTactics(side, 1, "ground interdiction")					
-		changeNumberAircraftForTactics(side, 0.5, "air offensive")	
-		changeWeightScore(side, 3, "ground interdiction")					
-		airCostPolicy(side, "increment")									-- increments expensive asset of ground interdiction missions (Bridge, Structure)
-		
-	elseif tactic == "expensive increment offensive action, resource and use of expensive asset" then				-- increments resource, task and use of expensive asset for offensive task
-		changeNumberAircraftForTactics(side, 1, "ground")					
-		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
-		changeWeightScore(side, 5, "ground")								-- increments choice of ground missions			
-		airCostPolicy(side, "high increment")
-		
-	elseif tactic == "air superiority" then									-- increment action and resource for air superiority ( task and action )
-		changeNumberAircraftForTactics(side, 0.7, "air superiority")
-		changeNumberAircraftForTactics(side, 0.5, "ground interdiction")	
-		changeWeightScore(side, 3, "air superiority")						-- increments choice of air superiority missions			
-				
-	elseif tactic == "defensive" then										-- increment action and resource for air defensive  ( task and action )
-		changeNumberAircraftForTactics(side, 1, "air defensive")
-		changeNumberAircraftForTactics(side, -0.5, "ground attack")			
-		changeWeightScore(side, 4, "air defensive")							-- increments choice of air defensive missions			
-		changeWeightScore(side, 0.3, "ground")								-- decrements choice of ground missions			
-
-	elseif tactic == "restore default resource" then						-- restore resource config parameters at default value (camp_init)
-		changeNumberAircraftForTactics(side, nil, "default")
-		
-	elseif tactic == "restore global default condition" then				-- restore resource, action and cost config parameters at default value (camp_init)
-		changeNumberAircraftForTactics(side, nil, "default")
-		changeWeightScore(side, nil, "default")	
-		airCostPolicy(side, "default")	
-
-	elseif tactic == "restore ground default condition" then
-		changeNumberAircraftForTactics(side, nil, "default ground")
-		changeWeightScore(side, 4, "default ground")	
-		airCostPolicy(side, "default ground")	
-
-	elseif tactic == "restore air default condition" then
-		changeNumberAircraftForTactics(side, nil, "default air")
-		changeWeightScore(side, 4, "default air")	
-		airCostPolicy(side, "default air")	
-
-	else
-		log.warn("unknow tactic: " .. tactic)
-	end
-end
-
 -- change priority target (targetlist) of the perc(%) value for specific task
 local function changePriorityTask(side, task, attribute, class, perc)
 
 	for target_name, target in pairs(targetlist[side]) do
 
-		if task == "all" or target.task == task and ( not attribute or target.attribute == attribute ) and ( not class and class == target.class ) then			
+		if target.task == task and ( not attribute ) or ( ( target.attributes and target.attributes[1] and target.attributes[1] == attribute ) and (  ( not class ) or ( class and class == target.class )  )  ) then			
 			target.priority = target.priority * ( 1 + perc )
-			
+
 		else
 			log.warn("target not found: task: " .. task .. ", attribute: " .. (attribute or "nil") .. ", class: " .. (class or "nil"))
 		end
@@ -606,7 +531,7 @@ local function resetPriorityTask(side, task, attribute, class)
 
 	for target_name, target in pairs(targetlist[side]) do
 
-		if task == "all" or target.task == task and ( not attribute or target.attribute == attribute ) and ( not class and class == target.class ) then			
+		if target.task == task and ( not attribute ) or ( ( target.attributes and target.attributes[1] and target.attributes[1] == attribute ) and (  ( not class ) or ( class and class == target.class )  )  ) then			
 			target.priority = target_priority_default[side][target_name]
 			
 		else
@@ -622,6 +547,7 @@ local function loadPriorityDefault()
         require("Active/target_priority_default") -- load stored target_priority_default.lua if not first mission campaign and exist table
 
     else -- initialize new target_priority_default if not exist 
+		os.remove("Active/target_priority_default.lua")
         target_priority_default = {} -- table contains target efficiency values: hash table with hash = target and value = firepower med for that target
 
 		for side_name, side in pairs(targetlist) do
@@ -639,6 +565,123 @@ local function printPriorityTable(text)
 	print( text .. "\n\n" .. inspect( target_priority_default ) )	
 end
 
+
+
+local tactics = {
+	
+	["moderate increment offensive resource"] = "moderate increment offensive resource",						-- moderate increments resource for offensive task
+	["increment offensive resource"] = "increment offensive resource",								-- increments resource and expensive asset for offensive task
+	["increment offensive action"] = "increment offensive action",									-- increments actions for offensive task
+	["increment offensive strategic action and resource"] = "increment offensive strategic action and resource", 				-- increments action, resource and expensive asset for strategic task	
+	["expensive increment offensive action, resource and use of expensive asset"] = "expensive increment offensive action, resource and use of expensive asset",				-- increments resource, task and high cost asset for offensive task
+	["air superiority"] = "air superiority",												-- increment action and resource for air superiority ( task and action )
+	["defensive"] = "defensive",													-- increment action and resource for air defensive ( task and action )
+	["increment priority for Anti-ship operations"] = "increment priority for Anti-ship operations",					-- increments mission for Anti-ship Strike task
+	["increment priority for SAM strike operations"] = "increment priority for SAM strike operations",				-- increments mission for SAM Strike task
+	["increment priority for Army Ground Attack operations"] = "increment priority for Army Ground Attack operations",		-- increments mission for Army Ground Attack task
+	["reset priority for all operations"] = "reset priority for all operations",									-- reset priority operations
+	["reset priority for SAM operations"] = "reset priority for SAM operations",									-- reset priority operations
+	["restore default resource"] = "restore default resource",									-- restore resource config parameters at default value (camp_init)
+	["restore global default condition"] = "restore global default condition",							-- restore resource, action and cost config parameters at default value (camp_init)
+	["restore air default condition"] = "restore air default condition",								-- restore air resource, action and cost config parameters at default value (camp_init)
+}
+
+--changePriorityTask(side, task, attribute, class, perc)
+--resetPriorityTask(side, task, attribute, class)
+
+local task_attribute = { 
+	["CAP"] = false,
+	["Intercept"] = false,
+	["Fighter Sweep"] = false,
+	["Escort"] = false,
+	["Anti-ship Strike"] = false,
+	["Strike"] = {
+		["attribute"] = {"Parked Aircraft", "SAM", "soft", "hard", "armor", "Structure", "Bridge", "ship"},
+		["class"] = {"static", "airbase", "vehicle", "ship"},
+	},
+	["Transport"] = true,
+	["Refueling"] = true,
+	["AWACS"] = true,
+}
+
+local function airDirective(side, tactic)
+
+	if tactic == tactics["moderate increment offensive resource"] then				-- moderate increments resource for offensive task
+		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
+		
+	elseif tactic == tactics["increment offensive resource"] then					-- increments resource and expensive asset for offensive task
+		changeNumberAircraftForTactics(side, 1, "ground")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")
+		airCostPolicy(side, "increment")									-- increments use of expensive asset (aircraft/loadouts)
+
+	elseif tactic == tactics["increment offensive action"] then						-- increments actions for offensive task
+		changeWeightScore(side, 3, "ground")								-- increments actions of ground missions					
+		changeWeightScore(side, 1.5, "air offensive")						-- increments actions of air offensive missions					
+		airCostPolicy(side, "increment")												 
+
+	elseif tactic == tactics["increment offensive strategic action and resource"] then 			-- increments action, resource and expensive asset for strategic task			
+		changeNumberAircraftForTactics(side, 1, "ground interdiction")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")	
+		changeWeightScore(side, 3, "ground interdiction")					
+		airCostPolicy(side, "increment")									-- increments expensive asset of ground interdiction missions (Bridge, Structure)
+		
+	elseif tactic == tactics["expensive increment offensive action, resource and use of expensive asset"] then				-- increments resource, task and use of expensive asset for offensive task
+		changeNumberAircraftForTactics(side, 1, "ground")					
+		changeNumberAircraftForTactics(side, 0.5, "air offensive")		
+		changeWeightScore(side, 5, "ground")								-- increments choice of ground missions			
+		airCostPolicy(side, "high increment")
+		
+	elseif tactic == tactics["air superiority"] then						-- increment action and resource for air superiority ( task and action )
+		changeNumberAircraftForTactics(side, 0.7, "air superiority")
+		changeNumberAircraftForTactics(side, 0.5, "ground interdiction")	
+		changeWeightScore(side, 3, "air superiority")						-- increments choice of air superiority missions			
+				
+	elseif tactic == tactics["defensive"] then								-- increment action and resource for air defensive  ( task and action )
+		changeNumberAircraftForTactics(side, 1, "air defensive")
+		changeNumberAircraftForTactics(side, -0.5, "ground attack")			
+		changeWeightScore(side, 4, "air defensive")							-- increments choice of air defensive missions			
+		changeWeightScore(side, 0.3, "ground")								-- decrements choice of ground missions			
+
+	elseif tactic == tactics["increment priority for Anti-ship operations"] then			-- increments mission for Anti-ship Strike task
+		changePriorityTask(side, "Anti-ship Strike", nil, nil, 1)
+
+	elseif tactic == tactics["increment priority for SAM strike operations"] then			-- increments mission for SAM Strike task
+		changePriorityTask(side, "Strike", "SAM", nil, 1)
+
+	elseif tactic == tactics["increment priority for Army Ground Attack operations"] then	-- increments mission for Army Ground Attack task
+		changePriorityTask(side, "Strike", nil , "vehicle", 1)
+
+	elseif tactic == tactics["reset priority for SAM operations"] then								-- increments mission for Anti-ship Strike task
+		resetPriorityTask(side, "Strike", "SAM", nil, nil)
+	
+	elseif tactic == tactics["reset priority for all operations"] then								-- increments mission for Anti-ship Strike task
+		resetPriorityTask(side, "All", nil, nil, nil)
+
+	elseif tactic == tactics["restore default resource"] then								-- restore resource config parameters at default value (camp_init)
+		changeNumberAircraftForTactics(side, nil, "default")
+		
+	elseif tactic == tactics["restore global default condition"] then						-- restore resource, action and cost config parameters at default value (camp_init)
+		changeNumberAircraftForTactics(side, nil, "default")
+		changeWeightScore(side, nil, "default")	
+		airCostPolicy(side, "default")	
+
+	elseif tactic == tactics["restore ground default condition"] then
+		changeNumberAircraftForTactics(side, nil, "default ground")
+		changeWeightScore(side, 4, "default ground")	
+		airCostPolicy(side, "default ground")	
+
+	elseif tactic == tactics["restore air default condition"] then
+		changeNumberAircraftForTactics(side, nil, "default air")
+		changeWeightScore(side, 4, "default air")	
+		airCostPolicy(side, "default air")	
+
+	else
+		log.warn("unknow tactic: " .. tactic)
+	end
+end
+
+
 -- GLOBAL FUNCTION 
 function commander()
 
@@ -655,22 +698,58 @@ loadPriorityDefault()
 
 
 
--- TESTING
+-- TESTING (very little)
 if local_test then
-	local testChangeNumberAircraftForTacticsFlg = true
-	
+	local testChangeNumberAircraftForTacticsFlg = false
+	local testAirCostChangeFlg = false
+	local testAirDirectiveFlg = true
 	
 	
 	printPriorityTable("default value")
 
-
-	if testChangeNumberAircraftForTacticsFlg then --side, perc, operations
-		
+	if testChangeNumberAircraftForTacticsFlg then --side, perc, operations		
 		changeNumberAircraftForTactics("blue", 30, "all")
-		print("camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
+		print("change - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
 		--printPriorityTable("changeNumberAircraftForTactics('blue', 30, 'all')")
 		changeNumberAircraftForTactics("blue", nil, "default")
-		print("camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)		
+		print("reset - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)		
+				
+	end
+
+	if testAirCostChangeFlg then --side, perc, operations
+		airCostChange("blue", "all", 30)
+		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST: " .. inspect(camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST))
+		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST: " .. inspect(camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_LOADOUT_COST))
+		airCostChange("blue", "default", nil)
+		print("reset - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST: " .. inspect(camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST))
+		print("reset - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_LOADOUT_COST: " .. inspect(camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_LOADOUT_COST))				
+
+	end
+
+	if testAirDirectiveFlg then --side, perc, operations		
+		print("init - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
+		print("init - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
+		print("init - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
+		print("init - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Attacker']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] )
+		print("init - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
+		airDirective("blue", "increment offensive strategic action and resource")		
+		print("change - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
+		print("change - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
+		print("change - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
+		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Attacker']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] )
+		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
+		airDirective("blue", "restore global default condition")
+		print("reset - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
+		print("reset - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
+		print("reset - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
+		print("reset - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Attacker']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] )
+		print("reset - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
+
+		print("init -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
+		airDirective("blue", "increment priority for SAM strike operations")
+		print("change -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
+		airDirective("blue", "reset priority for SAM operations")
+		print("reset -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
 	end
 end
 
