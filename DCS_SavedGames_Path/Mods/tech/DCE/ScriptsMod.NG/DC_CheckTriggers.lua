@@ -243,6 +243,11 @@ Return = {}
 
 ----- functions to buld trigger actions -----
 Action = {}
+
+	--tactical directive action
+	function Action.TacticalDirective(side, tactic) 
+		airDirective(side, tactic) -- DC_Tactical
+	end
 	
 	--void action
 	function Action.None()

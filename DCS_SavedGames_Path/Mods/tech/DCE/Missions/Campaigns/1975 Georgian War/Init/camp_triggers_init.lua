@@ -166,6 +166,19 @@ camp_triggers = {
 			[3] = 'NoMoreNewspaper = true',
 		},
 	},
+	
+	
+	----- TACTICAL DECISION -----
+	["High rate of ground losses"] = {
+		active = false,
+		once = true,
+		condition = 'GroundTarget["blue"].percent < 80 and camp.mission < 10',
+		action = {
+			[1] = 'Action.TacticalDirective("Increments defensive air operations")',
+		},
+	},
+
+
 
 	----- CAMPAIGN SITUATION -----
 	["Campaign first destructions"] = {

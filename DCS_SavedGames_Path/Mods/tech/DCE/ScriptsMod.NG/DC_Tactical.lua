@@ -604,7 +604,7 @@ local task_attribute = {
 	["AWACS"] = true,
 }
 
-local function airDirective(side, tactic)
+function airDirective(side, tactic)
 
 	if tactic == tactics["moderate increment offensive resource"] then				-- moderate increments resource for offensive task
 		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
@@ -681,16 +681,6 @@ local function airDirective(side, tactic)
 	end
 end
 
-
--- GLOBAL FUNCTION 
-function commander()
-
-	-- acquisition status campaign
-	-- evalutate status
-	-- execution directive:
-		-- operation(side, perc, tactic)
-
-end
 
 -- PREPROCESSING
 loadModuleConfigDefault()
