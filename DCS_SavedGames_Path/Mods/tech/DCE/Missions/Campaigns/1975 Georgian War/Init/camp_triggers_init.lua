@@ -169,15 +169,28 @@ camp_triggers = {
 	
 	
 	----- TACTICAL DECISION -----
-	["High rate of ground losses"] = {
+	["High rate of blue ground losses"] = {
 		active = false,
 		once = true,
 		condition = 'GroundTarget["blue"].percent < 80 and camp.mission < 10',
 		action = {
-			[1] = 'Action.TacticalDirective("Increments defensive air operations")',
+			[1] = 'Action.TacticalDirective("blue", "defensive")', -- increments air defensive operations
 		},
 	},
 
+	["High rate of red ground losses"] = {
+		active = false,
+		once = true,
+		condition = 'GroundTarget["red"].percent < 80 and camp.mission < 10',
+		action = {
+			[1] = 'Action.TacticalDirective("red", "defensive")', -- increments air defensive operations
+		},
+	},
+
+	-- le conditions dovrebbero essere determinate in base alle info riportate nella tabella in Active (da definire) elaborata in DEBRIEF_StatEvaluation contenente l staus tattico della campagna:
+	-- rateo perdite (blue_perdite_xxx/missioni)/(red_perdite_xxx/missioni)
+	-- forse la valutazione delle tactical stat e la creazione della relativa tabella la devi fare in DC_Tactical e utilizzare eventualmente altre tabelle di supporto prodotte in DENRIEF_StatsEvaluation
+	--blue - red supply situation : -5 +5  0 parità -5 red svantage
 
 
 	----- CAMPAIGN SITUATION -----

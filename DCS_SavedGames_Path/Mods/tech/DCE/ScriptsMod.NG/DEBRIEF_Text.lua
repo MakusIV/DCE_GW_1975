@@ -700,17 +700,107 @@ do
 	
 	local entries = {}
 	local air_loss_data = {}
+	local ground_loss_data = {}
+	local enemy_side_name
 
 	for side_name,side in pairs(oob_air) do															--iterate through sides in oob_air
 
+		if side_name == "blue" then
+			enemy_side_name = "red"
+		
+		else
+			enemy_side_name = "blue"
+		end
+
 		air_loss_data[side_name] = {
+
+			total = {
+				all = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Fighter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Attacker = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Bomber = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Transporter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Refueler = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				AWACS = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Reco = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Helicopter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+			},
+			last_mission = {
+				all = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Fighter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Attacker = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Bomber = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Transporter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Refueler = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				AWACS = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Reco = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+				Helicopter = {
+					["qty"] = 0,
+					["cost"] = 0,
+				},
+			},
+		}
+
+		ground_loss_data[enemy_side_name]  =  {
+
 			["total"] = {
-				["aircraft_qty"] = 0,
-				["aircraft_cost"] = 0,
+				["unit_qty"] = 0,
+				["ship_qty"] = 0,				
 			},
 			["last_mission"] = {
-				["aircraft_qty"] = 0,
-				["aircraft_cost"] = 0,
+				["unit_qty"] = 0,
+				["ship_qty"] = 0,				
 			},
 		}
 	
@@ -771,18 +861,43 @@ do
 				table.insert(entries[side_name][10].values, getEfficiency(unit.base, side_name))										-- base efficiency
 				table.insert(entries[side_name][11].values, getEfficiency("Reserves-R/" .. unit.name, side_name))						-- reserves efficiency
 
-				-- Loss evaluation ---
+				-- Air loss evaluation ---
 				if db_aircraft[side_name][unit.type] then																							
-					air_loss_data[side_name].total.aircraft_qty = air_loss_data[side_name].total.aircraft_qty + unit.roster.lost																		-- update total aircraft losses
-					air_loss_data[side_name].total.aircraft_cost = air_loss_data[side_name].total.aircraft_cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost								-- update total cost aircraft losses
+					air_loss_data[side_name].total.all.qty = air_loss_data[side_name].total.all.qty + unit.roster.lost																		-- update total aircraft losses
+					air_loss_data[side_name].total.all.cost = air_loss_data[side_name].total.all.cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost								-- update total cost aircraft losses
+					air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty + unit.roster.lost											-- update total aircraft type losses	
+					air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost											-- update total aircraft type losses	
 
 					if unit.score_last.lost > 0 then
-						air_loss_data[side_name].last_mission.aircraft_qty = air_loss_data[side_name].last_mission.aircraft_qty + unit.score_last.lost													-- update mission aircraft losses
-						air_loss_data[side_name].last_mission.aircraft_cost = air_loss_data[side_name].last_mission.aircraft_cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost		-- update mission cost aircraft losses
+						air_loss_data[side_name].last_mission.all.qty = air_loss_data[side_name].last_mission.all.qty + unit.score_last.lost													-- update mission aircraft losses
+						air_loss_data[side_name].last_mission.all.cost = air_loss_data[side_name].last_mission.all.cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost		-- update mission cost aircraft losses
+						air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty + unit.score_last.lost									-- update total aircraft type losses	
+						air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost									-- update total aircraft type losses	
 					end
 				else
 					--log.warn(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss is not included in the calculation of losses")
-					print(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss is not included in the calculation of losses")
+					print(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss are included in the calculation of losses with cost = 1")
+					air_loss_data[side_name].total.all.qty = air_loss_data[side_name].total.all.qty + unit.roster.lost																		-- update total aircraft losses
+					air_loss_data[side_name].total.all.cost = air_loss_data[side_name].total.all.cost + unit.roster.lost
+					
+					if unit.score_last.lost > 0 then
+						air_loss_data[side_name].last_mission.all.qty = air_loss_data[side_name].last_mission.all.qty + unit.score_last.lost													-- update mission aircraft losses
+						air_loss_data[side_name].last_mission.all.cost = air_loss_data[side_name].last_mission.all.cost + unit.score_last.lost		-- update mission cost aircraft losses
+					end
+				end				
+						
+				-- Ground losses evaluation ---
+				ground_loss_data[enemy_side_name].total.unit_qty = ground_loss_data[enemy_side_name].total.unit_qty + unit.score.kills_ground
+				
+				if unit.score_last.kills_ground > 0 then
+					ground_loss_data[enemy_side_name].mission.unit_qty = ground_loss_data[enemy_side_name].mission.unit_qty + unit.score_last.kills_ground
+				end
+
+				-- Ship losses evaluation ---
+				ground_loss_data[enemy_side_name].total.ship_qty = ground_loss_data[enemy_side_name].total.ship_qty + unit.score.kills_ship
+				
+				if unit.score_last.kills_ship > 0 then
+					ground_loss_data[enemy_side_name].mission.ship_qty = ground_loss_data[enemy_side_name].mission.ship_qty + unit.score_last.kills_ship
 				end
 
 				
@@ -816,9 +931,10 @@ do
 					table.insert(entries[side_name][9].values, unit.roster.ready .. " (-" .. unit.score_last.ready .. ")")				--unit ready aircraft plus score from this mission
 				else
 					table.insert(entries[side_name][9].values, unit.roster.ready)														--unit ready aircraft
-				end
+				end										
 			end
 		end
+
 	end
 		
 	--determine maximum string length for each entry
@@ -882,84 +998,110 @@ do
 
 	local statistic_losses = {
 		
-		["mission"] = {
-			["delta_loss"] = 0,
-			["delta_loss_cost"] = 0,
-			["delta_loss_perc"] = 0,
-			["delta_loss_cost_perc"] = 0,
-			["winner"] = "tie",
-		 },
-		["total"] = { 
-			["delta_loss"] = 0,
-			["delta_loss_cost"] = 0,
-			["delta_loss_perc"] = 0,
-			["delta_loss_cost_perc"] = 0,
-			["winner"] = "tie",
-		},		
+		["air"] = {
+			["mission"] = {
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},
+			["total"] = { 
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},		
+		},
+		["ground"] = {
+			["mission"] = {
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},
+			["total"] = { 
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},		
+		},
 	}
 
-	statistic_losses.mission.delta_loss_cost = air_loss_data.blue.last_mission.aircraft_cost - air_loss_data.red.last_mission.aircraft_cost
-	statistic_losses.mission.delta_loss = air_loss_data.blue.last_mission.aircraft_qty - air_loss_data.red.last_mission.aircraft_qty
+	statistic_losses.air.mission.delta_loss_cost = air_loss_data.blue.last_mission.all.cost - air_loss_data.red.last_mission.all.cost
+	statistic_losses.air.mission.delta_loss = air_loss_data.blue.last_mission.all.qty - air_loss_data.red.last_mission.all.qty
+	
+	if statistic_losses.air.mission.delta_loss_cost > 0 then
+		statistic_losses.air.mission.winner = "Red"
 
-	if statistic_losses.mission.delta_loss_cost > 0 then
-		statistic_losses.mission.winner = "Red"
-
-		if air_loss_data.red.last_mission.aircraft_cost > 0 then 
-			statistic_losses.mission.delta_loss_cost_perc = math.ceil( statistic_losses.mission.delta_loss_cost * 100 / air_loss_data.red.last_mission.aircraft_cost )
-			statistic_losses.mission.delta_loss_perc = math.ceil( statistic_losses.mission.delta_loss * 100 / air_loss_data.red.last_mission.aircraft_qty )
+		if air_loss_data.red.last_mission.all.cost > 0 then 
+			statistic_losses.air.mission.delta_loss_cost_perc = math.ceil( statistic_losses.air.mission.delta_loss_cost * 100 / air_loss_data.red.last_mission.all.cost )
+			statistic_losses.air.mission.delta_loss_perc = math.ceil( statistic_losses.air.mission.delta_loss * 100 / air_loss_data.red.last_mission.all.qty )
 		else
-			statistic_losses.mission.delta_loss_cost_perc = "- "
-			statistic_losses.mission.delta_loss_perc = "- "
+			statistic_losses.air.mission.delta_loss_cost_perc = "- "
+			statistic_losses.air.mission.delta_loss_perc = "- "
+		end
+	
+	elseif statistic_losses.air.mission.delta_loss_cost < 0 then
+		statistic_losses.air.mission.winner = "Blue"
+
+		if air_loss_data.blue.last_mission.all.cost > 0 then 
+			statistic_losses.air.mission.delta_loss_cost_perc = math.ceil( -statistic_losses.air.mission.delta_loss_cost * 100 / air_loss_data.blue.last_mission.all.cost )
+			statistic_losses.air.mission.delta_loss_perc = math.ceil( -statistic_losses.air.mission.delta_loss * 100 / air_loss_data.blue.last_mission.all.qty )
+		else
+			statistic_losses.air.mission.delta_loss_cost_perc = "- "
+			statistic_losses.air.mission.delta_loss_perc = "- "
+		end
+	end
+		
+
+
+	statistic_losses.air.total.delta_loss_cost = air_loss_data.blue.total.all.cost - air_loss_data.red.total.all.cost
+	statistic_losses.air.total.delta_loss = air_loss_data.blue.total.all.qty - air_loss_data.red.total.all.qty
+
+	if statistic_losses.air.total.delta_loss_cost > 0 then
+		statistic_losses.air.total.winner = "Red"
+
+		if air_loss_data.red.total.all.cost > 0 then 
+			statistic_losses.air.total.delta_loss_cost_perc = math.ceil( statistic_losses.air.total.delta_loss_cost * 100 / air_loss_data.red.total.all.cost )
+			statistic_losses.air.total.delta_loss_perc = math.ceil( statistic_losses.air.total.delta_loss * 100 / air_loss_data.red.total.all.qty )
+		else
+			statistic_losses.air.total.delta_loss_cost_perc = "- "
+			statistic_losses.air.total.delta_loss_perc = "- "
 		end
 		
-	elseif statistic_losses.mission.delta_loss_cost < 0 then
-		statistic_losses.mission.winner = "Blue"
+		
+	elseif statistic_losses.air.total.delta_loss_cost < 0 then
+		statistic_losses.air.total.winner = "Blue"
 
-		if air_loss_data.blue.last_mission.aircraft_cost > 0 then 
-			statistic_losses.mission.delta_loss_cost_perc = math.ceil( -statistic_losses.mission.delta_loss_cost * 100 / air_loss_data.blue.last_mission.aircraft_cost )
-			statistic_losses.mission.delta_loss_perc = math.ceil( -statistic_losses.mission.delta_loss * 100 / air_loss_data.blue.last_mission.aircraft_qty )
+		if air_loss_data.blue.total.all.cost > 0 then 
+			statistic_losses.air.total.delta_loss_cost_perc = math.ceil( -statistic_losses.air.total.delta_loss_cost * 100 / air_loss_data.blue.total.all.cost )
+			statistic_losses.air.total.delta_loss_perc = math.ceil( -statistic_losses.air.total.delta_loss * 100 / air_loss_data.blue.total.all.qty )
 		else
-			statistic_losses.mission.delta_loss_cost_perc = "- "
-			statistic_losses.mission.delta_loss_perc = "- "
+			statistic_losses.air.total.delta_loss_cost_perc = "- "
+			statistic_losses.air.total.delta_loss_perc = "- "
 		end
 		
 	end
 
-	statistic_losses.total.delta_loss_cost = air_loss_data.blue.total.aircraft_cost - air_loss_data.red.total.aircraft_cost
-	statistic_losses.total.delta_loss = air_loss_data.blue.total.aircraft_qty - air_loss_data.red.total.aircraft_qty
-
-	if statistic_losses.total.delta_loss_cost > 0 then
-		statistic_losses.total.winner = "Red"
-
-		if air_loss_data.red.total.aircraft_cost > 0 then 
-			statistic_losses.total.delta_loss_cost_perc = math.ceil( statistic_losses.total.delta_loss_cost * 100 / air_loss_data.red.total.aircraft_cost )
-			statistic_losses.total.delta_loss_perc = math.ceil( statistic_losses.total.delta_loss * 100 / air_loss_data.red.total.aircraft_qty )
-		else
-			statistic_losses.total.delta_loss_cost_perc = "- "
-			statistic_losses.total.delta_loss_perc = "- "
-		end
-		
-		
-	elseif statistic_losses.total.delta_loss_cost < 0 then
-		statistic_losses.total.winner = "Blue"
-
-		if air_loss_data.blue.total.aircraft_cost > 0 then 
-			statistic_losses.total.delta_loss_cost_perc = math.ceil( -statistic_losses.total.delta_loss_cost * 100 / air_loss_data.blue.total.aircraft_cost )
-			statistic_losses.total.delta_loss_perc = math.ceil( -statistic_losses.total.delta_loss * 100 / air_loss_data.blue.total.aircraft_qty )
-		else
-			statistic_losses.total.delta_loss_cost_perc = "- "
-			statistic_losses.total.delta_loss_perc = "- "
-		end
-		
-	end
-
-
-	s = s .. " - Blue Losses:\n   - last mission: aircraft lost: " ..  air_loss_data["blue"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["blue"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.aircraft_qty .. ", cost: " .. air_loss_data["blue"].total.aircraft_cost .. "\n\n"
-	s = s .. " - Red Losses:\n   - last mission: aircraft lost: " ..  air_loss_data["red"].last_mission.aircraft_qty .. ", cost: " .. air_loss_data["red"].last_mission.aircraft_cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.aircraft_qty .. ", cost: " .. air_loss_data["red"].total.aircraft_cost .. "\n\n"
-	s = s .. " - Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.mission.delta_loss .. " ( " .. statistic_losses.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.mission.delta_loss_cost .. " ( " .. statistic_losses.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
-	s = s .. "   - status campaign: Air Winner: " ..  statistic_losses.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.total.delta_loss .. " ( " .. statistic_losses.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.total.delta_loss_cost .. " ( " .. statistic_losses.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. " - Blue Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
+	s = s .. " - Red Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.red.last_mission.all.qty .. ", cost: " .. air_loss_data.red.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.all.qty .. ", cost: " .. air_loss_data["red"].total.all.cost .. "\n\n"
+	s = s .. " - Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.mission.delta_loss .. " ( " .. statistic_losses.air.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.mission.delta_loss_cost .. " ( " .. statistic_losses.air.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. "   - status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
 
 	debriefing = debriefing .. s .. "\n\n"
+
+	-- store air_loss_data, ground_loss_data and statistic_losses 
+	local statistic_data = {
+		global_air_losses = statistic_losses,
+		aircraft_losses = air_loss_data,
+		ground_losses = ground_loss_data,
+	}			
+	SaveTabOnPath( "Active/", "statistic_data", statistic_data )      
 end
 
 	

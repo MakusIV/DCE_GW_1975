@@ -130,7 +130,7 @@ db_aircraft = {
 		},
 
 		["AJS37"] = {-- 1971 (entrata in servizio)
-			["role"] = {"Fighter", "Attacker", "Reco"},
+			["role"] = {"Attacker", "Fighter", "Reco"},
 			["cost"] = 30000, --cost aircraft in K$
 			["factor"] = {},
 		},
@@ -166,7 +166,7 @@ db_aircraft = {
 		},	
 
 		["F-4E"] = {--1958 (primo volo) 1960 (entrata in servizio)
-			["role"] = {"Fighter", "Attacker", "Reco"},
+			["role"] = {"Attacker", "Fighter", "Reco"},
 			["cost"] = 15000, -- balanced for gameplay, doc cost: 2400, --cost aircraft in K$
 			["factor"] = {},
 		},
@@ -190,7 +190,7 @@ db_aircraft = {
 		},
 
 		["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
-			["role"] = {"Fighter", "Attacker", "Reco"},		
+			["role"] = {"Attacker", "Fighter", "Reco"},		
 			["cost"] = 13000, --balanced for gameplay, doc cost: 6600, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
@@ -279,7 +279,7 @@ db_aircraft = {
 		},
 
 		["MiG-27K"] = {--1970 (primo volo) 1975 (entrata in servizio) -- Bombe?
-			["role"] = {"Fighter", "Attacker", "Reco"},		
+			["role"] = {"Attacker", "Fighter", "Reco"},		
 			["cost"] = 13000, --balanced for gameplay, doc cost: 6600, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
@@ -315,7 +315,7 @@ db_aircraft = {
 		},
 
 		["L-39C"] = {--1968 (primo volo) 1971 (entrata in servizio)
-			["role"] = {"Fighter", "Attacker", "Reco"},		
+			["role"] = {"Attacker", "Fighter", "Reco"},		
 			["cost"] = 15000, --cost aircraft in K$  (1980)
 			["factor"] = {},
 		},
@@ -455,7 +455,7 @@ log.info("aircraft_data:\n" .. inspect(db_aircraft) .. "\n\n")
 
 -- GLOBAL FUNCTION 
 
--- return the primary role: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
+-- return the role for specifi task: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
 function getRole(aircraft_type, aircraft_task, side)
 	local role
 	
@@ -490,4 +490,10 @@ function getRole(aircraft_type, aircraft_task, side)
 
 	end
 	return role
+end
+
+-- return the primary (first) role: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
+function getFirstRole(aircraft_type, side)
+
+	return db_aircraft[side][aircraft_type].role[1]
 end
