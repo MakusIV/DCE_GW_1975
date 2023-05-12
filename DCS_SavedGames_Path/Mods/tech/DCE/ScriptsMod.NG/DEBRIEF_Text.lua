@@ -717,77 +717,85 @@ do
 			total = {
 				all = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Fighter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Attacker = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Bomber = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Transporter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Refueler = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				AWACS = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Reco = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Helicopter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
+				},
+				Unclassified = {
+					["qty"] = 0,
+					["cost"] = 0,					
 				},
 			},
 			last_mission = {
 				all = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Fighter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Attacker = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Bomber = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Transporter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Refueler = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				AWACS = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Reco = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
 				},
 				Helicopter = {
 					["qty"] = 0,
-					["cost"] = 0,
+					["cost"] = 0,					
+				},
+				Unclassified = {
+					["qty"] = 0,
+					["cost"] = 0,					
 				},
 			},
 		}
@@ -796,7 +804,7 @@ do
 
 			["total"] = {
 				["unit_qty"] = 0,
-				["ship_qty"] = 0,				
+				["ship_qty"] = 0,						
 			},
 			["last_mission"] = {
 				["unit_qty"] = 0,
@@ -854,35 +862,50 @@ do
 	
 		--add list values
 		for unit_n,unit in ipairs(side) do																								--iterate through units
+
 			if unit.inactive ~= true then																								--unit is active
 				table.insert(entries[side_name][1].values, unit.name)																	--unit name
 				table.insert(entries[side_name][2].values, ReplaceTypeName(unit.type))													--unit type
 				table.insert(entries[side_name][3].values, unit.base)
 				table.insert(entries[side_name][10].values, getEfficiency(unit.base, side_name))										-- base efficiency
 				table.insert(entries[side_name][11].values, getEfficiency("Reserves-R/" .. unit.name, side_name))						-- reserves efficiency
+				-- print("side: " .. side_name .. ", unit.type: " .. unit.type)
+				local unit_role = getFirstRole(unit.type, side_name)																	-- unit role: Fighter, Attacker, Bomber, Transporter, Refueler, AWACS, Reco
+				-- print("side: " .. side_name .. ", unit.type: " .. unit.type .. ", unit_role: " .. (unit_role or "nil"))
+
+				if not unit_role then					
+					-- print(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss are included in the calculation of losses with cost = 10000 and role = unclassified")
+					unit_role = "Unclassified"
+				end
+
+				--print("side: " .. side_name .. ", unit.type: " .. unit.type .. ", unit_role: " .. unit_role)
 
 				-- Air loss evaluation ---
-				if db_aircraft[side_name][unit.type] then																							
+				if db_aircraft[side_name][unit.type] then																												
 					air_loss_data[side_name].total.all.qty = air_loss_data[side_name].total.all.qty + unit.roster.lost																		-- update total aircraft losses
 					air_loss_data[side_name].total.all.cost = air_loss_data[side_name].total.all.cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost								-- update total cost aircraft losses
-					air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty + unit.roster.lost											-- update total aircraft type losses	
-					air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost											-- update total aircraft type losses	
+					air_loss_data[side_name].total[unit_role].qty = air_loss_data[side_name].total[unit_role].qty + unit.roster.lost											-- update total aircraft type losses	
+					air_loss_data[side_name].total[unit_role].cost = air_loss_data[side_name].total[unit_role].cost + db_aircraft[side_name][unit.type].cost * unit.roster.lost											-- update total aircraft type losses	
+					--print("air_loss_data[" .. side_name .. "].total[" .. unit_role .. "].qty: " .. air_loss_data[side_name].total[unit_role].qty .. ", air_loss_data[" .. side_name .. "].total[" .. unit_role .. "].cost: " .. air_loss_data[side_name].total[unit_role].cost)
 
 					if unit.score_last.lost > 0 then
 						air_loss_data[side_name].last_mission.all.qty = air_loss_data[side_name].last_mission.all.qty + unit.score_last.lost													-- update mission aircraft losses
 						air_loss_data[side_name].last_mission.all.cost = air_loss_data[side_name].last_mission.all.cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost		-- update mission cost aircraft losses
-						air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].qty + unit.score_last.lost									-- update total aircraft type losses	
-						air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost = air_loss_data[side_name].total[getFirstRole(unit.type, side_name)].cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost									-- update total aircraft type losses	
+						air_loss_data[side_name].last_mission[unit_role].qty = air_loss_data[side_name].last_mission[unit_role].qty + unit.score_last.lost									-- update total aircraft type losses	
+						air_loss_data[side_name].last_mission[unit_role].cost = air_loss_data[side_name].last_mission[unit_role].cost + db_aircraft[side_name][unit.type].cost * unit.score_last.lost									-- update total aircraft type losses							
 					end
-				else
-					--log.warn(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss is not included in the calculation of losses")
-					print(" this unit don't exist in db_aircraft table: " .. side_name .. " - " ..  unit.type .. ", this loss are included in the calculation of losses with cost = 1")
+
+				else					
 					air_loss_data[side_name].total.all.qty = air_loss_data[side_name].total.all.qty + unit.roster.lost																		-- update total aircraft losses
-					air_loss_data[side_name].total.all.cost = air_loss_data[side_name].total.all.cost + unit.roster.lost
+					air_loss_data[side_name].total.all.cost = air_loss_data[side_name].total.all.cost + 10000 * unit.roster.lost
+					air_loss_data[side_name].total[unit_role].qty = air_loss_data[side_name].total[unit_role].qty + unit.roster.lost											-- update total aircraft type losses	
+					air_loss_data[side_name].total[unit_role].cost = air_loss_data[side_name].total[unit_role].cost + 10000 * unit.roster.lost	
 					
 					if unit.score_last.lost > 0 then
 						air_loss_data[side_name].last_mission.all.qty = air_loss_data[side_name].last_mission.all.qty + unit.score_last.lost													-- update mission aircraft losses
-						air_loss_data[side_name].last_mission.all.cost = air_loss_data[side_name].last_mission.all.cost + unit.score_last.lost		-- update mission cost aircraft losses
+						air_loss_data[side_name].last_mission.all.cost = air_loss_data[side_name].last_mission.all.cost + 10000 * unit.score_last.lost		-- update mission cost aircraft losses
+						air_loss_data[side_name].last_mission[unit_role].qty = air_loss_data[side_name].last_mission[unit_role].qty + unit.score_last.lost									-- update total aircraft type losses	
+						air_loss_data[side_name].last_mission[unit_role].cost = air_loss_data[side_name].last_mission[unit_role].cost + 10000 * unit.score_last.lost									-- update total aircraft type losses							
 					end
 				end				
 						
@@ -890,14 +913,14 @@ do
 				ground_loss_data[enemy_side_name].total.unit_qty = ground_loss_data[enemy_side_name].total.unit_qty + unit.score.kills_ground
 				
 				if unit.score_last.kills_ground > 0 then
-					ground_loss_data[enemy_side_name].mission.unit_qty = ground_loss_data[enemy_side_name].mission.unit_qty + unit.score_last.kills_ground
+					ground_loss_data[enemy_side_name].last_mission.unit_qty = ground_loss_data[enemy_side_name].last_mission.unit_qty + unit.score_last.kills_ground
 				end
 
 				-- Ship losses evaluation ---
 				ground_loss_data[enemy_side_name].total.ship_qty = ground_loss_data[enemy_side_name].total.ship_qty + unit.score.kills_ship
 				
 				if unit.score_last.kills_ship > 0 then
-					ground_loss_data[enemy_side_name].mission.ship_qty = ground_loss_data[enemy_side_name].mission.ship_qty + unit.score_last.kills_ship
+					ground_loss_data[enemy_side_name].last_mission.ship_qty = ground_loss_data[enemy_side_name].last_mission.ship_qty + unit.score_last.kills_ship
 				end
 
 				

@@ -495,5 +495,12 @@ end
 -- return the primary (first) role: CAP, SWEEP, Intercept = Fighter, Strike, Anti-ship Strike = Attack or Bomber, AWACS, Refueling or Transport same
 function getFirstRole(aircraft_type, side)
 
-	return db_aircraft[side][aircraft_type].role[1]
+	local unit_type  = db_aircraft[side][aircraft_type]
+
+	if unit_type then
+		return unit_type.role[1]
+	
+	else
+		return nil
+	end
 end
