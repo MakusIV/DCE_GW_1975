@@ -1022,7 +1022,7 @@ do
 	local statistic_losses = {
 		
 		["air"] = {
-			["mission"] = {
+			["last_mission"] = {
 				["delta_loss"] = 0,
 				["delta_loss_cost"] = 0,
 				["delta_loss_perc"] = 0,
@@ -1038,7 +1038,23 @@ do
 			},		
 		},
 		["ground"] = {
-			["mission"] = {
+			["last_mission"] = {
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},
+			["total"] = { 
+				["delta_loss"] = 0,
+				["delta_loss_cost"] = 0,
+				["delta_loss_perc"] = 0,
+				["delta_loss_cost_perc"] = 0,
+				["winner"] = "tie",
+			},		
+		},
+		["ship"] = {
+			["last_mission"] = {
 				["delta_loss"] = 0,
 				["delta_loss_cost"] = 0,
 				["delta_loss_perc"] = 0,
@@ -1055,72 +1071,101 @@ do
 		},
 	}
 
-	statistic_losses.air.mission.delta_loss_cost = air_loss_data.blue.last_mission.all.cost - air_loss_data.red.last_mission.all.cost
-	statistic_losses.air.mission.delta_loss = air_loss_data.blue.last_mission.all.qty - air_loss_data.red.last_mission.all.qty
-	
-	if statistic_losses.air.mission.delta_loss_cost > 0 then
-		statistic_losses.air.mission.winner = "Red"
+	local typeStat = {"last_mission", "total"}
 
-		if air_loss_data.red.last_mission.all.cost > 0 then 
-			statistic_losses.air.mission.delta_loss_cost_perc = math.ceil( statistic_losses.air.mission.delta_loss_cost * 100 / air_loss_data.red.last_mission.all.cost )
-			statistic_losses.air.mission.delta_loss_perc = math.ceil( statistic_losses.air.mission.delta_loss * 100 / air_loss_data.red.last_mission.all.qty )
-		else
-			statistic_losses.air.mission.delta_loss_cost_perc = "- "
-			statistic_losses.air.mission.delta_loss_perc = "- "
+	for _, ts in pairs(typeStat) do
+		statistic_losses.air[ts].delta_loss_cost = air_loss_data.blue[ts].all.cost - air_loss_data.red[ts].all.cost
+		statistic_losses.air[ts].delta_loss = air_loss_data.blue[ts].all.qty - air_loss_data.red[ts].all.qty
+		statistic_losses.ground[ts].delta_loss = ground_loss_data.blue[ts].unit_qty - ground_loss_data.red[ts].unit_qty
+		statistic_losses.ship[ts].delta_loss = ground_loss_data.blue[ts].ship_qty - ground_loss_data.red[ts].ship_qty
+		
+		if statistic_losses.air[ts].delta_loss_cost > 0 then
+			statistic_losses.air[ts].winner = "red"
+
+			if air_loss_data.red[ts].all.cost > 0 then 
+				statistic_losses.air[ts].delta_loss_cost_perc = math.ceil( statistic_losses.air[ts].delta_loss_cost * 100 / air_loss_data.red[ts].all.cost )
+				statistic_losses.air[ts].delta_loss_perc = math.ceil( statistic_losses.air[ts].delta_loss * 100 / air_loss_data.red[ts].all.qty )
+			else
+				statistic_losses.air[ts].delta_loss_cost_perc = "- "
+				statistic_losses.air[ts].delta_loss_perc = "- "
+			end
+		
+		elseif statistic_losses.air[ts].delta_loss_cost < 0 then
+			statistic_losses.air[ts].winner = "blue"
+
+			if air_loss_data.blue[ts].all.cost > 0 then 
+				statistic_losses.air[ts].delta_loss_cost_perc = math.ceil( -statistic_losses.air[ts].delta_loss_cost * 100 / air_loss_data.blue[ts].all.cost )
+				statistic_losses.air[ts].delta_loss_perc = math.ceil( -statistic_losses.air[ts].delta_loss * 100 / air_loss_data.blue[ts].all.qty )
+			else
+				statistic_losses.air[ts].delta_loss_cost_perc = "- "
+				statistic_losses.air[ts].delta_loss_perc = "- "
+			end
 		end
-	
-	elseif statistic_losses.air.mission.delta_loss_cost < 0 then
-		statistic_losses.air.mission.winner = "Blue"
 
-		if air_loss_data.blue.last_mission.all.cost > 0 then 
-			statistic_losses.air.mission.delta_loss_cost_perc = math.ceil( -statistic_losses.air.mission.delta_loss_cost * 100 / air_loss_data.blue.last_mission.all.cost )
-			statistic_losses.air.mission.delta_loss_perc = math.ceil( -statistic_losses.air.mission.delta_loss * 100 / air_loss_data.blue.last_mission.all.qty )
-		else
-			statistic_losses.air.mission.delta_loss_cost_perc = "- "
-			statistic_losses.air.mission.delta_loss_perc = "- "
+		if statistic_losses.ground[ts].delta_loss > 0 then
+			statistic_losses.ground[ts].winner = "red"
+
+			if ground_loss_data.red[ts].total.unit_qty > 0 then 				
+				statistic_losses.ground[ts].delta_loss_perc = math.ceil( statistic_losses.ground[ts].delta_loss * 100 / ground_loss_data.red[ts].total.unit_qty )
+			else				
+				statistic_losses.ground[ts].delta_loss_perc = "- "
+			end
+		
+		elseif statistic_losses.ground[ts].delta_loss < 0 then
+			statistic_losses.ground[ts].winner = "blue"
+
+			if ground_loss_data.blue[ts].unit_qty > 0 then 				
+				statistic_losses.ground[ts].delta_loss_perc = math.ceil( -statistic_losses.ground[ts].delta_loss * 100 / ground_loss_data.blue[ts].unit_qty )
+			else				
+				statistic_losses.ground[ts].delta_loss_perc = "- "
+			end
+		end
+
+		if statistic_losses.ship[ts].delta_loss > 0 then
+			statistic_losses.ship[ts].winner = "red"
+
+			if ground_loss_data.red[ts].ship_qty > 0 then 				
+				statistic_losses.ship[ts].delta_loss_perc = math.ceil( statistic_losses.ship[ts].delta_loss * 100 / ground_loss_data.red[ts].ship_qty )
+			else				
+				statistic_losses.ship[ts].delta_loss_perc = "- "
+			end
+		
+		elseif statistic_losses.ship[ts].delta_loss < 0 then
+			statistic_losses.ship[ts].winner = "blue"
+
+			if ground_loss_data.blue[ts].ship_qty > 0 then 				
+				statistic_losses.ship[ts].delta_loss_perc = math.ceil( -statistic_losses.ship[ts].delta_loss * 100 / ground_loss_data.blue[ts].total.ship_qty )
+			else				
+				statistic_losses.ship[ts].delta_loss_perc = "- "
+			end
 		end
 	end
-		
 
 
-	statistic_losses.air.total.delta_loss_cost = air_loss_data.blue.total.all.cost - air_loss_data.red.total.all.cost
-	statistic_losses.air.total.delta_loss = air_loss_data.blue.total.all.qty - air_loss_data.red.total.all.qty
+	s = s .. " - Blue AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
+	s = s .. " - Red AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.red.last_mission.all.qty .. ", cost: " .. air_loss_data.red.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.all.qty .. ", cost: " .. air_loss_data["red"].total.all.cost .. "\n\n"
+	s = s .. " - AIR Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.last_mission.delta_loss .. " ( " .. statistic_losses.air.last_mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.last_mission.delta_loss_cost .. " ( " .. statistic_losses.air.last_mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. "   - AIR status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
 
-	if statistic_losses.air.total.delta_loss_cost > 0 then
-		statistic_losses.air.total.winner = "Red"
+	s = s ..  "GROUND LOSSES EVALUATION\n-------------------\n"
 
-		if air_loss_data.red.total.all.cost > 0 then 
-			statistic_losses.air.total.delta_loss_cost_perc = math.ceil( statistic_losses.air.total.delta_loss_cost * 100 / air_loss_data.red.total.all.cost )
-			statistic_losses.air.total.delta_loss_perc = math.ceil( statistic_losses.air.total.delta_loss * 100 / air_loss_data.red.total.all.qty )
-		else
-			statistic_losses.air.total.delta_loss_cost_perc = "- "
-			statistic_losses.air.total.delta_loss_perc = "- "
-		end
-		
-		
-	elseif statistic_losses.air.total.delta_loss_cost < 0 then
-		statistic_losses.air.total.winner = "Blue"
+	s = s .. " - Blue GROUND Losses:\n   - last mission: unit lost: " ..  ground_loss_data.blue.last_mission.unit_qty .. "\n   - total campaign: ground lost: " .. ground_loss_data.blue.total.unit_qty .. "\n\n"
+	s = s .. " - Red GROUND Losses:\n   - last mission: unit lost: " ..  ground_loss_data.red.last_mission.unit_qty .. "\n   - total campaign: ground lost: " .. ground_loss_data.red.total.unit_qty .. "\n\n"
+	s = s .. " - GROUND Losses Statistic:\n   - last mission: ground winner: " ..  statistic_losses.ground.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.ground.last_mission.delta_loss .. " ( " .. statistic_losses.ground.last_mission.delta_loss_perc .. "% )" .. "\n\n"
+	s = s .. "   - GROUND status campaign: Ground Winner: " ..  statistic_losses.ground.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.ground.total.delta_loss .. " ( " .. statistic_losses.ground.total.delta_loss_perc .. "% )" .. "\n\n"
 
-		if air_loss_data.blue.total.all.cost > 0 then 
-			statistic_losses.air.total.delta_loss_cost_perc = math.ceil( -statistic_losses.air.total.delta_loss_cost * 100 / air_loss_data.blue.total.all.cost )
-			statistic_losses.air.total.delta_loss_perc = math.ceil( -statistic_losses.air.total.delta_loss * 100 / air_loss_data.blue.total.all.qty )
-		else
-			statistic_losses.air.total.delta_loss_cost_perc = "- "
-			statistic_losses.air.total.delta_loss_perc = "- "
-		end
-		
-	end
+	s = s ..  "SHIP LOSSES EVALUATION\n-------------------\n"
 
-	s = s .. " - Blue Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
-	s = s .. " - Red Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.red.last_mission.all.qty .. ", cost: " .. air_loss_data.red.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.all.qty .. ", cost: " .. air_loss_data["red"].total.all.cost .. "\n\n"
-	s = s .. " - Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.mission.delta_loss .. " ( " .. statistic_losses.air.mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.mission.delta_loss_cost .. " ( " .. statistic_losses.air.mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
-	s = s .. "   - status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. " - Blue SHIP Losses:\n   - last mission: ship lost: " ..  ground_loss_data.blue.last_mission.ship_qty .. "\n   - total campaign: ship lost: " .. ground_loss_data.blue.total.ship_qty .. "\n\n"
+	s = s .. " - Red SHIP Losses:\n   - last mission: ship lost: " ..  ground_loss_data.red.last_mission.ship_qty .. "\n   - total campaign: ship lost: " .. ground_loss_data.red.total.ship_qty .. "\n\n"
+	s = s .. " - SHIP Losses Statistic:\n   - last mission: ship winner: " ..  statistic_losses.ship.last_mission.winner .. "\n   - blue-red ship losses " .. statistic_losses.ship.last_mission.delta_loss .. " ( " .. statistic_losses.ship.last_mission.delta_loss_perc .. "% )" .. "\n\n"
+	s = s .. "   - SHIP status campaign: Ground Winner: " ..  statistic_losses.ship.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.ship.total.delta_loss .. " ( " .. statistic_losses.ship.total.delta_loss_perc .. "% )" .. "\n\n"
 
 	debriefing = debriefing .. s .. "\n\n"
 
 	-- store air_loss_data, ground_loss_data and statistic_losses 
 	local statistic_data = {
-		global_air_losses = statistic_losses,
+		global_losses = statistic_losses,
 		aircraft_losses = air_loss_data,
 		ground_losses = ground_loss_data,
 	}			

@@ -32,6 +32,7 @@ log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Ac
 --require("Init/db_airbases")
 require("Active/oob_air")
 require("Active/oob_ground")
+require("Active/statistic_data")
 --require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 --require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 --
@@ -561,12 +562,13 @@ local function loadPriorityDefault()
     end
 end
 
+-- print target priority table
 local function printPriorityTable(text)		
 	print( text .. "\n\n" .. inspect( target_priority_default ) )	
 end
 
 
-
+-- normalized tactic directive
 local tactics = {
 	
 	["moderate increment offensive resource"] = "moderate increment offensive resource",						-- moderate increments resource for offensive task
@@ -589,6 +591,7 @@ local tactics = {
 --changePriorityTask(side, task, attribute, class, perc)
 --resetPriorityTask(side, task, attribute, class)
 
+-- normalized tasks and attributes
 local task_attribute = { 
 	["CAP"] = false,
 	["Intercept"] = false,
@@ -604,7 +607,8 @@ local task_attribute = {
 	["AWACS"] = true,
 }
 
-function airDirective(side, tactic)
+-- execute function for tactic directive
+local function airDirective(side, tactic)
 
 	if tactic == tactics["moderate increment offensive resource"] then				-- moderate increments resource for offensive task
 		changeNumberAircraftForTactics(side, 0.7, "ground attack")			-- increment min, max, requested aircraft for specific task/role
@@ -681,6 +685,130 @@ function airDirective(side, tactic)
 	end
 end
 
+-- evaluate statistical data to define the tactical directive to be applied
+function commander()
+
+	local directive  = {}
+
+	local actual_air_winner = statistic_data.global_losses.air.total.winner
+	local actual_air_delta_loss_perc = statistic_data.global_losses.air.total.delta_loss_perc -- air losses percentage difference from loser and winner
+	local actual_air_delta_cost_loss_perc = statistic_data.global_losses.air.total.delta_cost_loss_perc -- air losses percentage cost difference from loser and winner
+	local actual_ground_winner = statistic_data.global_losses.ground.total.winner
+	local actual_ground_delta_loss_perc = statistic_data.global_losses.ground.total.delta_loss_perc
+	local actual_ship_winner = statistic_data.global_losses.ship.total.winner
+	local actual_ship_delta_loss_perc = statistic_data.global_losses.ship.total.delta_loss_perc
+
+	local side = {"red", "blue"}
+
+	-- valuta se è necessario resettare i parametri per evitare incrementi eccessivi oppure consentirlo (verifica sia sui parametri di config che sulle priority)
+	-- valuta se è necessario il for per il cambio del side e in tal caso valuta se definire solo le azioni di successo e perdita solo del side_name (eliminando quelle per l'enem,y_side)
+	-- altrimenti elimina il for e inserisci le azioni per side_name e enemy_side_name  
+	--directive[side_name] = tactics["restore global default condition"]
+
+	--- dovresti valutare il differenziale delle loss_perc tra due missioni consecutive in modo da
+				--- considerare anche l'evoluzione e utilizzare in modiìo congruo i reset dei parametri
+				--- inoltre randomizza l'applicazione o no di ogni specifica direttiva
+
+	for i, side_name in ipairs(side) do
+		local enemy_side_name = side[ i%2 + 1]
+
+		if camp.mission > 3 then 
+
+			--- dovresti valutare il differenziale delle loss_perc tra due missioni consecutive in modo da
+			--- considerare anche l'evoluzione e utilizzare in modiìo congruo i reset dei parametri
+			--- inoltre randomizza l'applicazione o no di ogni specifica direttiva
+			if actual_air_winner == "tie" then
+				
+				local choice = math.ceil(math.random(1, 12))
+
+				if choice < 4 then					
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+				
+				elseif choice >= 4 and choice <= 8 then
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive[side_name] = tactics["air superiority"]
+					
+				else
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive[side_name] = tactics["defensive"]
+				end				
+			end
+
+			if actual_air_winner == side_name then -- AIR directive for air winner			
+
+				if actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 then  -- enemy suffers light losses
+					directive[side_name] = tactics["increment offensive strategic action and resource"]					
+
+				elseif actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 60 then  -- enemy suffers light losses
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+
+				elseif actual_air_delta_cost_loss_perc > 60 then -- enemy suffers heavy losses
+					directive[side_name] = tactics["restore air default condition"]
+					directive[side_name] = tactics["increment priority for SAM strike operations"]
+					directive[side_name] = tactics["increment priority for Anti-ship operations"]
+				end				
+			
+			else  -- AIR directive for air loser
+
+				if actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 then  -- side suffers light losses
+					directive[side_name] = tactics["air superiority"]	
+
+				elseif actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
+					directive[side_name] = tactics["increment offensive resource"]
+					directive[side_name] = tactics["air superiority"]
+
+				elseif actual_air_delta_cost_loss_perc > 40 then -- enemy suffers heavy losses
+					directive[side_name] = tactics["restore global default condition"] -- 					
+					directive[side_name] = tactics["defensive"] -- setting defensive tactic
+				end				
+
+			end
+			
+			if actual_ground_winner == side_name then -- GROUND directive for ground winner 
+
+				if actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 then  -- enemy suffers light losses
+					directive[side_name] = tactics["restore air default condition"]
+					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
+
+				elseif actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
+					directive[side_name] = tactics["restore air default condition"]
+					directive[side_name] = tactics["air superiority"]
+				
+				elseif actual_ground_delta_loss_perc > 40 then -- enemy suffers heavy losses
+					directive[side_name] = tactics["restore global default condition"] -- 
+					directive[side_name] = tactics["increment priority for SAM strike operations"]			
+				end
+			
+			else -- GROUND directive for ground loser
+
+				if actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 then  -- enemy suffers light losses
+					directive[side_name] = tactics["air superiority"]
+
+				elseif actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
+					directive[side_name] = tactics["restore air default condition"]
+					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+				
+				elseif actual_ground_delta_loss_perc > 40 then -- enemy suffers heavy losses
+					directive[side_name] = tactics["restore global default condition"] -- 
+					directive[side_name] = tactics["reset priority for all operations"]
+					directive[side_name] = tactics["defensive"] -- setting defensive tactic
+				end
+			end 				
+		end
+	end
+	
+
+	-- devi sviluppare una tabella con i diversi stati definiti dalle stats associandola alla direttiva da applicare
+	--[[
+
+
+	]]
+
+end
 
 -- PREPROCESSING
 loadModuleConfigDefault()
