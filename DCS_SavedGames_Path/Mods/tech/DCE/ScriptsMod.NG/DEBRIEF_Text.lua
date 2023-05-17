@@ -1122,8 +1122,8 @@ do
 		if statistic_losses.ground[ts].delta_loss > 0 then
 			statistic_losses.ground[ts].winner = "red"
 
-			if ground_loss_data.red[ts].total.unit_qty > 0 then 				
-				statistic_losses.ground[ts].delta_loss_perc = math.ceil( statistic_losses.ground[ts].delta_loss * 100 / ground_loss_data.red[ts].total.unit_qty )
+			if ground_loss_data.red[ts].unit_qty > 0 then 				
+				statistic_losses.ground[ts].delta_loss_perc = math.ceil( statistic_losses.ground[ts].delta_loss * 100 / ground_loss_data.red[ts].unit_qty )
 			else				
 				statistic_losses.ground[ts].delta_loss_perc = "- "
 			end
