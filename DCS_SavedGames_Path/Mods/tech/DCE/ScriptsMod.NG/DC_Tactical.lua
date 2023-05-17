@@ -213,15 +213,15 @@ camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 
 --local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
 local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
+local MISSION_START_COMMANDER = 5 -- first mission for start commander execution
+local report_commander = {} -- table for store report commander directive
 
 -- implement function to modify target priority for change objective tactics: 	
 -- devono essere inseriti anche gli altri fattori condizionanti presenti negli altri moduli
 
-
 -- load module_config_init table, if not exist create one new
 local function loadModuleConfigDefault()
 
-    --if ( camp.mission > 1 or ( local_test and camp.mission == 1 ) ) and io.open("Active/module_config_init.lua", "r") then
 	if camp.mission > 1 and io.open("Active/module_config_init.lua", "r") then
         require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 
@@ -230,6 +230,18 @@ local function loadModuleConfigDefault()
 		module_config_init = camp.module_config 
 		SaveTabOnPath( "Active/", "module_config_init", module_config_init )       
 		require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table  
+    end
+end
+
+local function loadReportCommander()
+    
+	if camp.mission > MISSION_START_COMMANDER and io.open("Active/report_commander.lua", "r") then
+        require("Active/report_commander") -- load stored report_commander.lua if not MISSION_START_COMMANDER mission campaign and exist table
+
+    elseif ( camp.mission == MISSION_START_COMMANDER ) or local_test then -- initialize new report_commander if not exist 	
+		os.remove("Active/report_commander.lua")			
+		SaveTabOnPath( "Active/", "report_commander", report_commander )       
+		require("Active/report_commander") -- load stored report_commander.lua if not MISSION_START_COMMANDER mission campaign and exist table  
     end
 end
 
@@ -541,6 +553,16 @@ local function resetPriorityTask(side, task, attribute, class)
 	end
 end
 
+-- returns table target priority value for specific side
+local function getTargetPriority(side)
+	local target_priority = {}
+			
+	for target_name, target in pairs(targetlist[side]) do
+		target_priority[target_name] = target.priority
+	end
+	return target_priority	
+end
+
 -- define, save and load priority_default table. priority_default table contains initial target priority value specified in targetlist_init
 local function loadPriorityDefault()
 
@@ -550,14 +572,15 @@ local function loadPriorityDefault()
     else -- initialize new target_priority_default if not exist 
 		os.remove("Active/target_priority_default.lua")
         target_priority_default = {} -- table contains target efficiency values: hash table with hash = target and value = firepower med for that target
-
+		
 		for side_name, side in pairs(targetlist) do
 			target_priority_default[side_name] = {}
 				
-			for target_name, target in pairs(targetlist[side_name]) do
+			--[[for target_name, target in pairs(targetlist[side_name]) do
 				target_priority_default[side_name][target_name] = target.priority
-			end
-		end
+			end]]
+			target_priority_default[side_name] = getTargetPriority(side_name)
+		end		
         SaveTabOnPath( "Active/", "target_priority_default", target_priority_default )         
     end
 end
@@ -685,20 +708,35 @@ local function airDirective(side, tactic)
 	end
 end
 
--- evaluate statistical data to define the tactical directive to be applied
+-- evaluate statistical data to define the tactical directive_executed to be applied
 function commander()
 
-	local directive  = {}
+	local directive_executed = {}
 
 	local actual_air_winner = statistic_data.global_losses.air.total.winner
 	local actual_air_delta_loss_perc = statistic_data.global_losses.air.total.delta_loss_perc -- air losses percentage difference from loser and winner
-	local actual_air_delta_cost_loss_perc = statistic_data.global_losses.air.total.delta_cost_loss_perc -- air losses percentage cost difference from loser and winner
+	local actual_air_delta_cost_loss_perc = statistic_data.global_losses.air.total.delta_loss_cost_perc -- air losses percentage cost difference from loser and winner
 	local actual_ground_winner = statistic_data.global_losses.ground.total.winner
 	local actual_ground_delta_loss_perc = statistic_data.global_losses.ground.total.delta_loss_perc
 	local actual_ship_winner = statistic_data.global_losses.ship.total.winner
 	local actual_ship_delta_loss_perc = statistic_data.global_losses.ship.total.delta_loss_perc
 
 	local side = {"red", "blue"}
+	loadReportCommander()
+
+	report_commander[ #report_commander + 1 ] = {
+						
+		mission = camp.mission,
+		winner = {
+			air = actual_air_winner,
+			ground = actual_ground_winner,
+			ship = actual_ship_winner,
+		},		
+		directive_executed = {},
+		target_priority = {},
+		config_module = {},
+		
+	}
 
 	-- valuta se è necessario resettare i parametri per evitare incrementi eccessivi oppure consentirlo (verifica sia sui parametri di config che sulle priority)
 	-- valuta se è necessario il for per il cambio del side e in tal caso valuta se definire solo le azioni di successo e perdita solo del side_name (eliminando quelle per l'enem,y_side)
@@ -709,121 +747,126 @@ function commander()
 				--- considerare anche l'evoluzione e utilizzare in modiìo congruo i reset dei parametri
 				--- inoltre randomizza l'applicazione o no di ogni specifica direttiva
 
+				--ATTENTO VERIFICA CHE LE VARIAZIONI SULLE PRIORITY SONO FATTE PER IL SIDE CORRETTO
+
 	for i, side_name in ipairs(side) do
 		local enemy_side_name = side[ i%2 + 1]
+		directive_executed[side_name] = {}
 
-		if camp.mission > 3 or local_test then 
-
-			--- dovresti valutare il differenziale delle loss_perc tra due missioni consecutive in modo da
-			--- considerare anche l'evoluzione e utilizzare in modiìo congruo i reset dei parametri
-			--- inoltre randomizza l'applicazione o no di ogni specifica direttiva
+		if camp.mission > MISSION_START_COMMANDER or local_test then 
+			report_commander[ #report_commander].directive_executed[side_name] = {}
+				
+			-- randomizza l'applicazione o no di ogni specifica direttiva?
 			if actual_air_winner == "tie" then
 				
 				local choice = math.ceil(math.random(1, 12))
 
 				if choice < 4 then					
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]										
 				
 				elseif choice >= 4 and choice <= 8 then
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-					directive[side_name] = tactics["air superiority"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 					
 				else
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-					directive[side_name] = tactics["defensive"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"]
 				end				
 			end
 
-			if actual_air_winner == side_name then -- AIR directive for air winner			
+			if actual_air_winner == side_name then -- AIR directive_executed for air winner			
 
 				if actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 then  -- enemy suffers light losses
-					directive[side_name] = tactics["increment offensive strategic action and resource"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive strategic action and resource"]					
 
 				elseif actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 50 then  -- enemy suffers light losses
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 
 				elseif actual_air_delta_cost_loss_perc > 50 and actual_air_delta_cost_loss_perc <= 70 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore air default condition"]
-					directive[side_name] = tactics["increment priority for SAM strike operations"]
-					directive[side_name] = tactics["increment priority for Anti-ship operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Anti-ship operations"]
 
 				elseif actual_air_delta_cost_loss_perc > 70 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore air default condition"]					
-					directive[side_name] = tactics["reset priority for all operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end				
 			
-			else  -- AIR directive for air loser
+			else  -- AIR directive_executed for air loser
 
 				if actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 then  -- side suffers light losses
-					directive[side_name] = tactics["air superiority"]	
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]	
 
-				elseif actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
-					directive[side_name] = tactics["increment offensive resource"]
-					directive[side_name] = tactics["air superiority"]
+				elseif actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- side suffers light losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive resource"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 
-				elseif actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore global default condition"] -- 					
-					directive[side_name] = tactics["defensive"] -- setting defensive tactic
+				elseif actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 then -- side suffers heavy losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
 
-				elseif actual_air_delta_cost_loss_perc > 60 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore air default condition"]					
-					directive[side_name] = tactics["reset priority for all operations"]
+				elseif actual_air_delta_cost_loss_perc > 60 then -- side suffers heavy losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end				
 
 			end
 			
-			if actual_ground_winner == side_name then -- GROUND directive for ground winner 
+			if actual_ground_winner == side_name then -- GROUND directive_executed for ground winner 
 
 				if actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 then  -- enemy suffers light losses
-					directive[side_name] = tactics["restore air default condition"]
-					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
 
 				elseif actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
-					directive[side_name] = tactics["restore air default condition"]
-					directive[side_name] = tactics["air superiority"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 				
 				elseif actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore global default condition"] -- 
-					directive[side_name] = tactics["increment priority for SAM strike operations"]			
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]			
 
 				elseif actual_ground_delta_loss_perc > 55 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore global default condition"] -- 
-					directive[side_name] = tactics["reset priority for all operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end
 			
-			else -- GROUND directive for ground loser
+			else -- GROUND directive_executed for ground loser
 
-				if actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 then  -- enemy suffers light losses
-					directive[side_name] = tactics["air superiority"]
+				if actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 then  -- side suffers light losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 
-				elseif actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
-					directive[side_name] = tactics["restore air default condition"]
-					directive[side_name] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-					directive[side_name] = tactics["increment priority for Army Ground Attack operations"]					
+				elseif actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- side suffers light losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 				
-				elseif actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore global default condition"] -- 
-					directive[side_name] = tactics["reset priority for all operations"]
-					directive[side_name] = tactics["defensive"] -- setting defensive tactic
+				elseif actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 then -- side suffers heavy losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
 
-				elseif actual_ground_delta_loss_perc > 55 then -- enemy suffers heavy losses
-					directive[side_name] = tactics["restore global default condition"] -- 
-					directive[side_name] = tactics["reset priority for all operations"]
+				elseif actual_ground_delta_loss_perc > 55 then -- side suffers heavy losses
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end
 			end 				
+
+			-- execute and store directive_executed in report_commander		
+			for n, dir in ipairs(directive_executed[side_name]) do							
+				airDirective(side_name, dir) -- execute directive				
+				table.insert(report_commander[ #report_commander ].directive_executed[side_name], n, dir) -- store directive in report				
+			end
+			report_commander[ #report_commander ].target_priority[side_name] = getTargetPriority(side_name)
+			report_commander[ #report_commander ].config_module = camp.module_config 			
 		end
-	end
-	
-
-	-- devi sviluppare una tabella con i diversi stati definiti dalle stats associandola alla direttiva da applicare
-	--[[
-
-
-	]]
-
+	end	
+	os.remove("Active/report_commander.lua")		
+	SaveTabOnPath( "Active/", "report_commander", report_commander )       
+	return directive_executed
 end
 
 -- PREPROCESSING
@@ -836,7 +879,7 @@ loadPriorityDefault()
 if local_test then
 	local testChangeNumberAircraftForTacticsFlg = false
 	local testAirCostChangeFlg = false
-	local testAirDirectiveFlg = false
+	local testAirdirective_executedFlg = false
 	local testCommander = true
 	
 	
@@ -861,19 +904,19 @@ if local_test then
 
 	end
 
-	if testAirDirectiveFlg then --side, perc, operations		
+	if testAirdirective_executedFlg then --side, perc, operations		
 		print("init - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
 		print("init - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
 		print("init - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
 		print("init - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Attacker']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] )
 		print("init - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
-		airDirective("blue", "increment offensive strategic action and resource")		
+		airdirective_executed("blue", "increment offensive strategic action and resource")		
 		print("change - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
 		print("change - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
 		print("change - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
 		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Attacker']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Attacker"] )
 		print("change - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
-		airDirective("blue", "restore global default condition")
+		airdirective_executed("blue", "restore global default condition")
 		print("reset - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_STRIKE)
 		print("reset - camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP: " .. camp.module_config.ATO_Generator["blue"].MAX_AIRCRAFT_FOR_SWEEP )
 		print("reset - camp.module_config.SCORE_TASK_FACTOR[side].Strike.Bridge: " .. camp.module_config.SCORE_TASK_FACTOR["blue"].Strike.Bridge )
@@ -881,14 +924,19 @@ if local_test then
 		print("reset - camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST['Fighter']: " .. camp.module_config.ATO_Generator["blue"].WEIGHT_SCORE_FOR_AIRCRAFT_COST["Fighter"] )			
 
 		print("init -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
-		airDirective("blue", "increment priority for SAM strike operations")
+		airdirective_executed("blue", "increment priority for SAM strike operations")
 		print("change -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
-		airDirective("blue", "reset priority for SAM operations")
+		airdirective_executed("blue", "reset priority for SAM operations")
 		print("reset -  targetlist.blue['203 SA-2 Site A-3'].priority: " .. targetlist.blue["203 SA-2 Site A-3"].priority )
 	end
 
 	if testCommander then
 		
+		local directive_executed = commander()
+		print("-- test commander() -- ")
+		print("directive_executed: \n" .. inspect(directive_executed) .. "\n\n")
+		print("report_commander.directive_executed: \n" .. inspect(report_commander.directive_executed) .. "\n\n")
+		print("\n\n-- end test commander() -- ")		
 	end
 end
 

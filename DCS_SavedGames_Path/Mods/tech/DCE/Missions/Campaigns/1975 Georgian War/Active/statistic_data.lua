@@ -1,74 +1,22 @@
 statistic_data = {
-	['global_air_losses'] = {
-		['air'] = {
-			['total'] = {
-				['delta_loss'] = -102,
-				['delta_loss_cost'] = -3068024,
-				['winner'] = 'Blue',
-				['delta_loss_cost_perc'] = 90,
-				['delta_loss_perc'] = 68,
-			},
-			['mission'] = {
-				['delta_loss'] = -1,
-				['delta_loss_cost'] = -127000,
-				['winner'] = 'Blue',
-				['delta_loss_cost_perc'] = 187,
-				['delta_loss_perc'] = 50,
-			},
-		},
-		['ground'] = {
-			['total'] = {
-				['delta_loss'] = 0,
-				['delta_loss_cost'] = 0,
-				['winner'] = 'tie',
-				['delta_loss_cost_perc'] = 0,
-				['delta_loss_perc'] = 0,
-			},
-			['mission'] = {
-				['delta_loss'] = 0,
-				['delta_loss_cost'] = 0,
-				['winner'] = 'tie',
-				['delta_loss_cost_perc'] = 0,
-				['delta_loss_perc'] = 0,
-			},
-		},
-	},
-	['ground_losses'] = {
-		['blue'] = {
-			['last_mission'] = {
-				['unit_qty'] = 0,
-				['ship_qty'] = 0,
-			},
-			['total'] = {
-				['unit_qty'] = 14,
-				['ship_qty'] = 0,
-			},
-		},
-		['red'] = {
-			['last_mission'] = {
-				['unit_qty'] = 0,
-				['ship_qty'] = 0,
-			},
-			['total'] = {
-				['unit_qty'] = 56,
-				['ship_qty'] = 3,
-			},
-		},
-	},
 	['aircraft_losses'] = {
 		['blue'] = {
 			['last_mission'] = {
 				['Fighter'] = {
-					['cost'] = 0,
-					['qty'] = 0,
+					['cost'] = 38000,
+					['qty'] = 1,
 				},
 				['Transporter'] = {
 					['cost'] = 0,
 					['qty'] = 0,
 				},
-				['Attacker'] = {
+				['Unclassified'] = {
 					['cost'] = 0,
 					['qty'] = 0,
+				},
+				['Attacker'] = {
+					['cost'] = 30000,
+					['qty'] = 1,
 				},
 				['Bomber'] = {
 					['cost'] = 0,
@@ -97,16 +45,20 @@ statistic_data = {
 			},
 			['total'] = {
 				['Fighter'] = {
-					['cost'] = 1122000,
-					['qty'] = 55,
+					['cost'] = 1084000,
+					['qty'] = 54,
 				},
 				['Transporter'] = {
 					['cost'] = 0,
 					['qty'] = 0,
 				},
+				['Unclassified'] = {
+					['cost'] = 0,
+					['qty'] = 0,
+				},
 				['Attacker'] = {
-					['cost'] = 1684000,
-					['qty'] = 78,
+					['cost'] = 1654000,
+					['qty'] = 77,
 				},
 				['Bomber'] = {
 					['cost'] = 702000,
@@ -144,13 +96,17 @@ statistic_data = {
 					['cost'] = 0,
 					['qty'] = 0,
 				},
-				['Attacker'] = {
+				['Unclassified'] = {
 					['cost'] = 0,
 					['qty'] = 0,
 				},
+				['Attacker'] = {
+					['cost'] = 10000,
+					['qty'] = 1,
+				},
 				['Bomber'] = {
-					['cost'] = 0,
-					['qty'] = 0,
+					['cost'] = 185000,
+					['qty'] = 2,
 				},
 				['Refueler'] = {
 					['cost'] = 0,
@@ -182,13 +138,17 @@ statistic_data = {
 					['cost'] = 370000,
 					['qty'] = 15,
 				},
+				['Unclassified'] = {
+					['cost'] = 240000,
+					['qty'] = 24,
+				},
 				['Attacker'] = {
-					['cost'] = 850000,
-					['qty'] = 73,
+					['cost'] = 840000,
+					['qty'] = 72,
 				},
 				['Bomber'] = {
-					['cost'] = 2880000,
-					['qty'] = 45,
+					['cost'] = 2695000,
+					['qty'] = 43,
 				},
 				['Refueler'] = {
 					['cost'] = 0,
@@ -199,7 +159,7 @@ statistic_data = {
 					['qty'] = 0,
 				},
 				['all'] = {
-					['cost'] = 6508024,
+					['cost'] = 6748000,
 					['qty'] = 252,
 				},
 				['Helicopter'] = {
@@ -210,6 +170,78 @@ statistic_data = {
 					['cost'] = 990000,
 					['qty'] = 3,
 				},
+			},
+		},
+	},
+	['ground_losses'] = {
+		['blue'] = {
+			['last_mission'] = {
+				['unit_qty'] = 0,
+				['ship_qty'] = 0,
+			},
+			['total'] = {
+				['unit_qty'] = 14,
+				['ship_qty'] = 0,
+			},
+		},
+		['red'] = {
+			['last_mission'] = {
+				['unit_qty'] = 0,
+				['ship_qty'] = 0,
+			},
+			['total'] = {
+				['unit_qty'] = 56,
+				['ship_qty'] = 3,
+			},
+		},
+	},
+	['global_losses'] = {
+		['air'] = {
+			['last_mission'] = {
+				['delta_loss'] = -1,
+				['delta_loss_cost'] = -127000,
+				['winner'] = 'blue',
+				['delta_loss_cost_perc'] = 187,
+				['delta_loss_perc'] = 50,
+			},
+			['total'] = {
+				['delta_loss'] = -102,
+				['delta_loss_cost'] = -3308000,
+				['winner'] = 'blue',
+				['delta_loss_cost_perc'] = 97,
+				['delta_loss_perc'] = 68,
+			},
+		},
+		['ground'] = {
+			['last_mission'] = {
+				['delta_loss'] = 0,
+				['delta_loss_cost'] = 0,
+				['winner'] = 'tie',
+				['delta_loss_cost_perc'] = 0,
+				['delta_loss_perc'] = 0,
+			},
+			['total'] = {
+				['delta_loss'] = -42,
+				['delta_loss_cost'] = 0,
+				['winner'] = 'blue',
+				['delta_loss_cost_perc'] = 0,
+				['delta_loss_perc'] = 300,
+			},
+		},
+		['ship'] = {
+			['last_mission'] = {
+				['delta_loss'] = 0,
+				['delta_loss_cost'] = 0,
+				['winner'] = 'tie',
+				['delta_loss_cost_perc'] = 0,
+				['delta_loss_perc'] = 0,
+			},
+			['total'] = {
+				['delta_loss'] = -3,
+				['delta_loss_cost'] = 0,
+				['winner'] = 'blue',
+				['delta_loss_cost_perc'] = 0,
+				['delta_loss_perc'] = '- ',
 			},
 		},
 	},

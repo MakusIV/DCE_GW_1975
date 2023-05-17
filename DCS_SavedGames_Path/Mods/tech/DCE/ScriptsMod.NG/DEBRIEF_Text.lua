@@ -1022,57 +1022,74 @@ do
 	local statistic_losses = {
 		
 		["air"] = {
-			["last_mission"] = {
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+			last_mission = {
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",				
 			},
-			["total"] = { 
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+			total = { 
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",
+				sum_loss_perc = {
+					red = 0,
+					blue = 0,
+				},
+				med_loss_perc = {
+					red = 0,
+					blue = 0,
+				},
+				diff_loss_perc = 0,
 			},		
 		},
-		["ground"] = {
-			["last_mission"] = {
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+		ground = {
+			last_mission = {
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",
 			},
-			["total"] = { 
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+			total = { 
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",
+				sum_loss_perc = {
+					red = 0,
+					blue = 0,
+				},
+				med_loss_perc = {
+					red = 0,
+					blue = 0,
+				},
+				diff_loss_perc = 0,
 			},		
 		},
-		["ship"] = {
-			["last_mission"] = {
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+		ship = {
+			last_mission = {
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",
 			},
-			["total"] = { 
-				["delta_loss"] = 0,
-				["delta_loss_cost"] = 0,
-				["delta_loss_perc"] = 0,
-				["delta_loss_cost_perc"] = 0,
-				["winner"] = "tie",
+			total = { 
+				delta_loss = 0,
+				delta_loss_cost = 0,
+				delta_loss_perc = 0,
+				delta_loss_cost_perc = 0,
+				winner = "tie",
 			},		
 		},
 	}
-
-	local typeStat = {"last_mission", "total"}
-
+	local typeStat = {"last_mission", "total"}	
+	
 	for _, ts in pairs(typeStat) do
 		statistic_losses.air[ts].delta_loss_cost = air_loss_data.blue[ts].all.cost - air_loss_data.red[ts].all.cost
 		statistic_losses.air[ts].delta_loss = air_loss_data.blue[ts].all.qty - air_loss_data.red[ts].all.qty
@@ -1139,20 +1156,67 @@ do
 				statistic_losses.ship[ts].delta_loss_perc = "- "
 			end
 		end
-	end
+	end	
 
+	local statistic_data = {}		
+
+	if camp.mission > 1 then
+
+		local function updateDifferentialStatistic(force)			
+			local winner = {"red", "blue", "tie"}
+			statistic_data.global_losses.air.all.diff_loss_perc = math.abs( statistic_data.global_losses.air.all.diff_loss_perc - statistic_losses.air.total.delta_loss_perc )
+
+			for i, side in ipairs(winner) do
+
+				if statistic_losses[force].total.winner == side and i ~= 3 then
+					statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] = statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] + statistic_losses[force].total.delta_loss_perc
+					statistic_data.global_losses[force].all.med_loss_perc[winner[ i%2 + 1]] = statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] / camp.mission
+					break
+				
+				else
+					statistic_data.global_losses[force].all.sum_loss_perc[side] = statistic_data.global_losses[force].all.sum_loss_perc[side] + statistic_losses[force].total.delta_loss_perc
+					statistic_data.global_losses[force].all.med_loss_perc[side] = statistic_data.global_losses[force].all.sum_loss_perc[side] / camp.mission
+				end					
+			end
+		end
+
+		if io.open("Active/statistic_data.lua", "r") then
+        	require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
+		end	
+		
+		if tonumber(statistic_losses.air.total.delta_loss_perc) ~= nil then
+			updateDifferentialStatistic("air")
+		end
+
+		if tonumber(statistic_losses.ground.total.delta_loss_perc) ~= nil then
+			updateDifferentialStatistic("ground")
+		end
+		
+	else
+		statistic_data = {
+			global_losses = statistic_losses,
+			aircraft_losses = air_loss_data,
+			ground_losses = ground_loss_data,
+		}		
+	end
 
 	s = s .. " - Blue AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
 	s = s .. " - Red AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.red.last_mission.all.qty .. ", cost: " .. air_loss_data.red.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.all.qty .. ", cost: " .. air_loss_data["red"].total.all.cost .. "\n\n"
-	s = s .. " - AIR Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.last_mission.delta_loss .. " ( " .. statistic_losses.air.last_mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.last_mission.delta_loss_cost .. " ( " .. statistic_losses.air.last_mission.delta_loss_cost_perc .. "% )"  .. "\n\n"
-	s = s .. "   - AIR status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n\n"
+	s = s .. " - AIR Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.last_mission.delta_loss .. " ( " .. statistic_losses.air.last_mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.last_mission.delta_loss_cost .. " ( " .. statistic_losses.air.last_mission.delta_loss_cost_perc .. "% )"  .. "\n\n"	
+	s = s .. "   - AIR status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n"
+	s = s .. "   - Blue-Red Differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.diff_loss_perc .. "%\n"
+	s = s .. "   - Blue Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.blue .. "%\n"
+	s = s .. "   - Red Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.red .. "%\n\n"
 
 	s = s ..  "GROUND LOSSES EVALUATION\n-------------------\n"
 
 	s = s .. " - Blue GROUND Losses:\n   - last mission: unit lost: " ..  ground_loss_data.blue.last_mission.unit_qty .. "\n   - total campaign: ground lost: " .. ground_loss_data.blue.total.unit_qty .. "\n\n"
 	s = s .. " - Red GROUND Losses:\n   - last mission: unit lost: " ..  ground_loss_data.red.last_mission.unit_qty .. "\n   - total campaign: ground lost: " .. ground_loss_data.red.total.unit_qty .. "\n\n"
 	s = s .. " - GROUND Losses Statistic:\n   - last mission: ground winner: " ..  statistic_losses.ground.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.ground.last_mission.delta_loss .. " ( " .. statistic_losses.ground.last_mission.delta_loss_perc .. "% )" .. "\n\n"
-	s = s .. "   - GROUND status campaign: Ground Winner: " ..  statistic_losses.ground.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.ground.total.delta_loss .. " ( " .. statistic_losses.ground.total.delta_loss_perc .. "% )" .. "\n\n"
+	s = s .. "   - GROUND status campaign: Ground Winner: " ..  statistic_losses.ground.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.ground.total.delta_loss .. " ( " .. statistic_losses.ground.total.delta_loss_perc .. "% )" .. "\n"
+	s = s .. "   - Blue-Red Differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.diff_loss_perc .. "%\n"
+	s = s .. "   - Blue Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.blue .. "%\n"
+	s = s .. "   - Red Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.red .. "%\n\n"
 
 	s = s ..  "SHIP LOSSES EVALUATION\n-------------------\n"
 
@@ -1163,13 +1227,15 @@ do
 
 	debriefing = debriefing .. s .. "\n\n"
 
-	-- store air_loss_data, ground_loss_data and statistic_losses 
-	local statistic_data = {
+	-- store air_loss_data, ground_loss_data and statistic_losses 		
+	statistic_data = {
 		global_losses = statistic_losses,
 		aircraft_losses = air_loss_data,
 		ground_losses = ground_loss_data,
-	}			
+	}		
+	os.remove("Active/statistic_data.lua")			
 	SaveTabOnPath( "Active/", "statistic_data", statistic_data )      
+	require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table  	
 end
 
 	
