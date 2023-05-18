@@ -206,9 +206,18 @@ statistic_data = {
 			},
 			['total'] = {
 				['delta_loss'] = -102,
+				['diff_loss_perc'] = 0,
+				['med_loss_perc'] = {
+					['blue'] = 0,
+					['red'] = 0,
+				},
+				['delta_loss_cost_perc'] = 97,
 				['delta_loss_cost'] = -3308000,
 				['winner'] = 'blue',
-				['delta_loss_cost_perc'] = 97,
+				['sum_loss_perc'] = {
+					['blue'] = 0,
+					['red'] = 0,
+				},
 				['delta_loss_perc'] = 68,
 			},
 		},
@@ -222,9 +231,18 @@ statistic_data = {
 			},
 			['total'] = {
 				['delta_loss'] = -42,
+				['diff_loss_perc'] = 0,
+				['med_loss_perc'] = {
+					['blue'] = 0,
+					['red'] = 0,
+				},
+				['delta_loss_cost_perc'] = 0,
 				['delta_loss_cost'] = 0,
 				['winner'] = 'blue',
-				['delta_loss_cost_perc'] = 0,
+				['sum_loss_perc'] = {
+					['blue'] = 0,
+					['red'] = 0,
+				},
 				['delta_loss_perc'] = 300,
 			},
 		},

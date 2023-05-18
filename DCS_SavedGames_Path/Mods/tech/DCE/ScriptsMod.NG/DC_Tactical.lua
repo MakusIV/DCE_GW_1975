@@ -720,7 +720,9 @@ function commander()
 	local actual_ground_delta_loss_perc = statistic_data.global_losses.ground.total.delta_loss_perc
 	local actual_ship_winner = statistic_data.global_losses.ship.total.winner
 	local actual_ship_delta_loss_perc = statistic_data.global_losses.ship.total.delta_loss_perc
-
+	local air_diff_loss_perc = statistic_data.global_losses.air.total.diff_loss_perc		
+	local ground_diff_loss_perc = statistic_data.global_losses.ground.total.diff_loss_perc
+	
 	local side = {"red", "blue"}
 	loadReportCommander()
 
@@ -752,6 +754,15 @@ function commander()
 	for i, side_name in ipairs(side) do
 		local enemy_side_name = side[ i%2 + 1]
 		directive_executed[side_name] = {}
+		local air_diff_loss = {
+			red = statistic_data.global_losses.air.total.med_loss_perc.red,
+			blue = statistic_data.global_losses.air.total.med_loss_perc.blue,
+		}
+		local ground_diff_loss = {
+			red = statistic_data.global_losses.ground.total.med_loss_perc.red,
+			blue = statistic_data.global_losses.ground.total.med_loss_perc.blue,
+		}
+				
 
 		if camp.mission > MISSION_START_COMMANDER or local_test then 
 			report_commander[ #report_commander].directive_executed[side_name] = {}
@@ -777,79 +788,78 @@ function commander()
 
 			if actual_air_winner == side_name then -- AIR directive_executed for air winner			
 
-				if actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 then  -- enemy suffers light losses
-					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive strategic action and resource"]					
+				if ( actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 ) or ( air_diff_loss[enemy_side_name] > 10 and air_diff_loss[enemy_side_name] <= 30 ) then  -- enemy suffers light losses or losses have increased slightly
+					directive_executed[side_name][ #directive_executed[side_name] + 1 ] = tactics["increment offensive strategic action and resource"]					
 
-				elseif actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 50 then  -- enemy suffers light losses
+				elseif ( actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 50 ) or ( air_diff_loss[enemy_side_name] > 40 and air_diff_loss[enemy_side_name] <= 60 ) then  -- enemy suffers significative losses or losses have increased
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 
-				elseif actual_air_delta_cost_loss_perc > 50 and actual_air_delta_cost_loss_perc <= 70 then -- enemy suffers heavy losses
+				elseif ( actual_air_delta_cost_loss_perc > 50 and actual_air_delta_cost_loss_perc <= 70 ) or ( air_diff_loss[enemy_side_name] > 60 and air_diff_loss[enemy_side_name] <= 80 ) then -- enemy suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Anti-ship operations"]
 
-				elseif actual_air_delta_cost_loss_perc > 70 then -- enemy suffers heavy losses
+				elseif actual_air_delta_cost_loss_perc > 70 or air_diff_loss[enemy_side_name] > 80 then -- enemy suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
-					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]					
 				end				
 			
 			else  -- AIR directive_executed for air loser
 
-				if actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 then  -- side suffers light losses
+				if ( actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 ) or ( air_diff_loss[side_name] > 5 and air_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]	
 
-				elseif actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- side suffers light losses
+				elseif ( actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( air_diff_loss[side_name] > 15 and air_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive resource"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 
-				elseif actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 then -- side suffers heavy losses
+				elseif ( actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 ) or ( air_diff_loss[side_name] > 35 and air_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 					
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
 
-				elseif actual_air_delta_cost_loss_perc > 60 then -- side suffers heavy losses
+				elseif actual_air_delta_cost_loss_perc > 60 or air_diff_loss[side_name] > 55 then -- side suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end				
-
 			end
 			
 			if actual_ground_winner == side_name then -- GROUND directive_executed for ground winner 
 
-				if actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 then  -- enemy suffers light losses
+				if ( actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 ) or ( ground_diff_loss[enemy_side_name] > 5 and ground_diff_loss[enemy_side_name] <= 15 ) then  -- enemy suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
 
-				elseif actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 then  -- enemy suffers light losses
+				elseif ( actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[enemy_side_name] > 15 and ground_diff_loss[enemy_side_name] <= 35 ) then  -- enemy suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 				
-				elseif actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 then -- enemy suffers heavy losses
+				elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[enemy_side_name] > 55 and ground_diff_loss[enemy_side_name] <= 75 ) then -- enemy suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]			
 
-				elseif actual_ground_delta_loss_perc > 55 then -- enemy suffers heavy losses
+				elseif actual_ground_delta_loss_perc > 55 or ground_diff_loss[enemy_side_name] > 75 then -- enemy suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end
 			
 			else -- GROUND directive_executed for ground loser
 
-				if actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 then  -- side suffers light losses
+				if ( actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 ) or ( ground_diff_loss[side_name] > 5 and ground_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 
-				elseif actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 then  -- side suffers light losses
+				elseif ( actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[side_name] > 15 and ground_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 				
-				elseif actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 then -- side suffers heavy losses
+				elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[side_name] > 35 and ground_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
 
-				elseif actual_ground_delta_loss_perc > 55 then -- side suffers heavy losses
+				elseif actual_ground_delta_loss_perc > 55 and ground_diff_loss[side_name] > 55 then -- side suffers heavy losses
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				end

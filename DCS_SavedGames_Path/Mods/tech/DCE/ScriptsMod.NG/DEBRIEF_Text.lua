@@ -1021,7 +1021,7 @@ do
 
 	local statistic_losses = {
 		
-		["air"] = {
+		air = {
 			last_mission = {
 				delta_loss = 0,
 				delta_loss_cost = 0,
@@ -1156,26 +1156,25 @@ do
 				statistic_losses.ship[ts].delta_loss_perc = "- "
 			end
 		end
-	end	
+	end		
 
-	local statistic_data = {}		
-
-	if camp.mission > 1 then
+	
+	if camp.mission > 1  then
 
 		local function updateDifferentialStatistic(force)			
 			local winner = {"red", "blue", "tie"}
-			statistic_data.global_losses.air.all.diff_loss_perc = math.abs( statistic_data.global_losses.air.all.diff_loss_perc - statistic_losses.air.total.delta_loss_perc )
+			statistic_data.global_losses[force].total.diff_loss_perc = math.abs( statistic_data.global_losses[force].total.diff_loss_perc - statistic_losses[force].total.delta_loss_perc )
 
 			for i, side in ipairs(winner) do
 
 				if statistic_losses[force].total.winner == side and i ~= 3 then
-					statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] = statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] + statistic_losses[force].total.delta_loss_perc
-					statistic_data.global_losses[force].all.med_loss_perc[winner[ i%2 + 1]] = statistic_data.global_losses[force].all.sum_loss_perc[winner[ i%2 + 1]] / camp.mission
+					statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
+					statistic_data.global_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission
 					break
 				
 				else
-					statistic_data.global_losses[force].all.sum_loss_perc[side] = statistic_data.global_losses[force].all.sum_loss_perc[side] + statistic_losses[force].total.delta_loss_perc
-					statistic_data.global_losses[force].all.med_loss_perc[side] = statistic_data.global_losses[force].all.sum_loss_perc[side] / camp.mission
+					statistic_data.global_losses[force].total.sum_loss_perc[side] = statistic_data.global_losses[force].total.sum_loss_perc[side] + statistic_losses[force].total.delta_loss_perc
+					statistic_data.global_losses[force].total.med_loss_perc[side] = statistic_data.global_losses[force].total.sum_loss_perc[side] / camp.mission
 				end					
 			end
 		end
