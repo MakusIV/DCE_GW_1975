@@ -41,9 +41,9 @@ local ATO_TE_CONFIG = {
 	
 	MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3,								-- minimum asset unless specified otherwise
 	MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3,									-- minimum asset unless specified otherwise
-	GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1,						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
+	GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1,						-- capacity for air threath rilevability (1: max capacity, 0 minimum capacity)
 	GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY = 1,					-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
-	GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1,						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
+	GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1,						-- capacity for air threath rilevability (1: max capacity, 0 minimum capacity)
 	GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY = 1,						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
 	MAN_SAM_RILEVABILITY = 0.2,												-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
 	SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.4,							-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
@@ -107,14 +107,14 @@ local ATO_G_CONFIG = {
 	SCORE_INFLUENCE_ROUTE_THREAT = 1,									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
 	FACTOR_FOR_REDUCE_SCORE = 0.01, 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
 	MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2,	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
-	MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,  -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
+	MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,   -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
 	MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5,						-- min total air threat level to authorize support escort flight (default = 0.5)
 	MIN_CLOUD_DENSITY = 0.8,											-- min clouds density for evalutation weather mission condition (defalut = 0.8)
 	MIN_FOG_VISIBILITY = 5000,											-- min fog visibility for any task (default: 5000m)
 	MIN_CLOUD_EIGHT_ABOVE_AIRBASE = 333,								-- min eight above airbase for execute any task (default: 333m, 1000 ft)
 	UNIT_SERVICEABILITY = 0.8,											-- serviceability percentage of unit.roster.ready 
 	MIN_PERCENTAGE_FOR_ESCORT = 0.75,									-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
-	MAX_AIRCRAFT_FOR_INTERCEPT = 2,									-- max number of aircraft for an intercept mission 
+	MAX_AIRCRAFT_FOR_INTERCEPT = 2,										-- max number of aircraft for an intercept mission 
 	MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2, 								-- max number of aircraft for an reconnaisance mission 
 	MAX_AIRCRAFT_FOR_STRIKE = 4, 										-- max number of aircraft for an strike mission 
 	MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
