@@ -460,12 +460,13 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 36,
 		},
+			----------------------- Soganlug ----------------------------
 		[20] = {
 			name = "801 ARS",							--unit name
 			type = "KC-135",							--aircraft type
 			country = "USA",							--unit country
 			livery = "Standard USAF",					--unit livery
-			base = "Senaki-Kolkhi",						--unit base
+			base = "Soganlug",						--unit base
 			skill = getSkill(mission_ini.min_skill_blue_refuelling, mission_ini.max_skill_blue_refuelling),			--unit skill
 			tasks = {									--unit tasks
 				["Refueling"] = true,
@@ -482,6 +483,7 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 7,
 		},		
+			---------------------- Senaki-Kolkhi ----------------------
 		[22] = { 
 			name = "GA 5rd TS",							--unit name
 			type = "An-26B",							--aircraft type
