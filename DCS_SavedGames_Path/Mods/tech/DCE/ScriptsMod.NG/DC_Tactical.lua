@@ -37,95 +37,6 @@ require("Active/statistic_data")
 --require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 --
 
-local ATO_TE_CONFIG = {
-	
-	MIN_ASSET_FOR_COMPUTE_LEVEL_INTERCEPT = 3,								-- minimum asset unless specified otherwise
-	MIN_ASSET_FOR_COMPUTE_LEVEL_CAP = 3,									-- minimum asset unless specified otherwise
-	GROUND_THREAT_RILEVABILITY_BLUE_AIR_CAPACITY = 1,						-- capacity for air threath rilevability (1: max capacity, 0 minimum capacity)
-	GROUND_THREAT_RILEVABILITY_BLUE_GROUND_CAPACITY = 1,					-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
-	GROUND_THREAT_RILEVABILITY_RED_AIR_CAPACITY = 1,						-- capacity for air threath rilevability (1: max capacity, 0 minimum capacity)
-	GROUND_THREAT_RILEVABILITY_RED_GROUND_CAPACITY = 1,						-- capacity for ground threath rilevability (1: max capacity, 0 minimum capacity)
-	MAN_SAM_RILEVABILITY = 0.2,												-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
-	SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.4,							-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
-	SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.5,							-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
-	MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY = 0.6,							-- specific ground asset rilevability (1: detectability ensured, 0 asset undetectable)
-	MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY = 0.7,
-	LARGE_SAM_VEHICLE_RILEVABILITY = 0.8,
-	SMALL_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.6,
-	MEDIUM_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.8,
-	LARGE_AAA_SAM_FIXEDPOS_RILEVABILITY = 0.9,
-	SMALL_SHIP_RILEVABILITY = 0.7,
-	MEDIUM_SHIP_RILEVABILITY = 0.8,
-	LARGE_SHIP_RILEVABILITY = 0.95,
-}
-
-local ATO_RG_CONFIG = {
-	TIME_FOR_INGRESS_CALCULATION = 60, -- (s) default 60s, time for compute ingress distance distance = speed(vattack) * time + standoff
-	MINIMUM_STANDOFF_DISTANCE = 7000, -- (m) default 7000m, minimum standoff value for calculation (not not applicable when the value is defined in db_loadouts: always with new firepower code)
-	TIME_FOR_STANDOFF_CALCULATION = 30, -- (s) default 30s, time for compute standoff distance distance = speed(vattack) * time + hattack
-	PROFILE_MIN_ALT_FOR_CAP_DETECTION = 3000, -- min altitude for generic CAP detection (no need EWR support)(default = 3000 m ). Questo parametro condiziona la classificazione come minaccia di una CAP
-	ALT_MIN_FOR_CLUTTER_EFFECT = 100, -- (defalut = 100 m)
-	PERC_REDUCTION_THREAT_LEVER_FOR_CLUTTER = 0.5, -- (1 max, 0 total. default = 0.5)
-	MAX_FACTOR_FOR_LENGHT_ROUTE = 1.5, -- default = 1.5, factor for calculate max distance of a route: max distance = factor * direct distance (from start to end point)
-	MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300, -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
-	SEPARATION_FROM_THREAT_RANGE = 1000, -- min distance from threat.range border
-	MAX_NUM_ISTANCE_PATH_FINDING = 7, -- max number of istances of function findPathLeg(), default = 7
-	-- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
-	-- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
-}
-
-local ATO_G_CONFIG = {
-
-	WEIGHT_SCORE_FOR_LOADOUT_COST = {									-- weight for weapon cost in mission score calculus (0 .. 1)
-
-		["Strike"] = 0.3,
-		["Anti-ship Strike"] = 0.1,
-		["SEAD"] = 0.1,
-		["Intercept"] = 0.2,
-		["CAP"] = 0.4,
-		["Escort"] = 0.3,
-		["Fighter Sweep"] = 0.2,
-		["Reconnaissance"] = 0.1,
-	},
-
-	WEIGHT_SCORE_FOR_AIRCRAFT_COST = { 									-- weight for aircraft cost in mission score calculus (0 .. 1) 
-
-		["Fighter"] = 0.3, 
-		["Attacker"] = 0.5,  
-		["Bomber"] = 0.2,  
-		["Transporter"] = 0.1, 
-		["Reco"] = 0.2, 
-		["Refueler"] = 0.1,  
-		["AWACS"] = 0.1, 
-		["Helicopter"] = 0.2, 
-	},
-
-	MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2,							-- minimum aircraft for strike and anti-ship strike task (default 2 or 3 -needed to survive the anti-aircraft defenses)
-	ESCORT_NUMBER_MULTIPLIER = 3,										-- max multiplier for escort number: when more escorts ESCORT_NUMBER_MULTIPLIER times escorts than escorted aircraft, limit escort number to ESCORT_NUMBER_MULTIPLIER times escorted aircraft (default 3)
-	MINIMUM_VALUE_OF_AIR_THREAT = 0.5,									-- minimum value of air threat for air unit with self escort capacity (default = 0.5) 	
-	FACTOR_FOR_REDUCTION_AIR_THREAT = 0.5,								-- factor for reduction of air threat for air unit with self escort capacity (default = 0.5)
-	SCORE_INFLUENCE_ROUTE_THREAT = 1,									-- (min 1) factor for draft_sorties_entry.score = unit_loadouts[l].capability * target.priority / ( route_threat * SCORE_INFLUENCE_ROUTE_THREAT )
-	FACTOR_FOR_REDUCE_SCORE = 0.01, 									-- factor for reduce_score in CAP (score = score - reduce_score * factor)
-	MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT = 2,	-- factor for check if target distance is lesser of support.unit.range route.lenght > unit_loadouts[l].minrange * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_UNIT_RANGE_LOADOUT) (default = 2)
-	MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE = 1.5,   -- factor for check if target distance is bigger of unit.loadout.minrange,  computed before intensive route calculations (getRoute) (ToTarget * MULTIPLIER_TARGET_DISTANCE_FOR_EVALUTATION_COMPUTING_ROUTE > unit_loadouts[l].minrange) (default = 1.5)
-	MIN_TOTAL_AIR_THREAT_FOR_ESCORT_SUPPORT = 0.5,						-- min total air threat level to authorize support escort flight (default = 0.5)
-	MIN_CLOUD_DENSITY = 0.8,											-- min clouds density for evalutation weather mission condition (defalut = 0.8)
-	MIN_FOG_VISIBILITY = 5000,											-- min fog visibility for any task (default: 5000m)
-	MIN_CLOUD_EIGHT_ABOVE_AIRBASE = 333,								-- min eight above airbase for execute any task (default: 333m, 1000 ft)
-	UNIT_SERVICEABILITY = 0.8,											-- serviceability percentage of unit.roster.ready 
-	MIN_PERCENTAGE_FOR_ESCORT = 0.75,									-- min percentage reduction of avalaible asset request for an escort group (for ammissible strike with escort), default 0.75
-	MAX_AIRCRAFT_FOR_INTERCEPT = 2,										-- max number of aircraft for an intercept mission 
-	MAX_AIRCRAFT_FOR_RECONNAISSANCE = 2, 								-- max number of aircraft for an reconnaisance mission 
-	MAX_AIRCRAFT_FOR_STRIKE = 4, 										-- max number of aircraft for an strike mission 
-	MAX_AIRCRAFT_FOR_CAP = 4, 											-- max number of aircraft for an cap mission 
-	MAX_AIRCRAFT_FOR_ESCORT = 4,		 								-- max number of aircraft for an escort mission 
-	MAX_AIRCRAFT_FOR_SWEEP = 4,		 								-- max number of aircraft for an sweep mission 
-	MAX_AIRCRAFT_FOR_OTHER = 3,		 								-- max number of aircraft for other mission 
-	--MIN_AIRCRAFT_FOR_OTHER = 1, 										-- min number of aircraft for other mission 
-	MAX_AIRCRAFT_FOR_BOMBER = 1,										-- max number of aircraft for bomber 
-	BOMBERS_RECO = {"S-3B",  "F-117A", "B-1B", "B-52H", "Tu-22M3", "Tu-95MS", "Tu-142", "Tu-160", "MiG-25RBT"},
-}
-
 
 -- function
 local function name(param)
@@ -214,6 +125,7 @@ camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 --local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
 local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
 local MISSION_START_COMMANDER = 5 -- first mission for start commander execution
+local RESET_PERIOD = 5 -- number of mission for reset all config param 
 local report_commander = {} -- table for store report commander directive
 
 -- implement function to modify target priority for change objective tactics: 	
@@ -235,10 +147,10 @@ end
 
 local function loadReportCommander()
     
-	if camp.mission > MISSION_START_COMMANDER and io.open("Active/report_commander.lua", "r") then
+	if camp.mission >= MISSION_START_COMMANDER and io.open("Active/report_commander.lua", "r") then
         require("Active/report_commander") -- load stored report_commander.lua if not MISSION_START_COMMANDER mission campaign and exist table
 
-    elseif ( camp.mission == MISSION_START_COMMANDER ) or local_test then -- initialize new report_commander if not exist 	
+    elseif ( camp.mission < MISSION_START_COMMANDER ) or local_test then -- initialize new report_commander if not exist 	
 		os.remove("Active/report_commander.lua")			
 		SaveTabOnPath( "Active/", "report_commander", report_commander )       
 		require("Active/report_commander") -- load stored report_commander.lua if not MISSION_START_COMMANDER mission campaign and exist table  
@@ -249,58 +161,58 @@ end
 local function changeNumberAircraftForTactics(side, perc, operations)
 
 	if operations == "all" then		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER * ( 1 + perc )
+		--camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = math.ceil(camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) )
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER * ( 1 + perc ))
 	
 	elseif operations == "ground" then		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )
+		--camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc ))
 
 	elseif operations == "ground attack" then		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )		
+		--camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )		)
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )		)
 		
 	elseif operations == "ground interdiction" then		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc )		
+		--camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE * ( 1 + perc )
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE * ( 1 + perc ))		
 
 	elseif operations == "air superiority" then		
-		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )		
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = math.ceil(camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc ))		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) )
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )	)	
 		
 	elseif operations == "air defensive" then		
-		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )		
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc ) 
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = math.ceil(camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc ))		
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP * ( 1 + perc )) 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT * ( 1 + perc ))		
 
 	elseif operations == "air offensive" then		
-		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc )				
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc )
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc )		
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = math.ceil(camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER * ( 1 + perc ))				
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT * ( 1 + perc ))
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = math.ceil(camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP * ( 1 + perc ))		
 	
 	elseif operations == "default" then				
 		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = module_config_init.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT
-		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP		
-		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP	
+		--camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE
@@ -318,11 +230,50 @@ local function changeNumberAircraftForTactics(side, perc, operations)
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT
 		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = module_config_init.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP		
-		
-
 
 	else
 		log.warn("unknow operations: " .. operations)
+	end
+
+	if camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE > 2 then
+		camp.module_config.ATO_Generator[side].MINIMUM_REQUESTED_AIRCRAFT_FOR_STRIKE = 2
+	end
+
+	if camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER > 3 then
+		camp.module_config.ATO_Generator[side].ESCORT_NUMBER_MULTIPLIER = 3
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE > 8 then
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_STRIKE = 8
+	end
+	
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER > 5 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_BOMBER = 5
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE > 3 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_RECONNAISSANCE = 3
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP > 6 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_CAP = 6
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT > 8 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_ESCORT = 8
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP > 8 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_SWEEP = 8
+	end
+
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT > 5 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_INTERCEPT = 5
+	end
+
+	
+	if camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER > 4 then 
+		camp.module_config.ATO_Generator[side].MAX_AIRCRAFT_FOR_OTHER = 4
 	end
 end
 
@@ -338,12 +289,12 @@ local function airCostChange(side, operations, perc)
 		perc_ground = perc
 	
 	elseif operations == "ground" then
-		perc_air = 1
+		perc_air = 0
 		perc_ground = perc
 
 	elseif operations == "air" then
 		perc_air = perc
-		perc_ground = 1
+		perc_ground = 0
 
 	elseif operations == "default" then
 		camp.module_config.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST = module_config_init.ATO_Generator[side].WEIGHT_SCORE_FOR_AIRCRAFT_COST
@@ -713,13 +664,6 @@ function commander()
 
 	local directive_executed = {}
 
-	if io.open("Active/statistic_data.lua", "r") then
-		require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
-	
-	else
-		log.error("statistic_data.lua not found: check if MISSION_START_COMMANDER > 1 ")
-	end
-
 	local actual_air_winner = statistic_data.global_losses.air.total.winner
 	local actual_air_delta_loss_perc = statistic_data.global_losses.air.total.delta_loss_perc -- air losses percentage difference from loser and winner
 	local actual_air_delta_cost_loss_perc = statistic_data.global_losses.air.total.delta_loss_cost_perc -- air losses percentage cost difference from loser and winner
@@ -768,114 +712,123 @@ function commander()
 		local ground_diff_loss = {
 			red = statistic_data.global_losses.ground.total.med_loss_perc.red,
 			blue = statistic_data.global_losses.ground.total.med_loss_perc.blue,
-		}				
-		report_commander[ #report_commander].directive_executed[side_name] = {}
-			
-		-- randomizza l'applicazione o no di ogni specifica direttiva?
-		if actual_air_winner == "tie" then
-			
-			local choice = math.ceil(math.random(1, 12))
-
-			if choice < 4 then					
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]										
-			
-			elseif choice >= 4 and choice <= 8 then
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
+		}
 				
-			else
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"]
-			end				
-		end
+		if camp.mission >= MISSION_START_COMMANDER or local_test then 
+			report_commander[ #report_commander].directive_executed[side_name] = {}
 
-		if actual_air_winner == side_name then -- AIR directive_executed for air winner			
+				if ( (camp.mission + MISSION_START_COMMANDER + 1 ) % RESET_PERIOD ) == 0 then --cyclics reset
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"]					
+					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+				else
+					
+					-- randomizza l'applicazione o no di ogni specifica direttiva?
+					if actual_air_winner == "tie" then
+						
+						local choice = math.ceil(math.random(1, 12))
 
-			if ( actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 ) or ( air_diff_loss[enemy_side_name] > 10 and air_diff_loss[enemy_side_name] <= 30 ) then  -- enemy suffers light losses or losses have increased slightly
-				directive_executed[side_name][ #directive_executed[side_name] + 1 ] = tactics["increment offensive strategic action and resource"]					
+						if choice < 4 then					
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]										
+						
+						elseif choice >= 4 and choice <= 8 then
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
+							
+						else
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"]
+						end				
+					end
 
-			elseif ( actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 50 ) or ( air_diff_loss[enemy_side_name] > 40 and air_diff_loss[enemy_side_name] <= 60 ) then  -- enemy suffers significative losses or losses have increased
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
+					if actual_air_winner == side_name then -- AIR directive_executed for air winner			
 
-			elseif ( actual_air_delta_cost_loss_perc > 50 and actual_air_delta_cost_loss_perc <= 70 ) or ( air_diff_loss[enemy_side_name] > 60 and air_diff_loss[enemy_side_name] <= 80 ) then -- enemy suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Anti-ship operations"]
+						if ( actual_air_delta_cost_loss_perc > 10 and actual_air_delta_cost_loss_perc <= 30 ) or ( air_diff_loss[enemy_side_name] > 10 and air_diff_loss[enemy_side_name] <= 30 ) then  -- enemy suffers light losses or losses have increased slightly
+							directive_executed[side_name][ #directive_executed[side_name] + 1 ] = tactics["increment offensive strategic action and resource"]					
 
-			elseif actual_air_delta_cost_loss_perc > 70 or air_diff_loss[enemy_side_name] > 80 then -- enemy suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]					
-			end				
-		
-		else  -- AIR directive_executed for air loser
+						elseif ( actual_air_delta_cost_loss_perc > 30 and actual_air_delta_cost_loss_perc <= 50 ) or ( air_diff_loss[enemy_side_name] > 40 and air_diff_loss[enemy_side_name] <= 60 ) then  -- enemy suffers significative losses or losses have increased
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
 
-			if ( actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 ) or ( air_diff_loss[side_name] > 5 and air_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]	
+						elseif ( actual_air_delta_cost_loss_perc > 50 and actual_air_delta_cost_loss_perc <= 70 ) or ( air_diff_loss[enemy_side_name] > 60 and air_diff_loss[enemy_side_name] <= 80 ) then -- enemy suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Anti-ship operations"]
 
-			elseif ( actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( air_diff_loss[side_name] > 15 and air_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive resource"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
+						elseif actual_air_delta_cost_loss_perc > 70 or air_diff_loss[enemy_side_name] > 80 then -- enemy suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"]				
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]					
+						end				
+					
+					else  -- AIR directive_executed for air loser
 
-			elseif ( actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 ) or ( air_diff_loss[side_name] > 35 and air_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 					
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
+						if ( actual_air_delta_cost_loss_perc > 5 and actual_air_delta_cost_loss_perc <= 15 ) or ( air_diff_loss[side_name] > 5 and air_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]	
 
-			elseif actual_air_delta_cost_loss_perc > 60 or air_diff_loss[side_name] > 55 then -- side suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
-			end				
-		end
-		
-		if actual_ground_winner == side_name then -- GROUND directive_executed for ground winner 
+						elseif ( actual_air_delta_cost_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( air_diff_loss[side_name] > 15 and air_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment offensive resource"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
 
-			if ( actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 ) or ( ground_diff_loss[enemy_side_name] > 5 and ground_diff_loss[enemy_side_name] <= 15 ) then  -- enemy suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
+						elseif ( actual_air_delta_cost_loss_perc > 40 and actual_air_delta_cost_loss_perc <= 60 ) or ( air_diff_loss[side_name] > 35 and air_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 					
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
 
-			elseif ( actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[enemy_side_name] > 15 and ground_diff_loss[enemy_side_name] <= 35 ) then  -- enemy suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
-			
-			elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[enemy_side_name] > 55 and ground_diff_loss[enemy_side_name] <= 75 ) then -- enemy suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]			
+						elseif actual_air_delta_cost_loss_perc > 60 or air_diff_loss[side_name] > 55 then -- side suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]					
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+						end				
+					end
+					
+					if actual_ground_winner == side_name then -- GROUND directive_executed for ground winner 
 
-			elseif actual_ground_delta_loss_perc > 55 or ground_diff_loss[enemy_side_name] > 75 then -- enemy suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+						if ( actual_ground_delta_loss_perc > 7 and actual_ground_delta_loss_perc <= 20 ) or ( ground_diff_loss[enemy_side_name] > 5 and ground_diff_loss[enemy_side_name] <= 15 ) then  -- enemy suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]										
+
+						elseif ( actual_ground_delta_loss_perc > 20 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[enemy_side_name] > 15 and ground_diff_loss[enemy_side_name] <= 35 ) then  -- enemy suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
+						
+						elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[enemy_side_name] > 55 and ground_diff_loss[enemy_side_name] <= 75 ) then -- enemy suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for SAM strike operations"]			
+
+						elseif actual_ground_delta_loss_perc > 55 or ground_diff_loss[enemy_side_name] > 75 then -- enemy suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+						end
+					
+					else -- GROUND directive_executed for ground loser
+
+						if ( actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 ) or ( ground_diff_loss[side_name] > 5 and ground_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
+
+						elseif ( actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[side_name] > 15 and ground_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
+						
+						elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[side_name] > 35 and ground_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
+
+						elseif actual_ground_delta_loss_perc > 55 and ground_diff_loss[side_name] > 55 then -- side suffers heavy losses
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
+							directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
+						end
+					end 
+				end				
+
+			-- execute and store directive_executed in report_commander		
+			for n, dir in ipairs(directive_executed[side_name]) do							
+				airDirective(side_name, dir) -- execute directive				
+				table.insert(report_commander[ #report_commander ].directive_executed[side_name], n, dir) -- store directive in report				
 			end
-		
-		else -- GROUND directive_executed for ground loser
-
-			if ( actual_ground_delta_loss_perc > 5 and actual_ground_delta_loss_perc <= 15 ) or ( ground_diff_loss[side_name] > 5 and ground_diff_loss[side_name] <= 15 ) then  -- side suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["air superiority"]
-
-			elseif ( actual_ground_delta_loss_perc > 15 and actual_air_delta_cost_loss_perc <= 40 ) or ( ground_diff_loss[side_name] > 15 and ground_diff_loss[side_name] <= 35 ) then  -- side suffers light losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore air default condition"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["expensive increment offensive action, resource and use of expensive asset"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["increment priority for Army Ground Attack operations"]					
-			
-			elseif ( actual_ground_delta_loss_perc > 40 and actual_ground_delta_loss_perc <= 55 ) or ( ground_diff_loss[side_name] > 35 and ground_diff_loss[side_name] <= 55 ) then -- side suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["defensive"] -- setting defensive tactic
-
-			elseif actual_ground_delta_loss_perc > 55 and ground_diff_loss[side_name] > 55 then -- side suffers heavy losses
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"] -- 
-				directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
-			end
-		end 				
-
-		-- execute and store directive_executed in report_commander		
-		for n, dir in ipairs(directive_executed[side_name]) do							
-			airDirective(side_name, dir) -- execute directive				
-			table.insert(report_commander[ #report_commander ].directive_executed[side_name], n, dir) -- store directive in report				
+			report_commander[ #report_commander ].target_priority[side_name] = getTargetPriority(side_name)
+			report_commander[ #report_commander ].config_module = camp.module_config 			
 		end
-		report_commander[ #report_commander ].target_priority[side_name] = getTargetPriority(side_name)
-		report_commander[ #report_commander ].config_module = camp.module_config 				
 	end	
 	os.remove("Active/report_commander.lua")		
 	SaveTabOnPath( "Active/", "report_commander", report_commander )       
@@ -885,13 +838,17 @@ end
 -- PREPROCESSING
 loadModuleConfigDefault()
 loadPriorityDefault()
-local directive_executed
 
-if local_test then 																-- TEST COMMANDER (very little)
+
+
+-- TESTING (very little)
+if local_test then
 	local testChangeNumberAircraftForTacticsFlg = false
 	local testAirCostChangeFlg = false
 	local testAirdirective_executedFlg = false
 	local testCommander = true
+	
+	
 	printPriorityTable("default value")
 
 	if testChangeNumberAircraftForTacticsFlg then --side, perc, operations		
@@ -941,18 +898,36 @@ if local_test then 																-- TEST COMMANDER (very little)
 
 	if testCommander then
 		
-		directive_executed = commander()
+		local directive_executed = commander()
 		print("-- test commander() -- ")
 		print("directive_executed: \n" .. inspect(directive_executed) .. "\n\n")
 		print("report_commander.directive_executed: \n" .. inspect(report_commander.directive_executed) .. "\n\n")
 		print("\n\n-- end test commander() -- ")		
 	end
-
-elseif camp.mission > MISSION_START_COMMANDER then  								-- EXECUTE COMMANDER
+else
 	commander()
 end
 
 --[[
+
+module_config[module_name] = getModuleConfig(module_name)
+saveModuleConfig( module_config[module_name] )
+
+
+
+
+implementare modulo tattico per blue e red per elaborazione configurazione parametri moduli,
+
+funzioni: 
+evalStatusGround()
+ - evalStatusGroundVehicle()
+ - evalStatusGroundShip()
+ - evalStatusGroundLogistic(): Plant & Line
+ - evalStatusGroundStatic()
+
+valuta:
+aumentare/rinforzare l'esecuzione di missioni GA (supporto truppe): 
+se 
 
 rinforzare il supporto ESCORT: 
 se le perdite di bomber/attacker dovute ai fighter è significativo: valuta i rapporti k_blue(red) = perdite bomber/ perdite fighter blue e red,   INCR= k_blue / k_red, 
@@ -963,5 +938,6 @@ se le perdite di bomber/attacker dovute ai ASM radar è significativo
 aumentare/rinforzare l'esecuzione di missioni CAP, Intercept, Fighter Sweep : 
 se il danno dei vehicle/Logistic/Static è significativo rispetto al totale dei ve
 il modulo deve fornire un report preciso per la scelta dei blue mentre deve essere aleatorio per quelle dei red. L'aleatorietà deve dipendere dalle capacxità di intelligenze (recom ground, air, economy ec
+
 
 ]]
