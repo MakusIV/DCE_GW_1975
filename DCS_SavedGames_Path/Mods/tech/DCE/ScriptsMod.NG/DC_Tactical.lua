@@ -673,23 +673,10 @@ function commander()
 	local actual_ship_delta_loss_perc = statistic_data.global_losses.ship.total.delta_loss_perc
 	local air_diff_loss_perc = statistic_data.global_losses.air.total.diff_loss_perc		
 	local ground_diff_loss_perc = statistic_data.global_losses.ground.total.diff_loss_perc
+	local num_report = camp.mission - MISSION_START_COMMANDER + 1
 	
 	local side = {"red", "blue"}
 	loadReportCommander()
-
-	report_commander[ #report_commander + 1 ] = {
-						
-		mission = camp.mission,
-		winner = {
-			air = actual_air_winner,
-			ground = actual_ground_winner,
-			ship = actual_ship_winner,
-		},		
-		directive_executed = {},
-		target_priority = {},
-		config_module = {},
-		
-	}
 
 	-- valuta se è necessario resettare i parametri per evitare incrementi eccessivi oppure consentirlo (verifica sia sui parametri di config che sulle priority)
 	-- valuta se è necessario il for per il cambio del side e in tal caso valuta se definire solo le azioni di successo e perdita solo del side_name (eliminando quelle per l'enem,y_side)
@@ -715,9 +702,25 @@ function commander()
 		}
 				
 		if camp.mission >= MISSION_START_COMMANDER or local_test then 
-			report_commander[ #report_commander].directive_executed[side_name] = {}
+			local num_report = camp.mission - MISSION_START_COMMANDER + 1
 
-				if ( (camp.mission + MISSION_START_COMMANDER + 1 ) % RESET_PERIOD ) == 0 then --cyclics reset
+			report_commander[ num_report ] = {
+						
+				mission = camp.mission,
+				winner = {
+					air = actual_air_winner,
+					ground = actual_ground_winner,
+					ship = actual_ship_winner,
+				},		
+				directive_executed = {},
+				target_priority = {},
+				config_module = {},
+				
+			}
+
+			report_commander[ num_report ].directive_executed[side_name] = {}
+
+				if num_report  % RESET_PERIOD  == 0 then --cyclics reset
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["restore global default condition"]					
 					directive_executed[side_name][ #directive_executed[side_name] +1 ] = tactics["reset priority for all operations"]
 				else
@@ -824,10 +827,10 @@ function commander()
 			-- execute and store directive_executed in report_commander		
 			for n, dir in ipairs(directive_executed[side_name]) do							
 				airDirective(side_name, dir) -- execute directive				
-				table.insert(report_commander[ #report_commander ].directive_executed[side_name], n, dir) -- store directive in report				
+				table.insert(report_commander[ num_report ].directive_executed[side_name], n, dir) -- store directive in report				
 			end
-			report_commander[ #report_commander ].target_priority[side_name] = getTargetPriority(side_name)
-			report_commander[ #report_commander ].config_module = camp.module_config 			
+			report_commander[ num_report ].target_priority[side_name] = getTargetPriority(side_name)
+			report_commander[ num_report ].config_module = camp.module_config 			
 		end
 	end	
 	os.remove("Active/report_commander.lua")		
