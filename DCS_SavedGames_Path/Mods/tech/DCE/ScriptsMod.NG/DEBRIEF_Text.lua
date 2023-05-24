@@ -1162,18 +1162,28 @@ do
 	if camp.mission > 1  then
 
 		local function updateDifferentialStatistic(force)			
-			local winner = {"red", "blue", "tie"}
+			local winner = {[1] = "red", [2] = "blue", [3] = "tie"}
 			statistic_data.global_losses[force].total.diff_loss_perc = math.floor(0.5 + math.abs( statistic_data.global_losses[force].total.diff_loss_perc - statistic_losses[force].total.delta_loss_perc ) )-- differential variation of total.delta_loss_perc
 
-			for i, side in ipairs(winner) do
+			for i, side in pairs(winner) do
 
 				if statistic_losses[force].total.winner == side and i ~= 3 then --red or blue winner
-					statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
-					statistic_data.global_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc					
+					statistic_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
+					statistic_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
+					statistic_losses[force].total.med_loss_perc[ winner[ i ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
+
+					--statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
+					--statistic_data.global_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
+					--statistic_data.global_losses[force].total.med_loss_perc[ winner[ i ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc					
 				
 				else -- tie
-					statistic_data.global_losses[force].total.sum_loss_perc[side] = statistic_data.global_losses[force].total.sum_loss_perc[side] + statistic_losses[force].total.delta_loss_perc
-					statistic_data.global_losses[force].total.med_loss_perc[side] = statistic_data.global_losses[force].total.sum_loss_perc[side] / camp.mission
+					statistic_losses[force].total.med_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red / camp.mission
+					statistic_losses[force].total.med_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue / camp.mission
+
+					--statistic_data.global_losses[force].total.sum_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red + statistic_losses[force].total.delta_loss_perc
+					-- statistic_data.global_losses[force].total.med_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red / camp.mission
+					-- statistic_data.global_losses[force].total.sum_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue + statistic_losses[force].total.delta_loss_perc
+					--statistic_data.global_losses[force].total.med_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue / camp.mission
 				end					
 			end
 		end
