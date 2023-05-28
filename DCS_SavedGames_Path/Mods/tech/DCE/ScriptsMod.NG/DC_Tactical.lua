@@ -494,9 +494,9 @@ local function changePriorityTask(side, task, attribute, class, perc)
 
 		if target.task == task and ( not attribute ) or ( ( target.attributes and target.attributes[1] and target.attributes[1] == attribute ) and (  ( not class ) or ( class and class == target.class )  )  ) then			
 			target.priority = math.ceil( target.priority * ( 1 + perc ) )
-
-			if target.priority > 20 then
-				target.priority = 20 -- max priority (targetlist_ini -> CAP priority = 20)
+			
+			if target.priority > 15 then
+				target.priority = 15 -- max priority (targetlist_ini -> CAP priority = 20)
 			
 			elseif target.priority < 1 then
 				target.priority = 1 -- min priority (targetlist_ini)
