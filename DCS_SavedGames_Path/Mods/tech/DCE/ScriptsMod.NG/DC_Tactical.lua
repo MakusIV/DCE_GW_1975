@@ -33,7 +33,7 @@ log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Ac
 require("Active/oob_air")
 require("Active/oob_ground")
 require("Active/statistic_data")
---require("Init/conf_mod")															-- Miguel21 modification M00 : need option
+require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 --require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 --
 
@@ -111,7 +111,6 @@ camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 
 --local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
 local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
-local MISSION_START_COMMANDER = 5 -- first mission for start commander execution
 local RESET_PERIOD = 5 -- number of mission for reset all config param 
 local report_commander = {} -- table for store report commander directive
 
@@ -1002,7 +1001,7 @@ function commander()
 
 	local num_report = camp.mission - MISSION_START_COMMANDER + 1
 
-	report_commander[ num_report ] = {
+	local report = {
 				
 		mission = camp.mission,
 		winner = {
@@ -1015,6 +1014,8 @@ function commander()
 		config_module = {},
 		
 	}
+
+	table.insert(report_commander, num_report, report)
 
 	for i, side_name in ipairs(side) do
 		local enemy_side_name = side[ i%2 + 1]

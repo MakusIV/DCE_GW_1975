@@ -1211,10 +1211,16 @@ do
 	s = s .. " - Blue AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
 	s = s .. " - Red AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.red.last_mission.all.qty .. ", cost: " .. air_loss_data.red.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["red"].total.all.qty .. ", cost: " .. air_loss_data["red"].total.all.cost .. "\n\n"
 	s = s .. " - AIR Losses Statistic:\n   - last mission: air winner: " ..  statistic_losses.air.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.air.last_mission.delta_loss .. " ( " .. statistic_losses.air.last_mission.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.last_mission.delta_loss_cost .. " ( " .. statistic_losses.air.last_mission.delta_loss_cost_perc .. "% )"  .. "\n\n"	
-	s = s .. "   - AIR status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n"
-	s = s .. "   - Blue-Red Differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.diff_loss_perc .. "%\n"
-	s = s .. "   - Blue Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.blue .. "%\n"
-	s = s .. "   - Red Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.red .. "%\n\n"
+	s = s .. "   - AIR status campaign: Air Winner: " ..  statistic_losses.air.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.air.total.delta_loss .. " ( " .. statistic_losses.air.total.delta_loss_perc .. "% )" .. ", blue-red delta loss cost : " .. statistic_losses.air.total.delta_loss_cost .. " ( " .. statistic_losses.air.total.delta_loss_cost_perc .. "% )"  .. "\n"	
+	
+	if camp.mission > MISSION_START_COMMANDER then
+		s = s .. "   - Blue-Red Differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.diff_loss_perc .. "%\n"
+		s = s .. "   - Blue Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.blue .. "%\n"
+		s = s .. "   - Red Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.red .. "%\n\n"
+	
+	else
+		s = s .. "\n"
+	end
 
 	s = s ..  "GROUND LOSSES EVALUATION\n-------------------\n"
 
@@ -1222,9 +1228,15 @@ do
 	s = s .. " - Red GROUND Losses:\n   - last mission: unit lost: " ..  ground_loss_data.red.last_mission.unit_qty .. "\n   - total campaign: ground lost: " .. ground_loss_data.red.total.unit_qty .. "\n\n"
 	s = s .. " - GROUND Losses Statistic:\n   - last mission: ground winner: " ..  statistic_losses.ground.last_mission.winner .. "\n   - blue-red delta losses " .. statistic_losses.ground.last_mission.delta_loss .. " ( " .. statistic_losses.ground.last_mission.delta_loss_perc .. "% )" .. "\n\n"
 	s = s .. "   - GROUND status campaign: Ground Winner: " ..  statistic_losses.ground.total.winner .. "\n   - blue-red delta losses: " .. statistic_losses.ground.total.delta_loss .. " ( " .. statistic_losses.ground.total.delta_loss_perc .. "% )" .. "\n"
-	s = s .. "   - Blue-Red Differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.diff_loss_perc .. "%\n"
-	s = s .. "   - Blue Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.blue .. "%\n"
-	s = s .. "   - Red Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.red .. "%\n\n"
+
+	if camp.mission > MISSION_START_COMMANDER then
+		s = s .. "   - Blue-Red Differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.diff_loss_perc .. "%\n"
+		s = s .. "   - Blue Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.blue .. "%\n"
+		s = s .. "   - Red Loss: median blue-red differenzial ground loss percentage: " ..  statistic_data.global_losses.ground.total.med_loss_perc.red .. "%\n\n"
+
+	else
+		s = s .. "\n"
+	end
 
 	s = s ..  "SHIP LOSSES EVALUATION\n-------------------\n"
 

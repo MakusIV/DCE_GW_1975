@@ -145,7 +145,8 @@ TargetPointF14_BullsToFP = true				-- assigns the BullsEye position to the NavPo
 -- limit the number of F-14s (in the same Flight as the player) on the CVN to avoid taxiing collisions
 limiteNbF14CVN = 3					    	-- advice 3 max is a good value
 
-
+MISSION_START_COMMANDER = 5     -- first mission for start commander execution
+	
 
 
 -- 2 ############################################################################################################################################################
