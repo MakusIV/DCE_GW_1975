@@ -437,7 +437,7 @@ for e = 1, #events do
 														log.info("dead ground unit was hit by a client (player)")											
 														clientstats[client_hit_table[events[e].initiator]].kills_ground = clientstats[client_hit_table[events[e].initiator]].kills_ground + 1							--award gound kill to client
 														clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground + 1		--award ground kill to client
-														log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.kills_ground)
+														--log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.kills_ground)
 													end
 												
 												else --friendly kill ground  
@@ -577,7 +577,7 @@ for e = 1, #events do
 															log.info("dead static unit was hit by a client (player)")											
 															clientstats[client_hit_table[events[e].initiator]].kills_ground = clientstats[client_hit_table[events[e].initiator]].kills_ground + 1							--award ground kill to client
 															clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.kills_ground + 1		--award ground kill to client
-															log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_ship = " .. clientstats[client_control[events[e].initiator]].score_last.kills_ground)															
+															--log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.kills_ship = " .. clientstats[client_control[events[e].initiator]].score_last.kills_ground)															
 														end
 													else --friendly kill  
 														log.debug("friendly kill ground, store stats for killer unit - killer_unit.name = " .. killer_unit.name .. ": update killer_unit.score.friendly_kills_ship and killer_unit.score_last.friendly_kills_ground () - to be implement")
@@ -587,7 +587,7 @@ for e = 1, #events do
 															log.info("dead static unit was hit by a client (player) and have both same side (friendly kill) - unit side: " .. side_name .. " ~= killer_side_name: " .. killer_side_name)
 															clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground + 1							--award ground kill to client
 															clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground = clientstats[client_hit_table[events[e].initiator]].score_last.friendly_kills_ground + 1		--award ground kill to client
-															log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_ground)															
+															--log.debug("store hit in clientstats: clientstats[" .. client_hit_table[events[e].initiator] .. "].friendly_kills_ground = " .. clientstats[client_hit_table[events[e].initiator]].friendly_kills_ground .. ", clientstats[" .. client_hit_table[events[e].initiator]"].score_last.friendly_kills_ground = " .. clientstats[client_control[events[e].initiator]].score_last.friendly_kills_ground)															
 														end
 													end	
 												end	
