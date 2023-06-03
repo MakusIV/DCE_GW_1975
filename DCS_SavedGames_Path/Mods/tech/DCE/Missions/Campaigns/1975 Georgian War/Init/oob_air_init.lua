@@ -231,7 +231,7 @@ oob_air = {
 				["Fighter Sweep"] = 0.2,	
 			},
 			number = 12,
-		},
+		},		
 		[4] = {
 			name = "R/VMFA-157",							--unit name
 			inactive = true,
@@ -242,12 +242,12 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},
-		[5] = {
+		[5] = { -- GUDAUTA --------------------------------------------------------------------
 			name = "315th Air Division",					--unit name
 			type = "C-130",									--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
-			base = "Batumi",								--unit base
+			base = "Gudauta",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
 			tasks = {										--unit tasks
 				["Transport"] = true,
@@ -285,13 +285,13 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
 			tasks = {},										--unit tasks
 			number = 15,
-		},-- END KOBULETI --------------------------------------------------------------------
-		[9] = {
+		},
+		[9] = {-- GUDAUTA --------------------------------------------------------------------
 			name = "171 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
-			base = "Batumi",								--unit base
+			base = "Gudauta",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_refuelling, mission_ini.max_skill_blue_refuelling),			--unit skill
 			tasks = {										--unit tasks
 				["Refueling"] = true,
@@ -307,9 +307,8 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_refuelling, mission_ini.max_skill_blue_refuelling),			--unit skill
 			tasks = {},										--unit tasks
 			number = 9,
-		},		
-			------------------ Vaziani ---------------------		
-		[11] = {
+		},			
+		[11] = {-- VAZIANI --------------------------------------------------------------------
 			name = "GA 3rd AS",								--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Georgia",							--unit country

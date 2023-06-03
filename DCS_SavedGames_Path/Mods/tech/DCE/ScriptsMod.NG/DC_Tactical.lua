@@ -24,7 +24,7 @@ log.level = log_level
 log.outfile = LOG_DIR .. "LOG_DC_Tactical.lua." .. camp.mission .. ".log" 
 local local_debug = false -- local debug   
 local active_log = false
-local local_test = true
+local local_test = false
 log.debug("Start")
 
 log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
@@ -34,6 +34,7 @@ require("Active/oob_air")
 require("Active/oob_ground")
 require("Active/statistic_data")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
+require("Active/camp_status")
 --require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 --
 
@@ -112,7 +113,7 @@ camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 --local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
 local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
 local RESET_PERIOD = 5 -- number of mission for reset all config param 
-local report_commander = {} -- table for store report commander directive
+--local report_commander = {} -- table for store report commander directive
 
 -- implement function to modify target priority for change objective tactics: 	
 -- devono essere inseriti anche gli altri fattori condizionanti presenti negli altri moduli
