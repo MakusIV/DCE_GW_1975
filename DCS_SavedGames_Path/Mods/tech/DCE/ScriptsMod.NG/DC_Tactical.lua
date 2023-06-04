@@ -34,9 +34,11 @@ require("Active/oob_air")
 require("Active/oob_ground")
 require("Active/statistic_data")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
---require("Active/camp_status")
---require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
---
+
+if not FirstMission then
+	require("Active/camp_status")
+end
+
 
 
 --[[
@@ -121,10 +123,10 @@ local RESET_PERIOD = 5 -- number of mission for reset all config param
 -- load module_config_init table, if not exist create one new
 local function loadModuleConfigDefault()
 
-	if camp.mission > 1 and io.open("Active/module_config_init.lua", "r") then
+	if camp.mission >= MISSION_START_COMMANDER and io.open("Active/module_config_init.lua", "r") then
         require("Active/module_config_init") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 
-    else -- initialize new computed_target_efficiency if not exist 	
+    elseif camp.mission == 1 then -- initialize new computed_target_efficiency if not exist 	
 		os.remove("Active/module_config_init.lua")	
 		module_config_init = camp.module_config 
 		SaveTabOnPath( "Active/", "module_config_init", module_config_init )       
