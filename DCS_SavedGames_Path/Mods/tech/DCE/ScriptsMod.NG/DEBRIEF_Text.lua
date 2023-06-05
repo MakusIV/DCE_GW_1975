@@ -1019,75 +1019,95 @@ do
 	
 	s = s ..  "AIR LOSSES EVALUATION\n-------------------\n"
 
-	local statistic_losses = {
+	if camp.mission > 1  then	
+
+		if io.open("Active/statistic_data.lua", "r") then
+        	require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
 		
-		air = {
-			last_mission = {
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",				
+		else 
+			print("ERROR - Active/statistic_data not found")
+		end	
+		
+		statistic_losses = statistic_data.global_losses
+		
+	else
+		statistic_losses = {
+		
+			air = {
+				last_mission = {
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",				
+				},
+				total = { 
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",
+					sum_loss_perc = {
+						red = 0,
+						blue = 0,
+					},
+					med_loss_perc = {
+						red = 0,
+						blue = 0,
+					},
+					diff_loss_perc = 0,
+				},		
 			},
-			total = { 
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",
-				sum_loss_perc = {
-					red = 0,
-					blue = 0,
+			ground = {
+				last_mission = {
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",
 				},
-				med_loss_perc = {
-					red = 0,
-					blue = 0,
-				},
-				diff_loss_perc = 0,
-			},		
-		},
-		ground = {
-			last_mission = {
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",
+				total = { 
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",
+					sum_loss_perc = {
+						red = 0,
+						blue = 0,
+					},
+					med_loss_perc = {
+						red = 0,
+						blue = 0,
+					},
+					diff_loss_perc = 0,
+				},		
 			},
-			total = { 
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",
-				sum_loss_perc = {
-					red = 0,
-					blue = 0,
+			ship = {
+				last_mission = {
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",
 				},
-				med_loss_perc = {
-					red = 0,
-					blue = 0,
-				},
-				diff_loss_perc = 0,
-			},		
-		},
-		ship = {
-			last_mission = {
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",
+				total = { 
+					delta_loss = 0,
+					delta_loss_cost = 0,
+					delta_loss_perc = 0,
+					delta_loss_cost_perc = 0,
+					winner = "tie",
+				},		
 			},
-			total = { 
-				delta_loss = 0,
-				delta_loss_cost = 0,
-				delta_loss_perc = 0,
-				delta_loss_cost_perc = 0,
-				winner = "tie",
-			},		
-		},
-	}
+		}
+		statistic_data = {
+			global_losses = statistic_losses,
+			aircraft_losses = air_loss_data,
+			ground_losses = ground_loss_data,
+		}		
+	end
+
+	
 	local typeStat = {"last_mission", "total"}	
 	
 	for _, ts in pairs(typeStat) do
@@ -1170,27 +1190,18 @@ do
 				if statistic_losses[force].total.winner == side and i ~= 3 then --red or blue winner
 					statistic_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
 					statistic_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
-					statistic_losses[force].total.med_loss_perc[ winner[ i ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
-
-					--statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] + statistic_losses[force].total.delta_loss_perc
-					--statistic_data.global_losses[force].total.med_loss_perc[ winner[ i%2 + 1 ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i%2 + 1 ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc
-					--statistic_data.global_losses[force].total.med_loss_perc[ winner[ i ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc					
+					statistic_losses[force].total.med_loss_perc[ winner[ i ] ] = statistic_data.global_losses[force].total.sum_loss_perc[ winner[ i ] ] / camp.mission  -- median of differential variation of total.delta_loss_perc		
 				
 				else -- tie
 					statistic_losses[force].total.med_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red / camp.mission
-					statistic_losses[force].total.med_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue / camp.mission
-
-					--statistic_data.global_losses[force].total.sum_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red + statistic_losses[force].total.delta_loss_perc
-					-- statistic_data.global_losses[force].total.med_loss_perc.red = statistic_data.global_losses[force].total.sum_loss_perc.red / camp.mission
-					-- statistic_data.global_losses[force].total.sum_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue + statistic_losses[force].total.delta_loss_perc
-					--statistic_data.global_losses[force].total.med_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue / camp.mission
+					statistic_losses[force].total.med_loss_perc.blue = statistic_data.global_losses[force].total.sum_loss_perc.blue / camp.mission					
 				end					
 			end
 		end
 
-		if io.open("Active/statistic_data.lua", "r") then
-        	require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
-		end	
+		--if io.open("Active/statistic_data.lua", "r") then
+        --	require("Active/statistic_data") -- load stored computed_target_efficiency.lua if not first mission campaign and exist table
+		--end	
 		
 		if tonumber(statistic_losses.air.total.delta_loss_perc) ~= nil then
 			updateDifferentialStatistic("air")
@@ -1200,12 +1211,12 @@ do
 			updateDifferentialStatistic("ground")
 		end
 		
-	else
-		statistic_data = {
-			global_losses = statistic_losses,
-			aircraft_losses = air_loss_data,
-			ground_losses = ground_loss_data,
-		}		
+	--else
+	--	statistic_data = {
+	--		global_losses = statistic_losses,
+	--		aircraft_losses = air_loss_data,
+	--		ground_losses = ground_loss_data,
+	--	}		
 	end
 
 	s = s .. " - Blue AIR Losses:\n   - last mission: aircraft lost: " ..  air_loss_data.blue.last_mission.all.qty .. ", cost: " .. air_loss_data.blue.last_mission.all.cost .."\n   - total campaign: aircraft lost: " .. air_loss_data["blue"].total.all.qty .. ", cost: " .. air_loss_data["blue"].total.all.cost .. "\n\n"
@@ -1217,7 +1228,7 @@ do
 		s = s .. "   - Blue-Red Differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.diff_loss_perc .. "%\n"
 		s = s .. "   - Blue Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.blue .. "%\n"
 		s = s .. "   - Red Loss: median blue-red differenzial air loss percentage: " ..  statistic_data.global_losses.air.total.med_loss_perc.red .. "%\n\n"
-	
+
 	else
 		s = s .. "\n"
 	end
