@@ -32,11 +32,11 @@ log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Ac
 --require("Init/db_airbases")
 require("Active/oob_air")
 require("Active/oob_ground")
-require("Active/statistic_data")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 
 if not FirstMission then
 	require("Active/camp_status")
+	require("Active/statistic_data")
 end
 
 
@@ -1489,8 +1489,9 @@ if local_test then
 		print("report_commander.directive_executed: \n" .. inspect(report_commander[-3].directive_executed) .. "\n\n")
 		print("\n\n-- end test commander() -- ")		
 	end
-else
-	commander()
+
+elseif not FirstMission then
+		commander()
 end
 
 --[[
