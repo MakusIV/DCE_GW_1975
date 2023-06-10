@@ -939,12 +939,12 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},	
-		[53] = {
+		[53] = { ----------------------- Gudauta -------------------------		
 			name = "317th Air Division",					--unit name
 			type = "C-130",									--aircraft type
 			country = "USA",								--unit country
 			livery = "",									--unit livery
-			base = "Kobuleti",								--unit base
+			base = "Gudauta",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
 			tasks = {										--unit tasks
 				["Transport"] = true,
