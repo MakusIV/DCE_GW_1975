@@ -112,8 +112,6 @@ camp.module_config.ATO_Generator[side].UNIT_SERVICEABILITY = val
 
 ]]
 
---local module_config_init -- default module_config: module config parameters stored initialized in camp_init module
-local target_priority_default -- priority_default table contains initial target priority value specified in targetlist_init
 local RESET_PERIOD = 5 -- number of mission for reset all config param 
 
 
@@ -490,6 +488,12 @@ local function changeWeightScore(side, value, operation)
 
 end
 
+-- print target priority table
+local function printPriorityTable(text)		
+	print( text .. "\n\n" .. inspect( target_priority_default ) )	
+end
+
+
 -- change priority target (targetlist) of the perc(%) value for specific task
 local function changePriorityTask(side, task, attribute, class, perc)
 
@@ -572,10 +576,6 @@ local function loadPriorityDefault()
     end
 end
 
--- print target priority table
-local function printPriorityTable(text)		
-	print( text .. "\n\n" .. inspect( target_priority_default ) )	
-end
 
 
 -- normalized tactic directive
@@ -1039,7 +1039,7 @@ function commander()
 			
 
 			if num_report  % RESET_PERIOD  == 0 then --cyclics reset
-				changeNumberAircraftForTactics(side, nil, "default")								-- reset min, max, requested aircraft 
+				changeNumberAircraftForTactics(side_name, nil, "default")								-- reset min, max, requested aircraft 
 				changeWeightScore(side_name, nil, "default")										-- reset weight score 				
 				airCostPolicy(side_name, "default")													-- reset use of expensive asset
 				resetPriorityTask(side_name, "all", nil, nil)						-- decrement priority for Strike task and soft attribute
@@ -1423,7 +1423,6 @@ end
 -- PREPROCESSING
 loadModuleConfigDefault()
 loadPriorityDefault()
-
 
 
 -- TESTING (very little)
