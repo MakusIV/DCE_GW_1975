@@ -35,7 +35,7 @@ require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 
 if not FirstMission then
-	require("Active/camp_status")
+	--require("Active/camp_status")
 	require("Active/statistic_data")
 end
 
