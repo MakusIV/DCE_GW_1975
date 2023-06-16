@@ -1,565 +1,602 @@
 
-AtoFP delayed LANDING 
 
-AtoFP FirstMsg Pack 1 - VF-101 - CAP 1
-Pack: 1 Nb   2  F-14B  Pack 1 - VF-101 - CAP 1  CVN-71 Theodore Roosevelt  Battle Group CAP  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 1 - VF-101 - CAP 2
-Pack: 1 Nb   2  F-14B  Pack 1 - VF-101 - CAP 2  CVN-71 Theodore Roosevelt  Battle Group CAP  ETA -258  StartT: 1  EtaWPT: -258   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 1 - VF-101 - CAP 3
-AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 3342.7728356889
-AtoFP passe CC SinglePlayer
-AtoFP passe FFd  not FlagInsertSixpack 
-AtoFP passe 1B activate_group_time_after 3123
-AtoFP passe 1C Start_set_ai_task 3124
-AtoFP passe GGa  ~= Turning Point and not FlagInsertSixpack
-Pack: 1 Nb   2  F-14B  Pack 1 - VF-101 - CAP 3  CVN-71 Theodore Roosevelt  Battle Group CAP  ETA 3342  StartT: 1  EtaWPT: 3342   // High  Type: TakeOffParking  SOL/VOL decale_A 3342 SOL/VOL decale_A   
-
-
-
-AtoFP FirstMsg Pack 2 - VFA-106 - Intercept 1
-AtoFP spawnOair AIR from:  IA intercept 3256
-AtoFP spawnOair AIR from:  IA intercept 3256
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe activate 03
-Pack: 2 Nb   2  FA-18C_hornet  Pack 2 - VFA-106 - Intercept 1  CVN-71 Theodore Roosevelt  CVN-71 Theodore Roosevelt Alert  ETA -1  StartT: 0  EtaWPT: 0   // Good  Type: Turning Point   VOL FLAG decale _B   
-
-
-
-AtoFP FirstMsg Pack 3 - 58 TFS - CAP 1
-Pack: 3 Nb   2  F-15C  Pack 3 - 58 TFS - CAP 1  Vaziani  CAP Kutaisi  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 3 - 58 TFS - CAP 2
+AtoFP FirstMsg Pack 1 - F7 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 3 Nb   1  F-15C  Pack 3 - 58 TFS - CAP 2  Vaziani  CAP Kutaisi  ETA 1087  StartT: 1  EtaWPT: 1087   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 1087    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 1 Nb   1  AJS37  Pack 1 - F7 - Strike 1  Sukhumi  206 SA-2 Site B-3  ETA 2953  StartT: 1  EtaWPT: 2953   // High  Type: TakeOffParking  SOL/VOL decale_A 2953    
 
 
 
-AtoFP FirstMsg Pack 4 - 13 TFS - CAP 1
-Pack: 4 Nb   2  F-16C_50  Pack 4 - 13 TFS - CAP 1  Senaki-Kolkhi  CAP Tbilissi  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 5 - VMA 311 - Strike 1
+AtoFP FirstMsg Pack 1 - VF-101 - Escort 1
 AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 1199.5902974212
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 1080 NbPlanetDeck: 8
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 8
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100024 trig_n: 15
-Pack: 5 Nb   4  AV8BNA  Pack 5 - VMA 311 - Strike 1  LHA_Tarawa  407 8th Army ELINT Station  ETA 1080  StartT: 1380  EtaWPT: 1199   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100024   
+AtoFP passe BB unitname+FARP 2880.3810701762
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100006 trig_n: 15
+Pack: 1 Nb   4  F-14A-135-GR  Pack 1 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  206 SA-2 Site B-3  ETA 2880  StartT: 2880  EtaWPT: 2880   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 2880 SOL/VOL decale_A   
 
 
 
-AtoFP FirstMsg Pack 5 - VFA-106 - SEAD 1
+AtoFP FirstMsg Pack 2 - F9 - Strike 1
 AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 1085.8587290854
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 1080 NbPlanetDeck: 11
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 11
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100028 trig_n: 16
-Pack: 5 Nb   3  FA-18C_hornet  Pack 5 - VFA-106 - SEAD 1  CVN-71 Theodore Roosevelt  407 8th Army ELINT Station  ETA 1080  StartT: 1380  EtaWPT: 1085   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100028   
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 2 Nb   1  AJS37  Pack 2 - F9 - Strike 1  Tbilissi-Lochini  209 SA-2 Site R-3  ETA 342  StartT: 1  EtaWPT: 342   // High  Type: TakeOffParking  SOL/VOL decale_A 342    
 
 
 
-AtoFP FirstMsg Pack 5 - VFA-106 - Escort 1
+AtoFP FirstMsg Pack 2 - VF-101 - Escort 1
+Pack: 2 Nb   4  F-14A-135-GR  Pack 2 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  209 SA-2 Site R-3  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 3 - VMFA-151 - Strike 1
 AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 1032.9878128171
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 900 NbPlanetDeck: 15
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 15
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100033 trig_n: 17
-Pack: 5 Nb   4  FA-18C_hornet  Pack 5 - VFA-106 - Escort 1  CVN-71 Theodore Roosevelt  407 8th Army ELINT Station  ETA 900  StartT: 1200  EtaWPT: 1032   // Excellent  Type: Turning Point   ATTENTION SECONDES a_activate_group 100033   
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 3 Nb   1  F-4E  Pack 3 - VMFA-151 - Strike 1  Batumi  106 SA-2 Site C-6  ETA 330  StartT: 1  EtaWPT: 330   // Good  Type: TakeOffParking  SOL/VOL decale_A 330    
 
 
 
-AtoFP FirstMsg Pack 5 - VFA-106 - Escort 2
-AtoFP passe AA [ETA] > 0 true
-AtoFP passe BB unitname+FARP 1119.2100515503
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 720 NbPlanetDeck: 17
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 17
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100036 trig_n: 18
-AtoFP passe LLLa LimitedParkTiming OR BaseAirStart 
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100036 trig_n: 18
-Pack: 5 Nb   2  FA-18C_hornet  Pack 5 - VFA-106 - Escort 2  CVN-71 Theodore Roosevelt  407 8th Army ELINT Station  ETA 720  StartT: 1020  EtaWPT: 1119   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100036   
-
-
-
-AtoFP FirstMsg Pack 6 - F7 - Strike 1
+AtoFP FirstMsg Pack 3 - VF-101 - Escort 1
+AtoFP passe 0A-a SinglePlayer ..NbPlanetDeck: 2
+AtoFP passe PlayerClient AddTimingDeckCata 900
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
-Pack: 6 Nb   4  AJS37  Pack 6 - F7 - Strike 1  Sukhumi  206 SA-11 Site B-3  ETA 0  StartT: 1  EtaWPT: 0   // Player  Type: TakeOffParking      
+Pack: 3 Nb   2  F-14A-135-GR  Pack 3 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  106 SA-2 Site C-6  ETA 900  StartT: 1  EtaWPT: 1   // Client  Type: TakeOffParking      
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
 
 
-AtoFP FirstMsg Pack 6 - F7 - Strike 2
+AtoFP FirstMsg Pack 4 - VMFA-151 - Strike 1
+Pack: 4 Nb   1  F-4E  Pack 4 - VMFA-151 - Strike 1  Batumi  NOGIR FARP MN76  ETA -699  StartT: 1  EtaWPT: -699   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 5 - 58 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 6 Nb   3  AJS37  Pack 6 - F7 - Strike 2  Sukhumi  206 SA-11 Site B-3  ETA 706  StartT: 1  EtaWPT: 706   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 706    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 5 Nb   1  F-4E  Pack 5 - 58 TFS - Strike 1  Kutaisi  104 SA-6 Site E-4  ETA 2757  StartT: 1  EtaWPT: 2757   // High  Type: TakeOffParking  SOL/VOL decale_A 2757    
 
 
 
-AtoFP FirstMsg Pack 6 - VF-101 - Escort 1
-AtoFP passe AA [ETA] > 0 true
-AtoFP passe BB unitname+FARP 696.24621880573
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 540 NbPlanetDeck: 21
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 21
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100050 trig_n: 20
-AtoFP passe LLLa LimitedParkTiming OR BaseAirStart 
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100050 trig_n: 20
-Pack: 6 Nb   4  F-14B  Pack 6 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  206 SA-11 Site B-3  ETA 540  StartT: 840  EtaWPT: 696   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100050   
+AtoFP FirstMsg Pack 6 - 58 TFS - Strike 1
+Pack: 6 Nb   1  F-4E  Pack 6 - 58 TFS - Strike 1  Kutaisi  203 SA-2 Site A-3  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 7 - 335 TFS - Strike 1
-Pack: 7 Nb   4  F-15E  Pack 7 - 335 TFS - Strike 1  Vaziani  Nalchik Airbase  ETA -50  StartT: 1  EtaWPT: -50   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 7 - 58 TFS - Strike 1
+Pack: 7 Nb   1  F-4E  Pack 7 - 58 TFS - Strike 1  Kutaisi  407 8th Army ELINT Station  ETA -188  StartT: 1  EtaWPT: -188   // Good  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 7 - VF-101 - Escort 1
-AtoFP passe AA [ETA] > 0 true
-AtoFP passe BB unitname+FARP 288.41550605201
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 180 NbPlanetDeck: 25
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 25
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100060 trig_n: 21
-AtoFP passe LLLa LimitedParkTiming OR BaseAirStart 
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100060 trig_n: 21
-Pack: 7 Nb   4  F-14B  Pack 7 - VF-101 - Escort 1  CVN-71 Theodore Roosevelt  Nalchik Airbase  ETA 180  StartT: 480  EtaWPT: 288   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100060   
-
-
-
-AtoFP FirstMsg Pack 8 - 417 TFS - Strike 1
+AtoFP FirstMsg Pack 8 - 58 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 8 Nb   1  F-117A  Pack 8 - 417 TFS - Strike 1  Soganlug  Bridge Vladikavkaz North MN 76  ETA 2894  StartT: 1  EtaWPT: 2894   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2894    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 8 Nb   1  F-4E  Pack 8 - 58 TFS - Strike 1  Kutaisi  LENIGORI FARP MM56  ETA 1860  StartT: 1  EtaWPT: 1860   // High  Type: TakeOffParking  SOL/VOL decale_A 1860    
 
 
 
-AtoFP FirstMsg Pack 9 - 417 TFS - Strike 1
+AtoFP FirstMsg Pack 9 - 54 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 9 Nb   1  F-117A  Pack 9 - 417 TFS - Strike 1  Soganlug  Bridge South Elhotovo MN 39  ETA 572  StartT: 1  EtaWPT: 572   // Good  Type: TakeOffParking  SOL/VOL decale_A 572    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 9 Nb   1  F-4E  Pack 9 - 54 TFS - Strike 1  Kobuleti  204 SA-6 Site B-1  ETA 1788  StartT: 1  EtaWPT: 1788   // High  Type: TakeOffParking  SOL/VOL decale_A 1788    
 
 
 
-AtoFP FirstMsg Pack 10 - 417 TFS - Strike 1
-Pack: 10 Nb   1  F-117A  Pack 10 - 417 TFS - Strike 1  Soganlug  Bridge Vladikavkaz South MN 76  ETA -391  StartT: 1  EtaWPT: -391   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 10 - F7 - Strike 1
+Pack: 10 Nb   3  AJS37  Pack 10 - F7 - Strike 1  Sukhumi  TSKHINVALI FARP MM27  ETA -9  StartT: 1  EtaWPT: -9   // High  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 10 - 13 TFS - SEAD 1
-Pack: 10 Nb   3  F-16C_50  Pack 10 - 13 TFS - SEAD 1  Senaki-Kolkhi  Bridge Vladikavkaz South MN 76  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 10 - 54 TFS - Escort 1
+Pack: 10 Nb   2  F-4E  Pack 10 - 54 TFS - Escort 1  Kobuleti  TSKHINVALI FARP MM27  ETA -154  StartT: 1  EtaWPT: -154   // Good  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 11 - VAW-125 - AWACS 1
-Pack: 11 Nb   1  E-2C  Pack 11 - VAW-125 - AWACS 1  CVN-71 Theodore Roosevelt  Battle Group AEW  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 11 - 54 TFS - Strike 1
+Pack: 11 Nb   1  F-4E  Pack 11 - 54 TFS - Strike 1  Kobuleti  101 SA-3 Site E-1  ETA -13  StartT: 1  EtaWPT: -13   // High  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 11 - VAW-125 - AWACS 2
-AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 13521.739371505
-AtoFP passe CC SinglePlayer
-AtoFP passe FFd  not FlagInsertSixpack 
-AtoFP passe 1B activate_group_time_after 3123
-AtoFP passe 1C Start_set_ai_task 3124
-AtoFP passe GGa  ~= Turning Point and not FlagInsertSixpack
-Pack: 11 Nb   1  E-2C  Pack 11 - VAW-125 - AWACS 2  CVN-71 Theodore Roosevelt  Battle Group AEW  ETA 13521  StartT: 1  EtaWPT: 13521   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 13521 SOL/VOL decale_A   
+AtoFP FirstMsg Pack 12 - 58 TFS - Strike 1
+Pack: 12 Nb   1  F-4E  Pack 12 - 58 TFS - Strike 1  Kutaisi  102 EWR Site  ETA -297  StartT: 1  EtaWPT: -297   // High  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 12 - 174 ARW - Refueling 1
-Pack: 12 Nb   1  KC135MPRS  Pack 12 - 174 ARW - Refueling 1  Tbilissi-Lochini  Tanker Track West  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 12 - 174 ARW - Refueling 2
+AtoFP FirstMsg Pack 13 - VMFA-159 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 12 Nb   1  KC135MPRS  Pack 12 - 174 ARW - Refueling 2  Tbilissi-Lochini  Tanker Track West  ETA 5974  StartT: 1  EtaWPT: 5974   // High  Type: TakeOffParking  SOL/VOL decale_A 5974    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 13 Nb   1  F-4E  Pack 13 - VMFA-159 - Strike 1  Sukhumi  101 EWR Site  ETA 1745  StartT: 1  EtaWPT: 1745   // Good  Type: TakeOffParking  SOL/VOL decale_A 1745    
 
 
 
-AtoFP FirstMsg Pack 13 - 801 ARS - Refueling 1
-Pack: 13 Nb   1  KC-135  Pack 13 - 801 ARS - Refueling 1  Senaki-Kolkhi  Tanker Track East  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 14 - VMFA-151 - Strike 1
+Pack: 14 Nb   1  F-4E  Pack 14 - VMFA-151 - Strike 1  Batumi  103 EWR Site  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 13 - 801 ARS - Refueling 2
+AtoFP FirstMsg Pack 15 - F9 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 13 Nb   1  KC-135  Pack 13 - 801 ARS - Refueling 2  Senaki-Kolkhi  Tanker Track East  ETA 14801  StartT: 1  EtaWPT: 14801   // High  Type: TakeOffParking  SOL/VOL decale_A 14801    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 15 Nb   3  AJS37  Pack 15 - F9 - Strike 1  Tbilissi-Lochini  Prohladniy Depot MP 24  ETA 1688  StartT: 1  EtaWPT: 1688   // High  Type: TakeOffParking  SOL/VOL decale_A 1688    
 
 
 
-AtoFP FirstMsg Pack 14 - 7 ACCS - AWACS 1
-Pack: 14 Nb   1  E-3A  Pack 14 - 7 ACCS - AWACS 1  Kutaisi  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 14 - 7 ACCS - AWACS 2
+AtoFP FirstMsg Pack 15 - VMFA-159 - Escort 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 14 Nb   1  E-3A  Pack 14 - 7 ACCS - AWACS 2  Kutaisi  AWACS  ETA 31836  StartT: 1  EtaWPT: 31836   // Good  Type: TakeOffParking  SOL/VOL decale_A 31836    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 15 Nb   2  F-4E  Pack 15 - VMFA-159 - Escort 1  Sukhumi  Prohladniy Depot MP 24  ETA 1107  StartT: 1  EtaWPT: 1107   // High  Type: TakeOffParking  SOL/VOL decale_A 1107    
 
 
 
-AtoFP FirstMsg Pack 15 - 175 ARW - Refueling 1
-Pack: 15 Nb   1  S-3B Tanker  Pack 15 - 175 ARW - Refueling 1  CVN-71 Theodore Roosevelt  Mission Support Tanker  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 15 - 175 ARW - Refueling 2
-AtoFP passe AA [ETA] > 0 false
-AtoFP passe BB unitname+FARP 3221.7518663323
-AtoFP passe CC SinglePlayer
-AtoFP passe FFd  not FlagInsertSixpack 
-AtoFP passe 1B activate_group_time_after 3123
-AtoFP passe 1C Start_set_ai_task 3124
-AtoFP passe GGa  ~= Turning Point and not FlagInsertSixpack
-Pack: 15 Nb   1  S-3B Tanker  Pack 15 - 175 ARW - Refueling 2  CVN-71 Theodore Roosevelt  Mission Support Tanker  ETA 3221  StartT: 1  EtaWPT: 3221   // High  Type: TakeOffParking  SOL/VOL decale_A 3221 SOL/VOL decale_A   
-
-
-AtoFP delayed LANDING 
-
-AtoFP FirstMsg Pack 16 - 175 ARW - Refueling 1
-Pack: 16 Nb   1  S-3B Tanker  Pack 16 - 175 ARW - Refueling 1  CVN-71 Theodore Roosevelt  Recovery Tanker  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
-
-
-
-AtoFP FirstMsg Pack 16 - 175 ARW - Refueling 2
-AtoFP passe AA [ETA] > 0 true
-AtoFP passe BB unitname+FARP 466.51215850404
-AtoFP passe CC SinglePlayer
-AtoFP passe -- == SixPack == -- 
-AtoFP passe BBB2 AddTimingDeckCata 360 NbPlanetDeck: 26
-AtoFP passe FFa ETA mission_ini.startup_time_player + 200 & LimitedParkNb NbPlanetDeck: 26
-AtoFP passe FFb  NbPlanetDeck >= LimitedParkNb
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP spawnOair AIR from:  NbPlanetDeck >= db_airbases[flight[f].base].LimitedParkNb 3079
-AtoFP SpawnOn passe activate 01
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100094 trig_n: 31
-AtoFP passe LLLa LimitedParkTiming OR BaseAirStart 
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP spawnOair AIR from:  LimitedParkTiming or BaseAirStart 3107
-AtoFP passe 1B modify_activate_group_time 503
-AtoFP passe 1Cc modify_activate_group_time find groupId 100094 trig_n: 31
-Pack: 16 Nb   1  S-3B Tanker  Pack 16 - 175 ARW - Refueling 2  CVN-71 Theodore Roosevelt  Recovery Tanker  ETA 360  StartT: 660  EtaWPT: 466   // High  Type: Turning Point   ATTENTION SECONDES a_activate_group 100094   
-
-
-
-AtoFP FirstMsg Pack 17 - 58 TFS - Fighter Sweep 1
+AtoFP FirstMsg Pack 16 - 54 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 17 Nb   4  F-15C  Pack 17 - 58 TFS - Fighter Sweep 1  Vaziani  Sweep Center  ETA 2619  StartT: 1  EtaWPT: 2619   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 2619    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 16 Nb   1  F-4E  Pack 16 - 54 TFS - Strike 1  Kobuleti  Maykop SA-2  ETA 482  StartT: 1  EtaWPT: 482   // High  Type: TakeOffParking  SOL/VOL decale_A 482    
 
 
 
-AtoFP FirstMsg Pack 18 - EC 1/12 - Fighter Sweep 1
+AtoFP FirstMsg Pack 17 - 58 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 18 Nb   4  M-2000C  Pack 18 - EC 1/12 - Fighter Sweep 1  Kutaisi  Sweep West  ETA 3607  StartT: 1  EtaWPT: 3607   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 3607    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 17 Nb   1  F-4E  Pack 17 - 58 TFS - Strike 1  Kutaisi  TSKHINVALI FARP AA  ETA 3280  StartT: 1  EtaWPT: 3280   // Good  Type: TakeOffParking  SOL/VOL decale_A 3280    
 
 
 
-AtoFP FirstMsg Pack 19 - EC 1/12 - Fighter Sweep 1
+AtoFP FirstMsg Pack 18 - VMFA-159 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 19 Nb   4  M-2000C  Pack 19 - EC 1/12 - Fighter Sweep 1  Kutaisi  Sweep East  ETA 3351  StartT: 1  EtaWPT: 3351   // High  Type: TakeOffParking  SOL/VOL decale_A 3351    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 18 Nb   1  F-4E  Pack 18 - VMFA-159 - Strike 1  Sukhumi  LENIGORI FARP AA  ETA 359  StartT: 1  EtaWPT: 359   // High  Type: TakeOffParking  SOL/VOL decale_A 359    
 
 
 
-AtoFP FirstMsg Pack 1 - 1./31.IAP - Intercept 1
-Pack: 1 Nb   2  Su-27  Pack 1 - 1./31.IAP - Intercept 1  Mineralnye-Vody  Mineralnye-Vody Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+AtoFP FirstMsg Pack 19 - VS-21 - Anti-ship Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 1394.636786493
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100060 trig_n: 28
+Pack: 19 Nb   1  S-3B  Pack 19 - VS-21 - Anti-ship Strike 1  CVN-71 Theodore Roosevelt  Russian Convoy 2  ETA 1394  StartT: 1394  EtaWPT: 1394   // Good  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1394 SOL/VOL decale_A   
 
 
 
-AtoFP FirstMsg Pack 1 - 1./31.IAP - Intercept 2
-Pack: 1 Nb   2  Su-27  Pack 1 - 1./31.IAP - Intercept 2  Mineralnye-Vody  Mineralnye-Vody Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+AtoFP FirstMsg Pack 19 - VS-21 - Anti-ship Strike 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 1402.2529816496
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100062 trig_n: 30
+Pack: 19 Nb   1  S-3B  Pack 19 - VS-21 - Anti-ship Strike 2  CVN-71 Theodore Roosevelt  Russian Convoy 2  ETA 1402  StartT: 1402  EtaWPT: 1402   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1402 SOL/VOL decale_A   
 
 
 
-AtoFP FirstMsg Pack 2 - 1./14.IAP - Intercept 1
-Pack: 2 Nb   2  MiG-29A  Pack 2 - 1./14.IAP - Intercept 1  Mozdok  Mozdok Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
-
-
-
-AtoFP FirstMsg Pack 2 - 1./14.IAP - Intercept 2
-Pack: 2 Nb   2  MiG-29A  Pack 2 - 1./14.IAP - Intercept 2  Mozdok  Mozdok Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
-
-
-
-AtoFP FirstMsg Pack 3 - 1./19.IAP - Intercept 1
-Pack: 3 Nb   2  MiG-29A  Pack 3 - 1./19.IAP - Intercept 1  Beslan  Beslan Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
-
-
-
-AtoFP FirstMsg Pack 3 - 1./19.IAP - Intercept 2
-Pack: 3 Nb   2  MiG-29A  Pack 3 - 1./19.IAP - Intercept 2  Beslan  Beslan Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
-
-
-
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 1
+AtoFP FirstMsg Pack 20 - VMFA-159 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 1  Maykop-Khanskaya  Kobuleti Airbase  ETA 1483  StartT: 1  EtaWPT: 1483   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 1483    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 20 Nb   1  F-4E  Pack 20 - VMFA-159 - Strike 1  Sukhumi  501 5th Artillery Division/1.Btry  ETA 3188  StartT: 1  EtaWPT: 3188   // High  Type: TakeOffParking  SOL/VOL decale_A 3188    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 2
+AtoFP FirstMsg Pack 21 - VS-21 - Anti-ship Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 1160.6236149693
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100066 trig_n: 33
+Pack: 21 Nb   1  S-3B  Pack 21 - VS-21 - Anti-ship Strike 1  CVN-71 Theodore Roosevelt  Russian Convoy 1  ETA 1160  StartT: 1160  EtaWPT: 1160   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1160 SOL/VOL decale_A   
+
+
+
+AtoFP FirstMsg Pack 21 - VS-21 - Anti-ship Strike 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 1168.2398101259
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100068 trig_n: 35
+Pack: 21 Nb   1  S-3B  Pack 21 - VS-21 - Anti-ship Strike 2  CVN-71 Theodore Roosevelt  Russian Convoy 1  ETA 1168  StartT: 1168  EtaWPT: 1168   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 1168 SOL/VOL decale_A   
+
+
+
+AtoFP FirstMsg Pack 21 - VMFA-159 - Escort 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 2  Maykop-Khanskaya  Kobuleti Airbase  ETA 1492  StartT: 1  EtaWPT: 1492   // Good  Type: TakeOffParking  SOL/VOL decale_A 1492    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 21 Nb   4  F-4E  Pack 21 - VMFA-159 - Escort 1  Sukhumi  Russian Convoy 1  ETA 625  StartT: 1  EtaWPT: 625   // High  Type: TakeOffParking  SOL/VOL decale_A 625    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 3
+AtoFP FirstMsg Pack 22 - 54 TFS - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 3  Maykop-Khanskaya  Kobuleti Airbase  ETA 1489  StartT: 1  EtaWPT: 1489   // Good  Type: TakeOffParking  SOL/VOL decale_A 1489    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 22 Nb   1  F-4E  Pack 22 - 54 TFS - Strike 1  Kobuleti  503 5th Artillery Division/3.Btry  ETA 1920  StartT: 1  EtaWPT: 1920   // High  Type: TakeOffParking  SOL/VOL decale_A 1920    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 4
+AtoFP FirstMsg Pack 23 - VMFA-151 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 4  Maykop-Khanskaya  Kobuleti Airbase  ETA 1499  StartT: 1  EtaWPT: 1499   // Excellent  Type: TakeOffParking  SOL/VOL decale_A 1499    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 23 Nb   1  F-4E  Pack 23 - VMFA-151 - Strike 1  Batumi  504 5th Artillery Division/4.Btry  ETA 1843  StartT: 1  EtaWPT: 1843   // High  Type: TakeOffParking  SOL/VOL decale_A 1843    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 5
+AtoFP FirstMsg Pack 24 - VMFA-151 - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 5  Maykop-Khanskaya  Kobuleti Airbase  ETA 1508  StartT: 1  EtaWPT: 1508   // High  Type: TakeOffParking  SOL/VOL decale_A 1508    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 24 Nb   1  F-4E  Pack 24 - VMFA-151 - Strike 1  Batumi  502 5th Artillery Division/2.Btry  ETA 2739  StartT: 1  EtaWPT: 2739   // High  Type: TakeOffParking  SOL/VOL decale_A 2739    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./61.IAP - Strike 6
+AtoFP FirstMsg Pack 25 - 7 ACCS - AWACS 1
+Pack: 25 Nb   1  E-3A  Pack 25 - 7 ACCS - AWACS 1  Kutaisi  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 26 - 174 ARW - Refueling 1
+Pack: 26 Nb   1  S-3B Tanker  Pack 26 - 174 ARW - Refueling 1  CVN-71 Theodore Roosevelt  Mission Support Tanker  ETA 0  StartT: 1  EtaWPT: 0   // Excellent  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 26 - 174 ARW - Refueling 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 8696.7518663323
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100085 trig_n: 41
+Pack: 26 Nb   1  S-3B Tanker  Pack 26 - 174 ARW - Refueling 2  CVN-71 Theodore Roosevelt  Mission Support Tanker  ETA 8696  StartT: 8696  EtaWPT: 8696   // Good  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 8696 SOL/VOL decale_A   
+
+
+
+AtoFP FirstMsg Pack 27 - 177 ARW - Refueling 1
+Pack: 27 Nb   1  S-3B Tanker  Pack 27 - 177 ARW - Refueling 1  CVN-74 John C. Stennis  Recovery Tanker  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 27 - 177 ARW - Refueling 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 6892.0278161734
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100089 trig_n: 43
+Pack: 27 Nb   1  S-3B Tanker  Pack 27 - 177 ARW - Refueling 2  CVN-74 John C. Stennis  Recovery Tanker  ETA 6892  StartT: 6892  EtaWPT: 6892   // Excellent  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 6892 SOL/VOL decale_A   
+
+
+
+AtoFP FirstMsg Pack 28 - VF-101 - Fighter Sweep 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe BB unitname+FARP 3207.2028688182
+AtoFP passe GG Multi.NbGroup >= 1
+AtoFP passe 1B activate_group_time_after 3161
+AtoFP passe 1C Start_set_ai_task 3162
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP spawnOair AIR from:  si multijoueur, les Flight AI commencent en vol 3332
+AtoFP passe 1B modify_activate_group_time 514
+AtoFP passe 1Cc modify_activate_group_time find groupId 100091 trig_n: 45
+Pack: 28 Nb   1  F-14A-135-GR  Pack 28 - VF-101 - Fighter Sweep 1  CVN-71 Theodore Roosevelt  Sweep Center  ETA 3207  StartT: 3207  EtaWPT: 3207   // High  Type: Turning Point  |+|ATTENTION Start en VOL  SOL/VOL decale_A 3207 SOL/VOL decale_A   
+
+
+
+AtoFP FirstMsg Pack 29 - 171 ARW - Refueling 1
+Pack: 29 Nb   1  KC135MPRS  Pack 29 - 171 ARW - Refueling 1  Batumi  Tanker Track East  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 29 - 171 ARW - Refueling 2
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   1  Tu-22M3  Pack 4 - 1./61.IAP - Strike 6  Maykop-Khanskaya  Kobuleti Airbase  ETA 1505  StartT: 1  EtaWPT: 1505   // High  Type: TakeOffParking  SOL/VOL decale_A 1505    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 29 Nb   1  KC135MPRS  Pack 29 - 171 ARW - Refueling 2  Batumi  Tanker Track East  ETA 4096  StartT: 1  EtaWPT: 4096   // Good  Type: TakeOffParking  SOL/VOL decale_A 4096    
 
 
 
-AtoFP FirstMsg Pack 4 - 1./14.IAP - Escort 1
+AtoFP FirstMsg Pack 30 - VMFA-151 - Fighter Sweep 1
+Pack: 30 Nb   1  F-4E  Pack 30 - VMFA-151 - Fighter Sweep 1  Batumi  Sweep East  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 31 - VMFA-151 - Fighter Sweep 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   2  MiG-29A  Pack 4 - 1./14.IAP - Escort 1  Mozdok  Kobuleti Airbase  ETA 743  StartT: 1  EtaWPT: 743   // Good  Type: TakeOffParking  SOL/VOL decale_A 743    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 31 Nb   1  F-4E  Pack 31 - VMFA-151 - Fighter Sweep 1  Batumi  Sweep West  ETA 1593  StartT: 1  EtaWPT: 1593   // High  Type: TakeOffParking  SOL/VOL decale_A 1593    
 
 
 
-AtoFP FirstMsg Pack 4 - 790.IAP - Escort 2
+AtoFP FirstMsg Pack 1 - 790.IAP - Intercept 1
+Pack: 1 Nb   1  MiG-25PD  Pack 1 - 790.IAP - Intercept 1  Mozdok  Mozdok Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+
+
+
+AtoFP FirstMsg Pack 2 - 793.IAP - CAP 1
+Pack: 2 Nb   1  MiG-25PD  Pack 2 - 793.IAP - CAP 1  Mineralnye-Vody  CAP AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 2 - 793.IAP - CAP 2
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   4  MiG-31  Pack 4 - 790.IAP - Escort 2  Mozdok  Kobuleti Airbase  ETA 1015  StartT: 1  EtaWPT: 1015   // High  Type: TakeOffParking  SOL/VOL decale_A 1015    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 2 Nb   1  MiG-25PD  Pack 2 - 793.IAP - CAP 2  Mineralnye-Vody  CAP AWACS  ETA 287  StartT: 1  EtaWPT: 287   // Good  Type: TakeOffParking  SOL/VOL decale_A 287    
 
 
 
-AtoFP FirstMsg Pack 4 - 790.IAP - Escort 3
+AtoFP FirstMsg Pack 3 - 793.IAP - CAP 1
+Pack: 3 Nb   1  MiG-25PD  Pack 3 - 793.IAP - CAP 1  Mineralnye-Vody  CAP Beslan  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 3 - 793.IAP - CAP 2
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 4 Nb   2  MiG-31  Pack 4 - 790.IAP - Escort 3  Mozdok  Kobuleti Airbase  ETA 1059  StartT: 1  EtaWPT: 1059   // High  Type: TakeOffParking  SOL/VOL decale_A 1059    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 3 Nb   1  MiG-25PD  Pack 3 - 793.IAP - CAP 2  Mineralnye-Vody  CAP Beslan  ETA 174  StartT: 1  EtaWPT: 174   // Good  Type: TakeOffParking  SOL/VOL decale_A 174    
 
 
 
-AtoFP FirstMsg Pack 5 - 1./17.IAP - Strike 1
-Pack: 5 Nb   4  Su-25T  Pack 5 - 1./17.IAP - Strike 1  Mozdok  19 4th Army HQ  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 4 - 793.IAP - Intercept 1
+Pack: 4 Nb   1  MiG-25PD  Pack 4 - 793.IAP - Intercept 1  Mineralnye-Vody  Mineralnye-Vody Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
 
 
 
-AtoFP FirstMsg Pack 5 - 1./17.IAP - Strike 2
-Pack: 5 Nb   2  Su-25T  Pack 5 - 1./17.IAP - Strike 2  Mozdok  19 4th Army HQ  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+AtoFP FirstMsg Pack 5 - 790.IAP - Intercept 1
+Pack: 5 Nb   1  MiG-25PD  Pack 5 - 790.IAP - Intercept 1  Mozdok  Mozdok Alert 200 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
 
 
 
-AtoFP FirstMsg Pack 5 - 2./19.IAP - Escort 1
-Pack: 5 Nb   2  MiG-29A  Pack 5 - 2./19.IAP - Escort 1  Nalchik  19 4th Army HQ  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+AtoFP FirstMsg Pack 6 - 793.IAP - CAP 1
+Pack: 6 Nb   1  MiG-25PD  Pack 6 - 793.IAP - CAP 1  Mineralnye-Vody  CAP Center  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
 
 
 
-AtoFP FirstMsg Pack 6 - 1./41.IAP - Strike 1
+AtoFP FirstMsg Pack 6 - 793.IAP - CAP 2
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 6 Nb   4  Su-24M  Pack 6 - 1./41.IAP - Strike 1  Mineralnye-Vody  17 1st Artillery Division/7.Btry  ETA 1977  StartT: 1  EtaWPT: 1977   // High  Type: TakeOffParking  SOL/VOL decale_A 1977    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 6 Nb   1  MiG-25PD  Pack 6 - 793.IAP - CAP 2  Mineralnye-Vody  CAP Center  ETA 90  StartT: 1  EtaWPT: 90   // High  Type: TakeOffParking  SOL/VOL decale_A 90    
 
 
 
-AtoFP FirstMsg Pack 6 - 1./41.IAP - Strike 2
+AtoFP FirstMsg Pack 7 - 793.IAP - Intercept 1
+Pack: 7 Nb   1  MiG-25PD  Pack 7 - 793.IAP - Intercept 1  Mineralnye-Vody  Mineralnye-Vody Alert 280 Km  ETA -1  StartT: 1  EtaWPT: 0   // Good  Type: TakeOffParking   |VOL decale_B    
+
+
+
+AtoFP FirstMsg Pack 8 - 1./123.IAP - Intercept 1
+Pack: 8 Nb   1  MiG-23MLD  Pack 8 - 1./123.IAP - Intercept 1  Beslan  Beslan Alert 120 Km  ETA -1  StartT: 1  EtaWPT: 0   // High  Type: TakeOffParking   |VOL decale_B    
+
+
+
+AtoFP FirstMsg Pack 9 - 1./81.IAP - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 6 Nb   2  Su-24M  Pack 6 - 1./41.IAP - Strike 2  Mineralnye-Vody  17 1st Artillery Division/7.Btry  ETA 1985  StartT: 1  EtaWPT: 1985   // High  Type: TakeOffParking  SOL/VOL decale_A 1985    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 9 Nb   3  Su-24M  Pack 9 - 1./81.IAP - Strike 1  Maykop-Khanskaya  AMBROLAURI FARP LN41  ETA 520  StartT: 1  EtaWPT: 520   // High  Type: TakeOffParking  SOL/VOL decale_A 520    
 
 
 
-AtoFP FirstMsg Pack 6 - 1./31.IAP - Escort 1
+AtoFP FirstMsg Pack 9 - 1./41.IAP - SEAD 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 6 Nb   4  Su-27  Pack 6 - 1./31.IAP - Escort 1  Mineralnye-Vody  17 1st Artillery Division/7.Btry  ETA 1899  StartT: 1  EtaWPT: 1899   // High  Type: TakeOffParking  SOL/VOL decale_A 1899    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 9 Nb   2  Su-24M  Pack 9 - 1./41.IAP - SEAD 1  Mineralnye-Vody  AMBROLAURI FARP LN41  ETA 841  StartT: 1  EtaWPT: 841   // Good  Type: TakeOffParking  SOL/VOL decale_A 841    
 
 
 
-AtoFP FirstMsg Pack 7 - 3.OSAP - Transport 1
+AtoFP FirstMsg Pack 9 - 1./123.IAP - Escort 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 7 Nb   1  An-26B  Pack 7 - 3.OSAP - Transport 1  Beslan  Airlift Mineralnye-Vody  ETA 219  StartT: 1  EtaWPT: 219   // Good  Type: TakeOffParking  SOL/VOL decale_A 219    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 9 Nb   4  MiG-23MLD  Pack 9 - 1./123.IAP - Escort 1  Beslan  AMBROLAURI FARP LN41  ETA 808  StartT: 1  EtaWPT: 808   // Good  Type: TakeOffParking  SOL/VOL decale_A 808    
 
 
 
-AtoFP FirstMsg Pack 8 - 1./19.IAP - Fighter Sweep 1
+AtoFP FirstMsg Pack 9 - 1./123.IAP - Escort 2
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 8 Nb   4  MiG-29A  Pack 8 - 1./19.IAP - Fighter Sweep 1  Beslan  Sweep South  ETA 3788  StartT: 1  EtaWPT: 3788   // Good  Type: TakeOffParking  SOL/VOL decale_A 3788    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 9 Nb   3  MiG-23MLD  Pack 9 - 1./123.IAP - Escort 2  Beslan  AMBROLAURI FARP LN41  ETA 865  StartT: 1  EtaWPT: 865   // Good  Type: TakeOffParking  SOL/VOL decale_A 865    
 
 
 
-AtoFP FirstMsg Pack 8 - 1./19.IAP - Fighter Sweep 2
+AtoFP FirstMsg Pack 10 - 1./81.IAP - Strike 1
+Pack: 10 Nb   2  Su-24M  Pack 10 - 1./81.IAP - Strike 1  Maykop-Khanskaya  GORI FARP MM25  ETA 0  StartT: 1  EtaWPT: 0   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 10 - 1./107.IAP - SEAD 1
+Pack: 10 Nb   2  MiG-27K  Pack 10 - 1./107.IAP - SEAD 1  Nalchik  GORI FARP MM25  ETA -368  StartT: 1  EtaWPT: -368   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 11 - 1./41.IAP - Strike 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 8 Nb   2  MiG-29A  Pack 8 - 1./19.IAP - Fighter Sweep 2  Beslan  Sweep South  ETA 3796  StartT: 1  EtaWPT: 3796   // High  Type: TakeOffParking  SOL/VOL decale_A 3796    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 11 Nb   2  Su-24M  Pack 11 - 1./41.IAP - Strike 1  Mineralnye-Vody  EWR-1 Site  ETA 1510  StartT: 1  EtaWPT: 1510   // High  Type: TakeOffParking  SOL/VOL decale_A 1510    
 
 
 
-AtoFP FirstMsg Pack 9 - 2.OSAP - Transport 1
+AtoFP FirstMsg Pack 11 - 1./133.IAP - Escort 1
 AtoFP passe AA [ETA] > 0 false
 AtoFP passe II SUR PISTE DUR
-AtoFP passe 1C Start_set_ai_task 3192
-Pack: 9 Nb   1  An-26B  Pack 9 - 2.OSAP - Transport 1  Sochi-Adler  Airlift Beslan  ETA 1137  StartT: 1  EtaWPT: 1137   // High  Type: TakeOffParking  SOL/VOL decale_A 1137    
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 11 Nb   4  MiG-23MLD  Pack 11 - 1./133.IAP - Escort 1  Mineralnye-Vody  EWR-1 Site  ETA 1420  StartT: 1  EtaWPT: 1420   // High  Type: TakeOffParking  SOL/VOL decale_A 1420    
+
+
+
+AtoFP FirstMsg Pack 11 - 1./133.IAP - Escort 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 11 Nb   2  MiG-23MLD  Pack 11 - 1./133.IAP - Escort 2  Mineralnye-Vody  EWR-1 Site  ETA 1506  StartT: 1  EtaWPT: 1506   // Good  Type: TakeOffParking  SOL/VOL decale_A 1506    
+
+
+
+AtoFP FirstMsg Pack 12 - 1./41.IAP - Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 12 Nb   1  Su-24M  Pack 12 - 1./41.IAP - Strike 1  Mineralnye-Vody  bridge GORI  ETA 2875  StartT: 1  EtaWPT: 2875   // High  Type: TakeOffParking  SOL/VOL decale_A 2875    
+
+
+
+AtoFP FirstMsg Pack 12 - 1./107.IAP - SEAD 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 12 Nb   2  MiG-27K  Pack 12 - 1./107.IAP - SEAD 1  Nalchik  bridge GORI  ETA 3184  StartT: 1  EtaWPT: 3184   // High  Type: TakeOffParking  SOL/VOL decale_A 3184    
+
+
+
+AtoFP FirstMsg Pack 13 - 1./41.IAP - Strike 1
+Pack: 13 Nb   1  Su-24M  Pack 13 - 1./41.IAP - Strike 1  Mineralnye-Vody  10 US Army ELINT Station  ETA -133  StartT: 1  EtaWPT: -133   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 13 - 1./133.IAP - Escort 1
+Pack: 13 Nb   4  MiG-23MLD  Pack 13 - 1./133.IAP - Escort 1  Mineralnye-Vody  10 US Army ELINT Station  ETA -223  StartT: 1  EtaWPT: -223   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 14 - 2457 SDRLO - AWACS 1
+Pack: 14 Nb   1  A-50  Pack 14 - 2457 SDRLO - AWACS 1  Nalchik  AWACS  ETA 0  StartT: 1  EtaWPT: 0   // Good  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 14 - 2457 SDRLO - AWACS 2
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 14 Nb   1  A-50  Pack 14 - 2457 SDRLO - AWACS 2  Nalchik  AWACS  ETA 14378  StartT: 1  EtaWPT: 14378   // High  Type: TakeOffParking  SOL/VOL decale_A 14378    
+
+
+
+AtoFP FirstMsg Pack 15 - 1./41.IAP - Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 15 Nb   1  Su-24M  Pack 15 - 1./41.IAP - Strike 1  Mineralnye-Vody  Bridge Dapnari-KM76  ETA 1944  StartT: 1  EtaWPT: 1944   // High  Type: TakeOffParking  SOL/VOL decale_A 1944    
+
+
+
+AtoFP FirstMsg Pack 15 - 1./117.IAP - SEAD 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 15 Nb   2  MiG-27K  Pack 15 - 1./117.IAP - SEAD 1  Mozdok  Bridge Dapnari-KM76  ETA 1570  StartT: 1  EtaWPT: 1570   // High  Type: TakeOffParking  SOL/VOL decale_A 1570    
+
+
+
+AtoFP FirstMsg Pack 16 - 1./61.IAP - Anti-ship Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 16 Nb   1  Tu-22M3  Pack 16 - 1./61.IAP - Anti-ship Strike 1  Maykop-Khanskaya  LHA-Group  ETA 2234  StartT: 1  EtaWPT: 2234   // Good  Type: TakeOffParking  SOL/VOL decale_A 2234    
+
+
+
+AtoFP FirstMsg Pack 17 - 1./61.IAP - Anti-ship Strike 1
+Pack: 17 Nb   1  Tu-22M3  Pack 17 - 1./61.IAP - Anti-ship Strike 1  Maykop-Khanskaya  NATO Convoy 1  ETA -285  StartT: 1  EtaWPT: -285   // Good  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 18 - 1./61.IAP - Anti-ship Strike 1
+Pack: 18 Nb   1  Tu-22M3  Pack 18 - 1./61.IAP - Anti-ship Strike 1  Maykop-Khanskaya  CVN-71 Theodore Roosevelt  ETA -233  StartT: 1  EtaWPT: -233   // High  Type: Turning Point      
+
+
+
+AtoFP FirstMsg Pack 19 - 1./61.IAP - Anti-ship Strike 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 19 Nb   1  Tu-22M3  Pack 19 - 1./61.IAP - Anti-ship Strike 1  Maykop-Khanskaya  CVN-74 John C. Stennis  ETA 1438  StartT: 1  EtaWPT: 1438   // High  Type: TakeOffParking  SOL/VOL decale_A 1438    
+
+
+
+AtoFP FirstMsg Pack 20 - 790.IAP - Fighter Sweep 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 20 Nb   1  MiG-25PD  Pack 20 - 790.IAP - Fighter Sweep 1  Mozdok  Sweep South  ETA 2422  StartT: 1  EtaWPT: 2422   // Good  Type: TakeOffParking  SOL/VOL decale_A 2422    
+
+
+
+AtoFP FirstMsg Pack 21 - 27.OSAP - Transport 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 21 Nb   1  An-26B  Pack 21 - 27.OSAP - Transport 1  Maykop-Khanskaya  Airlift Beslan  ETA 1556  StartT: 1  EtaWPT: 1556   // High  Type: TakeOffParking  SOL/VOL decale_A 1556    
+
+
+
+AtoFP FirstMsg Pack 22 - 3.OSAP - Transport 1
+AtoFP passe AA [ETA] > 0 false
+AtoFP passe II SUR PISTE DUR
+AtoFP passe 1C Start_set_ai_task 3203
+Pack: 22 Nb   1  An-26B  Pack 22 - 3.OSAP - Transport 1  Beslan  Airlift Mineralnye-Vody  ETA 2441  StartT: 1  EtaWPT: 2441   // Good  Type: TakeOffParking  SOL/VOL decale_A 2441    
 
 logExp  
- _affiche(titre) testDeckPlace
- _affiche(a c)           CVN-71 Theodore Roosevelt 1
- _affiche(e f)                          number 2
- _affiche(e f)                          groupName Pack 1 - VF-101 - CAP 3
- _affiche(e f)                          time 3342.7728356889
- _affiche(e f)                          LimitedParkNb 9
- _affiche(a c)           CVN-71 Theodore Roosevelt 2
- _affiche(e f)                          number 1
- _affiche(e f)                          groupName Pack 11 - VAW-125 - AWACS 2
- _affiche(e f)                          time 13521.739371505
- _affiche(e f)                          LimitedParkNb 9
- _affiche(a c)           CVN-71 Theodore Roosevelt 3
- _affiche(e f)                          number 1
- _affiche(e f)                          groupName Pack 15 - 175 ARW - Refueling 2
- _affiche(e f)                          time 3221.7518663323
- _affiche(e f)                          LimitedParkNb 9
-logExp  
- _affiche(titre) testDeckPlace deck
+ _affiche(titre) SixPack
  _affiche(a c)           1 number
- _affiche(d)                1
- _affiche(a c)           1 groupName
- _affiche(d)                Pack 15 - 175 ARW - Refueling 2
+ _affiche(d)                2
  _affiche(a c)           1 time
- _affiche(d)                3221.7518663323
+ _affiche(d)                900
  _affiche(a c)           1 LimitedParkNb
  _affiche(d)                9
- _affiche(a c)           2 number
- _affiche(d)                2
- _affiche(a c)           2 groupName
- _affiche(d)                Pack 1 - VF-101 - CAP 3
- _affiche(a c)           2 time
- _affiche(d)                3342.7728356889
- _affiche(a c)           2 LimitedParkNb
- _affiche(d)                9
- _affiche(a c)           3 number
- _affiche(d)                1
- _affiche(a c)           3 groupName
- _affiche(d)                Pack 11 - VAW-125 - AWACS 2
- _affiche(a c)           3 time
- _affiche(d)                13521.739371505
- _affiche(a c)           3 LimitedParkNb
- _affiche(d)                9
+ _affiche(a c)           1 client
+ _affiche(d)                true
+ _affiche(a c)           1 groupName
+ _affiche(d)                Pack 3 - VF-101 - Escort 1
 
-AtoFP startup_time_player: 00:25
-AtoFP NowTime: 04:17
+n: 1
+AtoFP passe 1B modify_activate_group_time 3855
+AtoFp SixPack Find Pack 3 - VF-101 - Escort 1logExp  
+ _affiche(titre) testDeckPlace
+
+AtoFP startup_time_player: 00:15
+AtoFP NowTime: 09:39
 CVN-71 Theodore Roosevelt Takeoff time on the platform at ...
- 05:08 - Pack 15 - 1 S-3B Tanker - 175 ARW - Refueling 2.
-
- 05:10 - Pack 1 - 2 F-14B - VF-101 - CAP 3.
-
- 08:00 - Pack 11 - 1 E-2C - VAW-125 - AWACS 2.
+ 09:52 - Pack 3 - 2 F-14A-135-GR - VF-101 - Escort 1 - Player

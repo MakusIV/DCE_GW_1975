@@ -6,6 +6,17 @@
 
 -- miguel21 modification M38.e  helps to balance the game
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = LOGGING_LEVEL
+log.outfile = LOG_DIR .. "LOG_UTIL_HelpBalancePower." .. camp.mission .. ".log" 
+local local_debug = true -- local debug   
+log.info("Start")
+-- =====================  End Marco implementation ==================================
+
+
 require("Init/oob_air_init")
  
  

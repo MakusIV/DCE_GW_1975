@@ -8,6 +8,12 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["conf_mod.lua"] = "1.27.30"
 
+--By Old_Boy
+ACTIVATE_TESTING_ENVIROMENTS = true -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat). By Old_Boy
+LOGGING_LEVEL = "warn" -- trace, debug, info, warn, error, fatal     --By Old_Boy
+LOG_DIR = "Log/"
+
+
 -- 1 ############################################################################################################################################################
 -- 1 ############################################################################################################################################################
 -- The options in this first part of the file can be modified by players. Changes do not require the campaign to be restarted. They will automatically be taken
@@ -16,9 +22,44 @@ versionDCE["conf_mod.lua"] = "1.27.30"
 -- 1 ############################################################################################################################################################
 
 mission_ini = {
+
+	min_skill_blue_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_blue_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_blue_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_blue_helicopter = "Excellent",	-- Average, Good, High, Excellent
+
+	min_skill_red_fighter = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_fighter = "High",	-- Average, Good, High, Excellent
+	min_skill_red_attacker = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_attacker = "High",	-- Average, Good, High, Excellent
+	min_skill_red_bomber = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_bomber = "High",	-- Average, Good, High, Excellent
+	min_skill_red_transport = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_transport = "High",	-- Average, Good, High, Excellent
+	min_skill_red_recognition = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_recognition = "High",	-- Average, Good, High, Excellent
+	min_skill_red_refuelling = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_refuelling = "High",	-- Average, Good, High, Excellent
+	min_skill_red_awacs = "Average",	-- Average, Good, High, Excellent
+	max_skill_red_awacs = "High",	-- Average, Good, High, Excellent
+	min_skill_red_helicopter = "Good",	-- Average, Good, High, Excellent
+	max_skill_red_helicopter = "Excellent",	-- Average, Good, High, Excellent
+
 	PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
-	PruneAggressiveness = 1.5,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
-	PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
+	PruneAggressiveness = 1,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
+	PruneStatic = false,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
 	ForcedPruneSam = false,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too.
 
 	AIemergencyLaunch = true,					-- (default : false), Tanks and Bombs emergency In Task Strike: autorise ou non aux AI � larguer leur emport sous la menace pendant un strike
@@ -27,9 +68,9 @@ mission_ini = {
 	intercept_hotstart = true,					-- (default : true), true: player flights with intercept task starts with engines running on parking
 	startup_time_player = 900,					-- (default : 600), time in seconds allocated for startup, taxi and take off for player flight
 
-	failure = false,							-- (default : false), true = aircraft failures activated, works in SOLO, bug in MP, M20
-	failureProbMax = 10,						-- (1 to 100) probabilit� maximum sur une panne -- Miguel21 modification M20
-	failureNbMax = 5 ,							-- ( 1 to ...57?) Max failures number in one mission --Miguel21 modification M20
+	failure = true,								-- (default : false), true = aircraft failures activated, works in SOLO, bug in MP, M20
+	failureProbMax = 5,							-- (1 to 100) probabilit� maximum sur une panne -- Miguel21 modification M20
+	failureNbMax = 3 ,							-- ( 1 to ...57?) Max failures number in one mission --Miguel21 modification M20
 
 	Keep_USNdeckCrew = false,					-- (default : false), false = supprime US Navy deck crew dans la g�n�ration de mission (Ceci n'installe/desinstalle pas le MOD USN) Miguel Modification M23
 
@@ -42,8 +83,8 @@ mission_ini = {
 
 	CVN_CleanDeck = false, 						-- (default : false), true: Remove all static aircraft from the deck. ( M31 )
 	CVN_TimeBtwPlane = 45, 						-- (default : false), Time between each aircraft for catapulting
-	CVN_Vmax = 10,								-- (default = 15.4333( m/s)==30kts), can have bp with F14, go down to 10 m/s
-	CVN_windDeck = 9,							-- (default = 13.89( m/s)==27kts), can have bp with F14, go down to 9 m/s
+	CVN_Vmax = 15,								-- (default = 15.4333( m/s)==30kts), can have bp with F14, go down to 10 m/s
+	CVN_windDeck = 13,							-- (default = 13.89( m/s)==27kts), can have bp with F14, go down to 9 m/s
 	CVN_despawnAfterLanding = true,				-- (default = true) despawn aircraft landing on CVN and LHA ,this avoids collisions between taxxing and landing aircraft
 
 	SC_SpawnOn = {
@@ -54,7 +95,7 @@ mission_ini = {
 	},
 
 	MP_PlaneRecovery = false,					--  (defaut: false) In multiplayer, this allows you to control an aircraft already in flight in case of a crash. M11.q
-	SC_CarrierIntoWind = "man",				-- (defaut: "auto")("man"), "auto": Original Mbot code: the CVN rotates according to the air operations. "man": the CVN runs only once via the commands in the radio menu F10
+	SC_CarrierIntoWind = "auto",					-- (defaut: "auto")("man"), "auto": Original Mbot code: the CVN rotates according to the air operations. "man": the CVN runs only once via the commands in the radio menu F10
 
 	WrittenOnScratchpadMod = true,				-- (defaut: true) pre-fills the scratchpad MOD sheet, for the moment, only works if DCS is not launched.
 
@@ -65,14 +106,14 @@ mission_ini = {
 -- Force your own options rather than those of base_ini.miz, which correspond to those of PBO-CEF ^^
 -- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent � ceux de PBO-CEF ^^
 mission_forcedOptions = {
-	--["accidental_failures"] = true,						-- False / true : Panne al�atoire (sera automatiquement desactiv� en multijoueur dans DCE)
+	--["accidental_failures"] = true,					-- False / true : Panne al�atoire (sera automatiquement desactiv� en multijoueur dans DCE)
 	["wakeTurbulence"] = true,							-- False / true : turbulence  [MP: recommend: false]
 	["labels"] = 0,										-- etiquette : ( 0 : aucune �tiquette ) || ( 1 : �tiquette PLEINE ) || ( 2 : �tiquette abr�g�e )|| ( 3 : �tiquette Plate )
-	["optionsView"] = "optview_all",				-- Vue de la Map F10: ( "optview_onlymap": ONLY the MAP) || ( "optview_myaircraft": only my plane on map) || ( "optview_allies": fog of war) || ( "optview_onlyallies" : Allied only  ) || ( "optview_all" : every visible targets and planes on map allowed by campaign maker : usefull to program JDAM or JSAW - non target units will stay invisible to player )
+	["optionsView"] = "optview_all",					-- Vue de la Map F10: ( "optview_onlymap": ONLY the MAP) || ( "optview_myaircraft": only my plane on map) || ( "optview_allies": fog of war) || ( "optview_onlyallies" : Allied only  ) || ( "optview_all" : every visible targets and planes on map allowed by campaign maker : usefull to program JDAM or JSAW - non target units will stay invisible to player )
 	["externalViews"] = true,							-- False / true : Vue externe
 	["permitCrash"] = true,								-- False / true : R�cup�ration de crash
 	["miniHUD"] = false,								-- False / true : Mini HUD
-	["cockpitVisualRM"] = true,						-- False / true : Mod reconnaissance Visuel dans le cockoit
+	["cockpitVisualRM"] = true,							-- False / true : Mod reconnaissance Visuel dans le cockoit
 	["userMarks"] = true,								-- False / true : autorise les marqueurs sur la vue MAP F10
 	["civTraffic"] = "",								-- Traffic civil routier : ( "" : OFF ) || ( "low" : BAS ) || ( "medium" : MOYEN )|| ( "high" : ELEVE )  [MP: recommend: ""]
 	["birds"] = 50,										-- Collision volatile (probabilit�) ( 0 � 1000 )  [MP: recommend: 0]
@@ -102,26 +143,10 @@ TargetPointF14 = true 						-- transforms IP, Station and Target points into IP,
 TargetPointF14_BullsToFP = true				-- assigns the BullsEye position to the NavPoint FP of the F-14
 
 -- limit the number of F-14s (in the same Flight as the player) on the CVN to avoid taxiing collisions
-limiteNbF14CVN = 3							-- advice 3 max is a good value
+limiteNbF14CVN = 3					    	-- advice 3 max is a good value
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MISSION_START_COMMANDER = 5     -- first mission for start commander execution
+	
 
 
 -- 2 ############################################################################################################################################################
@@ -242,7 +267,7 @@ campMod = {
 
 skillWish = {
 	["red"] = 50,				-- 1 � 100, valeur ULTRA conseill� :50
-	["blue"] = 62,				-- 1 � 100 : valuer ULTRA conseill� : 62
+	["blue"] = 50,				-- 1 � 100 : valuer ULTRA conseill� : 62
 }
 
 skillTab = {

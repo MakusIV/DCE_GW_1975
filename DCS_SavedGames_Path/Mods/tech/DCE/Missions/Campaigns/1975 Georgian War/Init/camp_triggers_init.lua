@@ -87,7 +87,7 @@ camp_triggers = {
 	["Campaign End Victory 2"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitReady("1./113.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("1./123.IAP") + Return.AirUnitReady("1./37.IAP") + Return.AirUnitReady("1./19.IAP") + Return.AirUnitReady("1./133.IAP") + Return.AirUnitReady("1./153.IAP") < 8',
+		condition = 'Return.AirUnitReady("113.IAP") + Return.AirUnitReady("790.IAP") + Return.AirUnitReady("123.IAP") + Return.AirUnitReady("37.IAP") + Return.AirUnitReady("19.IAP") + Return.AirUnitReady("133.IAP") + Return.AirUnitReady("153.IAP") < 8',
 		action = {
 			[1] = 'Action.CampaignEnd("win")',
 			[2] = 'Action.Text("The Russian Air Force is in ruins. After repeated air strikes and disastrous losses in air-air combat, the Russians are no longer able to produce any sorties or offer any resistance. The NATO now owns complete air superiority. With the disappearance of the air threat, the role of the F-15C Eagle and Mirage 2000C in this war comes to an end. Once again the victorious Eagle has proved to be to leading fighter in the world. Well done.")',
@@ -167,7 +167,7 @@ camp_triggers = {
 		},
 	},
 
------ CAMPAIGN SITUATION -----
+	----- CAMPAIGN SITUATION -----
 	["Campaign first destructions"] = {
 		active = true,
 		once = true,
@@ -362,7 +362,7 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Beslan Airbase") < 2',
 		action = {
 			[1] = 'Action.Text("After the facilities at Beslan Airbase have been hit by air strikes, air operations at this base came to a complete stop. Intelligence believes that due to the heavy damage inflicted, the base is no longer ably to produce any aviation sorties.")',
---[[		[2] = 'Action.AddImage("BDA_Beatty.jpg")', ]]--  ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Beatty.jpg")', ]]--  ---A changer
 		}
 	},
 	["Nalchik Airbase Disabled"] = {
@@ -378,7 +378,7 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Nalchik Airbase") < 2',
 		action = {
 			[1] = 'Action.Text("The infrastructure at Nalchik Airbase has been destroyed by air strikes. Flying operations at this base have ceased completely and are unlikely to resume. This will ease our efforts to hit other targets in the Nalchik Country area.")',
---[[		[2] = 'Action.AddImage("BDA_Lincoln.jpg")', ]]--  ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Lincoln.jpg")', ]]--  ---A changer
 		}
 	},
 	["Mozdok Airbase Disabled"] = {
@@ -409,7 +409,22 @@ camp_triggers = {
 		condition = 'Return.TargetAlive("Mineralnye-Vody Airbase") < 3',
 		action = {
 			[1] = 'Action.Text("Thanks to the destruction of the fuel and ammunition stocks at Mineralnye Vody Airbase, air operations at that base have come to a complete halt. Intelligence estimates that interceptors at Mineralnye Vody Airbase no longer pose a threat to allied strike aircraft. This will considerably ease our access to targets in the enemy rear area.")',
---[[		[2] = 'Action.AddImage("BDA_Creech.jpg")', ]]-- ---A changer
+		--[[		[2] = 'Action.AddImage("BDA_Creech.jpg")', ]]-- ---A changer
+		}
+	},
+	["Maykop-Khanskaya Airbase Disabled"] = {
+		active = true,
+		condition = 'Return.TargetAlive("Maykop-Khanskaya Airbase") < 2',
+		action = {
+			[1] = 'db_airbases["Maykop-Khanskaya"].inactive = true',
+		}
+	},
+	["Maykop-Khanskaya Airbase Disabled Text"] = {
+		active = true,
+		once = true,
+		condition = 'Return.TargetAlive("Maykop-Khanskaya Airbase") < 2',
+		action = {
+			[1] = 'Action.Text("Recent air strikes have destroyed enemy ground elements running operations at Maykop-Khanskaya Airbase. Without their ground support, any remaining aircraft at the airstrip will no longer be able to launch on sorties.")',
 		}
 	},
 	["CVN-74 John C. Stennis sunk"] = {
@@ -456,14 +471,14 @@ camp_triggers = {
 			[3] = 'Action.TargetActive("CAP Nalchik", true)',
 			[4] = 'Action.TargetActive("CAP Mineralnye-Vody", true)',
 			[5] = 'Action.TargetActive("CAP Center", true)',
-			[3] = 'Action.TargetActive("Mozdok Alert 200 Km", false)',
-			[4] = 'Action.TargetActive("Mozdok Alert 120 Km", false)',
-			[5] = 'Action.TargetActive("Nalchik Alert 200 Km", false)',
-			[6] = 'Action.TargetActive("Mineralnye-Vody Alert 280 Km", false)',
-			[7] = 'Action.TargetActive("Beslan Alert 120 Km", false)',
-			[8] = 'Action.TargetActive("Mineralnye-Vody Alert 200 Km", false)',
-			[9] = 'Action.TargetActive("Nalchik Alert 100 Km", false)',
-			[10] = 'Action.Text("With the recent destruction of all Early Warning Radar sites in the operations area, and Russians AWACS squadron being anihilated, the ability of the enemy to launch interceptors against our strike packages was severely degraded. Intelligence expects that the enemy will increasingly depend on Combat Air Patrols to compensate, though without the support of ground controllers these are estimated to be of limited effectiveness.")',
+			[6] = 'Action.TargetActive("Mozdok Alert 200 Km", false)',
+			[7] = 'Action.TargetActive("Mozdok Alert 120 Km", false)',
+			[8] = 'Action.TargetActive("Nalchik Alert 200 Km", false)',
+			[9] = 'Action.TargetActive("Mineralnye-Vody Alert 280 Km", false)',
+			[10] = 'Action.TargetActive("Beslan Alert 120 Km", false)',
+			[11] = 'Action.TargetActive("Mineralnye-Vody Alert 200 Km", false)',
+			[12] = 'Action.TargetActive("Nalchik Alert 100 Km", false)',
+			[13] = 'Action.Text("With the recent destruction of all Early Warning Radar sites in the operations area, and Russians AWACS squadron being anihilated, the ability of the enemy to launch interceptors against our strike packages was severely degraded. Intelligence expects that the enemy will increasingly depend on Combat Air Patrols to compensate, though without the support of ground controllers these are estimated to be of limited effectiveness.")',
 		},
 	},		
 	
@@ -481,37 +496,37 @@ camp_triggers = {
 	["Reinforce F7"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("F21", "F7", 12)',
+		action = 'Action.AirUnitReinforce("R/F7", "F7", 6)',
 	},
 	["Reinforce F9"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("F23", "F9", 12)',
+		action = 'Action.AirUnitReinforce("R/F9", "F9", 6)',
 	},
 	["Reinforce 69 BS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/69 BS", "69 BS", 15)',
+		action = 'Action.AirUnitReinforce("R/69 BS", "69 BS", 6)',
 	},
 	["Reinforce GA 3rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 3rd AS", "GA 3rd AS", 12)',
+		action = 'Action.AirUnitReinforce("R/GA 3rd AS", "GA 3rd AS", 6)',
 	},	
 	["Reinforce GA 4rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 4rd AS", "GA 4rd AS", 12)',
+		action = 'Action.AirUnitReinforce("R/GA 4rd AS", "GA 4rd AS", 6)',
 	},	
 	["Reinforce GA 5rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 12)',
+		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 6)',
 	},
 	["Reinforce GA 7rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 7rd AS", "GA 7rd AS", 12)',
+		action = 'Action.AirUnitReinforce("R/GA 7rd AS", "GA 7rd AS", 6)',
 	},	
 	["Reinforce GA 5rd TS"] = {
 		active = true,
@@ -526,7 +541,7 @@ camp_triggers = {
 	["Reinforce VMFA-159"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VMFA-151", "VMFA-151", 4)',
+		action = 'Action.AirUnitReinforce("R/VMFA-159", "VMFA-159", 4)',
 	},
 	["Reinforce 315th Air Division"] = {
 		active = true,
@@ -536,12 +551,17 @@ camp_triggers = {
 	["Reinforce 58 TFS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 8)',
+		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 6)',
+	},
+	["Reinforce BA 113"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/BA 113", "BA 113", 4)',
 	},
 	["Reinforce 317th Air Division"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/317th Air Division", "317th Air Division", 8)',
+		action = 'Action.AirUnitReinforce("R/317th Air Division", "317th Air Division", 6)',
 	},
 	["Reinforce 54 TFS"] = {
 		active = true,
@@ -551,112 +571,127 @@ camp_triggers = {
 	["Reinforce 171 ARW"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/171 ARW", "171 ARW", 3)',
+		action = 'Action.AirUnitReinforce("R/171 ARW", "171 ARW", 4)',
+	},
+	["Reinforce VS-21"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VS-21", "VS-21", 4)',
+	},
+	["Reinforce VS-22"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VS-22", "VS-22", 4)',
 	},
 	["Reinforce 174 ARW"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/174 ARW", "174 ARW", 4)',
 	},
+	["Reinforce VS-27"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VS-27", "VS-27", 2)',
+	},
 	["Reinforce VAW-125"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VAW-125", "VAW-125", 8)',
+		action = 'Action.AirUnitReinforce("R/VAW-125", "VAW-125", 6)',
 	},
 	["Reinforce VMFA-157"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VMFA-157", "VMFA-157", 16)',
+		action = 'Action.AirUnitReinforce("R/VMFA-157", "VMFA-157", 6)',
 	},
 	["Reinforce 6th Cvy"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/6th Cavalry", "6th Cavalry", 16)',
+		action = 'Action.AirUnitReinforce("R/6th Cavalry", "6th Cavalry", 6)',
 	},
 	["Reinforce 17th Cavalry"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/17th Cavalry", "17th Cavalry", 16)',
+		action = 'Action.AirUnitReinforce("R/17th Cavalry", "17th Cavalry", 6)',
 	},
 	["Reinforce GAH 2rd"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GAH 2rd", "GAH 2rd", 16)',
+		action = 'Action.AirUnitReinforce("R/GAH 2rd", "GAH 2rd", 6)',
 	},
 	["Reinforce VF-101"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VF-101", "VF-101", 16)',
+		action = 'Action.AirUnitReinforce("R/VF-101", "VF-101", 6)',
 	},
 	["Reinforce VF-118/GA"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VF-118/GA", "VF-118/GA", 16)',
+		action = 'Action.AirUnitReinforce("R/VF-118/GA", "VF-118/GA", 6)',
 	},
 	["Reinforce 801 ARS"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/801 ARS", "801 ARS", 4)',
 	},		
-	["Reinforce 1./117.IAP"] = {
+	["Reinforce 117.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./117.IAP", "1./117.IAP", 12)',
+		action = 'Action.AirUnitReinforce("R/117.IAP", "117.IAP", 6)',
 	},
-	["Reinforce 1./19.IAP"] = {
+	["Reinforce 19.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./19.IAP", "1./19.IAP", 12)',
+		action = 'Action.AirUnitReinforce("R/19.IAP", "19.IAP", 6)',
 	},
-	["Reinforce 1./37.IAP"] = {
+	["Reinforce 37.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./37.IAP", "1./37.IAP", 12)',
+		action = 'Action.AirUnitReinforce("R/37.IAP", "37.IAP", 6)',
 	},
-	["Reinforce 1./41.IAP"] = {
+	["Reinforce 41.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./41.IAP", "1./41.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/41.IAP", "41.IAP", 8)',
 	},
-	["Reinforce 1./61.IAP"] = {
+	["Reinforce 61.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./61.IAP", "1./61.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/61.IAP", "61.IAP", 8)',
 	},
-	["Reinforce 1./81.IAP"] = {
+	["Reinforce 81.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./81.IAP", "1./81.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/81.IAP", "81.IAP", 8)',
 	},	
 	["Reinforce 1st GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/1st GHR", "1st GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/1st GHR", "1st GHR", 6)',
 	},	
 	["Reinforce 2nd GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/2nd GHR", "2nd GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/2nd GHR", "2nd GHR", 6)',
 	},	
 	["Reinforce 13th GHR"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/13th GHR", "13th GHR", 8)',
+		action = 'Action.AirUnitReinforce("R/13th GHR", "13th GHR", 6)',
 	},
-	["Reinforce 1./107.IAP"] = {
+	["Reinforce 107.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./107.IAP", "1./107.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/107.IAP", "107.IAP", 6)',
 	},			
-	["Reinforce 1./111AS.IAP"] = {
+	["Reinforce 111AS.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./111AS.IAP", "1./111AS.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/111AS.IAP", "111AS.IAP", 6)',
 	},
 	["Reinforce 13.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./13.OSAP", "13.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/13.OSAP", "13.OSAP", 4)',
 	},	
 	["Reinforce 23.OSAP"] = {
 		active = true,
@@ -676,71 +711,71 @@ camp_triggers = {
 	["Reinforce 29.OSAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./29.OSAP", "1./29.OSAP", 4)',
+		action = 'Action.AirUnitReinforce("R/29.OSAP", "29.OSAP", 4)',
 	},		
-	["Reinforce 1./113.IAP"] = {
+	["Reinforce 113.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./113.IAP", "1./113.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/113.IAP", "113.IAP", 8)',
 	},
-	["Reinforce 1./115.IAP"] = {
+	["Reinforce 115.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./115.IAP", "1./115.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/115.IAP", "115.IAP", 8)',
 	},	
-	["Reinforce 1./127.IAP"] = {
+	["Reinforce 127.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./127.IAP", "1./127.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/127.IAP", "127.IAP", 8)',
 	},	
-	["Reinforce 1./123.IAP"] = {
+	["Reinforce 123.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./123.IAP", "1./123.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/123.IAP", "123.IAP", 8)',
 	},	
-	["Reinforce 1./115AS.IAP"] = {
+	["Reinforce 115AS.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./115AS.IAP", "1./115AS.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/115AS.IAP", "115AS.IAP", 8)',
 	},	
-	["Reinforce 1./133.IAP"] = {
+	["Reinforce 133.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./133.IAP", "1./133.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/133.IAP", "133.IAP", 8)',
 	},
-	["Reinforce 1./153.IAP"] = {
+	["Reinforce 153.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./153.IAP", "1./153.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/153.IAP", "153.IAP", 8)',
 	},
-	["Reinforce 1./135.IAP"] = {
+	["Reinforce 135.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R./135.IAP", "1./135.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/135.IAP", "135.IAP", 8)',
 	},
-	["Reinforce O/159.IAP"] = {
+	["Reinforce 159.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/159.IAP", "O/159.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/159.IAP", "159.IAP", 8)',
 	},
 	----- AVIATION UNIT STATUS -----
 	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 34',
 		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%.")',
 	},
 	["VF-101 Alive 50%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 8',
-		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 23',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 50%. If losses continue at the present rate, the combat capability of the squadron is in jeopardy.")',
 	},
 	["VF-101 Alive 25%"] = {
 		active = true,
 		once = true,
-		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 6',
-		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 75%. The number of available airframes is critically low. The squadron is short of destruction.")',
+		condition = 'Return.AirUnitAlive("VF-101") + Return.AirUnitReady("R/VF-101") < 12',
+		action = 'Action.Text("Aircraft strength of the VF-101 Squadron equiped with F-14A-135-GR has fallen below 25%. The number of available airframes is critically low. The squadron is short of destruction.")',
 	},
 	
 	

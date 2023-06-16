@@ -1,12 +1,19 @@
 --Various functions
-------------------------------------------------------------------------------------------------------- 
-------------------------------------------------------------------------------------------------------- 
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1 (CopyFile(), getSkill(), roundAtNumber(), SaveTabOnPath(), SaveTabWithNameOnPath())
 -- Miguel Fichier Revision M47.c
 ------------------------------------------------------------------------------------------------------- 
 
 
-if not versionDCE then versionDCE = {} end
-versionDCE["UTIL_Functions.lua"] = "1.6.21"
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["UTIL_Functions.lua"] = "OB.1.0.1"
+
 
 -- debugC Angle et Bearing des statics sur PA
 
@@ -244,6 +251,7 @@ function GetTangentLenght(p1, p2, pc, r)
 		return 2 * math.sqrt(math.pow(r, 2) - math.pow(t, 2))
 	end
 end
+
 
 
 --function to return subsequent IDs
@@ -552,7 +560,7 @@ function _afficheTXT(_table, titre, prof)
 	
 end -- function affiche
 
---function pour assigner les fréquences pour tout le monde, Plane and vehicle (EWR)
+--function pour assigner les frï¿½quences pour tout le monde, Plane and vehicle (EWR)
 -- miguel21 modification M34.i  custom FrequenceRadio (i  3 frequency bands)(g: VHF helicopter)(h: bug Gazelle)
 
 function CreatePlageFrequency()																				--trouve une plage de frequence commune si c'est possible
@@ -570,14 +578,14 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 		},
 	}
 
-	-- miguel21 modification M38.g (g: prise en compte des 3 bandes de fréquence)(e: priority to the player's frequencies)
+	-- miguel21 modification M38.g (g: prise en compte des 3 bandes de frï¿½quence)(e: priority to the player's frequencies)
 	for side, oob_side in pairs(oob_air) do
 		for n, sqd in pairs(oob_side) do
 			if not sqd.inactive and sqd.player then
 				if frequency[sqd.type] then					
 					for n = 1,  #frequency[sqd.type].radio do	
 						for bandFreq, value in pairs(frequency[sqd.type].radio[n]) do
-							if bandFreq == "FM" or bandFreq == "VHF" or bandFreq == "UHF" then								
+							if bandFreq == "FM" or bandFreq == "VHF"  or bandFreq == "LVHF" or bandFreq == "UHF" then								
 								
 								if not TempRadio[side][n] then TempRadio[side][n] = {} end	
 								if not TempRadio[side][n][bandFreq] then TempRadio[side][n][bandFreq] = {} end
@@ -608,7 +616,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 										if not TempRadio[side][nr][bandFreq].min then TempRadio[side][nr][bandFreq].min = value.min  end
 										if not TempRadio[side][nr][bandFreq].max then TempRadio[side][nr][bandFreq].max = value.max  end
 								
-										if (value.min < TempRadio[side][nr][bandFreq].max)  then								--si une plage radio est en dehors des autres, on privilègie le joueur
+										if (value.min < TempRadio[side][nr][bandFreq].max)  then								--si une plage radio est en dehors des autres, on privilï¿½gie le joueur
 											if value.min > TempRadio[side][nr][bandFreq].min then 
 												TempRadio[side][nr][bandFreq].min =  value.min	
 											end
@@ -620,7 +628,7 @@ function CreatePlageFrequency()																				--trouve une plage de frequen
 									end
 								end
 							end
-						elseif typeRadio == "frequency"  then											-- frequence de base utilisé par FC3 ou gazelle
+						elseif typeRadio == "frequency"  then											-- frequence de base utilisï¿½ par FC3 ou gazelle
 								print("UTIL_F Type No Frequency FC3? "..sqd.type)
 						end
 					end
@@ -879,4 +887,124 @@ function GetParkingId(parkingId, base)
 
 end
 
+-- MARCO copy file
+function CopyFile(old_path, new_path)
+	local old_file = io.open(old_path, "rb")
+	local new_file = io.open(new_path, "wb")
+	local old_file_sz, new_file_sz = 0, 0
+	if not old_file or not new_file then
+	  return false
+	end
+	while true do
+	  local block = old_file:read(2^13)
+	  if not block then 
+		old_file_sz = old_file:seek( "end" )
+		break
+	  end
+	  new_file:write(block)
+	end
+	old_file:close()
+	new_file_sz = new_file:seek( "end" )
+	new_file:close()
+	return new_file_sz == old_file_sz
+end
+
+function SaveTabOnPath( path, table_name, table )
+    -- path = "Active/"
+    local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
+    local tgtFile = io.open(path .. table_name .. ".lua", "w")
+    tgtFile:write(tgt_str)																		--save new data
+    tgtFile:close()
+end
+
+function SaveTabWithNameOnPath( path, table_file, table_name, table )
+    -- path = "Active/"
+    local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
+    local tgtFile = io.open(path .. table_file .. ".lua", "w")
+    tgtFile:write(tgt_str)																		--save new data
+    tgtFile:close()
+end
+
+-- return random skill within min_skill and max_kill. If min_skill = nil -> min_skill = Random or max_skill = nil -> max_skill = Random
+function getSkill(min_skill, max_skill)
+	local skill = {"Average" , "Good", "High", "Excellent"}
+	local skill_found
+	local compute_skill
+
+	if min_skill and type(min_skill) == "string" then
+		skill_found = false
+
+		for n = 1, 4 do
+			
+			if skill[n] == min_skill then 
+				skill_found = true
+				min_skill = n
+				break
+			end
+		end
+
+		if not skill_found then
+			min_skill = math.random(1,4)
+		end
+	
+	elseif type(min_skill) ~= "number" or min_skill < 1 or min_skill > 4 then
+		min_skill = math.random(1,4)
+	end
+
+	if max_skill and type(max_skill) == "string" then
+		skill_found = false
+
+		for n = 1, 4 do
+			
+			if skill[n] == max_skill then 
+				skill_found = true
+				max_skill = n
+				break
+			end
+		end
+
+		if not skill_found then
+			max_skill = math.random(1,4)
+		end
+	
+	elseif type(max_skill) ~= "number" or max_skill < 1 or max_skill > 4 then
+		max_skill = math.random(1,4)
+	end
+
+	if min_skill >= max_skill then
+		compute_skill = skill[min_skill]
+	
+	else
+		compute_skill = skill[ math.random(min_skill, max_skill)]
+	end
+	return compute_skill
+end
+
+-- return x round at number ()
+function roundAtNumber(x, number)
+	number = number or 1
+	
+	if number > x then
+		return x -- original false
+	end
+	x = x / number
+	return (x > 0 and math.floor(x + .5) or math.ceil(x - .5)) * number
+end
+
+-- activate log
+function activateLog(activate, condition, log_var, log_level)
+	
+	if activate and condition then		
+		log_var.level = log_level
+		log_var.activate = true
+		log_var.info("activateLog")
+		return true
+	
+	elseif not activate then		
+		log_var.level = log_level
+		log_var.activate = false
+		log_var.info("de-activateLog")
+		return false
+	end
+end
   

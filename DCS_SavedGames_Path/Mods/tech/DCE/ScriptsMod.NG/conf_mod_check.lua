@@ -13,23 +13,34 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["conf_mod_check.lua"] = "1.28.32"
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = LOGGING_LEVEL
+log.outfile = LOG_DIR .. "LOG_conf_mod_check." .. camp.mission .. ".log" 
+local local_debug = true -- local debug   
+log.info("Start")
+-- =====================  End Marco implementation ==================================
+
+
 	mission_ini_check = {
 		PruneScript = true,							-- reduce a mission by removing units (mod Tomsk M09)
 		PruneAggressiveness = 1.9,					-- How aggressive should the pruning be [0 to 2], larger numbers will remove more units, 0 = no pruning at all
 		PruneStatic = true,							-- (default : false), true: Should ALL parked (static) aircraft be pruned [MP: recommend: true]
 		ForcedPruneSam = false,						-- (default : false), true: PBO-CEF wanted to keep some actives SAMs, this option desactivates them too. 
 		
-		AIemergencyLaunch = true,					-- (default : false), Tanks and Bombs emergency In Task Strike: autorise ou non aux AI à larguer leur emport sous la menace pendant un strike
+		AIemergencyLaunch = true,					-- (default : false), Tanks and Bombs emergency In Task Strike: autorise ou non aux AI ï¿½ larguer leur emport sous la menace pendant un strike
 		
 		parking_hotstart = false,					-- (default : false), true: player flights starts with engines running on parking
 		intercept_hotstart = true,					-- (default : true), true: player flights with intercept task starts with engines running on parking
 		startup_time_player = 900,					-- (default : 600), time in seconds allocated for startup, taxi and take off for player flight
 		
 		failure = false,							-- (default : false), true = aircraft failures activated, works in SOLO, bug in MP, M20
-		failureProbMax = 10,						-- (1 to 100) probabilité maximum sur une panne -- Miguel21 modification M20
+		failureProbMax = 10,						-- (1 to 100) probabilitï¿½ maximum sur une panne -- Miguel21 modification M20
 		failureNbMax = 5 ,							-- ( 1 to ...57?) Max failures number in one mission --Miguel21 modification M20
 		
-		Keep_USNdeckCrew = false,					-- (default : false), false = supprime US Navy deck crew dans la génération de mission (Ceci n'installe/desinstalle pas le MOD USN) Miguel Modification M23
+		Keep_USNdeckCrew = false,					-- (default : false), false = supprime US Navy deck crew dans la gï¿½nï¿½ration de mission (Ceci n'installe/desinstalle pas le MOD USN) Miguel Modification M23
 		
 		OnlyDayMission = false,						-- (default : false), true: Force all missions to be played in daylight (Mod M25)
 		HourlyTolerance = 2,						-- %, When activating OnlyDayMission, allows you to play a little before or a little after the day. In percentage terms
@@ -59,20 +70,20 @@ versionDCE["conf_mod_check.lua"] = "1.28.32"
 	}
 
 	-- Force your own options rather than those of base_ini.miz, which correspond to those of PBO-CEF ^^
-	-- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent à ceux de PBO-CEF ^^
+	-- Force vos propres options plutot que ceux de base_ini.miz, qui correspondent ï¿½ ceux de PBO-CEF ^^
 	mission_forcedOptions_check = { 
-		--["accidental_failures"] = true,						-- False / true : Panne aléatoire (sera automatiquement desactivé en multijoueur dans DCE)
+		--["accidental_failures"] = true,						-- False / true : Panne alï¿½atoire (sera automatiquement desactivï¿½ en multijoueur dans DCE)
 		["wakeTurbulence"] = true,							-- False / true : turbulence  [MP: recommend: false]
-		["labels"] = 0,										-- etiquette : ( 0 : aucune étiquette ) || ( 1 : étiquette PLEINE ) || ( 2 : étiquette abrégée )|| ( 3 : étiquette Plate )
+		["labels"] = 0,										-- etiquette : ( 0 : aucune ï¿½tiquette ) || ( 1 : ï¿½tiquette PLEINE ) || ( 2 : ï¿½tiquette abrï¿½gï¿½e )|| ( 3 : ï¿½tiquette Plate )
 		["optionsView"] = "optview_all",				-- Vue de la Map F10: ( "optview_onlymap": ONLY the MAP) || ( "optview_myaircraft": only my plane on map) || ( "optview_allies": fog of war) || ( "optview_onlyallies" : Allied only  ) || ( "optview_all" : every visible targets and planes on map allowed by campaign maker : usefull to program JDAM or JSAW - non target units will stay invisible to player )
 		["externalViews"] = true,							-- False / true : Vue externe
-		["permitCrash"] = true,								-- False / true : Récupération de crash
+		["permitCrash"] = true,								-- False / true : Rï¿½cupï¿½ration de crash
 		["miniHUD"] = false,								-- False / true : Mini HUD
 		["cockpitVisualRM"] = true,						-- False / true : Mod reconnaissance Visuel dans le cockoit
 		["userMarks"] = true,								-- False / true : autorise les marqueurs sur la vue MAP F10
 		["civTraffic"] = "",								-- Traffic civil routier : ( "" : OFF ) || ( "low" : BAS ) || ( "medium" : MOYEN )|| ( "high" : ELEVE )  [MP: recommend: ""]
-		["birds"] = 100,										-- Collision volatile (probabilité) ( 0 à 1000 )  [MP: recommend: 0]
-		["cockpitStatusBarAllowed"] = false,				-- False / true : Barre d'état cockpit
+		["birds"] = 100,										-- Collision volatile (probabilitï¿½) ( 0 ï¿½ 1000 )  [MP: recommend: 0]
+		["cockpitStatusBarAllowed"] = false,				-- False / true : Barre d'ï¿½tat cockpit
 		["RBDAI"] = true,									-- False / true : Evaluation des dommages au combat
 	}
 					
@@ -104,36 +115,36 @@ versionDCE["conf_mod_check.lua"] = "1.28.32"
 
 
 	Debug_check = {
-		AfficheFailure = false,                        -- affiche les infos Pannes Aléatoires
-		AfficheFlight = true,						-- affiche les infos des packages créés dans ATO_FlightPlan
+		AfficheFailure = false,                        -- affiche les infos Pannes Alï¿½atoires
+		AfficheFlight = true,						-- affiche les infos des packages crï¿½ï¿½s dans ATO_FlightPlan
 		AfficheSol = false,							-- affiche les infos des cibles encore intactes
 		KillGround  = {
-			flag = false,				-- Active la destruction aléatoires des cibles, via les options plus bas
-			sideGround = "red",			-- le camp où l'on veut détruire les unités
+			flag = false,				-- Active la destruction alï¿½atoires des cibles, via les options plus bas
+			sideGround = "red",			-- le camp oï¿½ l'on veut dï¿½truire les unitï¿½s
 			sideTarget = "blue",		-- les targets de notre camp
-			pourcent = 50,				-- pourcentage de chance que l'unité soit détruite (juste l'unité, pas le groupe)
+			pourcent = 50,				-- pourcentage de chance que l'unitï¿½ soit dï¿½truite (juste l'unitï¿½, pas le groupe)
 		},
 		Generator  = {
-			affiche = true,			-- affiche les infos des premiers vols créés dans ATO_Generator
-			nb = 200,					-- nb de vol à afficher
+			affiche = true,			-- affiche les infos des premiers vols crï¿½ï¿½s dans ATO_Generator
+			nb = 200,					-- nb de vol ï¿½ afficher
 		},
 		checkTargetName = true,						-- FirsMission Alerte si les noms des targets possede 1 espace en premier ou en dernier
-		checkTargetName2Space = true,				-- FirsMission Alerte si les noms des targets possede 2 espaces consécutif			
+		checkTargetName2Space = true,				-- FirsMission Alerte si les noms des targets possede 2 espaces consï¿½cutif			
 	}
 
 	-- soit avec une valeur par caterorie RepairSAM RepairAirbase etc
 	campMod_check = {
-		-- RepairTotallyDestroyed = false,			-- répare (ou pas) les targets totalement détruites
-		RepairMinimumDestroyed = 33,			-- ne répare pas si le target.alive est inférieur à
+		-- RepairTotallyDestroyed = false,			-- rï¿½pare (ou pas) les targets totalement dï¿½truites
+		RepairMinimumDestroyed = 33,			-- ne rï¿½pare pas si le target.alive est infï¿½rieur ï¿½
 		RepairSAM = 15,							-- en %, Only CampaignMaker please
 		RepairAirbase = 12,						-- en %, Only CampaignMaker please
 		RepairStation = 8,						-- en %, Only CampaignMaker please
 		RepairBridge = 8,						-- en %, Only CampaignMaker please
 		Repair = 2,								-- en %, Only CampaignMaker please	
 		
-		KillTargetValue = 30,					-- en %, si la vie du Target est < 20%, on déclare les survivants mort, pour éviter d'y retourner.
+		KillTargetValue = 30,					-- en %, si la vie du Target est < 20%, on dï¿½clare les survivants mort, pour ï¿½viter d'y retourner.
 									
-		DeltaMn = {								-- minute, décale le temps necessaire lors d'apparition sur CVN, LHA ou FARP
+		DeltaMn = {								-- minute, dï¿½cale le temps necessaire lors d'apparition sur CVN, LHA ou FARP
 			CVN = 3,
 			LHA = 7,
 			FARP = 7,
@@ -142,8 +153,8 @@ versionDCE["conf_mod_check.lua"] = "1.28.32"
 		MovedBullseye = { 						-- Miguel21 modification M27 	MovedBullseye
 			caucasus = {
 				pos = {
-					x = -281713,	-- centre du rayon autour de laquelle on s'autorise à placer le nouveau BullsEye ['Senaki-Kolkhi']
-					y = 647369,		-- centre du rayon autour de laquelle on s'autorise à placer le nouveau BullsEye ['Senaki-Kolkhi']
+					x = -281713,	-- centre du rayon autour de laquelle on s'autorise ï¿½ placer le nouveau BullsEye ['Senaki-Kolkhi']
+					y = 647369,		-- centre du rayon autour de laquelle on s'autorise ï¿½ placer le nouveau BullsEye ['Senaki-Kolkhi']
 				},
 				rayon = 200,	-- distance en Km autour de laquelle on peut placer le bullsEye
 			},
@@ -197,11 +208,11 @@ versionDCE["conf_mod_check.lua"] = "1.28.32"
 
 
 
-	-- modif Miguel M12 Skill aléatoire
+	-- modif Miguel M12 Skill alï¿½atoire
 
 	skillWish_check = {
-		["red"] = 50,				-- 1 à 100, valeur ULTRA conseillé :50
-		["blue"] = 62,				-- 1 à 100 : valuer ULTRA conseillé : 62
+		["red"] = 50,				-- 1 ï¿½ 100, valeur ULTRA conseillï¿½ :50
+		["blue"] = 62,				-- 1 ï¿½ 100 : valuer ULTRA conseillï¿½ : 62
 	}
 				
 	skillTab_check = {

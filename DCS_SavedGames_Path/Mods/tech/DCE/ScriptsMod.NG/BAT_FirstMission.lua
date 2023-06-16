@@ -1,11 +1,18 @@
 --To manually generate the first campaign mission and reset the campaign to initial status. For manual use by campaign designer only, not required for normal campaign play.
 --Initiated by FirstMission.bat
 -------------------------------------------------------------------------------------------------------
--- Miguel Fichier Revision  M47.c
--------------------------------------------------------------------------------------------------------
 
+if not versionDCE then 
+	versionDCE = {} 
+end
 
--- adjustment A01.b : robust form
+               -- VERSION --
+
+versionDCE["BAT_FirstMission.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code
+-- adjustment A01.b : robust form.
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M46.d  singlePlayer with dedicated server (c: DF choice)(c: D choice with AI AirSpawn)
 -- miguel21 modification M38.e  helps to balance the game
@@ -13,9 +20,26 @@
 -- Miguel21 modification M14 : Versionning
 -- Miguel21 modification M11.q : Multiplayer (q: displays all tasks of several squadrons)(p: Task table)
 
-if not versionDCE then versionDCE = {} end
-versionDCE["BAT_FirstMission.lua"] = "1.7.33"
+--if not versionDCE then versionDCE = {} end
+--versionDCE["BAT_FirstMission.lua"] = "1.7.33"
 
+versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
+math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))										----- random seed -----
+math.random(); math.random(); math.random()																----- random seed -----
+dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
+dofile("Init/conf_mod.lua")
+dofile("Init/camp_init.lua")
+dofile("Init/db_firepower.lua")
+dofile("Init/oob_air_init.lua")
+dofile("Init/targetlist_init.lua")
+
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = LOGGING_LEVEL
+log.outfile = LOG_DIR .. "LOG_BAT_FirstMission." .. camp.mission .. ".log" 
+local local_debug = true -- local debug   
+log.info("Start")
 
 local function AcceptMission()
 	repeat
@@ -67,30 +91,15 @@ local TabTask = {
 		["Transport"] = "t",
 	["u"] = "Refueling",
 		["Refueling"] = "u",
-	}
+}
 
------ random seed -----
-math.randomseed(tonumber(tostring(os.time()):reverse():sub(1,6)))
-math.random(); math.random(); math.random()
-
-versionPackageICM = os.getenv('versionPackageICM')														-- Miguel21 modification M35.b version ScriptsMod
-
-dofile("Init/conf_mod.lua")
-dofile("Init/camp_init.lua")
-dofile("Init/oob_air_init.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
-dofile("Init/targetlist_init.lua")
-
---=====================  start marco implementation ==================================
-
-dofile("Init/supply_tab_init.lua")
-local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)						    --make a string
+dofile("Init/supply_tab_init.lua") -- load initial supply tab
+local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)				    --make a string
 local tgtFile = nil
 tgtFile = io.open("Active/supply_tab.lua", "w")
 tgtFile:write(tgt_str)																		--save new data
 tgtFile:close()
 
---=====================  end marco implementation ==================================
 
 local showVersion = versionPackageICM
 

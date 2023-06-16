@@ -1,9 +1,19 @@
 --To generate a new mission file. Unzips template mission, defines content of next missions and packs a new mission file
 --Initiated by Debrief_Master.lua, BAT_FirstMission.lua or BAT_RedoMission.lua
-------------------------------------------------------------------------------------------------------- 
--- Miguel Fichier Revision M47.c
-------------------------------------------------------------------------------------------------------- 
+-------------------------------------------------------------------------------------------------------
 
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["MAIN_NextMission.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.1: implements compute firepower code
+-- Old_Boy rev. OB.1.0.0: implements logging code
+-- Old_Boy rev. OB.0.0.1: implements logistic code
 -- miguel21 modification M47.c keeps the history of the campaign files (c: save debugging information during mission generation)
 -- miguel21 modification M40 Pedro
 -- miguel21 modification M38.d Check and Help CampaignMaker
@@ -21,39 +31,62 @@
 -- Miguel21 modification M00b	Integration de conf_mod
 -- -------------------------------------------------------------------------------------------------------
 
-if not versionDCE then versionDCE = {} end
-versionDCE["MAIN_NextMission.lua"] = "1.15.38"
+--if not versionDCE then versionDCE = {} end
+--versionDCE["MAIN_NextMission.lua"] = "1.15.38"
 
 
+local activate_testing_enviroment = ACTIVATE_TESTING_ENVIROMENTS -- false: for running in DCE enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMission.bat), true: for running in testing enviroment (DEBRIEF_Master.lua launched from DEBUG_DebriefMissionTesting.bat) --By Old_Boy
+inspect = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_inspect.lua")
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+log.activate = false-- select true to activate log
+log.level = LOGGING_LEVEL --"traceVeryLow" -- 
+log.outfile = LOG_DIR .. "LOG_MAIN_NextMission." .. camp.mission .. ".log"
+local local_debug = false -- local debug   
+local active_log = false -- select true to activate log
+log.info("Start")
+
+if activate_testing_enviroment then
+	log.warn("activate testing enviroment")
+end
+
+log.info("unpack template mission file")
 ----- unpack template mission file ----
 local minizip = require('minizip')
-
+log.debug("loaded minzip" .. tostring(minizip ~= nil))
 local zipFile = minizip.unzOpen("Init/base_mission.miz", 'rb')
-
+log.debug("open Init/base_mission.miz" .. tostring(zipFile ~= nil))
 zipFile:unzLocateFile('mission')
 local misStr = zipFile:unzReadAllCurrentFile()
 local misStrFunc = loadstring(misStr)()
-
+log.debug("unzip and load mission file" .. tostring(misStrFunc ~= nil))
 zipFile:unzLocateFile('options')
 local optStr = zipFile:unzReadAllCurrentFile()
 local optStrFunc = loadstring(optStr)()
-
+log.debug("unzip and load options file" .. tostring(optStrFunc ~= nil))
 zipFile:unzLocateFile('warehouses')
 local warStr = zipFile:unzReadAllCurrentFile()
 local warStrFunc = loadstring(warStr)()
-
+log.debug("unzip and load warehouses file" .. tostring(warStrFunc ~= nil))
 zipFile:unzLocateFile('l10n/DEFAULT/dictionary')
 local dicStr = zipFile:unzReadAllCurrentFile()
 local dicStrFunc = loadstring(dicStr)()
-
+log.debug("unzip and load l10n/DEFAULT/dictionary file" .. tostring(dicStrFunc ~= nil))
 zipFile:unzLocateFile('l10n/DEFAULT/mapResource')
 local resStr = zipFile:unzReadAllCurrentFile()
 local resStrFunc = loadstring(resStr)()
-
+log.debug("unzip and load l10n/DEFAULT/mapResource file" .. tostring(resStrFunc ~= nil))
 zipFile:unzClose()
 
+if mission.version < 19 then --19ok 18bad
+	log.warning("(MainNM) ATTENTION: BaseMission.miz is too old. (prior to DCS version 2.7.0) try to save it again with the mission editor. Or ask the creator of this campaign to provide an update.")
+	--os.execute 'pause'
+	--os.exit()
+end
+
+NameTheatre =  string.lower(mission.theatre)
 
 ---- add trigger to destory scenery objects -----
+log.info("add trigger to destory scenery objects. Iterate through destroyed scenery objects")
 mission.trig.flag[1] = true
 mission.trig.conditions[1] = "return(true)"
 mission.trig.actions[1] = ""
@@ -67,11 +100,12 @@ mission.trigrules[1] = {
 }
 
 require("Active/oob_scen")
-for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed scenery objects
+for scen_name,scen in pairs(oob_scen) do												--iterate through destroyed scenery objects
+	
 	if scen.x and scen.z then														--destroyed scenery object has x and z coordinates
 		
 		local zones_n = #mission.triggers.zones	+ 1									--trigger zone number
-		
+		log.debug("destroyed scenery object has x and z coordinates -> zones_n = " .. zones_n .. ", add trigger zone")
 		--add trigger zone
 		mission.triggers.zones[zones_n] = {
 			["x"] = scen.x,
@@ -88,10 +122,10 @@ for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed s
 			["hidden"] = true,
 			["name"] = "SceneryDestroyZone" .. #mission.trigrules[1].actions + 1,
 		}
-
+		log.trace("mission.triggers.zones[" .. zones_n .. "]:\n" .. inspect(mission.triggers.zones[zones_n]))
 		--add trigger
 		mission.trig.actions[1] = mission.trig.actions[1] ..  "a_scenery_destruction_zone(" .. zones_n .. ", 100);"
-		
+		log.trace("add trigger actions mission.trig.actions[1]:\n" .. mission.trig.actions[1])
 		mission.trigrules[1].actions[#mission.trigrules[1].actions + 1] = {
 			["ai_task"] = {
 				[1] = "",
@@ -101,13 +135,18 @@ for scen_name,scen in pairs(oob_scen) do											--iterate through destroyed s
 			["destruction_level"] = 100,
 			["zone"] = zones_n,
 		}
+		log.trace("add trigger rules mission.trigrules[1].actions[" .. #mission.trigrules[1].actions + 1 .. "]:\n" .. inspect(mission.trigrules[1].actions[#mission.trigrules[1].actions + 1]))
+		log.debug("destroyed scenery object has x and z coordinates -> add new scenery destroyed zone: " .. zones_n .. " in mission.triggers.zone[" .. zones_n .. "]")
 	end
 end
 
 
 ----- prepare triggers to run files in mission -----
 local trig_n = 1
+
 local function AddFileTrigger(filename)
+	local nameFunction = "function AddFileTrigger(" .. filename .. "): "    
+	log.trace("Start " .. nameFunction)
 	trig_n = trig_n + 1
 	mapResource["ResKey_Action_" .. trig_n] = filename
 	mission.trig.funcStartup[trig_n] = 'if mission.trig.conditions[' .. trig_n .. ']() then mission.trig.actions[' .. trig_n .. ']() end'
@@ -131,17 +170,18 @@ local function AddFileTrigger(filename)
 			},
 		},
 	}
+	log.trace("End " .. nameFunction)
 end
 
 AddFileTrigger("camp_status.lua")
 AddFileTrigger("EventsTracker.lua")
-AddFileTrigger("AddCommandRadioF10.lua")											-- Miguel21 Modification M29
+AddFileTrigger("AddCommandRadioF10.lua")												-- Miguel21 Modification M29
 AddFileTrigger("GCIdata.lua")
 AddFileTrigger("GCIscript.lua")
 AddFileTrigger("ARM_Defence_Script.lua")
 AddFileTrigger("CustomTasksScript.lua")
 AddFileTrigger("CarrierIntoWindScript.lua")
-AddFileTrigger("Pedro.lua")															-- miguel21 modification M40 Pedro
+AddFileTrigger("Pedro.lua")																-- miguel21 modification M40 Pedro
 
 ----- run scripts to create content of next mission -----
 dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Functions.lua")
@@ -158,6 +198,7 @@ camp.SC_CarrierIntoWind = string.lower(mission_ini.SC_CarrierIntoWind)					-- Mi
 
 local verScriptsModPath = "../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua"
 local TestPath = io.open(verScriptsModPath, "r")
+
 if  TestPath ~= nil then
 	io.close(TestPath)
 	dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Version.lua")
@@ -178,6 +219,9 @@ else
 	camp["MissionFilename"] =  camp.title.."_ongoing.miz"	
 end
 
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_LoadoutsAssignment.lua") -- define the firepower for targetlist and db_loadouts (verifica se opportuno inserirlo in DC_UpdateTargetList)	
+
+log.info("require: Init/db_firepower.lua, Init/db_loadouts, Init/db_airbases, Active/oob_air, Active/oob_ground, Init/conf_mod, Init/radios_freq_compatible")
 require("Init/db_loadouts")
 require("Init/db_airbases")
 require("Active/oob_air")
@@ -185,12 +229,76 @@ require("Active/oob_ground")
 require("Init/conf_mod")															-- Miguel21 modification M00 : need option
 require("Init/radios_freq_compatible")												-- miguel21 modification M34 custom FrequenceRadio
 
+
+-- define firepower value for db_loadouts (only first mission)
+if FirstMission then -- per sicurezza (verifica se esiste missione 0)
+	
+	CopyFile("Init/db_loadouts.lua", "Init/db_loadouts_original.lua")	
+	defineLoadoutsFirepowerAndCost()
+	defineLoadoutsCruiseParameters()
+	SaveTabOnPath( "Init/", "db_loadouts", db_loadouts ) -- save new updated db_loadouts     
+else
+	defineLoadoutsCruiseParameters()
+end
+
+
+-- INSERISCI QUI IL PREPROCESSING: 
+-- Blue_task_table, red_task_table dove la key = task (CAP, INTERCEPT,...) e value = tutte le info relative alle unità con quel task (sottotabella unità).
+-- ed_rooster con key = lost, ready e damaged e value nome unità
+--  red_base_asset con key = base con value le sottotabelle unità con tutti le proprietà relativa a quella unità
+
+-- create table blue_air_task
+blue_air_task = {}
+local blue_air_units = oob_air.blue
+local red_air_units = oob_air.red
+local air_task = {"CAP", "Escort", "Fighter Sweep", "Intercept", "Strike", "SEAD", "Anti-ship Strike", "Laser Illumination", "Refueling", "Transport", "Reconnaissance"}
+--local entry_task = {}
+-- local key_task 
+
+for n = 1, #air_task do 
+	log.traceLow("blue_air_task - task: " .. air_task[n])
+	blue_air_task[air_task[n]] = {}
+	local key_task
+
+	for n_unit = 1, #blue_air_units do
+		log.traceLow("blue_air_units[" .. n_unit .. "]: " .. inspect(blue_air_units[n_unit]))
+
+		for task_name, task_value in pairs (blue_air_units[n_unit].tasks) do
+			log.traceVeryLow("blue_air_task - task_name: " .. task_name .. ", task_value: " .. tostring(task_value))
+			
+			if air_task[n] == task_name and task_value then	
+				key_task = blue_air_units[n_unit].name .. "/" .. blue_air_units[n_unit].type
+				local entry_task = {}
+				entry_task[key_task] = { 					 
+						name =  blue_air_units[n_unit].name,
+						type =  blue_air_units[n_unit].type,
+						country =  blue_air_units[n_unit].country,
+						base =  blue_air_units[n_unit].base,
+						skill =  blue_air_units[n_unit].skill,
+						number =  blue_air_units[n_unit].number,
+						num_unit =  blue_air_units[n_unit].num_unit,
+				}
+				table.insert(blue_air_task[air_task[n]], entry_task)
+				log.traceLow("blue_air_task - unit added: " .. inspect(blue_air_task[air_task[n]]) )
+			end
+		end
+	end
+end
+log.trace("preprocessing: created table blue_air_task:\n" .. inspect(blue_air_task))
+
+-- debug code
 if Debug.KillGround.flag then
+
 	for side_name,side in pairs(oob_ground) do														--side table(red/blue)											
+
 		if side_name == Debug.KillGround.sideGround then	
+
 			for country_n,country in pairs(side) do														--country table (number array)
+
 				if country.vehicle then																	--if country has vehicles
+
 					for group_n,group in pairs(country.vehicle.group) do								--groups table (number array)
+
 						for unit_n,unit in pairs(group.units) do										--units table (number array)					
 							
 							if not unit.dead and math.random(1, 100) <= Debug.KillGround.pourcent then
@@ -204,9 +312,13 @@ if Debug.KillGround.flag then
 						end
 					end
 				end
+	
 				if country.static then																--if country has static objects	
+	
 					for group_n,group in pairs(country.static.group) do								--groups table (number array)
+	
 						for unit_n,unit in pairs(group.units) do									--units table (number array)
+	
 							if not unit.dead and math.random(1, 100) <= Debug.KillGround.pourcent then			--check if unitId matches initiatorMissionID (string, needs to be converted to number)
 								
 								print("MainNT PasseDestroy static "..unit.name)
@@ -243,6 +355,8 @@ if Debug.KillGround.flag then
 	end
 end
 require("Active/targetlist")
+
+-- debug code
 if Debug.KillGround.flag then
 	for side_name,side in pairs(targetlist) do											--iterate through targetlist
 		if side_name == Debug.KillGround.sideTarget then
@@ -267,11 +381,12 @@ if Debug.KillGround.flag then
 		end
 	end
 end
+
 require("Active/camp_triggers")
 
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Refpoints.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_MissionScore.lua")
-dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Time.lua")
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Refpoints.lua") -- Check all trigger zones on base_mission and store their x-y coordinates for easier use (stored in Refpoint)
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_MissionScore.lua") -- define the mission score and mission goals
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Time.lua") -- --advance campaign time, set mission time, day, month and year
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Weather.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_DestroyTarget.lua")			-- miguel21 Mod26
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_NavalEnvironment.lua")
@@ -279,6 +394,8 @@ dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_CheckTriggers.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateTargetlist.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_UpdateOOBGround.lua")
+
+dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Tactical.lua")
 
 dofile("../../../ScriptsMod."..versionPackageICM.."/ATO_ThreatEvaluation.lua")
 dofile("../../../ScriptsMod."..versionPackageICM.."/ATO_RouteGenerator.lua")

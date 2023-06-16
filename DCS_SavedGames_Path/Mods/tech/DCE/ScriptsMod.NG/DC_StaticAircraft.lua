@@ -9,6 +9,15 @@
 -- DC_SA_correction01.b Static disparaissent au bout de 3mn (b: nb de static en fonction de la place restante)
 -- miguel21 modification M43 assignation des numeros de parking du type C08 
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = LOGGING_LEVEL
+log.outfile = LOG_DIR .. "LOG_DC_StaticAircraft." .. camp.mission .. ".log" 
+local local_debug = true -- local debug   
+log.info("Start")
+-- =====================  End Marco implementation ==================================
 
 --Count all aircraft assigned in ATO
 local count = {}

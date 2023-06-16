@@ -11,6 +11,17 @@
 if not versionDCE then versionDCE = {} end
 versionDCE["DC_Weather.lua"] = "1.2.5"
 
+-- =====================  Marco implementation ==================================
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua")
+-- NOTE MARCO: prova a caricarlo usando require(".. . .. . .. .ScriptsMod."versionPackageICM..".UTIL_Log.lua")
+-- NOTE MARCO: https://forum.defold.com/t/including-a-lua-module-solved/2747/2
+log.level = LOGGING_LEVEL
+log.outfile = LOG_DIR .. "LOG_DC_Weather." .. camp.mission .. ".log" 
+local local_debug = true -- local debug   
+log.info("Start")
+-- =====================  End Marco implementation ==================================
+
+
 local debugWeather = false
 
 

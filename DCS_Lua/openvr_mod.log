@@ -1,0 +1,5 @@
+Initializing hooks...
+Requested interface IVRSystem_019
+Injecting GetRecommendedRenderTargetSize into IVRSystem_019
+Requested interface IVRCompositor_022
+Injecting Submit into IVRCompositor_022

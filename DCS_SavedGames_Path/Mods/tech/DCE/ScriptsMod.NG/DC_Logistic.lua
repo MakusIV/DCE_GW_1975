@@ -1,56 +1,84 @@
---[[
+-- ====================================== DC_Logistic =================================================================
+-- 
+-- UpdateOobAir():                        Update oob_air number property considering airbase efficiency property
+-- SaveTabOnDisk( table_name, table ):    Save table supply_tab.lua on disk
+-- 
+-- ====================================================================================================================
+
+-------------------------------------------------------------------------------------------------------
+
+if not versionDCE then 
+	versionDCE = {} 
+end
+
+               -- VERSION --
+
+versionDCE["DC_Logistic.lua"] = "OB.1.0.0"
+
+---------------------------------------------------------------------------------------------------------
+-- Old_Boy rev. OB.1.0.0: implements logging code
+-- Old_Boy rev. OB.0.0.1: implements supply line sistems (logistics)
+-------------------------------------------------------------------------------------------------------
 
 
-Aircraft resupply (ready aircraft) depends from damage level of airbase and damage level of supply_line and supply_plant
 
-The supply infrastructure logic:
+--[[DESCRIPTION 
 
-supply plant --- supplies ---->|----> supply line A -- supplies---> |--> airbase 1
-                               |                                    |--> airbase 3
-                               |                                    |--> airbase 5
-                               |
-                               |----> supply line B -- supplies---> |--> airbase 2
-							   |                                    |--> airbase 5
-							   |
-                               |----> supply line C -- supplies---> |--> airbase 2
+    Aircraft resupply (ready aircraft) depends from damage level of airbase and damage level of supply_line and supply_plant
 
-calculus:
-aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance
-airbase.efficiency = airbase.integrity * airbase.supply
-airbase.supply = max( supply_plant.integrity * supply_line.integrity )
-supply_plant.integrity, supply_line.integrity and airbase.integrity are alive/100 values defined for specific asset
+    The supply infrastructure logic:
 
-This module use two new table: airbase_tab and supply_tab.
-airbase_tab include airbases with aircraft_type and efficiency values: property used for number of aircraft avalaibility calculation.
-airbase_tab is automatically created, update and saved (/Active) during mission generation.
-supply_tab is loaded initially from supply_tab_init.lua file (/Init), update and saved (/Active) during mission generation.
-supply_tab define association from airbase and supply asset: supply_line, supply_plant.
-The Campaign Creator must define the supply_tab_init using targets presents in targetlist table and airbases presents in oob_air.
-Important: the names of the airbases must be the same as those used in the oob_air. The names of the airbases defined in targetlist must be
-the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
-For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]
+    supply plant --- supplies ---->|----> supply line A -- supplies---> |--> airbase 1
+                                |                                    |--> airbase 3
+                                |                                    |--> airbase 5
+                                |
+                                |----> supply line B -- supplies---> |--> airbase 2
+                                |                                    |--> airbase 5
+                                |
+                                |----> supply line C -- supplies---> |--> airbase 2
 
-]]
+    calculus:
+    aircraft.ready = expected.aircraft.ready * ( 2^( airbase.efficiency * k ) -1 ). k: defined by user for balance. k:(0,1]
+    airbase.efficiency = airbase.integrity * airbase.supply.       airbase.efficiency:[0,1]
+    airbase.supply = max( supply_plant.integrity * supply_line.integrity ). airbase.supply:[0,1]
+    <asset type>.integrity = <asset type>.alive/100.
 
--- airbase_tab structure example
---[[
-airbase_tab = {
+    This module use two table: airbase_tab and supply_tab.
+    airbase_tab include airbases with aircraft_type and efficiency values: used for number of aircraft avalaibility calculation.
+    airbase_tab is created, update and saved (/Active) during mission generation.
+    supply_tab is loaded initially from supply_tab_init.lua file (/Init), update and saved (/Active) during mission generation.
+    supply_tab define association from airbase and supply asset (supply_line, supply_plant).
+    The campaign maker must initialize supply_tab_init using targets presents in targetlist table and airbases presents in oob_air.
+    Important: 
+    I) the names of the airbases written in supply_tab_init must be the same as those used in the oob_air. 
+    II) the names of the airbases defined in targetlist must be the same as those used in oob_air, eventually with the addition of postfix " Airbase" or prefix " FARP".
+    For example: oob_air[<n>].base = "Mozdok", supply_tab[][][][airbases_supply]["Mozdok"], targetlist[]["Mozdok"] or targetlist[]["Mozdok Airbase"]]
 
-    [blue]
-        [base_1] = {
-            ["aircraft_types"]
-                [aircraft_1] true
-                [aircraft_2] true
-            ["efficiency"] 0.72
-            ["integrity"] 0.8
-            ["supply"] 0.9
+    --[[
 
-        --......
-    [red]
-        [base_n]
-            --......
+    airbase_tab structure example
+
+    airbase_tab = {
+
+        [blue] = {
+            [base_1] = {
+                ["aircraft_types"]
+                    [aircraft_1] = name
+                    [aircraft_2] = name
+                ["efficiency"] 0.72
+                ["integrity"] 0.8
+                ["supply"] 0.9
+            }
+            ......
         }
-}
+        [red] = {
+            [base_n] = {
+                ......
+            }
+            .......
+        }
+    }
+
 ]]
 
 -- supply_tab structure example
@@ -168,13 +196,9 @@ supply_tab = {
 			},
 		},
 	},
-}
+}]]
 
-]]
-
-
---[[
--- this definition of supply_tab is for testing in an active campaign running in DCS dedicated server enviroment
+--[[ this definition of supply_tab is for testing in an active campaign running in DCS dedicated server enviroment
 -- don't use in developement enviroment
 supply_tab = {
 	['blue'] = {
@@ -298,49 +322,49 @@ supply_tab = {
       }
     }
 	}
-}
+}]]
+
+
+--[[DCE IMPLEMENTATION INFO
+
+    new file:
+
+    ScriptsMod.NG/: DC_Logistic.lua
+    Init/: supply_tab_init.lua --defined by campaign's maker
+
+    file modified:
+
+
+    DEBRIEF_Master.lua:
+
+    94 --=====================  start marco implementation ==================================
+    95
+    96 --run logistic evalutation and save supply_tab
+    97 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
+    98 UpdateOobAir()
+    99
+    100 --=====================  end marco implementation ==================================
+
+
+    BAT_FirstMission.lua:
+
+    84 --====================  start marco implementation ==================================
+    85
+    86 dofile("Init/supply_tab_init.lua")
+    87 local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)
+    88 local tgtFile = nil
+    89 tgtFile = io.open("Active/supply_tab.lua", "w")
+    90 tgtFile:write(tgt_str)
+    91 tgtFile:close()
+    92
+    93 --=====================  end marco implementation ==================================
 ]]
 
-
-
-
---[[
-
-DCE IMPLEMENTATION INFO
-
-new file:
-
-Active/: DC_Logistic.lua --marco
-Init/: supply_tab_init.lua --defined by campaign's maker
-
-file modified:
-
-DEBRIEF_Master.lua:
-94 --=====================  start marco implementation ==================================
-95
-96 --run logistic evalutation and save supply_tab
-97 dofile("../../../ScriptsMod."..versionPackageICM.."/DC_Logistic.lua")--mark
-98 UpdateOobAir()
-99
-100 --=====================  end marco implementation ==================================
-
-BAT_FirstMission.lua:
-84 --====================  start marco implementation ==================================
-85
-86 dofile("Init/supply_tab_init.lua")
-87 local tgt_str = "supply_tab = " .. TableSerialization(supply_tab, 0)
-88 local tgtFile = nil
-89 tgtFile = io.open("Active/supply_tab.lua", "w")
-90 tgtFile:write(tgt_str)
-91 tgtFile:close()
-92
-93 --=====================  end marco implementation ==================================
-
-]]
-
-
-
-
+-- load UTIL_Log for define a local istance of logger (allow a dedicated file for this module)
+local log = dofile("../../../ScriptsMod."..versionPackageICM.."/UTIL_Log.lua") --log = require("UTIL_Log.lua")
+log.level = LOGGING_LEVEL  --(variabile globale)
+log.outfile = LOG_DIR .. "LOG_DC_Logistic." .. camp.mission .. ".log"
+local local_debug = true -- local debug
 local executeTest = false
 
 if executeTest then
@@ -352,15 +376,20 @@ if executeTest then
   dofile("E://DCE/DCE_GW_1975/DCS_SavedGames_Path/Mods/tech/DCE/ScriptsMod.NG/UTIL_Functions.lua")
 
 else
-  
+  -- load supply_tab
   dofile("Active/supply_tab.lua")
 
 end
 
 
 
+local DC_L_CONFIG = {
 
--- Utility function
+    PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_AIRBASES = 100, -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
+    PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_RESERVES = 100, -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
+}
+
+--============ LOCAL FUNCTION =================================
 
 -- dump a table
 --from: https://stackoverflow.com/questions/9168058/how-to-dump-a-table-to-console
@@ -393,7 +422,7 @@ local function copySupplyTab()
 end
 
 -- table lenght
-function tablelength(T)
+local function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
     return count
@@ -402,14 +431,20 @@ function tablelength(T)
 
 
 
-  -- Logistic function
+-- Logistic function
 
 -- Initialize the airbase_tab by defining the planes operating in the airbase
 -- OK
 local function InitializeAirbaseTab()
 
-    for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase
+    local nameFunction = " function InitializeAirbaseTab(): "    
+    log.debug("Start " .. nameFunction)
+    local aircraft_type
+    local group_name
+    local airbase_name
 
+    for side, index in pairs(oob_air) do-- iterate oob_air for take aircraft type in an airbase        
+            
         for index_value, oob_value in pairs(index) do
             aircraft_type = oob_value.type
             group_name = oob_value.name
@@ -419,10 +454,10 @@ local function InitializeAirbaseTab()
                 airbase_name = airbase_name .. "-" .. group_name
             end
 
-            --print(side, airbase_name, aircraft_type)
+            log.trace(nameFunction .. airbase_name .. "." .. side .. ": " .. aircraft_type)
 
             if airbase_tab == nil then
-                --print("airbase_tab is nil\n")
+                log.trace(nameFunction .. "airbase_tab is nil. Initialize new airbase_tab") 
                 airbase_tab = {
                     [side] = {
                         [airbase_name] = {
@@ -435,9 +470,10 @@ local function InitializeAirbaseTab()
                         }
                     }
                 }
-                --print("\n--->: " .. dump(airbase_tab).. " <----\n")
+                log.trace(nameFunction .. " - airbase_tab:\n" .. inspect(airbase_tab)) --print("\n--->: " .. dump(airbase_tab).. " <----\n")
 
             elseif airbase_tab[side] == nil then
+                log.trace(nameFunction .. "airbase_tab." .. side .. " is nil. Initialize new airbase_tab." .. side) 
                 airbase_tab[side] = {
                     [airbase_name] = {
                         ["aircraft_types"] = {
@@ -448,41 +484,44 @@ local function InitializeAirbaseTab()
                         ["supply"] = 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
                 }
+                log.trace(nameFunction .. "Created new airbase_tab." .. side .. ": " .. airbase_name .. ", aircraft_type: " .. aircraft_type .. ", group_name: " .. group_name)
 
             else
-                --print("airbase_tab is not nil\n")
-                --print("oob_air airbase_name: " .. side .. " " .. airbase_name .. "\n")
+                log.trace(nameFunction .. "airbase_tab." .. side .. " not nil")
+                log.trace(nameFunction .. "oob_air airbase_name: " .. side .. " " .. airbase_name)                
 
                 if airbase_tab[side][airbase_name] then
-                    --print("airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab\n")
+                    log.trace(nameFunction .. "airbase: " .. side .. " " .. airbase_name .." exists in airbase_tab")
 
                         if airbase_tab[side][airbase_name].aircraft_types[aircraft_type] == nil then
-                            --print("oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab.\n")
+                            log.trace(nameFunction .. "oob_air aircraft type: " .. aircraft_type .. " --> not exixst aircraft, insert in airbase_tab")
                             airbase_tab[side][airbase_name].aircraft_types[aircraft_type] = group_name
                         end
+                        
                 else
-                    --print("airbase not exists in airbase_tab\n")
-                    airbase_tab[side][airbase_name] =  { -- insert new airbase, initializa property and assign aircraft
+                    log.trace(nameFunction .. "airbase not exists in airbase_tab")
+                    airbase_tab[side][airbase_name] =  { -- insert new airbase, initialize property and assign aircraft
                         ["aircraft_types"] = { [aircraft_type] = group_name },-- insert new airbase and assign aircraft
                         ["efficiency"] = 1, -- efficiency_<airbase>  1 = max (full efficiency), 0 = min
                         ["integrity"] = 1, -- same of targetlist.alive 1 = max, 0 = min (full damage)
                         ["supply"]= 1 -- supply_<airbase> 1 (full supply) = max, 0 = min
                     }
-                end
-                --print("\n--->: " .. dump(airbase_tab).. " <----\n")
+                end                
             end
         end
     end
-
+    log.debug(nameFunction .. " - airbase_tab:\n" .. inspect(airbase_tab) )
+    log.debug("End " .. nameFunction)
 	return airbase_tab
 end
 
 -- Update the integrity property for supply plant in supply_tab, by using property alive in targetlist
 -- OK
 local function UpdateSupplyPlantIntegrity( sup_tab )
+    local nameFunction = "function UpdateSupplyPlantIntegrity( sup_tab ): "    
+    log.debug("Start " .. nameFunction)
 
     -- note: supply Plant are defined in supply_tab and also in targetlist like targets
-
     for sidepw, side_val in pairs( sup_tab ) do
 
         for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
@@ -490,11 +529,11 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
             for side, targets in pairs( targetlist ) do -- iteration of side in targetlist tab
 
                 for target_name, target_value in pairs( targets ) do -- iteration of targets from a single side
-                    --print("sup tab side: " .. sidepw .. " - " .. "sup_pl_name: " .. supply_plant_name .. " - " .. "targlist side: " .. side .. " - " .. "target name: " .. target_name .. "\n")
-                    --print("sup tab integrity: " .. supply_plant_values['integrity'] .. " - " .. "target_value[\"alive\"]: " .. tostring( target_value['alive']) .. "\n")
+                    log.trace(nameFunction .. "sup tab side: " .. sidepw .. " - " .. "sup_pl_name: " .. supply_plant_name .. " - " .. "targlist side: " .. side .. " - " .. "target name: " .. target_name)
+                    log.trace(nameFunction .. "sup tab integrity: " .. supply_plant_values['integrity'] .. " - " .. "target_value[\"alive\"]: " .. tostring( target_value['alive']))
 
                     if supply_plant_name ==  target_name then  -- update integrity value of an supply plant using alive target property
-                        --print( dump( target_value ) .. "\n")
+                        log.trace(nameFunction .. " target_value:\n" .. inspect( target_value ))
                         supply_plant_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         -- eventuale codice per terminare l'iterazione
                     end
@@ -503,14 +542,16 @@ local function UpdateSupplyPlantIntegrity( sup_tab )
             end
         end
     end
+    log.debug("End " .. nameFunction)
 	return sup_tab
 end
 
 -- Update the integrity property for supply line in supply_tab, by using property alive in targetlist
 -- OK
 local function UpdateSupplyLineIntegrity( sup_tab )
-
     -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "function UpdateSupplyLineIntegrity( sup_tab ): "    
+    log.debug("Start " .. nameFunction)
 
     for sidepw, side_val in pairs( sup_tab ) do
 
@@ -523,6 +564,7 @@ local function UpdateSupplyLineIntegrity( sup_tab )
                     for target_name, target_value in pairs( targets ) do -- iteration of targets from a single side
 
                         if supply_line_name == target_name then -- update integrity value of an supply line using alive target property
+                            log.trace(nameFunction .. "supply_line_name == target_name (" .. target_name .. ", actual value of supply_line_values.integrity: " .. supply_line_values.integrity .. ", updated with new value: " .. target_value.alive / 100)
                             supply_line_values.integrity = target_value.alive / 100 -- normalize integrity from 0 to 1
                         end
                     end
@@ -530,6 +572,7 @@ local function UpdateSupplyLineIntegrity( sup_tab )
             end
         end
     end
+    log.debug("End " .. nameFunction)
 	return sup_tab
 end
 
@@ -537,6 +580,9 @@ end
 -- Update the supply property in airbase_tab using integrity property from supply_tab
 -- OK
 local function UpdateAirbaseSupply( airb_tab, sup_tab )
+
+    local nameFunction = "function UpdateAirbaseSupply( airb_tab, sup_tab ): "    
+    log.debug("Start " .. nameFunction)
 
     local max_supply_value = {}
 
@@ -549,11 +595,11 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
                 for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do
 
                     for airbase_name, airbase_values in pairs( supply_line_values.airbase_supply ) do
-                        --print("air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
-                        --print("supply_plant: " .. supply_plant_name .. ", supply_line_name: " .. supply_line_name .. "\n")
+                        log.trace(nameFunction .. "air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name)
+                        log.trace(nameFunction .. "supply_plant: " .. supply_plant_name .. ", supply_line_name: " .. supply_line_name)
 
                         if base_name == airbase_name then
-                            -- print("side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name .. "\n")
+                            log.trace(nameFunction .. "side: " .. side_base .. " air_tab.airbase: " .. base_name .. ", supply_line.airbase: " .. airbase_name)
                             local supply = supply_plant_values.integrity --  -- update supply value of an airbase for power plantwithout power line (power_line_name == power_plant_name)                            
                             
                             if supply_plant_name ~= supply_line_name then
@@ -569,8 +615,8 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
                             else                                                                                        
                                 max_supply_value[base_name] = supply    
                             end
-                            --print("air_tab.airbase.supply: " .. base_values.supply .. ", calculated supply: " .. supply .. "\n")
-                            --print("supply_plant_values.integrity: " .. supply_plant_values.integrity .. ", supply_line_values.integrity: " .. supply_line_values.integrity .. ", calculated supply: " .. supply .. "\n")
+                            log.trace(nameFunction .. "air_tab.airbase.supply: " .. base_values.supply .. ", calculated supply: " .. supply)
+                            log.trace(nameFunction .. "supply_plant_values.integrity: " .. supply_plant_values.integrity .. ", supply_line_values.integrity: " .. supply_line_values.integrity .. ", calculated supply: " .. supply)
                         end
                     end
                 end
@@ -581,12 +627,16 @@ local function UpdateAirbaseSupply( airb_tab, sup_tab )
             end
         end
     end
+    log.debug("End " .. nameFunction)
 	return airb_tab
 end
 
 -- Update the integrity property in airbase_tab using alive property from targetlist
 -- OK
 local function UpdateAirbaseIntegrity( airb_tab )
+
+    local nameFunction = "function UpdateAirbaseIntegrity( airb_tab ): "    
+    log.debug("Start " .. nameFunction)
 
     for side, side_values in pairs( airb_tab ) do
 
@@ -600,18 +650,19 @@ local function UpdateAirbaseIntegrity( airb_tab )
 
             -- base = base .." Airbase" or " FARP"
             for target_name, target_value in pairs( targetlist[target_side] ) do
-                --print("airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name .. "\n")
+                log.trace(nameFunction .. "airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name)
 
                 if target_name == base or target_name  == base .. " Airbase" or  target_name == base .. " FARP" or  target_name == "FARP " .. base then
-                    --print("==============================\nairbase_tab airbase == targetlist airbase\n==============================\n")
-                    --print("airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name .. "\n")
-                    --print("airbase_tab integrity: " .. airbase_values.integrity .. " ---> " .. target_value.alive / 100 .. "\n")
-                    airbase_values.integrity = target_value.alive / 100
+                    log.trace(nameFunction .. "==============================\nairbase_tab airbase == targetlist airbase\n==============================")
+                    log.trace(nameFunction .. "airbase_tab airbase: " .. base .. ", targetlist airbase: " .. target_name)
+                    log.trace(nameFunction .. "actual airbase_tab integrity: " .. airbase_values.integrity .. ", new value: " .. target_value.alive / 100)
+                    airbase_values.integrity = roundAtNumber(target_value.alive / 100 , 0.01)
                     break
                 end
             end
        end
     end
+    log.debug("End " .. nameFunction)
 	return airb_tab
 end
 
@@ -619,26 +670,28 @@ end
 -- OK
 local function UpdateAirbaseEfficiency( airb_tab )
 
+    local nameFunction = "function UpdateAirbaseEfficiency( airb_tab ): "    
+    log.debug("End " .. nameFunction)
+
 	for side, side_val in pairs( airb_tab ) do
 
 		for base, airbase_values in pairs( side_val ) do
-			airbase_values.efficiency = airbase_values.integrity * airbase_values.supply
-			--print("airbase: " .. base  .. "\n" )
-			--print("airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.supply: " ..  airbase_values.supply .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency .. "\n" )
+			airbase_values.efficiency = roundAtNumber(airbase_values.integrity * airbase_values.supply, 0.01)
+			log.trace(nameFunction .. "airbase: " .. base)
+			log.trace(nameFunction .. "airbase_values.integrity: " .. airbase_values.integrity .. ", " .. "airbase_values.supply: " ..  airbase_values.supply .. ", " .. "airbase_values.efficiency: " ..  ", " .. airbase_values.efficiency)
 		end
-  end
-	return airb_tab
+    end
+    log.debug("End " .. nameFunction)
+    return airb_tab
 end
 
 -- Update oob_air number property considering airbase efficiency property
 function UpdateOobAir()
 
-    local percentage_efficiency_influence_for_airbases = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for airbases
-	local percentage_efficiency_influence_for_reserves = 100 -- (0 - 100) parameter to balance the influence property in the calculation of aircraft number for reserves
+    local nameFunction = "function UpdateOobAir(): "    
+    log.debug("Start " .. nameFunction)    
 	airbase_tab = nil
     airbase_tab = InitializeAirbaseTab()
-
-
 
     if not executeTest then -- delete this condition in operative version and insert UpdatesupplyTestIntegrity in a new line
         UpdateSupplyPlantIntegrity( supply_tab )
@@ -652,8 +705,8 @@ function UpdateOobAir()
 	for side, index in pairs(oob_air) do -- iterate oob_air for take aircraft type in an airbase
 
         for index_value, oob_value in pairs(index) do
-			--print("airbase_tab is not nil\n")
-			--print("oob_air value: ", side, oob_value.base, oob_value.type, oob_value.roster.ready )
+			log.trace(nameFunction .. "airbase_tab is not nil")
+			log.trace(nameFunction .. "oob_air value.base, type, rooster.ready: ", side, oob_value.base, oob_value.type, oob_value.roster.ready)
             local existed_airbase_name = oob_value.base .. "-" .. oob_value.name
 
             if airbase_tab[side][oob_value.base] then
@@ -662,21 +715,21 @@ function UpdateOobAir()
 
 
 			if existed_airbase_name then -- airbase name in oob_air exists in airbase_tab
-				--print("airbase: " .. side .. " " .. existed_airbase_name .." exists in airbase_tab\n")
+				log.trace(nameFunction .. "airbase: " .. side .. " " .. existed_airbase_name .." exists in airbase_tab")
 
 				if airbase_tab[side][existed_airbase_name].aircraft_types[oob_value.type] then --aircraft_type in oob_air exist in airbase_tab
 					result = true
                     local percentage_efficiency_influence = nil
 
 					if string.sub(oob_value.base, 1, 8) ~= "Reserves" then
-                        percentage_efficiency_influence = percentage_efficiency_influence_for_airbases/100
+                        percentage_efficiency_influence = DC_L_CONFIG.PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_AIRBASES/100
 
                     else
-                        percentage_efficiency_influence = percentage_efficiency_influence_for_reserves/100
+                        percentage_efficiency_influence = DC_L_CONFIG.PERCENTAGE_EFFICIENCY_INFLUENCE_FOR_RESERVES/100
                     end
 
-                    --print("old airbase oob_value.number: " .. oob_value.number .."\n")
-                    --print("airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][existed_airbase_name].efficiency .. "\n")
+                    log.trace(nameFunction .. "old airbase oob_value.number: " .. oob_value.number)
+                    log.trace(nameFunction .. "airbase_tab[side][airbase_name].efficiency: " .. airbase_tab[side][existed_airbase_name].efficiency)
 
                     local old_ready = oob_value.roster.ready
                     oob_value.roster.ready = math.floor( 0.5 + oob_value.roster.ready * ( 2^( airbase_tab[side][existed_airbase_name].efficiency * percentage_efficiency_influence ) - 1 ) ) -- min: 0 max = actual roster.ready
@@ -684,27 +737,35 @@ function UpdateOobAir()
                     oob_value.roster.lost = oob_value.roster.lost + increment_lost --min: 0, Max 
 				
                 else
-					print("oob_air aircraft type: " .. oob_value.type .. " --> not exist in airbase_tab\n")
+					log.trace(nameFunction .. "oob_air aircraft type: " .. oob_value.type .. " --> not exist in airbase_tab")
 					result = false
 				end
 
 			else
-				print( "airbase: " .. side .. " " .. airbase_name .. " not exists in airbase_tab\n" )
+				log.trace(nameFunction .. "airbase: " .. side .. " " .. airbase_name .. " not exists in airbase_tab" )
 				result = false
 			end
         end
 	end
-    -- print("\n--->: " .. dump(airbase_tab).. " <----\n")
-	-- print("\n--->: " .. dump(oob_air).. " <----\n")
-  SaveTabOnDisk( "airbase_tab", airbase_tab )
-  SaveTabOnDisk( "supply_tab", supply_tab )
-
-	return result
+    log.trace(nameFunction .. "-airbase_tab:\n--->: " .. inspect(airbase_tab).. " <----")
+	log.trace(nameFunction .. "oob_air:\n--->: " .. inspect(oob_air).. " <----")
+    SaveTabOnDisk( "airbase_tab", airbase_tab )
+    SaveTabOnDisk( "supply_tab", supply_tab )
+  
+    log.debug("End " .. nameFunction)
+    return result, airbase_tab, supply_tab
 end
 
+-- ============================================================					
+-- Last point for coding logger functionality by Old_Boy ------		
+-- ============================================================		
 
 -- Save table on disk supply_tab.lua
 function SaveTabOnDisk( table_name, table )
+
+    local nameFunction = "function SaveTabOnDisk( table_name, table ): "    
+    log.debug("Start " .. nameFunction)
+
     local tgt_str = table_name .. " = " .. TableSerialization(table, 0)						    --make a string
     local tgtFile = nil
 
@@ -716,12 +777,101 @@ function SaveTabOnDisk( table_name, table )
 
     tgtFile:write(tgt_str)																		--save new data
     tgtFile:close()
+    log.debug("End " .. nameFunction)    
 end
 
+-- return a string report of logistic status
+function reportLogisticStatus(sup_tab, airb_tab)
+    -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "function reportLogisticStatus(supply_tab): "    
+    log.debug("Start " .. nameFunction)
+    local s = "======================================== LOGISTIC ASSET REPORT ============================================\n"
 
+    for sidepw, side_val in pairs( sup_tab ) do
+        s = s .. "\n\n\n***************************************** side: " .. sidepw .. " **************************************************\n"
 
+        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+            s = s .. "\n- supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
 
+            for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
+                s = s .. "  -- supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                local efficiency
 
+                for stocked_name, _ in pairs(supply_line_values.airbase_supply) do
+
+                    efficiency, _ = getAssetEfficiency(stocked_name, airb_tab)
+
+                    if efficiency then
+                        s = s .. "     --- stocked: " .. stocked_name .. " - efficiency: " .. efficiency .. "\n"
+                    end
+                end
+            end
+        end
+    end
+    s = s .. "\n\n====================================== END LOGISTIC ASSET REPORT ==========================================\n"
+    log.debug("End " .. nameFunction)
+	return s
+end
+
+-- return a string report of logistic status
+function reportLogisticStatus2(sup_tab, airb_tab)
+    -- note: supply Line are defined in supply_tab and also in targetlist like targets
+    local nameFunction = "function reportLogisticStatus(supply_tab): "    
+    log.debug("Start " .. nameFunction)
+    local s = "======= LOGISTIC ASSET REPORT ======\n"
+
+    for sidepw, side_val in pairs( sup_tab ) do
+        s = s .. "\n\n\nside: " .. sidepw .. " ------------------------------------------------------------------------------------------\n"
+
+        for supply_plant_name, supply_plant_values in pairs( side_val ) do -- iteration of supply plants in supply_tab
+            s = s .. "\n\n supply plant: " .. supply_plant_name .. " - integrity: " .. supply_plant_values.integrity .. "\n"
+
+            for supply_line_name, supply_line_values in pairs( supply_plant_values.supply_line_names ) do-- iteration of supply lines from a single supply_tab
+                s = s .. "\n - supply line: " .. supply_line_name .. " - integrity: " .. supply_line_values.integrity .. "\n"
+                local efficiency
+
+                for resupplier_name, _ in pairs(supply_line_values.airbase_supply) do
+
+                    efficiency, info = getAssetEfficiency(resupplier_name, airb_tab)
+
+                    if efficiency then
+                        s = s .. "          resuppliers: " .. resupplier_name .. " - efficiency: " .. efficiency .. ", units:  " .. info .. "\n"
+                    end
+                end
+            end
+        end
+    end
+    s = s .. "\n\n======= END LOGISTIC ASSET REPORT ======\n"
+    log.debug("End " .. nameFunction)
+	return s
+end
+
+-- return the efficiency of the asset_name
+function getAssetEfficiency(asset_name, airb_tab)
+    
+    local nameFunction = "function getAssetEfficiency(asset_name, airb_tab): "    
+    log.debug("End " .. nameFunction)
+    local efficiency, info
+
+	for side, side_val in pairs( airb_tab ) do
+
+		for base, airbase_values in pairs( side_val ) do
+            log.trace(nameFunction .. "airbase: " .. base)
+
+            if base == asset_name then
+                efficiency = airbase_values.efficiency
+
+                for aircraft_type, group_name in pairs(airbase_values.aircraft_types) do
+                    info = group_name .. " (" .. aircraft_type .. ")" 
+                end
+                log.trace(nameFunction .. "asset_name (" .. base .. ") found in airbase_tab, airbase_values.efficiency: " ..  airbase_values.efficiency)
+                break
+            end			
+		end
+    end
+    log.debug("End " .. nameFunction)
+    return efficiency, info
+end
 
 
 -- Test function
@@ -2154,8 +2304,6 @@ if executeTest then
 end
 
 --[[
-att. le Reserves sono specificate per base e per name (lo squadrone delle riserve che e' associato negli event trigger definiti in camp_triggers.lua (utilizano la funzione Action.AirUnitReinforce("2nd Shaheen Squadron Res", "2nd Shaheen Squadron", 12)' dove il numero finale   sono gli aerei da trasferire limitato poi a 4 all'interno della funzione))
-teoricamente si potrebbbe distinguere le riserve in supply tab identificandole per i due parametri (che palle)
 
 oob_air che contiene le informazioni sui resupply per airbases e reserves viene salvato su disco in MAIN_NextMission.lua
 molto probabilmente il valore number non viene mai aggiornato in quanto costituisce il riferimento per calcolare se non ci
