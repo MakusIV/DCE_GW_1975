@@ -168,7 +168,13 @@ heli:
 oob_air = {
 
 	["blue"] = { --side 1
+
         -------------- Batumi -------------------------
+		-- VMFA-151						F-4E		12+36			F/A			USA
+		-- VMFA-157						F-5E-3		12+20			F/A			USA
+		
+		--  F/A: 80
+
 		[1] = {
 			name = "VMFA-151",								--unit name			
 			type = "F-4E",									--aircraft type
@@ -242,7 +248,17 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},
-		[5] = { -- GUDAUTA --------------------------------------------------------------------
+
+
+		---------- Gudauta --------------------------------------------------------------------
+		-- 315th Air Division			C-130		3+7				T			USA		
+		-- 171 ARW						KC135MPRS	3+9				R			USA
+		-- 317th Air Division			C-130		3+7				T			USA
+		
+		-- T: 20
+		-- R: 12
+
+		[5] = { 
 			name = "315th Air Division",					--unit name
 			type = "C-130",									--aircraft type
 			country = "USA",								--unit country
@@ -252,7 +268,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Transport"] = true,
 			},
-			number = 36,
+			number = 3,
 		},
 		[6] = {
 			name = "R/315th Air Division",					--unit name
@@ -263,30 +279,8 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
 			tasks = {},										--unit tasks
 			number = 7,
-		},
-		[7] = { -- KOBULETI --------------------------------------------------------------------
-			name = "69 BS",									--unit name
-			type = "B-52H",									--aircraft type
-			country = "USA",								--unit country
-			livery = "usaf standard",						--unit livery
-			base = "Kobuleti",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
-			tasks = {										--unit tasks
-				["Strike"] = true,
-			},
-			number = 3,
-		},
-		[8] = {
-			name = "R/69 BS",								--unit name
-			inactive = true,
-			type = "B-52H",									--aircraft type
-			country = "USA",								--unit country
-			base = "Reserves",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
-			tasks = {},										--unit tasks
-			number = 15,
-		},
-		[9] = {-- GUDAUTA --------------------------------------------------------------------
+		}, -- ( 7 and 8 see Kobuleti )
+		[9] = {
 			name = "171 ARW",								--unit name
 			type = "KC135MPRS",								--aircraft type
 			country = "USA",								--unit country
@@ -307,8 +301,40 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_refuelling, mission_ini.max_skill_blue_refuelling),			--unit skill
 			tasks = {},										--unit tasks
 			number = 9,
-		},			
-		[11] = {-- VAZIANI --------------------------------------------------------------------
+		},		
+
+		[53] = { 	
+			name = "317th Air Division",					--unit name
+			type = "C-130",									--aircraft type
+			country = "USA",								--unit country
+			livery = "",									--unit livery
+			base = "Gudauta",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
+			tasks = {										--unit tasks
+				["Transport"] = true,
+			},
+			number = 3,
+		},
+		[54] = {
+			name = "R/317th Air Division",					--unit name
+			inactive = true,
+			type = "C-130",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
+			tasks = {},										--unit tasks
+			number = 7,
+		},		
+
+	
+		---------- Vaziani --------------------------------------------------------------------
+		-- GA 3rd AS					MiG-27K		12+36			F/A			Georgia
+		-- GA 4rd AS					MiG-19P		12+36			F/A			Georgia
+		
+		-- F/A: 96 
+
+
+		[11] = {
 			name = "GA 3rd AS",								--unit name
 			type = "MiG-27K",								--aircraft type
 			country = "Georgia",							--unit country
@@ -371,7 +397,16 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},		
-			----------------------- Kutaisi -------------------------		
+		
+
+		----------------------- Kutaisi -------------------------		
+		-- 58 TFS					F-4E			12+36			F/A			USA
+		-- 7 ACCS					E-3A			3				AWACS		USA
+		-- BA 113					Mirage-F1C		12+24			F/A			France			
+
+		-- F/A: 64
+		-- AW: 3
+
 		[15] = {
 			name = "58 TFS",								--unit name			
 			type = "F-4E",									--aircraft type
@@ -383,6 +418,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = true,
+				["Intercept"] = true,
 				["Strike"] = true,
 				["SEAD"] = true,
 				["Anti-ship Strike"] = false,
@@ -421,7 +457,51 @@ oob_air = {
 			},
 			number = 3,
 		},
-			---------------------- Senaki-Kolkhi ----------------------
+		[55] = {
+			name = "BA 113",								--unit name			
+			type = "Mirage-F1C",									--aircraft type
+			country = "France",								--unit country
+			livery = "",									--unit livery
+			base = "Kutaisi",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
+			tasks = {										--unit tasks
+				["CAP"] = true,
+				["Escort"] = true,
+				["Fighter Sweep"] = true,
+				["Intercept"] = true,
+				["Strike"] = true,
+				["SEAD"] = false,
+				["Anti-ship Strike"] = false,
+				["Laser Illumination"] = false,
+			},
+			tasksCoef = {									--unit tasks coef (optional)
+				["Strike"] = 2,								-- coef normal : = 1
+				["SEAD"] = 1,
+				["Laser Illumination"] = 1,
+				["Intercept"] = 2,
+				["CAP"] = 2,
+				["Escort"] = 2,
+				["Fighter Sweep"] = 2,	
+			},
+			number = 12,
+		},
+		[56] = {
+			name = "R/BA 113",								--unit name
+			inactive = true,
+			type = "Mirage-F1C",									--aircraft type
+			country = "France",								--unit country
+			base = "Reserves",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
+			tasks = {},										--unit tasks
+			number = 24,
+		},
+		
+
+		---------------------- Senaki-Kolkhi ----------------------
+		-- GA 7rd AS				MiG-21Bis		12+36			F/A			Georgia
+		
+		-- F/A: 48
+
 		[18] = {
 			name = "GA 7rd AS",							--unit name
 			--player = false,							--player unit
@@ -459,7 +539,13 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 36,
 		},
-			----------------------- Soganlug ----------------------------
+		
+		
+		----------------------- Soganlug ----------------------------
+		-- 801 ARS						KC-135		3+7				R			USA
+		
+		-- R: 10
+
 		[20] = {
 			name = "801 ARS",							--unit name
 			type = "KC-135",							--aircraft type
@@ -482,7 +568,13 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 7,
 		},		
-			---------------------- Senaki-Kolkhi ----------------------
+		
+		
+		---------------------- Senaki-Kolkhi ----------------------
+		-- GA 5rd TS					An-26B		1+4				T			Georgia
+		
+		-- T: 5
+
 		[22] = { 
 			name = "GA 5rd TS",							--unit name
 			type = "An-26B",							--aircraft type
@@ -505,7 +597,15 @@ oob_air = {
 			tasks = {},									--unit tasks
 			number = 4,
 		},
-			--------------------- Tbilissi-Lochini -------------------
+		
+		
+		--------------------- Tbilissi-Lochini -------------------
+		-- F9							AJS37		12+36			F/A			Sweden
+		-- 174 ARW						KC135MPRS	3+7				R			USA
+		
+		-- A: 48
+		-- R: 10
+
 		[24] = {
 			name = "F9",								--unit name
 			--player = true,							--player unit
@@ -565,7 +665,15 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 7,
 		},
-        	-------------------- Sukhumi -------------------------------------
+        
+		
+		-------------------- Sukhumi -------------------------------------
+		-- VMFA-159						F-4E		12+36			F/A			USA
+		-- F7							AJS37		12+36			F/A			Sweden
+
+		-- F/A: 48
+		-- A: 48
+
 		[28] = {
 			name = "VMFA-159",								--unit name			
 			type = "F-4E",									--aircraft type
@@ -640,7 +748,19 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36
 		},
-			--------------- CVN-71 Theodore Roosevelt ----------------------
+		
+		
+		--------------- CVN-71 Theodore Roosevelt ----------------------
+		-- VF-101						F-14A-135-GR		12+36	F/A			USA
+		-- VAW-125						E-2C				5+5		AW			USA
+		-- VS-27						S-3B Tanker			5+5		T			USA
+		-- VS-21						S-3B				12+36	B			USA
+
+		-- F/A: 48
+		-- B: 48
+		-- R: 10
+		-- AW: 10
+
 		[32] = {
 			name = "VF-101",								--unit name
 			player = true,									--player unit
@@ -752,7 +872,17 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-			------------------ CVN-74 John C. Stennis --------------------
+		
+		
+		------------------ CVN-74 John C. Stennis --------------------
+		-- VF-118/GA					F-14A-135-GR		8+12	F/A			USA		
+		-- 177 ARW						S-3B Tanker			8+12	T			USA
+		-- VS-22						S-3B				12+36	B			USA
+
+		-- F/A: 20
+		-- B: 48
+		-- R: 20
+		
 		[40] = {
 			name = "VF-118/GA",								--unit name
 			player = false, 								--player unit
@@ -830,7 +960,13 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 36,
 		},
-			---------------- KHASHURI FARP LM84
+		
+		
+		---------------- KHASHURI FARP LM84 -------------------------
+		-- 17th Cavalry					UH-1H				8+20	H			USA
+		
+		-- H: 28
+
 		[45] = {
 			name = "17th Cavalry",							--unit name
 			type = "UH-1H",									--aircraft type
@@ -854,7 +990,13 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},
-			----------------  GORI FARP MM25
+		
+		
+		----------------  GORI FARP MM25 ----------------------------
+		-- 6th Cavalry					AH-1W				8+20	H			USA		
+
+		-- H: 28
+
 		[47] = {
 			name = "6th Cavalry",							--unit name
 			type = "AH-1W",									--aircraft type
@@ -877,7 +1019,13 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},			
-		---------------- AMBROLAURI FARP LN41
+		
+		
+		---------------- AMBROLAURI FARP LN41 -------------------------
+		-- GAH 2rd						Mi-24V				8+20	H			USA
+
+		-- H: 28
+
 		[49] = {
 			name = "GAH 2rd",								--unit name
 			type = "Mi-24V",								--aircraft type
@@ -901,7 +1049,37 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 20,
 		},
-		----------------------- Kobuleti -------------------------		
+		
+		
+		----------------------- Kobuleti -------------------------	
+		-- 69 69 BS						B-52H		3+15			B			USA
+		-- 54 TFS						F-4E		12+36			F/A			USA
+
+		-- F/A: 48
+		-- B: 18
+
+		[7] = { 
+			name = "69 BS",									--unit name
+			type = "B-52H",									--aircraft type
+			country = "USA",								--unit country
+			livery = "usaf standard",						--unit livery
+			base = "Kobuleti",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
+			tasks = {										--unit tasks
+				["Strike"] = true,
+			},
+			number = 3,
+		},
+		[8] = {
+			name = "R/69 BS",								--unit name
+			inactive = true,
+			type = "B-52H",									--aircraft type
+			country = "USA",								--unit country
+			base = "Reserves",								--unit base
+			skill = getSkill(mission_ini.min_skill_blue_bomber, mission_ini.max_skill_blue_bomber),			--unit skill
+			tasks = {},										--unit tasks
+			number = 15,
+		},
 		[51] = {
 			name = "54 TFS",								--unit name			
 			type = "F-4E",									--aircraft type
@@ -913,6 +1091,7 @@ oob_air = {
 				["CAP"] = true,
 				["Escort"] = true,
 				["Fighter Sweep"] = false,
+				["Intercept"] = true,
 				["Strike"] = true,
 				["SEAD"] = true,
 				["Anti-ship Strike"] = false,
@@ -927,7 +1106,7 @@ oob_air = {
 				["Escort"] = 1.5,
 				["Fighter Sweep"] = 0.2,	
 			},
-			number = 18,
+			number = 12,
 		},
 		[52] = {
 			name = "R/54 TFS",								--unit name
@@ -938,68 +1117,7 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
-		},	
-		[53] = { ----------------------- Gudauta -------------------------		
-			name = "317th Air Division",					--unit name
-			type = "C-130",									--aircraft type
-			country = "USA",								--unit country
-			livery = "",									--unit livery
-			base = "Gudauta",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
-			tasks = {										--unit tasks
-				["Transport"] = true,
-			},
-			number = 3,
-		},
-		[54] = {
-			name = "R/317th Air Division",					--unit name
-			inactive = true,
-			type = "C-130",									--aircraft type
-			country = "USA",								--unit country
-			base = "Reserves",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
-			tasks = {},										--unit tasks
-			number = 7,
-		},		
-
-		[55] = { -- kutaisi
-			name = "BA 113",								--unit name			
-			type = "Mirage-F1C",									--aircraft type
-			country = "France",								--unit country
-			livery = "",									--unit livery
-			base = "Kutaisi",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
-			tasks = {										--unit tasks
-				["CAP"] = true,
-				["Escort"] = true,
-				["Fighter Sweep"] = true,
-				["Intercept"] = true,
-				["Strike"] = true,
-				["SEAD"] = false,
-				["Anti-ship Strike"] = false,
-				["Laser Illumination"] = false,
-			},
-			tasksCoef = {									--unit tasks coef (optional)
-				["Strike"] = 2,								-- coef normal : = 1
-				["SEAD"] = 1,
-				["Laser Illumination"] = 1,
-				["Intercept"] = 2,
-				["CAP"] = 2,
-				["Escort"] = 2,
-				["Fighter Sweep"] = 2,	
-			},
-			number = 12,
-		},
-		[56] = {
-			name = "R/BA 113",								--unit name
-			inactive = true,
-			type = "Mirage-F1C",									--aircraft type
-			country = "France",								--unit country
-			base = "Reserves",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
-			tasks = {},										--unit tasks
-			number = 24,
-		},
+		},				
 	},
 	["red"] = {	--side 2		
 		-------------------- Mozdok ---------------		

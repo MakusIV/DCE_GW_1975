@@ -1708,6 +1708,123 @@ weapon_db = {
             },                  
         },
 
+        ["GBU-24"] = {  -- like Mk-84
+            ["type"] = "Guided Bombs",
+            ["task"] = {"Strike", "Anti-ship Strike"},
+            ["start_service"] = 1980,
+            ["end_service"] = nil,
+            ["cost"] = 25,-- k$  
+            ["tnt"] = 202, --kg
+            ["perc_efficiency_variability"] = 0.05, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.8, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.97, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.8,   -- 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },
+                
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },                
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },       
+            },                  
+        },
+
         ["GBU-12"] = {
             ["type"] = "Guided Bombs",
             ["task"] = {"Strike"},
