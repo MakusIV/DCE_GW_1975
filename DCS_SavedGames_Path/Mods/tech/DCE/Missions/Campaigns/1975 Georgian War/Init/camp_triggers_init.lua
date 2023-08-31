@@ -493,236 +493,154 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitRepair()',
 	},
-	["Reinforce F7"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/F7", "F7", 6)',
-	},
-	["Reinforce F9"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/F9", "F9", 6)',
-	},
-	["Reinforce 69 BS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/69 BS", "69 BS", 6)',
-	},
-	["Reinforce GA 3rd AS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 3rd AS", "GA 3rd AS", 6)',
-	},	
-	["Reinforce GA 4rd AS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 4rd AS", "GA 4rd AS", 6)',
-	},	
-	["Reinforce GA 5rd AS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 6)',
-	},
-	["Reinforce GA 7rd AS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 7rd AS", "GA 7rd AS", 6)',
-	},	
-	["Reinforce GA 5rd TS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 3)',
-	},
+	-- blue reinforcement
 	["Reinforce VMFA-151"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/VMFA-151", "VMFA-151", 4)',
 	},	
-	["Reinforce VMFA-159"] = {
+	["Reinforce VMFA-157"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VMFA-159", "VMFA-159", 4)',
+		action = 'Action.AirUnitReinforce("R/VMFA-157", "VMFA-157", 6)',
 	},
 	["Reinforce 315th Air Division"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/315th Air Division", "315th Air Division", 4)',
 	},	
-	["Reinforce 58 TFS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 6)',
-	},
-	["Reinforce BA 113"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/BA 113", "BA 113", 4)',
-	},
-	["Reinforce 317th Air Division"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/317th Air Division", "317th Air Division", 6)',
-	},
-	["Reinforce 54 TFS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/54 TFS", "54 TFS", 6)',
-	},	
 	["Reinforce 171 ARW"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/171 ARW", "171 ARW", 4)',
 	},
-	["Reinforce VS-21"] = {
+	["Reinforce GA 3rd AS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VS-21", "VS-21", 4)',
+		action = 'Action.AirUnitReinforce("R/GA 3rd AS", "GA 3rd AS", 8)',
+	},	
+	["Reinforce GA 4rd AS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/GA 4rd AS", "GA 4rd AS", 8)',
+	},	
+	["Reinforce 58 TFS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/58 TFS", "58 TFS", 8)',
 	},
-	["Reinforce VS-22"] = {
+	["Reinforce BA 113"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VS-22", "VS-22", 4)',
+		action = 'Action.AirUnitReinforce("R/BA 113", "BA 113", 8)',
+	},	
+	["Reinforce GA 7rd AS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/GA 7rd AS", "GA 7rd AS", 8)',
+	},	
+	["Reinforce 801 ARS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/801 ARS", "801 ARS", 2)',
+	},
+	["Reinforce GA 5rd TS"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/GA 5rd TS", "GA 5rd TS", 1)',
+	},
+	["Reinforce F9"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/F9", "F9", 8)',
 	},
 	["Reinforce 174 ARW"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/174 ARW", "174 ARW", 4)',
 	},
+	["Reinforce VMFA-159"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VMFA-159", "VMFA-159", 4)',
+	},
+	["Reinforce F7"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/F7", "F7", 8)',
+	},
+	["Reinforce VF-101"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VF-101", "VF-101", 8)',
+	},
+	["Reinforce VAW-125"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/VAW-125", "VAW-125", 2)',
+	},
 	["Reinforce VS-27"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/VS-27", "VS-27", 2)',
 	},
-	["Reinforce VAW-125"] = {
+	["Reinforce VS-21"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VAW-125", "VAW-125", 6)',
+		action = 'Action.AirUnitReinforce("R/VS-21", "VS-21", 8)',
 	},
-	["Reinforce VMFA-157"] = {
+	["Reinforce VF-118/GA"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VMFA-157", "VMFA-157", 6)',
+		action = 'Action.AirUnitReinforce("R/VF-118/GA", "VF-118/GA", 8)',
 	},
-	["Reinforce 6th Cvy"] = {
+	["Reinforce VS-22"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/6th Cavalry", "6th Cavalry", 6)',
+		action = 'Action.AirUnitReinforce("R/VS-22", "VS-22", 8)',
 	},
 	["Reinforce 17th Cavalry"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/17th Cavalry", "17th Cavalry", 6)',
 	},
+	["Reinforce 6th Cvy"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/6th Cavalry", "6th Cavalry", 6)',
+	},
 	["Reinforce GAH 2rd"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/GAH 2rd", "GAH 2rd", 6)',
 	},
-	["Reinforce VF-101"] = {
+	["Reinforce 69 BS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VF-101", "VF-101", 6)',
+		action = 'Action.AirUnitReinforce("R/69 BS", "69 BS", 2)',
 	},
-	["Reinforce VF-118/GA"] = {
+	["Reinforce 54 TFS"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/VF-118/GA", "VF-118/GA", 6)',
-	},
-	["Reinforce 801 ARS"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/801 ARS", "801 ARS", 4)',
+		action = 'Action.AirUnitReinforce("R/54 TFS", "54 TFS", 8)',
 	},		
+	
+	--red reinforcement
 	["Reinforce 117.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/117.IAP", "117.IAP", 6)',
+		action = 'Action.AirUnitReinforce("R/117.IAP", "117.IAP", 8)',
 	},
-	["Reinforce 19.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/19.IAP", "19.IAP", 6)',
-	},
-	["Reinforce 37.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/37.IAP", "37.IAP", 6)',
-	},
-	["Reinforce 41.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/41.IAP", "41.IAP", 8)',
-	},
-	["Reinforce 61.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/61.IAP", "61.IAP", 8)',
-	},
-	["Reinforce 81.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/81.IAP", "81.IAP", 8)',
-	},	
-	["Reinforce 1st GHR"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/1st GHR", "1st GHR", 6)',
-	},	
-	["Reinforce 2nd GHR"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/2nd GHR", "2nd GHR", 6)',
-	},	
-	["Reinforce 13th GHR"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/13th GHR", "13th GHR", 6)',
-	},
-	["Reinforce 107.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/107.IAP", "107.IAP", 6)',
-	},			
-	["Reinforce 111AS.IAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/111AS.IAP", "111AS.IAP", 6)',
-	},
-	["Reinforce 13.OSAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/13.OSAP", "13.OSAP", 4)',
-	},	
-	["Reinforce 23.OSAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/23.OSAP", "23.OSAP", 4)',
-	},	
-	["Reinforce 25.OSAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/25.OSAP", "25.OSAP", 4)',
-	},
-	["Reinforce 27.OSAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/27.OSAP", "27.OSAP", 4)',
-	},
-	["Reinforce 29.OSAP"] = {
-		active = true,
-		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/29.OSAP", "29.OSAP", 4)',
-	},		
 	["Reinforce 113.IAP"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/113.IAP", "113.IAP", 8)',
 	},
-	["Reinforce 115.IAP"] = {
+	["Reinforce 37.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/115.IAP", "115.IAP", 8)',
-	},	
+		action = 'Action.AirUnitReinforce("R/37.IAP", "37.IAP", 8)',
+	},
 	["Reinforce 127.IAP"] = {
 		active = true,
 		condition = 'true',
@@ -738,26 +656,104 @@ camp_triggers = {
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/115AS.IAP", "115AS.IAP", 8)',
 	},	
+	["Reinforce 19.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/19.IAP", "19.IAP", 8)',
+	},
+	["Reinforce 107.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/107.IAP", "107.IAP", 8)',
+	},	
+	["Reinforce 111AS.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/111AS.IAP", "111AS.IAP", 8)',
+	},
+	["Reinforce 13.OSAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/13.OSAP", "13.OSAP", 2)',
+	},	
+	["Reinforce 41.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/41.IAP", "41.IAP", 8)',
+	},
 	["Reinforce 133.IAP"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/133.IAP", "133.IAP", 8)',
+	},		
+	["Reinforce 135.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/135.IAP", "135.IAP", 8)',
 	},
+	["Reinforce 29.OSAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/29.OSAP", "29.OSAP", 2)',
+	},	
 	["Reinforce 153.IAP"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/153.IAP", "153.IAP", 8)',
 	},
-	["Reinforce 135.IAP"] = {
+	["Reinforce 61.IAP"] = {
 		active = true,
 		condition = 'true',
-		action = 'Action.AirUnitReinforce("R/135.IAP", "135.IAP", 8)',
+		action = 'Action.AirUnitReinforce("R/61.IAP", "61.IAP", 8)',
+	},
+	["Reinforce 81.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/81.IAP", "81.IAP", 8)',
+	},	
+	["Reinforce 27.OSAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/27.OSAP", "27.OSAP", 2)',
+	},
+	["Reinforce 115.IAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/115.IAP", "115.IAP", 8)',
+	},	
+	["Reinforce 23.OSAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/23.OSAP", "23.OSAP", 2)',
+	},	
+	["Reinforce 25.OSAP"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/25.OSAP", "25.OSAP", 2)',
 	},
 	["Reinforce 159.IAP"] = {
 		active = true,
 		condition = 'true',
 		action = 'Action.AirUnitReinforce("R/159.IAP", "159.IAP", 8)',
 	},
+	["Reinforce 1st GHR"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/1st GHR", "1st GHR", 6)',
+	},	
+	["Reinforce 2nd GHR"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/2nd GHR", "2nd GHR", 6)',
+	},	
+	["Reinforce 13th GHR"] = {
+		active = true,
+		condition = 'true',
+		action = 'Action.AirUnitReinforce("R/13th GHR", "13th GHR", 6)',
+	},
+	
+
+	
 	----- AVIATION UNIT STATUS -----
 	["VF-101 Alive 75%"] = {-- aircraft=16+30 = 46 --> 75% = 40, 40% = 23,  25% = 15
 		active = true,

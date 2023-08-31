@@ -170,10 +170,10 @@ oob_air = {
 	["blue"] = { --side 1
 
         -------------- Batumi -------------------------
-		-- VMFA-151						F-4E		12+36			F/A			USA
+		-- VMFA-151						F-4E		12+24			F/A			USA
 		-- VMFA-157						F-5E-3		12+20			F/A			USA
 		
-		--  F/A: 80
+		--  F/A: 68
 
 		[1] = {
 			name = "VMFA-151",								--unit name			
@@ -210,7 +210,7 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_fighter, mission_ini.max_skill_blue_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[3] = {
 			name = "VMFA-157",								--unit name
@@ -251,9 +251,9 @@ oob_air = {
 
 
 		---------- Gudauta --------------------------------------------------------------------
-		-- 315th Air Division			C-130		3+7				T			USA		
-		-- 171 ARW						KC135MPRS	3+9				R			USA
-		-- 317th Air Division			C-130		3+7				T			USA
+		-- 315th Air Division			C-130		2+7				T			USA		
+		-- 171 ARW						KC135MPRS	2+9				R			USA
+		
 		
 		-- T: 20
 		-- R: 12
@@ -268,7 +268,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Transport"] = true,
 			},
-			number = 3,
+			number = 2,
 		},
 		[6] = {
 			name = "R/315th Air Division",					--unit name
@@ -290,7 +290,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 3,
+			number = 2,
 		},
 		[10] = {
 			name = "R/171 ARW",								--unit name
@@ -303,35 +303,14 @@ oob_air = {
 			number = 9,
 		},		
 
-		[53] = { 	
-			name = "317th Air Division",					--unit name
-			type = "C-130",									--aircraft type
-			country = "USA",								--unit country
-			livery = "",									--unit livery
-			base = "Gudauta",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
-			tasks = {										--unit tasks
-				["Transport"] = true,
-			},
-			number = 3,
-		},
-		[54] = {
-			name = "R/317th Air Division",					--unit name
-			inactive = true,
-			type = "C-130",									--aircraft type
-			country = "USA",								--unit country
-			base = "Reserves",								--unit base
-			skill = getSkill(mission_ini.min_skill_blue_transport, mission_ini.max_skill_blue_transport),			--unit skill
-			tasks = {},										--unit tasks
-			number = 7,
-		},		
+		
 
 	
 		---------- Vaziani --------------------------------------------------------------------
-		-- GA 3rd AS					MiG-27K		12+36			F/A			Georgia
-		-- GA 4rd AS					MiG-19P		12+36			F/A			Georgia
+		-- GA 3rd AS					MiG-27K		12+24			F/A			Georgia
+		-- GA 4rd AS					MiG-19P		12+24			F/A			Georgia
 		
-		-- F/A: 96 
+		-- F/A: 72 
 
 
 		[11] = {
@@ -361,7 +340,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[13] = {
 			name = "GA 4rd AS",								--unit name
@@ -395,12 +374,12 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_fighter, mission_ini.max_skill_blue_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},		
 		
 
 		----------------------- Kutaisi -------------------------		
-		-- 58 TFS					F-4E			12+36			F/A			USA
+		-- 58 TFS					F-4E			12+24			F/A			USA
 		-- 7 ACCS					E-3A			3				AWACS		USA
 		-- BA 113					Mirage-F1C		12+24			F/A			France			
 
@@ -443,7 +422,7 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[17] = {
 			name = "7 ACCS",								--unit name
@@ -498,9 +477,9 @@ oob_air = {
 		
 
 		---------------------- Senaki-Kolkhi ----------------------
-		-- GA 7rd AS				MiG-21Bis		12+36			F/A			Georgia
+		-- GA 7rd AS				MiG-21Bis		12+24			F/A			Georgia
 		
-		-- F/A: 48
+		-- F/A: 36
 
 		[18] = {
 			name = "GA 7rd AS",							--unit name
@@ -537,14 +516,14 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_fighter, mission_ini.max_skill_blue_fighter),			--unit skill
 			tasks = {},									--unit tasks
-			number = 36,
+			number = 24,
 		},
 		
 		
 		----------------------- Soganlug ----------------------------
-		-- 801 ARS						KC-135		3+7				R			USA
+		-- 801 ARS						KC-135		2+7				R			USA
 		
-		-- R: 10
+		-- R: 9
 
 		[20] = {
 			name = "801 ARS",							--unit name
@@ -556,7 +535,7 @@ oob_air = {
 			tasks = {									--unit tasks
 				["Refueling"] = true,
 			},
-			number = 3,
+			number = 2,
 		},
 		[21] = {
 			name = "R/801 ARS",							--unit name
@@ -600,11 +579,11 @@ oob_air = {
 		
 		
 		--------------------- Tbilissi-Lochini -------------------
-		-- F9							AJS37		12+36			F/A			Sweden
-		-- 174 ARW						KC135MPRS	3+7				R			USA
+		-- F9							AJS37		12+24			F/A			Sweden
+		-- 174 ARW						KC135MPRS	2+5				R			USA
 		
-		-- A: 48
-		-- R: 10
+		-- A: 36
+		-- R: 7
 
 		[24] = {
 			name = "F9",								--unit name
@@ -641,7 +620,7 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[26] = {
 			name = "174 ARW",								--unit name
@@ -653,7 +632,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 3,
+			number = 2,
 		},
 		[27] = {
 			name = "R/174 ARW",								--unit name
@@ -663,16 +642,17 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_refuelling, mission_ini.max_skill_blue_refuelling),			--unit skill
 			tasks = {},										--unit tasks
-			number = 7,
+			number = 5,
 		},
         
 		
 		-------------------- Sukhumi -------------------------------------
-		-- VMFA-159						F-4E		12+36			F/A			USA
-		-- F7							AJS37		12+36			F/A			Sweden
+		-- VMFA-159						F-4E		12+24			F/A			USA
+		-- F7							AJS37		12+24			F/A			Sweden
 
-		-- F/A: 48
-		-- A: 48
+		-- F/A: 36
+		-- A: 36
+	
 
 		[28] = {
 			name = "VMFA-159",								--unit name			
@@ -709,7 +689,7 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[30] = {
 			name = "F7",								--unit name
@@ -746,20 +726,20 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36
+			number = 24
 		},
 		
 		
 		--------------- CVN-71 Theodore Roosevelt ----------------------
-		-- VF-101						F-14A-135-GR		12+36	F/A			USA
-		-- VAW-125						E-2C				5+5		AW			USA
-		-- VS-27						S-3B Tanker			5+5		T			USA
-		-- VS-21						S-3B				12+36	B			USA
+		-- VF-101						F-14A-135-GR		12+24	F/A			USA
+		-- VAW-125						E-2C				2+5		AW			USA
+		-- VS-27						S-3B Tanker			2+5		T			USA
+		-- VS-21						S-3B				12+24	B			USA
 
-		-- F/A: 48
-		-- B: 48
-		-- R: 10
-		-- AW: 10
+		-- F/A: 36
+		-- B: 36
+		-- R: 7
+		-- AW: 7
 
 		[32] = {
 			name = "VF-101",								--unit name
@@ -799,7 +779,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_fighter, mission_ini.max_skill_blue_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[34] = {
 			name = "VAW-125",								--unit name
@@ -812,7 +792,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["AWACS"] = true,
 			},
-			number = 5,
+			number = 2,
 		},
 		[35] = {
 			name = "R/VAW-125",								--unit name
@@ -835,7 +815,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 5,
+			number = 2,
 		},
 		[37] = {
 			name = "R/VS-27",								--unit name
@@ -870,18 +850,18 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		
 		
 		------------------ CVN-74 John C. Stennis --------------------
-		-- VF-118/GA					F-14A-135-GR		8+12	F/A			USA		
-		-- 177 ARW						S-3B Tanker			8+12	T			USA
-		-- VS-22						S-3B				12+36	B			USA
+		-- VF-118/GA					F-14A-135-GR		8+24	F/A			USA		
+		-- 177 ARW						S-3B Tanker			4		T			USA
+		-- VS-22						S-3B				12+24	B			USA
 
-		-- F/A: 20
-		-- B: 48
-		-- R: 20
+		-- F/A: 32
+		-- B: 36
+		-- R: 4
 		
 		[40] = {
 			name = "VF-118/GA",								--unit name
@@ -920,7 +900,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_fighter, mission_ini.max_skill_blue_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 12,
+			number = 24,
 		},
 		[42] = {
 			name = "177 ARW",								--unit name
@@ -933,7 +913,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Refueling"] = true,
 			},
-			number = 8,
+			number = 4,
 		},	
 		[43] = {
 			name = "VS-22",									--unit name
@@ -958,14 +938,14 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		
 		
 		---------------- KHASHURI FARP LM84 -------------------------
-		-- 17th Cavalry					UH-1H				8+20	H			USA
+		-- 17th Cavalry					UH-1H				8+24	H			USA
 		
-		-- H: 28
+		-- H-A: 32
 
 		[45] = {
 			name = "17th Cavalry",							--unit name
@@ -988,14 +968,14 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_helicopter, mission_ini.max_skill_blue_helicopter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 20,
+			number = 24,
 		},
 		
 		
 		----------------  GORI FARP MM25 ----------------------------
-		-- 6th Cavalry					AH-1W				8+20	H			USA		
+		-- 6th Cavalry					AH-1W				8+24	H			USA		
 
-		-- H: 28
+		-- H-A: 32
 
 		[47] = {
 			name = "6th Cavalry",							--unit name
@@ -1017,14 +997,14 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_helicopter, mission_ini.max_skill_blue_helicopter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 20,
+			number = 24,
 		},			
 		
 		
 		---------------- AMBROLAURI FARP LN41 -------------------------
-		-- GAH 2rd						Mi-24V				8+20	H			USA
+		-- GAH 2rd						Mi-24V				8+24	H			USA
 
-		-- H: 28
+		-- H-A: 32
 
 		[49] = {
 			name = "GAH 2rd",								--unit name
@@ -1047,13 +1027,13 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_blue_helicopter, mission_ini.max_skill_blue_helicopter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 20,
+			number = 24,
 		},
 		
 		
 		----------------------- Kobuleti -------------------------	
-		-- 69 69 BS						B-52H		3+15			B			USA
-		-- 54 TFS						F-4E		12+36			F/A			USA
+		-- 69 69 BS						B-52H		2+15			B			USA
+		-- 54 TFS						F-4E		12+24			F/A			USA
 
 		-- F/A: 48
 		-- B: 18
@@ -1068,7 +1048,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Strike"] = true,
 			},
-			number = 3,
+			number = 2,
 		},
 		[8] = {
 			name = "R/69 BS",								--unit name
@@ -1116,11 +1096,17 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_blue_attacker, mission_ini.max_skill_blue_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},				
 	},
+
+
 	["red"] = {	--side 2		
-		-------------------- Mozdok ---------------		
+		-------------------- Mozdok ---------------				
+		-- 790.IAP						MiG-25PD	18				F			Russia			
+		-- 117.IAP						MiG-27K		12+24			A			Russia
+		-- 113.IAP						MiG-23MLD	12+24			F/A			Russia
+		
 		[1] = {
 			name = "790.IAP",								--unit name
 			type = "MiG-25PD",								--aircraft type
@@ -1140,7 +1126,7 @@ oob_air = {
 				["Escort"] = 0.3,
 				["Fighter Sweep"] = 1,
 			},
-			number = 12,
+			number = 18,
 		},
 		[2] = {
 			name = "117.IAP",							--unit name
@@ -1170,7 +1156,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[4] = {
 			name = "113.IAP",							--unit name
@@ -1205,8 +1191,16 @@ oob_air = {
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},										--unit tasks
 			number = 36,
-		},				
+		},		
+
 		-------------------- Beslan ---------------
+		-- 790.IAP						MiG-25PD	18				F			Russia	
+		-- 37.IAP						MiG-21Bis	12+24			F/A			Russia
+		-- 127.IAP						MiG-27K		12+24			A			Russia
+		-- 123.IAP						MiG-23MLD	12+24			F/A			Russia
+		-- 115AS.IAP					L-39C		12+24			F/A			Russia
+		-- 3.OSAP						An-26B		6				T			Russia
+
 		[6] = {
 			name = "37.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
@@ -1233,7 +1227,7 @@ oob_air = {
 				["SEAD"] = 0.3,
 				["Laser Illumination"] = 1,
 			},
-			number = 24,
+			number = 12,
 		},
 		[7] = {
 			name = "R/37.IAP",								--unit name
@@ -1242,7 +1236,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},									--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[8] = {
 			name = "127.IAP",							--unit name
@@ -1272,7 +1266,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[10] = {
 			name = "123.IAP",							--unit name
@@ -1306,7 +1300,7 @@ oob_air = {
 			base = "Reserves",	
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,	
+			number = 24,	
 		},		
 		[12] = {
 			name = "115AS.IAP",							--unit name
@@ -1342,7 +1336,7 @@ oob_air = {
 			base = "Reserves",								--unit base
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[14] = {
 			name = "3.OSAP",								--unit name
@@ -1356,7 +1350,15 @@ oob_air = {
 			},
 			number = 6,
 		},
+
+
 		---------------------- Nalchik ---------------
+		-- 19.IAP						MiG-21Bis	12+24			F/A			Russia
+		-- 2457 SDRLO					A-50		4				AW			Russia
+		-- 107.IAP						MiG-27K		12+24			A			Russia
+		-- 111AS.IAP					L-39C		12+24			F/A			Russia
+		-- 13.OSAP						Il-76MD		6				T			Russia
+
 		[15] = {
 			name = "19.IAP",								--unit name
 			type = "MiG-21Bis",								--aircraft type
@@ -1383,7 +1385,7 @@ oob_air = {
 				["SEAD"] = 0.3,
 				["Laser Illumination"] = 1,
 			},
-			number = 18,
+			number = 12,
 		},
 		[16] = {
 			name = "R/19.IAP",								--unit name
@@ -1392,7 +1394,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[17] = {
 			name = "2457 SDRLO",							--unit name
@@ -1435,10 +1437,10 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[20] = {
-			name = "111AS.IAP",							--unit name
+			name = "111AS.IAP",								--unit name
 			type = "L-39C",									--aircraft type
 			country = "Russia",								--unit country
 			livery = "",									--unit livery
@@ -1471,7 +1473,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[22] = {
 			name = "13.OSAP",								--unit name
@@ -1483,7 +1485,7 @@ oob_air = {
 			tasks = {										--unit tasks
 				["Transport"] = true,				
 			},
-			number = 4,
+			number = 2,
 		},
 		[23] = {
 			name = "R/13.OSAP",							--unit name
@@ -1495,7 +1497,15 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 4,
 		},
+
+
 		-------------------- Mineralnye-Vody ------
+		-- 790.IAP						MiG-25PD	18				F			Russia	
+		-- 41.IAP						Su-24M		12+24			B			Russia	
+		-- 133.IAP						MiG-23MLD	12+24			F/A			Russia
+		-- 135.IAP						Su-17M4		12+24			B			Russia
+		-- 29.OSAP						An-26B		2+4				T			Russia
+
 		[24] = {
 			name = "793.IAP",								--unit name
 			type = "MiG-25PD",								--aircraft type
@@ -1515,7 +1525,7 @@ oob_air = {
 				["Escort"] = 0.5,
 				["Fighter Sweep"] = 1,
 			},
-			number = 12,
+			number = 18,
 		},
 		[25] = {
 			name = "41.IAP",								--unit name
@@ -1545,7 +1555,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},		
 		[27] = {
 			name = "133.IAP",							--unit name
@@ -1631,7 +1641,11 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 4,
 		},		
+
+
 		--------------------- Sochi-Adler --------------
+		-- 2.OSAP						An-26B		6				T			Russia
+
 		[33] = {
 			name = "2.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
@@ -1644,7 +1658,15 @@ oob_air = {
 			},
 			number = 6,
 		},		
+
+
 		--------------------- Maykop-Khanskaya --------------
+		-- 153.IAP						MiG-23MLD	12+24			F/A			Russia
+		-- 61.IAP						Tu-22M3		2+18			B			Russia
+		-- 81.IAP						Su-24M		12+24			B			Russia
+		-- 27.OSAP						An-26B		1+4				T			Russia
+		-- 115.IAP						Su-17M4		12+24			B			Russia
+		
 		[34] = {
 			name = "153.IAP",							--unit name
 			type = "MiG-23MLD",								--aircraft type
@@ -1666,7 +1688,7 @@ oob_air = {
 				["Escort"] = 2,
 				["Fighter Sweep"] = 1.3,	
 			},
-			number = 18,
+			number = 12,
 		},
 		[35] = {
 			name = "R/153.IAP",							--unit name
@@ -1676,7 +1698,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[36] = {
 			name = "61.IAP",								--unit name
@@ -1694,7 +1716,7 @@ oob_air = {
 				["Laser Illumination"] = 1,				
 				["Anti-ship Strike"] = 2,
 			},
-			number = 8,
+			number = 2,
 		},
 		[37] = {
 			name = "R/61.IAP",								--unit name
@@ -1703,7 +1725,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_bomber, mission_ini.max_skill_red_bomber),			--unit skill
 			tasks = {},										--unit tasks
-			number = 8,
+			number = 18,
 		},
 		[38] = {
 			name = "81.IAP",								--unit name
@@ -1733,7 +1755,7 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
 		[40] = {
 			name = "27.OSAP",								--unit name
@@ -1785,9 +1807,13 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_attacker, mission_ini.max_skill_red_attacker),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},
+
+
 		--------------------- Anapa-Vityazevo --------------
+		-- 27.OSAP						An-26B		2+4				T			Russia
+
 		[44] = {
 			name = "23.OSAP",								--unit name
 			type = "An-26B",								--aircraft type
@@ -1810,7 +1836,16 @@ oob_air = {
 			tasks = {},										--unit tasks
 			number = 4,
 		},
+
+
 		--------------------- Krasnodar-Center --------------
+		-- 2457.I SDRLO					A-50		4				AW			Russia
+		-- 25.OSAP						An-26B		2+4				T			Russia
+		-- 159.IAP						MiG-23MLD	12+24			F/A			Russia
+		-- O7 SDRLO						Su-24MR		5				REC			Russia
+		-- 09 SDRLO						MiG-25RBT	5				AW, REC		Russia
+
+
 		[46] = {
 			name = "2457.I SDRLO",							--unit name
 			type = "A-50",									--aircraft type
@@ -1876,85 +1911,9 @@ oob_air = {
 			base = "Reserves",
 			skill = getSkill(mission_ini.min_skill_red_fighter, mission_ini.max_skill_red_fighter),			--unit skill
 			tasks = {},										--unit tasks
-			number = 36,
+			number = 24,
 		},		
-		-------------------- NOGIR FARP MN76
-		[51] = { 
-			name = "1st GHR",								--unit name
-			type = "Mi-8MT",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "NOGIR FARP MN76", 						--unit base
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {
-				["Transport"] = true,
-				["Strike"] = true,
-			},
-			number = 4,
-		},
-		[52] = {
-			name = "R/1st GHR",								--unit name
-			inactive = true,
-			type = "Mi-8MT",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			base = "Reserves",
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {},										--unit tasks
-			number = 24,
-		},
-		-------------------- TSKHINVALI FARP MM27
-		[53] = {
-			name = "2nd GHR",								--unit name
-			type = "Mi-24V",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "TSKHINVALI FARP MM27",					--unit base
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {
-				["Transport"] = true,
-				["Strike"] = true,
-			},
-			number = 4,
-		},
-		[54] = {
-			name = "R/2nd GHR",								--unit name
-			inactive = true,
-			type = "Mi-24V",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			base = "Reserves",
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {},										--unit tasks
-			number = 24,
-		},
-		-------------------- LENIGORI FARP MN76
-		[55] = {
-			name = "13th GHR",								--unit name
-			type = "Mi-24V",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			country = "Russia",								--unit country
-			livery = "",									--unit livery
-			base = "LENIGORI FARP MM56",					--unit base
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {
-				["Transport"] = true,
-				["Strike"] = true,
-			},
-			number = 4,
-		},
-		[56] = {
-			name = "R/13th GHR",							--unit name
-			inactive = true,
-			type = "Mi-24V",								--aircraft type
-			helicopter = true,								--true for helicopter units
-			base = "Reserves",
-			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
-			tasks = {},										--unit tasks
-			number = 24,
-		},
-		---------------- Integration 		
-		[57] = {
+		[51] = {
 			name = "O7 SDRLO",								--unit name
 			type = "Su-24MR",								--aircraft type
 			country = "Russia",								--unit country
@@ -1967,7 +1926,7 @@ oob_air = {
 			},
 			number = 5,
 		},
-		[58] = {
+		[52] = {
 			name = "09 SDRLO",								--unit name
 			type = "MiG-25RBT",								--aircraft type
 			country = "Russia",								--unit country
@@ -1982,19 +1941,92 @@ oob_air = {
 			number = 5,
 		},
 
-	
+
+		-------------------- NOGIR FARP MN76
+		-- 1st GHR						Mi-8MT		8+24			H-A,T			Russia
+
+		[53] = { 
+			name = "1st GHR",								--unit name
+			type = "Mi-8MT",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "NOGIR FARP MN76", 						--unit base
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {
+				["Transport"] = true,
+				["Strike"] = true,
+			},
+			number = 8,
+		},
+		[54] = {
+			name = "R/1st GHR",								--unit name
+			inactive = true,
+			type = "Mi-8MT",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			base = "Reserves",
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {},										--unit tasks
+			number = 24,
+		},
 
 
+		-------------------- TSKHINVALI FARP MM27
+		-- 2nd GHR						Mi-24V		8+24			H-A,T			Russia
+
+		[55] = {
+			name = "2nd GHR",								--unit name
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "TSKHINVALI FARP MM27",					--unit base
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {
+				["Transport"] = true,
+				["Strike"] = true,
+			},
+			number = 8,
+		},
+		[56] = {
+			name = "R/2nd GHR",								--unit name
+			inactive = true,
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			base = "Reserves",
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {},										--unit tasks
+			number = 24,
+		},
 
 
+		-------------------- LENIGORI FARP MN76
+		-- 13th GHR						Mi-24V		8+24			H-A,T			Russia
 
-
-
-
-
-
-
-
+		[57] = {
+			name = "13th GHR",								--unit name
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			country = "Russia",								--unit country
+			livery = "",									--unit livery
+			base = "LENIGORI FARP MM56",					--unit base
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {
+				["Transport"] = true,
+				["Strike"] = true,
+			},
+			number = 8,
+		},
+		[58] = {
+			name = "R/13th GHR",							--unit name
+			inactive = true,
+			type = "Mi-24V",								--aircraft type
+			helicopter = true,								--true for helicopter units
+			base = "Reserves",
+			skill = getSkill(mission_ini.min_skill_red_helicopter, mission_ini.max_skill_red_helicopter),			--unit skill
+			tasks = {},										--unit tasks
+			number = 24,
+		},
 
 
 
