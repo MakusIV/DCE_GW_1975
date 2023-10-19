@@ -209,11 +209,11 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			x = unit.x,
 			y = unit.y,
 			range = 2500,  --DCS ENCYCLOPEDIA: 2500, stesso di airgoon
-			night = true,
+			night = false,
 			elevation = 3.5,
 			min_alt = 10,
 			max_alt = 2000,  --DCS ENCYCLOPEDIA: 2000, stesso di airgoon
-			rilevability =  camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+			rilevability =  camp.module_config.ATO_ThreatEvaluation.SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 
 	elseif unit.type == "ZSU_57_2" then --OK
@@ -225,18 +225,18 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			x = unit.x,
 			y = unit.y,
 			range = 7000,  -- detection from ME: 5000 (detection < range) DCS ENCYCLOPEDIA: no, airgoon: 7000-0 
-			night = true,
+			night = false,
 			elevation = 3.5,
 			min_alt = 0,
 			max_alt = 4000,  --DCS ENCYCLOPEDIA: no, , airgoon: 4000 
-			rilevability =  camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+			rilevability =  camp.module_config.ATO_ThreatEvaluation.SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 			
 	elseif unit.type == "Gepard" then --OK
 		threatentry = {
 			type = unit.type,
 			class = "AAA",
-			level = 1,
+			level = 2,
 			SEAD_offset = 0,
 			x = unit.x,
 			y = unit.y,
@@ -263,7 +263,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 10,
 			max_alt = 3400,--airgoon 3500
-			rilevability = camp.module_config.ATO_ThreatEvaluation.SMALL_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 		
 	
@@ -282,7 +282,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 46,
 			max_alt = 2900, -- airgoon 3000
-			rilevability = camp.module_config.ATO_ThreatEvaluation.LARGE_SAM_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -300,7 +300,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 0,
 			max_alt = 3400, --airgoon 3500
-			rilevability = camp.module_config.ATO_ThreatEvaluation.LARGE_SAM_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
 		
@@ -370,7 +370,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 30, --DCS ENCYCLOPEDIA: 30, airgoon: 30
 			max_alt = 3700, --DCE: 3700, DCS ENCYCLOPEDIA: 3500, airgoon: 3500
-			rilevability = camp.module_config.ATO_ThreatEvaluation.SMALL_AAA_SAM_IR_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_IR_VEHICLE_RILEVABILITY,
 		}
 	
 	
@@ -497,7 +497,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 
 		
-	elseif unit.type == "Hawk tr" then -- nota: non include i ln forse perchè è sempre necessario il tracker --OK
+	elseif unit.type == "Hawk tr" then 
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -513,10 +513,10 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 3,
 			min_alt = 100, -- DCE: 135, LAUNCHER DCS ENCYCLOPEDIA:  60, airgoon 25-18000
 			max_alt = 18000, --LAUNCHER DCS ENCYCLOPEDIA = 13700, airgoon 18000
-			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.LARGE_SAM_VEHICLE_RILEVABILITY,
 		}	
 		
-	elseif unit.type == "Patriot str" then -- nota: non include i ln forse perchè è sempre necessario il tracker --OK
+	elseif unit.type == "Patriot str" then 
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -536,7 +536,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		}
 	
 	
-	elseif unit.type == "NASAMS_Radar_MPQ64F1" then --dovresti sostituirlo con i due LN che anno range e max_alt differenti. QUi il 120C
+	elseif unit.type == "NASAMS_Radar_MPQ64F1" then 
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
@@ -552,7 +552,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 			elevation = 4,
 			min_alt = 1,
 			max_alt = 15000, --airgoon: 120B, 20000, 120C: 26000
-			rilevability = camp.module_config.ATO_ThreatEvaluation.MEDIUM_AAA_SAM_RADAR_VEHICLE_RILEVABILITY,
+			rilevability = camp.module_config.ATO_ThreatEvaluation.LARGE_SAM_VEHICLE_RILEVABILITY,
 		}
 
 	
@@ -716,7 +716,7 @@ local function AddThreat(unit, side, hide)											--unput is side and unit-ta
 		threatentry = {
 			type = unit.type,
 			class = "SAM",
-			level = 7,
+			level = 8,
 			SEAD_offset = 4,
 			x = unit.x,
 			y = unit.y,

@@ -46,6 +46,7 @@ local ATO_RG_CONFIG = {
 	MIN_DIFF_ALTITUDES_FOR_ALT_ROUTE = 300, -- min difference from leg_alt and profile.hattack to compute alternative route with altitude = hattack
 	SEPARATION_FROM_THREAT_RANGE = 1000, -- min distance from threat.range border
 	MAX_NUM_ISTANCE_PATH_FINDING = 7, -- max number of istances of function findPathLeg(), default = 7
+	MAX_TANGENT_ANGLE = 30 -- max tangent angle for p1 and threat circle. if tangent angle > max new point is calculated with original metodi.
 	-- note: diminish FACTOR_FOR_DISTANCE_FROM_THREAT_RANGE and increments MAX_NUM_ISTANCE_PATH_FINDING could be generate a more optimized route (maybe)
 	-- note: increments MAX_NUM_ISTANCE_PATH_FINDING could be generate  a more optimized route (maybe)
 }
@@ -106,8 +107,8 @@ local function evalRadarDetection(profile_alt, threat, type_profile, threat_tabl
 		else
 			threatentry.level = threat.level																	--full threat level is applied
 			log.traceLow("type_profile: " .. type_profile .. ", threat isn't ewr assigned full threatentry.level = " .. threatentry.level .. ", insert ewr in threat_table.ground[" .. profile_alt .. "]")
-			table.insert(threat_table.ground[profile_alt], threatentry)
 		end
+		table.insert(threat_table.ground[profile_alt], threatentry)
 	
 	else
 		log.traceLow("type_profile: " .. type_profile .. ", threat is an ewr, insert ewr in threat_table.ewr[" .. profile_alt .. "]")
@@ -473,11 +474,11 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", max_tan_angle (" .. max_tan_angle .. ") < 90 -> max_tangent_angle = " .. max_tangent_angle)		
 
 					else
-						max_tangent_angle = 45
+						max_tangent_angle = ATO_RG_CONFIG.MAX_TANGENT_ANGLE
 						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", max_tan_angle (" .. max_tan_angle .. ") >= 90 -> max_tangent_angle = 45")		
 					end
 
-					-- local function
+					-- return data for new route point computer with old metodi (shifting at 90,-90 degree)
 					local function GetTangentInfoBase(p1, p1_p2_heading, min_distance_from_p1_p2, r, position, separation_from_threat_range) 
 						local previous_log_level = log.level
 						log.level = function_log_level --"traceVeryLow" -- 
@@ -488,15 +489,18 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 						local lenghtL, lenghtR 
 						log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", headingL: " .. headingL .. ", headingR: " .. headingR)
 						
+						--p1 on right of cente.r circle		
+					        lenghtR = min_distance_from_p1_p2 + (r - min_distance_from_p1_p2)/2 + separation_from_threat_range --r/2 per non esagerare nello spostamento?
+						lenghtL = min_distance_from_p1_p2 + r/2 + separation_from_threat_range
+							
 						if string.sub(position, 1, 2) == "le" then	-- p1 on left of center circle			
-							lenghtL = min_distance_from_p1_p2 + (r/2 - min_distance_from_p1_p2)/2 + separation_from_threat_range
-							lenghtR = min_distance_from_p1_p2 + r/2 + separation_from_threat_range
+							local ll = lenghtL 
+							lenghtL = lenghtR 
+							lenghtR = ll
 							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1 on left of center circle (position: " .. position .. "), lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR)
-						
-						else --p1 on right of cente.r circle		
-							lenghtR = min_distance_from_p1_p2 + (r - min_distance_from_p1_p2)/2 + separation_from_threat_range
-							lenghtL = min_distance_from_p1_p2 + r/2 + separation_from_threat_range
-							log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1 on right of center circle (position: " .. position .. "), lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR)
+						else
+                                                        log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", p1 on right of center circle (position: " .. position .. "), lenghtL: " .. lenghtL .. ", lenghtR: " .. lenghtR)
+
 						end
 
 						local alfaL = 90
@@ -623,10 +627,10 @@ function GetRoute(basePoint, targetPoint, profile, side_, task, time, multipackn
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", radius_with_separation: " .. radius_with_separation .. ", p1_threat_distance: " .. GetDistance(point1, threat[1]) .. ", p2_threat_distance: " .. GetDistance(point2, threat[1]) .. ", min_distance_from_threat_p1_p2: " .. GetTangentDistance(point1, point2, threat[1]))					
 				
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p1-p2: ")
-				response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, position = GetTangentInfo(point1, point2, threat[1], threat[1].range, 45, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)								
+				response, tpL, tpR, headingL, headingR, lenghtL, lenghtR, position = GetTangentInfo(point1, point2, threat[1], threat[1].range, ATO_RG_CONFIG.MAX_TANGENT_ANGLE, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)								
 		
 				log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", compute tangent info with p2-p1: ")
-				response1, tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, position1 = GetTangentInfo(point2, point1, threat[1], threat[1].range, 45, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)				
+				response1, tpL1, tpR1, headingL1, headingR1, lenghtL1, lenghtR1, position1 = GetTangentInfo(point2, point1, threat[1], threat[1].range, ATO_RG_CONFIG.MAX_TANGENT_ANGLE, ATO_RG_CONFIG.SEPARATION_FROM_THREAT_RANGE)				
 				
 				if response and response1 then
 					log.traceVeryLow(nameFunction .. ", instance: " .. instance .. ", point1 and point2 are within threat circonference ")

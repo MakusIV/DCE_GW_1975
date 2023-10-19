@@ -355,6 +355,7 @@ local function checkWeather(mission, unit, unit_loadout, flight_loadout, task, i
 			if not isSupportFlight and ( task == "Strike" or task == "Anti-ship Strike" or task == "Reconnaissance" ) then		--extra requirement for A-G tasks
 				if active_log then log.traceLow("extra requirement for A-G tasks in weather capable analisys")		 end
 
+				--print("unit: " .. unit.name .. "-" .. unit.type .. ", task: " .. task .. ", unit_loadout: " .. inspect(unit_loadout))
 				if unit_loadout.hAttack > cloud_base then																		--attack alt is above cloud base
 					if active_log then log.traceLow("attack alt(" .. unit_loadout.hAttack .. ") is above cloud base(" .. cloud_base .. ")") end
 					
@@ -788,7 +789,7 @@ for side,unit in pairs(oob_air) do																								--iterate through all 
 																						if target.x ~= nil and target.y ~= nil then
 																							if active_log then log.info("target coord: ".. target.x .. ", " .. target.y) end													
 																						end
-
+																						--print("unit: " .. unit[n].name .. "-" .. unit[n].type .. ", task: " .. task .. ", target: " .. target_name .. ", side: " .. side .. ", target coord: ".. (target.x or "nil") .. ", " .. (target.y or "nil"))
 																						local ToTarget = GetDistance(airbasePoint, target)											--direct distance to target
 																						if active_log then log.traceLow("direct distance to target: " .. ToTarget) end
 																						

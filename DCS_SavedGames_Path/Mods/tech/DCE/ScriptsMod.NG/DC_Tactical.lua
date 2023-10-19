@@ -958,12 +958,12 @@ function commander()
 	local checkDifferential = false -- false: directives will be based on delta_loss_perc value (actual campaign delta( blue-red) losses percentage), true: directives will be based on diff_loss_perc value (mission trend of campaign  delta( blue-red) losses percentage )
 	local num_report = camp.mission - MISSION_START_COMMANDER + 1
 
-	-- return perc/weight value for changeNumberAircraftForTactics() or changePriorityTarget() or changeWeightScore()
+	-- return perc/weight value for changeNumberAircraftForTactics() or changePriorityTask() or changeWeightScore()
 	local function value(type, value, sign)
 
 		local p1 = { -- param to compute perc for changeNumberAircraftForTactics()
-			inc_min = {min_perc_for_condition, 0.3}, 	--x1, y1
-			inc_max = {max_perc_for_condition, 0.8}, 	--x2, y2							
+			inc_min = {min_perc_for_condition, 0.1}, 	--x1, y1
+			inc_max = {max_perc_for_condition, 0.5}, 	--x2, y2							
 		}
 
 		local w = { -- param to compute perc for changeWeightScore()
@@ -973,9 +973,9 @@ function commander()
 			dec_max = {max_perc_for_condition, 0.15}, 	--x2, y2							
 		}
 
-		local p2 = { -- param to compute perc for changePriorityTarget()
-			inc_min = {min_perc_for_condition, 0.2}, 	-- x1,y1
-			inc_max = {max_perc_for_condition, 1},  	-- x2, y2							
+		local p2 = { -- param to compute perc for changePriorityTask()
+			inc_min = {min_perc_for_condition, 0.1}, 	-- x1,y1
+			inc_max = {max_perc_for_condition, 0.8},  	-- x2, y2							
 		}
 
 		local ret
