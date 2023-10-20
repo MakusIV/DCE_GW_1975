@@ -51,7 +51,7 @@ weapon_db = {
             ["semiactive_range"] = 130,                         -- km, semiactive range (aircraft must track target)                  
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8,                              -- km max height
-            ["max_speed"] = 3,                                  -- mach                            
+            ["max_speed"] = 3.8,                                  -- mach                            
             ["manouvrability"] = 0.6,                           -- manouvrability (min 0 - max 1)
         },
 
@@ -68,24 +68,41 @@ weapon_db = {
             ["semiactive_range"] = 130,                         -- km, semiactive range (aircraft must track target)                  
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8 ,                             -- km max height
-            ["max_speed"] = 3,                                  -- mach                            
+            ["max_speed"] = 3.8,                                  -- mach                            
             ["manouvrability"] = 0.6,
         },
 
-        ["AIM-54C"] = {                                             -- weapon name
+        ["AIM-54C-MK47"] = {                                             -- weapon name
             ["type"] = "AAM",                                       -- weapon type
             ["seeker"] = "radar",                                -- seeker type (infrared, radar)
             ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
-            ["start_service"] = 1986,
+            ["start_service"] = 1982, 
             ["end_service"] = 2004,
             ["cost"] = 477,-- k$  
             ["tnt"] = 61, --kg
             ["reliability"] = 0.8,                              -- reliability (0-1)
             ["range"] = 160,                                    -- km, range ()                  
-            ["semiactive_range"] = 130,                         -- km, semiactive range (aircraft must track target)                  
+            ["semiactive_range"] = 148,                         -- km, semiactive range (aircraft must track target)                  
             ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
             ["max_height"] = 24.8 ,                             -- km max height
-            ["max_speed"] = 3,                                  -- mach                             
+            ["max_speed"] = 4.5,                                  -- mach                             
+            ["manouvrability"] = 0.73,
+        },
+
+        ["AIM-54C-MK60"] = {                                             -- weapon name
+            ["type"] = "AAM",                                       -- weapon type
+            ["seeker"] = "radar",                                -- seeker type (infrared, radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1982, 
+            ["end_service"] = 2004,
+            ["cost"] = 477,-- k$  
+            ["tnt"] = 61, --kg
+            ["reliability"] = 0.8,                              -- reliability (0-1)
+            ["range"] = 160,                                    -- km, range ()                  
+            ["semiactive_range"] = 148,                         -- km, semiactive range (aircraft must track target)                  
+            ["active_range"] = 18,                              -- km, active range  (missile has active autonomous tracking target)                
+            ["max_height"] = 24.8 ,                             -- km max height
+            ["max_speed"] = 4.5,                                  -- mach                             
             ["manouvrability"] = 0.73,
         },
 
@@ -370,6 +387,38 @@ weapon_db = {
             ["manouvrability"] = 0.4,
         },
 
+        ["RB-15F"] = {                                             -- weapon name
+            ["type"] = "ASM",                                       -- weapon type
+            ["task"] = {"Anti-ship Strike"},                        -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1985,
+            ["end_service"] = nil,
+            ["cost"] = 720,-- k$  
+            ["tnt"] = 220, --kg
+            ["range"] = 75, -- Km
+            ["perc_efficiency_variability"] = 0.1,                  -- efficiecy variability(0-1): firepower_max = firepower_max * ( 1 + perc_efficiency_variability )
+            ["efficiency"] = {                                      -- efficiency attribute table
+                
+                ["ship"] = {                                        -- attribute
+                    ["big"] = {                                     -- element dimension (big, medium, small, mix)
+                        ["accuracy"] = 1,                           -- accuracy: hit success probability percentage, 1 max, 0.1 min
+                        ["destroy_capacity"] = 0.6,                 -- destroy_capacity: number of destroyed single element ( element destroyed with single hit),  0.1 min
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1,  
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 1,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },        
+            },                              
+        },
+
         ["AGM-45"] = {                                             -- weapon name
             ["type"] = "ASM",                                       -- weapon type
             ["task"] = {"SEAD"},                        -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
@@ -429,6 +478,70 @@ weapon_db = {
                     ["mix"] = {
                         ["accuracy"] = 1, 
                         ["destroy_capacity"] = 0.85,
+                    },
+                },        
+            },                              
+        },
+
+        ["AGM-88"] = {                                             -- weapon name
+            ["type"] = "ASM",                                       -- weapon type
+            ["task"] = {"SEAD"},                        -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1966,
+            ["end_service"] = 1992,
+            ["cost"] = 200,-- k$  
+            ["tnt"] = 88, --kg
+            ["range"] = 80, -- Km
+            ["perc_efficiency_variability"] = 0.2,                  -- efficiecy variability(0-1): firepower_max = firepower_max * ( 1 + perc_efficiency_variability )
+            ["efficiency"] = {                                      -- efficiency attribute table
+                
+                ["SAM"] = {                                        -- attribute                    
+                    ["big"] = {
+                        ["accuracy"] = 0.8,  
+                        ["destroy_capacity"] = 0.77,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.88,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },        
+            },                              
+        },
+
+        ["Kormoran"] = {                                             -- weapon name
+            ["type"] = "ASM",                                       -- weapon type
+            ["task"] = {"Anti-ship Strike"},                        -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1973,
+            ["end_service"] = nil,
+            ["cost"] = 200,-- k$  
+            ["tnt"] = 165, --kg
+            ["range"] = 30, -- Km
+            ["perc_efficiency_variability"] = 0.1,                  -- efficiecy variability(0-1): firepower_max = firepower_max * ( 1 + perc_efficiency_variability )
+            ["efficiency"] = {                                      -- efficiency attribute table
+                
+                ["ship"] = {                                        -- attribute
+                    ["big"] = {                                     -- element dimension (big, medium, small, mix)
+                        ["accuracy"] = 1,                           -- accuracy: hit success probability percentage, 1 max, 0.1 min
+                        ["destroy_capacity"] = 0.45,                 -- destroy_capacity: number of destroyed single element ( element destroyed with single hit),  0.1 min
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1,  
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 1,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.70,
                     },
                 },        
             },                              
@@ -569,6 +682,38 @@ weapon_db = {
                     ["mix"] = {
                         ["accuracy"] = 0.75, 
                         ["destroy_capacity"] = 0.94,
+                    },
+                },                                   
+            },                              
+        },
+
+        ["Sea Eagle"] = { -- ROBOT 05 RB-05E  antiship Viggen radar 
+            ["type"] = "ASM",       
+            ["task"] = {"Anti-ship Strike"},
+            ["start_service"] = 1985,
+            ["end_service"] = nil,
+            ["cost"] = 700,-- k$  
+            ["tnt"] = 230, --kg
+            ["range"] = 100, --Km
+            ["perc_efficiency_variability"] = 0.1, -- efficiency variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.6,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.8,  
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7,   
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.8,
                     },
                 },                                   
             },                              
@@ -1183,7 +1328,24 @@ weapon_db = {
                         ["accuracy"] = 0.85, 
                         ["destroy_capacity"] = 0.85,
                     },
-                },    
+                }, 
+                
+                ["armor"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                }, 
             },                              
         },
 
@@ -1445,7 +1607,26 @@ weapon_db = {
                         ["accuracy"] = 0.75, 
                         ["destroy_capacity"] = 0.74,
                     },
-                },                                                          
+                }, 
+                
+                ["armor"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.39,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.44,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.49,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.44,
+                    },
+                },
             },
         },
 
@@ -1566,12 +1747,31 @@ weapon_db = {
                         ["accuracy"] = 0.75, 
                         ["destroy_capacity"] = 0.74,
                     },
-                },                
+                }, 
+                
+                ["armor"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.39,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.44,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.49,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.44,
+                    },
+                },
             },                              
         },
 
         ["GBU-10"] = {
-            ["type"] = "Guided Bombs",
+            ["type"] = "Guided bombs",
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1980,
             ["end_service"] = nil,
@@ -1640,7 +1840,7 @@ weapon_db = {
         },
     
         ["GBU-16"] = {  -- like Mk-83
-            ["type"] = "Guided Bombs",
+            ["type"] = "Guided bombs",
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -1708,125 +1908,8 @@ weapon_db = {
             },                  
         },
 
-        ["GBU-24"] = {  -- like Mk-84
-            ["type"] = "Guided Bombs",
-            ["task"] = {"Strike", "Anti-ship Strike"},
-            ["start_service"] = 1980,
-            ["end_service"] = nil,
-            ["cost"] = 25,-- k$  
-            ["tnt"] = 202, --kg
-            ["perc_efficiency_variability"] = 0.05, -- percentage of efficiecy variability 0-1 (100%)
-            ["efficiency"] = {  
-                
-                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
-                    ["big"] = {
-                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
-                        ["destroy_capacity"] = 0.8, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
-                    },
-                    ["med"] = {
-                        ["accuracy"] = 1, 
-                        ["destroy_capacity"] = 0.9,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.95, 
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 1, 
-                        ["destroy_capacity"] = 0.85,
-                    },
-                },                
-            
-                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
-                    ["big"] = {
-                        ["accuracy"] = 1,   
-                        ["destroy_capacity"] = 0.7,
-                    },
-                    ["med"] = {
-                        ["accuracy"] = 1, 
-                        ["destroy_capacity"] = 0.8,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.9, 
-                        ["destroy_capacity"] = 0.9,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.97, 
-                        ["destroy_capacity"] = 0.8,
-                    },
-                },        
-
-                ["ship"] = { -- mobile target
-                    ["big"] = {
-                        ["accuracy"] = 0.8,   -- 
-                        ["destroy_capacity"] = 0.85,
-                    },
-                    ["med"] = {
-                        ["accuracy"] = 0.7,  
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.5,   
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.7, 
-                        ["destroy_capacity"] = 0.8,
-                    },
-                },
-                
-                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
-                
-                    ["med"] = {
-                        ["accuracy"] = 0.8, 
-                        ["destroy_capacity"] = 0.85,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.6, 
-                        ["destroy_capacity"] = 0.95,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.7, 
-                        ["destroy_capacity"] = 0.85,
-                    },
-                },                
-
-                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
-                
-                    ["med"] = {
-                        ["accuracy"] = 0.9, 
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.8, 
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.85, 
-                        ["destroy_capacity"] = 1,
-                    },
-                },                
-
-                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
-                
-                    ["med"] = {
-                        ["accuracy"] = 0.9, 
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["small"] = {
-                        ["accuracy"] = 0.8, 
-                        ["destroy_capacity"] = 1,
-                    },
-                    ["mix"] = {
-                        ["accuracy"] = 0.85, 
-                        ["destroy_capacity"] = 0.85,
-                    },
-                },       
-            },                  
-        },
-
         ["GBU-12"] = {
-            ["type"] = "Guided Bombs",
+            ["type"] = "Guided bombs",
             ["task"] = {"Strike"},
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -1871,9 +1954,145 @@ weapon_db = {
                 },        
             },                   
         },
+
+        ["GBU-24"] = {  -- like Mk-84
+            ["type"] = "Guided bombs",
+            ["task"] = {"Strike"},
+            ["start_service"] = 1983,
+            ["end_service"] = nil,
+            ["cost"] = 55,-- k$  
+            ["tnt"] = 429, --kg
+            ["perc_efficiency_variability"] = 0.05, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.8, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.5,   -- 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.4,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.2,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.3, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },
+            },                    
+        },
+
+        ["GBU-27"] = { -- bunker
+            ["type"] = "Guided bombs",
+            ["task"] = {"Strike"},
+            ["start_service"] = 1985,
+            ["end_service"] = nil,
+            ["cost"] = 55,-- k$  
+            ["tnt"] = 429, --kg
+            ["perc_efficiency_variability"] = 0.05, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.8, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.5,   -- 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.4,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.2,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.3, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                },
+            },                   
+        },
             
         ["Mk-20"] = {  --aka CBU-100 anti-armor cluster
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -1960,8 +2179,96 @@ weapon_db = {
             },                  
         },
 
+        ["BLG66"] = {  --aka Belouga cluster soft target
+            ["type"] = "Cluster bombs",
+            ["task"] = {"Strike"},	
+            ["start_service"] = 1980,
+            ["end_service"] = nil,
+            ["cost"] = 15,-- k$  
+            ["weight"] = 305, --kg
+            ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.75,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 2.1, -- element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 3.2,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 4.5,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 4,
+                    },
+                },                              
+            
+                ["Parked Aircraft"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.75,   
+                        ["destroy_capacity"] = 3.2,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 4.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 6.5,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.67, 
+                        ["destroy_capacity"] = 5,
+                    },
+                },        
+
+                ["soft"] = { -- mobile target(artillery group)
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 2.7,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.6,  
+                        ["destroy_capacity"] = 4.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.5,   
+                        ["destroy_capacity"] = 6.5,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 5.5,
+                    },
+                },   
+                
+                ["armor"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.75,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 1, -- element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 1.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 2,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.65, 
+                        ["destroy_capacity"] = 1.5,
+                    },
+                },              
+            },                  
+        },
+
         ["CBU-52B"] = {  --aka cluster soft target
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -2030,7 +2337,7 @@ weapon_db = {
         },
 
         ["BK-90MJ1"] = {  --aka DWS 39 Mjölner MJ1 soft target, mj2 anti-armor, mj1+2 both,  cluster bomb
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1990,
             ["end_service"] = nil,
@@ -2118,7 +2425,7 @@ weapon_db = {
         },
 
         ["BK-90MJ1-2"] = {  --aka DWS 39 Mjölner MJ1 soft target, mj2 anti-armor, mj1+2 both,  cluster bomb
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1990,
             ["end_service"] = nil,
@@ -2206,7 +2513,7 @@ weapon_db = {
         },
 
         ["BK-90MJ2"] = {  --aka DWS 39 Mjölner MJ1 soft target, mj2 anti-armor, mj1+2 both,  cluster bomb
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1990,
             ["end_service"] = nil,
@@ -2880,7 +3187,11 @@ weapon_db = {
                     ["small"] = {
                         ["accuracy"] = 0.6, 
                         ["destroy_capacity"] = 0.15,
-                    },                   
+                    },  
+                    ["mix"] = {
+                        ["accuracy"] = 0.6, 
+                        ["destroy_capacity"] = 0.15,
+                    },                 
                 },                
                             
                 ["ship"] = { -- mobile target
@@ -2958,7 +3269,7 @@ weapon_db = {
             },                              
         }, 
 
-        ["SNEB-253"] = { -- Rockets ? mm HE , 
+        ["SNEB-253"] = { -- Rockets ? mm HE , aka Matra f1
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1955,
@@ -2974,7 +3285,11 @@ weapon_db = {
                     ["small"] = {
                         ["accuracy"] = 0.7, 
                         ["destroy_capacity"] = 0.07,
-                    },                   
+                    },     
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.07,
+                    },              
                 },                
                             
                 ["ship"] = { -- mobile target
@@ -3049,6 +3364,7 @@ weapon_db = {
         }, 
     },
 
+    -- MATRA_F1_SNEBT253
     --russia
     -- a2a missile: /K-13A/, /R-60M/, /R-3R/, /R-3S/, /R-24T/, /R-24R/, /R-40R/, /R-40T/, /R-27T(dopo)/, /R-27R(dopo)/
     -- bomb: /FAB-1500/, /FAB-500/, /FAB-250/, /FAB-100/, /FAB-50/, BL-755(cluster? att inglese??), /RBK-250(cluster)/, /RBK-500AO(cluster)/, /KAB-500L(laser)/, /KMGU-96r(cluster)/, /KMGU-2F/2B(cluster )/
@@ -3336,6 +3652,190 @@ weapon_db = {
                     ["mix"] = {
                         ["accuracy"] = 0.55, 
                         ["destroy_capacity"] = 0.55,
+                    },
+                },
+            },                              
+        },
+
+        ["Hot-3"] = { -- Missile wire-guide 150 mm antitank hard target,
+            ["type"] = "ASM",       
+            ["task"] = {"Strike", "Anti-ship Strike"},
+            ["start_service"] = 1978,
+            ["end_service"] = nil,
+            ["cost"] = 35,-- k$  
+            ["tnt"] = 6, --kg ?? (not applicable?)
+            ["range"] = 4, -- Km
+            ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                                   
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.12,
+                    },                   
+                },                
+                            
+                ["ship"] = { -- mobile target
+                    
+                    ["med"] = {
+                        ["accuracy"] = 0.85,  
+                        ["destroy_capacity"] = 0.15,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8,   
+                        ["destroy_capacity"] = 0.2,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.17,
+                    },
+                },    
+                                
+                ["soft"] = { -- mobile target(artillery group)
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.6,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },               
+
+                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.45,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.6,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.6,
+                    },
+                }, 
+
+                ["Parked Aircraft"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacit"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                },
+            },                              
+        },
+
+        ["Mistral"] = { -- Missile wire-guide 150 mm antitank hard target,
+            ["type"] = "ASM",       
+            ["task"] = {"Strike", "Anti-ship Strike"},
+            ["start_service"] = 1985, -- 1988
+            ["end_service"] = nil,
+            ["cost"] = 40,-- k$  
+            ["tnt"] = 3, --kg ?? (not applicable?)
+            ["range"] = 6, -- Km
+            ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                                   
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.3,
+                    },                   
+                },                
+                            
+                ["ship"] = { -- mobile target
+                                        
+                    ["small"] = {
+                        ["accuracy"] = 0.8,   
+                        ["destroy_capacity"] = 0.1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.17,
+                    },
+                },    
+                                
+                ["soft"] = { -- mobile target(artillery group)
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.3,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.37,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.35,
+                    },
+                },               
+
+                ["armor"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.25,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacity"] = 0.3,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.3,
+                    },
+                }, 
+
+                ["Parked Aircraft"] = { -- mobile target armor non è presente in targetlist, cmq valuta se inserirlo x distinguerlo da soft
+                    ["big"] = {
+                        ["accuracy"] = 0.9,   -- 
+                        ["destroy_capacity"] = 0.4,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.7,  
+                        ["destroy_capacit"] = 0.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.6,   
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.6,
                     },
                 },
             },                              
@@ -3862,7 +4362,7 @@ weapon_db = {
             },                              
         }, 
 
-        ["S-13"] = { -- Rockets 122 mm soft target, launcher B-13L (qty: 5)
+        ["S-13"] = { -- Rockets 122 mm soft target, launcher UB-13 (qty: 5)
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1973, --1973: trial-- service: 1983
@@ -3913,7 +4413,7 @@ weapon_db = {
             },                              
         }, 
 
-        ["S-25L"] = { -- Rockets 340 mm hard target (antitank), OFM,   Launcher O-25 (qty: 1)
+        ["S-25L"] = { -- Rockets 340 mm hard target (antitank), 250OFM,   Launcher O-25 (qty: 1)
             ["type"] = "Rockets",       
             ["task"] = {"Strike", "Anti-ship Strike"},
             ["start_service"] = 1975,
@@ -4101,7 +4601,7 @@ weapon_db = {
             },                              
         }, 
 
-        ["Kh-22N"] = { -- radar
+        ["Kh-22N"] = { -- radar antiship
             ["type"] = "ASM",       
             ["task"] = {"Anti-ship Strike"},
             ["start_service"] = 1967,
@@ -4789,7 +5289,133 @@ weapon_db = {
                 },           
             },                              
         },
-        
+
+        ["Kh-29L"] = { -- laser guided
+            ["type"] = "ASM",       
+            ["task"] = {"Anti-ship Strike", "Strike", "SEAD"},
+            ["start_service"] = 1980,
+            ["end_service"] = nil,
+            ["cost"] = 160,-- k$  
+            ["tnt"] = 320, --kg
+            ["range"] = 10, --Km
+            ["perc_efficiency_variability"] = 0.05, -- efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.55, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },        
+            },                               
+        },
+
+        ["Kh-29T"] = { -- TV guided
+            ["type"] = "ASM",       
+            ["task"] = {"Anti-ship Strike", "Strike", "SEAD"},
+            ["start_service"] = 1980,
+            ["end_service"] = nil,
+            ["cost"] = 160,-- k$  
+            ["tnt"] = 320, --kg
+            ["range"] = 12, --Km
+            ["perc_efficiency_variability"] = 0.05, -- efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.55, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    
+                    ["med"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.5,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 1,  
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 1, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },        
+            },                               
+        },
+
         ["R-13M"] = {                                              -- weapon name
             ["type"] = "AAM",                                       -- weapon type            
             ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
@@ -4848,6 +5474,21 @@ weapon_db = {
             ["max_height"] = 20,                                -- km max height
             ["max_speed"] = 2.7,                                  -- mach                            
             ["manouvrability"] = 0.7,
+        },
+
+        ["R-73"] = {                                            -- weapon name
+            ["type"] = "AAM",                                   -- weapon type            
+            ["seeker"] = "infrared",                            -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                                 -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1984, 
+            ["end_service"] = nil,
+            ["cost"] = 90,-- k$  
+            ["tnt"] = 7, --kg
+            ["reliability"] = 0.8,                              -- reliability (0-1)
+            ["range"] = 30,                                     -- km, range (aircraft must track target)                              
+            ["max_height"] = 20,                                -- km max height
+            ["max_speed"] = 2.7,                                -- mach                            
+            ["manouvrability"] = 0.85,
         },
 
         ["R-3S"] = {             -- aka K-13A                     -- weapon name
@@ -4969,6 +5610,37 @@ weapon_db = {
             ["tnt"] = 39, --kg 
             ["reliability"] = 0.6,                              -- reliability (0-1)
             ["range"] = 40,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 25,                                -- km max height
+            ["max_speed"] = 4.5,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["R-27ER"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "radar",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1983, 
+            ["end_service"] = nil,
+            ["cost"] = 230,-- k$  
+            ["tnt"] = 39, --kg 
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 120,                                    -- km, range (aircraft must track target)                              
+            ["semiactive_range"] = 50,                                    -- km, range (aircraft must track target)                              
+            ["max_height"] = 25,                                -- km max height
+            ["max_speed"] = 4.5,                                  -- mach                            
+            ["manouvrability"] = 0.7,
+        },
+
+        ["R-27ET"] = {                                              -- weapon name
+            ["type"] = "AAM",                                       -- weapon type            
+            ["seeker"] = "infrared",                                -- seeker type (infrared, semiactive_radar, active_radar)
+            ["task"] = {"A2A"},                               -- weapon task: loadout and targetlist task (Strike, Anti-ship Strike, CAP, Intercept, AWACS, Fighter Sweep, Escort, SEAD)
+            ["start_service"] = 1984, 
+            ["end_service"] = nil,
+            ["cost"] = 230,-- k$  
+            ["tnt"] = 39, --kg 
+            ["reliability"] = 0.6,                              -- reliability (0-1)
+            ["range"] = 130,                                    -- km, range (aircraft must track target)                              
             ["max_height"] = 25,                                -- km max height
             ["max_speed"] = 4.5,                                  -- mach                            
             ["manouvrability"] = 0.7,
@@ -5511,7 +6183,7 @@ weapon_db = {
         },
 
         ["RBK-250AO"] = {  --cluster bomb soft target
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -5599,7 +6271,7 @@ weapon_db = {
         },
 
         ["RBK-500AO"] = {  --cluster bomb soft target
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -5687,7 +6359,7 @@ weapon_db = {
         },
 
         ["RBK-500PTAB"] = {  --cluster bomb armor target (Anti-tank)
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -5774,8 +6446,147 @@ weapon_db = {
             },                  
         },
 
-        ["KAB-500L"] = { -- laser bomb (FAB-500 with laser guide)
+        ["BetAB-500"] = {
             ["type"] = "Bombs",       
+            ["task"] = {"Strike", "Anti-ship Strike"},
+            ["start_service"] = 1962,
+            ["end_service"] = nil,
+            ["cost"] = 2.7,-- k$  
+            ["tnt"] = 92, --kg
+            ["perc_efficiency_variability"] = 0.1, -- percentage of efficiecy variability 0-1 (100%)
+            ["efficiency"] = {  
+                
+                ["Structure"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 1,   -- 1 max, 0.1 min ( hit success percentage )
+                        ["destroy_capacity"] = 0.15, -- 1 max: element destroyed (single hit), 0.1 min ( element destroy capacity )                                    
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.22,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.53,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.24,
+                    },
+                },                
+            
+                ["Bridge"] = {-- fixed target (guided bombs and agm missile are more efficiency)            
+                    
+                    ["med"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.22,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.33,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.28,
+                    },
+                },        
+
+                ["ship"] = { -- mobile target
+                    ["big"] = {
+                        ["accuracy"] = 0.7,   -- 
+                        ["destroy_capacity"] = 0.22,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.5,  
+                        ["destroy_capacity"] = 0.27,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.3,   
+                        ["destroy_capacity"] = 0.35,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.4, 
+                        ["destroy_capacity"] = 0.3,
+                    },
+                },        
+
+                ["soft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.85,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.74, 
+                        ["destroy_capacity"] = 0.9,
+                    },
+                },                
+
+                ["Parked Aircraft"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.95, 
+                        ["destroy_capacity"] = 0.95,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.87, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.77, 
+                        ["destroy_capacity"] = 1,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 1,
+                    },
+                },   
+                
+                 ["armor"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.65,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.8, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.75,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.7, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                },
+
+                ["SAM"] = { -- fixed target (guided bombs and agm missile are more efficiency)            
+                    ["big"] = {
+                        ["accuracy"] = 0.9, 
+                        ["destroy_capacity"] = 0.7,
+                    },
+                    ["med"] = {
+                        ["accuracy"] = 0.85, 
+                        ["destroy_capacity"] = 0.75,
+                    },
+                    ["small"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.8,
+                    },
+                    ["mix"] = {
+                        ["accuracy"] = 0.75, 
+                        ["destroy_capacity"] = 0.75,
+                    },
+                },    
+            },                              
+        },
+
+        ["KAB-500L"] = { -- laser bomb (FAB-500 with laser guide)
+            ["type"] = "Guided bombs",       
             ["task"] = {"Strike"},
             ["start_service"] = 1975,
             ["end_service"] = nil,
@@ -5907,7 +6718,7 @@ weapon_db = {
         },
 
         ["KAB-500Kr"] = { -- tv-guided bomb fire&forget (FAB-500)
-            ["type"] = "Bombs",       
+            ["type"] = "Guided bombs",       
             ["task"] = {"Strike"},
             ["start_service"] = 1980,
             ["end_service"] = nil,
@@ -6039,7 +6850,7 @@ weapon_db = {
         },
 
         ["KGBU-2AO"] = {  --cluster bomb soft target
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -6127,7 +6938,7 @@ weapon_db = {
         },
 
         ["KGBU-2PTAB"] = {  --cluster bomb armor target
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
@@ -6215,7 +7026,7 @@ weapon_db = {
         },
 
         ["KGBU-96r"] = {  --?? cluster bomb soft target VERIFY
-            ["type"] = "Cluster Bombs",
+            ["type"] = "Cluster bombs",
             ["task"] = {"Strike"},	
             ["start_service"] = 1970,
             ["end_service"] = nil,
