@@ -1150,7 +1150,7 @@ end
 -- return true if task_name isn't air fight task (refuelling, Transport and AWACS)
 local function isNotFightTask(task_name)
 
-    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS" or task_name == "Laser Illumination" or task_name == "Flare Illumination" or task_name == "Escort Jammer"
+    return task_name == "Transport" or task_name == "Refueling" or task_name == "AWACS" or task_name == "Laser Illumination" or task_name == "Flare Illumination" or task_name == "Escort Jammer" or task_name == "Reconnaissance"
 end
     
 -- return weapon data for weapon (side optional to speed up searching). Return nil if weapon not found
